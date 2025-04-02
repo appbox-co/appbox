@@ -1,13 +1,12 @@
-'use client'
+"use client"
 
-import { useRef, useState, useEffect } from 'react'
-import { useInView } from 'react-intersection-observer'
-import Image from 'next/image'
-import { AnimatedBeam } from './magicui/animated-beam'
-import { App } from '@/lib/appbox/api/useApps'
-import { cn } from '@/lib/utils'
-import * as React from 'react'
-import { Icons } from '@/components/icons'
+import { Icons } from "@/components/icons"
+import { App } from "@/lib/appbox/api/useApps"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
+import { useInView } from "react-intersection-observer"
+import { AnimatedBeam } from "./magicui/animated-beam"
 
 interface ClientAppConnectionsProps {
   apps: App[]
@@ -36,17 +35,17 @@ export function ClientAppConnections({
   // Helper function to get the correct icon URL
   function getIconUrl(iconImage: string): string {
     if (!iconImage) {
-      return 'https://api.appbox.co/assets/images/apps/placeholder.png'
+      return "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
 
     try {
-      if (iconImage.startsWith('http')) {
+      if (iconImage.startsWith("http")) {
         return iconImage
       } else {
         return `https://api.appbox.co/assets/images/apps/icons/${iconImage}`
       }
     } catch (e) {
-      return 'https://api.appbox.co/assets/images/apps/placeholder.png'
+      return "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
   }
 
@@ -104,11 +103,11 @@ export function ClientAppConnections({
   return (
     <section className="pt-12" ref={inViewRef} id="app-connections-section">
       <div className="container">
-        <div className="mx-auto ax-w-[58rem] text-center">
+        <div className="ax-w-[58rem] mx-auto text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-4xl">
             {title}
           </h2>
-          <p className="mt-3 text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="text-muted-foreground mt-3 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             {description}
           </p>
         </div>
@@ -117,7 +116,7 @@ export function ClientAppConnections({
           {/* Static SVG lines for non-JS environments */}
           {!isClient && (
             <svg
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 size-full"
               xmlns="http://www.w3.org/2000/svg"
             >
               {apps.map((_, i) => {
@@ -125,8 +124,8 @@ export function ClientAppConnections({
                 // Extract numeric values from CSS calc
                 const leftMatch = pos.left.match(/calc\(50% \+ ([-\d.]+)px\)/)
                 const topMatch = pos.top.match(/calc\(50% \+ ([-\d.]+)px\)/)
-                const x2 = leftMatch ? parseFloat(leftMatch[1]) + 'px' : '0'
-                const y2 = topMatch ? parseFloat(topMatch[1]) + 'px' : '0'
+                const x2 = leftMatch ? parseFloat(leftMatch[1]) + "px" : "0"
+                const y2 = topMatch ? parseFloat(topMatch[1]) + "px" : "0"
 
                 return (
                   <line
@@ -149,10 +148,10 @@ export function ClientAppConnections({
             className="app-connections-center"
             style={{
               opacity: inView ? 1 : 0,
-              transition: 'opacity 0.5s ease-in-out',
+              transition: "opacity 0.5s ease-in-out",
             }}
           >
-            <Icons.emblem className="h-[calc(var(--size)*0.7)] w-[calc(var(--size)*0.7)]" />
+            <Icons.emblem className="size-[calc(var(--size)*0.7)]" />
           </div>
 
           {/* App icons */}
@@ -173,7 +172,7 @@ export function ClientAppConnections({
                 }}
               >
                 {/* Image stays proportional to the container */}
-                <div className="relative h-[calc(var(--size)*0.7)] w-[calc(var(--size)*0.7)]">
+                <div className="relative size-[calc(var(--size)*0.7)]">
                   <Image
                     src={getIconUrl(app.icon_image)}
                     alt={app.display_name}
@@ -197,8 +196,8 @@ export function ClientAppConnections({
                 className="beam-container"
                 style={{
                   opacity: 0,
-                  animation: 'fadeIn 1s ease-in-out forwards',
-                  position: 'absolute',
+                  animation: "fadeIn 1s ease-in-out forwards",
+                  position: "absolute",
                   inset: 0,
                   zIndex: 5,
                 }}

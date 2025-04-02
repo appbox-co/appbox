@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running linting checks before commit..."
+pnpm run lint:fix
+if [ $? -ne 0 ]; then
+  echo "Linting failed! Fix the errors before committing."
+  exit 1
+fi 

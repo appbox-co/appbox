@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { useRef, useState, useEffect } from 'react'
-import { useInView } from 'react-intersection-observer'
-import Image from 'next/image'
-import { AnimatedBeam } from './magicui/animated-beam'
-import { App } from '@/lib/appbox/api/useApps'
-import { cn } from '@/lib/utils'
-import * as React from 'react'
-import { Icons } from '@/components/icons'
+import { Icons } from "@/components/icons"
+import { App } from "@/lib/appbox/api/useApps"
+import { cn } from "@/lib/utils"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
+import { useInView } from "react-intersection-observer"
+import { AnimatedBeam } from "./magicui/animated-beam"
 
 interface AppConnectionsShowcaseProps {
   apps: App[]
@@ -35,17 +35,17 @@ export function AppConnectionsShowcase({
   // Helper function to get the correct icon URL
   function getIconUrl(iconImage: string): string {
     if (!iconImage) {
-      return 'https://api.appbox.co/assets/images/apps/placeholder.png'
+      return "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
 
     try {
-      if (iconImage.startsWith('http')) {
+      if (iconImage.startsWith("http")) {
         return iconImage
       } else {
         return `https://api.appbox.co/assets/images/apps/icons/${iconImage}`
       }
     } catch (e) {
-      return 'https://api.appbox.co/assets/images/apps/placeholder.png'
+      return "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
   }
 
@@ -87,23 +87,23 @@ export function AppConnectionsShowcase({
   return (
     <section className="py-12" ref={inViewRef} id="app-connections-section">
       <div className="container">
-        <div className="mx-auto ax-w-[58rem] text-center">
+        <div className="ax-w-[58rem] mx-auto text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-4xl">
             {title}
           </h2>
-          <p className="mt-3 text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="text-muted-foreground mt-3 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             {description}
           </p>
         </div>
 
         <div
           ref={containerRef}
-          className="relative w-full max-w-4xl mx-auto overflow-hidden aspect-[4/3]"
+          className="relative mx-auto aspect-[4/3] w-full max-w-4xl overflow-hidden"
         >
           {/* Static SVG lines for non-JS environments */}
           {!isClient && (
             <svg
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 size-full"
               xmlns="http://www.w3.org/2000/svg"
             >
               {apps.map((_, i) => {
@@ -111,8 +111,8 @@ export function AppConnectionsShowcase({
                 // Extract numeric values from CSS calc
                 const leftMatch = pos.left.match(/calc\(50% \+ ([-\d.]+)px\)/)
                 const topMatch = pos.top.match(/calc\(50% \+ ([-\d.]+)px\)/)
-                const x2 = leftMatch ? parseFloat(leftMatch[1]) + 'px' : '0'
-                const y2 = topMatch ? parseFloat(topMatch[1]) + 'px' : '0'
+                const x2 = leftMatch ? parseFloat(leftMatch[1]) + "px" : "0"
+                const y2 = topMatch ? parseFloat(topMatch[1]) + "px" : "0"
 
                 return (
                   <line
@@ -133,19 +133,19 @@ export function AppConnectionsShowcase({
           <div
             ref={centerRef}
             className={cn(
-              'absolute z-10 flex size-28 items-center justify-center rounded-full bg-primary/10 backdrop-blur-sm transition-all transform-gpu',
-              inView && isClient ? 'opacity-100 scale-100' : 'opacity-100' // Always visible for non-JS
+              "bg-primary/10 absolute z-10 flex size-28 transform-gpu items-center justify-center rounded-full backdrop-blur-sm transition-all",
+              inView && isClient ? "scale-100 opacity-100" : "opacity-100" // Always visible for non-JS
             )}
             style={{
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%) scale(1)',
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%) scale(1)",
               transition: isClient
-                ? 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
-                : 'none',
+                ? "opacity 0.5s ease-in-out, transform 0.5s ease-in-out"
+                : "none",
             }}
           >
-            <Icons.emblem className="h-20 w-20" />
+            <Icons.emblem className="size-20" />
           </div>
 
           {/* App icons arranged in a circle */}
@@ -158,19 +158,19 @@ export function AppConnectionsShowcase({
                 key={app.display_name}
                 ref={isClient ? appRefs[index] : undefined}
                 className={cn(
-                  'absolute z-10 flex size-12 items-center justify-center rounded-full bg-white p-2 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)] border-2 border-muted transform-gpu',
-                  inView && isClient ? 'opacity-100' : 'opacity-100' // Always visible for non-JS
+                  "border-muted absolute z-10 flex size-12 transform-gpu items-center justify-center rounded-full border-2 bg-white p-2 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
+                  inView && isClient ? "opacity-100" : "opacity-100" // Always visible for non-JS
                 )}
                 style={{
                   left: pos.left,
                   top: pos.top,
-                  transform: 'translate(-50%, -50%) scale(1)',
+                  transform: "translate(-50%, -50%) scale(1)",
                   transition: isClient
                     ? `opacity 0.4s ease-in-out ${index * 0.1}s, transform 0.4s ease-in-out ${index * 0.1}s`
-                    : 'none',
+                    : "none",
                 }}
               >
-                <div className="relative h-8 w-8">
+                <div className="relative size-8">
                   <Image
                     src={getIconUrl(app.icon_image)}
                     alt={app.display_name}

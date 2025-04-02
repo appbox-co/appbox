@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic"
 
 // Import Vortex with ssr: false
-const Vortex = dynamic(() => import('./vortex'), { ssr: false })
+const Vortex = dynamic(() => import("./vortex"), { ssr: false })
 
 // Define props type based on Vortex props
 interface VortexWrapperProps {

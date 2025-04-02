@@ -1,19 +1,20 @@
-import { defineRouting } from 'next-intl/routing'
-import { createNavigation } from 'next-intl/navigation'
-import type { LocalizedRecord } from '@/lib/opendocs/types/i18n'
+import type { LocalizedRecord } from "@/lib/opendocs/types/i18n"
+import { createNavigation } from "next-intl/navigation"
+import { defineRouting } from "next-intl/routing"
+
 export const routing = defineRouting({
   // A list of all locales that are supported
-  locales: ['en', 'de'],
+  locales: ["en", "de"],
 
   // Used when no locale matches
-  defaultLocale: 'en',
+  defaultLocale: "en",
 
-  localePrefix: 'as-needed',
+  localePrefix: "as-needed",
 })
 
 export const dateLocales: LocalizedRecord = {
-  en: 'en-US',
-  de: 'de-DE',
+  en: "en-US",
+  de: "de-DE",
 } as const
 
 // Lightweight wrappers around Next.js' navigation APIs

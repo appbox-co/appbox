@@ -1,19 +1,17 @@
-'use client'
+"use client"
 
-import { type PointerEvent, useState, useMemo } from 'react'
-import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
-import { ChevronDown } from 'lucide-react'
-import { useTheme } from 'next-themes'
-
-import { useIsMobile } from '@/lib/opendocs/hooks/use-is-mobile'
-import { Button } from '@/components/ui/button'
-
+import { Button } from "@/components/ui/button"
+import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
+import { ChevronDown } from "lucide-react"
+import { useTheme } from "next-themes"
+import { useMemo, useState, type PointerEvent } from "react"
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuContent,
-} from './ui/dropdown-menu'
+} from "./ui/dropdown-menu"
 
 interface ThemeModeToggleProps {
   messages: {
@@ -30,9 +28,9 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
 
   const themes = useMemo(() => {
     return [
-      { label: messages.dark, value: 'dark' },
-      { label: messages.light, value: 'light' },
-      { label: messages.system, value: 'system' },
+      { label: messages.dark, value: "dark" },
+      { label: messages.light, value: "light" },
+      { label: messages.system, value: "system" },
     ]
   }, [messages])
 
@@ -43,7 +41,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
   function closeDropdown(element: PointerEvent<HTMLElement>) {
     const target = element.relatedTarget as Element
 
-    if ('closest' in target && target.closest('[role=menu]')) return
+    if ("closest" in target && target.closest("[role=menu]")) return
 
     setOpen(() => false)
   }

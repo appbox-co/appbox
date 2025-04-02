@@ -1,10 +1,8 @@
-import { setRequestLocale } from 'next-intl/server'
-
-import { getServerDocsConfig } from '@/lib/opendocs/utils/get-server-docs-config'
-import { DocsSidebarNav } from '@/components/docs/sidebar-nav'
-import { ScrollArea } from '@/components/ui/scroll-area'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
+import { DocsSidebarNav } from "@/components/docs/sidebar-nav"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { getServerDocsConfig } from "@/lib/opendocs/utils/get-server-docs-config"
+import { setRequestLocale } from "next-intl/server"
 
 interface DocsLayoutProps {
   children: React.ReactNode
@@ -16,11 +14,9 @@ interface DocsLayoutProps {
 export const dynamicParams = true
 
 export default async function DocsLayout(props: DocsLayoutProps) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    children
-  } = props;
+  const { children } = props
 
   setRequestLocale(params.locale)
 

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { StarRating } from '@/components/ui/star-rating'
+import { StarRating } from "@/components/ui/star-rating"
 
 interface ClientStarRatingProps {
   value: number

@@ -1,9 +1,9 @@
 // This is a server-side API function
-import { AppDetails } from './useAppDetails'
+import { AppDetails } from "./useAppDetails"
 
 export async function getAppDetails(appName: string): Promise<AppDetails> {
   // Convert display name to API format (lowercase, spaces to hyphens)
-  const formattedName = appName.toLowerCase().replace(/\s+/g, '-')
+  const formattedName = appName.toLowerCase().replace(/\s+/g, "-")
 
   try {
     const response = await fetch(
@@ -17,7 +17,7 @@ export async function getAppDetails(appName: string): Promise<AppDetails> {
 
     return response.json()
   } catch (error) {
-    console.error('Error fetching app details:', error)
+    console.error("Error fetching app details:", error)
     throw error
   }
 }

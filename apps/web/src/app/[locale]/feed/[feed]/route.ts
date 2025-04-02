@@ -1,16 +1,14 @@
-import { NextResponse } from 'next/server'
-import { Feed, type Item } from 'feed'
-import { cache } from 'react'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { RSSFeed } from '@/lib/opendocs/types/blog'
-
-import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { allBlogs, type Blog } from 'contentlayer/generated'
-import { defaultLocale, locales } from '@/config/i18n'
-import { siteConfig } from '@/config/site'
-import { blogConfig } from '@/config/blog'
-import { absoluteUrl } from '@/lib/utils'
+import { blogConfig } from "@/config/blog"
+import { siteConfig } from "@/config/site"
+import { routing } from "@/i18n/routing"
+import type { RSSFeed } from "@/lib/opendocs/types/blog"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import { absoluteUrl } from "@/lib/utils"
+import { allBlogs, type Blog } from "contentlayer/generated"
+import { Feed, type Item } from "feed"
+import { NextResponse } from "next/server"
+import { cache } from "react"
 
 function generateWebsiteFeeds({
   file,
@@ -18,7 +16,7 @@ function generateWebsiteFeeds({
   locale,
 }: {
   posts: Blog[]
-  file: RSSFeed['file']
+  file: RSSFeed["file"]
   locale: LocaleOptions
 }) {
   const feed = new Feed({
@@ -26,25 +24,25 @@ function generateWebsiteFeeds({
     generator: siteConfig.name,
     copyright: siteConfig.name,
     image: siteConfig.og.image,
-    language: locale || defaultLocale,
+    language: locale || routing.defaultLocale,
     title: `Blog - ${siteConfig.name}`,
-    favicon: absoluteUrl('/favicon.ico'),
+    favicon: absoluteUrl("/favicon.ico"),
     link: absoluteUrl(`/${locale}/feed/${file}`),
     description: getObjectValueByLocale(siteConfig.description, locale),
   })
 
   const blogFeedEntries = posts
     .filter((post) => {
-      const [postLocale] = post.slugAsParams.split('/')
+      const [postLocale] = post.slugAsParams.split("/")
 
       return postLocale === locale
     })
     .map((post) => {
-      const [postLocale, ...postSlugList] = post.slugAsParams.split('/')
-      const postSlug = postSlugList.join('/') || ''
+      const [postLocale, ...postSlugList] = post.slugAsParams.split("/")
+      const postSlug = postSlugList.join("/") || ""
 
       const postLink =
-        postLocale === defaultLocale
+        postLocale === routing.defaultLocale
           ? `/blog/${postSlug}`
           : `/${locale}/blog/${postSlug}`
 
@@ -61,7 +59,7 @@ function generateWebsiteFeeds({
           {
             name: post.author?.name,
             link: post.author?.site,
-            email: post.author?.email || ' ',
+            email: post.author?.email || " ",
           },
         ],
       } as Item
@@ -83,10 +81,10 @@ const provideWebsiteFeeds = cache(
     })
 
     switch (feed) {
-      case 'blog.xml':
+      case "blog.xml":
         return websiteFeeds.get(feed)?.rss2()
 
-      case 'blog.json':
+      case "blog.json":
         return websiteFeeds.get(feed)?.json1()
 
       default:
@@ -96,22 +94,24 @@ const provideWebsiteFeeds = cache(
 )
 
 type StaticParams = {
-  params: Promise<{ feed: RSSFeed['file']; locale: LocaleOptions }>
+  params: Promise<{ feed: RSSFeed["file"]; locale: LocaleOptions }>
 }
 
 export const generateStaticParams = async (): Promise<
-  StaticParams['params'][]
+  { feed: RSSFeed["file"]; locale: LocaleOptions }[]
 > => {
   return blogConfig.rss
-    .map(({ file }) => locales.map((locale) => ({ feed: file, locale })))
+    .map(({ file }) =>
+      routing.locales.map((locale) => ({ feed: file, locale }))
+    )
     .flat()
 }
 
 export const GET = async (_: Request, props: StaticParams) => {
-  const params = await props.params;
+  const params = await props.params
   const websiteFeed = provideWebsiteFeeds({
     feed: params.feed,
-    locale: params.locale || defaultLocale,
+    locale: params.locale || routing.defaultLocale,
   })
 
   const feed = blogConfig.rss.find((rss) => rss.file === params.feed)
@@ -123,16 +123,15 @@ export const GET = async (_: Request, props: StaticParams) => {
   return new NextResponse(websiteFeed, {
     status: websiteFeed ? 200 : 404,
     headers: {
-      'Content-Type': contentType,
+      "Content-Type": contentType,
     },
   })
 }
 
 export const dynamicParams = true
-export const dynamic = 'force-static'
+export const dynamic = "force-static"
 
 const VERCEL_REVALIDATE = Number(
-  // eslint-disable-next-line turbo/no-undeclared-env-vars
   process.env.NEXT_PUBLIC_VERCEL_REVALIDATE_TIME || 300
 )
 

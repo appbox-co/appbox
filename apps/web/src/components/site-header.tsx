@@ -1,68 +1,58 @@
-import { getTranslations, getMessages } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
-import dynamic from 'next/dynamic'
-
-import { ThemeModeToggle } from '@/components/theme-mode-toggle'
-import { Separator } from '@/components/ui/separator'
-import { MobileNav } from '@/components/mobile-nav'
-import { MainNav } from '@/components/main-nav'
-import { Button, buttonVariants } from './ui/button'
-import { Icons } from '@/components/icons'
-import { siteConfig } from '@/config/site'
-import { I18nToggle } from './i18n-toggle'
-import { cn } from '@/lib/utils'
-import { Link } from '@/i18n/routing'
+import { Icons } from "@/components/icons"
+import { MainNav } from "@/components/main-nav"
+import { MobileNav } from "@/components/mobile-nav"
+import { ThemeModeToggle } from "@/components/theme-mode-toggle"
+import { Separator } from "@/components/ui/separator"
+import { siteConfig } from "@/config/site"
+import { Link } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
+import { getTranslations } from "next-intl/server"
+import dynamic from "next/dynamic"
+import { I18nToggle } from "./i18n-toggle"
+import { Button, buttonVariants } from "./ui/button"
 
 const CommandMenu = dynamic(() =>
-  import('@/components/command-menu').then((mod) => mod.CommandMenu)
+  import("@/components/command-menu").then((mod) => mod.CommandMenu)
 )
 
 export async function SiteHeader() {
-  const t = await getTranslations('site')
-  const messages = await getMessages()
-  const { site } = messages
+  const t = await getTranslations("site")
 
   return (
-    <header className={'sticky top-0 z-50 w-full'}>
+    <header className={"sticky top-0 z-50 w-full"}>
       <div className="absolute inset-0 backdrop-blur"></div>
       <div className="container relative flex h-14 max-w-screen-2xl items-center">
-        <MainNav
-          messages={{
-            docs: t('words.docs'),
-            blog: t('words.blog'),
-          }}
-        />
+        <MainNav />
 
         <MobileNav
           messages={{
-            menu: t('words.menu'),
-            toggleMenu: t('buttons.toggle_menu'),
+            menu: t("words.menu"),
+            toggleMenu: t("buttons.toggle_menu"),
           }}
-          menuLinks={<SiteHeaderMenuLinks />}
         />
 
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="hidden xl:block w-full flex-1 xl:w-auto xl:flex-none">
+          <div className="hidden w-full flex-1 xl:block xl:w-auto xl:flex-none">
             <CommandMenu
               messages={{
-                docs: t('words.docs'),
-                blog: t('words.blog'),
-                search: t('search.search'),
-                noResultsFound: t('search.no_results_found'),
-                typeCommandOrSearch: t('search.type_command_or_search'),
-                searchDocumentation: t('search.search_documentation'),
+                docs: t("words.docs"),
+                blog: t("words.blog"),
+                search: t("search.search"),
+                noResultsFound: t("search.no_results_found"),
+                typeCommandOrSearch: t("search.type_command_or_search"),
+                searchDocumentation: t("search.search_documentation"),
 
                 themes: {
-                  dark: t('themes.dark'),
-                  theme: t('themes.theme'),
-                  light: t('themes.light'),
-                  system: t('themes.system'),
+                  dark: t("themes.dark"),
+                  theme: t("themes.theme"),
+                  light: t("themes.light"),
+                  system: t("themes.system"),
                 },
               }}
             />
           </div>
 
-          <div className="hidden md:flex items-center gap-2 mr-2">
+          <div className="mr-2 hidden items-center gap-2 md:flex">
             <Link
               href="https://billing.appbox.co"
               target="_blank"
@@ -81,24 +71,24 @@ export async function SiteHeader() {
 
           <nav className="flex items-center gap-2">
             {/* Only show language and theme toggles on lg screens and up */}
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden items-center gap-2 lg:flex">
               <I18nToggle
                 messages={{
-                  toggleLanguage: t('buttons.toggle_language'),
+                  toggleLanguage: t("buttons.toggle_language"),
                 }}
               />
 
               <ThemeModeToggle
                 messages={{
-                  dark: t('themes.dark'),
-                  light: t('themes.light'),
-                  system: t('themes.system'),
+                  dark: t("themes.dark"),
+                  light: t("themes.light"),
+                  system: t("themes.system"),
                 }}
               />
             </div>
 
             {/* Only show GitHub link on lg screens and up */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden items-center lg:flex">
               <Separator orientation="vertical" className="mx-1 h-5" />
               <SiteHeaderMenuLinks />
             </div>
@@ -116,9 +106,9 @@ export function SiteHeaderMenuLinks() {
         <div
           className={cn(
             buttonVariants({
-              variant: 'ghost',
+              variant: "ghost",
             }),
-            'w-9 px-0'
+            "w-9 px-0"
           )}
         >
           <Icons.gitHub className="size-4" />

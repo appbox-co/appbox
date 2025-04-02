@@ -1,16 +1,16 @@
-import type { ComponentProps, HTMLAttributes } from 'react'
 import {
-  DollarSign,
-  Layers,
-  Grid,
-  BookOpen,
-  Book,
-  HelpCircle,
   Activity,
+  Book,
+  BookOpen,
+  CreditCard,
+  DollarSign,
+  Grid,
+  HelpCircle,
+  Layers,
   LogIn,
   ShoppingCart,
-  CreditCard,
-} from 'lucide-react'
+} from "lucide-react"
+import type { ComponentProps, HTMLAttributes } from "react"
 
 type IconProps = HTMLAttributes<SVGElement>
 
@@ -231,7 +231,7 @@ export const Icons = {
   orderNow: (props: IconProps) => <ShoppingCart {...props} />,
   billing: (props: IconProps) => <CreditCard {...props} />,
 
-  spinner: (props: IconProps & ComponentProps<'svg'>) => (
+  spinner: (props: IconProps & ComponentProps<"svg">) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"

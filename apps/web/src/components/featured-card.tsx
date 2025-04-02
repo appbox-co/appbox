@@ -1,19 +1,18 @@
-import React, { type PropsWithChildren } from 'react'
-
 import {
   Card,
-  CardTitle,
-  CardHeader,
   CardContent,
   CardDescription,
-} from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { cn } from "@/lib/utils"
+import React, { type PropsWithChildren } from "react"
 
 type FeaturedCardProps = PropsWithChildren<{
   icon?: React.ReactNode
   title?: React.ReactNode
   description?: React.ReactNode
-  orientation?: 'horizontal' | 'vertical'
+  orientation?: "horizontal" | "vertical"
 }>
 
 export function FeaturedCard({
@@ -21,14 +20,14 @@ export function FeaturedCard({
   title,
   children,
   description,
-  orientation = 'vertical',
+  orientation = "vertical",
 }: FeaturedCardProps) {
   return (
-    <Card className="backdrop-blur-lg dark:bg-card-primary">
+    <Card className="dark:bg-card-primary backdrop-blur-lg">
       <CardHeader
         className={cn(
-          'flex gap-4 pb-2',
-          orientation === 'horizontal' ? 'flex-row items-center' : 'flex-col'
+          "flex gap-4 pb-2",
+          orientation === "horizontal" ? "flex-row items-center" : "flex-col"
         )}
       >
         {icon && (

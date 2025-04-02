@@ -169,6 +169,9 @@ importers:
       '@babel/core':
         specifier: ^7.24.9
         version: 7.26.9
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ^4.4.1
+        version: 4.4.1(prettier@3.5.1)
       '@opendocs/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -205,6 +208,15 @@ importers:
       eslint-config-next:
         specifier: 15.1.7
         version: 15.1.7(eslint@8.57.0)(typescript@5.7.3)
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.57.0)
+      eslint-plugin-prettier:
+        specifier: ^5.2.1
+        version: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.5.1)
+      eslint-plugin-tailwindcss:
+        specifier: ^3.18.0
+        version: 3.18.0(tailwindcss@3.4.17)
       mdast-util-toc:
         specifier: ^7.1.0
         version: 7.1.0
@@ -214,6 +226,9 @@ importers:
       postcss:
         specifier: ^8.4.39
         version: 8.5.2
+      prettier:
+        specifier: ^3.5.1
+        version: 3.5.1
       pretty-quick:
         specifier: ^4.0.0
         version: 4.0.0(prettier@3.5.1)
@@ -1146,6 +1161,25 @@ packages:
   /@humanwhocodes/object-schema@2.0.3:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
+    dev: true
+
+  /@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.5.1):
+    resolution: {integrity: sha512-F0/Hrcfpy8WuxlQyAWJTEren/uxKhYonOGY4OyWmwRdeTvkh9mMSCxowZLjNkhwi/2ipqCgtXwwOk7tW0mWXkA==}
+    peerDependencies:
+      '@vue/compiler-sfc': 2.7.x || 3.x
+      prettier: 2 || 3
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
+    dependencies:
+      '@babel/generator': 7.26.9
+      '@babel/parser': 7.26.9
+      '@babel/traverse': 7.26.9
+      '@babel/types': 7.26.9
+      prettier: 3.5.1
+      semver: 7.7.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@img/sharp-darwin-arm64@0.33.5:
@@ -4549,6 +4583,17 @@ packages:
       semver: 6.3.1
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
+    dev: true
+
+  /eslint-plugin-tailwindcss@3.18.0(tailwindcss@3.4.17):
+    resolution: {integrity: sha512-PQDU4ZMzFH0eb2DrfHPpbgo87Zgg2EXSMOj1NSfzdZm+aJzpuwGerfowMIaVehSREEa0idbf/eoNYAOHSJoDAQ==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      tailwindcss: ^3.4.0
+    dependencies:
+      fast-glob: 3.3.3
+      postcss: 8.5.2
+      tailwindcss: 3.4.17
     dev: true
 
   /eslint-plugin-testing-library@6.5.0(eslint@8.57.0)(typescript@5.7.3):

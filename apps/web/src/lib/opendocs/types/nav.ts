@@ -1,5 +1,5 @@
-import type { IconOptions } from '@/components/icons'
-import type { LocalizedRecord } from './i18n'
+import type { IconOptions } from "@/components/icons"
+import type { LocalizedRecord } from "./i18n"
 
 export interface NavItem {
   title: LocalizedRecord

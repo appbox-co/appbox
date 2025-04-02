@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
 export const td = ({
   className,
@@ -6,7 +6,7 @@ export const td = ({
 }: React.HTMLAttributes<HTMLTableCellElement>) => (
   <td
     className={cn(
-      'border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right',
+      "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
       className
     )}
     {...props}

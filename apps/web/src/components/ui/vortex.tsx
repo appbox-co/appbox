@@ -1,13 +1,12 @@
-'use client'
+"use client"
 
-import React, { useEffect, useRef } from 'react'
-import { createNoise3D } from 'simplex-noise'
-import { motion } from 'framer-motion'
-
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import React, { useEffect, useRef } from "react"
+import { createNoise3D } from "simplex-noise"
 
 interface VortexProps {
-  children?: any
+  children?: React.ReactNode
   className?: string
   containerClassName?: string
   particleCount?: number
@@ -24,7 +23,7 @@ interface VortexProps {
   fadeTimeFactor?: number
 }
 
-export default function (props: VortexProps) {
+export default function Vortex(props: VortexProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef(null)
   const particleCount = props.particleCount || 700
@@ -49,15 +48,13 @@ export default function (props: VortexProps) {
   const xOff = 0.00125
   const yOff = 0.00125
   const zOff = 0.0005
-  const backgroundColor = props.backgroundColor || '#000000'
+  const backgroundColor = props.backgroundColor || "#000000"
   let tick = 0
   const noise3D = createNoise3D()
   let particleProps = new Float32Array(particlePropsLength)
-  let center: [number, number] = [0, 0]
+  const center: [number, number] = [0, 0]
 
-  const HALF_PI: number = 0.5 * Math.PI
   const TAU: number = 2 * Math.PI
-  const TO_RAD: number = Math.PI / 180
   const rand = (n: number): number => n * Math.random()
   const randRange = (n: number): number => n - rand(2 * n)
   const fadeTimeFactor = props.fadeTimeFactor ?? 1
@@ -90,7 +87,7 @@ export default function (props: VortexProps) {
     const canvas = canvasRef.current
     const container = containerRef.current
     if (canvas && container) {
-      const ctx = canvas.getContext('2d')
+      const ctx = canvas.getContext("2d")
 
       if (ctx) {
         resize(canvas, ctx)
@@ -168,7 +165,7 @@ export default function (props: VortexProps) {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    let i2 = 1 + i,
+    const i2 = 1 + i,
       i3 = 2 + i,
       i4 = 3 + i,
       i5 = 4 + i,
@@ -177,15 +174,15 @@ export default function (props: VortexProps) {
       i8 = 7 + i,
       i9 = 8 + i
 
-    let x = particleProps[i]
-    let y = particleProps[i2]
+    const x = particleProps[i]
+    const y = particleProps[i2]
     let vx = particleProps[i3]
     let vy = particleProps[i4]
-    let life = particleProps[i5]
-    let ttl = particleProps[i6]
-    let speed = particleProps[i7]
-    let radius = particleProps[i8]
-    let hue = particleProps[i9]
+    const life = particleProps[i5]
+    const ttl = particleProps[i6]
+    const speed = particleProps[i7]
+    const radius = particleProps[i8]
+    const hue = particleProps[i9]
 
     if (props.snow) {
       // Snow: gently drift downward
@@ -194,13 +191,17 @@ export default function (props: VortexProps) {
 
       drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
 
-      life!++
+      // Get current life value
+      let currentLife = life!
+
+      // Increment life counter
+      currentLife++
 
       particleProps[i] = x2
       particleProps[i2] = y2
       particleProps[i3] = vx!
       particleProps[i4] = vy!
-      particleProps[i5] = life!
+      particleProps[i5] = currentLife // Store updated life
     } else {
       // existing logic
       const n = noise3D(x! * xOff, y! * yOff, tick * zOff) * noiseSteps * TAU
@@ -212,13 +213,17 @@ export default function (props: VortexProps) {
 
       drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
 
-      life!++
+      // Get current life value
+      let currentLife = life!
+
+      // Increment life counter
+      currentLife++
 
       particleProps[i] = x2
       particleProps[i2] = y2
       particleProps[i3] = vx!
       particleProps[i4] = vy!
-      particleProps[i5] = life!
+      particleProps[i5] = currentLife // Store updated life
     }
 
     // Reinit if out of bounds or lifespan exceeded
@@ -240,7 +245,7 @@ export default function (props: VortexProps) {
     ctx: CanvasRenderingContext2D
   ) => {
     ctx.save()
-    ctx.lineCap = 'round'
+    ctx.lineCap = "round"
     ctx.lineWidth = radius
     const alpha = fadeInOut(life, ttl)
     if (props.snow) {
@@ -267,10 +272,7 @@ export default function (props: VortexProps) {
     }
   }
 
-  const resize = (
-    canvas: HTMLCanvasElement,
-    ctx?: CanvasRenderingContext2D
-  ) => {
+  const resize = (canvas: HTMLCanvasElement) => {
     const { innerWidth, innerHeight } = window
 
     canvas.width = innerWidth
@@ -285,14 +287,14 @@ export default function (props: VortexProps) {
     ctx: CanvasRenderingContext2D
   ) => {
     ctx.save()
-    ctx.filter = 'blur(8px) brightness(200%)'
-    ctx.globalCompositeOperation = 'lighter'
+    ctx.filter = "blur(8px) brightness(200%)"
+    ctx.globalCompositeOperation = "lighter"
     ctx.drawImage(canvas, 0, 0)
     ctx.restore()
 
     ctx.save()
-    ctx.filter = 'blur(4px) brightness(200%)'
-    ctx.globalCompositeOperation = 'lighter'
+    ctx.filter = "blur(4px) brightness(200%)"
+    ctx.globalCompositeOperation = "lighter"
     ctx.drawImage(canvas, 0, 0)
     ctx.restore()
   }
@@ -302,18 +304,18 @@ export default function (props: VortexProps) {
     ctx: CanvasRenderingContext2D
   ) => {
     ctx.save()
-    ctx.globalCompositeOperation = 'lighter'
+    ctx.globalCompositeOperation = "lighter"
     ctx.drawImage(canvas, 0, 0)
     ctx.restore()
   }
 
   useEffect(() => {
     setup()
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       const canvas = canvasRef.current
-      const ctx = canvas?.getContext('2d')
+      const ctx = canvas?.getContext("2d")
       if (canvas && ctx) {
-        resize(canvas, ctx)
+        resize(canvas)
       }
     })
     // eslint-disable-next-line
@@ -324,23 +326,23 @@ export default function (props: VortexProps) {
    * so we are disabling it for Firefox for now
    * */
   if (
-    typeof window !== 'undefined' &&
-    window.navigator.userAgent.includes('Firefox')
+    typeof window !== "undefined" &&
+    window.navigator.userAgent.includes("Firefox")
   )
     return null
 
   return (
-    <div className={cn('relative h-full w-full', props.containerClassName)}>
+    <div className={cn("relative size-full", props.containerClassName)}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         ref={containerRef}
-        className="absolute h-full w-full inset-0 z-0 bg-transparent flex items-center justify-center"
+        className="absolute inset-0 z-0 flex size-full items-center justify-center bg-transparent"
       >
         <canvas ref={canvasRef}></canvas>
       </motion.div>
 
-      <div className={cn('relative z-10', props.className)}>
+      <div className={cn("relative z-10", props.className)}>
         {props.children}
       </div>
     </div>

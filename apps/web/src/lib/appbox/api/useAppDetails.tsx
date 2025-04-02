@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query"
 
 export interface AppDetails {
   id: number
@@ -22,7 +22,7 @@ export interface AppDetails {
 
 async function fetchAppDetails(appName: string): Promise<AppDetails> {
   // Convert display name to API format (lowercase, spaces to underscores)
-  const formattedName = appName.toLowerCase().replace(/\s+/g, '-')
+  const formattedName = appName.toLowerCase().replace(/\s+/g, "-")
 
   const response = await fetch(
     `https://api.appbox.co/v1/apps/public/app/${formattedName}`
@@ -41,7 +41,7 @@ export function useAppDetails(appName: string | null) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['app-details', appName],
+    queryKey: ["app-details", appName],
     queryFn: () => fetchAppDetails(appName as string),
     enabled: !!appName, // Only run the query if appName is provided
   })

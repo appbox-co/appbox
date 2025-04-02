@@ -1,9 +1,8 @@
-'use client'
+"use client"
 
-import { motion } from 'motion/react'
-import { RefObject, useEffect, useId, useState } from 'react'
-
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
+import { motion } from "motion/react"
+import { RefObject, useEffect, useId, useState } from "react"
 
 export interface AnimatedBeamProps {
   className?: string
@@ -25,42 +24,42 @@ export interface AnimatedBeamProps {
   endYOffset?: number
 }
 
-export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
+export function AnimatedBeam({
   className,
   containerRef,
   fromRef,
   toRef,
   curvature = 0,
-  reverse = false, // Include the reverse prop
+  reverse = false,
   duration = Math.random() * 3 + 4,
   delay = 0,
-  pathColor = 'gray',
+  pathColor = "gray",
   pathWidth = 2,
   pathOpacity = 0.2,
-  gradientStartColor = '#ffaa40',
-  gradientStopColor = '#9c40ff',
+  gradientStartColor = "#ffaa40",
+  gradientStopColor = "#9c40ff",
   startXOffset = 0,
   startYOffset = 0,
   endXOffset = 0,
   endYOffset = 0,
-}) => {
+}: AnimatedBeamProps) {
   const id = useId()
-  const [pathD, setPathD] = useState('')
+  const [pathD, setPathD] = useState("")
   const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 })
 
   // Calculate the gradient coordinates based on the reverse prop
   const gradientCoordinates = reverse
     ? {
-        x1: ['90%', '-10%'],
-        x2: ['100%', '0%'],
-        y1: ['0%', '0%'],
-        y2: ['0%', '0%'],
+        x1: ["90%", "-10%"],
+        x2: ["100%", "0%"],
+        y1: ["0%", "0%"],
+        y2: ["0%", "0%"],
       }
     : {
-        x1: ['10%', '110%'],
-        x2: ['0%', '100%'],
-        y1: ['0%', '0%'],
-        y2: ['0%', '0%'],
+        x1: ["10%", "110%"],
+        x2: ["0%", "100%"],
+        y1: ["0%", "0%"],
+        y2: ["0%", "0%"],
       }
 
   useEffect(() => {
@@ -90,11 +89,6 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         const midX = (startX + endX) / 2
         const midY = (startY + endY) / 2
 
-        // Distance between points affects curve intensity
-        const distance = Math.sqrt(
-          Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
-        )
-
         // Calculate perpendicular offset (90 degrees to line direction)
         // More curvature for horizontal lines to ensure they're visible
         const perpOffset =
@@ -109,11 +103,8 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
     }
 
     // Initialize ResizeObserver
-    const resizeObserver = new ResizeObserver((entries) => {
-      // For all entries, recalculate the path
-      for (let entry of entries) {
-        updatePath()
-      }
+    const resizeObserver = new ResizeObserver(() => {
+      updatePath()
     })
 
     // Observe the container element
@@ -146,7 +137,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
       height={svgDimensions.height}
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
-        'pointer-events-none absolute left-0 top-0 transform-gpu stroke-2',
+        "pointer-events-none absolute left-0 top-0 transform-gpu stroke-2",
         className
       )}
       viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
@@ -169,12 +160,12 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         <motion.linearGradient
           className="transform-gpu"
           id={id}
-          gradientUnits={'userSpaceOnUse'}
+          gradientUnits={"userSpaceOnUse"}
           initial={{
-            x1: '0%',
-            x2: '0%',
-            y1: '0%',
-            y2: '0%',
+            x1: "0%",
+            x2: "0%",
+            y1: "0%",
+            y2: "0%",
           }}
           animate={{
             x1: gradientCoordinates.x1,

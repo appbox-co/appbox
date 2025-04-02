@@ -1,24 +1,21 @@
-'use client'
+"use client"
 
-import { DropdownMenuTriggerProps } from '@radix-ui/react-dropdown-menu'
-import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
-import { useCallback, useEffect, useState } from 'react'
-
-import type { NpmCommands } from '@/lib/opendocs/types/unist'
-
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuContent,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu"
+import type { NpmCommands } from "@/lib/opendocs/types/unist"
+import { cn } from "@/lib/utils"
+import { DropdownMenuTriggerProps } from "@radix-ui/react-dropdown-menu"
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons"
+import { useCallback, useEffect, useState } from "react"
 
 interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   value: string
-  src?: string
+  _src?: string
 }
 
 export async function copyToClipboardWithMeta(value: string) {
@@ -26,7 +23,7 @@ export async function copyToClipboardWithMeta(value: string) {
 }
 
 export function CopyButton({
-  src,
+  _src,
   value,
   className,
   ...props
@@ -44,7 +41,7 @@ export function CopyButton({
       size="icon"
       variant="ghost"
       className={cn(
-        'relative z-10 size-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50',
+        "relative z-10 size-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50",
         className
       )}
       onClick={() => {
@@ -68,7 +65,7 @@ interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
   commands: Required<NpmCommands>
 }
 
-const packageManagers = ['npm', 'yarn', 'pnpm', 'bun'] as const
+const packageManagers = ["npm", "yarn", "pnpm", "bun"] as const
 
 export function CopyNpmCommandButton({
   commands,
@@ -84,7 +81,7 @@ export function CopyNpmCommandButton({
   }, [hasCopied])
 
   const copyCommand = useCallback(
-    (value: string, pm: (typeof packageManagers)[number]) => {
+    (value: string, _pm: (typeof packageManagers)[number]) => {
       copyToClipboardWithMeta(value)
 
       setHasCopied(true)
@@ -99,7 +96,7 @@ export function CopyNpmCommandButton({
           size="icon"
           variant="ghost"
           className={cn(
-            'relative z-10 size-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50',
+            "relative z-10 size-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50",
             className
           )}
         >

@@ -1,4 +1,4 @@
-import React, { SVGProps } from 'react'
+import React, { SVGProps } from "react"
 
 /** This is a proper React component that returns <svg> */
 function DefaultLogo(props: SVGProps<SVGSVGElement>) {
@@ -39,55 +39,55 @@ const Footer2 = ({
   logo = {
     /** Instead of rendering <svg> directly, pass the DefaultLogo component */
     src: DefaultLogo,
-    alt: 'appbox',
-    title: 'appbox',
-    url: 'https://www.appbox.co',
+    alt: "appbox",
+    title: "appbox",
+    url: "https://www.appbox.co",
   },
-  tagline = 'Components made easy.',
+  tagline = "Components made easy.",
   menuItems = [
     {
-      title: 'Product',
+      title: "Product",
       links: [
-        { text: 'Overview', url: '#' },
-        { text: 'Pricing', url: '#' },
-        { text: 'Marketplace', url: '#' },
-        { text: 'Features', url: '#' },
-        { text: 'Integrations', url: '#' },
-        { text: 'Pricing', url: '#' },
+        { text: "Overview", url: "#" },
+        { text: "Pricing", url: "#" },
+        { text: "Marketplace", url: "#" },
+        { text: "Features", url: "#" },
+        { text: "Integrations", url: "#" },
+        { text: "Pricing", url: "#" },
       ],
     },
     {
-      title: 'Company',
+      title: "Company",
       links: [
-        { text: 'About', url: '#' },
-        { text: 'Team', url: '#' },
-        { text: 'Blog', url: '#' },
-        { text: 'Careers', url: '#' },
-        { text: 'Contact', url: '#' },
-        { text: 'Privacy', url: '#' },
+        { text: "About", url: "#" },
+        { text: "Team", url: "#" },
+        { text: "Blog", url: "#" },
+        { text: "Careers", url: "#" },
+        { text: "Contact", url: "#" },
+        { text: "Privacy", url: "#" },
       ],
     },
     {
-      title: 'Resources',
+      title: "Resources",
       links: [
-        { text: 'Help', url: '#' },
-        { text: 'Sales', url: '#' },
-        { text: 'Advertise', url: '#' },
+        { text: "Help", url: "#" },
+        { text: "Sales", url: "#" },
+        { text: "Advertise", url: "#" },
       ],
     },
     {
-      title: 'Social',
+      title: "Social",
       links: [
-        { text: 'Twitter', url: '#' },
-        { text: 'Instagram', url: '#' },
-        { text: 'LinkedIn', url: '#' },
+        { text: "Twitter", url: "#" },
+        { text: "Instagram", url: "#" },
+        { text: "LinkedIn", url: "#" },
       ],
     },
   ],
-  copyright = '© 2024 Copyright. All rights reserved.',
+  copyright = "© 2024 Copyright. All rights reserved.",
   bottomLinks = [
-    { text: 'Terms and Conditions', url: '#' },
-    { text: 'Privacy Policy', url: '#' },
+    { text: "Terms and Conditions", url: "#" },
+    { text: "Privacy Policy", url: "#" },
   ],
 }: Footer2Props) => {
   return (
@@ -108,16 +108,16 @@ const Footer2 = ({
             {menuItems.map((section, sectionIdx) => (
               <div key={sectionIdx}>
                 <h3 className="mb-4 font-bold">{section.title}</h3>
-                <ul className="space-y-4 text-muted-foreground">
+                <ul className="text-muted-foreground space-y-4">
                   {section.links.map((link, linkIdx) => (
                     <li
                       key={linkIdx}
-                      className="font-medium hover:text-primary"
+                      className="hover:text-primary font-medium"
                     >
                       <a
                         href={link.url}
-                        target={link.external ? '_blank' : undefined}
-                        rel={link.external ? 'noreferrer noopener' : undefined}
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noreferrer noopener" : undefined}
                       >
                         {link.text}
                       </a>
@@ -127,15 +127,15 @@ const Footer2 = ({
               </div>
             ))}
           </div>
-          <div className="mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium text-muted-foreground md:flex-row md:items-center">
+          <div className="text-muted-foreground mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium md:flex-row md:items-center">
             <p>{copyright}</p>
             <ul className="flex gap-4">
               {bottomLinks.map((link, linkIdx) => (
-                <li key={linkIdx} className="underline hover:text-primary">
+                <li key={linkIdx} className="hover:text-primary underline">
                   <a
                     href={link.url}
-                    target={link.external ? '_blank' : undefined}
-                    rel={link.external ? 'noreferrer noopener' : undefined}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noreferrer noopener" : undefined}
                   >
                     {link.text}
                   </a>

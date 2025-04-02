@@ -1,10 +1,7 @@
-import { ChevronRightIcon } from 'lucide-react'
-import { Fragment } from 'react'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Policy } from 'contentlayer/generated'
-
-import { routing, Link } from '@/i18n/routing'
+import { Link } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import type { Policy } from "contentlayer/generated"
+import { ChevronRightIcon } from "lucide-react"
 
 interface PolicyBreadcrumbProps {
   policy: Policy
@@ -20,7 +17,7 @@ export function PolicyBreadcrumb({ policy, locale }: PolicyBreadcrumbProps) {
 
       <ChevronRightIcon className="size-4" />
 
-      <span className="truncate text-foreground font-medium">
+      <span className="text-foreground truncate font-medium">
         {policy.title}
       </span>
     </div>

@@ -1,26 +1,23 @@
-import { setRequestLocale, getTranslations } from 'next-intl/server'
-import { Suspense } from 'react'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Metadata } from 'next'
-
-import '@/styles/mdx.css'
-
-import { PaginatedBlogPosts } from '@/components/blog/paginated-posts'
-import { BlogPostBreadcrumb } from '@/components/blog/breadcrumb'
-import { DashboardTableOfContents } from '@/components/docs/toc'
-import { getTableOfContents } from '@/lib/opendocs/utils/toc'
-import { getBlogFromParams } from '@/lib/opendocs/utils/blog'
-import { BlogPostHeading } from '@/components/blog/heading'
-import { BlogPostTags } from '@/components/blog/post-tags'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { AuthorCard } from '@/components/blog/author'
-import { allBlogs } from 'contentlayer/generated'
-import { routing } from '@/i18n/routing'
-import { Mdx } from '@/components/docs/mdx'
-import { siteConfig } from '@/config/site'
-import { Icons } from '@/components/icons'
-import { absoluteUrl } from '@/lib/utils'
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import type { Metadata } from "next"
+import { getTranslations, setRequestLocale } from "next-intl/server"
+import { Suspense } from "react"
+import "@/styles/mdx.css"
+import { AuthorCard } from "@/components/blog/author"
+import { BlogPostBreadcrumb } from "@/components/blog/breadcrumb"
+import { BlogPostHeading } from "@/components/blog/heading"
+import { PaginatedBlogPosts } from "@/components/blog/paginated-posts"
+import { BlogPostTags } from "@/components/blog/post-tags"
+import { Mdx } from "@/components/docs/mdx"
+import { DashboardTableOfContents } from "@/components/docs/toc"
+import { Icons } from "@/components/icons"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { siteConfig } from "@/config/site"
+import { routing } from "@/i18n/routing"
+import { getBlogFromParams } from "@/lib/opendocs/utils/blog"
+import { getTableOfContents } from "@/lib/opendocs/utils/toc"
+import { absoluteUrl } from "@/lib/utils"
+import { allBlogs } from "contentlayer/generated"
 
 interface BlogPageProps {
   params: Promise<{
@@ -40,13 +37,13 @@ export async function generateMetadata(
   setRequestLocale(locale)
 
   const [t, blogPost] = await Promise.all([
-    getTranslations('site'),
+    getTranslations("site"),
     getBlogFromParams({ params }),
   ])
 
   if (!blogPost) {
-    const title = t('words.blog')
-    const description = t('description')
+    const title = t("words.blog")
+    const description = t("description")
 
     const tags = new Set(
       allBlogs
@@ -65,7 +62,7 @@ export async function generateMetadata(
       openGraph: {
         title,
         description,
-        type: 'website',
+        type: "website",
         url: absoluteUrl(`/${locale}/blog`),
 
         images: [
@@ -81,14 +78,14 @@ export async function generateMetadata(
         title,
         description,
         images: [ogImage],
-        card: 'summary_large_image',
-        creator: '@appbox_io',
+        card: "summary_large_image",
+        creator: "@appbox_io",
       },
     }
   }
 
-  const [, ...blogSlugList] = blogPost.slugAsParams.split('/')
-  const blogSlug = blogSlugList.join('/') || ''
+  const [, ...blogSlugList] = blogPost.slugAsParams.split("/")
+  const blogSlug = blogSlugList.join("/") || ""
 
   const postAuthorName = blogPost.author?.name
   const postAuthorUrl = blogPost.author?.site
@@ -110,7 +107,7 @@ export async function generateMetadata(
     },
 
     openGraph: {
-      type: 'article',
+      type: "article",
       title: blogPost.title,
       authors: postAuthorName,
       description: blogPost.excerpt,
@@ -129,17 +126,17 @@ export async function generateMetadata(
       title: blogPost.title,
       images: [postOgImage],
       creator: postAuthorTwitter,
-      card: 'summary_large_image',
+      card: "summary_large_image",
       description: blogPost.excerpt,
     },
   }
 }
 
 export async function generateStaticParams(): Promise<
-  BlogPageProps['params'][]
+  BlogPageProps["params"][]
 > {
   const blog = allBlogs.map((blog) => {
-    const [locale, ...slugs] = blog.slugAsParams.split('/')
+    const [locale, ...slugs] = blog.slugAsParams.split("/")
 
     return {
       slug: slugs,
@@ -163,9 +160,9 @@ export default async function BlogPage(props: BlogPageProps) {
     return (
       <Suspense
         fallback={
-          <div className="h-64 md:h-96 w-full flex flex-1 items-center justify-center">
+          <div className="flex h-64 w-full flex-1 items-center justify-center md:h-96">
             <Icons.spinner
-              className="animate-spin max-h-32 max-w-32 min-h-20 min-w-20 h-full w-full"
+              className="size-full max-h-32 min-h-20 min-w-20 max-w-32 animate-spin"
               strokeWidth="1"
             />
           </div>
@@ -176,14 +173,14 @@ export default async function BlogPage(props: BlogPageProps) {
           locale={locale}
           perPage={6}
           messages={{
-            by: t('blog.words.by'),
-            next: t('blog.buttons.next'),
-            min_read: t('blog.cards.min_read'),
-            previous: t('blog.buttons.previous'),
-            rss_feed: t('blog.buttons.rss_feed'),
-            read_more: t('blog.buttons.read_more'),
-            go_to_next_page: t('blog.buttons.go_to_next_page'),
-            go_to_previous_page: t('blog.buttons.go_to_previous_page'),
+            by: t("blog.words.by"),
+            next: t("blog.buttons.next"),
+            min_read: t("blog.cards.min_read"),
+            previous: t("blog.buttons.previous"),
+            rss_feed: t("blog.buttons.rss_feed"),
+            read_more: t("blog.buttons.read_more"),
+            go_to_next_page: t("blog.buttons.go_to_next_page"),
+            go_to_previous_page: t("blog.buttons.go_to_previous_page"),
           }}
         />
       </Suspense>
@@ -193,12 +190,12 @@ export default async function BlogPage(props: BlogPageProps) {
   const toc = await getTableOfContents(blogPost.body.raw)
 
   return (
-    <main className="relative space-y-12 lg:gap-10 lg:grid lg:grid-cols-[1fr_250px]">
+    <main className="relative space-y-12 lg:grid lg:grid-cols-[1fr_250px] lg:gap-10">
       <div className="mx-auto min-w-0 max-w-4xl">
         <BlogPostBreadcrumb
           post={blogPost}
           messages={{
-            posts: t('blog.words.posts'),
+            posts: t("blog.words.posts"),
           }}
         />
 
@@ -206,8 +203,8 @@ export default async function BlogPage(props: BlogPageProps) {
           post={blogPost}
           locale={locale}
           messages={{
-            by: t('blog.words.by'),
-            min_read: t('blog.cards.min_read'),
+            by: t("blog.words.by"),
+            min_read: t("blog.cards.min_read"),
           }}
         />
 
@@ -228,9 +225,9 @@ export default async function BlogPage(props: BlogPageProps) {
                 sourceFilePath={blogPost._raw.sourceFilePath}
                 toc={toc}
                 messages={{
-                  onThisPage: t('docs.on_this_page'),
-                  editPageOnGitHub: t('docs.edit_page_on_github'),
-                  startDiscussionOnGitHub: t('docs.start_discussion_on_github'),
+                  onThisPage: t("docs.on_this_page"),
+                  editPageOnGitHub: t("docs.edit_page_on_github"),
+                  startDiscussionOnGitHub: t("docs.start_discussion_on_github"),
                 }}
               />
             </div>

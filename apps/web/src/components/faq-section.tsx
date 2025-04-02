@@ -1,15 +1,12 @@
-'use client'
-
-import { PlusIcon, MinusIcon } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+"use client"
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion-plus'
+} from "@/components/ui/accordion-plus"
+import { useTranslations } from "next-intl"
 
 export function FAQSection({
   title,
@@ -20,22 +17,22 @@ export function FAQSection({
   description?: string
   id?: string
 }) {
-  const t = useTranslations('site.faq')
+  const t = useTranslations("site.faq")
   const questions = [
-    'payment_methods',
-    'deployment_time',
-    'server_location',
-    'root_access',
-    'security',
-    'data_access',
-    'additional_software',
-    'fuse_rclone',
-    'refund_policy',
-    'custom_domain',
+    "payment_methods",
+    "deployment_time",
+    "server_location",
+    "root_access",
+    "security",
+    "data_access",
+    "additional_software",
+    "fuse_rclone",
+    "refund_policy",
+    "custom_domain",
   ]
 
   return (
-    <section id={id} className="py-16 scroll-mt-16">
+    <section id={id} className="scroll-mt-16 py-16">
       <div className="container">
         <div className="mx-auto grid max-w-6xl grid-cols-1 md:grid-cols-2">
           <div>
@@ -43,21 +40,23 @@ export function FAQSection({
               {title}
             </h2>
             {description && (
-              <p className="mt-4 text-muted-foreground">{description}</p>
+              <p className="text-muted-foreground mt-4">{description}</p>
             )}
           </div>
-          <div className="divide-y divide-border">
+          <div className="divide-border divide-y">
             <Accordion type="single" collapsible className="w-full">
               {questions.map((question) => (
                 <AccordionItem key={question} value={question}>
                   <AccordionTrigger>
-                    {t(`questions.${question}.title` as any)}
+                    {/* @ts-expect-error - Dynamic translation keys */}
+                    {t(`questions.${question}.title`)}
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="text-neutral-500 dark:text-neutral-400 max-w-none text-sm/[1.125rem] md:text-base/[1.375rem]">
+                    <div className="max-w-none text-sm/[1.125rem] text-neutral-500 md:text-base/[1.375rem] dark:text-neutral-400">
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: t.raw(`questions.${question}.content` as any),
+                          /* @ts-expect-error - Dynamic translation keys */
+                          __html: t.raw(`questions.${question}.content`),
                         }}
                       />
                     </div>

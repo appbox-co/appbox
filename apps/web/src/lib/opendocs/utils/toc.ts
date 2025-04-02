@@ -1,8 +1,8 @@
-import { visit } from 'unist-util-visit'
-import { toc } from 'mdast-util-toc'
-import { remark } from 'remark'
+import { toc } from "mdast-util-toc"
+import { remark } from "remark"
+import { visit } from "unist-util-visit"
 
-const textTypes = ['text', 'emphasis', 'strong', 'inlineCode']
+const textTypes = ["text", "emphasis", "strong", "inlineCode"]
 
 interface Item {
   title: string
@@ -14,59 +14,70 @@ interface Items {
   items?: Item[]
 }
 
-function flattenNode(node: any) {
+interface MdastNode {
+  type: string
+  value?: string
+  url?: string
+  children?: MdastNode[]
+}
+
+function flattenNode(node: MdastNode): string {
   const p: string[] = []
 
   visit(node, (node) => {
     if (!textTypes.includes(node.type)) return
-    p.push(node.value)
+    p.push(node.value || "")
   })
 
   return p.join(``)
 }
 
-function getItems(node: any, current: any): Items {
+function getItems(node: MdastNode | null, current: Partial<Item>): Item {
   if (!node) {
-    return {}
+    return { title: "", url: "" }
   }
 
-  if (node.type === 'paragraph') {
+  if (node.type === "paragraph") {
     visit(node, (item) => {
-      if (item.type === 'link') {
+      if (item.type === "link") {
         current.url = item.url
         current.title = flattenNode(node)
       }
 
-      if (item.type === 'text') {
+      if (item.type === "text") {
         current.title = flattenNode(node)
       }
     })
 
-    return current
+    return current as Item
   }
 
-  if (node.type === 'list') {
-    current.items = node.children.map((i: any) => getItems(i, {}))
+  if (node.type === "list") {
+    current.items = node.children?.map((i: MdastNode) => getItems(i, {})) || []
 
-    return current
-  } else if (node.type === 'listItem') {
-    const heading = getItems(node.children[0], {})
+    return current as Item
+  } else if (node.type === "listItem") {
+    const heading = getItems(node.children?.[0] ?? null, {})
 
-    if (node.children.length > 1) {
-      getItems(node.children[1], heading)
+    if (node.children && node.children.length > 1) {
+      getItems(node.children[1] ?? null, heading)
     }
 
     return heading
   }
 
-  return {}
+  return {} as Item
 }
 
-const getToc = () => (node: any, file: any) => {
-  const table = toc(node)
-  const items = getItems(table.map, {})
+function getToc() {
+  return function (tree: unknown, file: { data: unknown }) {
+    // @ts-expect-error We know this works at runtime
+    const table = toc(tree)
+    const items = getItems(table.map ?? null, {})
 
-  file.data = items
+    // Assign to file.data
+    file.data = items
+  }
 }
 
 export type TableOfContents = Items

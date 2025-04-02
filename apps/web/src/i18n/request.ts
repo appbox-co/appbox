@@ -1,13 +1,16 @@
-import { getRequestConfig } from 'next-intl/server'
-import { routing } from './routing'
-import deepmerge from 'deepmerge'
+import deepmerge from "deepmerge"
+import { getRequestConfig } from "next-intl/server"
+import { routing } from "./routing"
+
+// Add a type that matches the routing.locales union type
+type SupportedLocale = (typeof routing.locales)[number]
 
 export default getRequestConfig(async ({ requestLocale }) => {
   // This typically corresponds to the `[locale]` segment
   let locale = await requestLocale
 
   // Ensure that a valid locale is used
-  if (!locale || !routing.locales.includes(locale as any)) {
+  if (!locale || !routing.locales.includes(locale as SupportedLocale)) {
     locale = routing.defaultLocale
   }
 

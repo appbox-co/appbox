@@ -1,8 +1,7 @@
-import type { MetadataRoute } from 'next'
-
-import { allBlogs, allDocs } from 'contentlayer/generated'
-import { absoluteUrl } from '@/lib/utils'
-import { locales } from '@/config/i18n'
+import { locales } from "@/config/i18n"
+import { absoluteUrl } from "@/lib/utils"
+import { allBlogs, allDocs } from "contentlayer/generated"
+import type { MetadataRoute } from "next"
 
 type Sitemap = MetadataRoute.Sitemap
 
@@ -32,8 +31,8 @@ export default function sitemap(): Sitemap {
   ]
 
   const docPaths: Sitemap = allDocs.map((doc) => {
-    const [, ...docSlugList] = doc.slugAsParams.split('/')
-    const docSlug = docSlugList.join('/') || ''
+    const [, ...docSlugList] = doc.slugAsParams.split("/")
+    const docSlug = docSlugList.join("/") || ""
 
     return {
       url: absoluteUrl(`/docs/${docSlug}`),
@@ -51,8 +50,8 @@ export default function sitemap(): Sitemap {
   })
 
   const blogPaths: Sitemap = allBlogs.map((post) => {
-    const [, ...postSlugList] = post.slugAsParams.split('/')
-    const postSlug = postSlugList.join('/') || ''
+    const [, ...postSlugList] = post.slugAsParams.split("/")
+    const postSlug = postSlugList.join("/") || ""
 
     return {
       url: absoluteUrl(`/blog/${postSlug}`),

@@ -1,5 +1,5 @@
-import { getApps } from '@/lib/appbox/api/getApps'
-import { ClientAppConnections } from './client-app-connections'
+import { getApps } from "@/lib/appbox/api/getApps"
+import { ClientAppConnections } from "./client-app-connections"
 
 interface AppConnectionsSectionProps {
   title: string

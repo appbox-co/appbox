@@ -1,20 +1,17 @@
-import { getMessages } from 'next-intl/server'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Metadata, Viewport } from 'next'
-
-import '@/styles/globals.css'
-
-import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { ThemeProvider } from '@/components/theme-provider'
-import { SiteFooter } from '@/components/site-footer'
-import { SiteHeader } from '@/components/site-header'
-import { TanstackQueryProvider } from '@/components/providers/query-provider'
-import { routing } from '@/i18n/routing'
-import { siteConfig } from '@/config/site'
-import { fontSans } from '@/lib/fonts'
-import { cn } from '@/lib/utils'
-import { NextIntlClientProvider } from 'next-intl'
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import type { Metadata, Viewport } from "next"
+import { getMessages } from "next-intl/server"
+import "@/styles/globals.css"
+import { TanstackQueryProvider } from "@/components/providers/query-provider"
+import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
+import { ThemeProvider } from "@/components/theme-provider"
+import { siteConfig } from "@/config/site"
+import { routing } from "@/i18n/routing"
+import { fontSans } from "@/lib/fonts"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import { cn } from "@/lib/utils"
+import { NextIntlClientProvider } from "next-intl"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -37,23 +34,23 @@ export async function generateMetadata(props: {
     description: getObjectValueByLocale(siteConfig.description, params.locale),
 
     keywords: [
-      'Docs',
-      'Blog',
-      'i18n',
-      'React',
-      'shadcn',
-      'Next.js',
-      'Radix UI',
-      'Template',
-      'Tailwind CSS',
-      'Documentation',
-      'Server Components',
-      'Internationalization',
+      "Docs",
+      "Blog",
+      "i18n",
+      "React",
+      "shadcn",
+      "Next.js",
+      "Radix UI",
+      "Template",
+      "Tailwind CSS",
+      "Documentation",
+      "Server Components",
+      "Internationalization",
     ],
 
     openGraph: {
-      type: 'website',
-      locale: 'en_US',
+      type: "website",
+      locale: "en_US",
       url: siteConfig.url,
       title: siteConfig.name,
       siteName: siteConfig.name,
@@ -85,9 +82,9 @@ export async function generateMetadata(props: {
     // },
 
     icons: {
-      icon: '/favicon.ico',
-      apple: '/apple-touch-icon.png',
-      shortcut: '/favicon-16x16.png',
+      icon: "/favicon.ico",
+      apple: "/apple-touch-icon.png",
+      shortcut: "/favicon-16x16.png",
     },
 
     manifest: `${siteConfig.url}/site.webmanifest`,
@@ -98,8 +95,8 @@ export const dynamicParams = true
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
 }
 
@@ -122,7 +119,7 @@ export default async function RootLayout(props: AppLayoutProps) {
 
       <body
         className={cn(
-          'bg-background min-h-screen font-sans antialiased',
+          "bg-background min-h-screen font-sans antialiased",
           fontSans.variable
         )}
       >

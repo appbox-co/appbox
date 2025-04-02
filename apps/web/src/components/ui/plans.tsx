@@ -1,16 +1,17 @@
-'use client'
+"use client"
 
-import React, { useState } from 'react'
-import '@/styles/custom-styles.css'
-import { BackgroundGradient } from '@/components/ui/background-gradient'
-import { SparklesText } from '@/components/ui/sparkles-text'
-import { Button } from '@/components/ui/button'
+import React, { useState } from "react"
+import "@/styles/custom-styles.css"
+import { BackgroundGradient } from "@/components/ui/background-gradient"
+import { Button } from "@/components/ui/button"
+import { SparklesText } from "@/components/ui/sparkles-text"
+
 // Define types for billing cycle and pricing details
 type BillingCycle =
-  | ['monthly', '1M']
-  | ['quarterly', '3M']
-  | ['semiannually', '6M']
-  | ['annually', '12M']
+  | ["monthly", "1M"]
+  | ["quarterly", "3M"]
+  | ["semiannually", "6M"]
+  | ["annually", "12M"]
 
 interface PricingDetail {
   per_month: string
@@ -115,7 +116,7 @@ function interpolateColor(
 
   // Convert back to hex
   return (
-    '#' +
+    "#" +
     ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
   )
 }
@@ -132,8 +133,8 @@ function getGradientColorForFraction(
 function getPlanGradient(
   idx: number,
   totalPlans: number,
-  startGradientColor: string = '#00CCB1',
-  endGradientColor: string = '#1CA0FB'
+  startGradientColor: string = "#00CCB1",
+  endGradientColor: string = "#1CA0FB"
 ) {
   if (totalPlans < 1) {
     return `linear-gradient(to right, ${startGradientColor}, ${startGradientColor})`
@@ -162,18 +163,18 @@ function getPlanGradient(
 const Plans = ({
   data,
   messages,
-  gradientStartColor = '#00CCB1',
-  gradientEndColor = '#1CA0FB',
+  gradientStartColor = "#00CCB1",
+  gradientEndColor = "#1CA0FB",
 }: PlansProps) => {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>([
-    'monthly',
-    '1M',
+    "monthly",
+    "1M",
   ])
   const billingCycles: BillingCycle[] = [
-    ['monthly', '1M'],
-    ['quarterly', '3M'],
-    ['semiannually', '6M'],
-    ['annually', '12M'],
+    ["monthly", "1M"],
+    ["quarterly", "3M"],
+    ["semiannually", "6M"],
+    ["annually", "12M"],
   ]
 
   return (
@@ -181,27 +182,27 @@ const Plans = ({
       {data.map((group, groupIndex) => (
         <div
           key={groupIndex}
-          className="relative mx-auto px-8 py-6 sm:m-0 sm:px-0 scroll-margin-t-16 overflow-x-visible overflow-y-hidden scrollbar scrollbar-dark"
+          className="scroll-margin-t-16 scrollbar scrollbar-dark relative mx-auto overflow-y-hidden overflow-x-visible px-8 py-6 sm:m-0 sm:px-0"
         >
-          <h4 className="text-2xl font-bold mb-2">{group.short_title}</h4>
-          <p className="text-gray-400 mb-4">{group.description}</p>
+          <h4 className="mb-2 text-2xl font-bold">{group.short_title}</h4>
+          <p className="mb-4 text-gray-400">{group.description}</p>
 
           <div
             role="toolbar"
-            className="toolbar transition focus-ring-dark-neutral-normal-bgr rounded -space-x-px mb-4 inline-flex"
+            className="toolbar focus-ring-dark-neutral-normal-bgr mb-4 inline-flex -space-x-px rounded transition"
           >
             {billingCycles.map((cycle) => (
               <button
                 key={cycle[0]}
                 title={messages.billing_cycles.billed_every.replace(
-                  '[cycle]',
+                  "[cycle]",
                   cycle[0]
                 )}
                 type="button"
-                className={`${billingCycle[0] === cycle[0] ? 'billing-cycle-button-active' : 'billing-cycle-button-inactive'}`}
+                className={`${billingCycle[0] === cycle[0] ? "billing-cycle-button-active" : "billing-cycle-button-inactive"}`}
                 onClick={() => setBillingCycle(cycle)}
               >
-                <span className="flex space-x-2 w-full items-center justify-center *:flex *:items-center *:justify-center">
+                <span className="flex w-full items-center justify-center space-x-2 *:flex *:items-center *:justify-center">
                   <span>
                     <span className="hidden sm:block">
                       {
@@ -210,7 +211,7 @@ const Plans = ({
                         ]
                       }
                     </span>
-                    <span className="sm:hidden sm:sr-only">{cycle[1]}</span>
+                    <span className="sm:sr-only sm:hidden">{cycle[1]}</span>
                   </span>
                 </span>
               </button>
@@ -220,7 +221,7 @@ const Plans = ({
           <div className="inline-block min-w-full">
             <div className="plans-container">
               <div className="block sm:inline-flex">
-                <div className="block sm:inline-flex sm:space-x-4 pb-4">
+                <div className="block pb-4 sm:inline-flex sm:space-x-4">
                   {group.plans.map((plan, idx) => {
                     // Pass the custom gradient colors to the function
                     const shortTitleGradient = getPlanGradient(
@@ -231,9 +232,9 @@ const Plans = ({
                     )
 
                     const planCard = (
-                      <div className="mb-10 sm:mb-0 min-w-56 p-6 border dark:bg-card-primary text-card-foreground bg-card rounded-lg backdrop-blur-sm whitespace-nowrap">
+                      <div className="dark:bg-card-primary text-card-foreground bg-card mb-10 min-w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm sm:mb-0">
                         {plan.recommended && (
-                          <div className="sm:-mt-16 sm:mb-8 mb-3 justify-center flex">
+                          <div className="mb-3 flex justify-center sm:-mt-16 sm:mb-8">
                             <SparklesText
                               text="Most Popular"
                               className="text-xl font-semibold"
@@ -246,17 +247,17 @@ const Plans = ({
                           with an inline style for the gradient 
                         */}
                         <h5
-                          className="text-xl font-semibold mb-2 pb-2"
+                          className="mb-2 pb-2 text-xl font-semibold"
                           style={{
                             // The linear gradient "slice" we computed
                             background: shortTitleGradient,
                             // Let the background show through the text
-                            WebkitBackgroundClip: 'text',
+                            WebkitBackgroundClip: "text",
                             // For Safari / iOS
-                            WebkitTextFillColor: 'transparent',
+                            WebkitTextFillColor: "transparent",
                             // Standard property for Firefox, etc.
-                            backgroundClip: 'text',
-                            color: 'transparent',
+                            backgroundClip: "text",
+                            color: "transparent",
                           }}
                         >
                           {plan.short_title}
@@ -325,14 +326,14 @@ const Plans = ({
                             </span>
                           </div>
                         )}
-                        <div className="text-2xl font-extrabold text-white mb-2">
+                        <div className="mb-2 text-2xl font-extrabold text-white">
                           {plan.pricing.EUR[billingCycle[0]].per_month}
                           <small className="text-base font-medium text-gray-400">
                             {messages.card.per_month}
                           </small>
                         </div>
-                        <div className="text-xs text-gray-400 mb-4">
-                          {plan.pricing.EUR[billingCycle[0]].billed}{' '}
+                        <div className="mb-4 text-xs text-gray-400">
+                          {plan.pricing.EUR[billingCycle[0]].billed}{" "}
                           {
                             messages.billing_cycles[
                               billingCycle[0] as keyof typeof messages.billing_cycles
@@ -349,7 +350,7 @@ const Plans = ({
                       <BackgroundGradient
                         key={idx}
                         containerClassName="p-1 mb-10 sm:mb-0"
-                        className="rounded-lg bg-gray-950 -mb-10 sm:mb-0"
+                        className="-mb-10 rounded-lg bg-gray-950 sm:mb-0"
                       >
                         {planCard}
                       </BackgroundGradient>

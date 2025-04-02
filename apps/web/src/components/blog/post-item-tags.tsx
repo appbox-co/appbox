@@ -1,13 +1,11 @@
-'use client'
+"use client"
 
-import { useSearchParams } from 'next/navigation'
-import { useMemo } from 'react'
-
-import type { Blog } from 'contentlayer/generated'
-
-import { PaginationEllipsis } from '../ui/pagination'
-import { Link } from '@/i18n/routing'
-import { Badge } from '../ui/badge'
+import { Link } from "@/i18n/routing"
+import type { Blog } from "contentlayer/generated"
+import { useSearchParams } from "next/navigation"
+import { useMemo } from "react"
+import { Badge } from "../ui/badge"
+import { PaginationEllipsis } from "../ui/pagination"
 
 export function BlogPostItemTags({
   post,
@@ -40,18 +38,18 @@ export function BlogPostItemTags({
   }
 
   return (
-    <div className="w-fit flex flex-wrap items-center gap-2 pt-4">
+    <div className="flex w-fit flex-wrap items-center gap-2 pt-4">
       {tags.map((tag) => {
-        const currentTag = searchParams.get('tag') || ''
+        const currentTag = searchParams.get("tag") || ""
         const isCurrentTagActive = tag === currentTag
 
         const href = isCurrentTagActive
-          ? '/blog'
+          ? "/blog"
           : `/blog?tag=${encodeURI(tag)}`
 
         return (
           <Link key={tag} href={href}>
-            <Badge variant={isCurrentTagActive ? 'default' : 'secondary'}>
+            <Badge variant={isCurrentTagActive ? "default" : "secondary"}>
               {tag}
             </Badge>
           </Link>
@@ -60,7 +58,7 @@ export function BlogPostItemTags({
 
       {shouldDisplayEllipsis && (
         <Badge variant="secondary" className="pointer-events-none">
-          <PaginationEllipsis className="w-fit h-full" />
+          <PaginationEllipsis className="h-full w-fit" />
         </Badge>
       )}
     </div>

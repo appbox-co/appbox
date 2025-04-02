@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { useTranslations } from 'next-intl'
-import { AppGridCard } from '@/components/app-grid-card'
+import { AppGridCard } from "@/components/app-grid-card"
+import { useTranslations } from "next-intl"
 
 interface App {
   display_name: string
@@ -15,7 +15,7 @@ interface App {
 interface AppGridProps {
   apps: App[]
   isLoading: boolean
-  error: any
+  error: Error | null | unknown
 }
 
 export function AppGrid({ apps, isLoading, error }: AppGridProps) {
@@ -23,10 +23,10 @@ export function AppGrid({ apps, isLoading, error }: AppGridProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-solid border-current border-r-transparent mb-4"></div>
-          <p>{t('apps.loading')}</p>
+          <div className="mb-4 inline-block size-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent"></div>
+          <p>{t("apps.loading")}</p>
         </div>
       </div>
     )
@@ -34,9 +34,9 @@ export function AppGrid({ apps, isLoading, error }: AppGridProps) {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-center text-red-500">
-          <p>{t('apps.error')}</p>
+          <p>{t("apps.error")}</p>
         </div>
       </div>
     )
@@ -44,14 +44,14 @@ export function AppGrid({ apps, isLoading, error }: AppGridProps) {
 
   if (apps.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p>{t('apps.no_results')}</p>
+      <div className="flex h-64 items-center justify-center">
+        <p>{t("apps.no_results")}</p>
       </div>
     )
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {apps.map((app) => (
         <AppGridCard
           key={app.display_name}

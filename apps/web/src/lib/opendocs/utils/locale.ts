@@ -1,6 +1,5 @@
-import { routing } from '@/i18n/routing'
-
-import type { LocaleOptions } from '../types/i18n'
+import { routing } from "@/i18n/routing"
+import type { LocaleOptions } from "../types/i18n"
 
 export function getObjectValueByLocale(
   obj: Record<string, string>,
@@ -19,8 +18,8 @@ export function getSlugWithoutLocale(slug: string, context: string) {
 
     if (selectPathWithCurrentLocale.test(slug)) {
       slugWithoutLocaleFolder = slugWithoutLocaleFolder
-        .replace(new RegExp(`${locale}\/?`), '')
-        .replace(/\/$/, '')
+        .replace(new RegExp(`${locale}\/?`), "")
+        .replace(/\/$/, "")
     }
   }
 

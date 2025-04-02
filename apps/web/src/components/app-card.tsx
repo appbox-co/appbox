@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils'
-import Image from 'next/image'
-import Link from 'next/link'
+import { cn } from "@/lib/utils"
+import Image from "next/image"
+import Link from "next/link"
 
 interface AppCardProps {
   name: string
@@ -24,16 +24,16 @@ export function AppCard({
     <Link href={appUrl}>
       <figure
         className={cn(
-          'relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4 mx-2 z-10',
-          'backdrop-blur-sm backdrop-saturate-150',
+          "relative z-10 mx-2 h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
+          "backdrop-blur-sm backdrop-saturate-150",
           // light styles
-          'border-gray-950/[.1] bg-gray-950/[.03] hover:bg-gray-950/[.06]',
+          "border-gray-950/[.1] bg-gray-950/[.03] hover:bg-gray-950/[.06]",
           // dark styles
-          'dark:border-gray-50/[.1] dark:bg-gray-50/[.12] dark:hover:bg-gray-50/[.17]'
+          "dark:border-gray-50/[.1] dark:bg-gray-50/[.12] dark:hover:bg-gray-50/[.17]"
         )}
       >
         <div className="flex flex-row items-center gap-2">
-          <div className="w-10 h-10 rounded-md overflow-hidden relative">
+          <div className="relative size-10 overflow-hidden rounded-md">
             <Image
               src={`https://api.appbox.co/assets/images/apps/icons/${iconUrl}`}
               alt={`${name} icon`}
@@ -50,15 +50,15 @@ export function AppCard({
             </p>
           </div>
         </div>
-        <blockquote className="mt-2 text-sm line-clamp-3">
+        <blockquote className="mt-2 line-clamp-3 text-sm">
           {description}
         </blockquote>
         {categories.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
+          <div className="mt-2 flex flex-wrap gap-1">
             {categories.map((category) => (
               <span
                 key={category}
-                className="text-xs px-2 py-0.5 rounded-full bg-primary/20 text-primary"
+                className="bg-primary/20 text-primary rounded-full px-2 py-0.5 text-xs"
               >
                 {category}
               </span>

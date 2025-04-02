@@ -1,25 +1,22 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { allDocs } from 'contentlayer/generated'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Metadata } from 'next'
-
-import '@/styles/mdx.css'
-
-import { DashboardTableOfContents } from '@/components/docs/toc'
-import { DocumentNotFound } from '@/components/docs/not-found'
-import { getTableOfContents } from '@/lib/opendocs/utils/toc'
-import { DocBreadcrumb } from '@/components/docs/breadcrumb'
-import { getDocFromParams } from '@/lib/opendocs/utils/doc'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { DocPageProps } from '@/lib/opendocs/types/docs'
-import { DocHeading } from '@/components/docs/heading'
-import { DocsPager } from '@/components/docs/pager'
-import { DocLinks } from '@/components/docs/links'
-import { routing } from '@/i18n/routing'
-import { Mdx } from '@/components/docs/mdx'
-import { siteConfig } from '@/config/site'
-import { absoluteUrl } from '@/lib/utils'
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { allDocs } from "contentlayer/generated"
+import type { Metadata } from "next"
+import { getTranslations, setRequestLocale } from "next-intl/server"
+import "@/styles/mdx.css"
+import { DocBreadcrumb } from "@/components/docs/breadcrumb"
+import { DocHeading } from "@/components/docs/heading"
+import { DocLinks } from "@/components/docs/links"
+import { Mdx } from "@/components/docs/mdx"
+import { DocumentNotFound } from "@/components/docs/not-found"
+import { DocsPager } from "@/components/docs/pager"
+import { DashboardTableOfContents } from "@/components/docs/toc"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { siteConfig } from "@/config/site"
+import { routing } from "@/i18n/routing"
+import { DocPageProps } from "@/lib/opendocs/types/docs"
+import { getDocFromParams } from "@/lib/opendocs/utils/doc"
+import { getTableOfContents } from "@/lib/opendocs/utils/toc"
+import { absoluteUrl } from "@/lib/utils"
 
 export const dynamicParams = true
 
@@ -35,15 +32,15 @@ export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
     return {}
   }
 
-  const [, ...docSlugList] = doc.slugAsParams.split('/')
-  const docSlug = docSlugList.join('/') || ''
+  const [, ...docSlugList] = doc.slugAsParams.split("/")
+  const docSlug = docSlugList.join("/") || ""
 
   return {
     title: doc.title,
     description: doc.description,
 
     openGraph: {
-      type: 'article',
+      type: "article",
       title: doc.title,
       url: absoluteUrl(`/${locale}/docs/${docSlug}`),
       description: doc.description,
@@ -60,10 +57,10 @@ export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
 }
 
 export async function generateStaticParams(): Promise<
-  DocPageProps['params'][]
+  DocPageProps["params"][]
 > {
   const docs = allDocs.map((doc) => {
-    const [locale, ...slugs] = doc.slugAsParams.split('/')
+    const [locale, ...slugs] = doc.slugAsParams.split("/")
 
     return {
       slug: slugs,
@@ -79,14 +76,14 @@ export default async function DocPage(props: DocPageProps) {
   setRequestLocale(params.locale || routing.defaultLocale)
 
   const doc = await getDocFromParams({ params })
-  const t = await getTranslations('docs')
+  const t = await getTranslations("docs")
 
   if (!doc) {
     return (
       <DocumentNotFound
         messages={{
-          title: t('not_found.title'),
-          description: t('not_found.description'),
+          title: t("not_found.title"),
+          description: t("not_found.description"),
         }}
       />
     )
@@ -100,7 +97,7 @@ export default async function DocPage(props: DocPageProps) {
         <DocBreadcrumb
           doc={doc}
           messages={{
-            docs: t('docs'),
+            docs: t("docs"),
           }}
         />
 
@@ -123,9 +120,9 @@ export default async function DocPage(props: DocPageProps) {
                   toc={toc}
                   sourceFilePath={doc._raw.sourceFilePath}
                   messages={{
-                    onThisPage: t('on_this_page'),
-                    editPageOnGitHub: t('edit_page_on_github'),
-                    startDiscussionOnGitHub: t('start_discussion_on_github'),
+                    onThisPage: t("on_this_page"),
+                    editPageOnGitHub: t("edit_page_on_github"),
+                    startDiscussionOnGitHub: t("start_discussion_on_github"),
                   }}
                 />
               </div>

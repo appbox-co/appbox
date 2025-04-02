@@ -1,5 +1,5 @@
-import type { LocaleOptions, LocalizedRecord } from './i18n'
-import type { NavItem } from './nav'
+import type { LocaleOptions, LocalizedRecord } from "./i18n"
+import type { NavItem } from "./nav"
 
 export interface PostAuthor {
   id?: string

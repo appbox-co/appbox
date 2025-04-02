@@ -1,5 +1,5 @@
-import { getApps } from '@/lib/appbox/api/getApps'
-import { ClientAppsMarquee } from '@/components/client-apps-marquee'
+import { ClientAppsMarquee } from "@/components/client-apps-marquee"
+import { getApps } from "@/lib/appbox/api/getApps"
 
 interface AppsMarqueeProps {
   title: string
@@ -21,7 +21,7 @@ export async function AppsMarquee({ title, description }: AppsMarqueeProps) {
   try {
     apps = await getApps()
   } catch (error) {
-    console.error('Error fetching apps for marquee:', error)
+    console.error("Error fetching apps for marquee:", error)
   }
 
   // If no apps, return early
@@ -46,7 +46,7 @@ export async function AppsMarquee({ title, description }: AppsMarqueeProps) {
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-4xl">
             {title}
           </h2>
-          <p className="mt-3 text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="text-muted-foreground mt-3 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             {description}
           </p>
         </div>

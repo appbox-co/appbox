@@ -1,12 +1,12 @@
-import type { BlogConfig } from '../lib/opendocs/types/blog'
+import type { BlogConfig } from "../lib/opendocs/types/blog"
 
 export const blogConfig: BlogConfig = {
   mainNav: [
     {
-      href: '/blog',
+      href: "/blog",
 
       title: {
-        en: 'Blog',
+        en: "Blog",
       },
     },
   ],
@@ -17,37 +17,37 @@ export const blogConfig: BlogConfig = {
         in contentlayer.config.ts so we can get the author details from the blogConfig by comparing the author_id
         with the id below
       */
-      id: 'daltonmenezes',
-      name: 'Dalton Menezes',
-      image: '/authors/daltonmenezes.jpg',
-      site: 'https://daltonmenezes.com',
-      email: 'daltonmenezes@outlook.com',
+      id: "daltonmenezes",
+      name: "Dalton Menezes",
+      image: "/authors/daltonmenezes.jpg",
+      site: "https://daltonmenezes.com",
+      email: "daltonmenezes@outlook.com",
 
       bio: {
-        en: 'Software Engineer | Writer | Designer',
-        pt: 'Engenheiro de Software | Escritor | Designer',
+        en: "Software Engineer | Writer | Designer",
+        pt: "Engenheiro de Software | Escritor | Designer",
       },
 
       social: {
-        github: 'daltonmenezes',
-        twitter: '@daltonmenezes',
-        youtube: 'daltonmenezes',
-        linkedin: 'daltonmenezes',
+        github: "daltonmenezes",
+        twitter: "@daltonmenezes",
+        youtube: "daltonmenezes",
+        linkedin: "daltonmenezes",
       },
     },
   ],
 
   rss: [
     {
-      type: 'xml',
-      file: 'blog.xml',
-      contentType: 'application/xml',
+      type: "xml",
+      file: "blog.xml",
+      contentType: "application/xml",
     },
 
     {
-      type: 'json',
-      file: 'blog.json',
-      contentType: 'application/json',
+      type: "json",
+      file: "blog.json",
+      contentType: "application/json",
     },
   ],
 } as const

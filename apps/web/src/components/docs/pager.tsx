@@ -1,18 +1,15 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
-
-import type { NavItem, NavItemWithChildren } from '@/lib/opendocs/types/nav'
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Doc } from 'contentlayer/generated'
-
+import { Link } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import type { NavItem, NavItemWithChildren } from "@/lib/opendocs/types/nav"
+import { getServerDocsConfig } from "@/lib/opendocs/utils/get-server-docs-config"
 import {
-  getSlugWithoutLocale,
   getObjectValueByLocale,
-} from '@/lib/opendocs/utils/locale'
-
-import { getServerDocsConfig } from '@/lib/opendocs/utils/get-server-docs-config'
-import { buttonVariants } from '../ui/button'
-import { Link } from '@/i18n/routing'
-import { cn } from '@/lib/utils'
+  getSlugWithoutLocale,
+} from "@/lib/opendocs/utils/locale"
+import { cn } from "@/lib/utils"
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
+import type { Doc } from "contentlayer/generated"
+import { buttonVariants } from "../ui/button"
 
 interface DocsPagerProps {
   doc: Doc
@@ -34,7 +31,7 @@ export async function DocsPager({ doc, locale }: DocsPagerProps) {
       {pager?.prev?.href && (
         <Link
           href={pager.prev.href}
-          className={buttonVariants({ variant: 'outline' })}
+          className={buttonVariants({ variant: "outline" })}
         >
           <ChevronLeftIcon className="mr-2 size-4" />
 
@@ -45,7 +42,7 @@ export async function DocsPager({ doc, locale }: DocsPagerProps) {
       {pager?.next?.href && (
         <Link
           href={pager.next.href}
-          className={cn(buttonVariants({ variant: 'outline' }), 'ml-auto')}
+          className={cn(buttonVariants({ variant: "outline" }), "ml-auto")}
         >
           {getObjectValueByLocale(pager.next.title, pager.currentLocale)}
 
@@ -66,7 +63,7 @@ export async function getPagerForCurrentDoc({
   const docsConfig = await getServerDocsConfig({ locale })
   const flattenedLinks = [null, ...flatten(docsConfig.docs.sidebarNav), null]
 
-  const slugWithoutLocaleFolder = getSlugWithoutLocale(doc.slug, 'docs')
+  const slugWithoutLocaleFolder = getSlugWithoutLocale(doc.slug, "docs")
 
   const activeIndex = flattenedLinks.findIndex(
     (link) => slugWithoutLocaleFolder === link?.href

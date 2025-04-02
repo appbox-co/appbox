@@ -1,17 +1,15 @@
-import { type Doc, allDocs } from 'contentlayer/generated'
+import { docsConfig } from "@/config/docs"
+import { routing } from "@/i18n/routing"
+import { allDocs, type Doc } from "contentlayer/generated"
+import type { DocPageProps } from "../types/docs"
+import type { NavItem, SidebarNavItem } from "../types/nav"
+import { getSlugWithoutLocale } from "./locale"
 
-import type { NavItem, SidebarNavItem } from '../types/nav'
-import type { DocPageProps } from '../types/docs'
-
-import { getSlugWithoutLocale } from './locale'
-import { docsConfig } from '@/config/docs'
-import { routing } from '@/i18n/routing'
-
-export function makeLocalizedSlug({ locale, slug }: DocPageProps['params']) {
-  const _slug = slug?.join('/')
+export function makeLocalizedSlug({ locale, slug }: DocPageProps["params"]) {
+  const _slug = slug?.join("/")
   const _locale = locale || routing.defaultLocale
 
-  const localizedSlug = [_locale, _slug].filter(Boolean).join('/')
+  const localizedSlug = [_locale, _slug].filter(Boolean).join("/")
 
   return localizedSlug
 }
@@ -37,7 +35,7 @@ export async function getDocFromParams({
 }
 
 export function getBreadcrumb(docSlug: string) {
-  const slug = getSlugWithoutLocale(docSlug, 'docs')
+  const slug = getSlugWithoutLocale(docSlug, "docs")
 
   const findBreadcrumbPath = (
     items: SidebarNavItem[],

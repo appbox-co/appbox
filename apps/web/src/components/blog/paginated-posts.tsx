@@ -1,26 +1,23 @@
-'use client'
+"use client"
 
-import { useSearchParams } from 'next/navigation'
-import Balancer from 'react-wrap-balancer'
-import { compareDesc } from 'date-fns'
-import { useMemo } from 'react'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Blog } from 'contentlayer/generated'
-
+import { dateLocales, Link } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import {
-  getSlugWithoutLocale,
   getObjectValueByLocale,
-} from '@/lib/opendocs/utils/locale'
-
-import { cn, formatDate, truncateText } from '@/lib/utils'
-import { BlogPostItemTags } from './post-item-tags'
-import { buttonVariants } from '../ui/button'
-import { Pagination } from './pagination'
-import { RSSToggle } from './rss-toggle'
-import { ReadTime } from './read-time'
-import { Link, dateLocales } from '@/i18n/routing'
-import { Card } from '../ui/card'
+  getSlugWithoutLocale,
+} from "@/lib/opendocs/utils/locale"
+import { cn, formatDate, truncateText } from "@/lib/utils"
+import type { Blog } from "contentlayer/generated"
+import { compareDesc } from "date-fns"
+import { useSearchParams } from "next/navigation"
+import { useMemo } from "react"
+import Balancer from "react-wrap-balancer"
+import { buttonVariants } from "../ui/button"
+import { Card } from "../ui/card"
+import { Pagination } from "./pagination"
+import { BlogPostItemTags } from "./post-item-tags"
+import { ReadTime } from "./read-time"
+import { RSSToggle } from "./rss-toggle"
 
 interface PaginatedBlogPostsProps {
   posts: Blog[]
@@ -46,10 +43,10 @@ export function PaginatedBlogPosts({
   perPage = 10,
 }: PaginatedBlogPostsProps) {
   const searchParams = useSearchParams()
-  const tag = searchParams.get('tag')
+  const tag = searchParams.get("tag")
 
   const currentPage = useMemo(() => {
-    const page = searchParams.get('page')
+    const page = searchParams.get("page")
 
     return page ? parseInt(page, 10) : 1
   }, [searchParams])
@@ -70,7 +67,7 @@ export function PaginatedBlogPosts({
     () =>
       blogPosts
         .filter((post) => {
-          const [localeFromSlug] = post.slugAsParams.split('/')
+          const [localeFromSlug] = post.slugAsParams.split("/")
 
           return localeFromSlug === locale
         })
@@ -89,7 +86,7 @@ export function PaginatedBlogPosts({
   )
 
   return (
-    <main className="relative max-w-5xl mx-auto space-y-6 grid">
+    <main className="relative mx-auto grid max-w-5xl space-y-6">
       <RSSToggle
         messages={{
           rss_feed: messages.rss_feed,
@@ -97,21 +94,21 @@ export function PaginatedBlogPosts({
       />
 
       <div
-        className={cn('grid gap-4 grid-cols-1', {
-          'md:grid-cols-2': paginatedPosts.length >= 2,
-          'md:grid-cols-1': paginatedPosts.length < 2,
+        className={cn("grid grid-cols-1 gap-4", {
+          "md:grid-cols-2": paginatedPosts.length >= 2,
+          "md:grid-cols-1": paginatedPosts.length < 2,
         })}
       >
         {paginatedPosts.map((post) => {
-          const postLink = getSlugWithoutLocale(post.slug, 'blog')
+          const postLink = getSlugWithoutLocale(post.slug, "blog")
 
           return (
             <Card
               key={post._id}
-              className="flex flex-col p-4 md:p-8 w-full h-full backdrop-blur-lg dark:bg-card-primary justify-between"
+              className="dark:bg-card-primary flex size-full flex-col justify-between p-4 backdrop-blur-lg md:p-8"
             >
               <div>
-                <div className="flex items-center mb-2 text-xs text-muted-foreground justify-between gap-1">
+                <div className="text-muted-foreground mb-2 flex items-center justify-between gap-1 text-xs">
                   <time dateTime={post.date}>
                     {formatDate(
                       post.date,
@@ -130,9 +127,9 @@ export function PaginatedBlogPosts({
 
                 <Link
                   href={postLink}
-                  className={cn('hover:opacity-65 transition-all')}
+                  className={cn("transition-all hover:opacity-65")}
                 >
-                  <h1 className="text-xl py-2">
+                  <h1 className="py-2 text-xl">
                     <Balancer>{post.title}</Balancer>
                   </h1>
                 </Link>
@@ -147,9 +144,9 @@ export function PaginatedBlogPosts({
               <Link
                 href={postLink}
                 className={cn(
-                  'dark:hover:text-primary dark:text-primary-active transition-all',
-                  buttonVariants({ variant: 'link' }),
-                  'h-fit p-0 flex self-end mt-1'
+                  "dark:hover:text-primary dark:text-primary-active transition-all",
+                  buttonVariants({ variant: "link" }),
+                  "mt-1 flex h-fit self-end p-0"
                 )}
               >
                 {messages.read_more}

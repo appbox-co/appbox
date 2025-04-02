@@ -1,8 +1,6 @@
-import { ChevronRightIcon } from 'lucide-react'
-
-import type { Blog } from 'contentlayer/generated'
-
-import { Link } from '@/i18n/routing'
+import { Link } from "@/i18n/routing"
+import type { Blog } from "contentlayer/generated"
+import { ChevronRightIcon } from "lucide-react"
 
 interface BlogPostBreadcrumbProps {
   post: Blog

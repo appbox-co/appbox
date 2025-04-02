@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from "react"
 
 export function useMediaQuery(query: `(${string})`) {
   const [matches, setMatches] = useState(false)
@@ -10,10 +10,10 @@ export function useMediaQuery(query: `(${string})`) {
 
     const mediaQueryList = matchMedia(query)
 
-    mediaQueryList.addEventListener('change', onChange)
+    mediaQueryList.addEventListener("change", onChange)
     setMatches(mediaQueryList.matches)
 
-    return () => mediaQueryList.removeEventListener('change', onChange)
+    return () => mediaQueryList.removeEventListener("change", onChange)
   }, [query])
 
   return matches

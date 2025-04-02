@@ -1,22 +1,14 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { allPolicies } from 'contentlayer/generated'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Metadata } from 'next'
-
-import '@/styles/mdx.css'
-
-import { DashboardTableOfContents } from '@/components/docs/toc'
-import { DocumentNotFound } from '@/components/docs/not-found'
-import { getTableOfContents } from '@/lib/opendocs/utils/toc'
-import { DocBreadcrumb } from '@/components/docs/breadcrumb'
-import { getPolicyFromParams } from '@/lib/opendocs/utils/policy'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { DocHeading } from '@/components/docs/heading'
-import { routing } from '@/i18n/routing'
-import { Mdx } from '@/components/docs/mdx'
-import { siteConfig } from '@/config/site'
-import { absoluteUrl } from '@/lib/utils'
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { allPolicies } from "contentlayer/generated"
+import type { Metadata } from "next"
+import { getTranslations, setRequestLocale } from "next-intl/server"
+import "@/styles/mdx.css"
+import { DocHeading } from "@/components/docs/heading"
+import { Mdx } from "@/components/docs/mdx"
+import { DocumentNotFound } from "@/components/docs/not-found"
+import { DashboardTableOfContents } from "@/components/docs/toc"
+import { PolicyBreadcrumb } from "@/components/policies/breadcrumb"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Table,
   TableBody,
@@ -24,8 +16,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { PolicyBreadcrumb } from '@/components/policies/breadcrumb'
+} from "@/components/ui/table"
+import { siteConfig } from "@/config/site"
+import { routing } from "@/i18n/routing"
+import { getPolicyFromParams } from "@/lib/opendocs/utils/policy"
+import { getTableOfContents } from "@/lib/opendocs/utils/toc"
+import { absoluteUrl } from "@/lib/utils"
 
 export const dynamicParams = true
 
@@ -50,15 +46,15 @@ export async function generateMetadata(
     return {}
   }
 
-  const [, ...policySlugList] = policy.slugAsParams.split('/')
-  const policySlug = policySlugList.join('/') || ''
+  const [, ...policySlugList] = policy.slugAsParams.split("/")
+  const policySlug = policySlugList.join("/") || ""
 
   return {
     title: policy.title,
     description: policy.description,
 
     openGraph: {
-      type: 'article',
+      type: "article",
       title: policy.title,
       url: absoluteUrl(`/${locale}/policies/${policySlug}`),
       description: policy.description,
@@ -75,10 +71,10 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams(): Promise<
-  PolicyPageProps['params'][]
+  PolicyPageProps["params"][]
 > {
   const policies = allPolicies.map((policy) => {
-    const [locale, ...slugs] = policy.slugAsParams.split('/')
+    const [locale, ...slugs] = policy.slugAsParams.split("/")
 
     return {
       slug: slugs,
@@ -97,7 +93,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
   // If no slug is provided, render a policy index page
   if (!params.slug || params.slug.length === 0) {
     const policies = allPolicies
-      .filter((policy) => policy.slugAsParams.startsWith(params.locale || 'en'))
+      .filter((policy) => policy.slugAsParams.startsWith(params.locale || "en"))
       .sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically by title
 
     return (
@@ -105,8 +101,8 @@ export default async function PolicyPage(props: PolicyPageProps) {
         <div className="mx-auto w-full min-w-0">
           <h1 className="text-3xl font-bold tracking-tight">Policies</h1>
 
-          <div className="mt-4 mb-8">
-            <p className="text-lg text-muted-foreground">
+          <div className="mb-8 mt-4">
+            <p className="text-muted-foreground text-lg">
               These policies govern your use of Appbox services and outline our
               commitments to you. They include important information about
               privacy, security, and your responsibilities as a user.
@@ -123,8 +119,8 @@ export default async function PolicyPage(props: PolicyPageProps) {
             </TableHeader>
             <TableBody>
               {policies.map((policy) => {
-                const [locale, ...slugs] = policy.slugAsParams.split('/')
-                const policySlug = slugs.join('/')
+                const [_locale, ...slugs] = policy.slugAsParams.split("/")
+                const policySlug = slugs.join("/")
 
                 return (
                   <TableRow key={policy._id}>
@@ -135,7 +131,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
                     <TableCell className="text-right">
                       <a
                         href={`/${params.locale}/policies/${policySlug}`}
-                        className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4"
+                        className="focus-visible:ring-ring ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                       >
                         View
                       </a>
@@ -151,14 +147,14 @@ export default async function PolicyPage(props: PolicyPageProps) {
   }
 
   const policy = await getPolicyFromParams({ params })
-  const t = await getTranslations('docs')
+  const t = await getTranslations("docs")
 
   if (!policy) {
     return (
       <DocumentNotFound
         messages={{
-          title: t('not_found.title'),
-          description: t('not_found.description'),
+          title: t("not_found.title"),
+          description: t("not_found.description"),
         }}
       />
     )
@@ -193,9 +189,9 @@ export default async function PolicyPage(props: PolicyPageProps) {
                   toc={toc}
                   sourceFilePath={policy._raw.sourceFilePath}
                   messages={{
-                    onThisPage: t('on_this_page'),
-                    editPageOnGitHub: t('edit_page_on_github'),
-                    startDiscussionOnGitHub: t('start_discussion_on_github'),
+                    onThisPage: t("on_this_page"),
+                    editPageOnGitHub: t("edit_page_on_github"),
+                    startDiscussionOnGitHub: t("start_discussion_on_github"),
                   }}
                 />
               </div>

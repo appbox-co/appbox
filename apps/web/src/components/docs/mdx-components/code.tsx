@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
 export const code = ({
   className,
@@ -7,7 +7,7 @@ export const code = ({
   return (
     <code
       className={cn(
-        'break-words relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm',
+        "relative break-words rounded px-[0.3rem] py-[0.2rem] font-mono text-sm",
         className
       )}
       {...props}

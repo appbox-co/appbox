@@ -1,14 +1,12 @@
-import { type Blog, allBlogs } from 'contentlayer/generated'
+import { routing } from "@/i18n/routing"
+import { allBlogs, type Blog } from "contentlayer/generated"
+import type { BlogPageProps } from "../types/blog"
 
-import type { BlogPageProps } from '../types/blog'
-
-import { routing } from '@/i18n/routing'
-
-export function makeLocalizedSlug({ locale, slug }: BlogPageProps['params']) {
-  const _slug = slug?.join('/')
+export function makeLocalizedSlug({ locale, slug }: BlogPageProps["params"]) {
+  const _slug = slug?.join("/")
   const _locale = locale || routing.defaultLocale
 
-  const localizedSlug = [_locale, _slug].filter(Boolean).join('/')
+  const localizedSlug = [_locale, _slug].filter(Boolean).join("/")
 
   return localizedSlug
 }

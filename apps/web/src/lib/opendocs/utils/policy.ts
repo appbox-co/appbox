@@ -1,5 +1,5 @@
-import { allPolicies } from 'contentlayer/generated'
-import { LocaleOptions } from '../types/i18n'
+import { allPolicies } from "contentlayer/generated"
+import { LocaleOptions } from "../types/i18n"
 
 interface GetPolicyFromParamsProps {
   params: {
@@ -11,7 +11,7 @@ interface GetPolicyFromParamsProps {
 export async function getPolicyFromParams({
   params,
 }: GetPolicyFromParamsProps) {
-  const slug = params.slug?.join('/') || ''
+  const slug = params.slug?.join("/") || ""
   const locale = params.locale
 
   const slugWithLocale = locale ? `${locale}/${slug}` : slug

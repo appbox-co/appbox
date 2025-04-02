@@ -1,21 +1,18 @@
-'use client'
+"use client"
 
-import { ChevronDown, LanguagesIcon } from 'lucide-react'
-import { type PointerEvent, useState } from 'react'
-import { useLocale } from 'next-intl'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-
-import { useIsMobile } from '@/lib/opendocs/hooks/use-is-mobile'
-import { useRouter, usePathname, routing } from '@/i18n/routing'
-import { Button } from '@/components/ui/button'
-
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuContent,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu"
+import { routing, usePathname, useRouter } from "@/i18n/routing"
+import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { ChevronDown, LanguagesIcon } from "lucide-react"
+import { useLocale } from "next-intl"
+import { useState, type PointerEvent } from "react"
 
 interface I18nToggleProps {
   messages: {
@@ -24,8 +21,8 @@ interface I18nToggleProps {
 }
 
 const labels = {
-  [routing.defaultLocale]: 'English',
-  de: 'Deutsch',
+  [routing.defaultLocale]: "English",
+  de: "Deutsch",
 } as const
 
 const locales = Object.entries(labels)
@@ -44,7 +41,7 @@ export function I18nToggle({ messages }: I18nToggleProps) {
   function closeDropdown(element: PointerEvent<HTMLElement>) {
     const target = element.relatedTarget as Element
 
-    if ('closest' in target && target.closest('[role=menu]')) return
+    if ("closest" in target && target.closest("[role=menu]")) return
 
     setOpen(() => false)
   }

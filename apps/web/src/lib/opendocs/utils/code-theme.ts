@@ -1,27 +1,26 @@
-import { createHighlighter } from 'shiki'
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-
-import { localCodeThemes, codeThemeConfig } from '../../../config/code-theme'
-import { toKebabCase } from './to-kebab-case'
-
+import { readFileSync } from "node:fs"
+import { resolve } from "node:path"
 import type {
   CodeTheme,
   CodeThemeLanguage,
-} from '@/lib/opendocs/types/code-theme'
+  LocalCodeThemes,
+} from "@/lib/opendocs/types/code-theme"
+import { createHighlighter } from "shiki"
+import { codeThemeConfig, localCodeThemes } from "../../../config/code-theme"
+import { toKebabCase } from "./to-kebab-case"
 
 const localThemes = codeThemeConfig.localThemes
 
 export function getContentLayerCodeTheme() {
   const themeName = codeThemeConfig.theme
 
-  if (localCodeThemes.includes(themeName as any)) {
+  if (localCodeThemes.includes(themeName as LocalCodeThemes[number])) {
     return JSON.parse(
       readFileSync(
         resolve(
           `./src/styles/themes/syntax-highlight/${toKebabCase(themeName)}.json`
         ),
-        'utf-8'
+        "utf-8"
       )
     )
   }
@@ -32,19 +31,21 @@ export function getContentLayerCodeTheme() {
 export async function highlightServerCode(
   code: string,
   theme: CodeTheme = codeThemeConfig.theme,
-  language: CodeThemeLanguage = 'typescript'
+  language: CodeThemeLanguage = "typescript"
 ) {
   const [path, fs] = await Promise.all([
-    import('node:path'),
-    import('node:fs/promises'),
+    import("node:path"),
+    import("node:fs/promises"),
   ])
 
   const highlighter = await createHighlighter({
     langs: codeThemeConfig.languages,
-    themes: [theme].filter((theme) => !localThemes.includes(theme as any)),
+    themes: [theme].filter(
+      (theme) => !localThemes.includes(theme as LocalCodeThemes[number])
+    ),
   })
 
-  const isLocalTheme = localThemes.includes(theme as any)
+  const isLocalTheme = localThemes.includes(theme as LocalCodeThemes[number])
 
   if (isLocalTheme) {
     try {
@@ -53,7 +54,7 @@ export async function highlightServerCode(
           process.cwd(),
           `src/styles/themes/syntax-highlight/${toKebabCase(theme)}.json`
         ),
-        'utf-8'
+        "utf-8"
       )
 
       await highlighter.loadTheme(JSON.parse(editorTheme))
@@ -65,7 +66,7 @@ export async function highlightServerCode(
   const html = highlighter.codeToHtml(code, {
     lang: language,
     theme,
-    structure: 'inline',
+    structure: "inline",
   })
 
   return html

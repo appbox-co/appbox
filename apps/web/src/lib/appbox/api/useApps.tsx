@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query"
 
 export interface App {
   display_name: string
@@ -19,11 +19,11 @@ export interface App {
 
 async function fetchApps(all: boolean = false): Promise<App[]> {
   const response = await fetch(
-    `https://api.appbox.co/v1/apps/public/all${all ? '' : '/1'}`
+    `https://api.appbox.co/v1/apps/public/all${all ? "" : "/1"}`
   )
 
   if (!response.ok) {
-    throw new Error('Failed to fetch apps')
+    throw new Error("Failed to fetch apps")
   }
 
   return response.json()
@@ -35,7 +35,7 @@ export function useApps(all: boolean = false) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['apps'],
+    queryKey: ["apps"],
     queryFn: () => fetchApps(all),
   })
 

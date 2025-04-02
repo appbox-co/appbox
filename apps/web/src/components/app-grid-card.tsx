@@ -1,9 +1,9 @@
-import Image from 'next/image'
-import { useTranslations } from 'next-intl'
-import { cn } from '@/lib/utils'
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { useRouter } from 'next/navigation'
+import { Badge } from "@/components/ui/badge"
+import { Card, CardFooter } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 interface AppGridCardProps {
   name: string
@@ -31,7 +31,7 @@ export function AppGridCard({
     // Try to create a URL object to validate
     if (iconUrl) {
       // If it's a full URL already
-      if (iconUrl.startsWith('http')) {
+      if (iconUrl.startsWith("http")) {
         imageUrl = iconUrl
       } else {
         // If it's just a filename
@@ -41,11 +41,11 @@ export function AppGridCard({
       new URL(imageUrl)
     } else {
       // Fallback if no iconUrl provided
-      imageUrl = 'https://api.appbox.co/assets/images/apps/placeholder.png'
+      imageUrl = "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
   } catch (e) {
     // If URL construction fails, use a placeholder
-    imageUrl = 'https://api.appbox.co/assets/images/apps/placeholder.png'
+    imageUrl = "https://api.appbox.co/assets/images/apps/placeholder.png"
   }
 
   const handleClick = () => {
@@ -55,15 +55,15 @@ export function AppGridCard({
   return (
     <Card
       className={cn(
-        'overflow-hidden h-full flex flex-col transition-all duration-200 hover:shadow-lg cursor-pointer',
-        'border-gray-950/[.1] hover:border-primary/50',
-        'dark:border-gray-50/[.1] dark:hover:border-primary/50'
+        "flex h-full cursor-pointer flex-col overflow-hidden transition-all duration-200 hover:shadow-lg",
+        "hover:border-primary/50 border-gray-950/[.1]",
+        "dark:hover:border-primary/50 dark:border-gray-50/[.1]"
       )}
       onClick={handleClick}
     >
       <div className="p-4">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-12 h-12 rounded-md overflow-hidden relative flex-shrink-0 bg-white dark:bg-gray-100 p-0.5 shadow-sm">
+        <div className="mb-3 flex items-center gap-3">
+          <div className="relative size-12 shrink-0 overflow-hidden rounded-md bg-white p-0.5 shadow-sm dark:bg-gray-100">
             <Image
               src={imageUrl}
               alt={`${name} icon`}
@@ -72,17 +72,17 @@ export function AppGridCard({
             />
           </div>
           <div>
-            <h3 className="font-medium text-base line-clamp-1">{name}</h3>
-            <p className="text-xs text-muted-foreground">{publisher}</p>
+            <h3 className="line-clamp-1 text-base font-medium">{name}</h3>
+            <p className="text-muted-foreground text-xs">{publisher}</p>
           </div>
         </div>
 
-        <p className="text-sm line-clamp-3 mb-3 text-muted-foreground">
+        <p className="text-muted-foreground mb-3 line-clamp-3 text-sm">
           {description}
         </p>
 
         {categories.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2 mb-2">
+          <div className="my-2 flex flex-wrap gap-1">
             {categories.slice(0, 3).map((category) => (
               <Badge key={category} variant="secondary" className="text-xs">
                 {category}
@@ -97,9 +97,9 @@ export function AppGridCard({
         )}
       </div>
 
-      <CardFooter className="flex justify-between items-center border-t p-3 mt-auto">
-        <div className="text-xs text-muted-foreground">
-          {t('apps.card.app_slots')}:{' '}
+      <CardFooter className="mt-auto flex items-center justify-between border-t p-3">
+        <div className="text-muted-foreground text-xs">
+          {t("apps.card.app_slots")}:{" "}
           <span className="font-medium">{appSlots}</span>
         </div>
       </CardFooter>

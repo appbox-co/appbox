@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic"
 
 // Import GradientTracing with ssr: false
 const GradientTracing = dynamic(
-  () => import('../../components/ui/gradient-tracing'),
+  () => import("../../components/ui/gradient-tracing"),
   { ssr: false }
 )
 

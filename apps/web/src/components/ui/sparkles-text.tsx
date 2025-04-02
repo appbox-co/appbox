@@ -1,9 +1,14 @@
-'use client'
+"use client"
 
-import { CSSProperties, ReactElement, useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import {
+  CSSProperties,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 
 interface Sparkle {
   id: string
@@ -59,17 +64,17 @@ interface SparklesTextProps {
   }
 }
 
-const SparklesText: React.FC<SparklesTextProps> = ({
+function SparklesText({
   text,
-  colors = { first: '#9E7AFF', second: '#FE8BBB' },
+  colors = { first: "#9E7AFF", second: "#FE8BBB" },
   className,
   sparklesCount = 10,
   ...props
-}) => {
+}: SparklesTextProps) {
   const [sparkles, setSparkles] = useState<Sparkle[]>([])
 
-  // Create a random star with random position, color, etc.
-  const generateStar = (): Sparkle => {
+  // Memoize generateStar function with useCallback
+  const generateStar = useCallback((): Sparkle => {
     const starX = `${Math.random() * 100}%`
     const starY = `${Math.random() * 100}%`
     const color = Math.random() > 0.5 ? colors.first : colors.second
@@ -77,22 +82,22 @@ const SparklesText: React.FC<SparklesTextProps> = ({
     const scale = Math.random() * 1 + 0.3
     const id = `${starX}-${starY}-${Date.now()}`
     return { id, x: starX, y: starY, color, delay, scale }
-  }
+  }, [colors.first, colors.second])
 
-  // Generate initial set of sparkles as soon as the component mounts or colors change
+  // Now include generateStar in the dependency array
   useEffect(() => {
     const newSparkles = Array.from({ length: sparklesCount }, generateStar)
     setSparkles(newSparkles)
-  }, [colors.first, colors.second, sparklesCount])
+  }, [colors.first, colors.second, sparklesCount, generateStar])
 
   return (
     <div
-      className={cn('text-6xl font-bold', className)}
+      className={cn("text-6xl font-bold", className)}
       {...props}
       style={
         {
-          '--sparkles-first-color': `${colors.first}`,
-          '--sparkles-second-color': `${colors.second}`,
+          "--sparkles-first-color": `${colors.first}`,
+          "--sparkles-second-color": `${colors.second}`,
         } as CSSProperties
       }
     >
@@ -118,11 +123,7 @@ interface SparkleProps {
 }
 
 // Each Sparkle animates once, then triggers its own replacement.
-const Sparkle: React.FC<SparkleProps> = ({
-  sparkle,
-  setSparkles,
-  generateStar,
-}) => {
+function Sparkle({ sparkle, setSparkles, generateStar }: SparkleProps) {
   const { id, x, y, color, delay, scale } = sparkle
 
   const handleAnimationComplete = () => {

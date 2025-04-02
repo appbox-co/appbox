@@ -1,7 +1,5 @@
-import { setRequestLocale } from 'next-intl/server'
-import { ScrollArea } from '@/components/ui/scroll-area'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { setRequestLocale } from "next-intl/server"
 
 interface PoliciesLayoutProps {
   children: React.ReactNode

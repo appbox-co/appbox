@@ -1,24 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { ImageResponse } from 'next/og'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { NextRequest } from 'next/server'
-
-import { allBlogs, type Blog } from 'contentlayer/generated'
-import { absoluteUrl, truncateText } from '@/lib/utils'
-import { siteConfig } from '@/config/site'
-import { getFonts } from '@/lib/fonts'
+import { siteConfig } from "@/config/site"
+import { getFonts } from "@/lib/fonts"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { absoluteUrl, truncateText } from "@/lib/utils"
+import { allBlogs, type Blog } from "contentlayer/generated"
+import { ImageResponse } from "next/og"
+import type { NextRequest } from "next/server"
 
 interface BlogOgProps {
   params: Promise<{ slug: string; locale: LocaleOptions }>
 }
 
-export const runtime = 'edge'
+export const runtime = "edge"
 export const dynamicParams = true
 
 export async function GET(_: NextRequest, props: BlogOgProps) {
-  const params = await props.params;
+  const params = await props.params
   const post = getBlogPostBySlugAndLocale(params.slug, params.locale)
 
   if (!post) {
@@ -50,15 +48,15 @@ export async function GET(_: NextRequest, props: BlogOgProps) {
       ...siteConfig.og.size,
       fonts: [
         {
-          name: 'Geist',
+          name: "Geist",
           data: regular,
-          style: 'normal',
+          style: "normal",
           weight: 400,
         },
         {
-          name: 'Geist',
+          name: "Geist",
           data: bold,
-          style: 'normal',
+          style: "normal",
           weight: 700,
         },
       ],
@@ -114,18 +112,18 @@ function Fallback({ src }: { src: string }) {
 
 function getBlogPostBySlugAndLocale(slug: string, locale: LocaleOptions) {
   return allBlogs.find((post) => {
-    const [postLocale, ...slugs] = post.slugAsParams.split('/')
+    const [postLocale, ...slugs] = post.slugAsParams.split("/")
 
-    return slugs.join('/') === slug && postLocale === locale
+    return slugs.join("/") === slug && postLocale === locale
   })
 }
 
-export async function generateStaticParams(): Promise<BlogOgProps['params'][]> {
+export async function generateStaticParams(): Promise<BlogOgProps["params"][]> {
   const blog = allBlogs.map((blog) => {
-    const [locale, ...slugs] = blog.slugAsParams.split('/')
+    const [locale, ...slugs] = blog.slugAsParams.split("/")
 
     return {
-      slug: slugs.join('/'),
+      slug: slugs.join("/"),
       locale: locale as LocaleOptions,
     }
   })

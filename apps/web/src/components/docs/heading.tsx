@@ -1,9 +1,7 @@
-import Balancer from 'react-wrap-balancer'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Doc } from 'contentlayer/generated'
-
-import { DocNotAvailableInThisLanguage } from './not-available'
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import type { Doc } from "contentlayer/generated"
+import Balancer from "react-wrap-balancer"
+import { DocNotAvailableInThisLanguage } from "./not-available"
 
 interface DocHeadingProps {
   doc: Doc & { notAvailable: boolean }

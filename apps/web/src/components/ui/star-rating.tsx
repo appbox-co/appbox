@@ -1,6 +1,6 @@
-import React, { type Dispatch, type SetStateAction } from 'react'
-import { StarIcon, type LucideIcon, type LucideProps } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
+import { StarIcon, type LucideIcon, type LucideProps } from "lucide-react"
+import React, { type Dispatch, type SetStateAction } from "react"
 
 interface StarWrapperProps {
   value?: number
@@ -29,7 +29,7 @@ function StarRating({
 
   return (
     <div
-      className={cn('flex items-center gap-1', wrapperClassName)}
+      className={cn("flex items-center gap-1", wrapperClassName)}
       {...restWrapperProps}
     >
       {Array.from({ length: numStars }, (_, i) => {
@@ -37,12 +37,12 @@ function StarRating({
         const styledIconProps: LucideProps = {
           onMouseEnter: () => !showcase && !disabled && setValue!(i + 1),
           className: cn(
-            'fill-primary stroke-primary size-6',
+            "fill-primary stroke-primary size-6",
             {
-              'opacity-50 pointer-events-none': disabled,
-              'transition-transform duration-300 hover:scale-110':
+              "opacity-50 pointer-events-none": disabled,
+              "transition-transform duration-300 hover:scale-110":
                 !disabled && !showcase,
-              '!fill-muted !stroke-muted': !isRated,
+              "!fill-muted !stroke-muted": !isRated,
             },
             iconClassName
           ),

@@ -1,13 +1,11 @@
-import Balancer from 'react-wrap-balancer'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Blog } from 'contentlayer/generated'
-
-import { DocNotAvailableInThisLanguage } from '../docs/not-available'
-import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { cn, formatDate } from '@/lib/utils'
-import { dateLocales } from '@/i18n/routing'
-import { ReadTime } from './read-time'
+import { dateLocales } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import { cn, formatDate } from "@/lib/utils"
+import type { Blog } from "contentlayer/generated"
+import Balancer from "react-wrap-balancer"
+import { DocNotAvailableInThisLanguage } from "../docs/not-available"
+import { ReadTime } from "./read-time"
 
 interface BlogPostHeadingProps {
   locale: LocaleOptions
@@ -25,10 +23,10 @@ export function BlogPostHeading({
   messages,
 }: BlogPostHeadingProps) {
   return (
-    <div className="flex flex-col space-y-2 gap-2">
+    <div className="flex flex-col gap-2 space-y-2">
       <h1
         className={cn(
-          'scroll-m-20 text-4xl sm:text-6xl font-bold tracking-tight'
+          "scroll-m-20 text-4xl font-bold tracking-tight sm:text-6xl"
         )}
       >
         <Balancer>{post.title}</Balancer>
@@ -49,7 +47,7 @@ export function BlogPostHeading({
           </time>
 
           {post.author?.name && (
-            <span className="truncate max-w-52">
+            <span className="max-w-52 truncate">
               <Balancer>
                 {messages.by} {post.author?.name}
               </Balancer>

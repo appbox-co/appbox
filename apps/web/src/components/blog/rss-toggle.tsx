@@ -1,21 +1,19 @@
-'use client'
+"use client"
 
-import { type PointerEvent, useState } from 'react'
-import { useLocale } from 'next-intl'
-import ExternalLink from 'next/link'
-import { Rss } from 'lucide-react'
-
-import { useIsMobile } from '@/lib/opendocs/hooks/use-is-mobile'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { blogConfig } from '@/config/blog'
-import { cn } from '@/lib/utils'
-
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuContent,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu"
+import { blogConfig } from "@/config/blog"
+import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
+import { cn } from "@/lib/utils"
+import { Rss } from "lucide-react"
+import { useLocale } from "next-intl"
+import ExternalLink from "next/link"
+import { useState, type PointerEvent } from "react"
 
 interface RSSToggleProps {
   messages: {
@@ -36,7 +34,7 @@ export function RSSToggle({ messages }: RSSToggleProps) {
   function closeDropdown(element: PointerEvent<HTMLElement>) {
     const target = element.relatedTarget as Element
 
-    if ('closest' in target && target.closest('[role=menu]')) return
+    if ("closest" in target && target.closest("[role=menu]")) return
 
     setOpen(() => false)
   }
@@ -47,10 +45,10 @@ export function RSSToggle({ messages }: RSSToggleProps) {
         <Button
           variant="ghost"
           className={cn(
-            'flex place-self-end transition-all group pointer-events-auto relative w-fit gap-1 px-2',
-            buttonVariants({ variant: 'ghost' }),
-            'hover:text-amber-600',
-            'aria-expanded:text-amber-600'
+            "group pointer-events-auto relative flex w-fit gap-1 place-self-end px-2 transition-all",
+            buttonVariants({ variant: "ghost" }),
+            "hover:text-amber-600",
+            "aria-expanded:text-amber-600"
           )}
           aria-expanded={open}
           aria-label={messages.rss_feed}

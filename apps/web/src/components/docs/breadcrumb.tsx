@@ -1,12 +1,10 @@
-import { ChevronRightIcon } from 'lucide-react'
-import { Fragment } from 'react'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { Doc } from 'contentlayer/generated'
-
-import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { getBreadcrumb } from '@/lib/opendocs/utils/doc'
-import { routing, Link } from '@/i18n/routing'
+import { Link, routing } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { getBreadcrumb } from "@/lib/opendocs/utils/doc"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import type { Doc } from "contentlayer/generated"
+import { ChevronRightIcon } from "lucide-react"
+import { Fragment } from "react"
 
 interface DocBreadcrumbProps {
   doc: Doc
@@ -17,7 +15,7 @@ interface DocBreadcrumbProps {
 }
 
 export function DocBreadcrumb({ doc, messages }: DocBreadcrumbProps) {
-  const [locale] = (doc.slugAsParams.split('/') || routing.defaultLocale) as [
+  const [locale] = (doc.slugAsParams.split("/") || routing.defaultLocale) as [
     LocaleOptions,
   ]
 
@@ -40,7 +38,7 @@ export function DocBreadcrumb({ doc, messages }: DocBreadcrumbProps) {
             {item.href && !isLastItem ? (
               <Link
                 href={item.href}
-                className="truncate text-foreground font-medium hover:underline"
+                className="text-foreground truncate font-medium hover:underline"
               >
                 {docTitle}
               </Link>

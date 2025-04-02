@@ -1,8 +1,8 @@
-const { createContentlayerPlugin } = require('next-contentlayer2')
+const { createContentlayerPlugin } = require("next-contentlayer2")
 
 const withContentlayer = createContentlayerPlugin({})
 
-const createNextIntlPlugin = require('next-intl/plugin')
+const createNextIntlPlugin = require("next-intl/plugin")
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -10,7 +10,7 @@ const withNextIntl = createNextIntlPlugin()
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['appbox.co', 'api.appbox.co'],
+    domains: ["appbox.co", "api.appbox.co"],
   },
 }
 

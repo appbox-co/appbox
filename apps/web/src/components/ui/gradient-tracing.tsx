@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import React from "react"
+
 interface GradientTracingProps {
   width: number
   height: number
@@ -20,8 +20,8 @@ export default function GradientTracing(props: GradientTracingProps) {
   const {
     width,
     height,
-    baseColor = 'black',
-    gradientColors = ['#2EB9DF', '#2EB9DF', '#9E00FF'],
+    baseColor = "black",
+    gradientColors = ["#2EB9DF", "#2EB9DF", "#9E00FF"],
     animationDuration = 5,
     strokeWidth = 1,
     className,
@@ -32,7 +32,7 @@ export default function GradientTracing(props: GradientTracingProps) {
 
   return (
     <div
-      className={cn('relative', className)}
+      className={cn("relative", className)}
       style={{ width, height, opacity }}
     >
       <svg width={width} height={height} viewBox="0 0 161 170" fill="none">
@@ -62,7 +62,7 @@ export default function GradientTracing(props: GradientTracingProps) {
             transition={{
               duration: animationDuration,
               repeat: Infinity,
-              ease: 'linear',
+              ease: "linear",
             }}
             id={gradientId}
             gradientUnits="userSpaceOnUse"

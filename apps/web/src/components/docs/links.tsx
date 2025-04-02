@@ -1,11 +1,9 @@
-import { getTranslations } from 'next-intl/server'
-import { ExternalLinkIcon } from 'lucide-react'
-
-import type { Doc } from 'contentlayer/generated'
-
-import { badgeVariants } from '../ui/badge'
-import { Link } from '@/i18n/routing'
-import { cn } from '@/lib/utils'
+import { Link } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
+import type { Doc } from "contentlayer/generated"
+import { ExternalLinkIcon } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import { badgeVariants } from "../ui/badge"
 
 export async function DocLinks({ doc }: { doc: Doc }) {
   if (!doc?.links) {
@@ -21,9 +19,9 @@ export async function DocLinks({ doc }: { doc: Doc }) {
           href={doc.links.source}
           target="_blank"
           rel="noreferrer"
-          className={cn(badgeVariants({ variant: 'secondary' }), 'gap-1')}
+          className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
         >
-          {t('docs.source')}
+          {t("docs.source")}
 
           <ExternalLinkIcon className="size-3" />
         </Link>
@@ -34,9 +32,9 @@ export async function DocLinks({ doc }: { doc: Doc }) {
           href={doc.links.doc}
           target="_blank"
           rel="noreferrer"
-          className={cn(badgeVariants({ variant: 'secondary' }), 'gap-1')}
+          className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
         >
-          {t('docs.docs')}
+          {t("docs.docs")}
 
           <ExternalLinkIcon className="size-3" />
         </Link>
@@ -47,9 +45,9 @@ export async function DocLinks({ doc }: { doc: Doc }) {
           href={doc.links.api}
           target="_blank"
           rel="noreferrer"
-          className={cn(badgeVariants({ variant: 'secondary' }), 'gap-1')}
+          className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
         >
-          {t('docs.api_reference')}
+          {t("docs.api_reference")}
 
           <ExternalLinkIcon className="size-3" />
         </Link>
@@ -60,9 +58,9 @@ export async function DocLinks({ doc }: { doc: Doc }) {
           href={doc.links.blog}
           target="_blank"
           rel="noreferrer"
-          className={cn(badgeVariants({ variant: 'secondary' }), 'gap-1')}
+          className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
         >
-          {t('site.words.blog')}
+          {t("site.words.blog")}
 
           <ExternalLinkIcon className="size-3" />
         </Link>

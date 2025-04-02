@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Marquee } from '@/components/magicui/marquee'
-import { AppCard } from '@/components/app-card'
+import { AppCard } from "@/components/app-card"
+import { Marquee } from "@/components/magicui/marquee"
 
 interface App {
   display_name: string
@@ -46,8 +46,8 @@ export function ClientAppsMarquee({
           />
         ))}
       </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
+      <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
+      <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
     </div>
   )
 }

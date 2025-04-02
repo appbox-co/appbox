@@ -1,21 +1,18 @@
-'use client'
-
-import { Fragment } from 'react'
-
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-import type { SidebarNavItem } from '@/lib/opendocs/types/nav'
+"use client"
 
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
-} from '@/components/ui/accordion'
-
-import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { usePathname, Link as DesktopLink } from '@/i18n/routing'
-import { MobileLink } from '../mobile-link'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/accordion"
+import { Link as DesktopLink, usePathname } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import type { SidebarNavItem } from "@/lib/opendocs/types/nav"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import { cn } from "@/lib/utils"
+import { Fragment } from "react"
+import { MobileLink } from "../mobile-link"
 
 export interface DocsSidebarNavProps {
   items: SidebarNavItem[]
@@ -35,16 +32,16 @@ export function DocsSidebarNav({
   return items.length > 0 ? (
     <div
       className={cn(
-        !isMobile && 'w-full',
-        isMobile && 'flex flex-col space-y-3 pt-6 pr-3'
+        !isMobile && "w-full",
+        isMobile && "flex flex-col space-y-3 pr-3 pt-6"
       )}
     >
       {items.map((item, index) => (
-        <div key={index} className={cn('pb-4')}>
+        <div key={index} className={cn("pb-4")}>
           <h4
             className={cn(
-              !isMobile && 'mb-1 rounded-md px-2 py-1 text-sm font-semibold',
-              isMobile && 'font-medium'
+              !isMobile && "mb-1 rounded-md px-2 py-1 text-sm font-semibold",
+              isMobile && "font-medium"
             )}
           >
             {getObjectValueByLocale(item.title, locale)}
@@ -112,7 +109,7 @@ export function DocsSidebarNavItems({
                     getObjectValueByLocale(item.title, locale)
                   )
                     ? getObjectValueByLocale(item.title, locale)
-                    : ''
+                    : ""
                 }
               >
                 <AccordionItem
@@ -123,7 +120,7 @@ export function DocsSidebarNavItems({
                       {getObjectValueByLocale(item.title, locale)}
 
                       {item.label && (
-                        <span className="h-fit rounded-md bg-primary-active px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline">
+                        <span className="bg-primary-active h-fit rounded-md px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline">
                           {getObjectValueByLocale(item.label, locale)}
                         </span>
                       )}
@@ -159,19 +156,19 @@ export function DocsSidebarNavItems({
               href={item.href}
               {...props}
               className={cn(
-                'group my-1 ml-2 flex h-fit w-full items-center gap-2 rounded-md border border-transparent px-2 hover:underline',
-                item.disabled && 'cursor-not-allowed opacity-60',
+                "group my-1 ml-2 flex h-fit w-full items-center gap-2 rounded-md border border-transparent px-2 hover:underline",
+                item.disabled && "cursor-not-allowed opacity-60",
                 pathname?.endsWith(item.href)
-                  ? 'text-foreground border-l-primary-active rounded-none border-l-2 font-medium'
-                  : 'text-muted-foreground'
+                  ? "text-foreground border-l-primary-active rounded-none border-l-2 font-medium"
+                  : "text-muted-foreground"
               )}
-              target={item.external ? '_blank' : ''}
-              rel={item.external ? 'noreferrer' : ''}
+              target={item.external ? "_blank" : ""}
+              rel={item.external ? "noreferrer" : ""}
             >
               {getObjectValueByLocale(item.title, locale)}
 
               {item.label && (
-                <span className="rounded-md bg-primary-active px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline">
+                <span className="bg-primary-active rounded-md px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline">
                   {getObjectValueByLocale(item.label, locale)}
                 </span>
               )}

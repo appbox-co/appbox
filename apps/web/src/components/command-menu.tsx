@@ -1,39 +1,34 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useCallback, Fragment, useMemo } from 'react'
-import { useTheme } from 'next-themes'
-import { useLocale } from 'next-intl'
-
-import type { AlertDialogProps } from '@radix-ui/react-alert-dialog'
-import type { NavItemWithChildren } from '@/lib/opendocs/types/nav'
-
+import { Button } from "@/components/ui/button"
+import { useRouter } from "@/i18n/routing"
+import { useBlogConfig } from "@/lib/opendocs/hooks/use-blog-config"
+import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
+import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import { cn } from "@/lib/utils"
+import type { AlertDialogProps } from "@radix-ui/react-alert-dialog"
 import {
-  SunIcon,
-  FileIcon,
-  MoonIcon,
-  LaptopIcon,
   CircleIcon,
+  FileIcon,
   FileTextIcon,
-} from '@radix-ui/react-icons'
-
-import { Button } from '@/components/ui/button'
-import { useRouter } from '@/i18n/routing'
-import { cn } from '@/lib/utils'
-
+  LaptopIcon,
+  MoonIcon,
+  SunIcon,
+} from "@radix-ui/react-icons"
+import { allBlogs } from "contentlayer/generated"
+import { useLocale } from "next-intl"
+import { useTheme } from "next-themes"
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
 import {
-  CommandItem,
-  CommandList,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandDialog,
+  CommandItem,
+  CommandList,
   CommandSeparator,
-} from './ui/command'
-
-import { useDocsConfig } from '@/lib/opendocs/hooks/use-docs-config'
-import { useBlogConfig } from '@/lib/opendocs/hooks/use-blog-config'
-import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { allBlogs } from 'contentlayer/generated'
+} from "./ui/command"
 
 function DocsCommandMenu({
   runCommand,
@@ -126,7 +121,7 @@ function BlogCommandMenu({
 
   const posts = useMemo(() => {
     return allBlogs.filter((post) => {
-      const [postLocale] = post.slugAsParams.split('/')
+      const [postLocale] = post.slugAsParams.split("/")
 
       return postLocale === locale
     })
@@ -137,10 +132,10 @@ function BlogCommandMenu({
       {posts.map((post) => (
         <CommandItem
           key={post._id}
-          value={`${post.title} ${post.excerpt} ${post.tags.join(' ')}`}
+          value={`${post.title} ${post.excerpt} ${post.tags.join(" ")}`}
           onSelect={() => {
-            const [, ...slugs] = post.slugAsParams.split('/')
-            const slug = slugs.join('/')
+            const [, ...slugs] = post.slugAsParams.split("/")
+            const slug = slugs.join("/")
 
             runCommand(() => router.push(`/blog/${slug}`))
           }}
@@ -149,7 +144,7 @@ function BlogCommandMenu({
             <FileTextIcon className="size-4" />
           </div>
 
-          <div className="flex flex-col gap-1 p-2 w-full">
+          <div className="flex w-full flex-col gap-1 p-2">
             <h1 className="text-lg">{post.title}</h1>
             <p className="truncate">{post.excerpt}</p>
           </div>
@@ -186,7 +181,7 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
         if (
           (e.target instanceof HTMLElement && e.target.isContentEditable) ||
           e.target instanceof HTMLInputElement ||
@@ -201,9 +196,9 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
       }
     }
 
-    document.addEventListener('keydown', down)
+    document.addEventListener("keydown", down)
 
-    return () => document.removeEventListener('keydown', down)
+    return () => document.removeEventListener("keydown", down)
   }, [])
 
   const runCommand = useCallback((command: () => unknown) => {
@@ -221,7 +216,7 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
       <Button
         variant="outline"
         className={cn(
-          'bg-card-primary text-muted-foreground relative h-8 w-full justify-start rounded-lg text-sm font-normal shadow-none sm:pr-12 md:w-40 lg:w-64'
+          "bg-card-primary text-muted-foreground relative h-8 w-full justify-start rounded-lg text-sm font-normal shadow-none sm:pr-12 md:w-40 lg:w-64"
         )}
         onClick={() => setOpen(true)}
         {...props}
@@ -286,17 +281,17 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
           <CommandSeparator className="my-1" />
 
           <CommandGroup heading={messages.themes.theme}>
-            <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
+            <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
               <SunIcon className="mr-2 size-4" />
               {messages.themes.light}
             </CommandItem>
 
-            <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
+            <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
               <MoonIcon className="mr-2 size-4" />
               {messages.themes.dark}
             </CommandItem>
 
-            <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
+            <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
               <LaptopIcon className="mr-2 size-4" />
               {messages.themes.system}
             </CommandItem>

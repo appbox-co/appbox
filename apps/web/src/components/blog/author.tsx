@@ -1,37 +1,34 @@
-import { LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
-import { Globe, Mail } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-
-import type { Blog } from 'contentlayer/generated'
-
 import {
   Card,
-  CardTitle,
-  CardHeader,
   CardContent,
   CardDescription,
-} from '@/components/ui/card'
-
-import { buttonVariants } from '../ui/button'
-import { cn } from '@/lib/utils'
-import { Icons } from '../icons'
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { cn } from "@/lib/utils"
+import { LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
+import type { Blog } from "contentlayer/generated"
+import { Globe, Mail } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { Icons } from "../icons"
+import { buttonVariants } from "../ui/button"
 
 export function AuthorCard({ post }: { post: Blog }) {
   const { author } = post
 
   return (
-    <Card className="backdrop-blur-lg dark:bg-card-primary w-full">
+    <Card className="dark:bg-card-primary w-full backdrop-blur-lg">
       <CardHeader
-        className={cn('flex gap-4 flex-wrap', 'flex-row items-center')}
+        className={cn("flex flex-wrap gap-4", "flex-row items-center")}
       >
         {author?.image && (
           <Image
             width={80}
             height={80}
-            src={post.author?.image!}
-            alt={post.author?.name!}
-            className="w-20 rounded-full border-4 border-muted"
+            src={author.image}
+            alt={author.name || "Author"}
+            className="border-muted w-20 rounded-full border-4"
           />
         )}
 
@@ -42,7 +39,7 @@ export function AuthorCard({ post }: { post: Blog }) {
             {author?.bio && <CardDescription>{author.bio}</CardDescription>}
           </CardContent>
 
-          <div className="flex flex-wrap items-center w-full pt-2">
+          <div className="flex w-full flex-wrap items-center pt-2">
             {author?.site && (
               <Link
                 aria-label={author.site}
@@ -51,11 +48,11 @@ export function AuthorCard({ post }: { post: Blog }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'text-accent-foreground w-fit',
+                  "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: 'ghost',
+                    variant: "ghost",
                   }),
-                  'px-2'
+                  "px-2"
                 )}
               >
                 <Globe size={16} />
@@ -70,11 +67,11 @@ export function AuthorCard({ post }: { post: Blog }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'text-accent-foreground w-fit',
+                  "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: 'ghost',
+                    variant: "ghost",
                   }),
-                  'px-2'
+                  "px-2"
                 )}
               >
                 <Icons.gitHub className="size-4" />
@@ -89,11 +86,11 @@ export function AuthorCard({ post }: { post: Blog }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'text-accent-foreground w-fit',
+                  "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: 'ghost',
+                    variant: "ghost",
                   }),
-                  'px-2'
+                  "px-2"
                 )}
               >
                 <TwitterLogoIcon />
@@ -108,11 +105,11 @@ export function AuthorCard({ post }: { post: Blog }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'text-accent-foreground w-fit',
+                  "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: 'ghost',
+                    variant: "ghost",
                   }),
-                  'px-2'
+                  "px-2"
                 )}
               >
                 <LinkedInLogoIcon />
@@ -127,11 +124,11 @@ export function AuthorCard({ post }: { post: Blog }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'text-accent-foreground w-fit',
+                  "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: 'ghost',
+                    variant: "ghost",
                   }),
-                  'px-2'
+                  "px-2"
                 )}
               >
                 <Icons.youtube className="size-4" />
@@ -146,11 +143,11 @@ export function AuthorCard({ post }: { post: Blog }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'text-accent-foreground w-fit',
+                  "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: 'ghost',
+                    variant: "ghost",
                   }),
-                  'px-2'
+                  "px-2"
                 )}
               >
                 <Mail size={16} />

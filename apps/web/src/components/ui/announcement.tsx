@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Badge, type BadgeProps } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
-import { type HTMLAttributes, createContext, useContext } from 'react'
+import { Badge, type BadgeProps } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
+import { createContext, useContext, type HTMLAttributes } from "react"
 
 type BadgeContextType = {
   themed: boolean
@@ -16,7 +16,7 @@ const useBadgeContext = () => {
   const context = useContext(BadgeContext)
 
   if (!context) {
-    throw new Error('useBadgeContext must be used within a Badge')
+    throw new Error("useBadgeContext must be used within a Badge")
   }
 
   return context
@@ -27,7 +27,7 @@ export type AnnouncementProps = BadgeProps & {
 }
 
 export const Announcement = ({
-  variant = 'outline',
+  variant = "outline",
   themed = false,
   className,
   ...props
@@ -36,10 +36,10 @@ export const Announcement = ({
     <Badge
       variant={variant}
       className={cn(
-        'max-w-full gap-2 rounded-full bg-background px-3 py-0.5 font-medium shadow-sm transition-all',
-        'hover:shadow-md',
-        'dark:bg-background/80 dark:border-foreground/10',
-        themed && 'border-foreground/5',
+        "bg-background max-w-full gap-2 rounded-full px-3 py-0.5 font-medium shadow-sm transition-all",
+        "hover:shadow-md",
+        "dark:bg-background/80 dark:border-foreground/10",
+        themed && "border-foreground/5",
         className
       )}
       {...props}
@@ -58,9 +58,9 @@ export const AnnouncementTag = ({
   return (
     <div
       className={cn(
-        '-ml-2.5 shrink-0 truncate rounded-full bg-foreground/5 px-2.5 py-1 text-xs',
-        'dark:bg-foreground/15',
-        themed && 'bg-background/60',
+        "bg-foreground/5 -ml-2.5 shrink-0 truncate rounded-full px-2.5 py-1 text-xs",
+        "dark:bg-foreground/15",
+        themed && "bg-background/60",
         className
       )}
       {...props}
@@ -75,7 +75,7 @@ export const AnnouncementTitle = ({
   ...props
 }: AnnouncementTitleProps) => (
   <div
-    className={cn('flex items-center gap-1 truncate py-1', className)}
+    className={cn("flex items-center gap-1 truncate py-1", className)}
     {...props}
   />
 )

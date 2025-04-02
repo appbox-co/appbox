@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
-import { useLocale } from 'next-intl'
-
-import type { BlogConfig } from '@/lib/opendocs/types/blog'
-import type { LocaleOptions } from '../types/i18n'
-
-import { routing } from '@/i18n/routing'
+import { routing } from "@/i18n/routing"
+import type { BlogConfig } from "@/lib/opendocs/types/blog"
+import { useLocale } from "next-intl"
+import { useEffect, useState } from "react"
+import type { LocaleOptions } from "../types/i18n"
 
 export function useBlogConfig() {
   const locale = useLocale() as LocaleOptions

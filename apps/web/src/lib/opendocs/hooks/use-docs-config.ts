@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
-import { useLocale } from 'next-intl'
-
-import type { DocsConfig } from '@/lib/opendocs/types/docs'
-import type { LocaleOptions } from '../types/i18n'
-
-import { routing } from '@/i18n/routing'
+import { routing } from "@/i18n/routing"
+import type { DocsConfig } from "@/lib/opendocs/types/docs"
+import { useLocale } from "next-intl"
+import { useEffect, useState } from "react"
+import type { LocaleOptions } from "../types/i18n"
 
 export function useDocsConfig() {
   const locale = useLocale() as LocaleOptions
