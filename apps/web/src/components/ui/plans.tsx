@@ -232,7 +232,7 @@ const Plans = ({
                     )
 
                     const planCard = (
-                      <div className="dark:bg-card-primary text-card-foreground bg-card mb-10 min-w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm sm:mb-0">
+                      <div className="dark:bg-card-primary text-card-foreground bg-card mb-10 min-w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-xs sm:mb-0">
                         {plan.recommended && (
                           <div className="mb-3 flex justify-center sm:-mt-16 sm:mb-8">
                             <SparklesText

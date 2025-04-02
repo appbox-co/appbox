@@ -59,7 +59,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
         >
           <SunIcon className="size-[1.2rem] rotate-0 scale-100 transition-all dark:hidden dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="hidden size-[1.2rem] rotate-90 scale-0 transition-all dark:flex dark:rotate-0 dark:scale-100" />
-          <ChevronDown className="size-3 transition duration-300 group-aria-[expanded=true]:rotate-180" />
+          <ChevronDown className="size-3 transition duration-300 group-aria-expanded:rotate-180" />
 
           <span className="sr-only">Toggle theme</span>
           <span className="pointer-events-auto absolute z-10 block h-14 w-full" />

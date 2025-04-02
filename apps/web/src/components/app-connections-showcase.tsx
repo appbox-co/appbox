@@ -98,7 +98,7 @@ export function AppConnectionsShowcase({
 
         <div
           ref={containerRef}
-          className="relative mx-auto aspect-[4/3] w-full max-w-4xl overflow-hidden"
+          className="relative mx-auto aspect-4/3 w-full max-w-4xl overflow-hidden"
         >
           {/* Static SVG lines for non-JS environments */}
           {!isClient && (
@@ -133,7 +133,7 @@ export function AppConnectionsShowcase({
           <div
             ref={centerRef}
             className={cn(
-              "bg-primary/10 absolute z-10 flex size-28 transform-gpu items-center justify-center rounded-full backdrop-blur-sm transition-all",
+              "bg-primary/10 absolute z-10 flex size-28 transform-gpu items-center justify-center rounded-full backdrop-blur-xs transition-all",
               inView && isClient ? "scale-100 opacity-100" : "opacity-100" // Always visible for non-JS
             )}
             style={{

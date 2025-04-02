@@ -25,7 +25,7 @@ export function AppCard({
       <figure
         className={cn(
           "relative z-10 mx-2 h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
-          "backdrop-blur-sm backdrop-saturate-150",
+          "backdrop-blur-xs backdrop-saturate-150",
           // light styles
           "border-gray-950/[.1] bg-gray-950/[.03] hover:bg-gray-950/[.06]",
           // dark styles

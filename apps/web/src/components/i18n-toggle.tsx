@@ -65,7 +65,7 @@ export function I18nToggle({ messages }: I18nToggleProps) {
         >
           <LanguagesIcon className="size-[1.2rem] transition-all dark:rotate-0 dark:scale-100" />
 
-          <ChevronDown className="size-3 transition duration-300 group-aria-[expanded=true]:rotate-180" />
+          <ChevronDown className="size-3 transition duration-300 group-aria-expanded:rotate-180" />
 
           <span className="sr-only">{messages.toggleLanguage}</span>
           <span className="pointer-events-auto absolute z-10 block h-14 w-full" />

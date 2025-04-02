@@ -43,7 +43,7 @@ function StarRating({
               "opacity-50 pointer-events-none": disabled,
               "transition-transform duration-300 hover:scale-110":
                 !disabled && !showcase,
-              "!fill-muted !stroke-muted": !isRated,
+              "fill-muted! stroke-muted!": !isRated,
             },
             iconClassName
           ),

@@ -28,7 +28,7 @@ function PageHeaderHeading({
     <h1
       className={cn(
         "text-center text-3xl font-bold leading-tight tracking-tighter md:text-6xl lg:leading-[1.1]",
-        "dark:bg-gradient-to-r dark:from-slate-50 dark:to-slate-200 dark:bg-clip-text dark:text-transparent",
+        "dark:bg-linear-to-r dark:from-slate-50 dark:to-slate-200 dark:bg-clip-text dark:text-transparent",
         className
       )}
       {...props}

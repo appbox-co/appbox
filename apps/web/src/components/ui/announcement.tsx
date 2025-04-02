@@ -36,7 +36,7 @@ export const Announcement = ({
     <Badge
       variant={variant}
       className={cn(
-        "bg-background max-w-full gap-2 rounded-full px-3 py-0.5 font-medium shadow-sm transition-all",
+        "bg-background max-w-full gap-2 rounded-full px-3 py-0.5 font-medium shadow-xs transition-all",
         "hover:shadow-md",
         "dark:bg-background/80 dark:border-foreground/10",
         themed && "border-foreground/5",

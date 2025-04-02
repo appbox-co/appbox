@@ -63,7 +63,7 @@ export function AppGridCard({
     >
       <div className="p-4">
         <div className="mb-3 flex items-center gap-3">
-          <div className="relative size-12 shrink-0 overflow-hidden rounded-md bg-white p-0.5 shadow-sm dark:bg-gray-100">
+          <div className="relative size-12 shrink-0 overflow-hidden rounded-md bg-white p-0.5 shadow-xs dark:bg-gray-100">
             <Image
               src={imageUrl}
               alt={`${name} icon`}

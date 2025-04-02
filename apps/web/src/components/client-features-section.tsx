@@ -25,7 +25,7 @@ interface FeatureItemProps {
 const FeatureItem = ({ area, icon, title, description }: FeatureItemProps) => {
   return (
     <li className={`min-h-56 list-none ${area}`}>
-      <div className="bg-background/20 relative h-full rounded-2xl border p-2 backdrop-blur-sm md:rounded-3xl md:p-3">
+      <div className="bg-background/20 relative h-full rounded-2xl border p-2 backdrop-blur-xs md:rounded-3xl md:p-3">
         <GlowingEffect
           spread={40}
           glow={true}

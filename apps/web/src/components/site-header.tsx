@@ -20,8 +20,8 @@ export async function SiteHeader() {
 
   return (
     <header className={"sticky top-0 z-50 w-full"}>
-      <div className="absolute inset-0 backdrop-blur"></div>
-      <div className="container relative flex h-14 max-w-screen-2xl items-center">
+      <div className="absolute inset-0 backdrop-blur-sm"></div>
+      <div className="container relative flex h-14 max-w-(--breakpoint-2xl) items-center">
         <MainNav />
 
         <MobileNav

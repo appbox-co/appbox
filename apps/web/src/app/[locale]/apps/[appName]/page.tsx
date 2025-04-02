@@ -73,7 +73,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
         <div className="order-2 md:order-1 md:col-span-4 lg:col-span-3">
           <div className="sticky top-6 w-full space-y-6">
             {/* App logo positioned outside and full width */}
-            <div className="relative aspect-square w-full overflow-hidden rounded-lg border bg-white p-6 shadow-sm dark:bg-gray-100">
+            <div className="relative aspect-square w-full overflow-hidden rounded-lg border bg-white p-6 shadow-xs dark:bg-gray-100">
               <Image
                 src={imageUrl}
                 alt={`${appDetails.display_name} icon`}
@@ -88,7 +88,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
             </Button>
 
             {/* App information card */}
-            <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <div className="bg-card rounded-lg border p-6 shadow-xs">
               <h3 className="mb-4 text-lg font-medium">
                 {t("detail.app_info")}
               </h3>
@@ -137,7 +137,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
             </div>
 
             {/* Community ratings */}
-            <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <div className="bg-card rounded-lg border p-6 shadow-xs">
               <h3 className="mb-4 text-lg font-medium">
                 {t("detail.community_ratings")}
               </h3>
