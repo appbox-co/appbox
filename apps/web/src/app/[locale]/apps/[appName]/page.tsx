@@ -45,7 +45,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
       } else {
         imageUrl = `https://api.appbox.co/assets/images/apps/icons/${appDetails.icon_image}`
       }
-    } catch (e) {
+    } catch (_e) {
       imageUrl = "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
   }
