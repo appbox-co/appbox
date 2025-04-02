@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import { cloneElement, useState } from "react";
 import "@/styles/custom-styles.css"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Button } from "@/components/ui/button"
@@ -355,8 +355,8 @@ const Plans = ({
                         {planCard}
                       </BackgroundGradient>
                     ) : (
-                      React.cloneElement(planCard, { key: idx })
-                    )
+                      cloneElement(planCard, { key: idx })
+                    );
                   })}
                 </div>
               </div>
@@ -365,7 +365,7 @@ const Plans = ({
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export default Plans

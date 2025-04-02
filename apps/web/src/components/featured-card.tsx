@@ -6,7 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import React, { type PropsWithChildren } from "react"
+import type { type PropsWithChildren } from "react";
+import * as React from "react";
 
 type FeaturedCardProps = PropsWithChildren<{
   icon?: React.ReactNode

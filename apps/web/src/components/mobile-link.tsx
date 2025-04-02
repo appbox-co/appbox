@@ -3,7 +3,7 @@
 import { Link, useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import type { LinkProps } from "next/link"
-import React from "react"
+import * as React from "react";
 
 export interface MobileLinkProps extends Omit<LinkProps, "locale"> {
   onOpenChange?: (open: boolean) => void

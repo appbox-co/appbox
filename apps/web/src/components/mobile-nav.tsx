@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import { Icons } from "@/components/icons"
 import {
   Sheet,
@@ -11,7 +10,8 @@ import { siteConfig } from "@/config/site"
 import { usePathname, useRouter } from "@/i18n/routing"
 import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
 import { useTranslations } from "next-intl"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { DocsSidebarNav } from "./docs/sidebar-nav"
 import { MobileLink } from "./mobile-link"
 import { Button } from "./ui/button"

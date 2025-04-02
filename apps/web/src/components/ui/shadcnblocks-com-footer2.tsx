@@ -1,4 +1,5 @@
-import React, { SVGProps } from "react"
+import { SVGProps } from "react";
+import * as React from "react";
 
 /** This is a proper React component that returns <svg> */
 function DefaultLogo(props: SVGProps<SVGSVGElement>) {

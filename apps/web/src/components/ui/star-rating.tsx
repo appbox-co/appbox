@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { StarIcon, type LucideIcon, type LucideProps } from "lucide-react"
-import React, { type Dispatch, type SetStateAction } from "react"
+import type { type Dispatch, type SetStateAction } from "react";
+import * as React from "react";
 
 interface StarWrapperProps {
   value?: number

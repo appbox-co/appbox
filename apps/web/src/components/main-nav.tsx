@@ -15,7 +15,7 @@ import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import React from "react"
+import * as React from "react";
 
 // -----------------------------------------------------------------------
 // Added a new interface to support nested menu items.
