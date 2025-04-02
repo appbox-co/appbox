@@ -1,13 +1,17 @@
 const { createContentlayerPlugin } = require('next-contentlayer2')
 
+const withContentlayer = createContentlayerPlugin({})
+
+const createNextIntlPlugin = require('next-intl/plugin')
+
+const withNextIntl = createNextIntlPlugin()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  images: {
+    domains: ['appbox.co', 'api.appbox.co'],
+  },
 }
-
-const withContentlayer = createContentlayerPlugin({})
-
-const withNextIntl = require('next-intl/plugin')('./src/i18n')
 
 module.exports = withNextIntl(withContentlayer(nextConfig))

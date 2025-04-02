@@ -13,7 +13,7 @@ import {
 import { CodeBlockWrapper } from '@/components/docs/mdx-components/code-block-wrapper'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Callout } from '@/components/callout'
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
 import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs'

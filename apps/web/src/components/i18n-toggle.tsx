@@ -7,9 +7,8 @@ import { useLocale } from 'next-intl'
 import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
 
 import { useIsMobile } from '@/lib/opendocs/hooks/use-is-mobile'
-import { useRouter, usePathname } from '@/navigation'
+import { useRouter, usePathname, routing } from '@/i18n/routing'
 import { Button } from '@/components/ui/button'
-import { labels } from '@/config/i18n'
 
 import {
   DropdownMenu,
@@ -24,6 +23,11 @@ interface I18nToggleProps {
   }
 }
 
+const labels = {
+  [routing.defaultLocale]: 'English',
+  de: 'Deutsch',
+} as const
+
 const locales = Object.entries(labels)
 
 export function I18nToggle({ messages }: I18nToggleProps) {
@@ -31,7 +35,6 @@ export function I18nToggle({ messages }: I18nToggleProps) {
   const pathname = usePathname()
   const isMobile = useIsMobile()
   const currentLocale = useLocale()
-
   const [open, setOpen] = useState(false)
 
   function openDropdown() {

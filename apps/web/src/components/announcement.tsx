@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 
 import { Separator } from '@/components/ui/separator'
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 
 export function Announcement({
   title,

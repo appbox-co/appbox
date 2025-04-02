@@ -4,7 +4,7 @@ import { ExternalLinkIcon } from 'lucide-react'
 import type { Doc } from 'contentlayer/generated'
 
 import { badgeVariants } from '../ui/badge'
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
 export async function DocLinks({ doc }: { doc: Doc }) {

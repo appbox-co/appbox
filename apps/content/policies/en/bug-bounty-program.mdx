@@ -1,0 +1,97 @@
+---
+title: Bug Bounty Program
+description: Our security vulnerability reporting program and rewards
+---
+
+At Appbox, security is a fundamental priority. We actively encourage security researchers to help strengthen our platform by identifying and reporting potential vulnerabilities. This program outlines our approach to responsible security research, how we handle vulnerability reports, and the rewards we offer to researchers who help improve our security posture.
+
+## Our Commitment
+
+When you participate in our bug bounty program, we promise to:
+
+* Acknowledge and evaluate your report in a timely manner
+* Address confirmed vulnerabilities with appropriate urgency
+* Recognize and reward you for unique, previously unreported vulnerabilities that lead to security improvements
+
+## Program Coverage
+
+This bug bounty program applies to the following Appbox platforms:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co]
+
+## Excluded Areas and Issues
+
+The following are considered outside the scope of our bug bounty program:
+
+* WHMCS Client Area [https://billing.appbox.co] - Vulnerabilities should be reported directly to WHMCS through their own security program
+* Security issues that don't affect our default application configurations
+* Vulnerabilities in our containers that require non-standard configurations
+* Timing-based information disclosure attacks
+* Process enumeration techniques
+* Any form of denial of service or high-volume attacks
+* Social engineering and phishing techniques
+* Automated security scanning that generates excessive traffic or loads
+
+## Reward Structure
+
+### Main Website and Control Panel
+
+| **Vulnerability Type**                               | **PayPal Reward** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting Infrastructure
+
+| Vulnerability Type                           | PayPal Reward | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Contributors who report valid vulnerabilities will be recognized in our Security Researchers Hall of Fame as a token of our appreciation.
+
+## Claiming Your Reward
+
+* You may choose between two reward options:  
+   * Direct PayPal payment (requires a valid PayPal account)
+   * Appbox service credits (applicable to any Appbox service, non-transferable)
+
+## Participation Guidelines
+
+* Adhere to this policy, our [Terms of Service](/policies/terms-of-service), and all applicable laws
+* Report vulnerabilities promptly after discovery
+* Respect user privacy and system integrity during your research
+* Submit all vulnerability reports exclusively through our [Support Ticket System](https://billing.appbox.co/submitticket.php?step=2&deptid=3)
+* Maintain confidentiality about discovered vulnerabilities until resolved
+* Limit your testing to systems explicitly included in this program
+* If you gain unexpected access to sensitive data: access only the minimum amount needed to demonstrate the issue, stop testing immediately, and report the vulnerability promptly
+* Use only your own test accounts for any interaction with our systems
+* Never attempt to extort Appbox based on your findings
+
+## Legal Protection
+
+Security researchers following this policy can expect:
+
+* Protection from legal action for good-faith security research conducted within these guidelines
+* Exemption from anti-circumvention legal claims when necessary for legitimate security research
+* Waiver of certain policy restrictions that would otherwise prevent security testing
+* Recognition that compliant security research is beneficial and conducted in good faith
+
+You remain responsible for complying with all applicable laws. If you face legal action from a third party while adhering to this policy, we will affirm that your actions were conducted in compliance with our program. If you're uncertain about whether your planned research activities comply with this policy, please contact us through the [Support Ticket System](https://billing.appbox.co/submitticket.php?step=2&deptid=3) before proceeding.
+
+## Reporting Process
+
+To report a vulnerability, create a detailed ticket through our [Support Ticket System](https://billing.appbox.co/submitticket.php?step=2&deptid=3).
+
+* Your report should include comprehensive steps to reproduce the vulnerability. You may use this template as a guide: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* All program communications must go through our official Support Ticket Platform
+* Public disclosure of any vulnerability without explicit written permission from Appbox violates this program's terms and will disqualify you from receiving a reward 

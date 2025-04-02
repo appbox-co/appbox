@@ -6,8 +6,7 @@ import type { Doc } from 'contentlayer/generated'
 
 import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
 import { getBreadcrumb } from '@/lib/opendocs/utils/doc'
-import { defaultLocale } from '@/config/i18n'
-import { Link } from '@/navigation'
+import { routing, Link } from '@/i18n/routing'
 
 interface DocBreadcrumbProps {
   doc: Doc
@@ -18,7 +17,7 @@ interface DocBreadcrumbProps {
 }
 
 export function DocBreadcrumb({ doc, messages }: DocBreadcrumbProps) {
-  const [locale] = (doc.slugAsParams.split('/') || defaultLocale) as [
+  const [locale] = (doc.slugAsParams.split('/') || routing.defaultLocale) as [
     LocaleOptions,
   ]
 

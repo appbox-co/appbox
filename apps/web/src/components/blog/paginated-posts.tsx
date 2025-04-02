@@ -16,11 +16,10 @@ import {
 import { cn, formatDate, truncateText } from '@/lib/utils'
 import { BlogPostItemTags } from './post-item-tags'
 import { buttonVariants } from '../ui/button'
-import { dateLocales } from '@/config/i18n'
 import { Pagination } from './pagination'
 import { RSSToggle } from './rss-toggle'
 import { ReadTime } from './read-time'
-import { Link } from '@/navigation'
+import { Link, dateLocales } from '@/i18n/routing'
 import { Card } from '../ui/card'
 
 interface PaginatedBlogPostsProps {

@@ -1,0 +1,289 @@
+.billing-cycle-button:active {
+  --tw-text-opacity: 1;
+  color: rgba(249, 250, 251, var(--tw-text-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(111, 114, 125, var(--tw-bg-opacity));
+}
+
+.billing-cycle-button:hover {
+  --tw-text-opacity: 1;
+  color: rgba(229, 230, 235, var(--tw-text-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(81, 85, 94, var(--tw-bg-opacity));
+}
+
+/* Light mode (default) styles for billing cycle buttons */
+.billing-cycle-button-active {
+  /* Light Mode Active Styles */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  position: relative;
+  appearance: none;
+  white-space: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  --tw-text-opacity: 1;
+  color: rgba(10, 10, 10, var(--tw-text-opacity)); /* Dark text for light mode */
+  --tw-bg-opacity: 1;
+  background-color: rgba(220, 220, 220, var(--tw-bg-opacity)); /* A light blue tint */
+  border-color: transparent;
+  font-size: 0.875rem;
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  min-width: 4rem;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.billing-cycle-button-inactive {
+  /* Light Mode Inactive Styles */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  position: relative;
+  appearance: none;
+  white-space: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  --tw-text-opacity: 1;
+  color: rgba(80, 80, 80, var(--tw-text-opacity)); /* Slightly dark gray text */
+  --tw-bg-opacity: 1;
+  background-color: rgba(245, 245, 245, var(--tw-bg-opacity)); /* Very light background */
+  border-color: transparent;
+  font-size: 0.875rem;
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  min-width: 4rem;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+/* Dark mode overrides – these reuse the current dark mode colors */
+.dark .billing-cycle-button-active {
+  color: rgba(249, 250, 251, 1);
+  background-color: rgba(111, 114, 125, 1);
+}
+
+.dark .billing-cycle-button-inactive {
+  color: rgba(212, 214, 223, 1);
+  background-color: rgba(56, 60, 68, 1);
+}
+
+.toolbar > button {
+  /* Remove default rounding if any */
+  border-radius: 0;
+}
+
+.toolbar > button:first-child {
+  border-top-left-radius: 0.375rem; /* Adjust as needed */
+  border-bottom-left-radius: 0.375rem;
+}
+
+.toolbar > button:last-child {
+  border-top-right-radius: 0.375rem; /* Adjust as needed */
+  border-bottom-right-radius: 0.375rem;
+}
+
+.plans-container {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .plans-container {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 640px) {
+  .plans-container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .plans-container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .plans-container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1152px) {
+  .plans-container {
+    max-width: 1152px;
+  }
+}
+
+/* Navigation menu hover trigger styles */
+html:not([data-touch-device='true'])
+  .hover-trigger
+  [data-radix-navigation-menu-trigger] {
+  pointer-events: auto;
+}
+
+html:not([data-touch-device='true'])
+  .hover-trigger
+  [data-radix-navigation-menu-content] {
+  animation-duration: 250ms;
+  transition: opacity 250ms;
+}
+
+/* Show navigation items on hover */
+html:not([data-touch-device='true'])
+  .hover-trigger
+  [data-radix-navigation-menu-trigger]:hover
+  + [data-radix-navigation-menu-content],
+html:not([data-touch-device='true'])
+  .hover-trigger
+  [data-radix-navigation-menu-content]:hover {
+  display: block;
+  opacity: 1;
+  animation: fadeIn 250ms ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* App Connections Responsive Styles */
+.app-connections-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px; /* Explicit max width for larger screens */
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  --radius: 220px; /* Set the default radius here */
+}
+
+/* Base styles for the center emblem */
+.app-connections-center {
+  --size: 7rem;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  width: var(--size);
+  height: var(--size);
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgba(var(--color-primary), 0.1);
+  backdrop-filter: blur(4px);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+/* Base styles for the app icons */
+.app-connections-icon {
+  --size: 3rem;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  width: var(--size);
+  height: var(--size);
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: white;
+  padding: 0.5rem;
+  box-shadow: 0 0 20px -12px rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--color-muted);
+  transform: translate(-50%, -50%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+  .app-connections-container {
+    --radius: 180px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-connections-container {
+    --radius: 160px;
+  }
+  
+  .app-connections-center {
+    --size: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-connections-container {
+    --radius: 130px;
+    aspect-ratio: 3/2;
+  }
+  
+  .app-connections-center {
+    --size: 5rem;
+  }
+  
+  .app-connections-icon {
+    --size: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-connections-container {
+    --radius: 110px;
+    aspect-ratio: 1/1;
+  }
+  
+  .app-connections-center {
+    --size: 4.5rem;
+  }
+  
+  .app-connections-icon {
+    --size: 2.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-connections-container {
+    --radius: 90px;
+  }
+  
+  .app-connections-center {
+    --size: 4rem;
+  }
+  
+  .app-connections-icon {
+    --size: 2rem;
+  }
+}
+
+/* Fade-in animation for beams */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.beam-container {
+  animation-delay: 300ms; /* Start fading after a slight delay */
+}

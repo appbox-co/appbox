@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale, getTranslations } from 'next-intl/server'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
 import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
@@ -16,27 +16,28 @@ import { BlogPostTags } from '@/components/blog/post-tags'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { AuthorCard } from '@/components/blog/author'
 import { allBlogs } from 'contentlayer/generated'
-import { defaultLocale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 import { Mdx } from '@/components/docs/mdx'
 import { siteConfig } from '@/config/site'
 import { Icons } from '@/components/icons'
 import { absoluteUrl } from '@/lib/utils'
 
 interface BlogPageProps {
-  params: {
+  params: Promise<{
     slug: string[]
     locale: LocaleOptions
-  }
+  }>
 }
 
 export const dynamicParams = true
 
-export async function generateMetadata({
-  params,
-}: BlogPageProps): Promise<Metadata> {
-  const locale = params.locale || defaultLocale
+export async function generateMetadata(
+  props: BlogPageProps
+): Promise<Metadata> {
+  const params = await props.params
+  const locale = params.locale || routing.defaultLocale
 
-  unstable_setRequestLocale(locale)
+  setRequestLocale(locale)
 
   const [t, blogPost] = await Promise.all([
     getTranslations('site'),
@@ -81,7 +82,7 @@ export async function generateMetadata({
         description,
         images: [ogImage],
         card: 'summary_large_image',
-        creator: siteConfig.links.twitter.username,
+        creator: '@appbox_io',
       },
     }
   }
@@ -89,11 +90,10 @@ export async function generateMetadata({
   const [, ...blogSlugList] = blogPost.slugAsParams.split('/')
   const blogSlug = blogSlugList.join('/') || ''
 
-  const postAuthorName = blogPost.author?.name || siteConfig.author.name
-  const postAuthorUrl = blogPost.author?.site || siteConfig.author.site
+  const postAuthorName = blogPost.author?.name
+  const postAuthorUrl = blogPost.author?.site
 
-  const postAuthorTwitter =
-    blogPost.author?.social?.twitter || siteConfig.links.twitter.username
+  const postAuthorTwitter = blogPost.author?.social?.twitter
 
   const postOgImage = blogPost.og_image
     ? absoluteUrl(`/blog-og/${blogPost.og_image}`)
@@ -150,10 +150,11 @@ export async function generateStaticParams(): Promise<
   return blog
 }
 
-export default async function BlogPage({ params }: BlogPageProps) {
-  const locale = params.locale || defaultLocale
+export default async function BlogPage(props: BlogPageProps) {
+  const params = await props.params
+  const locale = params.locale || routing.defaultLocale
 
-  unstable_setRequestLocale(locale)
+  setRequestLocale(locale)
 
   const t = await getTranslations()
   const blogPost = await getBlogFromParams({ params })

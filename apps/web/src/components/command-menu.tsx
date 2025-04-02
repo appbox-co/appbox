@@ -17,7 +17,7 @@ import {
 } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
-import { useRouter } from '@/navigation'
+import { useRouter } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
 import {

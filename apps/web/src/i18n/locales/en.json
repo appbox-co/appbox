@@ -1,64 +1,173 @@
 {
   "site": {
-    "heading": "for your projects easily",
-    "description": "Beautifully designed template that you can use for your projects for free. Accessible. Customizable. Open Source.",
-    "announcement": "Introducing Opendocs",
+    "heading": "fast app hosting for your",
+    "description": "Appbox offers a fully customizable, optimized cloud service powered by open source software and an intuitive control panel.",
+    "announcement": "Introducing Appbox",
     "changelog": "Changelog",
-
     "buttons": {
       "get_started": "Get Started",
       "toggle_menu": "Toggle Menu",
       "toggle_language": "Toggle Language"
     },
-
     "words": {
       "menu": "Menu",
       "docs": "Docs",
       "blog": "Blog"
     },
-
     "featured_cards": {
       "nextjs": {
         "description": "Built with Next.js using app router."
       },
-
       "shadcn": {
         "description": "Built on top of Shadcn (site/components)."
       },
-
       "tailwind": {
         "description": "Styled with Tailwind CSS."
       },
-
       "i18n": {
         "description": "Internationalization support with next-intl."
       },
-
       "more": {
         "title": "and more!",
         "description": "Many more features to use like documents and blog posts using MDX, dark and white mode, search command palette, internationalized sitemap and more..."
       }
     },
-
     "footer": {
-      "created_by": "Created by"
+      "copyright": "Copyright © {year} Appbox. All rights reserved."
     },
-
     "search": {
       "search": "Search",
       "no_results_found": "No results found",
       "search_documentation": "Search documentation",
       "type_command_or_search": "Type a command or search"
     },
-
     "themes": {
       "theme": "Theme",
       "dark": "Dark",
       "light": "Light",
       "system": "System"
+    },
+    "apps_section": {
+      "title": "Massive Ready-to-Deploy App Collection",
+      "description": "Host everything from databases and media servers to dev tools and communication platforms - deploy enterprise-grade software with just a few clicks"
+    },
+    "features": {
+      "section": {
+        "title": "Powerful Features for Everyone",
+        "description": "Experience the full power of your Appbox with features designed for both beginners and experts alike"
+      },
+      "root_access": {
+        "title": "Full Root Access",
+        "description": "Deploy full OS apps like Debian and Ubuntu with SSH access, giving you complete control over your environment."
+      },
+      "remote_desktop": {
+        "title": "Remote Desktop",
+        "description": "Run UI applications on our servers with full remote desktop access to OS apps, bringing desktop experiences to the cloud."
+      },
+      "one_click": {
+        "title": "True One-Click Installs",
+        "description": "Configure everything during installation with our streamlined setup forms - no additional configuration needed after deployment."
+      },
+      "community": {
+        "title": "Rich Community",
+        "description": "Join our thriving ecosystem with community app submissions, documentation contributions, and an open source web client."
+      },
+      "security": {
+        "title": "Security & Privacy",
+        "description": "We take security and privacy seriously at Appbox. All apps run in separate namespaces without root access, providing complete isolation between applications. Our infrastructure is designed with a security-first approach - from hardened kernels to regular security audits. For enhanced privacy, our VPN app allows you to route all your traffic through your Appbox, ensuring your online activities remain private and secure. With Appbox, you get enterprise-grade security features in an easy-to-use package."
+      },
+      "deploy_fast": {
+        "title": "Deploy in Seconds",
+        "description": "With our blazing fast, state of the art hardware, you don't have to wait around for your apps to install."
+      },
+      "custom_hardware": {
+        "title": "Custom Hardware",
+        "description": "We worked with industry experts to create our own hardware infrastructure, ensuring privacy, security, and optimal performance."
+      },
+      "custom_network": {
+        "title": "Custom Network",
+        "description": "We own all our networking equipment, giving us the flexibility to peer with networks of our choice, making your connection much faster."
+      },
+      "support": {
+        "title": "Expert Support",
+        "description": "We offer support via tickets which are only answered by industry leading experts."
+      },
+      "documentation": {
+        "title": "Beautiful Documentation",
+        "description": "Our open source documentation system allows users to contribute, creating an extensive and valuable resource that's constantly growing."
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "Frequently Asked Questions",
+        "description": "Find answers to our most common questions and discover how Appbox can benefit you."
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "What payment methods do you accept?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We offer multiple payment options to make your purchase as seamless as possible:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Debit/Credit Cards<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (Including Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Cryptocurrencies<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">We also provide flexible billing cycles—monthly, quarterly, semi-annually, or annually. If you'd like to see more options, just let us know.</p>"
+        },
+        "deployment_time": {
+          "title": "How quickly will I get my Appbox?",
+          "content": "<p class=\"mb-4 leading-relaxed\">As soon as your payment is confirmed, our automated system deploys your Appbox right away. Any apps you choose during checkout are also set up instantly, so you can start using them without delay.</p>"
+        },
+        "server_location": {
+          "title": "Where are your servers located?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Our servers reside in dedicated racks at the AMS5 data center in Amsterdam, Netherlands, ensuring top-tier performance and reliability.</p>"
+        },
+        "root_access": {
+          "title": "Do you offer root access?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Yes, we do. While our App Store simplifies the application install process, we also provide Ubuntu and Debian apps with full root access if you need complete control.</p><p class=\"mb-4 leading-relaxed\">Please note that Docker and apps requiring specific kernel modules or systemd are not supported due to security policies. However, we're developing virtual machine options to help you work around these limitations.</p>"
+        },
+        "security": {
+          "title": "What security features do you offer?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We take security seriously, implementing multiple layers of protection to safeguard your data:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Each Appbox runs in its own sandbox to isolate your data</li><li>All connections use HTTPS, encrypting data in transit</li><li>Unlimited VPN accounts (for qualifying packages) let you route your traffic through Appbox</li><li>Daily log deletion (FTP, SSH, HTTP, VPN, etc.) for additional privacy</li></ul>"
+        },
+        "data_access": {
+          "title": "How can I access my Appbox data from my computer?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We offer several convenient ways to manage your Appbox files and media:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Use sync apps such as Resilio or Syncthing to keep files updated automatically.</li><li>Stream media from anywhere with Plex, Navidrome, or similar apps.</li><li>Download files securely using FTP over TLS, HTTPS, or other protocols.</li></ul><p class=\"mb-4 leading-relaxed\">The App Store includes various apps to help you stay connected to your data in the way that works best for you.</p>"
+        },
+        "additional_software": {
+          "title": "Can I install software not available in the App Store?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Absolutely. Our OS apps let you install custom software, and some even come with a remote desktop interface for a full graphical experience. This gives you complete freedom to run the tools and applications you need.</p>"
+        },
+        "fuse_rclone": {
+          "title": "Do you allow FuSE mounts or Rclone?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Yes, we do. Our OS apps fully support FuSE, and we offer a dedicated Rclone app in the App Store for quick and easy cloud storage integration.</p>"
+        },
+        "refund_policy": {
+          "title": "What is your refund policy?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We offer a 7-day pro-rated refund window for new customers. Existing customers have different eligibility criteria for refunds. Payments made with cryptocurrencies, purchases of dedicated IP addresses, and certain other transactions are non-refundable. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">View our complete refund policy</a> for full details.</p>"
+        },
+        "custom_domain": {
+          "title": "Can I use my own domain name?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Yes. You can map your own domain and set up subdomains for each application. Simply add an A record in your DNS pointing to your Appbox, and we'll handle the rest to get you up and running smoothly.</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "Product",
+      "resources": "Resources",
+      "pricing": "Pricing",
+      "features": "Features",
+      "apps": "Apps",
+      "documentation": "Documentation",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "service_status": "Service Status",
+      "overview": "Overview of features",
+      "view_pricing": "View our pricing plans",
+      "explore_apps": "Explore our apps",
+      "read_docs": "Read the docs",
+      "latest_articles": "Latest articles and news",
+      "faq_description": "Frequently asked questions",
+      "check_status": "Check our service status"
+    },
+    "external_links": {
+      "billing": "Billing",
+      "control_panel": "Control Panel"
     }
   },
-
   "docs": {
     "on_this_page": "On this page",
     "edit_page_on_github": "Edit this page on GitHub",
@@ -66,23 +175,19 @@
     "api_reference": "API Reference",
     "docs": "Docs",
     "source": "Source",
-
     "not_found": {
       "description": "The document you are looking for does not exist.",
       "title": "Document not found"
     }
   },
-
   "blog": {
     "words": {
       "posts": "Posts",
       "by": "by"
     },
-
     "cards": {
       "min_read": "min read"
     },
-
     "buttons": {
       "next": "Next",
       "previous": "Previous",
@@ -90,6 +195,76 @@
       "read_more": "read more",
       "go_to_next_page": "Go to next page",
       "go_to_previous_page": "Go to previous page"
+    }
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "semiannually": "Semiannually",
+      "annually": "Annually",
+      "billed_every": "Billed [cycle]"
+    },
+    "card": {
+      "storage": "Storage",
+      "traffic": "Traffic",
+      "app_slots": "App Slots",
+      "connection_speed": "Connection Speed",
+      "resource_multiplier": "Resource Multiplier",
+      "users_per_disk": "Users Per Disk",
+      "raid": "RAID",
+      "disks": "Disks",
+      "per_month": "/mo",
+      "order_now": "Order Now"
+    }
+  },
+  "apps": {
+    "title": "App Library",
+    "description": "Explore our massive collection of ready-to-deploy apps",
+    "loading": "Loading apps...",
+    "error": "Failed to load apps",
+    "no_results": "No apps match your search criteria",
+    "back_to_apps": "Back to apps",
+    "app_not_found": "The requested app could not be found",
+    "search": {
+      "title": "Search",
+      "description": "Find the perfect app for your needs",
+      "name_search": "Search by name",
+      "name_placeholder": "App name or keyword",
+      "category": "Category",
+      "all_categories": "All Categories",
+      "app_slots": "App Slots",
+      "app_slots_placeholder": "Any app slots",
+      "sort_by": "Sort by",
+      "sort_popularity": "Popularity",
+      "sort_name": "Name (A-Z)",
+      "sort_date": "Recently Added",
+      "reset_filters": "Reset Filters"
+    },
+    "card": {
+      "app_slots": "App Slots",
+      "view_details": "View Details"
+    },
+    "detail": {
+      "by": "by",
+      "description": "Description",
+      "app_info": "App Information",
+      "version": "Version",
+      "app_slots": "App Slots",
+      "released": "Released",
+      "developer_site": "Developer Site",
+      "visit_site": "Visit site",
+      "deploy_app": "Deploy this App",
+      "community_ratings": "Community Ratings",
+      "upvotes": "Upvotes",
+      "downvotes": "Downvotes",
+      "no_ratings_yet": "No ratings yet"
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "Connected App Ecosystem",
+      "description": "Each app has file system access to shared parts of other apps, all connected to each other via a secure local network bridge."
     }
   }
 }

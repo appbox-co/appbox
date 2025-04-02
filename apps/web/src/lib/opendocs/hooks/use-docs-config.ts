@@ -4,11 +4,11 @@ import { useLocale } from 'next-intl'
 import type { DocsConfig } from '@/lib/opendocs/types/docs'
 import type { LocaleOptions } from '../types/i18n'
 
-import { defaultLocale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 
 export function useDocsConfig() {
   const locale = useLocale() as LocaleOptions
-  const currentLocale = locale || defaultLocale
+  const currentLocale = locale || routing.defaultLocale
 
   const [docsConfig, setDocsConfig] = useState<{
     currentLocale: LocaleOptions

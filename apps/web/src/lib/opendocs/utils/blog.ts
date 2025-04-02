@@ -2,11 +2,11 @@ import { type Blog, allBlogs } from 'contentlayer/generated'
 
 import type { BlogPageProps } from '../types/blog'
 
-import { defaultLocale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 
 export function makeLocalizedSlug({ locale, slug }: BlogPageProps['params']) {
   const _slug = slug?.join('/')
-  const _locale = locale || defaultLocale
+  const _locale = locale || routing.defaultLocale
 
   const localizedSlug = [_locale, _slug].filter(Boolean).join('/')
 
@@ -22,7 +22,7 @@ export async function getBlogFromParams({
   if (!blog) {
     localizedSlug = makeLocalizedSlug({
       ...params,
-      locale: defaultLocale,
+      locale: routing.defaultLocale,
     })
 
     blog = allBlogs.find((blog) => blog.slugAsParams === localizedSlug)

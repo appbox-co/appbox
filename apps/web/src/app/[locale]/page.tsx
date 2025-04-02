@@ -1,52 +1,88 @@
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
-import dynamic from 'next/dynamic'
+import { getTranslations } from 'next-intl/server'
+import Script from 'next/script'
 
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
 import { FeaturedCard } from '@/components/featured-card'
-import { Announcement } from '@/components/announcement'
+import {
+  Announcement,
+  AnnouncementTag,
+  AnnouncementTitle,
+} from '@/components/ui/announcement'
 import { buttonVariants } from '@/components/ui/button'
 import { FlipWords } from '@/components/ui/flip-words'
 import { Icons } from '@/components/icons'
 import { siteConfig } from '@/config/site'
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
-
+import Plans from '@/components/ui/plans'
+import { mockData } from '@/data/mockData'
+import { ClientGradientWrapper } from '@/components/ui/client-gradient-wrapper'
+import { ClientVortexWrapper } from '@/components/ui/client-vortex-wrapper'
+import { AppsMarquee } from '@/components/apps-marquee'
 import {
   PageHeader,
   PageActions,
   PageHeaderHeading,
   PageHeaderDescription,
 } from '@/components/page-header'
+import { ArrowUpRightIcon } from 'lucide-react'
+import { AppConnectionsSection } from '@/components/app-connections-section'
+import { FeaturesSection } from '@/components/features-section'
+import { FAQSection } from '@/components/faq-section'
 
-import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
-
-export const dynamicParams = true
-
-const Vortex = dynamic(() => import('../../components/ui/vortex'), {
-  ssr: false,
-})
-
-export default async function IndexPage({
-  params,
-}: {
-  params: { locale: LocaleOptions }
-}) {
-  unstable_setRequestLocale(params.locale)
-
+export default async function IndexPage() {
   const t = await getTranslations()
 
   return (
     <div className="container relative">
       <PageHeader>
-        <Announcement title={t('site.announcement')} href="/docs" />
+        <Link href="/docs">
+          <Announcement>
+            <AnnouncementTag>Latest Update</AnnouncementTag>
+            <AnnouncementTitle>
+              🎉 {t('site.announcement')}
+              <ArrowUpRightIcon
+                size={16}
+                className="shrink-0 text-muted-foreground"
+              />
+            </AnnouncementTitle>
+          </Announcement>
+        </Link>
 
         <PageHeaderHeading>
-          <FlipWords
-            words={['site', 'blog', 'docs']}
-            className="text-9xl -z-10"
-          />
-
-          <TextGenerateEffect words={t('site.heading')} />
+          <div className="relative">
+            <ClientGradientWrapper
+              width={300}
+              height={300}
+              path="M100,100 m0,-75 a75,75 0 1,1 -0.1,0 z"
+              gradientColors={['#7B68EE', '#7B68EE', '#3498DB']}
+              className="absolute -z-10 left-[50%] -translate-x-1/2 -top-10"
+              opacity={0.7}
+            />
+            <TextGenerateEffect words={t('site.heading')} />
+            <FlipWords
+              words={[
+                'site',
+                'blog',
+                'docs',
+                'files',
+                'database',
+                'team',
+                'marketing',
+                'analytics',
+                'projects',
+                'VPS',
+                'videos',
+                'images',
+                'audio',
+                'code',
+                'data',
+                'security',
+                'testing',
+              ]}
+              className="text-7xl"
+            />
+          </div>
         </PageHeaderHeading>
 
         <PageHeaderDescription>{t('site.description')}</PageHeaderDescription>
@@ -69,51 +105,95 @@ export default async function IndexPage({
         </PageActions>
 
         <div className="fixed left-0 -top-40 size-full -z-10 overflow-hidden">
-          <Vortex
+          <ClientVortexWrapper
             backgroundColor="transparent"
             className="flex size-full"
             rangeY={300}
             baseRadius={2}
             particleCount={20}
-            rangeSpeed={1.5}
+            rangeSpeed={0.5}
+            fadeTimeFactor={0.2}
+            // snow
+            // particleCount={50}
+            // rangeSpeed={1.5}
+            // snowBaseTTL={500}
+            // snowRangeTTL={1000}
+            // fadeTimeFactor={0.5}
           />
         </div>
       </PageHeader>
 
-      <section className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-2 2xl:grid-cols-4">
-          <FeaturedCard
-            icon="🧬"
-            title="Next.js"
-            description={t('site.featured_cards.nextjs.description')}
-          />
-
-          <FeaturedCard
-            icon="⚡️"
-            title="Shadcn"
-            description={t('site.featured_cards.shadcn.description')}
-          />
-
-          <FeaturedCard
-            icon="🚀"
-            title="Tailwind"
-            description={t('site.featured_cards.tailwind.description')}
-          />
-
-          <FeaturedCard
-            icon="🌍"
-            title="i18n"
-            description={t('site.featured_cards.i18n.description')}
-          />
-        </div>
-
-        <FeaturedCard
-          icon="+"
-          orientation="horizontal"
-          title={t('site.featured_cards.more.title')}
-          description={t('site.featured_cards.more.description')}
+      <section id="plans-section" className="pt-4 scroll-mt-4">
+        <Plans
+          data={mockData.data}
+          messages={{
+            billing_cycles: {
+              monthly: t('plans.billing_cycles.monthly'),
+              quarterly: t('plans.billing_cycles.quarterly'),
+              semiannually: t('plans.billing_cycles.semiannually'),
+              annually: t('plans.billing_cycles.annually'),
+              billed_every: t('plans.billing_cycles.billed_every'),
+            },
+            card: {
+              storage: t('plans.card.storage'),
+              traffic: t('plans.card.traffic'),
+              app_slots: t('plans.card.app_slots'),
+              connection_speed: t('plans.card.connection_speed'),
+              resource_multiplier: t('plans.card.resource_multiplier'),
+              users_per_disk: t('plans.card.users_per_disk'),
+              raid: t('plans.card.raid'),
+              disks: t('plans.card.disks'),
+              per_month: t('plans.card.per_month'),
+              order_now: t('plans.card.order_now'),
+            },
+          }}
         />
       </section>
+
+      <AppsMarquee
+        title={t('site.apps_section.title')}
+        description={t('site.apps_section.description')}
+      />
+
+      <AppConnectionsSection
+        title={t('home.connections_section.title')}
+        description={t('home.connections_section.description')}
+      />
+
+      <FeaturesSection
+        id="features"
+        title={t('site.features.section.title')}
+        description={t('site.features.section.description')}
+      />
+
+      <FAQSection
+        id="faq"
+        title={t('site.faq.section.title')}
+        description={t('site.faq.section.description')}
+      />
+
+      <Script
+        id="chatwoot-widget"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(d,t) {
+              var BASE_URL="https://chatwoot.appbox.co";
+              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+              g.src=BASE_URL+"/packs/js/sdk.js";
+              g.defer = true;
+              g.async = true;
+              s.parentNode.insertBefore(g,s);
+              g.onload=function(){
+                window.chatwootSDK.run({
+                  websiteToken: 'A8Ddn77aZ43frViEkFT8trZg',
+                  baseUrl: BASE_URL
+                })
+              }
+            })(document,"script");
+          `,
+        }}
+      />
     </div>
   )
 }

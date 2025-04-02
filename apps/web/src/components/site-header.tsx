@@ -1,17 +1,17 @@
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getMessages } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
 import dynamic from 'next/dynamic'
 
 import { ThemeModeToggle } from '@/components/theme-mode-toggle'
 import { Separator } from '@/components/ui/separator'
-import { VersionDropdown } from './version-dropdown'
 import { MobileNav } from '@/components/mobile-nav'
 import { MainNav } from '@/components/main-nav'
-import { buttonVariants } from './ui/button'
+import { Button, buttonVariants } from './ui/button'
 import { Icons } from '@/components/icons'
 import { siteConfig } from '@/config/site'
 import { I18nToggle } from './i18n-toggle'
-import { Link } from '@/navigation'
 import { cn } from '@/lib/utils'
+import { Link } from '@/i18n/routing'
 
 const CommandMenu = dynamic(() =>
   import('@/components/command-menu').then((mod) => mod.CommandMenu)
@@ -19,10 +19,13 @@ const CommandMenu = dynamic(() =>
 
 export async function SiteHeader() {
   const t = await getTranslations('site')
+  const messages = await getMessages()
+  const { site } = messages
 
   return (
-    <header className={'sticky top-0 z-50 w-full backdrop-blur'}>
-      <div className="container flex h-14 max-w-screen-2xl items-center">
+    <header className={'sticky top-0 z-50 w-full'}>
+      <div className="absolute inset-0 backdrop-blur"></div>
+      <div className="container relative flex h-14 max-w-screen-2xl items-center">
         <MainNav
           messages={{
             docs: t('words.docs'),
@@ -39,7 +42,7 @@ export async function SiteHeader() {
         />
 
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
+          <div className="hidden xl:block w-full flex-1 xl:w-auto xl:flex-none">
             <CommandMenu
               messages={{
                 docs: t('words.docs'),
@@ -59,28 +62,43 @@ export async function SiteHeader() {
             />
           </div>
 
-          <nav className="flex items-center">
-            <VersionDropdown
-              messages={{
-                changelog: t('changelog'),
-              }}
-            />
+          <div className="hidden md:flex items-center gap-2 mr-2">
+            <Link
+              href="https://billing.appbox.co"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button variant="outline">Billing</Button>
+            </Link>
+            <Link
+              href="https://www.appbox.co/login"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button variant="defaultsm">Control Panel</Button>
+            </Link>
+          </div>
 
-            <I18nToggle
-              messages={{
-                toggleLanguage: t('buttons.toggle_language'),
-              }}
-            />
+          <nav className="flex items-center gap-2">
+            {/* Only show language and theme toggles on lg screens and up */}
+            <div className="hidden lg:flex items-center gap-2">
+              <I18nToggle
+                messages={{
+                  toggleLanguage: t('buttons.toggle_language'),
+                }}
+              />
 
-            <ThemeModeToggle
-              messages={{
-                dark: t('themes.dark'),
-                light: t('themes.light'),
-                system: t('themes.system'),
-              }}
-            />
+              <ThemeModeToggle
+                messages={{
+                  dark: t('themes.dark'),
+                  light: t('themes.light'),
+                  system: t('themes.system'),
+                }}
+              />
+            </div>
 
-            <div className="phone:flex hidden items-center">
+            {/* Only show GitHub link on lg screens and up */}
+            <div className="hidden lg:flex items-center">
               <Separator orientation="vertical" className="mx-1 h-5" />
               <SiteHeaderMenuLinks />
             </div>

@@ -6,7 +6,7 @@ import type { Blog } from 'contentlayer/generated'
 import { DocNotAvailableInThisLanguage } from '../docs/not-available'
 import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
 import { cn, formatDate } from '@/lib/utils'
-import { dateLocales } from '@/config/i18n'
+import { dateLocales } from '@/i18n/routing'
 import { ReadTime } from './read-time'
 
 interface BlogPostHeadingProps {

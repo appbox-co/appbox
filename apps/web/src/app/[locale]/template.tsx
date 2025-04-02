@@ -13,13 +13,19 @@ export default function Template({ children }: ComponentProps<'div'>) {
     return <>{children}</>
   }
 
+  // Return the children without any animation effects
+  return <>{children}</>
+
+  // Or if you want to keep the motion.div for potential future use, but disable animations:
+  /*
   return (
     <motion.div
-      initial={{ y: 20, opacity: 0 }}
+      initial={{ y: 0, opacity: 1 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ ease: 'easeInOut', duration: 0.7 }}
+      transition={{ duration: 0 }}
     >
       {children}
     </motion.div>
   )
+  */
 }

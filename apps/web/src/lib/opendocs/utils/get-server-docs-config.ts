@@ -1,4 +1,4 @@
-import { defaultLocale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 
 import type { LocaleOptions } from '../types/i18n'
 
@@ -11,6 +11,6 @@ export async function getServerDocsConfig({ locale }: ServerDocsConfig) {
 
   return {
     docs: docsConfig,
-    currentLocale: locale || defaultLocale,
+    currentLocale: locale || routing.defaultLocale,
   }
 }

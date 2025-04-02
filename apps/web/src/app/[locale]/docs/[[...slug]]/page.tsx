@@ -1,4 +1,4 @@
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { allDocs } from 'contentlayer/generated'
 
 import type { LocaleOptions } from '@/lib/opendocs/types/i18n'
@@ -16,19 +16,18 @@ import { DocPageProps } from '@/lib/opendocs/types/docs'
 import { DocHeading } from '@/components/docs/heading'
 import { DocsPager } from '@/components/docs/pager'
 import { DocLinks } from '@/components/docs/links'
-import { defaultLocale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 import { Mdx } from '@/components/docs/mdx'
 import { siteConfig } from '@/config/site'
 import { absoluteUrl } from '@/lib/utils'
 
 export const dynamicParams = true
 
-export async function generateMetadata({
-  params,
-}: DocPageProps): Promise<Metadata> {
+export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
+  const params = await props.params
   const locale = params.locale
 
-  unstable_setRequestLocale(locale || defaultLocale)
+  setRequestLocale(locale || routing.defaultLocale)
 
   const doc = await getDocFromParams({ params })
 
@@ -57,14 +56,6 @@ export async function generateMetadata({
         },
       ],
     },
-
-    twitter: {
-      card: 'summary_large_image',
-      title: doc.title,
-      description: doc.description,
-      images: [siteConfig.og.image],
-      creator: siteConfig.links.twitter.username,
-    },
   }
 }
 
@@ -83,8 +74,9 @@ export async function generateStaticParams(): Promise<
   return docs
 }
 
-export default async function DocPage({ params }: DocPageProps) {
-  unstable_setRequestLocale(params.locale || defaultLocale)
+export default async function DocPage(props: DocPageProps) {
+  const params = await props.params
+  setRequestLocale(params.locale || routing.defaultLocale)
 
   const doc = await getDocFromParams({ params })
   const t = await getTranslations('docs')

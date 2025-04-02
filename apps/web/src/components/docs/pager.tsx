@@ -11,7 +11,7 @@ import {
 
 import { getServerDocsConfig } from '@/lib/opendocs/utils/get-server-docs-config'
 import { buttonVariants } from '../ui/button'
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
 interface DocsPagerProps {

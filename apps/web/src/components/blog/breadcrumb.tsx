@@ -2,7 +2,7 @@ import { ChevronRightIcon } from 'lucide-react'
 
 import type { Blog } from 'contentlayer/generated'
 
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 
 interface BlogPostBreadcrumbProps {
   post: Blog

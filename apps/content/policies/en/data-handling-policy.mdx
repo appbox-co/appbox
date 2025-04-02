@@ -1,0 +1,329 @@
+---
+title: Data Handling Policy
+description: How we manage and protect your data
+---
+
+At Appbox, we collect and store only the minimum information necessary to maintain our records and deliver our services. The Appbox team is trained to handle your data with the utmost privacy and security in mind and follows strict protocols, including using strong credentials and multi-factor authentication. All payment processing is handled entirely by our payment processors, and none of your financial information is stored by Appbox, aside from payment records and their respective transaction IDs.
+
+## Email
+
+- **Uses**
+  - Serves as your login for your Appbox Client Area and Appbox Control Panel
+  - Point of contact for Appbox service announcements
+  - Point of contact for Appbox Ticket System inquiries
+- **Collection**
+  - Provided by the user during signup
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - This is for contacting the user for support or any service announcements
+- **Retention**
+  - Indefinite
+- **More information**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Uses**
+  - Identifies the user on the Appbox Ticket System
+  - Serves as the name of the user's Appbox slot
+  - Registered as a local user on the server where the user's slot is deployed, showing any running processes the user has
+  - Serves as the user's username for installed applications
+- **Collection**
+  - Provided by the user during signup
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Required for support inquiries
+    - Required to investigate server issues by searching for applications with high resource consumption, server instability sources, or any unauthorized applications
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Uses**
+  - Used to compute applicable taxes based on the user's selected country
+- **Collection**
+  - Provided by the user during signup
+- **Storage**
+  - WHMCS = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Uses**
+  - Serves as the user's password for the Appbox Client Area
+- **Collection**
+  - Provided by the user during signup on the Appbox Client Area
+- **Storage**
+  - WHMCS = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Limited access by the Appbox team
+    - The Appbox team cannot see the user's password as it is hashed, but they can reset your password after verification
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - We strongly recommend enabling two-factor authentication on your [account security page](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel Password
+
+- **Uses**
+  - Serves as the user's password on the Appbox Control Panel to access their slot
+- **Collection**
+  - Provided by the user after the deployment of their slot
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Limited access by the Appbox team
+    - The Appbox team cannot see the user's password as it is hashed, but they can reset your password after verification
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - We strongly recommend enabling two-factor authentication on your [account security page](https://billing.appbox.co/user/security)
+
+### Application Passwords
+
+- **Uses**
+  - Serves as the password for the user's installed applications
+- **Collection**
+  - Provided by the user after the deployment of their slot
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Required for application-specific support inquiries, with the user's permission
+- **Retention**
+  - Until the user uninstalls the application
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - We strongly recommend enabling two-factor authentication on your [account security page](https://billing.appbox.co/user/security)
+
+## Payment Processing
+
+### PayPal
+
+- **Uses**
+  - Serves as one of Appbox's payment gateways
+- **Collection**
+  - Payment processing is done entirely by PayPal. The only data saved in WHMCS under the user's account is the **PayPal Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - The Appbox Sales Team may verify the user's information with PayPal as part of our sales process
+- **Retention**
+  - Indefinite
+
+### Stripe
+
+- **Uses**
+  - Serves as one of Appbox's payment gateways
+- **Collection**
+  - Payment processing is done entirely by Stripe. The only data saved in WHMCS under the user's account is the **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Storage**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - The Appbox Sales Team may verify the user's information with Stripe as part of our sales process
+- **Retention**
+  - Indefinite
+
+### CoinGate
+
+- **Uses**
+  - Serves as one of Appbox's payment gateways for cryptocurrency transactions
+- **Collection**
+  - Payment processing is done entirely by CoinGate. The only data saved in WHMCS is the **CoinGate Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - The Appbox Sales Team may verify the user's information with CoinGate as part of our sales process
+- **Retention**
+  - Indefinite
+
+*Note: CoinGate itself stores the blockchain transaction ID and the sender's blockchain address as part of their service. This information is not stored by Appbox.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Uses**
+  - Used to monitor the health and resource usage of the servers
+- **Collection**
+  - Generated after the deployment of the user's slot
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - Server metrics can be viewed using various Linux utilities installed on your slot. The following major metrics can be seen:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Your running processes
+      - Processes run by other users on the same server are not accessible by you
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (your allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - In addition to the metrics above, the Appbox team uses Posthog to quickly aggregate all metrics from all servers and alert the team of any errors
+    - Server metrics are used for support inquiries and to investigate any resource abuse
+- **Retention**
+  - Indefinite
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Uses**
+  - Any invalid access attempts are logged into Appbox API, which restricts the user from logging into the Control Panel after a certain number of attempts for a specified period. This includes:
+    - Username, as inputted by the user
+    - IP address
+    - Number of attempts
+    - Last date of attempt
+- **Collection**
+  - Collected when a user enters credentials incorrectly
+- **Storage**
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Team
+    - Used to identify any brute-force attempts
+    - Users can request to lift their timeout and remove the access attempt, upon request and verification via the Ticket system
+- **Retention**
+  - 24 hours or upon user request
+
+#### SSH Login Logs
+
+- **Uses**
+  - Records login attempts and successful logins to SSH on user-installed applications like Ubuntu or Debian
+- **Collection**
+  - Generated automatically by the SSH server when login attempts occur
+- **Storage**
+  - Application container = Cleartext (typically in `/var/log/auth.log` or similar)
+- **Access and Reasons for Access**
+  - User
+    - As these logs are stored within applications where users have root (sudo) access, users have full control over and access to these logs
+    - Users can view, modify, or delete these logs as needed
+  - Appbox team
+    - Access is only available with user permission during support troubleshooting
+- **Retention**
+  - Managed by the user, as they have root access to the container
+  - Default log rotation policies apply unless modified by the user
+
+### System Generated Logs
+
+- **Uses**
+  - Server-wide generated logs, used to identify issues on the servers
+- **Collection**
+  - Generated by the operating system of the servers
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - Limited Access Appbox team
+    - Used to identify issues in specific servers
+    - Logs are aggregated by Posthog, which alerts the team of any errors
+- **Retention**
+  - Indefinite
+
+### Logs Generated by Installed Applications
+
+- **Uses**
+  - Logs generated by installed applications, used to identify issues within the user's slot
+- **Collection**
+  - Generated by the user's installed applications
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Required for application-specific support inquiries, with the user's permission
+- **Retention**
+  - Until the user uninstalls the application or removes it
+
+### User's bash History
+
+- **Uses**
+  - Records all commands entered by the user on the slot's shell, located in `$HOME/.bash_history`
+- **Collection**
+  - Each command entered on the shell is recorded
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - As the bash history file is stored in the user's home directory, users have full control over this file
+    - Users can view, modify, clear, or delete this file as needed (using commands like `history -c` or by editing/removing the file)
+  - Appbox team
+    - Used for general or application-specific inquiries such as verifying if the commands entered by the user are correct, but only with user permission
+    - Used to check for possible intrusions or server abuse, but only when necessary for security investigations
+- **Retention**
+  - Managed by the user, who can clear the history at any time
+  - By default, bash history is retained indefinitely until the user removes it
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Uses**
+  - Essential files for installed applications to run properly
+- **Collection**
+  - Installed by the user on their slot
+- **Storage**
+  - Appbox Servers = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Used for application-specific support inquiries, with the user's permission
+- **Retention**
+  - Indefinite until the user removes it
+
+#### User Data
+
+- **Uses**
+  - Data created by the user and/or the user's applications and stored on the user's slot
+- **Collection**
+  - Created by the user and/or the user's applications
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - The user's files are stored in home folders on Appbox servers and are isolated from other users. Only the user can access them
+  - Appbox team
+    - Can be accessed for support inquiries, with the user's permission
+- **Retention**
+  - Indefinite until the user removes it
+    - For legitimate DMCA takedown notices, we'll inform the user and ask them to delete the content within 24 hours
+- **More Information**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)

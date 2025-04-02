@@ -1,14 +1,17 @@
 'use client'
 
 import type { LinkProps } from 'next/link'
+import React from 'react'
 
-import { Link, useRouter } from '@/navigation'
+import { Link, useRouter } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
 export interface MobileLinkProps extends Omit<LinkProps, 'locale'> {
   onOpenChange?: (open: boolean) => void
   children: React.ReactNode
   className?: string
+  target?: string
+  rel?: string
 }
 
 export function MobileLink({
@@ -16,6 +19,8 @@ export function MobileLink({
   children,
   className,
   onOpenChange,
+  target,
+  rel,
   ...props
 }: MobileLinkProps) {
   const router = useRouter()
@@ -28,6 +33,8 @@ export function MobileLink({
         onOpenChange?.(false)
       }}
       className={cn(className)}
+      target={target}
+      rel={rel}
       {...props}
     >
       {children}

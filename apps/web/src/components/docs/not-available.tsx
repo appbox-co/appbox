@@ -1,4 +1,4 @@
-import { defaultLocale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 
 const messages = {
   pt: 'Este conteúdo não está disponível em sua língua ainda',
@@ -26,7 +26,7 @@ export function DocNotAvailableInThisLanguage({ locale }: Props) {
 
   return (
     <div className="rounded-md border border-amber-600/50 bg-amber-800/70 p-4">
-      ⚠️ {message || messages[defaultLocale]}.
+      ⚠️ {message || messages[routing.defaultLocale]}.
     </div>
   )
 }

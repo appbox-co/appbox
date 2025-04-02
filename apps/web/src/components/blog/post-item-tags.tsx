@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import type { Blog } from 'contentlayer/generated'
 
 import { PaginationEllipsis } from '../ui/pagination'
-import { Link } from '@/navigation'
+import { Link } from '@/i18n/routing'
 import { Badge } from '../ui/badge'
 
 export function BlogPostItemTags({

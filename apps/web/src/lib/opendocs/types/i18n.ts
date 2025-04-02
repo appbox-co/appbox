@@ -1,7 +1,7 @@
-import { locale } from '@/config/i18n'
+import { routing } from '@/i18n/routing'
 
-export type Locales = (keyof typeof locale)[]
-export type LocaleOptions = Locales[number]
+export type Locales = (typeof routing.locales)[number]
+export type LocaleOptions = (typeof routing.locales)[number]
 
 export type LocalizedRecord = Partial<{
   [key in LocaleOptions]: string

@@ -11,13 +11,14 @@ import { siteConfig } from '@/config/site'
 import { getFonts } from '@/lib/fonts'
 
 interface BlogOgProps {
-  params: { slug: string; locale: LocaleOptions }
+  params: Promise<{ slug: string; locale: LocaleOptions }>
 }
 
 export const runtime = 'edge'
 export const dynamicParams = true
 
-export async function GET(_: NextRequest, { params }: BlogOgProps) {
+export async function GET(_: NextRequest, props: BlogOgProps) {
+  const params = await props.params;
   const post = getBlogPostBySlugAndLocale(params.slug, params.locale)
 
   if (!post) {

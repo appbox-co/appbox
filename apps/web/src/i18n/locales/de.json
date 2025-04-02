@@ -1,0 +1,278 @@
+{
+  "site": {
+    "heading": "Schnelles App-Hosting für Ihre",
+    "description": "Appbox bietet einen vollständig anpassbaren, optimierten Cloud-Service, angetrieben von Open-Source-Software und einem intuitiven Control-Panel.",
+    "announcement": "Einführung von Appbox",
+    "changelog": "Änderungsprotokoll",
+
+    "buttons": {
+      "get_started": "Los geht's",
+      "toggle_menu": "Menü umschalten",
+      "toggle_language": "Sprache umschalten"
+    },
+
+    "words": {
+      "menu": "Menü",
+      "docs": "Dokumentation",
+      "blog": "Blog"
+    },
+
+    "featured_cards": {
+      "nextjs": {
+        "description": "Erstellt mit Next.js unter Verwendung des App-Routers."
+      },
+
+      "shadcn": {
+        "description": "Auf Basis von Shadcn (site/components)."
+      },
+
+      "tailwind": {
+        "description": "Gestaltet mit Tailwind CSS."
+      },
+
+      "i18n": {
+        "description": "Internationalisierungsunterstützung mit next-intl."
+      },
+
+      "more": {
+        "title": "und mehr!",
+        "description": "Viele weitere Funktionen wie Dokumente und Blogposts mit MDX, Dunkel- und Hellmodus, Suchbefehlspalette, internationalisierte Sitemap und mehr…"
+      }
+    },
+
+    "footer": {
+      "copyright": "Urheberrecht © {year} Appbox. Alle Rechte vorbehalten."
+    },
+
+    "search": {
+      "search": "Suche",
+      "no_results_found": "Keine Ergebnisse gefunden",
+      "search_documentation": "Dokumentation durchsuchen",
+      "type_command_or_search": "Geben Sie einen Befehl oder Suchbegriff ein"
+    },
+
+    "themes": {
+      "theme": "Thema",
+      "dark": "Dunkel",
+      "light": "Hell",
+      "system": "System"
+    },
+
+    "apps_section": {
+      "title": "Riesige Sammlung einsatzbereiter Anwendungen",
+      "description": "Hosten Sie alles von Datenbanken und Medienservern bis hin zu Entwicklungstools und Kommunikationsplattformen - setzen Sie Unternehmenssoftware mit nur wenigen Klicks ein"
+    },
+
+    "features": {
+      "section": {
+        "title": "Leistungsstarke Funktionen für Alle",
+        "description": "Erleben Sie die volle Leistung Ihrer Appbox mit Funktionen, die sowohl für Anfänger als auch für Experten konzipiert sind"
+      },
+      "root_access": {
+        "title": "Vollständiger Root-Zugriff",
+        "description": "Setzen Sie vollständige Betriebssystem-Apps wie Debian und Ubuntu mit SSH-Zugriff ein und erhalten Sie vollständige Kontrolle über Ihre Umgebung."
+      },
+      "remote_desktop": {
+        "title": "Remote Desktop",
+        "description": "Führen Sie UI-Anwendungen auf unseren Servern mit vollständigem Remote-Desktop-Zugriff auf Betriebssystem-Apps aus und bringen Sie Desktop-Erlebnisse in die Cloud."
+      },
+      "one_click": {
+        "title": "Echte Ein-Klick-Installation",
+        "description": "Konfigurieren Sie alles während der Installation mit unseren optimierten Einrichtungsformularen - keine zusätzliche Konfiguration nach der Bereitstellung erforderlich."
+      },
+      "community": {
+        "title": "Aktive Community",
+        "description": "Treten Sie unserem florierenden Ökosystem bei, mit Community-App-Einreichungen, Dokumentationsbeiträgen und einem Open-Source-Webclient."
+      },
+      "security": {
+        "title": "Sicherheit & Datenschutz",
+        "description": "Bei Appbox nehmen wir Sicherheit und Datenschutz ernst. Alle Apps laufen in separaten Namespaces ohne Root-Zugriff, was eine vollständige Isolierung zwischen Anwendungen gewährleistet. Unsere Infrastruktur ist mit einem Security-First-Ansatz konzipiert - von gehärteten Kerneln bis hin zu regelmäßigen Sicherheitsaudits. Für verbesserten Datenschutz ermöglicht unsere VPN-App, Ihren gesamten Datenverkehr über Ihre Appbox zu leiten, um sicherzustellen, dass Ihre Online-Aktivitäten privat und sicher bleiben. Mit Appbox erhalten Sie Sicherheitsfunktionen auf Unternehmensniveau in einem benutzerfreundlichen Paket."
+      },
+      "deploy_fast": {
+        "title": "Blitzschnelle Bereitstellung",
+        "description": "Mit unserer blitzschnellen, hochmodernen Hardware müssen Sie nicht auf die Installation Ihrer Apps warten."
+      },
+      "custom_hardware": {
+        "title": "Maßgeschneiderte Hardware",
+        "description": "Wir haben mit Branchenexperten zusammengearbeitet, um unsere eigene Hardware-Infrastruktur zu entwickeln, die Datenschutz, Sicherheit und optimale Leistung gewährleistet."
+      },
+      "custom_network": {
+        "title": "Eigenes Netzwerk",
+        "description": "Wir besitzen unsere gesamte Netzwerkausrüstung und haben die Flexibilität, mit Netzwerken unserer Wahl zu peeren, was Ihre Verbindung viel schneller macht."
+      },
+      "support": {
+        "title": "Experten-Support",
+        "description": "Wir bieten Support über Tickets an, die nur von führenden Branchenexperten beantwortet werden."
+      },
+      "documentation": {
+        "title": "Umfassende Dokumentation",
+        "description": "Unser Open-Source-Dokumentationssystem ermöglicht Benutzerbeiträge und schafft eine umfangreiche, wertvolle Ressource, die ständig wächst."
+      }
+    },
+
+    "faq": {
+      "section": {
+        "title": "Häufig gestellte Fragen",
+        "description": "Finden Sie Antworten auf unsere häufigsten Fragen und entdecken Sie, wie Appbox Ihnen nutzen kann."
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "Welche Zahlungsmethoden akzeptieren Sie?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten mehrere Zahlungsoptionen an, um Ihren Einkauf so reibungslos wie möglich zu gestalten:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Debit-/Kreditkarten<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (einschließlich Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Kryptowährungen<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">Wir bieten auch flexible Abrechnungszyklen an – monatlich, vierteljährlich, halbjährlich oder jährlich. Wenn Sie weitere Optionen wünschen, teilen Sie uns dies bitte mit.</p>"
+        },
+        "deployment_time": {
+          "title": "Wie schnell erhalte ich meine Appbox?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Sobald Ihre Zahlung bestätigt ist, stellt unser automatisiertes System Ihre Appbox sofort bereit. Alle Apps, die Sie beim Checkout ausgewählt haben, werden ebenfalls sofort eingerichtet, sodass Sie sie ohne Verzögerung nutzen können.</p>"
+        },
+        "server_location": {
+          "title": "Wo befinden sich Ihre Server?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Unsere Server befinden sich in dedizierten Racks im AMS5-Rechenzentrum in Amsterdam, Niederlande, und gewährleisten erstklassige Leistung und Zuverlässigkeit.</p>"
+        },
+        "root_access": {
+          "title": "Bieten Sie Root-Zugriff an?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Während unser App Store den Installationsprozess für Anwendungen vereinfacht, bieten wir auch Ubuntu- und Debian-Apps mit vollem Root-Zugriff an, wenn Sie vollständige Kontrolle benötigen.</p><p class=\"mb-4 leading-relaxed\">Bitte beachten Sie, dass Docker und Apps, die bestimmte Kernel-Module oder systemd benötigen, aufgrund von Sicherheitsrichtlinien nicht unterstützt werden. Wir entwickeln jedoch Optionen für virtuelle Maschinen, um Ihnen zu helfen, diese Einschränkungen zu umgehen.</p>"
+        },
+        "security": {
+          "title": "Welche Sicherheitsfunktionen bieten Sie an?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir nehmen Sicherheit ernst und implementieren mehrere Schutzebenen, um Ihre Daten zu schützen:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Jede Appbox läuft in ihrer eigenen Sandbox, um Ihre Daten zu isolieren</li><li>Alle Verbindungen nutzen HTTPS und verschlüsseln Daten während der Übertragung</li><li>Unbegrenzte VPN-Konten (für qualifizierte Pakete) ermöglichen es Ihnen, Ihren Datenverkehr über Appbox zu leiten</li><li>Tägliche Löschung von Protokollen (FTP, SSH, HTTP, VPN usw.) für zusätzlichen Datenschutz</li></ul>"
+        },
+        "data_access": {
+          "title": "Wie kann ich von meinem Computer auf meine Appbox-Daten zugreifen?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten mehrere bequeme Möglichkeiten, Ihre Appbox-Dateien und -Medien zu verwalten:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Verwenden Sie Synchronisierungs-Apps wie Resilio oder Syncthing, um Dateien automatisch aktuell zu halten.</li><li>Streamen Sie Medien von überall mit Plex, Navidrome oder ähnlichen Apps.</li><li>Laden Sie Dateien sicher mit FTP über TLS, HTTPS oder anderen Protokollen herunter.</li></ul><p class=\"mb-4 leading-relaxed\">Der App Store enthält verschiedene Apps, die Ihnen helfen, mit Ihren Daten auf die für Sie am besten geeignete Weise in Verbindung zu bleiben.</p>"
+        },
+        "additional_software": {
+          "title": "Kann ich Software installieren, die nicht im App Store verfügbar ist?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Auf jeden Fall. Unsere Betriebssystem-Apps ermöglichen es Ihnen, benutzerdefinierte Software zu installieren, und einige verfügen sogar über eine Remote-Desktop-Schnittstelle für ein vollständiges grafisches Erlebnis. Dies gibt Ihnen vollständige Freiheit, die Tools und Anwendungen auszuführen, die Sie benötigen.</p>"
+        },
+        "fuse_rclone": {
+          "title": "Erlauben Sie FuSE-Mounts oder Rclone?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Unsere Betriebssystem-Apps unterstützen FuSE vollständig, und wir bieten eine dedizierte Rclone-App im App Store für schnelle und einfache Cloud-Speicher-Integration an.</p>"
+        },
+        "refund_policy": {
+          "title": "Wie lautet Ihre Rückerstattungsrichtlinie?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten Neukunden ein 7-tägiges anteiliges Rückerstattungsfenster. Für Bestandskunden gelten unterschiedliche Kriterien für Rückerstattungen. Zahlungen mit Kryptowährungen, Käufe von dedizierten IP-Adressen und bestimmte andere Transaktionen sind nicht erstattungsfähig. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Lesen Sie unsere vollständige Rückerstattungsrichtlinie</a> für alle Details.</p>"
+        },
+        "custom_domain": {
+          "title": "Kann ich meinen eigenen Domainnamen verwenden?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Sie können Ihre eigene Domain zuordnen und Subdomains für jede Anwendung einrichten. Fügen Sie einfach einen A-Eintrag in Ihrem DNS hinzu, der auf Ihre Appbox verweist, und wir kümmern uns um den Rest, um Sie reibungslos in Betrieb zu nehmen.</p>"
+        }
+      }
+    },
+
+    "navigation": {
+      "product": "Produkte",
+      "resources": "Ressourcen",
+      "pricing": "Preise",
+      "features": "Funktionen",
+      "apps": "Apps",
+      "documentation": "Dokumentation",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "service_status": "Dienststatus",
+      "overview": "Übersicht der Funktionen",
+      "view_pricing": "Preispläne anzeigen",
+      "explore_apps": "Unsere Apps erkunden",
+      "read_docs": "Dokumentation lesen",
+      "latest_articles": "Neueste Artikel und Nachrichten",
+      "faq_description": "Häufig gestellte Fragen",
+      "check_status": "Überprüfen Sie unseren Dienststatus"
+    },
+
+    "external_links": {
+      "billing": "Abrechnung",
+      "control_panel": "Kontrollpanel"
+    }
+  },
+
+  "docs": {
+    "on_this_page": "Auf dieser Seite",
+    "edit_page_on_github": "Diese Seite auf GitHub bearbeiten",
+    "start_discussion_on_github": "Eine Diskussion auf GitHub starten",
+    "api_reference": "API-Referenz",
+    "docs": "Dokumentation",
+    "source": "Quellcode",
+
+    "not_found": {
+      "description": "Das gesuchte Dokument existiert nicht.",
+      "title": "Dokument nicht gefunden"
+    }
+  },
+
+  "blog": {
+    "words": {
+      "posts": "Beiträge",
+      "by": "von"
+    },
+
+    "cards": {
+      "min_read": "Min. Lesezeit"
+    },
+
+    "buttons": {
+      "next": "Weiter",
+      "previous": "Zurück",
+      "rss_feed": "RSS-Feed",
+      "read_more": "mehr lesen",
+      "go_to_next_page": "Zur nächsten Seite gehen",
+      "go_to_previous_page": "Zur vorherigen Seite gehen"
+    }
+  },
+
+  "plans": {
+    "billing_cycles": {
+      "monthly": "Monatlich",
+      "quarterly": "Vierteljährlich",
+      "semiannually": "Halbjährlich",
+      "annually": "Jährlich",
+      "billed_every": "Abgerechnet alle [cycle]"
+    },
+    "card": {
+      "storage": "Speicher",
+      "traffic": "Traffic",
+      "app_slots": "App-Slots",
+      "connection_speed": "Verbindungsgeschwindigkeit",
+      "resource_multiplier": "Ressourcen-Multiplikator",
+      "users_per_disk": "Benutzer pro Festplatte",
+      "raid": "RAID",
+      "disks": "Festplatten",
+      "per_month": "/Monat",
+      "order_now": "Jetzt bestellen"
+    }
+  },
+
+  "apps": {
+    "title": "App-Bibliothek",
+    "description": "Erkunden Sie unsere riesige Sammlung von einsatzbereiten Apps",
+    "loading": "Apps werden geladen...",
+    "error": "Fehler beim Laden der Apps",
+    "no_results": "Keine Apps entsprechen Ihren Suchkriterien",
+    
+    "search": {
+      "title": "Suche",
+      "description": "Finden Sie die perfekte App für Ihre Bedürfnisse",
+      "name_search": "Nach Namen suchen",
+      "name_placeholder": "App-Name oder Stichwort",
+      "category": "Kategorie",
+      "all_categories": "Alle Kategorien",
+      "app_slots": "App-Slots",
+      "app_slots_placeholder": "Beliebige App-Slots",
+      "sort_by": "Sortieren nach",
+      "sort_popularity": "Beliebtheit",
+      "sort_name": "Name (A-Z)",
+      "sort_date": "Kürzlich hinzugefügt",
+      "reset_filters": "Filter zurücksetzen"
+    },
+    
+    "card": {
+      "app_slots": "App-Slots",
+      "view_details": "Details anzeigen"
+    }
+  },
+
+  "home": {
+    "connections_section": {
+      "title": "Verbundenes App-Ökosystem",
+      "description": "Jede App hat Dateisystemzugriff auf gemeinsame Teile anderer Apps, alle miteinander verbunden über eine sichere lokale Netzwerkbrücke."
+    }
+  }
+} 

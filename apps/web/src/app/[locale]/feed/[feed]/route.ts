@@ -96,7 +96,7 @@ const provideWebsiteFeeds = cache(
 )
 
 type StaticParams = {
-  params: { feed: RSSFeed['file']; locale: LocaleOptions }
+  params: Promise<{ feed: RSSFeed['file']; locale: LocaleOptions }>
 }
 
 export const generateStaticParams = async (): Promise<
@@ -107,7 +107,8 @@ export const generateStaticParams = async (): Promise<
     .flat()
 }
 
-export const GET = async (_: Request, { params }: StaticParams) => {
+export const GET = async (_: Request, props: StaticParams) => {
+  const params = await props.params;
   const websiteFeed = provideWebsiteFeeds({
     feed: params.feed,
     locale: params.locale || defaultLocale,

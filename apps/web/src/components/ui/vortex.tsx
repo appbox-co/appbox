@@ -18,6 +18,10 @@ interface VortexProps {
   baseRadius?: number
   rangeRadius?: number
   backgroundColor?: string
+  snow?: boolean
+  snowBaseTTL?: number
+  snowRangeTTL?: number
+  fadeTimeFactor?: number
 }
 
 export default function (props: VortexProps) {
@@ -27,8 +31,14 @@ export default function (props: VortexProps) {
   const particlePropCount = 9
   const particlePropsLength = particleCount * particlePropCount
   const rangeY = props.rangeY || 100
-  const baseTTL = 50
-  const rangeTTL = 150
+  const DEFAULT_BASE_TTL = 600
+  const DEFAULT_RANGE_TTL = 300
+  const baseTTL = props.snow
+    ? (props.snowBaseTTL ?? DEFAULT_BASE_TTL * 2)
+    : DEFAULT_BASE_TTL
+  const rangeTTL = props.snow
+    ? (props.snowRangeTTL ?? DEFAULT_RANGE_TTL * 2)
+    : DEFAULT_RANGE_TTL
   const baseSpeed = props.baseSpeed || 0.0
   const rangeSpeed = props.rangeSpeed || 1.5
   const baseRadius = props.baseRadius || 1
@@ -50,9 +60,28 @@ export default function (props: VortexProps) {
   const TO_RAD: number = Math.PI / 180
   const rand = (n: number): number => n * Math.random()
   const randRange = (n: number): number => n - rand(2 * n)
+  const fadeTimeFactor = props.fadeTimeFactor ?? 1
+
+  /**
+   * If fadeTimeFactor = 0.1, then 0.05 (5%) of lifetime is fade-in, 0.05 is fade-out.
+   * The rest (90%) is fully visible.
+   */
   const fadeInOut = (t: number, m: number): number => {
-    let hm = 0.5 * m
-    return Math.abs(((t + hm) % m) - hm) / hm
+    // halfFade is the duration of the fade-in (and also the fade-out) period
+    const halfFade = (m * fadeTimeFactor) / 2
+    const startFadeOut = m - halfFade
+    // 1) Fade-in from 0 to halfFade
+    if (t < halfFade) {
+      return t / halfFade
+    }
+    // 2) Fade-out from (m - halfFade) to m
+    else if (t > startFadeOut) {
+      return 1 - (t - startFadeOut) / halfFade
+    }
+    // 3) Fully visible in the middle
+    else {
+      return 1
+    }
   }
   const lerp = (n1: number, n2: number, speed: number): number =>
     (1 - speed) * n1 + speed * n2
@@ -87,15 +116,29 @@ export default function (props: VortexProps) {
 
     let x, y, vx, vy, life, ttl, speed, radius, hue
 
-    x = rand(canvas.width)
-    y = center[1] + randRange(rangeY)
-    vx = 0
-    vy = 0
-    life = 0
-    ttl = baseTTL + rand(rangeTTL)
-    speed = baseSpeed + rand(rangeSpeed)
-    radius = baseRadius + rand(rangeRadius)
-    hue = baseHue + rand(rangeHue)
+    if (props.snow) {
+      // Spawn near the top, but inside the visible canvas
+      x = rand(canvas.width)
+      y = rand(rangeY) // e.g. somewhere in [0..rangeY]
+      vx = randRange(0.5) // slight horizontal drift
+      vy = 0
+      life = 0
+      ttl = baseTTL + rand(rangeTTL)
+      speed = baseSpeed + rand(rangeSpeed)
+      radius = baseRadius + rand(rangeRadius)
+      hue = baseHue + rand(rangeHue)
+    } else {
+      // existing logic
+      x = rand(canvas.width)
+      y = center[1] + randRange(rangeY)
+      vx = 0
+      vy = 0
+      life = 0
+      ttl = baseTTL + rand(rangeTTL)
+      speed = baseSpeed + rand(rangeSpeed)
+      radius = baseRadius + rand(rangeRadius)
+      hue = baseHue + rand(rangeHue)
+    }
 
     particleProps.set([x, y, vx, vy, life, ttl, speed, radius, hue], i)
   }
@@ -133,34 +176,56 @@ export default function (props: VortexProps) {
       i7 = 6 + i,
       i8 = 7 + i,
       i9 = 8 + i
-    let n, x, y, vx, vy, life, ttl, speed, x2, y2, radius, hue
 
-    x = particleProps[i]
-    y = particleProps[i2]
-    n = noise3D(x! * xOff, y! * yOff, tick * zOff) * noiseSteps * TAU
-    vx = lerp(particleProps[i3]!, Math.cos(n), 0.5)
-    vy = lerp(particleProps[i4]!, Math.sin(n), 0.5)
-    life = particleProps[i5]
-    ttl = particleProps[i6]
-    speed = particleProps[i7]
-    x2 = x! + vx * speed!
-    y2 = y! + vy * speed!
-    radius = particleProps[i8]
-    hue = particleProps[i9]
+    let x = particleProps[i]
+    let y = particleProps[i2]
+    let vx = particleProps[i3]
+    let vy = particleProps[i4]
+    let life = particleProps[i5]
+    let ttl = particleProps[i6]
+    let speed = particleProps[i7]
+    let radius = particleProps[i8]
+    let hue = particleProps[i9]
 
-    drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
+    if (props.snow) {
+      // Snow: gently drift downward
+      const x2 = x! + vx! * 0.5 // reduce horizontal speed
+      const y2 = y! + speed!
 
-    life!++
+      drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
 
-    particleProps[i] = x2
-    particleProps[i2] = y2
-    particleProps[i3] = vx
-    particleProps[i4] = vy
-    particleProps[i5] = life!
+      life!++
 
-    const bounds = checkBounds(x!, y!, canvas) || life! > ttl!
+      particleProps[i] = x2
+      particleProps[i2] = y2
+      particleProps[i3] = vx!
+      particleProps[i4] = vy!
+      particleProps[i5] = life!
+    } else {
+      // existing logic
+      const n = noise3D(x! * xOff, y! * yOff, tick * zOff) * noiseSteps * TAU
+      vx = lerp(vx!, Math.cos(n), 0.5)
+      vy = lerp(vy!, Math.sin(n), 0.5)
 
-    bounds && initParticle(i)
+      const x2 = x! + vx * speed!
+      const y2 = y! + vy * speed!
+
+      drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
+
+      life!++
+
+      particleProps[i] = x2
+      particleProps[i2] = y2
+      particleProps[i3] = vx!
+      particleProps[i4] = vy!
+      particleProps[i5] = life!
+    }
+
+    // Reinit if out of bounds or lifespan exceeded
+    const outOfBounds = checkBounds(x!, y!, canvas) || life! > ttl!
+    if (outOfBounds) {
+      initParticle(i)
+    }
   }
 
   const drawParticle = (
@@ -177,7 +242,15 @@ export default function (props: VortexProps) {
     ctx.save()
     ctx.lineCap = 'round'
     ctx.lineWidth = radius
-    ctx.strokeStyle = `hsla(${hue},100%,60%,${fadeInOut(life, ttl)})`
+    const alpha = fadeInOut(life, ttl)
+    if (props.snow) {
+      // Fade white in and out
+      ctx.strokeStyle = `hsla(0, 0%, 100%, ${alpha})`
+    } else {
+      // Original color logic
+      ctx.strokeStyle = `hsla(${hue},100%,60%,${alpha})`
+    }
+
     ctx.beginPath()
     ctx.moveTo(x, y)
     ctx.lineTo(x2, y2)
@@ -187,7 +260,11 @@ export default function (props: VortexProps) {
   }
 
   const checkBounds = (x: number, y: number, canvas: HTMLCanvasElement) => {
-    return x > canvas.width || x < 0 || y > canvas.height || y < 0
+    if (props.snow) {
+      return x > canvas.width || x < 0 || y > canvas.height
+    } else {
+      return x > canvas.width || x < 0 || y > canvas.height || y < 0
+    }
   }
 
   const resize = (

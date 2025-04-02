@@ -241,10 +241,40 @@ export const Blog = defineDocumentType(() => ({
   computedFields: blogComputedFields,
 }))
 
+export const Policy = defineDocumentType(() => ({
+  name: 'Policy',
+  filePathPattern: `policies/**/*.mdx`,
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    description: {
+      type: 'string',
+      required: true,
+    },
+    toc: {
+      type: 'boolean',
+      default: true,
+    },
+  },
+  computedFields: {
+    slug: {
+      type: 'string',
+      resolve: (doc) => `/${doc._raw.flattenedPath}`,
+    },
+    slugAsParams: {
+      type: 'string',
+      resolve: (doc) => doc._raw.flattenedPath.split('/').slice(1).join('/'),
+    },
+  },
+}))
+
 export default makeSource({
-  documentTypes: [Doc, Blog],
+  documentTypes: [Doc, Blog, Policy],
   contentDirPath: '../content',
-  contentDirInclude: ['docs', 'blog'],
+  contentDirInclude: ['docs', 'blog', 'policies'],
 
   mdx: {
     remarkPlugins: [remarkGfm, codeImport],

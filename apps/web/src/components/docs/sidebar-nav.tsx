@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/accordion'
 
 import { getObjectValueByLocale } from '@/lib/opendocs/utils/locale'
-import { usePathname, Link as DesktopLink } from '@/navigation'
+import { usePathname, Link as DesktopLink } from '@/i18n/routing'
 import { MobileLink } from '../mobile-link'
 import { cn } from '@/lib/utils'
 
