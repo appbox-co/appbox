@@ -52,17 +52,6 @@ export const docsConfig: DocsConfig = {
         },
 
         {
-          href: "/docs/customizing",
-
-          title: {
-            en: "Customizing",
-            pt: "Personalizando",
-          },
-
-          items: [],
-        },
-
-        {
           title: {
             en: "MDX",
           },
@@ -121,17 +110,6 @@ export const docsConfig: DocsConfig = {
               items: [],
             },
           ],
-        },
-
-        {
-          href: "/docs/changelog",
-
-          title: {
-            en: "Changelog",
-            pt: "Histórico de alterações",
-          },
-
-          items: [],
         },
       ],
     },

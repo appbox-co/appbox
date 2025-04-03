@@ -1,7 +1,6 @@
-import { createContentlayerPlugin } from "next-contentlayer2"
+import { withContentlayer } from "next-contentlayer2"
 import nextIntlPlugin from "next-intl/plugin"
 
-const withContentlayer = createContentlayerPlugin({})
 const withNextIntl = nextIntlPlugin()
 
 /** @type {import('next').NextConfig} */

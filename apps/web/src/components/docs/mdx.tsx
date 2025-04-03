@@ -1,5 +1,3 @@
-"use client"
-
 import { Callout } from "@/components/callout"
 import { CodeBlockWrapper } from "@/components/docs/mdx-components/code-block-wrapper"
 import {

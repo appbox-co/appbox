@@ -5,6 +5,17 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --breakpoint-phone: 400px;
+}
+
+@theme inline {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-pulse-glow: pulse-glow 1.75s infinite cubic-bezier(0, 0, 0, 1.5);
+
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -38,14 +49,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-pulse-glow: pulseGlow 1.75s infinite cubic-bezier(0, 0, 0, 1.5);
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-
-  --breakpoint-phone: 400px;
-
   @keyframes accordion-down {
     from {
       height: 0;
@@ -62,7 +65,7 @@
       height: 0;
     }
   }
-  @keyframes pulseGlow {
+  @keyframes pulse-glow {
     from {
       box-shadow: 0 0 0 0 hsl(var(--primary) / 70%);
     }
@@ -202,7 +205,9 @@
   }
 }
 
-
+button:hover, a:hover, [role="button"]:hover, .interactive:hover {
+  cursor: pointer;
+}
 
 @layer base {
   * {

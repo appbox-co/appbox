@@ -26,7 +26,7 @@ export default function GradientTracing(props: GradientTracingProps) {
     opacity = 1,
   } = props
 
-  const gradientId = `pulse-${Math.random().toString(36).substr(2, 9)}`
+  const gradientId = `pulse-${Math.random().toString(36).substring(2, 11)}`
 
   return (
     <div
@@ -60,6 +60,7 @@ export default function GradientTracing(props: GradientTracingProps) {
             transition={{
               duration: animationDuration,
               repeat: Infinity,
+              repeatDelay: 5,
               ease: "linear",
             }}
             id={gradientId}

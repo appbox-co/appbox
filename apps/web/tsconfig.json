@@ -1,17 +1,42 @@
 {
-  "extends": "@opendocs/typescript-config/nextjs.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Custom Next.js Config",
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "es2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    // You have two choices here:
+    // Option A: Let Next.js handle the JSX transform:
+    "jsx": "preserve",
+    // Option B: Have TypeScript compile JSX using the automatic runtime:
+    // "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "contentlayer/generated": [
+        "./.contentlayer/generated"
+      ]
+    },
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
-    },
-    "baseUrl": ".",
-    "rootDir": ".",
+    ]
   },
   "include": [
     "**/*.ts",
@@ -25,5 +50,7 @@
     "contentlayer.config.ts",
     ".contentlayer/generated"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
