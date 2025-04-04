@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs"
 import { resolve } from "node:path"
+import { createHighlighter } from "shiki"
 import type {
   CodeTheme,
   CodeThemeLanguage,
-  LocalCodeThemes,
+  LocalCodeThemes
 } from "@/lib/opendocs/types/code-theme"
-import { createHighlighter } from "shiki"
 import { codeThemeConfig, localCodeThemes } from "../../../config/code-theme"
 import { toKebabCase } from "./to-kebab-case"
 
@@ -35,14 +35,14 @@ export async function highlightServerCode(
 ) {
   const [path, fs] = await Promise.all([
     import("node:path"),
-    import("node:fs/promises"),
+    import("node:fs/promises")
   ])
 
   const highlighter = await createHighlighter({
     langs: codeThemeConfig.languages,
     themes: [theme].filter(
       (theme) => !localThemes.includes(theme as LocalCodeThemes[number])
-    ),
+    )
   })
 
   const isLocalTheme = localThemes.includes(theme as LocalCodeThemes[number])
@@ -66,7 +66,7 @@ export async function highlightServerCode(
   const html = highlighter.codeToHtml(code, {
     lang: language,
     theme,
-    structure: "inline",
+    structure: "inline"
   })
 
   return html

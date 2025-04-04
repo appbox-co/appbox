@@ -1,14 +1,14 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
+import type { Doc } from "contentlayer/generated"
 import { Link } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { NavItem, NavItemWithChildren } from "@/lib/opendocs/types/nav"
 import { getServerDocsConfig } from "@/lib/opendocs/utils/get-server-docs-config"
 import {
   getObjectValueByLocale,
-  getSlugWithoutLocale,
+  getSlugWithoutLocale
 } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import type { Doc } from "contentlayer/generated"
 import { buttonVariants } from "../ui/button"
 
 interface DocsPagerProps {
@@ -19,7 +19,7 @@ interface DocsPagerProps {
 export async function DocsPager({ doc, locale }: DocsPagerProps) {
   const pager = await getPagerForCurrentDoc({
     doc,
-    locale,
+    locale
   })
 
   if (!pager) {
@@ -55,7 +55,7 @@ export async function DocsPager({ doc, locale }: DocsPagerProps) {
 
 export async function getPagerForCurrentDoc({
   doc,
-  locale,
+  locale
 }: {
   doc: Doc
   locale: LocaleOptions
@@ -79,7 +79,7 @@ export async function getPagerForCurrentDoc({
   return {
     prev,
     next,
-    currentLocale: docsConfig.currentLocale,
+    currentLocale: docsConfig.currentLocale
   }
 }
 
@@ -89,7 +89,7 @@ export function flatten(links: NavItemWithChildren[]): NavItem[] {
       return [
         ...flat,
         ...(link.href ? [link] : []),
-        ...(link.items?.length > 0 ? flatten(link.items) : []),
+        ...(link.items?.length > 0 ? flatten(link.items) : [])
       ]
     }, [])
     .filter((link) => !link?.disabled)

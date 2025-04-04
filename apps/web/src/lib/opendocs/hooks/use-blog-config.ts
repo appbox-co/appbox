@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react"
+import { useLocale } from "next-intl"
 import { routing } from "@/i18n/routing"
 import type { BlogConfig } from "@/lib/opendocs/types/blog"
-import { useLocale } from "next-intl"
-import { useEffect, useState } from "react"
 import type { LocaleOptions } from "../types/i18n"
 
 export function useBlogConfig() {
@@ -17,15 +17,15 @@ export function useBlogConfig() {
     blog: {
       mainNav: [],
       authors: [],
-      rss: [],
-    },
+      rss: []
+    }
   })
 
   useEffect(() => {
     import(`@/config/blog`).then(({ blogConfig }) => {
       setBlogConfig({
         currentLocale,
-        blog: blogConfig,
+        blog: blogConfig
       })
     })
   }, [currentLocale])

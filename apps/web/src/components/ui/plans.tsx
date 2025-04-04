@@ -1,6 +1,6 @@
 "use client"
 
-import { cloneElement, useState } from "react";
+import { cloneElement, useState } from "react"
 import "@/styles/custom-styles.css"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Button } from "@/components/ui/button"
@@ -164,17 +164,17 @@ const Plans = ({
   data,
   messages,
   gradientStartColor = "#00CCB1",
-  gradientEndColor = "#1CA0FB",
+  gradientEndColor = "#1CA0FB"
 }: PlansProps) => {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>([
     "monthly",
-    "1M",
+    "1M"
   ])
   const billingCycles: BillingCycle[] = [
     ["monthly", "1M"],
     ["quarterly", "3M"],
     ["semiannually", "6M"],
-    ["annually", "12M"],
+    ["annually", "12M"]
   ]
 
   return (
@@ -257,7 +257,7 @@ const Plans = ({
                             WebkitTextFillColor: "transparent",
                             // Standard property for Firefox, etc.
                             backgroundClip: "text",
-                            color: "transparent",
+                            color: "transparent"
                           }}
                         >
                           {plan.short_title}
@@ -356,7 +356,7 @@ const Plans = ({
                       </BackgroundGradient>
                     ) : (
                       cloneElement(planCard, { key: idx })
-                    );
+                    )
                   })}
                 </div>
               </div>
@@ -365,7 +365,7 @@ const Plans = ({
         </div>
       ))}
     </div>
-  );
+  )
 }
 
 export default Plans

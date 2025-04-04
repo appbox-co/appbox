@@ -1,14 +1,14 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { motion, stagger, useAnimate } from "framer-motion"
 import { useEffect } from "react"
+import { motion, stagger, useAnimate } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 export const TextGenerateEffect = ({
   words,
   className,
   filter = true,
-  duration = 0.5,
+  duration = 0.5
 }: {
   words: string
   className?: string
@@ -22,15 +22,14 @@ export const TextGenerateEffect = ({
       "span",
       {
         opacity: 1,
-        filter: filter ? "blur(0px)" : "none",
+        filter: filter ? "blur(0px)" : "none"
       },
       {
         duration: duration ? duration : 1,
-        delay: stagger(0.2),
+        delay: stagger(0.2)
       }
     )
-    // eslint-disable-next-line
-  }, [scope.current]);
+  }, [animate, duration, filter])
 
   const renderWords = () => {
     return (
@@ -41,7 +40,7 @@ export const TextGenerateEffect = ({
               key={word + idx}
               className={cn("text-black opacity-0 dark:text-white", className)}
               style={{
-                filter: filter ? "blur(10px)" : "none",
+                filter: filter ? "blur(10px)" : "none"
               }}
             >
               {word}{" "}

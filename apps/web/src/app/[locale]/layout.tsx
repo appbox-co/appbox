@@ -1,7 +1,8 @@
-import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { Metadata, Viewport } from "next"
 import { getMessages } from "next-intl/server"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/globals.css"
+import { NextIntlClientProvider } from "next-intl"
 import { TanstackQueryProvider } from "@/components/providers/query-provider"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -11,7 +12,6 @@ import { routing } from "@/i18n/routing"
 import { fontSans } from "@/lib/fonts"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
-import { NextIntlClientProvider } from "next-intl"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -26,9 +26,11 @@ export async function generateMetadata(props: {
   const params = await props.params
 
   return {
+    metadataBase: new URL(siteConfig.url || "https://www.appbox.co"),
+
     title: {
       default: siteConfig.name,
-      template: `%s - ${siteConfig.name}`,
+      template: `%s - ${siteConfig.name}`
     },
 
     description: getObjectValueByLocale(siteConfig.description, params.locale),
@@ -45,7 +47,7 @@ export async function generateMetadata(props: {
       "Tailwind CSS",
       "Documentation",
       "Server Components",
-      "Internationalization",
+      "Internationalization"
     ],
 
     openGraph: {
@@ -64,9 +66,9 @@ export async function generateMetadata(props: {
         {
           ...siteConfig.og.size,
           alt: siteConfig.name,
-          url: siteConfig.og.image,
-        },
-      ],
+          url: siteConfig.og.image
+        }
+      ]
     },
 
     // twitter: {
@@ -82,12 +84,14 @@ export async function generateMetadata(props: {
     // },
 
     icons: {
-      icon: "/favicon.ico",
-      apple: "/apple-touch-icon.png",
-      shortcut: "/favicon-16x16.png",
+      icon: "/appboxes-white.svg",
+      apple: "/appboxes-white.svg",
+      shortcut: "/appboxes-white.svg"
     },
 
-    manifest: `${siteConfig.url}/site.webmanifest`,
+    manifest: siteConfig.url
+      ? `${siteConfig.url}/site.webmanifest`
+      : "/site.webmanifest"
   }
 }
 
@@ -96,8 +100,8 @@ export const dynamicParams = true
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+    { media: "(prefers-color-scheme: dark)", color: "black" }
+  ]
 }
 
 export default async function RootLayout(props: AppLayoutProps) {

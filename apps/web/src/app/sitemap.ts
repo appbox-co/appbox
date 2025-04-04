@@ -1,7 +1,7 @@
-import { locales } from "@/config/i18n"
-import { absoluteUrl } from "@/lib/utils"
-import { allBlogs, allDocs } from "contentlayer/generated"
 import type { MetadataRoute } from "next"
+import { allBlogs, allDocs } from "contentlayer/generated"
+import { routing } from "@/i18n/routing"
+import { absoluteUrl } from "@/lib/utils"
 
 type Sitemap = MetadataRoute.Sitemap
 
@@ -13,9 +13,9 @@ export default function sitemap(): Sitemap {
 
       alternates: {
         languages: Object.fromEntries(
-          locales.map((locale) => [locale, absoluteUrl(`/${locale}`)])
-        ),
-      },
+          routing.locales.map((locale) => [locale, absoluteUrl(`/${locale}`)])
+        )
+      }
     },
 
     {
@@ -24,10 +24,13 @@ export default function sitemap(): Sitemap {
 
       alternates: {
         languages: Object.fromEntries(
-          locales.map((locale) => [locale, absoluteUrl(`/${locale}/docs`)])
-        ),
-      },
-    },
+          routing.locales.map((locale) => [
+            locale,
+            absoluteUrl(`/${locale}/docs`)
+          ])
+        )
+      }
+    }
   ]
 
   const docPaths: Sitemap = allDocs.map((doc) => {
@@ -40,12 +43,12 @@ export default function sitemap(): Sitemap {
 
       alternates: {
         languages: Object.fromEntries(
-          locales.map((locale) => [
+          routing.locales.map((locale) => [
             locale,
-            absoluteUrl(`/${locale}/docs/${docSlug}`),
+            absoluteUrl(`/${locale}/docs/${docSlug}`)
           ])
-        ),
-      },
+        )
+      }
     }
   })
 
@@ -59,12 +62,12 @@ export default function sitemap(): Sitemap {
 
       alternates: {
         languages: Object.fromEntries(
-          locales.map((locale) => [
+          routing.locales.map((locale) => [
             locale,
-            absoluteUrl(`/${locale}/blog/${postSlug}`),
+            absoluteUrl(`/${locale}/blog/${postSlug}`)
           ])
-        ),
-      },
+        )
+      }
     }
   })
 

@@ -1,9 +1,9 @@
 "use client"
 
+import * as React from "react"
+import type { LinkProps } from "next/link"
 import { Link, useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import type { LinkProps } from "next/link"
-import * as React from "react";
 
 export interface MobileLinkProps extends Omit<LinkProps, "locale"> {
   onOpenChange?: (open: boolean) => void

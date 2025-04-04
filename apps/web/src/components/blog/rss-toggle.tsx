@@ -1,19 +1,19 @@
 "use client"
 
+import { useState, type PointerEvent } from "react"
+import { useLocale } from "next-intl"
+import ExternalLink from "next/link"
+import { Rss } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { blogConfig } from "@/config/blog"
 import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
 import { cn } from "@/lib/utils"
-import { Rss } from "lucide-react"
-import { useLocale } from "next-intl"
-import ExternalLink from "next/link"
-import { useState, type PointerEvent } from "react"
 
 interface RSSToggleProps {
   messages: {

@@ -1,33 +1,27 @@
 "use client"
 
+import { useCallback, useEffect, useState } from "react"
+import { DropdownMenuTriggerProps } from "@radix-ui/react-dropdown-menu"
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import type { NpmCommands } from "@/lib/opendocs/types/unist"
 import { cn } from "@/lib/utils"
-import { DropdownMenuTriggerProps } from "@radix-ui/react-dropdown-menu"
-import { CheckIcon, CopyIcon } from "@radix-ui/react-icons"
-import { useCallback, useEffect, useState } from "react"
 
 interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   value: string
-  _src?: string
 }
 
 export async function copyToClipboardWithMeta(value: string) {
   navigator.clipboard.writeText(value)
 }
 
-export function CopyButton({
-  _src,
-  value,
-  className,
-  ...props
-}: CopyButtonProps) {
+export function CopyButton({ value, className, ...props }: CopyButtonProps) {
   const [hasCopied, setHasCopied] = useState(false)
 
   useEffect(() => {

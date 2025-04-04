@@ -1,5 +1,5 @@
-import { routing } from "@/i18n/routing"
 import { allBlogs, type Blog } from "contentlayer/generated"
+import { routing } from "@/i18n/routing"
 import type { BlogPageProps } from "../types/blog"
 
 export function makeLocalizedSlug({ locale, slug }: BlogPageProps["params"]) {
@@ -12,7 +12,7 @@ export function makeLocalizedSlug({ locale, slug }: BlogPageProps["params"]) {
 }
 
 export async function getBlogFromParams({
-  params,
+  params
 }: BlogPageProps): Promise<(Blog & { notAvailable: boolean }) | null> {
   let localizedSlug = makeLocalizedSlug(params)
   let blog = allBlogs.find((blog) => blog.slugAsParams === localizedSlug)
@@ -20,7 +20,7 @@ export async function getBlogFromParams({
   if (!blog) {
     localizedSlug = makeLocalizedSlug({
       ...params,
-      locale: routing.defaultLocale,
+      locale: routing.defaultLocale
     })
 
     blog = allBlogs.find((blog) => blog.slugAsParams === localizedSlug)

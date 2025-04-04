@@ -1,15 +1,15 @@
 "use client"
 
-import { Link } from "@/i18n/routing"
-import type { Blog } from "contentlayer/generated"
-import { useSearchParams } from "next/navigation"
 import { useMemo } from "react"
+import { useSearchParams } from "next/navigation"
+import type { Blog } from "contentlayer/generated"
+import { Link } from "@/i18n/routing"
 import { Badge } from "../ui/badge"
 import { PaginationEllipsis } from "../ui/pagination"
 
 export function BlogPostItemTags({
   post,
-  limitOfTagsToDisplay = 5,
+  limitOfTagsToDisplay = 5
 }: {
   post: Blog
   limitOfTagsToDisplay?: number

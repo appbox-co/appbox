@@ -1,5 +1,7 @@
 "use client"
 
+import { useMemo } from "react"
+import { useSearchParams } from "next/navigation"
 import {
   PaginationContent,
   PaginationEllipsis,
@@ -7,11 +9,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-  Pagination as RawPagination,
+  Pagination as RawPagination
 } from "@/components/ui/pagination"
 import { cn } from "@/lib/utils"
-import { useSearchParams } from "next/navigation"
-import { useMemo } from "react"
 
 interface PaginationProps {
   numberOfPages: number
@@ -28,7 +28,7 @@ interface PaginationProps {
 export function Pagination({
   messages,
   numberOfPages,
-  pagesToShow = 5,
+  pagesToShow = 5
 }: PaginationProps) {
   const searchParams = useSearchParams()
 
@@ -66,7 +66,7 @@ export function Pagination({
             href={hasPreviousPage ? `?page=${currentPage - 1}` : "#"}
             aria-label={messages.go_to_previous_page}
             className={cn({
-              "opacity-50 pointer-events-none": !hasPreviousPage,
+              "opacity-50 pointer-events-none": !hasPreviousPage
             })}
           >
             {messages.previous}
@@ -83,7 +83,7 @@ export function Pagination({
             <PaginationItem
               key={page}
               className={cn({
-                "opacity-50 pointer-events-none": isCurrentPage,
+                "opacity-50 pointer-events-none": isCurrentPage
               })}
             >
               {shouldDisplayEllipsis ? (

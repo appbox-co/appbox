@@ -9,7 +9,7 @@ interface GetPolicyFromParamsProps {
 }
 
 export async function getPolicyFromParams({
-  params,
+  params
 }: GetPolicyFromParamsProps) {
   const slug = params.slug?.join("/") || ""
   const locale = params.locale

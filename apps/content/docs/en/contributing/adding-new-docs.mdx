@@ -1,6 +1,7 @@
 ---
 title: Adding new docs
 description: Add new documents to your documentation site and blog.
+sort: 2
 ---
 
 # For documentation
@@ -17,8 +18,17 @@ MDX documents are stored in the `apps/content/docs/[language]` and `apps/content
 ---
 title: Document Title
 description: Document Description.
+sort: 1
 ---
 ```
+
+The following metadata fields are supported:
+
+- `title` (required): The title of the document.
+- `description` (required): A brief description of the document.
+- `sort` (optional): A number that determines the order of the document in navigation. Documents with lower sort values appear first. If not provided, documents are sorted alphabetically by title.
+- `links` (optional): Links to related documents, API references, source code, etc.
+- `toc` (optional): Whether to show the table of contents. Defaults to `true`.
 
 To add new metadata to the document, you can add new keys to the header. For example, you can add an `author` key to indicate the document author:
 
@@ -26,6 +36,7 @@ To add new metadata to the document, you can add new keys to the header. For exa
 ---
 title: Document Title
 description: Document Description.
+sort: 2
 author: Author Name
 ---
 ```

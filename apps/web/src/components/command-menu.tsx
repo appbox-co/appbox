@@ -1,12 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useRouter } from "@/i18n/routing"
-import { useBlogConfig } from "@/lib/opendocs/hooks/use-blog-config"
-import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
-import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
-import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
-import { cn } from "@/lib/utils"
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
+import { useLocale } from "next-intl"
+import { useTheme } from "next-themes"
 import type { AlertDialogProps } from "@radix-ui/react-alert-dialog"
 import {
   CircleIcon,
@@ -14,12 +10,16 @@ import {
   FileTextIcon,
   LaptopIcon,
   MoonIcon,
-  SunIcon,
+  SunIcon
 } from "@radix-ui/react-icons"
 import { allBlogs } from "contentlayer/generated"
-import { useLocale } from "next-intl"
-import { useTheme } from "next-themes"
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "@/i18n/routing"
+import { useBlogConfig } from "@/lib/opendocs/hooks/use-blog-config"
+import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
+import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
+import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
+import { cn } from "@/lib/utils"
 import {
   CommandDialog,
   CommandEmpty,
@@ -27,12 +27,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
+  CommandSeparator
 } from "./ui/command"
 
 function DocsCommandMenu({
   runCommand,
-  messages,
+  messages
 }: {
   runCommand: (command: () => unknown) => void
   messages: {
@@ -109,7 +109,7 @@ function DocsCommandMenu({
 
 function BlogCommandMenu({
   runCommand,
-  messages,
+  messages
 }: {
   runCommand: (command: () => unknown) => void
   messages: {
@@ -265,7 +265,7 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
           <DocsCommandMenu
             runCommand={runCommand}
             messages={{
-              docs: messages.docs,
+              docs: messages.docs
             }}
           />
 
@@ -274,7 +274,7 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
           <BlogCommandMenu
             runCommand={runCommand}
             messages={{
-              blog: messages.blog,
+              blog: messages.blog
             }}
           />
 

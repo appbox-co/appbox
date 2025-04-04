@@ -1,8 +1,9 @@
-import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import { Suspense } from "react"
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
-import { Suspense } from "react"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
+import { allBlogs } from "contentlayer/generated"
 import { AuthorCard } from "@/components/blog/author"
 import { BlogPostBreadcrumb } from "@/components/blog/breadcrumb"
 import { BlogPostHeading } from "@/components/blog/heading"
@@ -17,7 +18,6 @@ import { routing } from "@/i18n/routing"
 import { getBlogFromParams } from "@/lib/opendocs/utils/blog"
 import { getTableOfContents } from "@/lib/opendocs/utils/toc"
 import { absoluteUrl } from "@/lib/utils"
-import { allBlogs } from "contentlayer/generated"
 
 interface BlogPageProps {
   params: Promise<{
@@ -38,7 +38,7 @@ export async function generateMetadata(
 
   const [t, blogPost] = await Promise.all([
     getTranslations("site"),
-    getBlogFromParams({ params }),
+    getBlogFromParams({ params })
   ])
 
   if (!blogPost) {
@@ -69,9 +69,9 @@ export async function generateMetadata(
           {
             ...siteConfig.og.size,
             url: ogImage,
-            alt: siteConfig.name,
-          },
-        ],
+            alt: siteConfig.name
+          }
+        ]
       },
 
       twitter: {
@@ -79,8 +79,8 @@ export async function generateMetadata(
         description,
         images: [ogImage],
         card: "summary_large_image",
-        creator: "@appbox_io",
-      },
+        creator: "@appbox_io"
+      }
     }
   }
 
@@ -103,7 +103,7 @@ export async function generateMetadata(
 
     authors: {
       url: postAuthorUrl,
-      name: postAuthorName,
+      name: postAuthorName
     },
 
     openGraph: {
@@ -117,9 +117,9 @@ export async function generateMetadata(
         {
           ...siteConfig.og.size,
           url: postOgImage,
-          alt: blogPost.title,
-        },
-      ],
+          alt: blogPost.title
+        }
+      ]
     },
 
     twitter: {
@@ -127,20 +127,20 @@ export async function generateMetadata(
       images: [postOgImage],
       creator: postAuthorTwitter,
       card: "summary_large_image",
-      description: blogPost.excerpt,
-    },
+      description: blogPost.excerpt
+    }
   }
 }
 
 export async function generateStaticParams(): Promise<
-  BlogPageProps["params"][]
+  { slug: string[]; locale: LocaleOptions }[]
 > {
   const blog = allBlogs.map((blog) => {
     const [locale, ...slugs] = blog.slugAsParams.split("/")
 
     return {
       slug: slugs,
-      locale: locale as LocaleOptions,
+      locale: locale as LocaleOptions
     }
   })
 
@@ -180,7 +180,7 @@ export default async function BlogPage(props: BlogPageProps) {
             rss_feed: t("blog.buttons.rss_feed"),
             read_more: t("blog.buttons.read_more"),
             go_to_next_page: t("blog.buttons.go_to_next_page"),
-            go_to_previous_page: t("blog.buttons.go_to_previous_page"),
+            go_to_previous_page: t("blog.buttons.go_to_previous_page")
           }}
         />
       </Suspense>
@@ -195,7 +195,7 @@ export default async function BlogPage(props: BlogPageProps) {
         <BlogPostBreadcrumb
           post={blogPost}
           messages={{
-            posts: t("blog.words.posts"),
+            posts: t("blog.words.posts")
           }}
         />
 
@@ -204,7 +204,7 @@ export default async function BlogPage(props: BlogPageProps) {
           locale={locale}
           messages={{
             by: t("blog.words.by"),
-            min_read: t("blog.cards.min_read"),
+            min_read: t("blog.cards.min_read")
           }}
         />
 
@@ -227,7 +227,7 @@ export default async function BlogPage(props: BlogPageProps) {
                 messages={{
                   onThisPage: t("docs.on_this_page"),
                   editPageOnGitHub: t("docs.edit_page_on_github"),
-                  startDiscussionOnGitHub: t("docs.start_discussion_on_github"),
+                  startDiscussionOnGitHub: t("docs.start_discussion_on_github")
                 }}
               />
             </div>

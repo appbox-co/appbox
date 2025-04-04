@@ -32,7 +32,6 @@ export const pre = ({
       {__rawString__ && !__npmCommand__ && (
         <CopyButton
           value={__rawString__}
-          src={__src__}
           className={cn("absolute right-4 top-4", __withMeta__ && "top-16")}
         />
       )}
@@ -45,7 +44,7 @@ export const pre = ({
               __bunCommand__,
               __npmCommand__,
               __yarnCommand__,
-              __pnpmCommand__,
+              __pnpmCommand__
             }}
             className={cn("absolute right-4 top-4", __withMeta__ && "top-16")}
           />

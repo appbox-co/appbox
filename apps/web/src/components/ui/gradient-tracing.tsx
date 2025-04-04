@@ -1,6 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils"
+"use client"
+
 import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 interface GradientTracingProps {
   width: number
@@ -23,7 +24,7 @@ export default function GradientTracing(props: GradientTracingProps) {
     animationDuration = 5,
     strokeWidth = 1,
     className,
-    opacity = 1,
+    opacity = 1
   } = props
 
   const gradientId = `pulse-${Math.random().toString(36).substring(2, 11)}`
@@ -55,13 +56,13 @@ export default function GradientTracing(props: GradientTracingProps) {
           <motion.linearGradient
             animate={{
               x1: [0, width * 2],
-              x2: [0, width],
+              x2: [0, width]
             }}
             transition={{
               duration: animationDuration,
               repeat: Infinity,
               repeatDelay: 5,
-              ease: "linear",
+              ease: "linear"
             }}
             id={gradientId}
             gradientUnits="userSpaceOnUse"

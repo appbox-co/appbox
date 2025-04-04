@@ -25,22 +25,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€10.99",
-                billed: "€10.99",
+                billed: "€10.99"
               },
               quarterly: {
                 per_month: "€10.99",
-                billed: "€31.32",
+                billed: "€31.32"
               },
               semiannually: {
                 per_month: "€10.44",
-                billed: "€62.64",
+                billed: "€62.64"
               },
               annually: {
                 per_month: "€10.58",
-                billed: "€126.93",
-              },
-            },
-          },
+                billed: "€126.93"
+              }
+            }
+          }
         },
         {
           sort: 2,
@@ -57,29 +57,29 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€16.19",
-                billed: "€16.19",
+                billed: "€16.19"
               },
               quarterly: {
                 per_month: "€16.19",
-                billed: "€46.14",
+                billed: "€46.14"
               },
               semiannually: {
                 per_month: "€15.38",
-                billed: "€92.28",
+                billed: "€92.28"
               },
               annually: {
                 per_month: "€15.58",
-                billed: "€186.99",
-              },
-            },
-          },
-        },
+                billed: "€186.99"
+              }
+            }
+          }
+        }
       ],
       icon: {
         type: "image/svg+xml",
         width: null,
-        height: null,
-      },
+        height: null
+      }
     },
     // Group 2: Standard Appbox Pricing
     {
@@ -105,22 +105,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€13.95",
-                billed: "€13.95",
+                billed: "€13.95"
               },
               quarterly: {
                 per_month: "€13.95",
-                billed: "€39.76",
+                billed: "€39.76"
               },
               semiannually: {
                 per_month: "€13.25",
-                billed: "€79.52",
+                billed: "€79.52"
               },
               annually: {
                 per_month: "€13.43",
-                billed: "€161.12",
-              },
-            },
-          },
+                billed: "€161.12"
+              }
+            }
+          }
         },
         {
           sort: 1,
@@ -137,22 +137,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€14.37",
-                billed: "€14.37",
+                billed: "€14.37"
               },
               quarterly: {
                 per_month: "€14.37",
-                billed: "€43.11",
+                billed: "€43.11"
               },
               semiannually: {
                 per_month: "€13.75",
-                billed: "€41.25",
+                billed: "€41.25"
               },
               annually: {
                 per_month: "€13.3",
-                billed: "€159.6",
-              },
-            },
-          },
+                billed: "€159.6"
+              }
+            }
+          }
         },
         {
           sort: 2,
@@ -170,22 +170,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€18.69",
-                billed: "€18.69",
+                billed: "€18.69"
               },
               quarterly: {
                 per_month: "€18.69",
-                billed: "€56.07",
+                billed: "€56.07"
               },
               semiannually: {
                 per_month: "€17.56",
-                billed: "€105.36",
+                billed: "€105.36"
               },
               annually: {
                 per_month: "€16.82",
-                billed: "€201.84",
-              },
-            },
-          },
+                billed: "€201.84"
+              }
+            }
+          }
         },
         {
           sort: 3,
@@ -202,22 +202,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€24.91",
-                billed: "€24.91",
+                billed: "€24.91"
               },
               quarterly: {
                 per_month: "€24.91",
-                billed: "€74.73",
+                billed: "€74.73"
               },
               semiannually: {
                 per_month: "€23.66",
-                billed: "€141.96",
+                billed: "€141.96"
               },
               annually: {
                 per_month: "€22.42",
-                billed: "€269.04",
-              },
-            },
-          },
+                billed: "€269.04"
+              }
+            }
+          }
         },
         {
           sort: 4,
@@ -234,29 +234,29 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€33.99",
-                billed: "€33.99",
+                billed: "€33.99"
               },
               quarterly: {
                 per_month: "€33.99",
-                billed: "€101.97",
+                billed: "€101.97"
               },
               semiannually: {
                 per_month: "€32.29",
-                billed: "€193.74",
+                billed: "€193.74"
               },
               annually: {
                 per_month: "€30.59",
-                billed: "€367.08",
-              },
-            },
-          },
-        },
+                billed: "€367.08"
+              }
+            }
+          }
+        }
       ],
       icon: {
         type: "image/svg+xml",
         width: null,
-        height: null,
-      },
+        height: null
+      }
     },
     // Group 3: Dedicated & Semi-Dedicated Appbox Pricing
     {
@@ -284,22 +284,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€65.57",
-                billed: "€65.57",
+                billed: "€65.57"
               },
               quarterly: {
                 per_month: "€65.57",
-                billed: "€196.71",
+                billed: "€196.71"
               },
               semiannually: {
                 per_month: "€62.5",
-                billed: "€187.5",
+                billed: "€187.5"
               },
               annually: {
                 per_month: "€60",
-                billed: "€720",
-              },
-            },
-          },
+                billed: "€720"
+              }
+            }
+          }
         },
         {
           sort: 1,
@@ -318,22 +318,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€98.28",
-                billed: "€98.28",
+                billed: "€98.28"
               },
               quarterly: {
                 per_month: "€98.28",
-                billed: "€294.84",
+                billed: "€294.84"
               },
               semiannually: {
                 per_month: "€95",
-                billed: "€285",
+                billed: "€285"
               },
               annually: {
                 per_month: "€90",
-                billed: "€1080",
-              },
-            },
-          },
+                billed: "€1080"
+              }
+            }
+          }
         },
         {
           sort: 2,
@@ -352,22 +352,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€147.42",
-                billed: "€147.42",
+                billed: "€147.42"
               },
               quarterly: {
                 per_month: "€147.42",
-                billed: "€442.26",
+                billed: "€442.26"
               },
               semiannually: {
                 per_month: "€140.05",
-                billed: "€840.30",
+                billed: "€840.30"
               },
               annually: {
                 per_month: "€132.68",
-                billed: "€1592.16",
-              },
-            },
-          },
+                billed: "€1592.16"
+              }
+            }
+          }
         },
         {
           sort: 3,
@@ -386,22 +386,22 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€196.56",
-                billed: "€196.56",
+                billed: "€196.56"
               },
               quarterly: {
                 per_month: "€196.56",
-                billed: "€589.68",
+                billed: "€589.68"
               },
               semiannually: {
                 per_month: "€186.73",
-                billed: "€1120.38",
+                billed: "€1120.38"
               },
               annually: {
                 per_month: "€176.90",
-                billed: "€2122.80",
-              },
-            },
-          },
+                billed: "€2122.80"
+              }
+            }
+          }
         },
         {
           sort: 4,
@@ -420,29 +420,29 @@ export const mockData: PlansData = {
             EUR: {
               monthly: {
                 per_month: "€393.12",
-                billed: "€393.12",
+                billed: "€393.12"
               },
               quarterly: {
                 per_month: "€393.12",
-                billed: "€1179.36",
+                billed: "€1179.36"
               },
               semiannually: {
                 per_month: "€373.46",
-                billed: "€2240.76",
+                billed: "€2240.76"
               },
               annually: {
                 per_month: "€353.81",
-                billed: "€4245.72",
-              },
-            },
-          },
-        },
+                billed: "€4245.72"
+              }
+            }
+          }
+        }
       ],
       icon: {
         type: "image/svg+xml",
         width: null,
-        height: null,
-      },
-    },
-  ],
+        height: null
+      }
+    }
+  ]
 }

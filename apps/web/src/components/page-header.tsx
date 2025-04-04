@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils"
 import type { HTMLAttributes } from "react"
 import Balance from "react-wrap-balancer"
+import { cn } from "@/lib/utils"
 
 function PageHeader({
   className,

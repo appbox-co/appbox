@@ -1,6 +1,6 @@
 "use client"
 
-import { GlowingEffect } from "@/components/ui/glowing-effect"
+import { ReactNode } from "react"
 import {
   FileText,
   HeadphonesIcon,
@@ -11,9 +11,9 @@ import {
   ShieldCheck,
   Terminal,
   Users,
-  Zap,
+  Zap
 } from "lucide-react"
-import { ReactNode } from "react"
+import { GlowingEffect } from "@/components/ui/glowing-effect"
 
 interface FeatureItemProps {
   area: string
@@ -69,7 +69,7 @@ interface ClientFeaturesSectionProps {
 }
 
 export function ClientFeaturesSection({
-  features,
+  features
 }: ClientFeaturesSectionProps) {
   return (
     <div className="space-y-6">

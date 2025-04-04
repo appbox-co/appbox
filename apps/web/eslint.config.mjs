@@ -1,14 +1,10 @@
 // Import the compatibility utility to handle old-style configs
 import { FlatCompat } from "@eslint/eslintrc"
 import eslint from "@eslint/js"
-import nextPlugin from "@next/eslint-plugin-next"
-import tseslint from "@typescript-eslint/eslint-plugin"
 import tsParser from "@typescript-eslint/parser"
-import prettierConfig from "eslint-config-prettier"
-import prettierPlugin from "eslint-plugin-prettier"
-import reactPlugin from "eslint-plugin-react"
-// Import the defineConfig and globalIgnores utilities
+import prettierPlugin from "eslint-plugin-prettier/recommended"
 import { defineConfig, globalIgnores } from "eslint/config"
+import tseslint from "typescript-eslint"
 
 // Temporarily removing tailwindcss plugin due to compatibility issues
 // import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
@@ -25,7 +21,7 @@ const config = [
       ".next/**",
       ".contentlayer/**",
       ".turbo/**",
-      "public/**",
+      "public/**"
     ],
     "Ignore build and generated directories"
   ),
@@ -34,20 +30,14 @@ const config = [
   {
     // Global settings
     languageOptions: {
-      ecmaVersion: 2020,
-      sourceType: "module",
-    },
+      ecmaVersion: 2022,
+      sourceType: "module"
+    }
   },
 
   // Base configuration for all files
   {
     files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
-    plugins: {
-      "@typescript-eslint": tseslint,
-      prettier: prettierPlugin,
-      react: reactPlugin,
-      "@next/next": nextPlugin,
-    },
     rules: {
       // Next rules
       "@next/next/no-html-link-for-pages": "off",
@@ -63,8 +53,8 @@ const config = [
         {
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
-        },
+          caughtErrorsIgnorePattern: "^_"
+        }
       ],
 
       // JavaScript rules
@@ -72,8 +62,8 @@ const config = [
         "error",
         {
           argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-        },
+          varsIgnorePattern: "^_"
+        }
       ],
 
       // React rules
@@ -99,17 +89,17 @@ const config = [
       "react/no-string-refs": "warn",
       "react/no-unescaped-entities": "warn",
       "react/prop-types": "warn",
-      "react/require-render-return": "error",
+      "react/require-render-return": "error"
     },
     // Removed Tailwind settings
     settings: {
       react: {
-        version: "detect",
+        version: "detect"
       },
       next: {
-        rootDir: ["src/"],
-      },
-    },
+        rootDir: ["src/"]
+      }
+    }
   },
 
   // TypeScript specific configuration
@@ -118,33 +108,29 @@ const config = [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: "module",
-      },
-    },
+        ecmaVersion: 2022,
+        sourceType: "module"
+      }
+    }
   },
+
+  tseslint.configs.recommended,
 
   // Config files override
   {
     files: ["**/next.config.js", "**/*.config.js"],
     rules: {
-      "@typescript-eslint/no-var-requires": "off",
-    },
-  },
-
-  // Include TypeScript recommended rules
-  {
-    files: ["**/*.ts", "**/*.tsx"],
-    rules: tseslint.configs.recommended.rules,
+      "@typescript-eslint/no-var-requires": "off"
+    }
   },
 
   // Use the compatibility utility for Next.js core-web-vitals
   ...compat.config({
-    extends: ["next/core-web-vitals"],
+    extends: ["next/core-web-vitals", "next/typescript"]
   }),
 
   // Prettier
-  prettierConfig,
+  prettierPlugin
 ]
 
 // Then export that variable

@@ -1,5 +1,5 @@
-import deepmerge from "deepmerge"
 import { getRequestConfig } from "next-intl/server"
+import deepmerge from "deepmerge"
 import { routing } from "./routing"
 
 // Add a type that matches the routing.locales union type
@@ -21,6 +21,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
-    messages,
+    messages
   }
 })

@@ -1,13 +1,13 @@
+import type { PropsWithChildren } from "react"
+import * as React from "react"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import type { type PropsWithChildren } from "react";
-import * as React from "react";
 
 type FeaturedCardProps = PropsWithChildren<{
   icon?: React.ReactNode
@@ -21,7 +21,7 @@ export function FeaturedCard({
   title,
   children,
   description,
-  orientation = "vertical",
+  orientation = "vertical"
 }: FeaturedCardProps) {
   return (
     <Card className="dark:bg-card-primary backdrop-blur-lg">

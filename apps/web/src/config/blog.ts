@@ -6,9 +6,9 @@ export const blogConfig: BlogConfig = {
       href: "/blog",
 
       title: {
-        en: "Blog",
-      },
-    },
+        en: "Blog"
+      }
+    }
   ],
 
   authors: [
@@ -17,37 +17,34 @@ export const blogConfig: BlogConfig = {
         in contentlayer.config.ts so we can get the author details from the blogConfig by comparing the author_id
         with the id below
       */
-      id: "daltonmenezes",
-      name: "Dalton Menezes",
-      image: "/authors/daltonmenezes.jpg",
-      site: "https://daltonmenezes.com",
-      email: "daltonmenezes@outlook.com",
+      id: "rid",
+      name: "rid",
+      image: "/authors/rid.png",
+      site: "https://www.appbox.co",
+      email: "support@appbox.co",
 
       bio: {
         en: "Software Engineer | Writer | Designer",
-        pt: "Engenheiro de Software | Escritor | Designer",
+        pt: "Engenheiro de Software | Escritor | Designer"
       },
 
       social: {
-        github: "daltonmenezes",
-        twitter: "@daltonmenezes",
-        youtube: "daltonmenezes",
-        linkedin: "daltonmenezes",
-      },
-    },
+        github: "rid"
+      }
+    }
   ],
 
   rss: [
     {
       type: "xml",
       file: "blog.xml",
-      contentType: "application/xml",
+      contentType: "application/xml"
     },
 
     {
       type: "json",
       file: "blog.json",
-      contentType: "application/json",
-    },
-  ],
+      contentType: "application/json"
+    }
+  ]
 } as const

@@ -6,5 +6,5 @@ export const codeThemeConfig: CodeThemeConfig = {
   theme: localCodeThemes[0],
   localThemes: localCodeThemes,
 
-  languages: ["txt", "json", "bash", "diff", "markdown", "typescript"],
+  languages: ["txt", "json", "bash", "diff", "markdown", "typescript"]
 } as const

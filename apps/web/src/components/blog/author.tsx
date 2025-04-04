@@ -1,16 +1,16 @@
+import Image from "next/image"
+import Link from "next/link"
+import { LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
+import type { Blog } from "contentlayer/generated"
+import { Globe, Mail } from "lucide-react"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
-import type { Blog } from "contentlayer/generated"
-import { Globe, Mail } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 import { Icons } from "../icons"
 import { buttonVariants } from "../ui/button"
 
@@ -50,7 +50,7 @@ export function AuthorCard({ post }: { post: Blog }) {
                 className={cn(
                   "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: "ghost",
+                    variant: "ghost"
                   }),
                   "px-2"
                 )}
@@ -69,7 +69,7 @@ export function AuthorCard({ post }: { post: Blog }) {
                 className={cn(
                   "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: "ghost",
+                    variant: "ghost"
                   }),
                   "px-2"
                 )}
@@ -88,7 +88,7 @@ export function AuthorCard({ post }: { post: Blog }) {
                 className={cn(
                   "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: "ghost",
+                    variant: "ghost"
                   }),
                   "px-2"
                 )}
@@ -107,7 +107,7 @@ export function AuthorCard({ post }: { post: Blog }) {
                 className={cn(
                   "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: "ghost",
+                    variant: "ghost"
                   }),
                   "px-2"
                 )}
@@ -126,7 +126,7 @@ export function AuthorCard({ post }: { post: Blog }) {
                 className={cn(
                   "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: "ghost",
+                    variant: "ghost"
                   }),
                   "px-2"
                 )}
@@ -145,7 +145,7 @@ export function AuthorCard({ post }: { post: Blog }) {
                 className={cn(
                   "text-accent-foreground w-fit",
                   buttonVariants({
-                    variant: "ghost",
+                    variant: "ghost"
                   }),
                   "px-2"
                 )}

@@ -14,5 +14,3 @@ export interface NavItem {
 export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[]
 }
-
-export interface SidebarNavItem extends NavItemWithChildren {}

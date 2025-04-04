@@ -1,12 +1,12 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
+import Image from "next/image"
+import { useInView } from "react-intersection-observer"
 import { Icons } from "@/components/icons"
 import { App } from "@/lib/appbox/api/useApps"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import * as React from "react"
-import { useInView } from "react-intersection-observer"
 import { AnimatedBeam } from "./magicui/animated-beam"
 
 interface AppConnectionsShowcaseProps {
@@ -18,7 +18,7 @@ interface AppConnectionsShowcaseProps {
 export function AppConnectionsShowcase({
   apps = [],
   title,
-  description,
+  description
 }: AppConnectionsShowcaseProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const centerRef = useRef<HTMLDivElement>(null)
@@ -27,7 +27,7 @@ export function AppConnectionsShowcase({
   >([])
   const { ref: inViewRef, inView } = useInView({
     threshold: 0.1,
-    triggerOnce: false,
+    triggerOnce: false
   })
   const [isClient, setIsClient] = useState(false)
   const [displayApps, setDisplayApps] = useState<App[]>([])
@@ -44,7 +44,7 @@ export function AppConnectionsShowcase({
       } else {
         return `https://api.appbox.co/assets/images/apps/icons/${iconImage}`
       }
-    } catch (e) {
+    } catch (_e) {
       return "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
   }
@@ -77,7 +77,7 @@ export function AppConnectionsShowcase({
     const radius = 220
     return {
       left: `calc(50% + ${radius * Math.cos(angle)}px)`,
-      top: `calc(50% + ${radius * Math.sin(angle)}px)`,
+      top: `calc(50% + ${radius * Math.sin(angle)}px)`
     }
   }
 
@@ -142,7 +142,7 @@ export function AppConnectionsShowcase({
               transform: "translate(-50%, -50%) scale(1)",
               transition: isClient
                 ? "opacity 0.5s ease-in-out, transform 0.5s ease-in-out"
-                : "none",
+                : "none"
             }}
           >
             <Icons.emblem className="size-20" />
@@ -167,7 +167,7 @@ export function AppConnectionsShowcase({
                   transform: "translate(-50%, -50%) scale(1)",
                   transition: isClient
                     ? `opacity 0.4s ease-in-out ${index * 0.1}s, transform 0.4s ease-in-out ${index * 0.1}s`
-                    : "none",
+                    : "none"
                 }}
               >
                 <div className="relative size-8">

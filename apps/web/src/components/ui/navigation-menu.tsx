@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils"
+import * as React from "react"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
-import * as React from "react"
+import { cn } from "@/lib/utils"
 
 // Add this interface near the top of the file
 interface MSNavigator extends Navigator {
@@ -216,5 +216,5 @@ export {
   NavigationMenuTrigger,
   NavigationMenuLink,
   NavigationMenuIndicator,
-  NavigationMenuViewport,
+  NavigationMenuViewport
 }

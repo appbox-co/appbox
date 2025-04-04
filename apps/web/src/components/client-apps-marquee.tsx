@@ -18,7 +18,7 @@ interface ClientAppsMarqueeProps {
 
 export function ClientAppsMarquee({
   firstRow,
-  secondRow,
+  secondRow
 }: ClientAppsMarqueeProps) {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">

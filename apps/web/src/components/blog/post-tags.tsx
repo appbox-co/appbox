@@ -1,6 +1,6 @@
+import type { Blog } from "contentlayer/generated"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import type { Blog } from "contentlayer/generated"
 import { badgeVariants } from "../ui/badge"
 
 export async function BlogPostTags({ post }: { post: Blog }) {

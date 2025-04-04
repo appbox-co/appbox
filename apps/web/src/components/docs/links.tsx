@@ -1,8 +1,8 @@
-import { Link } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
+import { getTranslations } from "next-intl/server"
 import type { Doc } from "contentlayer/generated"
 import { ExternalLinkIcon } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 import { badgeVariants } from "../ui/badge"
 
 export async function DocLinks({ doc }: { doc: Doc }) {

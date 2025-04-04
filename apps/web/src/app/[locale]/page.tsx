@@ -1,3 +1,6 @@
+import { getTranslations } from "next-intl/server"
+import Script from "next/script"
+import { ArrowUpRightIcon } from "lucide-react"
 import { AppConnectionsSection } from "@/components/app-connections-section"
 import { AppsMarquee } from "@/components/apps-marquee"
 import { FAQSection } from "@/components/faq-section"
@@ -7,12 +10,12 @@ import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
-  PageHeaderHeading,
+  PageHeaderHeading
 } from "@/components/page-header"
 import {
   Announcement,
   AnnouncementTag,
-  AnnouncementTitle,
+  AnnouncementTitle
 } from "@/components/ui/announcement"
 import { buttonVariants } from "@/components/ui/button"
 import { ClientGradientWrapper } from "@/components/ui/client-gradient-wrapper"
@@ -24,9 +27,6 @@ import { siteConfig } from "@/config/site"
 import { mockData } from "@/data/mockData"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { ArrowUpRightIcon } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Script from "next/script"
 
 export default async function IndexPage() {
   const t = await getTranslations()
@@ -76,7 +76,7 @@ export default async function IndexPage() {
                 "code",
                 "data",
                 "security",
-                "testing",
+                "testing"
               ]}
               className="text-7xl"
             />
@@ -130,7 +130,7 @@ export default async function IndexPage() {
               quarterly: t("plans.billing_cycles.quarterly"),
               semiannually: t("plans.billing_cycles.semiannually"),
               annually: t("plans.billing_cycles.annually"),
-              billed_every: t("plans.billing_cycles.billed_every"),
+              billed_every: t("plans.billing_cycles.billed_every")
             },
             card: {
               storage: t("plans.card.storage"),
@@ -142,8 +142,8 @@ export default async function IndexPage() {
               raid: t("plans.card.raid"),
               disks: t("plans.card.disks"),
               per_month: t("plans.card.per_month"),
-              order_now: t("plans.card.order_now"),
-            },
+              order_now: t("plans.card.order_now")
+            }
           }}
         />
       </section>
@@ -189,7 +189,7 @@ export default async function IndexPage() {
                 })
               }
             })(document,"script");
-          `,
+          `
         }}
       />
     </div>

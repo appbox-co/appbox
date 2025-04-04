@@ -1,15 +1,15 @@
 "use client"
 
+import { createContext, useContext, type HTMLAttributes } from "react"
 import { Badge, type BadgeProps } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { createContext, useContext, type HTMLAttributes } from "react"
 
 type BadgeContextType = {
   themed: boolean
 }
 
 const BadgeContext = createContext<BadgeContextType>({
-  themed: false,
+  themed: false
 })
 
 const useBadgeContext = () => {

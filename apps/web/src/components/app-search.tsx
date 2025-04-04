@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -7,7 +9,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,10 +18,8 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
 
 interface AppSearchProps {
   searchTerm: string
@@ -42,7 +42,7 @@ export function AppSearch({
   appSlots,
   onAppSlotsChange,
   sortBy,
-  onSortChange,
+  onSortChange
 }: AppSearchProps) {
   const t = useTranslations()
   const [localAppSlots, setLocalAppSlots] = useState(

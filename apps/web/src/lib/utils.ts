@@ -13,7 +13,7 @@ export function formatDate(
   return date.toLocaleDateString(locale, {
     month: "long",
     day: "numeric",
-    year: "numeric",
+    year: "numeric"
   })
 }
 

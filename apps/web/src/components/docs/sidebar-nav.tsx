@@ -1,21 +1,21 @@
 "use client"
 
+import { Fragment } from "react"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
+  AccordionTrigger
 } from "@/components/ui/accordion"
 import { Link as DesktopLink, usePathname } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
-import type { SidebarNavItem } from "@/lib/opendocs/types/nav"
+import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
-import { Fragment } from "react"
 import { MobileLink } from "../mobile-link"
 
 export interface DocsSidebarNavProps {
-  items: SidebarNavItem[]
+  items: NavItemWithChildren[]
   locale: LocaleOptions
   isMobile?: boolean
   handleMobileSidebar?: (state: boolean) => void
@@ -25,7 +25,7 @@ export function DocsSidebarNav({
   items,
   locale,
   isMobile,
-  handleMobileSidebar,
+  handleMobileSidebar
 }: DocsSidebarNavProps) {
   const pathname = usePathname()
 
@@ -62,7 +62,7 @@ export function DocsSidebarNav({
 }
 
 interface DocsSidebarNavItemsProps {
-  items: SidebarNavItem[]
+  items: NavItemWithChildren[]
   locale: LocaleOptions
   pathname: string | null
   isMobile?: boolean
@@ -76,7 +76,7 @@ export function DocsSidebarNavItems({
   pathname,
   locale,
   isMobile,
-  handleMobileSidebar,
+  handleMobileSidebar
 }: DocsSidebarNavItemsProps) {
   const Link = !isMobile ? DesktopLink : MobileLink
 

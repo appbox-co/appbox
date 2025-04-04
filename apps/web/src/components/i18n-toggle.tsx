@@ -1,18 +1,18 @@
 "use client"
 
+import { useState, type PointerEvent } from "react"
+import { useLocale } from "next-intl"
+import { ChevronDown, LanguagesIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { routing, usePathname, useRouter } from "@/i18n/routing"
 import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
-import { ChevronDown, LanguagesIcon } from "lucide-react"
-import { useLocale } from "next-intl"
-import { useState, type PointerEvent } from "react"
 
 interface I18nToggleProps {
   messages: {
@@ -22,7 +22,7 @@ interface I18nToggleProps {
 
 const labels = {
   [routing.defaultLocale]: "English",
-  de: "Deutsch",
+  de: "Deutsch"
 } as const
 
 const locales = Object.entries(labels)
@@ -48,7 +48,7 @@ export function I18nToggle({ messages }: I18nToggleProps) {
 
   function changeLocale(locale: LocaleOptions) {
     router.replace(pathname, {
-      locale,
+      locale
     })
   }
 

@@ -1,17 +1,18 @@
-"use client";
+"use client"
+
+import { useState } from "react"
+import * as React from "react"
+import { useTranslations } from "next-intl"
 import { Icons } from "@/components/icons"
 import {
   Sheet,
   SheetContent,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
 import { usePathname, useRouter } from "@/i18n/routing"
 import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
-import { useTranslations } from "next-intl"
-import { useState } from "react";
-import * as React from "react";
 import { DocsSidebarNav } from "./docs/sidebar-nav"
 import { MobileLink } from "./mobile-link"
 import { Button } from "./ui/button"
@@ -56,7 +57,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           href: "/#features",
           icon: Icons.features,
           description: t("overview"),
-          descriptionKey: "overview",
+          descriptionKey: "overview"
         },
         {
           title: t("pricing"),
@@ -64,7 +65,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           href: "/#plans-section",
           icon: Icons.pricing,
           description: t("view_pricing"),
-          descriptionKey: "view_pricing",
+          descriptionKey: "view_pricing"
         },
         {
           title: t("apps"),
@@ -72,9 +73,9 @@ export function MobileNav({ messages }: MobileNavProps) {
           href: "/apps",
           icon: Icons.apps,
           description: t("explore_apps"),
-          descriptionKey: "explore_apps",
-        },
-      ],
+          descriptionKey: "explore_apps"
+        }
+      ]
     },
     {
       title: t("resources"),
@@ -87,7 +88,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           icon: Icons.documentation,
           description: t("read_docs"),
           descriptionKey: "read_docs",
-          external: true,
+          external: true
         },
         {
           title: t("blog"),
@@ -95,7 +96,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           href: "/blog",
           icon: Icons.blog,
           description: t("latest_articles"),
-          descriptionKey: "latest_articles",
+          descriptionKey: "latest_articles"
         },
         {
           title: t("faq"),
@@ -103,7 +104,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           href: "/#faq",
           icon: Icons.faq,
           description: t("faq_description"),
-          descriptionKey: "faq_description",
+          descriptionKey: "faq_description"
         },
         {
           title: t("service_status"),
@@ -112,10 +113,10 @@ export function MobileNav({ messages }: MobileNavProps) {
           icon: Icons.serviceStatus,
           description: t("check_status"),
           descriptionKey: "check_status",
-          external: true,
-        },
-      ],
-    },
+          external: true
+        }
+      ]
+    }
   ]
 
   const shouldDisplayDocsSidebarContent = pathname.startsWith("/docs")
@@ -134,7 +135,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           plansSection.getBoundingClientRect().top + window.pageYOffset
         window.scrollTo({
           top: sectionTop - headerHeight,
-          behavior: "smooth",
+          behavior: "smooth"
         })
       }
     } else {

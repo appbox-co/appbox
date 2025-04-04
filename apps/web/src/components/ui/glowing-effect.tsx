@@ -1,8 +1,8 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { animate } from "motion/react"
 import { memo, useCallback, useEffect, useRef } from "react"
+import { animate } from "motion/react"
+import { cn } from "@/lib/utils"
 
 interface GlowingEffectProps {
   blur?: number
@@ -27,7 +27,7 @@ const GlowingEffect = memo(
     className,
     movementDuration = 2,
     borderWidth = 1,
-    disabled = true,
+    disabled = true
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const lastPosition = useRef({ x: 0, y: 0 })
@@ -102,7 +102,7 @@ const GlowingEffect = memo(
             ease: [0.16, 1, 0.3, 1],
             onUpdate: (value) => {
               element.style.setProperty("--start", String(value))
-            },
+            }
           })
         })
       },
@@ -117,7 +117,7 @@ const GlowingEffect = memo(
 
       window.addEventListener("scroll", handleScroll, { passive: true })
       document.body.addEventListener("pointermove", handlePointerMove, {
-        passive: true,
+        passive: true
       })
 
       return () => {
@@ -168,7 +168,7 @@ const GlowingEffect = memo(
                   #5a922c calc(50% / var(--repeating-conic-gradient-times)), 
                   #4c7894 calc(75% / var(--repeating-conic-gradient-times)),
                   #dd7bbb calc(100% / var(--repeating-conic-gradient-times))
-                )`,
+                )`
             } as React.CSSProperties
           }
           className={cn(

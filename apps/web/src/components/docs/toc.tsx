@@ -1,12 +1,12 @@
 "use client"
 
+import { useEffect, useMemo, useState } from "react"
+import { ExternalLink } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
 import { useMounted } from "@/lib/opendocs/hooks/use-mounted"
 import { TableOfContents } from "@/lib/opendocs/utils/toc"
 import { cn } from "@/lib/utils"
-import { ExternalLink } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
 
 interface DefaultTableOfContentItemsProps {
   sourceFilePath: string
@@ -26,7 +26,7 @@ interface DashboardTableOfContentsProps
 export function DashboardTableOfContents({
   toc,
   messages,
-  sourceFilePath,
+  sourceFilePath
 }: DashboardTableOfContentsProps) {
   const itemIds = useMemo(
     () =>
@@ -74,7 +74,7 @@ export function DashboardTableOfContents({
 
 function DefaultTableOfContentItems({
   messages,
-  sourceFilePath,
+  sourceFilePath
 }: DefaultTableOfContentItemsProps) {
   return (
     <div className="mt-2 flex flex-col gap-1">

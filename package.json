@@ -8,7 +8,8 @@
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "prepare": "husky",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",

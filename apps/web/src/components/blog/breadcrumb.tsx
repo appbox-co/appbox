@@ -1,6 +1,6 @@
-import { Link } from "@/i18n/routing"
 import type { Blog } from "contentlayer/generated"
 import { ChevronRightIcon } from "lucide-react"
+import { Link } from "@/i18n/routing"
 
 interface BlogPostBreadcrumbProps {
   post: Blog
@@ -12,7 +12,7 @@ interface BlogPostBreadcrumbProps {
 
 export function BlogPostBreadcrumb({
   post,
-  messages,
+  messages
 }: BlogPostBreadcrumbProps) {
   return (
     <div className="text-muted-foreground mb-4 flex items-center space-x-1 text-sm">

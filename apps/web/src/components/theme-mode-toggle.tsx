@@ -1,16 +1,16 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
+import { useMemo, useState, type PointerEvent } from "react"
+import { useTheme } from "next-themes"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { ChevronDown } from "lucide-react"
-import { useTheme } from "next-themes"
-import { useMemo, useState, type PointerEvent } from "react"
+import { Button } from "@/components/ui/button"
+import { useIsMobile } from "@/lib/opendocs/hooks/use-is-mobile"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "./ui/dropdown-menu"
 
 interface ThemeModeToggleProps {
@@ -30,7 +30,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
     return [
       { label: messages.dark, value: "dark" },
       { label: messages.light, value: "light" },
-      { label: messages.system, value: "system" },
+      { label: messages.system, value: "system" }
     ]
   }, [messages])
 

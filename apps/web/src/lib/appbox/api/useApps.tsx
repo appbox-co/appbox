@@ -33,10 +33,10 @@ export function useApps(all: boolean = false) {
   const {
     data: apps = [],
     isLoading,
-    error,
+    error
   } = useQuery({
     queryKey: ["apps"],
-    queryFn: () => fetchApps(all),
+    queryFn: () => fetchApps(all)
   })
 
   return { apps, isLoading, error }

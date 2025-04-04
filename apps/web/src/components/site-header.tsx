@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+import dynamic from "next/dynamic"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
@@ -6,8 +8,6 @@ import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { getTranslations } from "next-intl/server"
-import dynamic from "next/dynamic"
 import { I18nToggle } from "./i18n-toggle"
 import { Button, buttonVariants } from "./ui/button"
 
@@ -27,7 +27,7 @@ export async function SiteHeader() {
         <MobileNav
           messages={{
             menu: t("words.menu"),
-            toggleMenu: t("buttons.toggle_menu"),
+            toggleMenu: t("buttons.toggle_menu")
           }}
         />
 
@@ -46,8 +46,8 @@ export async function SiteHeader() {
                   dark: t("themes.dark"),
                   theme: t("themes.theme"),
                   light: t("themes.light"),
-                  system: t("themes.system"),
-                },
+                  system: t("themes.system")
+                }
               }}
             />
           </div>
@@ -74,7 +74,7 @@ export async function SiteHeader() {
             <div className="hidden items-center gap-2 lg:flex">
               <I18nToggle
                 messages={{
-                  toggleLanguage: t("buttons.toggle_language"),
+                  toggleLanguage: t("buttons.toggle_language")
                 }}
               />
 
@@ -82,7 +82,7 @@ export async function SiteHeader() {
                 messages={{
                   dark: t("themes.dark"),
                   light: t("themes.light"),
-                  system: t("themes.system"),
+                  system: t("themes.system")
                 }}
               />
             </div>
@@ -106,7 +106,7 @@ export function SiteHeaderMenuLinks() {
         <div
           className={cn(
             buttonVariants({
-              variant: "ghost",
+              variant: "ghost"
             }),
             "w-9 px-0"
           )}

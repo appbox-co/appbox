@@ -1,5 +1,5 @@
-import { SVGProps } from "react";
-import * as React from "react";
+import { SVGProps } from "react"
+import * as React from "react"
 
 /** This is a proper React component that returns <svg> */
 function DefaultLogo(props: SVGProps<SVGSVGElement>) {
@@ -42,7 +42,7 @@ const Footer2 = ({
     src: DefaultLogo,
     alt: "appbox",
     title: "appbox",
-    url: "https://www.appbox.co",
+    url: "https://www.appbox.co"
   },
   tagline = "Components made easy.",
   menuItems = [
@@ -54,8 +54,8 @@ const Footer2 = ({
         { text: "Marketplace", url: "#" },
         { text: "Features", url: "#" },
         { text: "Integrations", url: "#" },
-        { text: "Pricing", url: "#" },
-      ],
+        { text: "Pricing", url: "#" }
+      ]
     },
     {
       title: "Company",
@@ -65,31 +65,31 @@ const Footer2 = ({
         { text: "Blog", url: "#" },
         { text: "Careers", url: "#" },
         { text: "Contact", url: "#" },
-        { text: "Privacy", url: "#" },
-      ],
+        { text: "Privacy", url: "#" }
+      ]
     },
     {
       title: "Resources",
       links: [
         { text: "Help", url: "#" },
         { text: "Sales", url: "#" },
-        { text: "Advertise", url: "#" },
-      ],
+        { text: "Advertise", url: "#" }
+      ]
     },
     {
       title: "Social",
       links: [
         { text: "Twitter", url: "#" },
         { text: "Instagram", url: "#" },
-        { text: "LinkedIn", url: "#" },
-      ],
-    },
+        { text: "LinkedIn", url: "#" }
+      ]
+    }
   ],
   copyright = "© 2024 Copyright. All rights reserved.",
   bottomLinks = [
     { text: "Terms and Conditions", url: "#" },
-    { text: "Privacy Policy", url: "#" },
-  ],
+    { text: "Privacy Policy", url: "#" }
+  ]
 }: Footer2Props) => {
   return (
     <section className="py-32">

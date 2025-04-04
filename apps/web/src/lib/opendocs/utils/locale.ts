@@ -12,13 +12,11 @@ export function getSlugWithoutLocale(slug: string, context: string) {
   let slugWithoutLocaleFolder = slug
 
   for (const locale of routing.locales) {
-    const selectPathWithCurrentLocale = new RegExp(
-      `^\/${context}\/(${locale})\/?`
-    )
+    const selectPathWithCurrentLocale = new RegExp(`^/${context}/(${locale})/?`)
 
     if (selectPathWithCurrentLocale.test(slug)) {
       slugWithoutLocaleFolder = slugWithoutLocaleFolder
-        .replace(new RegExp(`${locale}\/?`), "")
+        .replace(new RegExp(`${locale}/?`), "")
         .replace(/\/$/, "")
     }
   }

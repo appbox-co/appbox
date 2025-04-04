@@ -1,17 +1,17 @@
+import { getTranslations } from "next-intl/server"
 import { AppFilterClient } from "@/components/app-filter-client"
 import {
   PageHeader,
   PageHeaderDescription,
-  PageHeaderHeading,
+  PageHeaderHeading
 } from "@/components/page-header"
 import { getApps } from "@/lib/appbox/api/getApps"
 import { App } from "@/lib/appbox/api/useApps"
-import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
 
 export default async function AppsPage({
-  searchParams,
+  searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {

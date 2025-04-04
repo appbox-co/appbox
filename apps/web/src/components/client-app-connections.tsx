@@ -1,11 +1,11 @@
 "use client"
 
-import { Icons } from "@/components/icons"
-import { App } from "@/lib/appbox/api/useApps"
-import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import * as React from "react"
+import Image from "next/image"
 import { useInView } from "react-intersection-observer"
+import { Icons } from "@/components/icons"
+import { App } from "@/lib/appbox/api/useApps"
 import { AnimatedBeam } from "./magicui/animated-beam"
 
 interface ClientAppConnectionsProps {
@@ -17,7 +17,7 @@ interface ClientAppConnectionsProps {
 export function ClientAppConnections({
   apps = [],
   title,
-  description,
+  description
 }: ClientAppConnectionsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const centerRef = useRef<HTMLDivElement>(null)
@@ -26,7 +26,7 @@ export function ClientAppConnections({
   >([])
   const { ref: inViewRef, inView } = useInView({
     threshold: 0.1,
-    triggerOnce: false,
+    triggerOnce: false
   })
   const [isClient, setIsClient] = useState(false)
   const [displayApps, setDisplayApps] = useState<App[]>([])
@@ -44,7 +44,7 @@ export function ClientAppConnections({
       } else {
         return `https://api.appbox.co/assets/images/apps/icons/${iconImage}`
       }
-    } catch (e) {
+    } catch (_e) {
       return "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
   }
@@ -93,7 +93,7 @@ export function ClientAppConnections({
       // Calculate the percentage from center, plus the angle-based offset
       left: `50%`,
       top: `50%`,
-      transform: `translate(-50%, -50%) translate(calc(var(--radius) * ${Math.cos(angle)}), calc(var(--radius) * ${Math.sin(angle)}))`,
+      transform: `translate(-50%, -50%) translate(calc(var(--radius) * ${Math.cos(angle)}), calc(var(--radius) * ${Math.sin(angle)}))`
     }
   }
 
@@ -148,7 +148,7 @@ export function ClientAppConnections({
             className="app-connections-center"
             style={{
               opacity: inView ? 1 : 0,
-              transition: "opacity 0.5s ease-in-out",
+              transition: "opacity 0.5s ease-in-out"
             }}
           >
             <Icons.emblem className="size-[calc(var(--size)*0.7)]" />
@@ -168,7 +168,7 @@ export function ClientAppConnections({
                   top: pos.top,
                   transform: pos.transform,
                   opacity: inView ? 1 : 0,
-                  transition: `opacity 0.4s ease-in-out ${index * 0.05}s`,
+                  transition: `opacity 0.4s ease-in-out ${index * 0.05}s`
                 }}
               >
                 {/* Image stays proportional to the container */}
@@ -199,7 +199,7 @@ export function ClientAppConnections({
                   animation: "fadeIn 1s ease-in-out forwards",
                   position: "absolute",
                   inset: 0,
-                  zIndex: 5,
+                  zIndex: 5
                 }}
               >
                 {appRefs.map((appRef, i) => (

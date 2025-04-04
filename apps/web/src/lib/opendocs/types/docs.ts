@@ -1,9 +1,9 @@
 import type { LocaleOptions } from "./i18n"
-import type { NavItem, SidebarNavItem } from "./nav"
+import type { NavItem, NavItemWithChildren } from "./nav"
 
 export interface DocsConfig {
   mainNav: NavItem[]
-  sidebarNav: SidebarNavItem[]
+  sidebarNav: NavItemWithChildren[]
 }
 
 export interface DocPageProps {

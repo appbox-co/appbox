@@ -1,5 +1,5 @@
-import { siteConfig } from "@/config/site"
 import type { MetadataRoute } from "next"
+import { siteConfig } from "@/config/site"
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   return {
@@ -13,13 +13,13 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
       {
         src: "/android-chrome-192x192.png",
         sizes: "192x192",
-        type: "image/png",
+        type: "image/png"
       },
       {
         src: "/android-chrome-512x512.png",
         sizes: "512x512",
-        type: "image/png",
-      },
-    ],
+        type: "image/png"
+      }
+    ]
   }
 }

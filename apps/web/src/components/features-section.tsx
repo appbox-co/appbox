@@ -1,5 +1,5 @@
-import { ClientFeaturesSection } from "@/components/client-features-section"
 import { getTranslations } from "next-intl/server"
+import { ClientFeaturesSection } from "@/components/client-features-section"
 
 interface FeaturesSectionProps {
   title: string
@@ -10,51 +10,51 @@ interface FeaturesSectionProps {
 export async function FeaturesSection({
   title,
   description,
-  id,
+  id
 }: FeaturesSectionProps) {
   const t = await getTranslations("site.features")
 
   const features = {
     root_access: {
       title: t("root_access.title"),
-      description: t("root_access.description"),
+      description: t("root_access.description")
     },
     remote_desktop: {
       title: t("remote_desktop.title"),
-      description: t("remote_desktop.description"),
+      description: t("remote_desktop.description")
     },
     one_click: {
       title: t("one_click.title"),
-      description: t("one_click.description"),
+      description: t("one_click.description")
     },
     community: {
       title: t("community.title"),
-      description: t("community.description"),
+      description: t("community.description")
     },
     security: {
       title: t("security.title"),
-      description: t("security.description"),
+      description: t("security.description")
     },
     deploy_fast: {
       title: t("deploy_fast.title"),
-      description: t("deploy_fast.description"),
+      description: t("deploy_fast.description")
     },
     custom_hardware: {
       title: t("custom_hardware.title"),
-      description: t("custom_hardware.description"),
+      description: t("custom_hardware.description")
     },
     custom_network: {
       title: t("custom_network.title"),
-      description: t("custom_network.description"),
+      description: t("custom_network.description")
     },
     support: {
       title: t("support.title"),
-      description: t("support.description"),
+      description: t("support.description")
     },
     documentation: {
       title: t("documentation.title"),
-      description: t("documentation.description"),
-    },
+      description: t("documentation.description")
+    }
   }
 
   return (

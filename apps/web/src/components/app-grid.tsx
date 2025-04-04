@@ -1,7 +1,7 @@
 "use client"
 
-import { AppGridCard } from "@/components/app-grid-card"
 import { useTranslations } from "next-intl"
+import { AppGridCard } from "@/components/app-grid-card"
 
 interface App {
   display_name: string

@@ -1,7 +1,7 @@
-import { Link } from "@/i18n/routing"
-import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { Policy } from "contentlayer/generated"
 import { ChevronRightIcon } from "lucide-react"
+import { Link } from "@/i18n/routing"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 
 interface PolicyBreadcrumbProps {
   policy: Policy

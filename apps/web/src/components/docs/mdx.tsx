@@ -1,19 +1,19 @@
+import type { ComponentProps } from "react"
+import { useMDXComponent } from "next-contentlayer2/hooks"
+import Image from "next/image"
 import { Callout } from "@/components/callout"
 import { CodeBlockWrapper } from "@/components/docs/mdx-components/code-block-wrapper"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
+  AccordionTrigger
 } from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { useMDXComponent } from "next-contentlayer2/hooks"
-import Image from "next/image"
-import type { ComponentProps } from "react"
 import { a } from "./mdx-components/a"
 import { blockquote } from "./mdx-components/blockquote"
 import { code } from "./mdx-components/code"
@@ -144,7 +144,7 @@ const components = {
       )}
       {...props}
     />
-  ),
+  )
 }
 
 interface MdxProps {

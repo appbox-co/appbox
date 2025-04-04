@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
 import { Clock } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { Badge, BadgeProps } from "../ui/badge"
 
 interface ReadTimeProps extends BadgeProps {

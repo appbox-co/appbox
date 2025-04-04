@@ -4,7 +4,7 @@ export type Locales = (typeof routing.locales)[number]
 export type LocaleOptions = (typeof routing.locales)[number]
 
 export type LocalizedRecord = Partial<{
-  [key in LocaleOptions]: string
+  [key in LocaleOptions | "pt"]: string
 }>
 
 export type IntlMessages = typeof import("@/i18n/locales/en.json")

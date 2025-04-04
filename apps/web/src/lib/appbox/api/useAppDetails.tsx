@@ -39,11 +39,11 @@ export function useAppDetails(appName: string | null) {
   const {
     data: appDetails,
     isLoading,
-    error,
+    error
   } = useQuery({
     queryKey: ["app-details", appName],
     queryFn: () => fetchAppDetails(appName as string),
-    enabled: !!appName, // Only run the query if appName is provided
+    enabled: !!appName // Only run the query if appName is provided
   })
 
   return { appDetails, isLoading, error }

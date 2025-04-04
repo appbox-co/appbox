@@ -8,7 +8,7 @@ interface AppConnectionsSectionProps {
 
 export async function AppConnectionsSection({
   title,
-  description,
+  description
 }: AppConnectionsSectionProps) {
   // Fetch apps on the server side
   const apps = await getApps().catch(() => [])

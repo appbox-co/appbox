@@ -1,3 +1,7 @@
+import { cache } from "react"
+import { NextResponse } from "next/server"
+import { allBlogs, type Blog } from "contentlayer/generated"
+import { Feed, type Item } from "feed"
 import { blogConfig } from "@/config/blog"
 import { siteConfig } from "@/config/site"
 import { routing } from "@/i18n/routing"
@@ -5,15 +9,11 @@ import type { RSSFeed } from "@/lib/opendocs/types/blog"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { absoluteUrl } from "@/lib/utils"
-import { allBlogs, type Blog } from "contentlayer/generated"
-import { Feed, type Item } from "feed"
-import { NextResponse } from "next/server"
-import { cache } from "react"
 
 function generateWebsiteFeeds({
   file,
   posts,
-  locale,
+  locale
 }: {
   posts: Blog[]
   file: RSSFeed["file"]
@@ -28,7 +28,7 @@ function generateWebsiteFeeds({
     title: `Blog - ${siteConfig.name}`,
     favicon: absoluteUrl("/favicon.ico"),
     link: absoluteUrl(`/${locale}/feed/${file}`),
-    description: getObjectValueByLocale(siteConfig.description, locale),
+    description: getObjectValueByLocale(siteConfig.description, locale)
   })
 
   const blogFeedEntries = posts
@@ -59,9 +59,9 @@ function generateWebsiteFeeds({
           {
             name: post.author?.name,
             link: post.author?.site,
-            email: post.author?.email || " ",
-          },
-        ],
+            email: post.author?.email || " "
+          }
+        ]
       } as Item
     })
 
@@ -77,7 +77,7 @@ const provideWebsiteFeeds = cache(
     const websiteFeeds = generateWebsiteFeeds({
       locale,
       file: feed,
-      posts: allBlogs,
+      posts: allBlogs
     })
 
     switch (feed) {
@@ -111,7 +111,7 @@ export const GET = async (_: Request, props: StaticParams) => {
   const params = await props.params
   const websiteFeed = provideWebsiteFeeds({
     feed: params.feed,
-    locale: params.locale || routing.defaultLocale,
+    locale: params.locale || routing.defaultLocale
   })
 
   const feed = blogConfig.rss.find((rss) => rss.file === params.feed)
@@ -123,8 +123,8 @@ export const GET = async (_: Request, props: StaticParams) => {
   return new NextResponse(websiteFeed, {
     status: websiteFeed ? 200 : 404,
     headers: {
-      "Content-Type": contentType,
-    },
+      "Content-Type": contentType
+    }
   })
 }
 

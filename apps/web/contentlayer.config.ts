@@ -2,7 +2,7 @@ import {
   defineDocumentType,
   defineNestedType,
   makeSource,
-  type ComputedFields,
+  type ComputedFields
 } from "contentlayer2/source-files"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypePrettyCode, { type Options } from "rehype-pretty-code"
@@ -18,24 +18,24 @@ import { rehypeNpmCommand } from "./src/lib/opendocs/utils/rehype-npm-command"
 const docComputedFields: ComputedFields = {
   slug: {
     type: "string",
-    resolve: (doc) => `/${doc._raw.flattenedPath}`,
+    resolve: (doc) => `/${doc._raw.flattenedPath}`
   },
 
   slugAsParams: {
     type: "string",
-    resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
-  },
+    resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/")
+  }
 }
 
 const blogComputedFields: ComputedFields = {
   slug: {
     type: "string",
-    resolve: (post) => `/${post._raw.flattenedPath}`,
+    resolve: (post) => `/${post._raw.flattenedPath}`
   },
 
   slugAsParams: {
     type: "string",
-    resolve: (post) => post._raw.flattenedPath.split("/").slice(1).join("/"),
+    resolve: (post) => post._raw.flattenedPath.split("/").slice(1).join("/")
   },
 
   author: {
@@ -53,15 +53,15 @@ const blogComputedFields: ComputedFields = {
 
       if (!author) {
         return {
-          id: post?.author_id,
+          id: post?.author_id
         }
       }
 
       return {
         ...author,
-        bio: author.bio?.[locale as keyof typeof author.bio] || author.bio?.en,
+        bio: author.bio?.[locale as keyof typeof author.bio] || author.bio?.en
       }
-    },
+    }
   },
 
   readTimeInMinutes: {
@@ -73,8 +73,8 @@ const blogComputedFields: ComputedFields = {
       const readTimeInMinutes = numberOfWords / wordsPerMinute
 
       return Math.ceil(readTimeInMinutes)
-    },
-  },
+    }
+  }
 }
 
 const LinksProperties = defineNestedType(() => ({
@@ -82,21 +82,21 @@ const LinksProperties = defineNestedType(() => ({
 
   fields: {
     doc: {
-      type: "string",
+      type: "string"
     },
 
     blog: {
-      type: "string",
+      type: "string"
     },
 
     api: {
-      type: "string",
+      type: "string"
     },
 
     source: {
-      type: "string",
-    },
-  },
+      type: "string"
+    }
+  }
 }))
 
 const AuthorProperties = defineNestedType(() => ({
@@ -104,27 +104,27 @@ const AuthorProperties = defineNestedType(() => ({
 
   fields: {
     id: {
-      type: "string",
+      type: "string"
     },
 
     name: {
-      type: "string",
+      type: "string"
     },
 
     bio: {
-      type: "string",
+      type: "string"
     },
 
     site: {
-      type: "string",
+      type: "string"
     },
 
     email: {
-      type: "string",
+      type: "string"
     },
 
     image: {
-      type: "string",
+      type: "string"
     },
 
     social: {
@@ -135,24 +135,24 @@ const AuthorProperties = defineNestedType(() => ({
 
         fields: {
           github: {
-            type: "string",
+            type: "string"
           },
 
           twitter: {
-            type: "string",
+            type: "string"
           },
 
           youtube: {
-            type: "string",
+            type: "string"
           },
 
           linkedin: {
-            type: "string",
-          },
-        },
-      })),
-    },
-  },
+            type: "string"
+          }
+        }
+      }))
+    }
+  }
 }))
 
 export const Doc = defineDocumentType(() => ({
@@ -163,27 +163,33 @@ export const Doc = defineDocumentType(() => ({
   fields: {
     title: {
       type: "string",
-      required: true,
+      required: true
     },
 
     description: {
       type: "string",
-      required: true,
+      required: true
+    },
+
+    sort: {
+      type: "number",
+      description: "The sort order of the document in navigation",
+      required: false
     },
 
     links: {
       type: "nested",
-      of: LinksProperties,
+      of: LinksProperties
     },
 
     toc: {
       type: "boolean",
       default: true,
-      required: false,
-    },
+      required: false
+    }
   },
 
-  computedFields: docComputedFields,
+  computedFields: docComputedFields
 }))
 
 export const Blog = defineDocumentType(() => ({
@@ -194,48 +200,48 @@ export const Blog = defineDocumentType(() => ({
   fields: {
     title: {
       type: "string",
-      required: true,
+      required: true
     },
 
     excerpt: {
       type: "string",
-      required: true,
+      required: true
     },
 
     date: {
       type: "date",
       description: "The date of the post",
-      required: true,
+      required: true
     },
 
     author: {
       type: "nested",
-      of: AuthorProperties,
+      of: AuthorProperties
     },
 
     author_id: {
       type: "string",
-      description: "The author of the post",
+      description: "The author of the post"
     },
 
     og_image: {
       type: "string",
-      description: "The image for the open graph meta tag",
+      description: "The image for the open graph meta tag"
     },
 
     links: {
       type: "nested",
-      of: LinksProperties,
+      of: LinksProperties
     },
 
     tags: {
       type: "list",
       of: { type: "string" },
-      required: true,
-    },
+      required: true
+    }
   },
 
-  computedFields: blogComputedFields,
+  computedFields: blogComputedFields
 }))
 
 export const Policy = defineDocumentType(() => ({
@@ -245,27 +251,27 @@ export const Policy = defineDocumentType(() => ({
   fields: {
     title: {
       type: "string",
-      required: true,
+      required: true
     },
     description: {
       type: "string",
-      required: true,
+      required: true
     },
     toc: {
       type: "boolean",
-      default: true,
-    },
+      default: true
+    }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => `/${doc._raw.flattenedPath}`,
+      resolve: (doc) => `/${doc._raw.flattenedPath}`
     },
     slugAsParams: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/")
+    }
+  }
 }))
 
 export default makeSource({
@@ -313,8 +319,8 @@ export default makeSource({
 
           onVisitHighlightedChars(node) {
             node.properties.className = ["word--highlighted"]
-          },
-        } as Options,
+          }
+        } as Options
       ],
 
       () => (tree) => {
@@ -350,10 +356,10 @@ export default makeSource({
         {
           properties: {
             ariaLabel: "Link to section",
-            className: ["subheading-anchor"],
-          },
-        },
-      ],
-    ],
-  },
+            className: ["subheading-anchor"]
+          }
+        }
+      ]
+    ]
+  }
 })

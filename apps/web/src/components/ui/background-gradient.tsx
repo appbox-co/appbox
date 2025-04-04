@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils"
+import * as React from "react"
 import { motion } from "framer-motion"
-import * as React from "react";
+import { cn } from "@/lib/utils"
 
 export const BackgroundGradient = ({
   children,
   className,
-  containerClassName,
+  containerClassName
 }: {
   children?: React.ReactNode
   className?: string
@@ -14,8 +14,8 @@ export const BackgroundGradient = ({
   const variants = {
     initial: { backgroundPosition: "0% 50%" },
     animate: {
-      backgroundPosition: ["0% 50%", "100% 50%"],
-    },
+      backgroundPosition: ["0% 50%", "100% 50%"]
+    }
   }
   return (
     <div className={cn("group relative p-[4px]", containerClassName)}>
@@ -25,7 +25,7 @@ export const BackgroundGradient = ({
         animate="animate"
         transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
         style={{
-          backgroundSize: "200% 100%",
+          backgroundSize: "200% 100%"
         }}
         className={cn(
           "absolute inset-0 z-1 rounded-lg opacity-60 blur-xl transition  duration-500 will-change-transform group-hover:opacity-100",
@@ -38,7 +38,7 @@ export const BackgroundGradient = ({
         animate="animate"
         transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
         style={{
-          backgroundSize: "200% 100%",
+          backgroundSize: "200% 100%"
         }}
         className={cn(
           "absolute inset-0 z-1 rounded-lg will-change-transform",

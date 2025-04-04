@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils"
+import type { Dispatch, SetStateAction } from "react"
+import * as React from "react"
 import { StarIcon, type LucideIcon, type LucideProps } from "lucide-react"
-import type { type Dispatch, type SetStateAction } from "react";
-import * as React from "react";
+import { cn } from "@/lib/utils"
 
 interface StarWrapperProps {
   value?: number
@@ -22,7 +22,7 @@ function StarRating({
   disabled,
   showcase,
   iconProps = {},
-  wrapperProps = {},
+  wrapperProps = {}
 }: StarWrapperProps) {
   const { className: wrapperClassName, ...restWrapperProps } = wrapperProps
   const { className: iconClassName, ...restIconProps } = iconProps
@@ -43,11 +43,11 @@ function StarRating({
               "opacity-50 pointer-events-none": disabled,
               "transition-transform duration-300 hover:scale-110":
                 !disabled && !showcase,
-              "fill-muted! stroke-muted!": !isRated,
+              "fill-muted! stroke-muted!": !isRated
             },
             iconClassName
           ),
-          ...restIconProps,
+          ...restIconProps
         }
         return (
           <div key={i}>

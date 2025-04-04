@@ -7,8 +7,17 @@ const withNextIntl = nextIntlPlugin()
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["appbox.co", "api.appbox.co"],
-  },
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "appbox.co"
+      },
+      {
+        protocol: "https",
+        hostname: "api.appbox.co"
+      }
+    ]
+  }
 }
 
 export default withNextIntl(withContentlayer(nextConfig))

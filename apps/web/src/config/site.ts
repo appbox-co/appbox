@@ -5,7 +5,7 @@ export const siteConfig = {
   name: "Appbox",
 
   description: {
-    en: en.site.description,
+    en: en.site.description
   },
 
   url: process.env.NEXT_PUBLIC_APP_URL,
@@ -15,8 +15,8 @@ export const siteConfig = {
 
     size: {
       width: 1200,
-      height: 630,
-    },
+      height: 630
+    }
   },
 
   links: {
@@ -27,9 +27,9 @@ export const siteConfig = {
     // },
     github: {
       label: "GitHub",
-      url: "https://github.com/appbox-co",
-    },
-  },
+      url: "https://github.com/appbox-co"
+    }
+  }
 } as const
 
 export type SiteConfig = typeof siteConfig

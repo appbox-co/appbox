@@ -1,14 +1,14 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
 import {
   CSSProperties,
   ReactElement,
   useCallback,
   useEffect,
-  useState,
+  useState
 } from "react"
+import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 interface Sparkle {
   id: string
@@ -97,7 +97,7 @@ function SparklesText({
       style={
         {
           "--sparkles-first-color": `${colors.first}`,
-          "--sparkles-second-color": `${colors.second}`,
+          "--sparkles-second-color": `${colors.second}`
         } as CSSProperties
       }
     >
@@ -141,11 +141,11 @@ function Sparkle({ sparkle, setSparkles, generateStar }: SparkleProps) {
       animate={{
         opacity: [0, 1, 0],
         scale: [0, scale, 0],
-        rotate: [75, 120, 150],
+        rotate: [75, 120, 150]
       }}
       transition={{
         duration: 2, // Adjust as needed for desired speed
-        delay,
+        delay
       }}
       onAnimationComplete={handleAnimationComplete}
       width="21"

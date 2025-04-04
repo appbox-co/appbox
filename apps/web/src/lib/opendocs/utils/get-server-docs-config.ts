@@ -10,6 +10,6 @@ export async function getServerDocsConfig({ locale }: ServerDocsConfig) {
 
   return {
     docs: docsConfig,
-    currentLocale: locale || routing.defaultLocale,
+    currentLocale: locale || routing.defaultLocale
   }
 }

@@ -1,9 +1,9 @@
 "use client"
 
+import { useCallback, useEffect, useRef, useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { AppGrid } from "@/components/app-grid"
 import { AppSearch } from "@/components/app-search"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useRef, useState } from "react"
 
 interface App {
   display_name: string
@@ -26,7 +26,7 @@ export function AppFilterClient({
   initialApps,
   categories,
   initialCategory,
-  initialSearch,
+  initialSearch
 }: AppFilterClientProps) {
   const router = useRouter()
   const pathname = usePathname()

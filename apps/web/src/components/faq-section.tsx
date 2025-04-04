@@ -1,17 +1,17 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
+  AccordionTrigger
 } from "@/components/ui/accordion-plus"
-import { useTranslations } from "next-intl"
 
 export function FAQSection({
   title,
   description,
-  id,
+  id
 }: {
   title: string
   description?: string
@@ -28,7 +28,7 @@ export function FAQSection({
     "additional_software",
     "fuse_rclone",
     "refund_policy",
-    "custom_domain",
+    "custom_domain"
   ]
 
   return (
@@ -48,15 +48,13 @@ export function FAQSection({
               {questions.map((question) => (
                 <AccordionItem key={question} value={question}>
                   <AccordionTrigger>
-                    {/* @ts-expect-error - Dynamic translation keys */}
                     {t(`questions.${question}.title`)}
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="max-w-none text-sm/[1.125rem] text-neutral-500 md:text-base/[1.375rem] dark:text-neutral-400">
                       <div
                         dangerouslySetInnerHTML={{
-                          /* @ts-expect-error - Dynamic translation keys */
-                          __html: t.raw(`questions.${question}.content`),
+                          __html: t.raw(`questions.${question}.content`)
                         }}
                       />
                     </div>

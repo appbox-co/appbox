@@ -1,10 +1,10 @@
+import { ArrowRightIcon } from "@radix-ui/react-icons"
 import { Separator } from "@/components/ui/separator"
 import { Link } from "@/i18n/routing"
-import { ArrowRightIcon } from "@radix-ui/react-icons"
 
 export function Announcement({
   title,
-  href,
+  href
 }: {
   title: string
   href?: string

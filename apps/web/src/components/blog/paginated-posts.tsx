@@ -1,17 +1,17 @@
 "use client"
 
+import { useMemo } from "react"
+import { useSearchParams } from "next/navigation"
+import type { Blog } from "contentlayer/generated"
+import { compareDesc } from "date-fns"
+import Balancer from "react-wrap-balancer"
 import { dateLocales, Link } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import {
   getObjectValueByLocale,
-  getSlugWithoutLocale,
+  getSlugWithoutLocale
 } from "@/lib/opendocs/utils/locale"
 import { cn, formatDate, truncateText } from "@/lib/utils"
-import type { Blog } from "contentlayer/generated"
-import { compareDesc } from "date-fns"
-import { useSearchParams } from "next/navigation"
-import { useMemo } from "react"
-import Balancer from "react-wrap-balancer"
 import { buttonVariants } from "../ui/button"
 import { Card } from "../ui/card"
 import { Pagination } from "./pagination"
@@ -40,7 +40,7 @@ export function PaginatedBlogPosts({
   posts,
   locale,
   messages,
-  perPage = 10,
+  perPage = 10
 }: PaginatedBlogPostsProps) {
   const searchParams = useSearchParams()
   const tag = searchParams.get("tag")
@@ -89,14 +89,14 @@ export function PaginatedBlogPosts({
     <main className="relative mx-auto grid max-w-5xl space-y-6">
       <RSSToggle
         messages={{
-          rss_feed: messages.rss_feed,
+          rss_feed: messages.rss_feed
         }}
       />
 
       <div
         className={cn("grid grid-cols-1 gap-4", {
           "md:grid-cols-2": paginatedPosts.length >= 2,
-          "md:grid-cols-1": paginatedPosts.length < 2,
+          "md:grid-cols-1": paginatedPosts.length < 2
         })}
       >
         {paginatedPosts.map((post) => {
@@ -120,7 +120,7 @@ export function PaginatedBlogPosts({
                     time={post.readTimeInMinutes}
                     variant="unstyled"
                     messages={{
-                      min_read: messages.min_read,
+                      min_read: messages.min_read
                     }}
                   />
                 </div>

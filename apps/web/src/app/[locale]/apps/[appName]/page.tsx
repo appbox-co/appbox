@@ -1,14 +1,14 @@
 // Make the StarRating component a Client Component since it's interactive
+import { getTranslations } from "next-intl/server"
+import Image from "next/image"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+import { ChevronLeft, ExternalLink } from "lucide-react"
 import ClientStarRating from "@/components/client-star-rating"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { getAppDetails } from "@/lib/appbox/api/getAppDetails"
-import { ChevronLeft, ExternalLink } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
 
 interface AppDetailPageProps {
   params: {

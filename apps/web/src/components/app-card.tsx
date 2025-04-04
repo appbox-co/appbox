@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface AppCardProps {
   name: string
@@ -15,7 +15,7 @@ export function AppCard({
   publisher,
   description,
   iconUrl,
-  categories,
+  categories
 }: AppCardProps) {
   // Format the URL-friendly app name
   const appUrl = `/apps/${encodeURIComponent(name)}`

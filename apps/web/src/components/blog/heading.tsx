@@ -1,9 +1,9 @@
+import type { Blog } from "contentlayer/generated"
+import Balancer from "react-wrap-balancer"
 import { dateLocales } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn, formatDate } from "@/lib/utils"
-import type { Blog } from "contentlayer/generated"
-import Balancer from "react-wrap-balancer"
 import { DocNotAvailableInThisLanguage } from "../docs/not-available"
 import { ReadTime } from "./read-time"
 
@@ -20,7 +20,7 @@ interface BlogPostHeadingProps {
 export function BlogPostHeading({
   post,
   locale,
-  messages,
+  messages
 }: BlogPostHeadingProps) {
   return (
     <div className="flex flex-col gap-2 space-y-2">

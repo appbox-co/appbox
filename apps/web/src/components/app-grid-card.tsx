@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge"
-import { Card, CardFooter } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardFooter } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
 interface AppGridCardProps {
   name: string
@@ -20,7 +20,7 @@ export function AppGridCard({
   description,
   iconUrl,
   appSlots,
-  categories,
+  categories
 }: AppGridCardProps) {
   const t = useTranslations()
   const router = useRouter()
@@ -43,7 +43,7 @@ export function AppGridCard({
       // Fallback if no iconUrl provided
       imageUrl = "https://api.appbox.co/assets/images/apps/placeholder.png"
     }
-  } catch (e) {
+  } catch (_e) {
     // If URL construction fails, use a placeholder
     imageUrl = "https://api.appbox.co/assets/images/apps/placeholder.png"
   }

@@ -11,7 +11,7 @@ interface ClientStarRatingProps {
 export default function ClientStarRating({
   value,
   showcase = false,
-  wrapperClassName,
+  wrapperClassName
 }: ClientStarRatingProps) {
   return (
     <StarRating

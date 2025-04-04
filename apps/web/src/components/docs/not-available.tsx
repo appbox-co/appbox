@@ -12,7 +12,7 @@ const messages = {
   nl: "Deze inhoud is nog niet beschikbaar in uw taal",
   pl: "Ten zasób nie jest jeszcze dostępny w twoim języku",
   ru: "Этот контент пока не доступен на вашем языке",
-  zh: "此内容尚未提供您的语言版本",
+  zh: "此内容尚未提供您的语言版本"
 } as const
 
 type Locales = keyof typeof messages

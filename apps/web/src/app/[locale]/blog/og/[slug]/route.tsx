@@ -1,19 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
-
+import { ImageResponse } from "next/og"
+import type { NextRequest } from "next/server"
+import { allBlogs, type Blog } from "contentlayer/generated"
 import { siteConfig } from "@/config/site"
 import { getFonts } from "@/lib/fonts"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
-import { absoluteUrl, truncateText } from "@/lib/utils"
-import { allBlogs, type Blog } from "contentlayer/generated"
-import { ImageResponse } from "next/og"
-import type { NextRequest } from "next/server"
+import { truncateText } from "@/lib/utils"
 
 interface BlogOgProps {
-  params: Promise<{ slug: string; locale: LocaleOptions }>
+  params: { slug: string; locale: LocaleOptions }
 }
 
 export const runtime = "edge"
 export const dynamicParams = true
+
+// Fallback URL if NEXT_PUBLIC_APP_URL is not defined
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+
+// Create a safe absolute URL function that works even if NEXT_PUBLIC_APP_URL is undefined
+function safeAbsoluteUrl(path: string) {
+  // Ensure path starts with a slash
+  const safePath = path.startsWith("/") ? path : `/${path}`
+  return `${BASE_URL}${safePath}`
+}
 
 export async function GET(_: NextRequest, props: BlogOgProps) {
   const params = await props.params
@@ -21,7 +30,7 @@ export async function GET(_: NextRequest, props: BlogOgProps) {
 
   if (!post) {
     return new ImageResponse(<Fallback src="/og.jpg" />, {
-      ...siteConfig.og.size,
+      ...siteConfig.og.size
     })
   }
 
@@ -35,7 +44,7 @@ export async function GET(_: NextRequest, props: BlogOgProps) {
         <Background src="/og-background.jpg" />
 
         <div tw="my-10 mx-14 flex flex-col">
-          <Logo src="/logo.svg" />
+          <Logo src="/appboxes-white.svg" />
 
           <div tw="flex flex-col h-full max-h-[300px]">
             <Title>{post.title}</Title>
@@ -51,15 +60,15 @@ export async function GET(_: NextRequest, props: BlogOgProps) {
           name: "Geist",
           data: regular,
           style: "normal",
-          weight: 400,
+          weight: 400
         },
         {
           name: "Geist",
           data: bold,
           style: "normal",
-          weight: 700,
-        },
-      ],
+          weight: 700
+        }
+      ]
     }
   )
 }
@@ -70,7 +79,7 @@ function Author({ post }: { post: Blog }) {
       {post.author?.image && (
         <img
           tw="w-20 h-20 rounded-full border-gray-800 border-4"
-          src={absoluteUrl(post.author?.image)}
+          src={safeAbsoluteUrl(post.author?.image)}
           alt=""
         />
       )}
@@ -84,14 +93,14 @@ function Background({ src }: { src: string }) {
   return (
     <img
       alt=""
-      src={absoluteUrl(src)}
+      src={safeAbsoluteUrl(src)}
       tw="w-full h-full absolute left-0 top-0 opacity-70"
     />
   )
 }
 
 function Logo({ src }: { src: string }) {
-  return <img tw="w-28 h-28 rounded-full" src={absoluteUrl(src)} alt="" />
+  return <img tw="w-28 h-28" src={safeAbsoluteUrl(src)} alt="" />
 }
 
 function Title({ children }: { children: string }) {
@@ -105,7 +114,7 @@ function Title({ children }: { children: string }) {
 function Fallback({ src }: { src: string }) {
   return (
     <div tw="flex w-full h-full">
-      <img src={absoluteUrl(src)} tw="w-full h-full" alt="" />
+      <img src={safeAbsoluteUrl(src)} tw="w-full h-full" alt="" />
     </div>
   )
 }
@@ -118,13 +127,15 @@ function getBlogPostBySlugAndLocale(slug: string, locale: LocaleOptions) {
   })
 }
 
-export async function generateStaticParams(): Promise<BlogOgProps["params"][]> {
+export async function generateStaticParams(): Promise<
+  { slug: string; locale: LocaleOptions }[]
+> {
   const blog = allBlogs.map((blog) => {
     const [locale, ...slugs] = blog.slugAsParams.split("/")
 
     return {
       slug: slugs.join("/"),
-      locale: locale as LocaleOptions,
+      locale: locale as LocaleOptions
     }
   })
 

@@ -1,12 +1,12 @@
-import { ButtonProps, buttonVariants } from "@/components/ui/button"
-import { Link } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
+import * as React from "react"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  DotsHorizontalIcon,
+  DotsHorizontalIcon
 } from "@radix-ui/react-icons"
-import * as React from "react"
+import { ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Link } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -55,7 +55,7 @@ const PaginationLink = ({
     className={cn(
       buttonVariants({
         variant: isActive ? "outline" : "ghost",
-        size,
+        size
       }),
       className
     )}
@@ -118,5 +118,5 @@ export {
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-  PaginationEllipsis,
+  PaginationEllipsis
 }

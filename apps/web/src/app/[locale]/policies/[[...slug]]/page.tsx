@@ -1,13 +1,13 @@
-import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
-import { allPolicies } from "contentlayer/generated"
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
+import { allPolicies } from "contentlayer/generated"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
-import { DocHeading } from "@/components/docs/heading"
 import { Mdx } from "@/components/docs/mdx"
 import { DocumentNotFound } from "@/components/docs/not-found"
 import { DashboardTableOfContents } from "@/components/docs/toc"
 import { PolicyBreadcrumb } from "@/components/policies/breadcrumb"
+import { PolicyHeading } from "@/components/policies/heading"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Table,
@@ -15,7 +15,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from "@/components/ui/table"
 import { siteConfig } from "@/config/site"
 import { routing } from "@/i18n/routing"
@@ -63,10 +63,10 @@ export async function generateMetadata(
         {
           ...siteConfig.og.size,
           url: siteConfig.og.image,
-          alt: siteConfig.name,
-        },
-      ],
-    },
+          alt: siteConfig.name
+        }
+      ]
+    }
   }
 }
 
@@ -78,7 +78,7 @@ export async function generateStaticParams(): Promise<
 
     return {
       slug: slugs,
-      locale: locale as LocaleOptions,
+      locale: locale as LocaleOptions
     }
   })
 
@@ -154,7 +154,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
       <DocumentNotFound
         messages={{
           title: t("not_found.title"),
-          description: t("not_found.description"),
+          description: t("not_found.description")
         }}
       />
     )
@@ -164,8 +164,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
 
   const policyWithToc = {
     ...policy,
-    toc: toc,
-    notAvailable: false,
+    notAvailable: false
   }
 
   return (
@@ -173,14 +172,14 @@ export default async function PolicyPage(props: PolicyPageProps) {
       <div className="mx-auto w-full min-w-0">
         <PolicyBreadcrumb policy={policy} locale={params.locale} />
 
-        <DocHeading doc={policyWithToc} locale={params.locale} />
+        <PolicyHeading policy={policyWithToc} locale={params.locale} />
 
         <div className="pb-12 pt-8">
           <Mdx code={policy.body.code} />
         </div>
       </div>
 
-      {toc && toc.items.length > 0 && (
+      {toc && toc.items && toc.items.length > 0 && (
         <div className="hidden text-sm xl:block">
           <div className="sticky top-16 -mt-10 pt-4">
             <ScrollArea className="pb-10">
@@ -191,7 +190,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
                   messages={{
                     onThisPage: t("on_this_page"),
                     editPageOnGitHub: t("edit_page_on_github"),
-                    startDiscussionOnGitHub: t("start_discussion_on_github"),
+                    startDiscussionOnGitHub: t("start_discussion_on_github")
                   }}
                 />
               </div>

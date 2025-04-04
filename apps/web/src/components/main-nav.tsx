@@ -1,5 +1,8 @@
 "use client"
 
+import * as React from "react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,13 +12,10 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
 import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import * as React from "react";
 
 // -----------------------------------------------------------------------
 // Added a new interface to support nested menu items.
@@ -79,7 +79,7 @@ export function MainNav() {
           href: "/#features",
           icon: Icons.features,
           description: t("overview"),
-          descriptionKey: "overview",
+          descriptionKey: "overview"
         },
         {
           title: t("apps"),
@@ -87,9 +87,9 @@ export function MainNav() {
           href: "/apps",
           icon: Icons.apps,
           description: t("explore_apps"),
-          descriptionKey: "explore_apps",
-        },
-      ],
+          descriptionKey: "explore_apps"
+        }
+      ]
     },
     {
       title: t("resources"),
@@ -102,7 +102,7 @@ export function MainNav() {
           icon: Icons.documentation,
           description: t("read_docs"),
           descriptionKey: "read_docs",
-          external: true,
+          external: true
         },
         {
           title: t("blog"),
@@ -110,7 +110,7 @@ export function MainNav() {
           href: "/blog",
           icon: Icons.blog,
           description: t("latest_articles"),
-          descriptionKey: "latest_articles",
+          descriptionKey: "latest_articles"
         },
         {
           title: t("faq"),
@@ -118,7 +118,7 @@ export function MainNav() {
           href: "/#faq",
           icon: Icons.faq,
           description: t("faq_description"),
-          descriptionKey: "faq_description",
+          descriptionKey: "faq_description"
         },
         {
           title: t("service_status"),
@@ -127,10 +127,10 @@ export function MainNav() {
           icon: Icons.serviceStatus,
           description: t("check_status"),
           descriptionKey: "check_status",
-          external: true,
-        },
-      ],
-    },
+          external: true
+        }
+      ]
+    }
   ]
 
   // Handle pricing button click
@@ -147,7 +147,7 @@ export function MainNav() {
           plansSection.getBoundingClientRect().top + window.pageYOffset
         window.scrollTo({
           top: sectionTop - headerHeight,
-          behavior: "smooth",
+          behavior: "smooth"
         })
       }
     } else {

@@ -1,9 +1,10 @@
-"use client";
-import { cn } from "@/lib/utils"
+"use client"
+
+import { useEffect, useRef } from "react"
+import * as React from "react"
 import { motion } from "framer-motion"
-import { useEffect, useRef } from "react";
-import * as React from "react";
 import { createNoise3D } from "simplex-noise"
+import { cn } from "@/lib/utils"
 
 interface VortexProps {
   children?: React.ReactNode
@@ -90,7 +91,7 @@ export default function Vortex(props: VortexProps) {
       const ctx = canvas.getContext("2d")
 
       if (ctx) {
-        resize(canvas, ctx)
+        resize(canvas)
         initParticles()
         draw(canvas, ctx)
       }
@@ -318,8 +319,9 @@ export default function Vortex(props: VortexProps) {
         resize(canvas)
       }
     })
-    // eslint-disable-next-line
-  }, []);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   /**
    * Firefox has some issues with this component and becomes very laggy
