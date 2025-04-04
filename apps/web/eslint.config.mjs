@@ -126,7 +126,7 @@ const config = [
 
   // Use the compatibility utility for Next.js core-web-vitals
   ...compat.config({
-    extends: ["next/core-web-vitals", "next/typescript"]
+    extends: ["next", "next/core-web-vitals", "next/typescript"]
   }),
 
   // Prettier
