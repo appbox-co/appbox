@@ -18,10 +18,6 @@ interface VortexWrapperProps {
   baseRadius?: number
   rangeRadius?: number
   backgroundColor?: string
-  snow?: boolean
-  snowBaseTTL?: number
-  snowRangeTTL?: number
-  fadeTimeFactor?: number
 }
 
 export function ClientVortexWrapper(props: VortexWrapperProps) {

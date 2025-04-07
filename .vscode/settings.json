@@ -4,9 +4,7 @@
     { "pattern": "packages/*/" }
   ],
 
-  "tailwindCSS.experimental.configFile": {
-    "apps/web/tailwind.config.ts": "apps/web/**"
-  },
+  "tailwindCSS.experimental.configFile": "apps/web/src/styles/globals.css",
 
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],

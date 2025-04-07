@@ -33,7 +33,16 @@ export default async function IndexPage() {
 
   return (
     <div className="container relative">
-      <PageHeader>
+      <div className="flex flex-col items-center">
+        <ClientGradientWrapper
+          width={180}
+          height={180}
+          path="M100,100 m0,-75 a75,75 0 1,1 -0.1,0 z"
+          gradientColors={["#7B68EE", "#7B68EE", "#3498DB"]}
+          className="justify-center mt-6"
+        />
+      </div>
+      <PageHeader className="mb-10">
         <Link href="/docs">
           <Announcement>
             <AnnouncementTag>Latest Update</AnnouncementTag>
@@ -49,14 +58,6 @@ export default async function IndexPage() {
 
         <PageHeaderHeading>
           <div className="relative">
-            <ClientGradientWrapper
-              width={300}
-              height={300}
-              path="M100,100 m0,-75 a75,75 0 1,1 -0.1,0 z"
-              gradientColors={["#7B68EE", "#7B68EE", "#3498DB"]}
-              className="absolute -top-10 left-1/2 -z-10 -translate-x-1/2"
-              opacity={0.7}
-            />
             <TextGenerateEffect words={t("site.heading")} />
             <FlipWords
               words={[
@@ -78,7 +79,7 @@ export default async function IndexPage() {
                 "security",
                 "testing"
               ]}
-              className="text-7xl"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
             />
           </div>
         </PageHeaderHeading>
@@ -86,7 +87,7 @@ export default async function IndexPage() {
         <PageHeaderDescription>{t("site.description")}</PageHeaderDescription>
 
         <PageActions>
-          <Link href="/docs" className={cn(buttonVariants())}>
+          <Link href="/#plans-section" className={cn(buttonVariants())}>
             {t("site.buttons.get_started")}
           </Link>
 
@@ -107,16 +108,9 @@ export default async function IndexPage() {
             backgroundColor="transparent"
             className="flex size-full"
             rangeY={300}
-            baseRadius={2}
+            baseRadius={1.5}
             particleCount={20}
-            rangeSpeed={0.5}
-            fadeTimeFactor={0.2}
-            // snow
-            // particleCount={50}
-            // rangeSpeed={1.5}
-            // snowBaseTTL={500}
-            // snowRangeTTL={1000}
-            // fadeTimeFactor={0.5}
+            rangeSpeed={0.8}
           />
         </div>
       </PageHeader>
