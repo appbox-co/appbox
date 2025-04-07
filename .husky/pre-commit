@@ -3,4 +3,15 @@ echo "Running linting checks before commit..."
 if ! pnpm run lint:fix; then
   echo "Linting failed! Fix the errors before committing."
   exit 1
+fi
+
+# Check if any MDX files or contentlayer config have been modified
+if git diff --cached --name-only | grep -E '\.mdx$|contentlayer\.config\.ts$'; then
+  echo "Content files changed, rebuilding contentlayer..."
+  cd apps/web && pnpm contentlayer:build
+  if [ $? -ne 0 ]; then
+    echo "Contentlayer build failed! Fix the errors before committing."
+    exit 1
+  fi
+  echo "Contentlayer rebuild successful."
 fi 

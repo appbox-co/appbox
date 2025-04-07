@@ -44,5 +44,22 @@ author: Author Name
 But when adding custom metadata, you also need to update the `contentlayer.config.ts` file located at the root of the project and inside the `fields` property in the `Doc` or `Blog` constants.
 After that, you will need to display the new information in the document template. To do this, you will need to update the `src/app/[locale]/docs/[[...slug]]/page.tsx` file, or `src/app/[locale]/blog/[[...slug]]/page.tsx` or one of its child components.
 
+## Rebuilding Contentlayer
+
+When you make changes to documentation content, add new docs, or modify the `contentlayer.config.ts` file, you'll need to rebuild the contentlayer cache for your changes to take effect during development. Run:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+This command regenerates the content types and data needed by the application. You'll need to run this command whenever you:
+
+- Add new metadata fields to the `contentlayer.config.ts` file
+- Add or modify MDX content when the dev server isn't running
+- Change the structure of your content organization
+
+The command is automatically run when building the project for production, but you'll need to run it manually during development if you make structural changes to content.
+
 
 

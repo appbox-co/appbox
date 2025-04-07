@@ -1,44 +1,99 @@
 ---
 title: Introduction
-description: Next.js beautifully designed template that you can use for your projects for free with site, blog and docs support. Accessible. Customizable. Open Source.
+description: Welcome to the official documentation for the open-sourced Appbox frontend.
 sort: 1
 ---
 
-**opendocs** is a template that was born out of the needs I had with the documentation of open source projects.
-The idea is that you can use this template to document your projects in a simple and beautiful way.
+**Welcome to the Appbox Documentation**  
+We're excited to announce that the frontend for [Appbox](https://www.appbox.co/) is now open-sourced at [GitHub](https://github.com/appbox-co/appbox). Our aim is to foster a collaborative community that contributes to documentation, develops new frontend features, and helps improve the overall Appbox experience.
 
-Initially built from the site and components of [shadcn/ui](https://ui.shadcn.com/), I made a series of improvements and additions to make it a more complete documentation template for my projects.
+While our documentation is still in the early stages, we're working to build a comprehensive resource similar to other platforms in our space. Currently, our docs primarily focus on contribution guidelines, but we plan to expand with detailed information for all apps available on Appbox.
 
-## Features
+Until our documentation grows more robust, please visit our [legacy knowledge base](https://billing.appbox.co/knowledgebase) for immediate questions about specific apps or services. If you need technical support, you can [submit a ticket](https://billing.appbox.co/submitticket.php) for assistance. You can always access these new docs via the link in our site's footer to check our progress as we expand.
 
-- **Beautiful and responsive design**: The template is responsive and adapts to any screen size.
-- **Ready-to-use components**: Use the ready-to-use components to create a beautiful and informative documentation.
-- **Customizable**: Customize the template to fit your project.
-- **Easy to use**: The template is easy to use and you can start documenting your project quickly.
-- **Internationalization**: The template supports multiple languages.
-- **Internationalized sitemap**: The sitemap is internationalized and you can add links to different languages.
-- **SEO optimized**: The template is optimized for SEO.
-- **Ready for production**: The template is ready for production and you can deploy it easily.
-- **Dark and light theme**: The template supports dark and light themes.
-- **Accessible**: The template aims to be accessible to everyone.
-- **Open Source**: The template is open source and you can contribute to it on GitHub.
+## Future Plans
 
-those are some of the features of the template!
+- **In-Depth App Guides**  
+  Covering installation, troubleshooting, and tips for each of the apps supported on our platform.
+- **User & Developer Resources**  
+  Providing everything from beginner-friendly tutorials to advanced code references for customizing your Appbox experience.
+- **Community-Driven Content**  
+  Encouraging pull requests, feedback, and suggestions—all are welcome and help grow this project for everyone.
 
 ## Getting Started
 
-To start using the template, you can clone the repository and start customizing it for your project.
+If you want to check out or contribute to our open-sourced frontend code, clone the [Appbox](https://github.com/appbox-co/appbox) repository:
 
 ```bash
-git clone git@github.com:daltonmenezes/opendocs.git
+git clone https://github.com/appbox-co/appbox.git
 ```
 
-After cloning the repository, you can install the dependencies and run the project.
+Then navigate into the project and install its dependencies:
 
 ```bash
-cd opendocs
+cd appbox
 pnpm install
 pnpm dev
 ```
 
-After running the `pnpm dev` command, you can access the template at `http://localhost:3000`.
+Your local instance will be available at `http://localhost:3000`. Feel free to explore, make changes, and create pull requests. We appreciate every contribution!
+
+## Development Tools
+
+### Linting
+
+The project comes with comprehensive linting setup using ESLint with TypeScript and Prettier integration. This ensures consistent code style and helps catch common errors early. You can run the linting checks manually:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Our ESLint configuration includes:
+- TypeScript-specific rules via `@typescript-eslint`
+- Next.js specific linting with `eslint-config-next`
+- Code formatting with Prettier integration
+
+### Pre-commit Hooks
+
+We use Husky to manage Git hooks, which helps ensure only quality code is committed to the repository. The following hooks are set up:
+
+- **pre-commit**: Runs `lint:fix` before each commit to ensure code quality
+- **commit-msg**: Uses commitlint to enforce conventional commit message formatting
+
+This means your commits will be checked for code quality and proper formatting automatically before they're accepted, maintaining a high standard throughout the codebase.
+
+## Making Pull Requests
+
+When you're ready to contribute your changes, follow these guidelines to make your Pull Request (PR) more likely to be accepted:
+
+### Before Creating a PR
+
+1. **Rebase from the latest main branch** to avoid merge conflicts:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Ensure all linting passes**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Make sure your code works locally** by testing the relevant functionality.
+
+### PR Guidelines
+
+1. **Keep PRs focused** - Address one issue or feature per PR.
+2. **Write clear commit messages** - Following the conventional commit format.
+3. **Include clear descriptions** - Explain what your PR does and why it's needed.
+4. **Add tests** - Where applicable, add tests to verify your changes work correctly.
+5. **Document your code** - Use comments for complex logic and ensure function names are descriptive.
+6. **Follow existing patterns** - Your code should match the style and patterns used in the rest of the codebase.
+
+For significant changes, consider opening an issue first to discuss the approach before investing time in coding. This helps ensure your contribution aligns with the project's direction and avoids wasted effort.

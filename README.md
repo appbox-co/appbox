@@ -27,7 +27,7 @@ This repository contains the open-source code for the [Appbox](https://www.appbo
 
 ### Prerequisites
 
-- Node.js 18 or later
+- Node.js 23.11.0 or later
 - pnpm (we use this as our package manager)
 
 ### Installation
