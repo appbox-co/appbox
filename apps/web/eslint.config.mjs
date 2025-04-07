@@ -1,10 +1,10 @@
 // Import the compatibility utility to handle old-style configs
+import { fixupConfigRules } from "@eslint/compat"
 import { FlatCompat } from "@eslint/eslintrc"
 import eslint from "@eslint/js"
 import tsParser from "@typescript-eslint/parser"
 import prettierPlugin from "eslint-plugin-prettier/recommended"
 import { defineConfig, globalIgnores } from "eslint/config"
-import tseslint from "typescript-eslint"
 
 // Temporarily removing tailwindcss plugin due to compatibility issues
 // import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
@@ -114,8 +114,6 @@ const config = [
     }
   },
 
-  tseslint.configs.recommended,
-
   // Config files override
   {
     files: ["**/next.config.js", "**/*.config.js"],
@@ -125,9 +123,11 @@ const config = [
   },
 
   // Use the compatibility utility for Next.js core-web-vitals
-  ...compat.config({
-    extends: ["next", "next/core-web-vitals", "next/typescript"]
-  }),
+  ...fixupConfigRules(
+    compat.config({
+      extends: ["next", "next/core-web-vitals", "next/typescript"]
+    })
+  ),
 
   // Prettier
   prettierPlugin
