@@ -18,9 +18,10 @@ import {
   AnnouncementTitle
 } from "@/components/ui/announcement"
 import { buttonVariants } from "@/components/ui/button"
-import { ClientGradientWrapper } from "@/components/ui/client-gradient-wrapper"
 import { ClientVortexWrapper } from "@/components/ui/client-vortex-wrapper"
 import { FlipWords } from "@/components/ui/flip-words"
+import { ClientGradientSwitcher } from "@/components/ui/gradient-client-switcher"
+import { GradientWrapper } from "@/components/ui/gradient-wrapper"
 import Plans from "@/components/ui/plans"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import { siteConfig } from "@/config/site"
@@ -31,23 +32,39 @@ import { cn } from "@/lib/utils"
 export default async function IndexPage() {
   const t = await getTranslations()
 
+  // Props for both gradient components
+  const gradientProps = {
+    width: 180,
+    height: 180,
+    path: "M100,100 m0,-75 a75,75 0 1,1 -0.1,0 z",
+    gradientColors: ["#7B68EE", "#7B68EE", "#3498DB"] as [
+      string,
+      string,
+      string
+    ],
+    className: "justify-center mt-6"
+  }
+
   return (
     <div className="container relative">
       <div className="flex flex-col items-center">
-        <ClientGradientWrapper
-          width={180}
-          height={180}
-          path="M100,100 m0,-75 a75,75 0 1,1 -0.1,0 z"
-          gradientColors={["#7B68EE", "#7B68EE", "#3498DB"]}
-          className="justify-center mt-6"
-        />
+        {/* Static gradient shows during SSR, then client component takes over */}
+        <div className="relative">
+          {/* Server rendered static version */}
+          <GradientWrapper {...gradientProps} />
+
+          {/* Client-side animated version (will show after hydration) */}
+          <div className="absolute inset-0">
+            <ClientGradientSwitcher {...gradientProps} />
+          </div>
+        </div>
       </div>
       <PageHeader className="mb-10">
-        <Link href="/docs">
+        <Link href="/blog/massive-updates">
           <Announcement>
             <AnnouncementTag>Latest Update</AnnouncementTag>
             <AnnouncementTitle>
-              🎉 {t("site.announcement")}
+              🚀 {t("site.announcement")}
               <ArrowUpRightIcon
                 size={16}
                 className="text-muted-foreground shrink-0"

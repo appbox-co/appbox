@@ -215,27 +215,30 @@ interface ListItemProps
   children: React.ReactNode
 }
 
-const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li className="row-span-3">
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors",
-              className
-            )}
-            {...props}
+function ListItem({ className, title, children, ...props }: ListItemProps) {
+  return (
+    <li className="row-span-3">
+      <NavigationMenuLink asChild>
+        <a
+          data-slot="navigation-link"
+          className={cn(
+            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors",
+            className
+          )}
+          {...props}
+        >
+          <div data-slot="title" className="text-sm font-medium leading-none">
+            {title}
+          </div>
+          <p
+            data-slot="description"
+            className="text-muted-foreground line-clamp-2 text-sm leading-snug"
           >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-              {children}
-            </p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    )
-  }
-)
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+}
 ListItem.displayName = "ListItem"

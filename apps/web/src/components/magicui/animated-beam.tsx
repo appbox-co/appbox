@@ -132,6 +132,7 @@ export function AnimatedBeam({
 
   return (
     <svg
+      data-slot="animated-beam"
       fill="none"
       width={svgDimensions.width}
       height={svgDimensions.height}
@@ -143,6 +144,7 @@ export function AnimatedBeam({
       viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
     >
       <path
+        data-slot="path-background"
         d={pathD}
         stroke={pathColor}
         strokeWidth={pathWidth}
@@ -150,6 +152,7 @@ export function AnimatedBeam({
         strokeLinecap="round"
       />
       <path
+        data-slot="path-animated"
         d={pathD}
         strokeWidth={pathWidth}
         stroke={`url(#${id})`}
