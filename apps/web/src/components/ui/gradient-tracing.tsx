@@ -51,7 +51,7 @@ export default function GradientTracing(props: GradientTracingProps) {
   useEffect(() => {
     const triggerGlitch = () => {
       // Randomly decide when the next glitch happens (between 0.5 and 3 seconds)
-      const nextGlitchDelay = Math.random() * 2500 + 500
+      const nextGlitchDelay = Math.random() * 5000 + 1000
 
       timeoutRef.current = setTimeout(() => {
         // Glitch effect: briefly hide the outline
