@@ -7,6 +7,9 @@
 @theme {
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-duration-fast: 0.2s;
+  --animate-duration-normal: 0.3s;
+  --animate-duration-slow: 0.5s;
 
   --breakpoint-phone: 400px;
 }
@@ -15,6 +18,8 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --animate-pulse-glow: pulse-glow 1.75s infinite cubic-bezier(0, 0, 0, 1.5);
+  --animate-in: fade-in var(--animate-duration-normal) ease-out, scale-in var(--animate-duration-normal) cubic-bezier(0.05, 0.7, 0.1, 1);
+  --animate-out: fade-out var(--animate-duration-normal) ease-in, scale-out var(--animate-duration-normal) cubic-bezier(0.05, 0.7, 0.1, 1);
 
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
@@ -88,6 +93,54 @@
     to {
       transform: translateY(calc(-100% - var(--gap)));
     }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  @keyframes scale-in {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+  }
+  @keyframes scale-out {
+    from { transform: scale(1); }
+    to { transform: scale(0.95); }
+  }
+  @keyframes slide-in-from-top {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes slide-in-from-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-in-from-bottom {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes slide-in-from-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-out-to-top {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+  }
+  @keyframes slide-out-to-right {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+  }
+  @keyframes slide-out-to-bottom {
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
+  }
+  @keyframes slide-out-to-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
   }
 }
 
