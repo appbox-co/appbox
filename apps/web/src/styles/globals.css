@@ -18,8 +18,8 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --animate-pulse-glow: pulse-glow 1.75s infinite cubic-bezier(0, 0, 0, 1.5);
-  --animate-in: fade-in var(--animate-duration-normal) ease-out, scale-in var(--animate-duration-normal) cubic-bezier(0.05, 0.7, 0.1, 1);
-  --animate-out: fade-out var(--animate-duration-normal) ease-in, scale-out var(--animate-duration-normal) cubic-bezier(0.05, 0.7, 0.1, 1);
+  --animate-in: fade-in var(--animate-duration-normal) ease-out;
+  --animate-out: fade-out var(--animate-duration-normal) ease-in;
 
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
