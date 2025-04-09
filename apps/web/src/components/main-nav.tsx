@@ -39,34 +39,6 @@ export function MainNav() {
   const router = useRouter()
   const t = useTranslations("site.navigation")
 
-  // Wrap this in a try/catch to handle cases where the translation is not available
-  // let t: any
-  // try {
-  //   t = useTranslations("site.navigation")
-  // } catch (error) {
-  //   // Fallback translations if the hook fails
-  //   t = (key: string) => {
-  //     const fallbacks: Record<string, string> = {
-  //       product: "Product",
-  //       resources: "Resources",
-  //       pricing: "Pricing",
-  //       features: "Features",
-  //       apps: "Apps",
-  //       documentation: "Documentation",
-  //       blog: "Blog",
-  //       faq: "FAQ",
-  //       service_status: "Service Status",
-  //       overview: "Overview of features",
-  //       explore_apps: "Explore our apps",
-  //       read_docs: "Read the docs",
-  //       latest_articles: "Latest articles and news",
-  //       faq_description: "Frequently asked questions",
-  //       check_status: "Check our service status",
-  //     }
-  //     return fallbacks[key] || key
-  //   }
-  // }
-
   // Define the components array inside the component to access translations
   const components: MenuItem[] = [
     {
