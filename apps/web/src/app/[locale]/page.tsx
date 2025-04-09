@@ -25,12 +25,13 @@ import { GradientWrapper } from "@/components/ui/gradient-wrapper"
 import Plans from "@/components/ui/plans"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import { siteConfig } from "@/config/site"
-import { mockData } from "@/data/mockData"
 import { Link } from "@/i18n/routing"
+import { getPlans } from "@/lib/appbox/api/getPlans"
 import { cn } from "@/lib/utils"
 
 export default async function IndexPage() {
   const t = await getTranslations()
+  const plansData = await getPlans()
 
   // Props for both gradient components
   const gradientProps = {
@@ -134,7 +135,7 @@ export default async function IndexPage() {
 
       <section id="plans-section" className="scroll-mt-4 pt-4">
         <Plans
-          data={mockData.data}
+          data={plansData.data}
           messages={{
             billing_cycles: {
               monthly: t("plans.billing_cycles.monthly"),
@@ -153,7 +154,8 @@ export default async function IndexPage() {
               raid: t("plans.card.raid"),
               disks: t("plans.card.disks"),
               per_month: t("plans.card.per_month"),
-              order_now: t("plans.card.order_now")
+              order_now: t("plans.card.order_now"),
+              billed_as: t("plans.card.billed_as")
             }
           }}
         />
