@@ -3,6 +3,7 @@ import { getMessages } from "next-intl/server"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/globals.css"
 import { NextIntlClientProvider } from "next-intl"
+import { PostHogProvider } from "@/components/providers/posthog-provider"
 import { TanstackQueryProvider } from "@/components/providers/query-provider"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -130,17 +131,19 @@ export default async function RootLayout(props: AppLayoutProps) {
         <ThemeProvider enableSystem attribute="class" defaultTheme="dark">
           <TanstackQueryProvider>
             <NextIntlClientProvider messages={messages}>
-              <div>
-                <div className="relative z-10 flex min-h-screen flex-col">
-                  <SiteHeader />
+              <PostHogProvider>
+                <div>
+                  <div className="relative z-10 flex min-h-screen flex-col">
+                    <SiteHeader />
 
-                  <main className="flex-1">{children}</main>
+                    <main className="flex-1">{children}</main>
 
-                  <SiteFooter />
+                    <SiteFooter />
+                  </div>
+
+                  <div className="fixed left-0 top-0 size-full bg-linear-to-b from-[#a277ff] via-transparent to-transparent opacity-10" />
                 </div>
-
-                <div className="fixed left-0 top-0 size-full bg-linear-to-b from-[#a277ff] via-transparent to-transparent opacity-10" />
-              </div>
+              </PostHogProvider>
             </NextIntlClientProvider>
           </TanstackQueryProvider>
         </ThemeProvider>

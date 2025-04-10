@@ -139,7 +139,7 @@ export default function Vortex(props: VortexProps) {
 
     drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
 
-    life!++
+    life = life! + 1
     particleProps[i] = x2
     particleProps[i2] = y2
     particleProps[i3] = vx
