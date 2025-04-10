@@ -71,7 +71,7 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams(): Promise<
-  PolicyPageProps["params"][]
+  { slug?: string[]; locale: LocaleOptions }[]
 > {
   const policies = allPolicies.map((policy) => {
     const [locale, ...slugs] = policy.slugAsParams.split("/")
@@ -82,8 +82,8 @@ export async function generateStaticParams(): Promise<
     }
   })
 
-  // Return an array of resolved promises instead of plain objects
-  return policies.map((policy) => Promise.resolve(policy))
+  // Return plain objects, not Promises
+  return policies
 }
 
 export default async function PolicyPage(props: PolicyPageProps) {

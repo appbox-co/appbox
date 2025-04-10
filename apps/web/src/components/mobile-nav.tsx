@@ -163,6 +163,7 @@ export function MobileNav({ messages }: MobileNavProps) {
           href="/"
           className="flex items-center"
           onOpenChange={setOpen}
+          onClick={() => setOpen(false)}
         >
           <Icons.emblem className="mr-2 size-4" />
           <span className="font-bold">{siteConfig.name}</span>
@@ -177,6 +178,7 @@ export function MobileNav({ messages }: MobileNavProps) {
               target="_blank"
               rel="noreferrer"
               onOpenChange={setOpen}
+              onClick={() => setOpen(false)}
               className="flex items-center font-medium"
             >
               {tExt("billing")}
@@ -187,6 +189,7 @@ export function MobileNav({ messages }: MobileNavProps) {
               target="_blank"
               rel="noreferrer"
               onOpenChange={setOpen}
+              onClick={() => setOpen(false)}
               className="flex items-center font-medium"
             >
               {tExt("control_panel")}
@@ -212,11 +215,13 @@ export function MobileNav({ messages }: MobileNavProps) {
                       target={item.external ? "_blank" : undefined}
                       rel={item.external ? "noopener noreferrer" : undefined}
                       // Add special handling for pricing link
-                      onClick={
-                        item.title === t("pricing")
-                          ? handlePricingClick
-                          : undefined
-                      }
+                      onClick={(e) => {
+                        setOpen(false)
+                        if (item.title === t("pricing")) {
+                          e.preventDefault()
+                          handlePricingClick()
+                        }
+                      }}
                       className="flex items-center"
                     >
                       {item.icon && <item.icon className="mr-2 size-4" />}
