@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import Link from "next/link"
 import { ExternalLink } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
@@ -78,19 +79,23 @@ function DefaultTableOfContentItems({
 }: DefaultTableOfContentItemsProps) {
   return (
     <div className="mt-2 flex flex-col gap-1">
-      <a
+      <Link
         className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition"
         href={`${siteConfig.links.github.url}/edit/main/apps/content/${sourceFilePath}`}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         {messages.editPageOnGitHub} <ExternalLink size={12} />
-      </a>
+      </Link>
 
-      <a
+      <Link
         className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition"
         href={`${siteConfig.links.github.url}/discussions/new/choose`}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         {messages.startDiscussionOnGitHub} <ExternalLink size={12} />
-      </a>
+      </Link>
     </div>
   )
 }
@@ -144,7 +149,7 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
       {tree.items.map((item, index) => {
         return (
           <li key={index} className={cn("mt-0 pt-2")}>
-            <a
+            <Link
               href={item.url}
               className={cn(
                 "hover:text-foreground inline-block no-underline transition-colors",
@@ -154,7 +159,7 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
               )}
             >
               {item.title}
-            </a>
+            </Link>
 
             {item.items?.length ? (
               <Tree tree={item} level={level + 1} activeItem={activeItem} />

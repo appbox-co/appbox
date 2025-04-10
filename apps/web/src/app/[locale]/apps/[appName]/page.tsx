@@ -5,8 +5,9 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ChevronLeft, ExternalLink } from "lucide-react"
 import ClientStarRating from "@/components/client-star-rating"
+import DeployButton from "@/components/deploy-button"
 import { Badge } from "@/components/ui/badge"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { getAppDetails } from "@/lib/appbox/api/getAppDetails"
 
@@ -83,9 +84,14 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
             </div>
 
             {/* Deploy button moved outside */}
-            <Button className="w-full" size="lg">
-              {t("detail.deploy_app")}
-            </Button>
+            <DeployButton
+              appId={appDetails.id}
+              deployText={t("detail.deploy_app")}
+              dialogTitle={t("detail.deploy_dialog.title")}
+              dialogQuestion={t("detail.deploy_dialog.question")}
+              yesText={t("detail.deploy_dialog.yes")}
+              noText={t("detail.deploy_dialog.no")}
+            />
 
             {/* App information card */}
             <div className="bg-card rounded-lg border p-6 shadow-xs">

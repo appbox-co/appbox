@@ -181,22 +181,32 @@ export function MainNav() {
   )
 }
 
-interface ListItemProps
-  extends Omit<React.ComponentPropsWithoutRef<"a">, "title"> {
+interface ListItemProps {
   title: React.ReactNode
   children: React.ReactNode
+  href?: string
+  className?: string
+  target?: string
+  rel?: string
 }
 
-function ListItem({ className, title, children, ...props }: ListItemProps) {
+function ListItem({
+  className,
+  title,
+  children,
+  href,
+  ...props
+}: ListItemProps) {
   return (
     <li className="row-span-3">
       <NavigationMenuLink asChild>
-        <a
+        <Link
           data-slot="navigation-link"
           className={cn(
             "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors",
             className
           )}
+          href={href || ""}
           {...props}
         >
           <div data-slot="title" className="text-sm font-medium leading-none">
@@ -208,7 +218,7 @@ function ListItem({ className, title, children, ...props }: ListItemProps) {
           >
             {children}
           </p>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   )

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { allPolicies } from "contentlayer/generated"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
+import Link from "next/link"
 import { Mdx } from "@/components/docs/mdx"
 import { DocumentNotFound } from "@/components/docs/not-found"
 import { DashboardTableOfContents } from "@/components/docs/toc"
@@ -129,12 +130,12 @@ export default async function PolicyPage(props: PolicyPageProps) {
                     </TableCell>
                     <TableCell>{policy.description}</TableCell>
                     <TableCell className="text-right">
-                      <a
+                      <Link
                         href={`/${params.locale}/policies/${policySlug}`}
                         className="focus-visible:ring-ring ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                       >
                         View
-                      </a>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 )

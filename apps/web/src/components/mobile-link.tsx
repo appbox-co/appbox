@@ -24,13 +24,22 @@ export function MobileLink({
 }: MobileLinkProps) {
   const router = useRouter()
 
+  // Handle click event
+  const handleClick = (_e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Only handle internal navigation with router.push
+    if (href.toString().startsWith("/") || href.toString().startsWith("#")) {
+      router.push(href.toString())
+    }
+
+    if (onOpenChange) {
+      onOpenChange(false)
+    }
+  }
+
   return (
     <Link
       href={href}
-      onClick={() => {
-        router.push(href.toString())
-        onOpenChange?.(false)
-      }}
+      onClick={handleClick}
       className={cn(className)}
       target={target}
       rel={rel}

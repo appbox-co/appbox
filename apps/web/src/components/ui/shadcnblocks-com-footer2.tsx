@@ -1,5 +1,6 @@
 import { SVGProps } from "react"
 import * as React from "react"
+import { Link } from "@/i18n/routing"
 
 /** This is a proper React component that returns <svg> */
 function DefaultLogo(props: SVGProps<SVGSVGElement>) {
@@ -98,10 +99,10 @@ const Footer2 = ({
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2 mb-8 lg:mb-0">
               <div className="flex items-center gap-2 lg:justify-start">
-                <a href={logo.url}>
+                <Link href={logo.url}>
                   {/* Now logo.src is definitely a component, so <logo.src /> is valid */}
                   <logo.src className="size-10" />
-                </a>
+                </Link>
                 <p className="text-xl font-semibold">{logo.title}</p>
               </div>
               <p className="mt-4 font-bold">{tagline}</p>
@@ -115,13 +116,13 @@ const Footer2 = ({
                       key={linkIdx}
                       className="hover:text-primary font-medium"
                     >
-                      <a
+                      <Link
                         href={link.url}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noreferrer noopener" : undefined}
                       >
                         {link.text}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -133,13 +134,13 @@ const Footer2 = ({
             <ul className="flex gap-4">
               {bottomLinks.map((link, linkIdx) => (
                 <li key={linkIdx} className="hover:text-primary underline">
-                  <a
+                  <Link
                     href={link.url}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noreferrer noopener" : undefined}
                   >
                     {link.text}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

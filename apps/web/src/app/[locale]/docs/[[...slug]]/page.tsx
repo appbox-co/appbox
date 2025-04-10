@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { allDocs } from "contentlayer/generated"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
+import Link from "next/link"
 import { DocBreadcrumb } from "@/components/docs/breadcrumb"
 import { DocHeading } from "@/components/docs/heading"
 import { DocLinks } from "@/components/docs/links"
@@ -179,12 +180,12 @@ export default async function DocPage(props: DocPageProps) {
                   <TableCell className="font-medium">{info.title}</TableCell>
                   <TableCell>{info.description}</TableCell>
                   <TableCell className="text-right">
-                    <a
+                    <Link
                       href={`/${params.locale}/docs/${info.firstDocSlug}`}
                       className="focus-visible:ring-ring ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                     >
                       {t("index.view")}
-                    </a>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
