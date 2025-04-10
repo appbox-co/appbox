@@ -11,11 +11,11 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_APP_URL,
 
   og: {
-    image: absoluteUrl("/og.jpg"),
+    image: absoluteUrl("/og.png"),
 
     size: {
-      width: 1200,
-      height: 630
+      width: 3200,
+      height: 2521
     }
   },
 
