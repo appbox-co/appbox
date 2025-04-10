@@ -7,8 +7,8 @@ export interface DocsConfig {
 }
 
 export interface DocPageProps {
-  params: {
+  params: Promise<{
     slug: string[]
     locale: LocaleOptions
-  }
+  }>
 }

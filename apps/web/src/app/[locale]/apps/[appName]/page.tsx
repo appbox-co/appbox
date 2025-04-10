@@ -11,10 +11,10 @@ import { Separator } from "@/components/ui/separator"
 import { getAppDetails } from "@/lib/appbox/api/getAppDetails"
 
 interface AppDetailPageProps {
-  params: {
+  params: Promise<{
     appName: string
     locale: string
-  }
+  }>
 }
 
 export default async function AppDetailPage({ params }: AppDetailPageProps) {

@@ -65,7 +65,7 @@ export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
 }
 
 export async function generateStaticParams(): Promise<
-  DocPageProps["params"][]
+  { slug: string[]; locale: LocaleOptions }[]
 > {
   const docs = allDocs.map((doc) => {
     const [locale, ...slugs] = doc.slugAsParams.split("/")

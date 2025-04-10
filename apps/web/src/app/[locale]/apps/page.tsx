@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic"
 export default async function AppsPage({
   searchParams
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const t = await getTranslations("apps")
 
@@ -25,7 +25,7 @@ export default async function AppsPage({
     console.error("Error fetching apps:", error)
   }
 
-  // Get filter parameters from URL - properly await searchParams first
+  // Get filter parameters from URL - properly await searchParams
   const params = await searchParams
   const categoryFilter = params.category as string | undefined
   const searchFilter = params.search as string | undefined

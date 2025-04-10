@@ -15,3 +15,12 @@ if git diff --cached --name-only | grep -E '\.mdx$|contentlayer\.config\.ts$'; t
   fi
   echo "Contentlayer rebuild successful."
 fi 
+
+# Run build to catch any build-time errors
+echo "Running build check before commit..."
+cd "$(git rev-parse --show-toplevel)" || exit 1
+if ! pnpm build; then
+  echo "Build failed! Fix the errors before committing."
+  exit 1
+fi
+echo "Build check successful." 

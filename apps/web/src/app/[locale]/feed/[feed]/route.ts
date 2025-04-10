@@ -131,8 +131,4 @@ export const GET = async (_: Request, props: StaticParams) => {
 export const dynamicParams = true
 export const dynamic = "force-static"
 
-const VERCEL_REVALIDATE = Number(
-  process.env.NEXT_PUBLIC_VERCEL_REVALIDATE_TIME || 300
-)
-
-export const revalidate = VERCEL_REVALIDATE
+export const revalidate = 300

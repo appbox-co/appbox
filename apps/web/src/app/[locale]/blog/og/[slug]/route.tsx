@@ -1,18 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og"
-import type { NextRequest } from "next/server"
 import { allBlogs, type Blog } from "contentlayer/generated"
 import { siteConfig } from "@/config/site"
 import { getFonts } from "@/lib/fonts"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import { truncateText } from "@/lib/utils"
 
-interface BlogOgProps {
-  params: { slug: string; locale: LocaleOptions }
-}
-
-export const runtime = "edge"
-export const dynamicParams = true
+export const dynamic = "force-dynamic"
 
 // Fallback URL if NEXT_PUBLIC_APP_URL is not defined
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
@@ -24,9 +18,15 @@ function safeAbsoluteUrl(path: string) {
   return `${BASE_URL}${safePath}`
 }
 
-export async function GET(_: NextRequest, props: BlogOgProps) {
-  const params = await props.params
-  const post = getBlogPostBySlugAndLocale(params.slug, params.locale)
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ slug: string; locale: LocaleOptions }> }
+) {
+  const resolvedParams = await params
+  const post = getBlogPostBySlugAndLocale(
+    resolvedParams.slug,
+    resolvedParams.locale
+  )
 
   if (!post) {
     return new ImageResponse(<Fallback src="/og.jpg" />, {
@@ -125,19 +125,4 @@ function getBlogPostBySlugAndLocale(slug: string, locale: LocaleOptions) {
 
     return slugs.join("/") === slug && postLocale === locale
   })
-}
-
-export async function generateStaticParams(): Promise<
-  { slug: string; locale: LocaleOptions }[]
-> {
-  const blog = allBlogs.map((blog) => {
-    const [locale, ...slugs] = blog.slugAsParams.split("/")
-
-    return {
-      slug: slugs.join("/"),
-      locale: locale as LocaleOptions
-    }
-  })
-
-  return blog
 }
