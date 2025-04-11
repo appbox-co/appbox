@@ -4,7 +4,7 @@ import { PlansData } from "@/components/ui/plans"
 export async function getPlans(): Promise<PlansData> {
   try {
     const response = await fetch("https://billing.appbox.co/feeds/plans.php", {
-      next: { revalidate: 3600 } // Cache for 1 hour
+      next: { revalidate: 300 } // Cache for 5 minutes
     })
 
     if (!response.ok) {
