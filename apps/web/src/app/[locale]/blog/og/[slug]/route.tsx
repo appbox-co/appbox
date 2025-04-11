@@ -44,7 +44,7 @@ export async function GET(
         <Background src="/og-background.jpg" />
 
         <div tw="my-10 mx-14 flex flex-col">
-          <Logo src="/appboxes-white.svg" />
+          <Logo src="/appbox-box-white.svg" />
 
           <div tw="flex flex-col h-full max-h-[300px]">
             <Title>{post.title}</Title>

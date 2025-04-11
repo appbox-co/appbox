@@ -85,9 +85,9 @@ export async function generateMetadata(props: {
     // },
 
     icons: {
-      icon: "/appboxes-white.svg",
-      apple: "/appboxes-white.svg",
-      shortcut: "/appboxes-white.svg"
+      icon: "/appbox-box-white.svg",
+      apple: "/appbox-box-white.svg",
+      shortcut: "/appbox-box-white.svg"
     },
 
     manifest: siteConfig.url
