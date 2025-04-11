@@ -2,7 +2,9 @@
   <img src="https://www.appbox.co/appbox-gradient-box-purple.svg" alt="Appbox Logo" width="150" height="auto" />
 </p>
 
-# Appbox Website and Control Panel
+<div align="center">
+  <h1>Appbox Website and Control Panel</h1>
+</div>
 
 ## About Appbox
 
@@ -36,7 +38,7 @@ This repository contains the open-source code for the [Appbox](https://www.appbo
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Appbox-co/Appbox.git
+   git clone https://github.com/appbox-co/appbox.git
    cd website
    ```
 
@@ -131,9 +133,7 @@ For more details, see our [Adding New Docs](./apps/content/docs/en/adding-new-do
 
 ## Community
 
-- [Discord](https://discord.gg/appbox) - Join our community chat
-- [Twitter](https://twitter.com/appboxhosting) - Follow us for updates
-- [Support Tickets](https://www.appbox.co/support) - Get help with your service
+- [Support Tickets](https://billing.appbox.co/submitticket.php?step=2&deptid=3) - Get help with your service
 
 ## License
 
