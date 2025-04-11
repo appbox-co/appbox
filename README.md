@@ -1,6 +1,8 @@
-# Appbox Website and Control Panel
+<p align="center">
+  <img src="https://www.appbox.co/appbox-gradient-box-purple.svg" alt="Appbox Logo" width="150" height="auto" />
+</p>
 
-![Appbox Logo](https://www.appbox.co/logo.png)
+# Appbox Website and Control Panel
 
 ## About Appbox
 
