@@ -27,7 +27,7 @@ export const siteConfig = {
     // },
     github: {
       label: "GitHub",
-      url: "https://github.com/appbox-co"
+      url: "https://github.com/appbox-co/appbox"
     }
   }
 } as const
