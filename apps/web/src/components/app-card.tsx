@@ -50,7 +50,7 @@ export function AppCard({
             </p>
           </div>
         </div>
-        <blockquote className="mt-2 line-clamp-3 text-sm">
+        <blockquote className="mt-2 line-clamp-3 text-sm overflow-hidden text-ellipsis max-h-[4.5em]">
           {description}
         </blockquote>
         {categories.length > 0 && (
