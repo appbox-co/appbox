@@ -14,6 +14,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "www.appbox.co"
+      },
+      {
+        protocol: "https",
         hostname: "api.appbox.co"
       }
     ]
