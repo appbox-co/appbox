@@ -150,7 +150,6 @@ export default async function IndexPage() {
               app_slots: t("plans.card.app_slots"),
               connection_speed: t("plans.card.connection_speed"),
               resource_multiplier: t("plans.card.resource_multiplier"),
-              users_per_disk: t("plans.card.users_per_disk"),
               raid: t("plans.card.raid"),
               disks: t("plans.card.disks"),
               per_month: t("plans.card.per_month"),

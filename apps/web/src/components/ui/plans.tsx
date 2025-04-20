@@ -39,7 +39,6 @@ interface Plan {
   available?: boolean
   connection_speed: string
   resources: string
-  users_per_disk: number | string
   raid?: string
   number_of_disks?: number
   pricing: {
@@ -83,7 +82,6 @@ interface PlansProps {
       app_slots: string
       connection_speed: string
       resource_multiplier: string
-      users_per_disk: string
       raid: string
       disks: string
       per_month: string
@@ -296,14 +294,6 @@ const Plans = ({
                               </h5>
                               <span className="text-gray-500 dark:text-gray-400">
                                 {messages.card.resource_multiplier}
-                              </span>
-                            </div>
-                            <div className="mb-4">
-                              <h5 className="text-xl font-bold">
-                                {plan.users_per_disk}
-                              </h5>
-                              <span className="text-gray-500 dark:text-gray-400">
-                                {messages.card.users_per_disk}
                               </span>
                             </div>
                             {plan.raid && (
