@@ -10,11 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "appbox.co"
-      },
-      {
-        protocol: "https",
-        hostname: "www.appbox.co"
+        hostname: "**.appbox.co"
       },
       {
         protocol: "https",
