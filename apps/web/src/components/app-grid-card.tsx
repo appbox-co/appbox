@@ -77,7 +77,7 @@ export function AppGridCard({
           </div>
         </div>
 
-        <p className="text-muted-foreground mb-3 line-clamp-3 text-sm">
+        <p className="text-muted-foreground mb-3 line-clamp-3 text-sm overflow-hidden text-ellipsis max-h-[4.5em]">
           {description}
         </p>
 
