@@ -28,7 +28,8 @@ export function FAQSection({
     "additional_software",
     "fuse_rclone",
     "refund_policy",
-    "custom_domain"
+    "custom_domain",
+    "upgrade_after_purchase"
   ]
 
   return (
