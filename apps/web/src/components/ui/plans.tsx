@@ -2,7 +2,9 @@
 
 import { cloneElement, useState } from "react"
 import "@/styles/custom-styles.css"
+import Link from "next/link"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { SparklesText } from "@/components/ui/sparkles-text"
 
@@ -41,6 +43,9 @@ interface Plan {
   resources: string
   raid?: string
   number_of_disks?: number
+  excluded_app_categories?: {
+    [key: string]: string
+  }
   pricing: {
     EUR: Pricing
   }
@@ -242,7 +247,7 @@ const Plans = ({
 
                         const planCard = (
                           <div
-                            className={`dark:bg-card-primary/80 text-card-foreground dark:text-white ${!plan.recommended ? "mb-10 sm:mb-0" : ""} min-w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm`}
+                            className={`dark:bg-card-primary/80 text-card-foreground dark:text-white ${!plan.recommended ? "mb-10 sm:mb-0" : ""} min-w-56 sm:w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm`}
                           >
                             <h5
                               className="mb-2 pb-2 text-xl font-semibold"
@@ -316,6 +321,33 @@ const Plans = ({
                                 </span>
                               </div>
                             )}
+                            {plan.excluded_app_categories &&
+                              Object.keys(plan.excluded_app_categories).length >
+                                0 && (
+                                <div className="mb-4">
+                                  <h5 className="text-xl font-bold mb-2">
+                                    Excluded Apps
+                                  </h5>
+                                  <div className="flex flex-wrap gap-1">
+                                    {Object.entries(
+                                      plan.excluded_app_categories
+                                    ).map(([id, category]) => (
+                                      <Link
+                                        key={id}
+                                        href={`/apps?category=${encodeURIComponent(category)}`}
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <Badge
+                                          variant="secondary"
+                                          className="text-xs"
+                                        >
+                                          {category}
+                                        </Badge>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
                             <div className="mb-2 text-2xl font-extrabold dark:text-white">
                               {plan.pricing.EUR[billingCycle[0]].per_month}
                               <small className="text-base font-medium text-gray-500 dark:text-gray-400">
@@ -354,7 +386,7 @@ const Plans = ({
                         return plan.recommended ? (
                           <div
                             key={idx}
-                            className="flex flex-col items-center mb-10 sm:mb-0 mt-6 sm:mt-0 min-w-56"
+                            className="flex flex-col items-center mb-10 sm:mb-0 mt-6 sm:mt-0 min-w-56 sm:w-56"
                           >
                             {/* Separate visible row for the "Most Popular" badge */}
                             <div className="mb-2 text-center">
@@ -372,7 +404,7 @@ const Plans = ({
                             </BackgroundGradient>
                           </div>
                         ) : (
-                          <div key={idx} className="min-w-56">
+                          <div key={idx} className="min-w-56 sm:w-56">
                             {/* Empty space to maintain alignment - only if group has recommended plans */}
                             {group.plans.some((p) => p.recommended) && (
                               <div className="mb-0 sm:mb-2 h-0 sm:h-8"></div>
