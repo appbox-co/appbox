@@ -397,7 +397,7 @@ const Plans = ({
                               />
                             </div>
                             <BackgroundGradient
-                              containerClassName="p-1 w-full"
+                              containerClassName="p-1 w-full sm:w-fit"
                               className="rounded-lg dark:bg-gray-950 bg-gray-50"
                             >
                               {planCard}
