@@ -92,6 +92,7 @@ interface PlansProps {
       per_month: string
       order_now: string
       billed_as: string
+      excluded_app_categories: string
     }
   }
   gradientStartColor?: string
@@ -265,7 +266,7 @@ const Plans = ({
                               <h5 className="text-xl font-bold">
                                 {plan.storage_capacity}
                               </h5>
-                              <span className="text-gray-500 dark:text-gray-400">
+                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {plan.storage_type} {messages.card.storage}
                               </span>
                             </div>
@@ -273,7 +274,7 @@ const Plans = ({
                               <h5 className="text-xl font-bold">
                                 {plan.traffic}
                               </h5>
-                              <span className="text-gray-500 dark:text-gray-400">
+                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {messages.card.traffic}
                               </span>
                             </div>
@@ -281,7 +282,7 @@ const Plans = ({
                               <h5 className="text-xl font-bold">
                                 {plan.app_slots}
                               </h5>
-                              <span className="text-gray-500 dark:text-gray-400">
+                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {messages.card.app_slots}
                               </span>
                             </div>
@@ -289,7 +290,7 @@ const Plans = ({
                               <h5 className="text-xl font-bold">
                                 {plan.connection_speed}
                               </h5>
-                              <span className="text-gray-500 dark:text-gray-400">
+                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {messages.card.connection_speed}
                               </span>
                             </div>
@@ -297,7 +298,7 @@ const Plans = ({
                               <h5 className="text-xl font-bold">
                                 {plan.resources}
                               </h5>
-                              <span className="text-gray-500 dark:text-gray-400">
+                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {messages.card.resource_multiplier}
                               </span>
                             </div>
@@ -306,7 +307,7 @@ const Plans = ({
                                 <h5 className="text-xl font-bold">
                                   {plan.raid}
                                 </h5>
-                                <span className="text-gray-500 dark:text-gray-400">
+                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                   {messages.card.raid}
                                 </span>
                               </div>
@@ -316,7 +317,7 @@ const Plans = ({
                                 <h5 className="text-xl font-bold">
                                   {plan.number_of_disks}
                                 </h5>
-                                <span className="text-gray-500 dark:text-gray-400">
+                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                   {messages.card.disks}
                                 </span>
                               </div>
@@ -325,8 +326,8 @@ const Plans = ({
                               Object.keys(plan.excluded_app_categories).length >
                                 0 && (
                                 <div className="mb-4">
-                                  <h5 className="text-xl font-bold mb-2">
-                                    Excluded Apps
+                                  <h5 className="text-xl font-bold mb-2 whitespace-normal">
+                                    {messages.card.excluded_app_categories}
                                   </h5>
                                   <div className="flex flex-wrap gap-1">
                                     {Object.entries(
@@ -350,7 +351,7 @@ const Plans = ({
                               )}
                             <div className="mb-2 text-2xl font-extrabold dark:text-white">
                               {plan.pricing.EUR[billingCycle[0]].per_month}
-                              <small className="text-base font-medium text-gray-500 dark:text-gray-400">
+                              <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {messages.card.per_month}
                               </small>
                             </div>

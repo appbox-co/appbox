@@ -154,7 +154,8 @@ export default async function IndexPage() {
               disks: t("plans.card.disks"),
               per_month: t("plans.card.per_month"),
               order_now: t("plans.card.order_now"),
-              billed_as: t("plans.card.billed_as")
+              billed_as: t("plans.card.billed_as"),
+              excluded_app_categories: t("plans.card.excluded_app_categories")
             }
           }}
         />
