@@ -42,8 +42,8 @@ export function MainNav() {
   // Define the components array inside the component to access translations
   const components: MenuItem[] = [
     {
-      title: t("product"),
-      translationKey: "product",
+      title: t("resources"),
+      translationKey: "resources",
       children: [
         {
           title: t("features"),
@@ -53,20 +53,6 @@ export function MainNav() {
           description: t("overview"),
           descriptionKey: "overview"
         },
-        {
-          title: t("apps"),
-          translationKey: "apps",
-          href: "/apps",
-          icon: Icons.apps,
-          description: t("explore_apps"),
-          descriptionKey: "explore_apps"
-        }
-      ]
-    },
-    {
-      title: t("resources"),
-      translationKey: "resources",
-      children: [
         {
           title: t("documentation"),
           translationKey: "documentation",
@@ -128,6 +114,11 @@ export function MainNav() {
     }
   }
 
+  const handleAppsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    router.push("/apps")
+  }
+
   return (
     <div className="mr-4 hidden md:flex">
       {/* ----------------------------------------------------------------
@@ -146,6 +137,13 @@ export function MainNav() {
               onClick={handlePricingClick}
             >
               {t("pricing")}
+            </Button>
+            <Button
+              variant="ghost"
+              className={navigationMenuTriggerStyle()}
+              onClick={handleAppsClick}
+            >
+              {t("apps")}
             </Button>
           </NavigationMenuItem>
 
