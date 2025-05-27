@@ -142,6 +142,15 @@ export default async function RootLayout(props: AppLayoutProps) {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'GT-T53F3CT6');
+            gtag('consent', 'update', {
+              analytics_storage: 'granted',
+              ad_storage: 'granted',
+              functionality_storage: 'granted',
+              personalization_storage: 'granted',
+              security_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted'
+            })
           `}
         </Script>
 
