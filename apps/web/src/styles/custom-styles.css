@@ -257,3 +257,12 @@ html:not([data-touch-device='true'])
 .beam-container {
   animation-delay: 300ms; /* Start fading after a slight delay */
 }
+
+#iubenda-cs-banner div.iubenda-cs-content {
+  background-color: rgba( 0, 0, 0, 0.6 ) !important;
+  backdrop-filter: blur(10px);
+}
+
+#iubenda-cs-banner {
+  will-change: unset !important;
+}

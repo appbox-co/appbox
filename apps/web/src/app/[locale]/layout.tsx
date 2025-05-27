@@ -130,7 +130,11 @@ export default async function RootLayout(props: AppLayoutProps) {
           fontSans.variable
         )}
       >
-        {/* Google tag (gtag.js) */}
+        <Script
+          type="text/javascript"
+          src="//embeds.iubenda.com/widgets/03e26262-624c-4f5b-8687-f85ec29afd9f.js"
+          strategy="afterInteractive"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=GT-T53F3CT6"
           strategy="afterInteractive"
