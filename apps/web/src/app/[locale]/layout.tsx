@@ -3,6 +3,8 @@ import { getMessages } from "next-intl/server"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/globals.css"
 import { NextIntlClientProvider } from "next-intl"
+import Script from "next/script"
+import { Analytics } from "@/components/analytics"
 import { PostHogProvider } from "@/components/providers/posthog-provider"
 import { TanstackQueryProvider } from "@/components/providers/query-provider"
 import { SiteFooter } from "@/components/site-footer"
@@ -128,10 +130,25 @@ export default async function RootLayout(props: AppLayoutProps) {
           fontSans.variable
         )}
       >
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=GT-T53F3CT6"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'GT-T53F3CT6');
+          `}
+        </Script>
+
         <ThemeProvider enableSystem attribute="class" defaultTheme="dark">
           <TanstackQueryProvider>
             <NextIntlClientProvider messages={messages}>
               <PostHogProvider>
+                <Analytics />
                 <div>
                   <div className="relative z-10 flex min-h-screen flex-col">
                     <SiteHeader />
