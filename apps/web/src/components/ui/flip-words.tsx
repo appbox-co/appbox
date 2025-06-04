@@ -75,7 +75,7 @@ export const FlipWords = ({
             }}
             className="inline-block"
           >
-            {letter}
+            {letter === " " ? "\u00A0" : letter}
           </motion.span>
         ))}
       </motion.div>

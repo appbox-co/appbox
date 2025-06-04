@@ -23,7 +23,6 @@ import { FlipWords } from "@/components/ui/flip-words"
 import { ClientGradientSwitcher } from "@/components/ui/gradient-client-switcher"
 import { GradientWrapper } from "@/components/ui/gradient-wrapper"
 import Plans from "@/components/ui/plans"
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
 import { getPlans } from "@/lib/appbox/api/getPlans"
@@ -75,38 +74,25 @@ export default async function IndexPage() {
         </Link>
 
         <PageHeaderHeading>
-          <div className="relative">
-            <TextGenerateEffect words={t("site.heading")} />
+          <span
+            dangerouslySetInnerHTML={{ __html: t.raw("site.heading") }}
+            className="text-4xl sm:text-5xl md:text-6xl"
+          />
+          <div className="mt-4 text-2xl sm:text-3xl md:text-4xl text-muted-foreground font-normal tracking-tight">
+            {t.raw("site.subheading").split("{flipwords}")[0]}
             <FlipWords
-              words={[
-                "site",
-                "blog",
-                "docs",
-                "files",
-                "database",
-                "team",
-                "marketing",
-                "analytics",
-                "projects",
-                "VPS",
-                "videos",
-                "images",
-                "audio",
-                "code",
-                "data",
-                "security",
-                "testing"
-              ]}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+              words={t.raw("site.flipwords")}
+              className="text-2xl sm:text-3xl md:text-4xl text-primary font-semibold tracking-tight"
             />
+            {t.raw("site.subheading").split("{flipwords}")[1]}
           </div>
         </PageHeaderHeading>
 
         <PageHeaderDescription>{t("site.description")}</PageHeaderDescription>
 
         <PageActions>
-          <Link href="/#plans-section" className={cn(buttonVariants())}>
-            {t("site.buttons.get_started")}
+          <Link href="/apps" className={cn(buttonVariants())}>
+            {t("site.buttons.browse_apps")}
           </Link>
 
           <Link
@@ -114,7 +100,7 @@ export default async function IndexPage() {
             rel="noreferrer"
             href={siteConfig.links.github.url}
             title={siteConfig.links.github.label}
-            className={cn(buttonVariants({ variant: "outline" }))}
+            className={cn(buttonVariants({ variant: "ghost" }))}
           >
             <Icons.gitHub className="mr-2 size-4" />
             {siteConfig.links.github.label}
