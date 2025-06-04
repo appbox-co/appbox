@@ -1,0 +1,97 @@
+---
+title: Bug Bounty Programm
+description: Unser Programm zur Meldung von Sicherheitslücken und Belohnungen
+---
+
+Bei Appbox ist Sicherheit eine grundlegende Priorität. Wir ermutigen Sicherheitsforscher aktiv dabei zu helfen, unsere Plattform zu stärken, indem sie potenzielle Schwachstellen identifizieren und melden. Dieses Programm beschreibt unseren Ansatz für verantwortliche Sicherheitsforschung, wie wir mit Schwachstellenmeldungen umgehen und welche Belohnungen wir Forschern anbieten, die zur Verbesserung unserer Sicherheitslage beitragen.
+
+## Unser Engagement
+
+Wenn ihr an unserem Bug Bounty Programm teilnehmt, versprechen wir:
+
+* Eure Meldung zeitnah zu bestätigen und zu bewerten
+* Bestätigte Schwachstellen mit angemessener Dringlichkeit zu behandeln
+* Euch für einzigartige, bisher nicht gemeldete Schwachstellen anzuerkennen und zu belohnen, die zu Sicherheitsverbesserungen führen
+
+## Programm-Abdeckung
+
+Dieses Bug Bounty Programm gilt für die folgenden Appbox-Plattformen:
+
+* Appbox Hauptwebsite [https://www.appbox.co]
+* Appbox Kontrollpanel [https://www.appbox.co/login]
+* Appbox Hosting-Infrastruktur [username.appboxes.co]
+
+## Ausgeschlossene Bereiche und Probleme
+
+Die folgenden gelten als außerhalb des Geltungsbereichs unseres Bug Bounty Programms:
+
+* WHMCS Client Area [https://billing.appbox.co] - Schwachstellen sollten direkt an WHMCS über ihr eigenes Sicherheitsprogramm gemeldet werden
+* Sicherheitsprobleme, die unsere Standard-Anwendungskonfigurationen nicht betreffen
+* Schwachstellen in unseren Containern, die nicht-standardmäßige Konfigurationen erfordern
+* Timing-basierte Informationsleckage-Angriffe
+* Prozessaufzählungstechniken
+* Jede Form von Denial-of-Service oder hochvolumigen Angriffen
+* Social Engineering und Phishing-Techniken
+* Automatisierte Sicherheitsscans, die übermäßigen Traffic oder Lasten generieren
+
+## Belohnungsstruktur
+
+### Hauptwebsite und Kontrollpanel
+
+| **Schwachstellentyp**                                        | **PayPal Belohnung** | **Service-Guthaben** |
+| ------------------------------------------------------------ | -------------------- | -------------------- |
+| XSS                                                          | EUR 100              | EUR 200              |
+| XSS (CSP Bypass)                                             | EUR 200              | EUR 300              |
+| CSRF                                                         | EUR 300              | EUR 450              |
+| Authentifizierungs-Bypass                                    | EUR 500              | EUR 750              |
+| SQL Injection                                                | EUR 1000             | EUR 1500             |
+| Beliebige Code-Ausführung                                    | EUR 1000             | EUR 1500             |
+| Beliebige Code-Ausführung (mit Privilegienerweiterung)      | EUR 2000             | EUR 3000             |
+| Persistente Code-Änderung                                    | EUR 1000             | EUR 1500             |
+
+### Hosting-Infrastruktur
+
+| Schwachstellentyp                                            | PayPal Belohnung | Service-Guthaben |
+| ------------------------------------------------------------ | ---------------- | ---------------- |
+| Authentifizierungs-Bypass (SSH, FTP, VPN, etc.)             | EUR 500          | EUR 750          |
+| Authentifizierungs-Bypass für unterstützte Apps             | EUR 100          | EUR 200          |
+| Lokale Privilegienerweiterung                               | EUR 500          | EUR 750          |
+
+Mitwirkende, die gültige Schwachstellen melden, werden in unserer Security Researchers Hall of Fame als Zeichen unserer Wertschätzung anerkannt.
+
+## Eure Belohnung beanspruchen
+
+* Ihr könnt zwischen zwei Belohnungsoptionen wählen:
+   * Direkte PayPal-Zahlung (erfordert ein gültiges PayPal-Konto)
+   * Appbox Service-Guthaben (anwendbar auf jeden Appbox-Service, nicht übertragbar)
+
+## Teilnahmerichtlinien
+
+* Haltet euch an diese Richtlinie, unsere [Nutzungsbedingungen](/policies/terms-of-service) und alle geltenden Gesetze
+* Meldet Schwachstellen umgehend nach der Entdeckung
+* Respektiert die Privatsphäre der Nutzer und die Systemintegrität während eurer Forschung
+* Reicht alle Schwachstellenmeldungen ausschließlich über unser [Support-Ticket-System](https://billing.appbox.co/submitticket.php?step=2&deptid=3) ein
+* Wahrt die Vertraulichkeit über entdeckte Schwachstellen bis zur Behebung
+* Beschränkt eure Tests auf Systeme, die explizit in diesem Programm enthalten sind
+* Falls ihr unerwarteten Zugang zu sensiblen Daten erhaltet: greift nur auf die Mindestmenge zu, die nötig ist, um das Problem zu demonstrieren, stoppt die Tests sofort und meldet die Schwachstelle umgehend
+* Verwendet nur eure eigenen Testkonten für jede Interaktion mit unseren Systemen
+* Versucht niemals, Appbox basierend auf euren Erkenntnissen zu erpressen
+
+## Rechtsschutz
+
+Sicherheitsforscher, die dieser Richtlinie folgen, können erwarten:
+
+* Schutz vor rechtlichen Schritten für gutgläubige Sicherheitsforschung, die innerhalb dieser Richtlinien durchgeführt wird
+* Befreiung von Anti-Umgehungsrechtsansprüchen, wenn nötig für legitime Sicherheitsforschung
+* Verzicht auf bestimmte Richtlinienbeschränkungen, die sonst Sicherheitstests verhindern würden
+* Anerkennung, dass konforme Sicherheitsforschung vorteilhaft und in gutem Glauben durchgeführt wird
+
+Ihr bleibt dafür verantwortlich, alle geltenden Gesetze einzuhalten. Falls ihr rechtlichen Schritten von Dritten ausgesetzt seid, während ihr euch an diese Richtlinie haltet, werden wir bestätigen, dass eure Handlungen in Übereinstimmung mit unserem Programm durchgeführt wurden. Falls ihr unsicher seid, ob eure geplanten Forschungsaktivitäten dieser Richtlinie entsprechen, kontaktiert uns bitte über das [Support-Ticket-System](https://billing.appbox.co/submitticket.php?step=2&deptid=3), bevor ihr fortfahrt.
+
+## Meldeprozess
+
+Um eine Schwachstelle zu melden, erstellt ein detailliertes Ticket über unser [Support-Ticket-System](https://billing.appbox.co/submitticket.php?step=2&deptid=3).
+
+* Euer Bericht sollte umfassende Schritte zur Reproduktion der Schwachstelle enthalten. Ihr könnt diese Vorlage als Leitfaden verwenden: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Alle Programmkommunikationen müssen über unsere offizielle Support-Ticket-Plattform laufen
+* Die öffentliche Preisgabe jeder Schwachstelle ohne ausdrückliche schriftliche Genehmigung von Appbox verstößt gegen die Bedingungen dieses Programms und disqualifiziert euch vom Erhalt einer Belohnung 

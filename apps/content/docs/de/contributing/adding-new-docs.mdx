@@ -1,0 +1,62 @@
+---
+title: Neue Docs hinzufügen
+description: Neue Dokumente zu eurer Dokumentationsseite und eurem Blog hinzufügen.
+sort: 2
+---
+
+# Für Dokumentation
+
+1. Erstellt eine neue `.mdx`-Datei im `apps/content/docs/[language]`-Ordner mit dem Inhalt eures Dokuments.
+2. Fügt das Dokument zum Navigationsmenü der Website hinzu.
+    Dazu fügt ihr ein neues Element zur Datei `src/config/docs.ts` in der `sidebarNav`-Eigenschaft mit den gewünschten Informationen hinzu, folgt einfach dem Muster der bestehenden Elemente. Dadurch wird das Dokument auch zur Such-Befehlspalette hinzugefügt.
+
+## MDX-Dokumenteinstellungen
+
+MDX-Dokumente werden im `apps/content/docs/[language]`- und `apps/content/blog/[language]`-Ordner gespeichert. Jedes Dokument ist eine MDX-Datei, die einen Header mit Metadaten wie Titel und Beschreibung enthält. Hier ist ein Beispiel eines Dokument-Headers:
+
+```mdx
+---
+title: Dokumenttitel
+description: Dokumentbeschreibung.
+sort: 1
+---
+```
+
+Die folgenden Metadatenfelder werden unterstützt:
+
+- `title` (erforderlich): Der Titel des Dokuments.
+- `description` (erforderlich): Eine kurze Beschreibung des Dokuments.
+- `sort` (optional): Eine Nummer, die die Reihenfolge des Dokuments in der Navigation bestimmt. Dokumente mit niedrigeren Sort-Werten erscheinen zuerst. Falls nicht angegeben, werden Dokumente alphabetisch nach Titel sortiert.
+- `links` (optional): Links zu verwandten Dokumenten, API-Referenzen, Quellcode, etc.
+- `toc` (optional): Ob das Inhaltsverzeichnis angezeigt werden soll. Standard ist `true`.
+
+Um neue Metadaten zum Dokument hinzuzufügen, könnt ihr neue Schlüssel zum Header hinzufügen. Beispielsweise könnt ihr einen `author`-Schlüssel hinzufügen, um den Dokumentautor anzugeben:
+
+```mdx
+---
+title: Dokumenttitel
+description: Dokumentbeschreibung.
+sort: 2
+author: Autorenname
+---
+```
+
+Beim Hinzufügen benutzerdefinierter Metadaten müsst ihr jedoch auch die Datei `contentlayer.config.ts` aktualisieren, die sich im Stammverzeichnis des Projekts befindet, und zwar innerhalb der `fields`-Eigenschaft in den `Doc`- oder `Blog`-Konstanten.
+Danach müsst ihr die neuen Informationen im Dokumenttemplate anzeigen. Dazu müsst ihr die Datei `src/app/[locale]/docs/[[...slug]]/page.tsx` oder `src/app/[locale]/blog/[[...slug]]/page.tsx` oder eine ihrer Kindkomponenten aktualisieren.
+
+## Contentlayer neu erstellen
+
+Wenn ihr Änderungen am Dokumentationsinhalt vornehmt, neue Docs hinzufügt oder die Datei `contentlayer.config.ts` modifiziert, müsst ihr den Contentlayer-Cache neu erstellen, damit eure Änderungen während der Entwicklung wirksam werden. Führt aus:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Dieser Befehl regeneriert die Inhaltstypen und Daten, die von der Anwendung benötigt werden. Ihr müsst diesen Befehl ausführen, wann immer ihr:
+
+- Neue Metadatenfelder zur Datei `contentlayer.config.ts` hinzufügt
+- MDX-Inhalte hinzufügt oder modifiziert, wenn der Dev-Server nicht läuft
+- Die Struktur eurer Inhaltsorganisation ändert
+
+Der Befehl wird automatisch ausgeführt, wenn das Projekt für die Produktion erstellt wird, aber ihr müsst ihn während der Entwicklung manuell ausführen, wenn ihr strukturelle Änderungen am Inhalt vornehmt. 
