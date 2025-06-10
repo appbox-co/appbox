@@ -118,24 +118,28 @@ export function ClientAppConnections({
             <svg
               className="absolute inset-0 size-full"
               xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid meet"
             >
               {apps.map((_, i) => {
-                const pos = getStaticPosition(i, apps.length)
-                // Extract numeric values from CSS calc
-                const leftMatch = pos.left.match(/calc\(50% \+ ([-\d.]+)px\)/)
-                const topMatch = pos.top.match(/calc\(50% \+ ([-\d.]+)px\)/)
-                const x2 = leftMatch ? parseFloat(leftMatch[1]) + "px" : "0"
-                const y2 = topMatch ? parseFloat(topMatch[1]) + "px" : "0"
+                // Calculate positions as percentages for SVG
+                const radius = 35 // Percentage-based radius for viewBox 100x100
+                const angleStep = (2 * Math.PI) / apps.length
+                const angle = i * angleStep
+
+                // Calculate positions as percentages (50% = 50 in viewBox 0-100)
+                const x2 = 50 + radius * Math.cos(angle)
+                const y2 = 50 + radius * Math.sin(angle)
 
                 return (
                   <line
                     key={`static-line-${i}`}
-                    x1="50%"
-                    y1="50%"
-                    x2={`calc(50% + ${x2})`}
-                    y2={`calc(50% + ${y2})`}
+                    x1="50"
+                    y1="50"
+                    x2={x2}
+                    y2={y2}
                     stroke="rgba(var(--color-primary), 0.2)"
-                    strokeWidth="1"
+                    strokeWidth="0.5"
                   />
                 )
               })}
