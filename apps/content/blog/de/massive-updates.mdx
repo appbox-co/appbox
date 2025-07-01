@@ -13,7 +13,7 @@ Nach monatelanger Arbeit hinter den Kulissen, vielen Nachtschichten und viel zu 
 
 ## Willkommen in unserem neuen digitalen Zuhause
 
-Ihr schaut gerade auf unsere brandneue Website! Wir haben uns endlich von unserem alten WordPress-Setup verabschiedet. Die ganze Sache wurde mit moderner Technologie neu aufgebaut, die schneller, sicherer und tatsächlich skalierbar ist.
+Ihr schaut gerade auf unsere brandneue Website! Wir haben uns endlich von unserem alten WordPress-Setup verabschiedet. Die ganze Sache wurde mit moderner Technologie neu aufgebaut, die schneller, sicherer und tatsächlich richtig skalierbar ist.
 
 Diese neue Website wird die Heimat für ordentliche Dokumentation, regelmäßige Blog-Posts (wie diesen hier) und schließlich das Frontend für unsere neue Plattform. Das Design ist nicht nur sauberer - es ist tatsächlich funktional und macht das Finden von Sachen viel einfacher.
 
@@ -21,7 +21,7 @@ Wir verwenden Next.js mit ContentLayer unter der Haube, was uns wirklich schnell
 
 ## Wir werden Open Source!
 
-Die Website, auf der ihr das hier lest? Der Code ist öffentlich und jeder kann dazu beitragen.
+Wir werden auch Open Source! Die Website, auf der ihr das hier lest? Der Code ist öffentlich und jeder kann dazu beitragen.
 
 Das ist riesig für uns. Wir haben immer versucht, transparent zu sein, aber hier setzen wir unser Geld dort ein, wo unser Mund ist und bauen tatsächlich mit der Community statt nur für sie. Wenn ihr Entwickler seid und schon immer mal dabei helfen wolltet, die Tools zu formen, die ihr verwendet, jetzt könnt ihr das. Schaut euch unser GitHub-Repo für Beitragsleitlinien und alles an, was ihr zum Loslegen braucht.
 
@@ -31,33 +31,39 @@ Die neue Website ist nur der Anfang. Wir arbeiten an Appbox v2, dem größten Up
 
 Container-Deployment war schon immer unser Ding, aber v2 geht weiter mit dem, wonach alle gefragt haben: vollständige VPS-Unterstützung. Die VPS-Apps geben euch vollständigen Root-Zugang ohne Einschränkungen. Wenn ihr totale Kontrolle über eure Umgebung braucht, darauf habt ihr gewartet.
 
-Das kombiniert unsere bewährte Container-Infrastruktur mit echter VPS-Flexibilität. Es ist nicht nur ein technisches Upgrade - es überdenkt, was App-Hosting sein sollte.
+Wir haben es bereits auf einem Server zum Laufen gebracht und es funktioniert wirklich gut. Ihr werdet VPS-Apps genauso wie jede andere App aus dem App Store installieren können. Das ermöglicht die Installation von Apps, die derzeit nicht möglich sind, wie Docker, Snap und Tailscale. Es erfordert ein OS-Update auf unseren Servern auf Debian 13, da wir einige neue Virtualisierungsfeatures verwenden, um es sicherer zu machen und die Performance zu steigern. Wir müssen dieses Update ausrollen, bevor wir das Feature starten können, aber es wird bald weitere Updates dazu geben.
+
+Das kombiniert unsere bewährte Container-Infrastruktur mit echter VPS-Flexibilität und gibt euch das Beste aus beiden Welten.
 
 ## Aufbau unserer eigenen Netzwerk-Infrastruktur
 
 Hier sind die wirklich großen Neuigkeiten: Wir bauen unser eigenes Netzwerk.
 
-Nicht nur mehr Server hinzufügen oder Bandbreite upgraden. Wir registrieren unsere eigene Autonomous System Number (ASN) und kaufen dedizierte Ausrüstung, um ein Netzwerk aufzubauen, das vollständig unser ist.
+Nicht nur mehr Server hinzufügen oder Bandbreite upgraden. Wir haben unsere eigene Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) und unseren eigenen IP-Block (79.140.195.0/24), um ein Netzwerk aufzubauen, das vollständig unser ist. Im Grunde werden wir unser eigener ISP mit unserer eigenen offiziellen Internet-Identität und Adressraum, sodass wir kontrollieren können, wie eure Daten über das Internet reisen [1].
 
 Was bedeutet das für euch? Wir können alles kontrollieren, es speziell für Appbox-Nutzer optimieren und Zuverlässigkeit und Performance liefern, die vorher nicht möglich war.
 
 ## Sofortiges Peering mit AMS-IX
 
-Zu unserer Netzwerkentwicklung peeren wir mit AMS-IX für 100G Konnektivität. Das gibt uns direkten Zugang zu einem der größten Internet-Austauschpunkte der Welt, was niedrigere Latenz und bessere Geschwindigkeiten für alle bedeutet.
+Zu unserer Netzwerkentwicklung peeren wir mit AMS-IX für 100G Konnektivität. Das gibt uns direkten Zugang zu einem der größten Internet-Austauschpunkte der Welt, was niedrigere Latenz und bessere Geschwindigkeiten für alle bedeutet. Stellt es euch vor wie eine direkte Autobahn zu den wichtigsten Internet-Providern, anstatt die Nebenstraßen zu nehmen [2].
 
 Diese Art von Konnektivität ist normalerweise nur viel größeren Unternehmen verfügbar, aber wir wollen Enterprise-Grade-Performance liefern, egal in welchem Plan ihr seid.
 
+Wir haben jetzt die Vereinbarung für unseren Hardware-Kauf sortiert, also sind wir bereit loszulegen. Wir werden die neue Hardware spätestens im Oktober erhalten, möglicherweise schon im September. Das bedeutet, wir sollten kurz danach auf dem neuen Netzwerk laufen.
+
 ## Preisanpassungen
 
-Der Aufbau dieser Infrastruktur kostet Geld, und während wir das meiste davon übernehmen, müssen wir unsere Preise sowohl für neue als auch bestehende Kunden anpassen.
+Das ist der Teil, den wir wirklich nicht schreiben wollten. Der Aufbau einer solchen Infrastruktur ist teuer, und während wir den größten Teil der Kosten selbst übernehmen, müssen wir leider eine kleine Anpassung unserer Preise sowohl für neue als auch bestehende Kunden vornehmen.
 
 Ich möchte ehrlich darüber sein. Die neuen Preise sind bereits live auf der Website, und wir werden bestehende Kunden bald mit Details darüber kontaktieren, wie sich das auf sie auswirkt.
 
-Das war keine leichte Entscheidung, aber es ist notwendig, um die Verbesserungen zu finanzieren, die alles für alle besser machen werden.
+Wir wissen, wie angespannt die Lage für alle gerade ist, und das war ehrlich gesagt eine der schwierigsten Entscheidungen, die wir treffen mussten. Wir haben die Erhöhungen so klein wie möglich gehalten - wir decken im Grunde alles ab, außer dem absoluten Minimum, das wir brauchen, um das zum Laufen zu bringen.
 
-Die gute Nachricht ist, dass die Erhöhungen vernünftig sind und wir immer noch sehr wettbewerbsfähig sind. Zum Beispiel steigt unser beliebter NG-4500-Plan nur um €2,08 pro Monat, was immer noch viel weniger ist als vergleichbare Pläne von Konkurrenten.
+Wir werden diese Preiserhöhung aber mehr als wert machen. Ihr werdet den Unterschied in Performance und Zuverlässigkeit wirklich bemerken. Außerdem bedeutet das, dass wir unser Netzwerk weiter ausbauen und mehr Peering hinzufügen können, sodass die Dinge von hier an nur besser werden.
 
-Für bestehende Kunden zahlt ihr nur die Differenz zwischen alten und neuen Preisen. Wenn ihr Werberabatte habt, bleiben die zusätzlich zum neuen Grundpreis. Wir schätzen eure Treue.
+Wir haben diese aktualisierten Preise für neue Kunden vor 3 Monaten gestartet, und das Feedback war gut, also fühlen wir uns, als hätten wir eine gute Balance zwischen bezahlbar halten und den Verbesserungen finanzieren, die ihr verdient - wir sind immer noch sehr wettbewerbsfähig. Zum Beispiel steigt unser beliebter NG-4500-Plan nur um €2,08 pro Monat, was immer noch viel weniger ist als vergleichbare Pläne von Konkurrenten.
+
+Für bestehende Kunden zahlt ihr nur die Differenz zwischen alten und neuen Preisen. Wenn ihr Werberabatte habt, bleiben die zusätzlich zum neuen Grundpreis. Wir schätzen eure Treue, besonders in Zeiten wie diesen.
 
 Unsere Rabattstruktur bleibt gleich:
 - 5% Rabatt für vierteljährliche Zahlungen
@@ -68,16 +74,16 @@ Wenn ihr automatische Zahlungen eingerichtet habt, erfolgt die Anpassung mit eur
 
 ## Mehr Speicher!
 
-Es geht nicht nur darum, mehr zu zahlen. Wir erhöhen auch den Speicher für unseren niedrigsten Plan von 3TB auf 3,5TB. Das ist eine Steigerung von 16%, was unseren Einstiegs-NG-Plan trotz der Preisänderung zu einem noch besseren Deal macht.
+Es geht aber nicht nur darum, mehr zu zahlen. Wir erhöhen auch den Speicher für unseren niedrigsten Plan von 3TB auf 3,5TB. Das ist eine Steigerung von 16%, was unseren Einstiegsplan trotz der Preisänderung zu einem noch besseren Deal macht.
 
 ## Was kommt als Nächstes?
 
 Das ist nur der Anfang dessen, was für Appbox kommt. In den nächsten Wochen und Monaten werdet ihr regelmäßige Updates sehen, während wir neue Features ausrollen, bestehende verbessern und weiter die Infrastruktur für die nächste Generation des App-Hostings aufbauen.
 
-Wir planen, unsere neue Netzwerk-Infrastruktur im August/September zu testen, und wir werden euch auf dem Laufenden halten, während wir Fortschritte machen.
+Wir planen, unsere neue Netzwerk-Infrastruktur im September/Oktober zu testen, und wir werden euch auf dem Laufenden halten, während wir Fortschritte machen.
 
 Unsere Roadmap umfasst:
-- VPS-Apps, die keine Einschränkungen haben werden (wie Docker)
+- VPS-Apps, die keine Einschränkungen haben werden (wie Docker, Snap und Tailscale)
 - Bessere Dokumentation, die tatsächlich alles abdeckt
 - Ein Community-Showcase für coole Sachen, die Leute mit Appbox bauen
 - Regelmäßige technische Blog-Posts über unsere Infrastruktur
@@ -91,4 +97,12 @@ Weitere Updates folgen bald.
 
 ---
 
-*Welche Features oder Verbesserungen würdet ihr gerne im neuen Appbox sehen? Schreibt uns eine Nachricht an support@appbox.co.* 
+*Welche Features oder Verbesserungen würdet ihr gerne im neuen Appbox sehen? Schreibt uns eine Nachricht an support@appbox.co.*
+
+---
+
+**Referenzen:**
+
+[1] [Was ist eine Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [Was ist Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point) 

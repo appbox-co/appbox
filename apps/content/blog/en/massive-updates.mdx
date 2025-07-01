@@ -21,7 +21,7 @@ We're using Next.js with ContentLayer under the hood, which gives us really fast
 
 ## We're Going Open Source!
 
-The website you're reading this on? The code is public and anyone can contribute to it.
+We're also going open source! The website you're reading this on? The code is public and anyone can contribute to it.
 
 This is huge for us. We've always tried to be transparent, but this is us putting our money where our mouth is and actually building with the community instead of just for them. If you're a developer and you've ever wanted to help shape the tools you use, now you can. Check out our GitHub repo for contribution guidelines and everything you need to get started.
 
@@ -29,35 +29,41 @@ This is huge for us. We've always tried to be transparent, but this is us puttin
 
 The new website is just the beginning. We're working on Appbox v2, which is the biggest update we've ever done.
 
-Container deployment has always been our thing, but v2 takes it further with what everyone's been asking for: full VPS support. The VPS apps will give you complete root access with no restrictions. If you need total control over your environment, this is what you've been waiting for.
+Container deployment has always been our thing, but v2 takes it further with what everyone's been asking for, full VPS support. The VPS apps will give you complete root access with no restrictions. If you need total control over your environment, this is what you've been waiting for.
 
-This combines our proven container infrastructure with true VPS flexibility. It's not just a technical upgrade - it's rethinking what app hosting should be.
+We've already got it working on one server and it's working really well. You'll be able to install VPS apps just like any other app from the app store. This will let you install apps that aren't currently possible, like Docker, Snap, and Tailscale. It requires an OS update on our servers to Debian 13 since we're using some new virtualization features to make it more secure and boost performance. We'll need to roll out that update before we can launch the feature, but there will be more updates on that soon.
+
+This combines our proven container infrastructure with true VPS flexibility giving you the best of both worlds.
 
 ## Building Our Own Network Infrastructure
 
 Here's the really big news, we're building our own network.
 
-Not just adding more servers or upgrading bandwidth. We're registering our own Autonomous System Number (ASN) and buying dedicated equipment to build a network that's entirely ours.
+Not just adding more servers or upgrading bandwidth. We've got our own Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) and our own IP block (79.140.195.0/24) to build a network that's entirely ours. Basically, we're becoming our own ISP with our own official internet identity and address space, so we can control how your data travels across the internet [1].
 
 What does this mean for you? We can control everything, optimize it specifically for Appbox users, and deliver reliability and performance that wasn't possible before.
 
 ## Immediate Peering with AMS-IX
 
-To go with our network development, we're peering with AMS-IX for 100G of connectivity. This gives us direct access to one of the world's biggest internet exchanges, which means lower latency and better speeds for everyone.
+To go with our network development, we're peering with AMS-IX for 100G of connectivity. This gives us direct access to one of the world's biggest internet exchanges, which means lower latency and better speeds for everyone. Think of it like having a direct highway to major internet providers instead of taking the back roads [2].
 
 This kind of connectivity is usually only available to much larger companies, but we want to provide enterprise-grade performance no matter what plan you're on.
 
+We've now got the agreement sorted for our hardware purchase, so we're ready to go. We'll receive the new hardware by October at the latest, possibly as early as September. This means we should be up and running on the new network shortly after.
+
 ## Price Adjustments
 
-Building this infrastructure costs money, and while we're covering most of it, we do need to adjust our pricing for both new and existing customers.
+This is the part we really didn't want to have to write. Building infrastructure like this is expensive, and while we're shouldering most of the cost ourselves, we unfortunately need to make a small adjustment to our pricing for both new and existing customers.
 
 I want to be upfront about this. The new pricing is already live on the site, and we'll be contacting existing customers soon with details about how this affects them.
 
-This wasn't easy to decide, but it's necessary to fund the improvements that will make everything better for everyone.
+We know how stretched everyone is right now, and this was honestly one of the toughest decisions we've had to make. We've kept the increases as small as we possibly can - we're basically covering everything except the absolute minimum we need to make this work.
 
-The good news is that the increases are reasonable, and we're still very competitive. For example, our popular NG-4500 plan is only going up by €2.08 per month, which is still way less than comparable plans from competitors.
+We're going to make this price increase more than worth it though. You'll really notice the difference in performance and reliability. Plus, this means we can keep expanding our network and adding more peering going forward, so things are only going to keep getting better from here.
 
-For existing customers, you'll only pay the difference between old and new pricing. If you have any promotional discounts, those stay on top of the new base price. We appreciate your loyalty.
+We launched these updated prices for new customers 3 months ago, and the feedback has been good, so we feel like we've got a good balance between keeping things affordable and funding the improvements you deserve, we're still very competitive. For example, our popular NG-4500 plan is only going up by €2.08 per month, which is still way less than comparable plans from competitors.
+
+For existing customers, you'll only pay the difference between old and new pricing. If you have any promotional discounts, those stay on top of the new base price. We appreciate your loyalty, especially during times like these.
 
 Our discount structure stays the same:
 - 5% off for quarterly payments
@@ -68,16 +74,16 @@ If you have automatic payments set up, the adjustment will happen with your next
 
 ## More Storage!
 
-It's not all about paying more though. We're also bumping storage on our lowest plan from 3TB to 3.5TB. That's a 16% increase, which makes our entry-level NG plan an even better deal despite the price change.
+It's not all about paying more though. We're also bumping storage on our lowest plan from 3TB to 3.5TB. That's a 16% increase, which makes our entry-level plan an even better deal despite the price change.
 
 ## What's Next?
 
 This is just the start of what's coming for Appbox. Over the next few weeks and months, you'll see regular updates as we roll out new features, improve existing ones, and keep building the infrastructure for the next generation of app hosting.
 
-We're planning to start testing our new network infrastructure in August/September, and we'll keep you updated as we make progress.
+We're planning to start testing our new network infrastructure in September/October, and we'll keep you updated as we make progress.
 
 Our roadmap includes:
-- VPS apps which will have no restrictions (like docker)
+- VPS apps which will have no restrictions (like Docker, Snap, and Tailscale)
 - Better documentation that actually covers everything
 - A community showcase for cool things people are building with Appbox
 - Regular technical blog posts about our infrastructure
@@ -92,3 +98,11 @@ More updates coming soon.
 ---
 
 *What features or improvements would you like to see in the new Appbox? Drop us a line at support@appbox.co.*
+
+---
+
+**References:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)
