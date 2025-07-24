@@ -15,6 +15,7 @@ import { routing } from "@/i18n/routing"
 import { fontSans } from "@/lib/fonts"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
+import "@/styles/custom-styles.css"
 
 interface AppLayoutProps {
   children: React.ReactNode

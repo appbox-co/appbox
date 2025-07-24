@@ -1,7 +1,6 @@
 "use client"
 
 import { cloneElement, useState } from "react"
-import "@/styles/custom-styles.css"
 import Link from "next/link"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Badge } from "@/components/ui/badge"
