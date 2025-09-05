@@ -23,6 +23,10 @@ const nextConfig = {
       {
         source: "/:path*",
         has: [{ type: "host", value: "appbox-delta.vercel.app" }],
+        missing: [
+          { type: "header", key: "X-Rerouted" },
+          { type: "header", key: "X-Worker-Route" }
+        ],
         headers: [{ key: "X-Robots-Tag", value: "noindex" }]
       }
     ]
