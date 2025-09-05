@@ -31,7 +31,7 @@ export async function generateMetadata(props: {
 
   return {
     metadataBase: new URL(siteConfig.url || "https://www.appbox.co"),
-    
+
     alternates: {
       canonical: "./"
     },
