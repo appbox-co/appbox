@@ -2,6 +2,8 @@
 
 import { cloneElement, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Info } from "lucide-react"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -175,6 +177,17 @@ const Plans = ({
     "monthly",
     "1M"
   ])
+  const router = useRouter()
+
+  const handleFAQClick = (faqKey: string) => {
+    // Update URL with query parameter without navigation
+    const url = new URL(window.location.href)
+    url.searchParams.set("faq", faqKey)
+    url.hash = "faq"
+
+    // Use router.push to update URL without full page reload
+    router.push(url.toString(), { scroll: false })
+  }
   const billingCycles: BillingCycle[] = [
     ["monthly", "1M"],
     ["quarterly", "3M"],
@@ -294,9 +307,19 @@ const Plans = ({
                               </span>
                             </div>
                             <div className="mb-4">
-                              <h5 className="text-xl font-bold">
-                                {plan.resources}
-                              </h5>
+                              <div className="flex items-center gap-1">
+                                <h5 className="text-xl font-bold">
+                                  {plan.resources}
+                                </h5>
+                                <button
+                                  onClick={() =>
+                                    handleFAQClick("resource_multipliers")
+                                  }
+                                  className="opacity-60 hover:opacity-100 transition-opacity"
+                                >
+                                  <Info className="h-4 w-4" />
+                                </button>
+                              </div>
                               <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                 {messages.card.resource_multiplier}
                               </span>
@@ -325,9 +348,21 @@ const Plans = ({
                               Object.keys(plan.excluded_app_categories).length >
                                 0 && (
                                 <div className="mb-4">
-                                  <h5 className="text-xl font-bold mb-2 whitespace-normal">
-                                    {messages.card.excluded_app_categories}
-                                  </h5>
+                                  <div className="flex items-center gap-1 mb-2">
+                                    <h5 className="text-xl font-bold whitespace-normal">
+                                      {messages.card.excluded_app_categories}
+                                    </h5>
+                                    <button
+                                      onClick={() =>
+                                        handleFAQClick(
+                                          "excluded_app_categories"
+                                        )
+                                      }
+                                      className="opacity-60 hover:opacity-100 transition-opacity"
+                                    >
+                                      <Info className="h-4 w-4" />
+                                    </button>
+                                  </div>
                                   <div className="flex flex-wrap gap-1">
                                     {Object.entries(
                                       plan.excluded_app_categories

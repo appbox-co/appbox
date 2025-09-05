@@ -16,6 +16,7 @@ By contributing to this project, you agree that your contributions will be licen
 ## Development Workflow
 
 1. **Create a branch** for your changes:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -23,6 +24,7 @@ By contributing to this project, you agree that your contributions will be licen
 2. **Make your changes** and ensure they follow our code style guidelines
 
 3. **Run linting** to ensure code quality:
+
    ```bash
    pnpm lint:fix
    ```
@@ -30,18 +32,22 @@ By contributing to this project, you agree that your contributions will be licen
 4. **Test your changes** locally
 
 5. **If working with documentation or content**, rebuild the contentlayer cache:
+
    ```bash
    cd apps/web
    pnpm contentlayer:build
    ```
+
    This is necessary when adding new docs, modifying content structure, or changing the contentlayer configuration.
 
 6. **Commit your changes** using conventional commit format:
+
    ```bash
    git commit -m "feat: add new feature"
    ```
 
 7. **Push to your fork**:
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -74,6 +80,7 @@ We especially welcome contributions to our documentation:
 - Adding tutorials or how-to guides
 
 When working with documentation, remember to rebuild the contentlayer cache after making changes:
+
 ```bash
 cd apps/web
 pnpm contentlayer:build
@@ -91,7 +98,8 @@ If you find a bug or have a feature request:
 ## Questions or Need Help?
 
 If you have questions or need help, you can:
+
 - Open an issue with your question
 - Contact our support team at [support](https://billing.appbox.co/submitticket.php)
 
-Thank you for contributing to Appbox! 
+Thank you for contributing to Appbox!

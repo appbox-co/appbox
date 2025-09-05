@@ -37,17 +37,20 @@ This repository contains the open-source code for the [Appbox](https://www.appbo
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/appbox-co/appbox.git
    cd website
    ```
 
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 3. Start the development server:
+
    ```bash
    pnpm dev
    ```
@@ -105,6 +108,7 @@ The commit message should be structured as follows:
 ```
 
 Common types include:
+
 - `docs`: Documentation changes
 - `feat`: New features
 - `fix`: Bug fixes
@@ -114,6 +118,7 @@ Common types include:
 - `test`: Adding or correcting tests
 
 Examples:
+
 ```
 feat: add support for Polish language
 fix(docs): correct typos in installation guide

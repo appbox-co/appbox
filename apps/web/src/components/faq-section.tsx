@@ -1,6 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
+import { useRouter, useSearchParams } from "next/navigation"
 import {
   Accordion,
   AccordionContent,
@@ -18,6 +20,10 @@ export function FAQSection({
   id?: string
 }) {
   const t = useTranslations("site.faq")
+  const [openItem, setOpenItem] = useState<string>("")
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
   const questions = [
     "payment_methods",
     "deployment_time",
@@ -29,8 +35,31 @@ export function FAQSection({
     "fuse_rclone",
     "refund_policy",
     "custom_domain",
-    "upgrade_after_purchase"
+    "upgrade_after_purchase",
+    "resource_multipliers",
+    "excluded_app_categories"
   ]
+
+  useEffect(() => {
+    // Check if there's a faq query parameter
+    const faqParam = searchParams.get("faq")
+    if (faqParam && questions.includes(faqParam)) {
+      setOpenItem(faqParam)
+      // Small delay to ensure the accordion opens before scrolling
+      setTimeout(() => {
+        const element = document.getElementById("faq")
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+      }, 100)
+
+      // Clean up the URL by removing the query parameter
+      const newSearchParams = new URLSearchParams(searchParams.toString())
+      newSearchParams.delete("faq")
+      const newUrl = `${window.location.pathname}${newSearchParams.toString() ? `?${newSearchParams.toString()}` : ""}#faq`
+      router.replace(newUrl)
+    }
+  }, [searchParams, questions, router])
 
   return (
     <section id={id} className="scroll-mt-16 py-16">
@@ -45,7 +74,13 @@ export function FAQSection({
             )}
           </div>
           <div className="divide-border divide-y">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              value={openItem}
+              onValueChange={setOpenItem}
+            >
               {questions.map((question) => (
                 <AccordionItem key={question} value={question}>
                   <AccordionTrigger>

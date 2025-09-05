@@ -165,6 +165,14 @@
         "upgrade_after_purchase": {
           "title": "Can I upgrade after purchase?",
           "content": "<p class=\"mb-4 leading-relaxed\">Yes, we will transfer everything from your old plan to your new plan automatically.</p><p class=\"mb-4 leading-relaxed\">Everything will be the same, you won't even notice it. The only thing that may change will be specific port numbers, if you're accessing an app by port number directly, for example FTP.</p>"
+        },
+        "resource_multipliers": {
+          "title": "What are resource multipliers?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Each app has base resources assigned to it based on average usage by users over the past years.</p><p class=\"mb-4 leading-relaxed\">For example OS apps such as Ubuntu and Debian have 8GB of RAM assigned to them.</p><p class=\"mb-4 leading-relaxed\">When you purchase a plan with a higher resource multiplier, those resources are increased for each app.</p><p class=\"mb-4 leading-relaxed\">For example if you purchased an NG-3500 which has a 1x resource multiplier, using the example above your Ubuntu app would be assigned 8GB of RAM.</p><p class=\"mb-4 leading-relaxed\">However if you purchased an NG-18000 which has a 2x resource multiplier, the Ubuntu app would be assigned 16GB of RAM (8GB of RAM multiplied by 2).</p><p class=\"mb-4 leading-relaxed\">You can view the current resource multiplier for each app on its Installed app page, which you can get to via the <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a> link.</p>"
+        },
+        "excluded_app_categories": {
+          "title": "What are excluded app categories?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Some plans have restrictions on certain app categories that cannot be installed on them. These are called \"Excluded App Categories\".</p><p class=\"mb-4 leading-relaxed\">When viewing our pricing plans, you'll see excluded categories listed as clickable badges under plans that have restrictions. This helps you understand which types of apps won't be available on that particular plan.</p><p class=\"mb-4 leading-relaxed\">You can click on any excluded category badge to view all the apps in that category, so you know exactly which applications would not be installable on that plan.</p><p class=\"mb-4 leading-relaxed\">If you need access to apps in an excluded category, consider choosing a higher-tier plan that doesn't have those restrictions.</p>"
         }
       }
     },
