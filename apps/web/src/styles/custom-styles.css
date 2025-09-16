@@ -271,45 +271,26 @@ div.iubenda-uspr-btn {
   display: none !important;
 }
 
-/* Custom scrollbar styles for plans container */
-.scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.7) transparent;
+/* Opacity mask for right-side fade on horizontally scrollable containers */
+.mask-fade-right {
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 64px), transparent 100%);
+  mask-image: linear-gradient(to right, black calc(100% - 64px), transparent 100%);
 }
 
-.scrollbar::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
-}
-
-.scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(155, 155, 155, 0.7);
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 155, 155, 0.9);
-}
-
-/* Dark mode scrollbar styles */
-.dark .scrollbar {
-  scrollbar-color: rgba(200, 200, 200, 0.7) transparent;
-}
-
-.dark .scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.dark .scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(200, 200, 200, 0.7);
-}
-
-.dark .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(200, 200, 200, 0.9);
+/* Opacity mask for both left and right sides */
+.mask-fade-both {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 64px,
+    black calc(100% - 64px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 64px,
+    black calc(100% - 64px),
+    transparent 100%
+  );
 }

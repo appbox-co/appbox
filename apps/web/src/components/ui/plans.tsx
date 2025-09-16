@@ -1,6 +1,6 @@
 "use client"
 
-import { cloneElement, useState } from "react"
+import { cloneElement, useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Info } from "lucide-react"
@@ -178,6 +178,49 @@ const Plans = ({
     "1M"
   ])
   const router = useRouter()
+  
+  // Function to check if container needs scrolling and toggle right-side opacity mask
+  const updateMask = (groupIndex: number) => {
+    const scrollContainer = document.getElementById(`plans-scroll-${groupIndex}`)
+    if (scrollContainer) {
+      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth
+      const canScrollRight = scrollContainer.scrollLeft < (maxScrollLeft - 1)
+      scrollContainer.classList.toggle("mask-fade-right", canScrollRight)
+    }
+  }
+
+  // Update mask when component mounts and on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      data.forEach((_, index) => updateMask(index))
+    }
+
+    // Initial check
+    setTimeout(() => {
+      data.forEach((_, index) => updateMask(index))
+    }, 100)
+
+    // Add event listeners
+    window.addEventListener('resize', handleResize)
+    
+    // Add scroll listeners to each plans container
+    const scrollListeners: Array<() => void> = []
+    data.forEach((_, index) => {
+      const scrollContainer = document.getElementById(`plans-scroll-${index}`)
+      if (scrollContainer) {
+        const handleScroll = () => updateMask(index)
+        scrollContainer.addEventListener('scroll', handleScroll)
+        scrollListeners.push(() => {
+          scrollContainer.removeEventListener('scroll', handleScroll)
+        })
+      }
+    })
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      scrollListeners.forEach(cleanup => cleanup())
+    }
+  }, [data, billingCycle])
 
   const handleFAQClick = (faqKey: string) => {
     // Update URL with query parameter without navigation
@@ -240,13 +283,14 @@ const Plans = ({
           </div>
 
           {/* Scrollable plan cards section */}
-          <div className="overflow-x-auto scrollbar">
-            <div className="inline-block min-w-full px-0">
-              <div className="plans-container">
-                <div className="inline-flex">
-                  <div
-                    className={`inline-flex space-x-4 ${group.plans.some((plan) => plan.recommended) ? "pb-14 mt-4" : "pb-4 mt-4"}`}
-                  >
+          <div className="relative">
+            <div className="overflow-x-auto scroll-smooth" id={`plans-scroll-${groupIndex}`}>
+              <div className="inline-block min-w-full px-0">
+                <div className="plans-container">
+                  <div className="inline-flex">
+                    <div
+                      className={`inline-flex space-x-4 ${group.plans.some((plan) => plan.recommended) ? "pb-14 mt-4" : "pb-4 mt-4"}`}
+                    >
                     {[...group.plans]
                       .sort((a, b) => a.sort - b.sort)
                       .map((plan, idx) => {
@@ -260,7 +304,7 @@ const Plans = ({
 
                         const planCard = (
                           <div
-                            className={`dark:bg-card-primary/80 text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm`}
+                            className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6`}
                           >
                             <h5
                               className="mb-2 pb-2 text-xl font-semibold"
@@ -448,6 +492,7 @@ const Plans = ({
                           </div>
                         )
                       })}
+                    </div>
                   </div>
                 </div>
               </div>

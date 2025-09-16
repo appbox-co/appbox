@@ -25,11 +25,10 @@ export function AppCard({
       <figure
         className={cn(
           "relative z-10 mx-2 h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
-          "backdrop-blur-xs backdrop-saturate-150",
-          // light styles
-          "border-gray-950/[.1] bg-gray-950/[.03] hover:bg-gray-950/[.06]",
-          // dark styles
-          "dark:border-gray-50/[.1] dark:bg-gray-50/[.12] dark:hover:bg-gray-50/[.17]"
+          // solid backgrounds
+          "bg-card text-card-foreground dark:bg-[#0b0d10]",
+          // consistent borders
+          "border-border"
         )}
       >
         <div className="flex flex-row items-center gap-2">

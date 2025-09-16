@@ -21,7 +21,7 @@ export function ClientAppsMarquee({
   secondRow
 }: ClientAppsMarqueeProps) {
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden mask-fade-both">
       <Marquee pauseOnHover className="[--duration:300s]">
         {firstRow.map((app) => (
           <AppCard
@@ -46,8 +46,7 @@ export function ClientAppsMarquee({
           />
         ))}
       </Marquee>
-      <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-linear-to-r"></div>
-      <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-linear-to-l"></div>
+      
     </div>
   )
 }
