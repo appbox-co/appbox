@@ -46,7 +46,6 @@ export function ClientAppsMarquee({
           />
         ))}
       </Marquee>
-      
     </div>
   )
 }

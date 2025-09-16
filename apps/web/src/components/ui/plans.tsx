@@ -1,6 +1,6 @@
 "use client"
 
-import { cloneElement, useState, useEffect } from "react"
+import { cloneElement, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Info } from "lucide-react"
@@ -178,13 +178,16 @@ const Plans = ({
     "1M"
   ])
   const router = useRouter()
-  
+
   // Function to check if container needs scrolling and toggle right-side opacity mask
   const updateMask = (groupIndex: number) => {
-    const scrollContainer = document.getElementById(`plans-scroll-${groupIndex}`)
+    const scrollContainer = document.getElementById(
+      `plans-scroll-${groupIndex}`
+    )
     if (scrollContainer) {
-      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth
-      const canScrollRight = scrollContainer.scrollLeft < (maxScrollLeft - 1)
+      const maxScrollLeft =
+        scrollContainer.scrollWidth - scrollContainer.clientWidth
+      const canScrollRight = scrollContainer.scrollLeft < maxScrollLeft - 1
       scrollContainer.classList.toggle("mask-fade-right", canScrollRight)
     }
   }
@@ -201,24 +204,24 @@ const Plans = ({
     }, 100)
 
     // Add event listeners
-    window.addEventListener('resize', handleResize)
-    
+    window.addEventListener("resize", handleResize)
+
     // Add scroll listeners to each plans container
     const scrollListeners: Array<() => void> = []
     data.forEach((_, index) => {
       const scrollContainer = document.getElementById(`plans-scroll-${index}`)
       if (scrollContainer) {
         const handleScroll = () => updateMask(index)
-        scrollContainer.addEventListener('scroll', handleScroll)
+        scrollContainer.addEventListener("scroll", handleScroll)
         scrollListeners.push(() => {
-          scrollContainer.removeEventListener('scroll', handleScroll)
+          scrollContainer.removeEventListener("scroll", handleScroll)
         })
       }
     })
 
     return () => {
-      window.removeEventListener('resize', handleResize)
-      scrollListeners.forEach(cleanup => cleanup())
+      window.removeEventListener("resize", handleResize)
+      scrollListeners.forEach((cleanup) => cleanup())
     }
   }, [data, billingCycle])
 
@@ -284,214 +287,217 @@ const Plans = ({
 
           {/* Scrollable plan cards section */}
           <div className="relative">
-            <div className="overflow-x-auto scroll-smooth" id={`plans-scroll-${groupIndex}`}>
+            <div
+              className="overflow-x-auto scroll-smooth"
+              id={`plans-scroll-${groupIndex}`}
+            >
               <div className="inline-block min-w-full px-0">
                 <div className="plans-container">
                   <div className="inline-flex">
                     <div
                       className={`inline-flex space-x-4 ${group.plans.some((plan) => plan.recommended) ? "pb-14 mt-4" : "pb-4 mt-4"}`}
                     >
-                    {[...group.plans]
-                      .sort((a, b) => a.sort - b.sort)
-                      .map((plan, idx) => {
-                        // Pass the custom gradient colors to the function
-                        const shortTitleGradient = getPlanGradient(
-                          idx,
-                          group.plans.length,
-                          gradientStartColor,
-                          gradientEndColor
-                        )
+                      {[...group.plans]
+                        .sort((a, b) => a.sort - b.sort)
+                        .map((plan, idx) => {
+                          // Pass the custom gradient colors to the function
+                          const shortTitleGradient = getPlanGradient(
+                            idx,
+                            group.plans.length,
+                            gradientStartColor,
+                            gradientEndColor
+                          )
 
-                        const planCard = (
-                          <div
-                            className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6`}
-                          >
-                            <h5
-                              className="mb-2 pb-2 text-xl font-semibold"
-                              style={{
-                                background: shortTitleGradient,
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                backgroundClip: "text",
-                                color: "transparent"
-                              }}
+                          const planCard = (
+                            <div
+                              className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6`}
                             >
-                              {plan.short_title}
-                            </h5>
-                            <div className="mb-4">
-                              <h5 className="text-xl font-bold">
-                                {plan.storage_capacity}
+                              <h5
+                                className="mb-2 pb-2 text-xl font-semibold"
+                                style={{
+                                  background: shortTitleGradient,
+                                  WebkitBackgroundClip: "text",
+                                  WebkitTextFillColor: "transparent",
+                                  backgroundClip: "text",
+                                  color: "transparent"
+                                }}
+                              >
+                                {plan.short_title}
                               </h5>
-                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                {plan.storage_type} {messages.card.storage}
-                              </span>
-                            </div>
-                            <div className="mb-4">
-                              <h5 className="text-xl font-bold">
-                                {plan.traffic}
-                              </h5>
-                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                {messages.card.traffic}
-                              </span>
-                            </div>
-                            <div className="mb-4">
-                              <h5 className="text-xl font-bold">
-                                {plan.app_slots}
-                              </h5>
-                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                {messages.card.app_slots}
-                              </span>
-                            </div>
-                            <div className="mb-4">
-                              <h5 className="text-xl font-bold">
-                                {plan.connection_speed}
-                              </h5>
-                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                {messages.card.connection_speed}
-                              </span>
-                            </div>
-                            <div className="mb-4">
-                              <div className="flex items-center gap-1">
-                                <h5 className="text-xl font-bold">
-                                  {plan.resources}
-                                </h5>
-                                <button
-                                  onClick={() =>
-                                    handleFAQClick("resource_multipliers")
-                                  }
-                                  className="opacity-60 hover:opacity-100 transition-opacity"
-                                >
-                                  <Info className="h-4 w-4" />
-                                </button>
-                              </div>
-                              <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                {messages.card.resource_multiplier}
-                              </span>
-                            </div>
-                            {plan.raid && (
                               <div className="mb-4">
                                 <h5 className="text-xl font-bold">
-                                  {plan.raid}
+                                  {plan.storage_capacity}
                                 </h5>
                                 <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                  {messages.card.raid}
+                                  {plan.storage_type} {messages.card.storage}
                                 </span>
                               </div>
-                            )}
-                            {plan.number_of_disks !== undefined && (
                               <div className="mb-4">
                                 <h5 className="text-xl font-bold">
-                                  {plan.number_of_disks}
+                                  {plan.traffic}
                                 </h5>
                                 <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                  {messages.card.disks}
+                                  {messages.card.traffic}
                                 </span>
                               </div>
-                            )}
-                            {plan.excluded_app_categories &&
-                              Object.keys(plan.excluded_app_categories).length >
-                                0 && (
+                              <div className="mb-4">
+                                <h5 className="text-xl font-bold">
+                                  {plan.app_slots}
+                                </h5>
+                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                  {messages.card.app_slots}
+                                </span>
+                              </div>
+                              <div className="mb-4">
+                                <h5 className="text-xl font-bold">
+                                  {plan.connection_speed}
+                                </h5>
+                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                  {messages.card.connection_speed}
+                                </span>
+                              </div>
+                              <div className="mb-4">
+                                <div className="flex items-center gap-1">
+                                  <h5 className="text-xl font-bold">
+                                    {plan.resources}
+                                  </h5>
+                                  <button
+                                    onClick={() =>
+                                      handleFAQClick("resource_multipliers")
+                                    }
+                                    className="opacity-60 hover:opacity-100 transition-opacity"
+                                  >
+                                    <Info className="h-4 w-4" />
+                                  </button>
+                                </div>
+                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                  {messages.card.resource_multiplier}
+                                </span>
+                              </div>
+                              {plan.raid && (
                                 <div className="mb-4">
-                                  <div className="flex items-center gap-1 mb-2">
-                                    <h5 className="text-xl font-bold whitespace-normal">
-                                      {messages.card.excluded_app_categories}
-                                    </h5>
-                                    <button
-                                      onClick={() =>
-                                        handleFAQClick(
-                                          "excluded_app_categories"
-                                        )
-                                      }
-                                      className="opacity-60 hover:opacity-100 transition-opacity"
-                                    >
-                                      <Info className="h-4 w-4" />
-                                    </button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-1">
-                                    {Object.entries(
-                                      plan.excluded_app_categories
-                                    ).map(([id, category]) => (
-                                      <Link
-                                        key={id}
-                                        href={`/apps?category=${encodeURIComponent(category)}`}
-                                        onClick={(e) => e.stopPropagation()}
-                                      >
-                                        <Badge
-                                          variant="secondary"
-                                          className="text-xs"
-                                        >
-                                          {category}
-                                        </Badge>
-                                      </Link>
-                                    ))}
-                                  </div>
+                                  <h5 className="text-xl font-bold">
+                                    {plan.raid}
+                                  </h5>
+                                  <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                    {messages.card.raid}
+                                  </span>
                                 </div>
                               )}
-                            <div className="mb-2 text-2xl font-extrabold dark:text-white">
-                              {plan.pricing.EUR[billingCycle[0]].per_month}
-                              <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                {messages.card.per_month}
-                              </small>
+                              {plan.number_of_disks !== undefined && (
+                                <div className="mb-4">
+                                  <h5 className="text-xl font-bold">
+                                    {plan.number_of_disks}
+                                  </h5>
+                                  <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                    {messages.card.disks}
+                                  </span>
+                                </div>
+                              )}
+                              {plan.excluded_app_categories &&
+                                Object.keys(plan.excluded_app_categories)
+                                  .length > 0 && (
+                                  <div className="mb-4">
+                                    <div className="flex items-center gap-1 mb-2">
+                                      <h5 className="text-xl font-bold whitespace-normal">
+                                        {messages.card.excluded_app_categories}
+                                      </h5>
+                                      <button
+                                        onClick={() =>
+                                          handleFAQClick(
+                                            "excluded_app_categories"
+                                          )
+                                        }
+                                        className="opacity-60 hover:opacity-100 transition-opacity"
+                                      >
+                                        <Info className="h-4 w-4" />
+                                      </button>
+                                    </div>
+                                    <div className="flex flex-wrap gap-1">
+                                      {Object.entries(
+                                        plan.excluded_app_categories
+                                      ).map(([id, category]) => (
+                                        <Link
+                                          key={id}
+                                          href={`/apps?category=${encodeURIComponent(category)}`}
+                                          onClick={(e) => e.stopPropagation()}
+                                        >
+                                          <Badge
+                                            variant="secondary"
+                                            className="text-xs"
+                                          >
+                                            {category}
+                                          </Badge>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              <div className="mb-2 text-2xl font-extrabold dark:text-white">
+                                {plan.pricing.EUR[billingCycle[0]].per_month}
+                                <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                  {messages.card.per_month}
+                                </small>
+                              </div>
+                              <div className="mb-4 text-xs text-gray-500 dark:text-gray-400">
+                                {billingCycle[0] === "monthly"
+                                  ? `${messages.card.billed_as} ${messages.billing_cycles.monthly}`
+                                  : `${plan.pricing.EUR[billingCycle[0]].billed} ${messages.billing_cycles[billingCycle[0] as keyof typeof messages.billing_cycles]}`}
+                              </div>
+                              {plan.available === false ? (
+                                <Button variant="outline" asChild>
+                                  <a
+                                    href="https://billing.appbox.co/submitticket.php?step=2&deptid=6"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Contact Us
+                                  </a>
+                                </Button>
+                              ) : (
+                                <Button variant="pulse" asChild>
+                                  <a
+                                    href={`https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {messages.card.order_now}
+                                  </a>
+                                </Button>
+                              )}
                             </div>
-                            <div className="mb-4 text-xs text-gray-500 dark:text-gray-400">
-                              {billingCycle[0] === "monthly"
-                                ? `${messages.card.billed_as} ${messages.billing_cycles.monthly}`
-                                : `${plan.pricing.EUR[billingCycle[0]].billed} ${messages.billing_cycles[billingCycle[0] as keyof typeof messages.billing_cycles]}`}
-                            </div>
-                            {plan.available === false ? (
-                              <Button variant="outline" asChild>
-                                <a
-                                  href="https://billing.appbox.co/submitticket.php?step=2&deptid=6"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Contact Us
-                                </a>
-                              </Button>
-                            ) : (
-                              <Button variant="pulse" asChild>
-                                <a
-                                  href={`https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {messages.card.order_now}
-                                </a>
-                              </Button>
-                            )}
-                          </div>
-                        )
+                          )
 
-                        return plan.recommended ? (
-                          <div
-                            key={idx}
-                            className="flex flex-col items-center mb-0 mt-0 w-56"
-                          >
-                            {/* Separate visible row for the "Most Popular" badge */}
-                            <div className="mb-2 text-center">
-                              <SparklesText
-                                text="Most Popular"
-                                className="text-xl font-semibold"
-                                sparklesCount={4}
-                              />
-                            </div>
-                            <BackgroundGradient
-                              containerClassName="p-1 w-full w-fit"
-                              className="rounded-lg dark:bg-gray-950 bg-gray-50"
+                          return plan.recommended ? (
+                            <div
+                              key={idx}
+                              className="flex flex-col items-center mb-0 mt-0 w-56"
                             >
-                              {planCard}
-                            </BackgroundGradient>
-                          </div>
-                        ) : (
-                          <div key={idx} className="min-w-56 w-56">
-                            {/* Empty space to maintain alignment - only if group has recommended plans */}
-                            {group.plans.some((p) => p.recommended) && (
-                              <div className="mb-2 h-8"></div>
-                            )}
-                            {cloneElement(planCard, { key: idx })}
-                          </div>
-                        )
-                      })}
+                              {/* Separate visible row for the "Most Popular" badge */}
+                              <div className="mb-2 text-center">
+                                <SparklesText
+                                  text="Most Popular"
+                                  className="text-xl font-semibold"
+                                  sparklesCount={4}
+                                />
+                              </div>
+                              <BackgroundGradient
+                                containerClassName="p-1 w-full w-fit"
+                                className="rounded-lg dark:bg-gray-950 bg-gray-50"
+                              >
+                                {planCard}
+                              </BackgroundGradient>
+                            </div>
+                          ) : (
+                            <div key={idx} className="min-w-56 w-56">
+                              {/* Empty space to maintain alignment - only if group has recommended plans */}
+                              {group.plans.some((p) => p.recommended) && (
+                                <div className="mb-2 h-8"></div>
+                              )}
+                              {cloneElement(planCard, { key: idx })}
+                            </div>
+                          )
+                        })}
                     </div>
                   </div>
                 </div>
