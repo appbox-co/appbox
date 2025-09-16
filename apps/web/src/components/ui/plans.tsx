@@ -200,10 +200,10 @@ const Plans = ({
       {data.map((group, groupIndex) => (
         <div
           key={groupIndex}
-          className="scroll-margin-t-16 relative mx-auto py-6 sm:m-0"
+          className="scroll-margin-t-16 relative mx-auto py-6 m-0"
         >
           {/* Static header content that doesn't scroll */}
-          <div className="px-8 sm:px-0">
+          <div className="px-0">
             <h4 className="mb-2 text-2xl font-bold">{group.short_title}</h4>
             <p className="mb-4 text-gray-400">{group.description}</p>
 
@@ -241,11 +241,11 @@ const Plans = ({
 
           {/* Scrollable plan cards section */}
           <div className="overflow-x-auto scrollbar scrollbar-dark">
-            <div className="inline-block min-w-full px-8 sm:px-0">
+            <div className="inline-block min-w-full px-0">
               <div className="plans-container">
-                <div className="block sm:inline-flex">
+                <div className="inline-flex">
                   <div
-                    className={`block sm:inline-flex sm:space-x-4 ${group.plans.some((plan) => plan.recommended) ? "pb-12 mt-4" : "pb-4 mt-4 sm:mt-0"}`}
+                    className={`inline-flex space-x-4 ${group.plans.some((plan) => plan.recommended) ? "pb-14 mt-4" : "pb-4 mt-4"}`}
                   >
                     {[...group.plans]
                       .sort((a, b) => a.sort - b.sort)
@@ -260,7 +260,7 @@ const Plans = ({
 
                         const planCard = (
                           <div
-                            className={`dark:bg-card-primary/80 text-card-foreground dark:text-white ${!plan.recommended ? "mb-10 sm:mb-0" : ""} min-w-56 sm:w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm`}
+                            className={`dark:bg-card-primary/80 text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6 backdrop-blur-sm`}
                           >
                             <h5
                               className="mb-2 pb-2 text-xl font-semibold"
@@ -421,7 +421,7 @@ const Plans = ({
                         return plan.recommended ? (
                           <div
                             key={idx}
-                            className="flex flex-col items-center mb-10 sm:mb-0 mt-6 sm:mt-0 min-w-56 sm:w-56"
+                            className="flex flex-col items-center mb-0 mt-0 w-56"
                           >
                             {/* Separate visible row for the "Most Popular" badge */}
                             <div className="mb-2 text-center">
@@ -432,17 +432,17 @@ const Plans = ({
                               />
                             </div>
                             <BackgroundGradient
-                              containerClassName="p-1 w-full sm:w-fit"
+                              containerClassName="p-1 w-full w-fit"
                               className="rounded-lg dark:bg-gray-950 bg-gray-50"
                             >
                               {planCard}
                             </BackgroundGradient>
                           </div>
                         ) : (
-                          <div key={idx} className="min-w-56 sm:w-56">
+                          <div key={idx} className="min-w-56 w-56">
                             {/* Empty space to maintain alignment - only if group has recommended plans */}
                             {group.plans.some((p) => p.recommended) && (
-                              <div className="mb-0 sm:mb-2 h-0 sm:h-8"></div>
+                              <div className="mb-2 h-8"></div>
                             )}
                             {cloneElement(planCard, { key: idx })}
                           </div>
