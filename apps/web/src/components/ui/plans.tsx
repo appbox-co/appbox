@@ -240,7 +240,7 @@ const Plans = ({
           </div>
 
           {/* Scrollable plan cards section */}
-          <div className="overflow-x-auto scrollbar scrollbar-dark">
+          <div className="overflow-x-auto scrollbar">
             <div className="inline-block min-w-full px-0">
               <div className="plans-container">
                 <div className="inline-flex">
