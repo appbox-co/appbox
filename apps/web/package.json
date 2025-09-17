@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
+    "generate-favicons": "node ../../generate-favicons.js src/app/icon-dark.svg .",
     "dev": "next dev --turbopack",
     "build": "run-s contentlayer:build next:build",
     "start": "next start",
@@ -55,7 +56,6 @@
     "react-dom": "19.1.0",
     "react-intersection-observer": "^9.16.0",
     "react-wrap-balancer": "^1.1.1",
-    "sharp": "^0.34.0",
     "simplex-noise": "^4.0.3",
     "tailwind-merge": "^3.1.0",
     "tailwindcss-animate": "^1.0.7"

@@ -92,14 +92,36 @@ export async function generateMetadata(props: {
     // },
 
     icons: {
-      icon: "/appbox-box-white.svg",
-      apple: "/appbox-box-white.svg",
-      shortcut: "/appbox-box-white.svg"
+      icon: [
+        {
+          url: "/icon-dark.svg",
+          sizes: "any",
+          type: "image/svg+xml"
+        },
+        {
+          url: "/icon.png",
+          sizes: "96x96",
+          type: "image/png"
+        },
+        {
+          url: "/favicon-32x32.png",
+          sizes: "32x32",
+          type: "image/png"
+        }
+      ],
+      apple: [
+        {
+          url: "/apple-icon.png",
+          sizes: "180x180",
+          type: "image/png"
+        }
+      ],
+      shortcut: "/favicon.ico"
     },
 
     manifest: siteConfig.url
-      ? `${siteConfig.url}/site.webmanifest`
-      : "/site.webmanifest"
+      ? `${siteConfig.url}/manifest.webmanifest`
+      : "/manifest.webmanifest"
   }
 }
 
@@ -127,6 +149,7 @@ export default async function RootLayout(props: AppLayoutProps) {
     >
       <head>
         <meta name="theme-color" content="#181423" />
+        <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
         <Script
           type="text/javascript"
           strategy="afterInteractive"
