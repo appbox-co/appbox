@@ -16,12 +16,16 @@ const path = require('path');
 const CONFIG = {
   // PNG sizes for various use cases
   pngSizes: {
-    // All PNG icons - use dark icon for consistency and reliability
-    'icon.png': { size: 96, outputDir: 'src/app', source: 'dark' },
-    'favicon-32x32.png': { size: 32, outputDir: 'src/app', source: 'dark' },
-    'apple-icon.png': { size: 180, outputDir: 'src/app', source: 'dark' },
-    'web-app-manifest-192x192.png': { size: 192, outputDir: 'public', source: 'dark' },
-    'web-app-manifest-512x512.png': { size: 512, outputDir: 'public', source: 'dark' }
+    // Browser/tab icons - full size (no padding needed)
+    'icon.png': { size: 96, outputDir: 'src/app', source: 'dark', padding: false },
+    'favicon-32x32.png': { size: 32, outputDir: 'src/app', source: 'dark', padding: false },
+    
+    // Apple touch icon - add padding for better appearance with iOS styling
+    'apple-icon.png': { size: 180, outputDir: 'src/app', source: 'dark', padding: true },
+    
+    // App home screen icons - add padding so logo doesn't fill entire tile
+    'web-app-manifest-192x192.png': { size: 192, outputDir: 'public', source: 'dark', padding: true },
+    'web-app-manifest-512x512.png': { size: 512, outputDir: 'public', source: 'dark', padding: true }
   },
 
   // ICO config (traditional favicon)
@@ -41,14 +45,47 @@ async function ensureDirectoryExists(dirPath) {
   }
 }
 
-async function generatePngFromSvg(svgPath, outputPath, size) {
+async function generatePngFromSvg(svgPath, outputPath, size, addPadding = false) {
   try {
-    await sharp(svgPath)
-      .resize(size, size)
-      .png({ quality: 100, compressionLevel: 9 })
-      .toFile(outputPath);
+    if (addPadding) {
+      // For app home screen icons, add padding so logo doesn't fill entire tile
+      const logoSize = Math.round(size * 0.8); // Logo takes 80% of canvas
+      const padding = Math.round((size - logoSize) / 2);
+      
+      // Create logo at smaller size
+      const logoBuffer = await sharp(svgPath)
+        .resize(logoSize, logoSize)
+        .png({ quality: 100, compressionLevel: 9 })
+        .toBuffer();
+      
+      // Create white background and composite smaller logo in center
+      await sharp({
+        create: {
+          width: size,
+          height: size,
+          channels: 4,
+          background: { r: 255, g: 255, b: 255, alpha: 1 }
+        }
+      })
+        .composite([{
+          input: logoBuffer,
+          top: padding,
+          left: padding
+        }])
+        .png({ quality: 100, compressionLevel: 9 })
+        .toFile(outputPath);
+      
+      console.log(`✅ Generated: ${outputPath} (${size}x${size} with padding)`);
+    } else {
+      // Regular generation without padding
+      await sharp(svgPath)
+        .resize(size, size)
+        .png({ quality: 100, compressionLevel: 9 })
+        .toFile(outputPath);
+      
+      console.log(`✅ Generated: ${outputPath} (${size}x${size})`);
+    }
     
-    console.log(`✅ Generated: ${outputPath} (${size}x${size})`);
     return true;
   } catch (error) {
     console.error(`❌ Failed to generate ${outputPath}:`, error.message);
@@ -120,8 +157,8 @@ Examples:
     
     await ensureDirectoryExists(outputDir);
     
-    console.log(`🔄 Using ${config.source} source for ${filename}`);
-    const success = await generatePngFromSvg(sourceSvg, outputPath, config.size);
+    console.log(`🔄 Using ${config.source} source for ${filename}${config.padding ? ' (with padding)' : ''}`);
+    const success = await generatePngFromSvg(sourceSvg, outputPath, config.size, config.padding);
     if (success) {
       generatedPngs.push(outputPath);
     }
