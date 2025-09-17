@@ -3,7 +3,7 @@
 import { cloneElement, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Info, ChevronRight } from "lucide-react"
+import { ChevronRight, Info } from "lucide-react"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -177,7 +177,9 @@ const Plans = ({
     "monthly",
     "1M"
   ])
-  const [scrollableGroups, setScrollableGroups] = useState<Set<number>>(new Set())
+  const [scrollableGroups, setScrollableGroups] = useState<Set<number>>(
+    new Set()
+  )
   const router = useRouter()
 
   // Function to check if container needs scrolling and toggle right-side opacity mask
@@ -190,9 +192,9 @@ const Plans = ({
         scrollContainer.scrollWidth - scrollContainer.clientWidth
       const canScrollRight = scrollContainer.scrollLeft < maxScrollLeft - 1
       scrollContainer.classList.toggle("mask-fade-right", canScrollRight)
-      
+
       // Update scrollable groups state
-      setScrollableGroups(prev => {
+      setScrollableGroups((prev) => {
         const newSet = new Set(prev)
         if (canScrollRight) {
           newSet.add(groupIndex)
@@ -304,8 +306,8 @@ const Plans = ({
               id={`plans-scroll-${groupIndex}`}
             >
               {/* Scroll indicator arrow */}
-              <div 
-                className={`scroll-indicator-arrow ${scrollableGroups.has(groupIndex) ? 'visible pulsing' : ''}`}
+              <div
+                className={`scroll-indicator-arrow ${scrollableGroups.has(groupIndex) ? "visible pulsing" : ""}`}
               >
                 <ChevronRight className="text-white dark:text-gray-200" />
               </div>
