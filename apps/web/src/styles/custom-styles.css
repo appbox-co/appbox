@@ -317,7 +317,7 @@ div.iubenda-uspr-btn {
 }
 
 /* Pulsing animation for the arrow */
-@keyframes pulse-glow {
+@keyframes pulse-glow-arrow {
   0%, 100% {
     opacity: 0.7;
     transform: translateY(-50%) scale(1);
@@ -329,5 +329,5 @@ div.iubenda-uspr-btn {
 }
 
 .scroll-indicator-arrow.pulsing {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulse-glow-arrow 2s ease-in-out infinite;
 }
