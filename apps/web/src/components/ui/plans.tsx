@@ -309,7 +309,7 @@ const Plans = ({
               <div
                 className={`scroll-indicator-arrow ${scrollableGroups.has(groupIndex) ? "visible pulsing" : ""}`}
               >
-                <ChevronRight className="text-white dark:text-gray-200" />
+                <ChevronRight className="text-gray-800 dark:text-gray-200" />
               </div>
               <div className="inline-block min-w-full px-0">
                 <div className="plans-container">
