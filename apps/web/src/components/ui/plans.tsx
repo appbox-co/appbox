@@ -467,7 +467,7 @@ const Plans = ({
                               {plan.available === false ? (
                                 <Button variant="outline" asChild>
                                   <a
-                                    href="https://billing.appbox.co/submitticket.php?step=2&deptid=6"
+                                    href="https://billing.appbox.co/contact.php"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
