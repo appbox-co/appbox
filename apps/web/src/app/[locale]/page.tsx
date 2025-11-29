@@ -126,7 +126,9 @@ export default async function IndexPage() {
 
           <Link href="/blog/network-upgrade-black-friday">
             <Announcement>
-              <AnnouncementTag className="hidden sm:block">Latest Update</AnnouncementTag>
+              <AnnouncementTag className="hidden sm:block">
+                Latest Update
+              </AnnouncementTag>
               <AnnouncementTitle>
                 <span className="sm:hidden">🆕</span>
                 <span className="hidden sm:inline">🚀</span>
