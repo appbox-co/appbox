@@ -5,7 +5,13 @@ export async function getApps(all: boolean = false): Promise<App[]> {
   try {
     const response = await fetch(
       `https://api.appbox.co/v1/apps/public/all${all ? "" : "/1"}`,
-      { next: { revalidate: 3600 } } // Cache for 1 hour
+      {
+        headers: {
+          "User-Agent": "Appbox-Web/2.0",
+          Accept: "application/json"
+        },
+        next: { revalidate: 3600 } // Cache for 1 hour
+      }
     )
 
     if (!response.ok) {
@@ -15,6 +21,6 @@ export async function getApps(all: boolean = false): Promise<App[]> {
     return response.json()
   } catch (error) {
     console.error("Error fetching apps:", error)
-    throw error
+    return [] // Return empty array as fallback
   }
 }

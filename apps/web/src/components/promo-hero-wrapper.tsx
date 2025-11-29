@@ -15,6 +15,11 @@ export function PromoHeroWrapper({
   gradientFrom = "#DC2626",
   gradientTo = "#F43F5E"
 }: PromoHeroWrapperProps) {
+  // If no promo, just render children without any wrapper styling
+  if (!hasPromo) {
+    return <div className="relative">{children}</div>
+  }
+
   return (
     <div className="relative mb-12 mt-8 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Animations */}

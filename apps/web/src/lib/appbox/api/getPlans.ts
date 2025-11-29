@@ -372,17 +372,30 @@ export async function getPlans(): Promise<PlansData> {
 
   // Real API call
   try {
+    console.log("📡 Fetching plans from API...")
     const response = await fetch("https://billing.appbox.co/feeds/plans.php", {
+      headers: {
+        "User-Agent": "Appbox-Web/2.0",
+        Accept: "application/json"
+      },
       next: { revalidate: 300 } // Cache for 5 minutes
     })
 
     if (!response.ok) {
-      throw new Error("Failed to fetch plans data")
+      console.error(
+        `❌ API returned ${response.status}: ${response.statusText}`
+      )
+      throw new Error(
+        `Failed to fetch plans data: ${response.status} ${response.statusText}`
+      )
     }
 
+    console.log("✅ Plans fetched successfully")
     return response.json()
   } catch (error) {
-    console.error("Error fetching plans data:", error)
-    throw error
+    console.error("❌ Error fetching plans data:", error)
+    // Fallback to mock data if API fails
+    console.log("🔄 Falling back to mock data")
+    return MOCK_PLANS_DATA
   }
 }
