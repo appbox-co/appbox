@@ -75,7 +75,7 @@ export const AnnouncementTitle = ({
   ...props
 }: AnnouncementTitleProps) => (
   <div
-    className={cn("flex items-center gap-1 truncate py-1", className)}
+    className={cn("inline-flex items-center gap-1 py-1 text-center", className)}
     {...props}
   />
 )

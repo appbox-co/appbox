@@ -28,6 +28,38 @@ interface Pricing {
   annually: PricingDetail
 }
 
+interface PromotionalPricingDetail {
+  original_per_month: string
+  discounted_per_month: string
+  savings_per_month: string
+  total_savings: string
+}
+
+interface Promotion {
+  active: boolean
+  promo_code: string
+  title: string
+  description: string
+  discount_percentage: number
+  duration_months: number
+  applies_to: string[]
+  discount_type: string
+  auto_apply: boolean
+  promotional_pricing: {
+    EUR: {
+      monthly?: PromotionalPricingDetail
+      quarterly?: PromotionalPricingDetail
+      semiannually?: PromotionalPricingDetail
+      annually?: PromotionalPricingDetail
+    }
+  }
+  terms: string
+  expiry_date: string | null
+  badge_text: string
+}
+
+export type { Promotion }
+
 // Updated Plan interface – removed includes_media_apps and added new fields.
 interface Plan {
   sort: number
@@ -47,6 +79,7 @@ interface Plan {
   excluded_app_categories?: {
     [key: string]: string
   }
+  promotion?: Promotion
   pricing: {
     EUR: Pricing
   }
@@ -320,22 +353,58 @@ const Plans = ({
                       {[...group.plans]
                         .sort((a, b) => a.sort - b.sort)
                         .map((plan, idx) => {
-                          // Pass the custom gradient colors to the function
+                          // Check if promotion is active and applies to current billing cycle
+                          const hasActivePromotion =
+                            plan.promotion?.active &&
+                            plan.promotion.applies_to.includes(billingCycle[0])
+                          const promotionalPricing = hasActivePromotion
+                            ? plan.promotion?.promotional_pricing.EUR[
+                                billingCycle[0] as keyof typeof plan.promotion.promotional_pricing.EUR
+                              ]
+                            : undefined
+
+                          // Check if any plan in the group has an active promotion
+                          const groupHasPromotion = group.plans.some(
+                            (p) =>
+                              p.promotion?.active &&
+                              p.promotion.applies_to.includes(billingCycle[0])
+                          )
+
+                          // Use red gradient for promotions, otherwise use brand colors
+                          const startColor = groupHasPromotion
+                            ? "#DC2626"
+                            : gradientStartColor
+                          const endColor = groupHasPromotion
+                            ? "#F43F5E"
+                            : gradientEndColor
+
+                          // Pass the gradient colors to the function
                           const shortTitleGradient = getPlanGradient(
                             idx,
                             group.plans.length,
-                            gradientStartColor,
-                            gradientEndColor
+                            startColor,
+                            endColor
                           )
 
                           const planCard = (
                             <div
-                              className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6`}
+                              className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6 relative ${hasActivePromotion ? "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10" : ""}`}
                             >
+                              {/* Promotion Badge */}
+                              {hasActivePromotion && (
+                                <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10">
+                                  <Badge
+                                    variant="secondary"
+                                    className="bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 text-white text-xs font-bold px-2.5 py-0.5 shadow-lg shadow-red-500/20 border-0 uppercase tracking-wide"
+                                  >
+                                    {plan.promotion?.badge_text}
+                                  </Badge>
+                                </div>
+                              )}
                               <h5
                                 className="mb-2 pb-2 text-xl font-semibold"
                                 style={{
-                                  background: shortTitleGradient,
+                                  backgroundImage: shortTitleGradient,
                                   WebkitBackgroundClip: "text",
                                   WebkitTextFillColor: "transparent",
                                   backgroundClip: "text",
@@ -453,17 +522,54 @@ const Plans = ({
                                     </div>
                                   </div>
                                 )}
-                              <div className="mb-2 text-2xl font-extrabold dark:text-white">
-                                {plan.pricing.EUR[billingCycle[0]].per_month}
-                                <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                  {messages.card.per_month}
-                                </small>
-                              </div>
-                              <div className="mb-4 text-xs text-gray-500 dark:text-gray-400">
-                                {billingCycle[0] === "monthly"
-                                  ? `${messages.card.billed_as} ${messages.billing_cycles.monthly}`
-                                  : `${plan.pricing.EUR[billingCycle[0]].billed} ${messages.billing_cycles[billingCycle[0] as keyof typeof messages.billing_cycles]}`}
-                              </div>
+
+                              {/* Promotional Pricing Display */}
+                              {hasActivePromotion && promotionalPricing ? (
+                                <>
+                                  {/* Promotion Info Banner */}
+                                  <div className="mb-3 px-3 py-2 bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 rounded-md border border-red-100 dark:border-red-900/40">
+                                    <p className="text-xs font-semibold text-red-700 dark:text-red-300 whitespace-normal break-words">
+                                      {plan.promotion?.description}
+                                    </p>
+                                  </div>
+
+                                  {/* Pricing with strikethrough */}
+                                  <div className="mb-2">
+                                    <div className="text-sm text-gray-400 dark:text-gray-500 line-through decoration-gray-400/50 mb-1">
+                                      {promotionalPricing.original_per_month}
+                                    </div>
+                                    <div className="text-2xl font-extrabold text-red-600 dark:text-red-400">
+                                      {promotionalPricing.discounted_per_month}
+                                      <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal ml-1">
+                                        {messages.card.per_month}
+                                      </small>
+                                    </div>
+                                  </div>
+
+                                  {/* Savings */}
+                                  <div className="mb-4 text-xs text-red-600 dark:text-red-400 font-semibold">
+                                    Save {promotionalPricing.total_savings} over
+                                    3 months
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div className="mb-2 text-2xl font-extrabold dark:text-white">
+                                    {
+                                      plan.pricing.EUR[billingCycle[0]]
+                                        .per_month
+                                    }
+                                    <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                      {messages.card.per_month}
+                                    </small>
+                                  </div>
+                                  <div className="mb-4 text-xs text-gray-500 dark:text-gray-400">
+                                    {billingCycle[0] === "monthly"
+                                      ? `${messages.card.billed_as} ${messages.billing_cycles.monthly}`
+                                      : `${plan.pricing.EUR[billingCycle[0]].billed} ${messages.billing_cycles[billingCycle[0] as keyof typeof messages.billing_cycles]}`}
+                                  </div>
+                                </>
+                              )}
                               {plan.available === false ? (
                                 <Button variant="outline" asChild>
                                   <a
@@ -477,7 +583,13 @@ const Plans = ({
                               ) : (
                                 <Button variant="pulse" asChild>
                                   <a
-                                    href={`https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}`}
+                                    href={`https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}${
+                                      hasActivePromotion &&
+                                      plan.promotion?.auto_apply &&
+                                      plan.promotion?.promo_code
+                                        ? `&promocode=${plan.promotion.promo_code}`
+                                        : ""
+                                    }`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >

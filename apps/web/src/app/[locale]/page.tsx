@@ -12,6 +12,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading
 } from "@/components/page-header"
+import { PromoHeroWrapper } from "@/components/promo-hero-wrapper"
 import {
   Announcement,
   AnnouncementTag,
@@ -23,6 +24,7 @@ import { FlipWords } from "@/components/ui/flip-words"
 import { ClientGradientSwitcher } from "@/components/ui/gradient-client-switcher"
 import { GradientWrapper } from "@/components/ui/gradient-wrapper"
 import Plans from "@/components/ui/plans"
+import { PromoBannerData } from "@/components/ui/promo-banner"
 import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
 import { getPlans } from "@/lib/appbox/api/getPlans"
@@ -31,6 +33,28 @@ import { cn } from "@/lib/utils"
 export default async function IndexPage() {
   const t = await getTranslations()
   const plansData = await getPlans()
+
+  // Extract promotion data from the first active promotion found
+  const activePromotion = plansData.data
+    .flatMap((group) => group.plans)
+    .find((plan) => plan.promotion?.active)?.promotion
+
+  // Create promo banner data if promotion exists
+  const promoBannerData: PromoBannerData | null = activePromotion
+    ? {
+        active: true,
+        promo_code: activePromotion.promo_code,
+        title: activePromotion.title,
+        description: activePromotion.description,
+        discount_percentage: activePromotion.discount_percentage,
+        badge_text: activePromotion.badge_text,
+        cta_text: "View Deals",
+        background_gradient: {
+          from: "#DC2626",
+          to: "#F43F5E"
+        }
+      }
+    : null
 
   // Props for both gradient components
   const gradientProps = {
@@ -47,77 +71,135 @@ export default async function IndexPage() {
 
   return (
     <div className="container relative">
-      <div className="flex flex-col items-center">
-        {/* Static gradient shows during SSR, then client component takes over */}
-        <div className="relative">
-          {/* Server rendered static version */}
-          <GradientWrapper {...gradientProps} />
-
-          {/* Client-side animated version (will show after hydration) */}
-          <div className="absolute inset-0">
-            <ClientGradientSwitcher {...gradientProps} />
+      {/* Hero Section with Integrated Promo */}
+      <PromoHeroWrapper
+        hasPromo={!!promoBannerData}
+        gradientFrom={promoBannerData?.background_gradient?.from}
+        gradientTo={promoBannerData?.background_gradient?.to}
+      >
+        <div className="flex flex-col items-center">
+          {/* Gradient Icon */}
+          <div className="relative">
+            <GradientWrapper {...gradientProps} />
+            <div className="absolute inset-0">
+              <ClientGradientSwitcher {...gradientProps} />
+            </div>
           </div>
         </div>
-      </div>
-      <PageHeader className="mb-10">
-        <Link href="/blog/massive-updates">
-          <Announcement>
-            <AnnouncementTag>Latest Update</AnnouncementTag>
-            <AnnouncementTitle>
-              🚀 {t("site.announcement")}
-              <ArrowUpRightIcon
-                size={16}
-                className="text-muted-foreground shrink-0"
-              />
-            </AnnouncementTitle>
-          </Announcement>
-        </Link>
 
-        <PageHeaderHeading>
-          <span
-            dangerouslySetInnerHTML={{ __html: t.raw("site.heading") }}
-            className="text-4xl sm:text-5xl md:text-6xl"
-          />
-          <div className="mt-4 text-2xl sm:text-3xl md:text-4xl text-muted-foreground font-normal tracking-tight">
-            {t.raw("site.subheading").split("{flipwords}")[0]}
-            <FlipWords
-              words={t.raw("site.flipwords")}
-              className="text-2xl sm:text-3xl md:text-4xl text-primary font-semibold tracking-tight"
+        <PageHeader className="mb-0">
+          {/* Promo Badge - show at top if promo active */}
+          {promoBannerData && (
+            <div className="mb-4 flex flex-col items-center gap-2">
+              {/* Black Friday Text */}
+              <div className="text-sm font-bold text-white/90 uppercase tracking-[0.2em]">
+                Black Friday
+              </div>
+              {/* Promo Badge */}
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg"
+                style={{
+                  background: `linear-gradient(135deg, ${promoBannerData.background_gradient?.from || "#DC2626"} 0%, ${promoBannerData.background_gradient?.to || "#F43F5E"} 100%)`
+                }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  className="text-white"
+                >
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className="text-sm font-bold text-white uppercase tracking-wider">
+                  {promoBannerData.badge_text} for 3 months
+                </span>
+              </div>
+            </div>
+          )}
+
+          <Link href="/blog/network-upgrade-black-friday">
+            <Announcement>
+              <AnnouncementTag className="hidden sm:block">Latest Update</AnnouncementTag>
+              <AnnouncementTitle>
+                <span className="sm:hidden">🆕</span>
+                <span className="hidden sm:inline">🚀</span>
+                {t("site.announcement")}
+                <ArrowUpRightIcon
+                  size={16}
+                  className="text-muted-foreground shrink-0"
+                />
+              </AnnouncementTitle>
+            </Announcement>
+          </Link>
+
+          <PageHeaderHeading>
+            <span
+              dangerouslySetInnerHTML={{ __html: t.raw("site.heading") }}
+              className="text-4xl sm:text-5xl md:text-6xl"
             />
-            {t.raw("site.subheading").split("{flipwords}")[1]}
-          </div>
-        </PageHeaderHeading>
+            <div className="mt-4 text-2xl sm:text-3xl md:text-4xl text-muted-foreground font-normal tracking-tight">
+              {t.raw("site.subheading").split("{flipwords}")[0]}
+              <FlipWords
+                words={t.raw("site.flipwords")}
+                className="text-2xl sm:text-3xl md:text-4xl text-primary font-semibold tracking-tight"
+              />
+              {t.raw("site.subheading").split("{flipwords}")[1]}
+            </div>
+          </PageHeaderHeading>
 
-        <PageHeaderDescription>{t("site.description")}</PageHeaderDescription>
+          <PageHeaderDescription>{t("site.description")}</PageHeaderDescription>
 
-        <PageActions>
-          <Link href="/apps" className={cn(buttonVariants())}>
-            {t("site.buttons.browse_apps")}
-          </Link>
+          {/* Promo Code Display - show if promo active */}
+          {promoBannerData && (
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="text-sm text-white/60 font-medium">
+                Use code
+              </span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
+                <span className="text-lg font-bold font-mono text-white tracking-wider">
+                  {promoBannerData.promo_code}
+                </span>
+              </div>
+            </div>
+          )}
 
-          <Link
-            target="_blank"
-            rel="noreferrer"
-            href={siteConfig.links.github.url}
-            title={siteConfig.links.github.label}
-            className={cn(buttonVariants({ variant: "ghost" }))}
-          >
-            <Icons.gitHub className="mr-2 size-4" />
-            {siteConfig.links.github.label}
-          </Link>
-        </PageActions>
+          <PageActions>
+            <Link href="/apps" className={cn(buttonVariants())}>
+              {t("site.buttons.browse_apps")}
+            </Link>
 
-        <div className="fixed -top-40 left-0 -z-10 size-full overflow-hidden">
-          <ClientVortexWrapper
-            backgroundColor="transparent"
-            className="flex size-full"
-            rangeY={300}
-            baseRadius={1.5}
-            particleCount={20}
-            rangeSpeed={0.8}
-          />
-        </div>
-      </PageHeader>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href={siteConfig.links.github.url}
+              title={siteConfig.links.github.label}
+              className={cn(buttonVariants({ variant: "ghost" }))}
+            >
+              <Icons.gitHub className="mr-2 size-4" />
+              {siteConfig.links.github.label}
+            </Link>
+          </PageActions>
+        </PageHeader>
+      </PromoHeroWrapper>
+
+      {/* Background vortex effect - outside of PromoHeroWrapper */}
+      <div className="fixed -top-40 left-0 -z-10 size-full overflow-hidden pointer-events-none">
+        <ClientVortexWrapper
+          backgroundColor="transparent"
+          className="flex size-full"
+          rangeY={300}
+          baseRadius={1.5}
+          particleCount={20}
+          rangeSpeed={0.8}
+        />
+      </div>
 
       <section id="plans-section" className="scroll-mt-4 pt-4">
         <Plans
