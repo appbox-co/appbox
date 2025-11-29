@@ -92,7 +92,7 @@ export default async function IndexPage() {
           {promoBannerData && (
             <div className="mb-4 flex flex-col items-center gap-2">
               {/* Black Friday Text */}
-              <div className="text-sm font-bold text-white/90 uppercase tracking-[0.2em]">
+              <div className="text-sm font-bold text-red-600 dark:text-white/90 uppercase tracking-[0.2em]">
                 Black Friday
               </div>
               {/* Promo Badge */}
@@ -161,11 +161,11 @@ export default async function IndexPage() {
           {/* Promo Code Display - show if promo active */}
           {promoBannerData && (
             <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="text-sm text-white/60 font-medium">
+              <span className="text-sm text-red-600/80 dark:text-white/60 font-medium">
                 Use code
               </span>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
-                <span className="text-lg font-bold font-mono text-white tracking-wider">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 dark:bg-white/10 backdrop-blur-md border border-red-500/20 dark:border-white/20">
+                <span className="text-lg font-bold font-mono text-red-600 dark:text-white tracking-wider">
                   {promoBannerData.promo_code}
                 </span>
               </div>
