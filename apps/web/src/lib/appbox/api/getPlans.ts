@@ -2,7 +2,7 @@
 import { PlansData } from "@/components/ui/plans"
 
 // Set to true to use mock data for testing Black Friday promotions
-const USE_MOCK_DATA = true
+const USE_MOCK_DATA = false
 
 const MOCK_PLANS_DATA: PlansData = {
   data: [
