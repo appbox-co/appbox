@@ -9,8 +9,8 @@ export const img = ({
   height,
   ...props
 }: React.ImgHTMLAttributes<HTMLImageElement>) => {
-  // Return null or a placeholder if src is undefined
-  if (!src) return null
+  // Return null or a placeholder if src is undefined or is a Blob
+  if (!src || typeof src !== "string") return null
 
   // Convert width/height to numbers if they exist
   const widthNum = width ? Number(width) : undefined

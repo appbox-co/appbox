@@ -17,7 +17,7 @@
     "isolatedModules": true,
     // You have two choices here:
     // Option A: Let Next.js handle the JSX transform:
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     // Option B: Have TypeScript compile JSX using the automatic runtime:
     // "jsx": "react-jsx",
     "baseUrl": ".",
@@ -47,7 +47,8 @@
     "tailwind.config.ts",
     ".next/types/**/*.ts",
     "contentlayer.config.ts",
-    ".contentlayer/generated"
+    ".contentlayer/generated",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

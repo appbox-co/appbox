@@ -20,14 +20,15 @@ import "@/styles/custom-styles.css"
 interface AppLayoutProps {
   children: React.ReactNode
   params: Promise<{
-    locale: LocaleOptions
+    locale: string
   }>
 }
 
 export async function generateMetadata(props: {
-  params: Promise<{ locale: LocaleOptions }>
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const params = await props.params
+  const locale = params.locale as LocaleOptions
 
   return {
     metadataBase: new URL(siteConfig.url || "https://www.appbox.co"),
@@ -41,7 +42,7 @@ export async function generateMetadata(props: {
       template: `%s - ${siteConfig.name}`
     },
 
-    description: getObjectValueByLocale(siteConfig.description, params.locale),
+    description: getObjectValueByLocale(siteConfig.description, locale),
 
     keywords: [
       "Docs",
@@ -65,10 +66,7 @@ export async function generateMetadata(props: {
       title: siteConfig.name,
       siteName: siteConfig.name,
 
-      description: getObjectValueByLocale(
-        siteConfig.description,
-        params.locale
-      ),
+      description: getObjectValueByLocale(siteConfig.description, locale),
 
       images: [
         {

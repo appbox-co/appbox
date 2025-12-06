@@ -2,7 +2,7 @@
 import { ImageResponse } from "next/og"
 import { allBlogs, type Blog } from "contentlayer/generated"
 import { siteConfig } from "@/config/site"
-import { getFonts } from "@/lib/fonts"
+import { getFonts } from "@/lib/og-fonts"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import { truncateText } from "@/lib/utils"
 
@@ -20,13 +20,11 @@ function safeAbsoluteUrl(path: string) {
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ slug: string; locale: LocaleOptions }> }
+  { params }: { params: Promise<{ slug: string; locale: string }> }
 ) {
   const resolvedParams = await params
-  const post = getBlogPostBySlugAndLocale(
-    resolvedParams.slug,
-    resolvedParams.locale
-  )
+  const locale = resolvedParams.locale as LocaleOptions
+  const post = getBlogPostBySlugAndLocale(resolvedParams.slug, locale)
 
   if (!post) {
     return new ImageResponse(<Fallback src="/og.jpg" />, {

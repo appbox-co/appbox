@@ -4,7 +4,7 @@ import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 interface PoliciesLayoutProps {
   children: React.ReactNode
   params: Promise<{
-    locale: LocaleOptions
+    locale: string
   }>
 }
 
@@ -12,9 +12,10 @@ export const dynamicParams = true
 
 export default async function PoliciesLayout(props: PoliciesLayoutProps) {
   const params = await props.params
+  const locale = params.locale as LocaleOptions
   const { children } = props
 
-  setRequestLocale(params.locale)
+  setRequestLocale(locale)
 
   return (
     <div className="border-b">

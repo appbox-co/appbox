@@ -10,6 +10,22 @@ import {
   AccordionTrigger
 } from "@/components/ui/accordion-plus"
 
+const questions = [
+  "payment_methods",
+  "deployment_time",
+  "server_location",
+  "root_access",
+  "security",
+  "data_access",
+  "additional_software",
+  "fuse_rclone",
+  "refund_policy",
+  "custom_domain",
+  "upgrade_after_purchase",
+  "resource_multipliers",
+  "excluded_app_categories"
+]
+
 export function FAQSection({
   title,
   description,
@@ -23,22 +39,6 @@ export function FAQSection({
   const [openItem, setOpenItem] = useState<string>("")
   const searchParams = useSearchParams()
   const router = useRouter()
-
-  const questions = [
-    "payment_methods",
-    "deployment_time",
-    "server_location",
-    "root_access",
-    "security",
-    "data_access",
-    "additional_software",
-    "fuse_rclone",
-    "refund_policy",
-    "custom_domain",
-    "upgrade_after_purchase",
-    "resource_multipliers",
-    "excluded_app_categories"
-  ]
 
   useEffect(() => {
     // Check if there's a faq query parameter
@@ -59,7 +59,7 @@ export function FAQSection({
       const newUrl = `${window.location.pathname}${newSearchParams.toString() ? `?${newSearchParams.toString()}` : ""}#faq`
       router.replace(newUrl)
     }
-  }, [searchParams, questions, router])
+  }, [searchParams, router])
 
   return (
     <section id={id} className="scroll-mt-16 py-16">
