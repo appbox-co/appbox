@@ -19,8 +19,7 @@ interface DefaultTableOfContentItemsProps {
   }
 }
 
-interface DashboardTableOfContentsProps
-  extends DefaultTableOfContentItemsProps {
+interface DashboardTableOfContentsProps extends DefaultTableOfContentItemsProps {
   toc: TableOfContents
 }
 

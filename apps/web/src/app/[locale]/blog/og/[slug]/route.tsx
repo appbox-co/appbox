@@ -37,22 +37,20 @@ export async function GET(
   const { bold, regular } = await getFonts()
 
   return new ImageResponse(
-    (
-      <div
-        tw={`bg-black flex flex-col min-w-full h-[${siteConfig.og.size.height}px] relative`}
-      >
-        <Background src="/og-background.jpg" />
+    <div
+      tw={`bg-black flex flex-col min-w-full h-[${siteConfig.og.size.height}px] relative`}
+    >
+      <Background src="/og-background.jpg" />
 
-        <div tw="my-10 mx-14 flex flex-col">
-          <Logo src="/appbox-box-white.svg" />
+      <div tw="my-10 mx-14 flex flex-col">
+        <Logo src="/appbox-box-white.svg" />
 
-          <div tw="flex flex-col h-full max-h-[300px]">
-            <Title>{post.title}</Title>
-            <Author post={post} />
-          </div>
+        <div tw="flex flex-col h-full max-h-[300px]">
+          <Title>{post.title}</Title>
+          <Author post={post} />
         </div>
       </div>
-    ),
+    </div>,
     {
       ...siteConfig.og.size,
       fonts: [
