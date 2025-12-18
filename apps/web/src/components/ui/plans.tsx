@@ -8,6 +8,7 @@ import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { SparklesText } from "@/components/ui/sparkles-text"
+import { CURRENT_PROMO_THEME } from "@/config/promo-theme"
 
 // Define types for billing cycle and pricing details
 type BillingCycle =
@@ -370,12 +371,21 @@ const Plans = ({
                               p.promotion.applies_to.includes(billingCycle[0])
                           )
 
-                          // Use red gradient for promotions, otherwise use brand colors
-                          const startColor = groupHasPromotion
+                          // Holiday theme uses green/red, Black Friday uses red gradient
+                          const isHoliday = CURRENT_PROMO_THEME === "holiday"
+                          const promoStartColor = isHoliday
+                            ? "#16A34A"
+                            : "#DC2626"
+                          const promoEndColor = isHoliday
                             ? "#DC2626"
+                            : "#F43F5E"
+
+                          // Use theme gradient for promotions, otherwise use brand colors
+                          const startColor = groupHasPromotion
+                            ? promoStartColor
                             : gradientStartColor
                           const endColor = groupHasPromotion
-                            ? "#F43F5E"
+                            ? promoEndColor
                             : gradientEndColor
 
                           // Pass the gradient colors to the function
@@ -388,15 +398,22 @@ const Plans = ({
 
                           const planCard = (
                             <div
-                              className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6 relative ${hasActivePromotion ? "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10" : ""}`}
+                              className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6 relative ${
+                                hasActivePromotion
+                                  ? isHoliday
+                                    ? "border-green-200 dark:border-green-900/40 shadow-sm shadow-green-100/20 dark:shadow-green-900/10"
+                                    : "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10"
+                                  : ""
+                              }`}
                             >
                               {/* Promotion Badge */}
                               {hasActivePromotion && (
                                 <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10">
                                   <Badge
                                     variant="secondary"
-                                    className="bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 text-white text-xs font-bold px-2.5 py-0.5 shadow-lg shadow-red-500/20 border-0 uppercase tracking-wide"
+                                    className="text-white text-xs font-bold px-2.5 py-0.5 shadow-lg border-0 uppercase tracking-wide bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 shadow-red-500/20"
                                   >
+                                    {isHoliday ? "🎄 " : ""}
                                     {plan.promotion?.badge_text}
                                   </Badge>
                                 </div>
@@ -527,8 +544,21 @@ const Plans = ({
                               {hasActivePromotion && promotionalPricing ? (
                                 <>
                                   {/* Promotion Info Banner */}
-                                  <div className="mb-3 px-3 py-2 bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 rounded-md border border-red-100 dark:border-red-900/40">
-                                    <p className="text-xs font-semibold text-red-700 dark:text-red-300 whitespace-normal break-words">
+                                  <div
+                                    className={`mb-3 px-3 py-2 rounded-md border ${
+                                      isHoliday
+                                        ? "bg-gradient-to-r from-green-50 to-red-50 dark:from-green-950/30 dark:to-red-950/30 border-green-100 dark:border-green-900/40"
+                                        : "bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-red-100 dark:border-red-900/40"
+                                    }`}
+                                  >
+                                    <p
+                                      className={`text-xs font-semibold whitespace-normal break-words ${
+                                        isHoliday
+                                          ? "text-green-700 dark:text-green-300"
+                                          : "text-red-700 dark:text-red-300"
+                                      }`}
+                                    >
+                                      {isHoliday ? "🎁 " : ""}
                                       {plan.promotion?.description}
                                     </p>
                                   </div>
@@ -538,7 +568,13 @@ const Plans = ({
                                     <div className="text-sm text-gray-400 dark:text-gray-500 line-through decoration-gray-400/50 mb-1">
                                       {promotionalPricing.original_per_month}
                                     </div>
-                                    <div className="text-2xl font-extrabold text-red-600 dark:text-red-400">
+                                    <div
+                                      className={`text-2xl font-extrabold ${
+                                        isHoliday
+                                          ? "text-green-600 dark:text-green-400"
+                                          : "text-red-600 dark:text-red-400"
+                                      }`}
+                                    >
                                       {promotionalPricing.discounted_per_month}
                                       <small className="text-base font-medium text-gray-500 dark:text-gray-400 break-words whitespace-normal ml-1">
                                         {messages.card.per_month}
@@ -547,9 +583,16 @@ const Plans = ({
                                   </div>
 
                                   {/* Savings */}
-                                  <div className="mb-4 text-xs text-red-600 dark:text-red-400 font-semibold">
-                                    Save {promotionalPricing.total_savings} over
-                                    3 months
+                                  <div
+                                    className={`mb-4 text-xs font-semibold ${
+                                      isHoliday
+                                        ? "text-green-600 dark:text-green-400"
+                                        : "text-red-600 dark:text-red-400"
+                                    }`}
+                                  >
+                                    {isHoliday ? "🎄 " : ""}Save{" "}
+                                    {promotionalPricing.total_savings} over 3
+                                    months
                                   </div>
                                 </>
                               ) : (

@@ -5,6 +5,8 @@ import { motion } from "framer-motion"
 import { createNoise3D } from "simplex-noise"
 import { cn } from "@/lib/utils"
 
+type VortexMode = "default" | "snow"
+
 interface VortexProps {
   children?: React.ReactNode
   className?: string
@@ -17,27 +19,32 @@ interface VortexProps {
   baseRadius?: number
   rangeRadius?: number
   backgroundColor?: string
+  mode?: VortexMode
 }
 
 export default function Vortex(props: VortexProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef(null)
-  const particleCount = props.particleCount || 700
+  const mode = props.mode || "default"
+  const isSnowMode = mode === "snow"
+
+  // Snow mode uses different defaults
+  const particleCount = props.particleCount || (isSnowMode ? 100 : 700)
   const particlePropCount = 9
   const particlePropsLength = particleCount * particlePropCount
   const rangeY = props.rangeY || 100
-  const baseTTL = 400
-  const rangeTTL = 800
-  const baseSpeed = props.baseSpeed || 0.0
-  const rangeSpeed = props.rangeSpeed || 1.5
-  const baseRadius = props.baseRadius || 1
-  const rangeRadius = props.rangeRadius || 2
-  const baseHue = props.baseHue || 220
-  const rangeHue = 100
-  const noiseSteps = 1.5
+  const baseTTL = isSnowMode ? 600 : 400
+  const rangeTTL = isSnowMode ? 400 : 800
+  const baseSpeed = props.baseSpeed ?? (isSnowMode ? 0.3 : 0.0)
+  const rangeSpeed = props.rangeSpeed ?? (isSnowMode ? 0.5 : 1.5)
+  const baseRadius = props.baseRadius ?? (isSnowMode ? 1.5 : 1)
+  const rangeRadius = props.rangeRadius ?? (isSnowMode ? 2 : 2)
+  const baseHue = props.baseHue ?? (isSnowMode ? 200 : 220) // Light blue for snow
+  const rangeHue = isSnowMode ? 20 : 100 // Narrow hue range for snow (stays white/blue)
+  const noiseSteps = isSnowMode ? 0.3 : 1.5 // Gentler movement for snow
   const xOff = 0.00125
   const yOff = 0.00125
-  const zOff = 0.0001
+  const zOff = isSnowMode ? 0.00005 : 0.0001 // Slower noise changes for snow
   const backgroundColor = props.backgroundColor || "#000000"
   let tick = 0
   const noise3D = createNoise3D()
@@ -72,19 +79,34 @@ export default function Vortex(props: VortexProps) {
     particleProps = new Float32Array(particlePropsLength)
 
     for (let i = 0; i < particlePropsLength; i += particlePropCount) {
-      initParticle(i)
+      initParticle(i, true) // true = initial spawn
     }
   }
 
-  const initParticle = (i: number) => {
+  const initParticle = (i: number, isInitialSpawn: boolean = false) => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const x = rand(canvas.width)
-    const y = center[1] + randRange(rangeY)
+    let x: number, y: number
+
+    if (isSnowMode) {
+      x = rand(canvas.width)
+      if (isInitialSpawn) {
+        // On initial load, spread snow across the entire screen
+        y = rand(canvas.height)
+      } else {
+        // On respawn, start from top
+        y = -10 - rand(50)
+      }
+    } else {
+      x = rand(canvas.width)
+      y = center[1] + randRange(rangeY)
+    }
+
     const vx = 0
     const vy = 0
-    const life = 0
+    // For initial spawn in snow mode, randomize life so particles fade in/out at different times
+    const life = isInitialSpawn && isSnowMode ? rand(baseTTL) : 0
     const ttl = baseTTL + rand(rangeTTL)
     const speed = baseSpeed + rand(rangeSpeed)
     const radius = baseRadius + rand(rangeRadius)
@@ -96,12 +118,25 @@ export default function Vortex(props: VortexProps) {
   const draw = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     tick++
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = backgroundColor
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // Only fill background if not transparent
+    if (backgroundColor !== "transparent") {
+      ctx.fillStyle = backgroundColor
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+    }
 
     drawParticles(ctx)
-    renderGlow(canvas, ctx)
-    renderToScreen(canvas, ctx)
+
+    // Snow mode uses softer rendering (no intense glow)
+    if (isSnowMode) {
+      // Skip glow for transparent snow - particles are already visible
+      if (backgroundColor !== "transparent") {
+        renderSnowGlow(canvas, ctx)
+      }
+    } else {
+      renderGlow(canvas, ctx)
+      renderToScreen(canvas, ctx)
+    }
 
     window.requestAnimationFrame(() => draw(canvas, ctx))
   }
@@ -127,8 +162,17 @@ export default function Vortex(props: VortexProps) {
     const x = particleProps[i]
     const y = particleProps[i2]
     const n = noise3D(x! * xOff, y! * yOff, tick * zOff) * noiseSteps * TAU
-    const vx = lerp(particleProps[i3]!, Math.cos(n), 0.5)
-    const vy = lerp(particleProps[i4]!, Math.sin(n), 0.5)
+    let vx: number, vy: number
+
+    if (isSnowMode) {
+      // Snow falls downward with gentle horizontal sway
+      vx = lerp(particleProps[i3]!, Math.sin(n) * 0.5, 0.1) // Gentle horizontal sway
+      vy = lerp(particleProps[i4]!, 1, 0.05) // Constant downward movement
+    } else {
+      vx = lerp(particleProps[i3]!, Math.cos(n), 0.5)
+      vy = lerp(particleProps[i4]!, Math.sin(n), 0.5)
+    }
+
     let life = particleProps[i5]
     const ttl = particleProps[i6]
     const speed = particleProps[i7]
@@ -137,7 +181,7 @@ export default function Vortex(props: VortexProps) {
     const radius = particleProps[i8]
     const hue = particleProps[i9]
 
-    drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx)
+    drawParticle(x!, y!, x2, y2, life!, ttl!, radius!, hue!, ctx, isSnowMode)
 
     life = life! + 1
     particleProps[i] = x2
@@ -146,7 +190,12 @@ export default function Vortex(props: VortexProps) {
     particleProps[i4] = vy
     particleProps[i5] = life!
 
-    if (checkBounds(x!, y!, canvas) || life! > ttl!) {
+    // For snow mode, reset when particle goes below screen
+    if (isSnowMode) {
+      if (y! > canvas.height + 10 || x! < -10 || x! > canvas.width + 10) {
+        initParticle(i)
+      }
+    } else if (checkBounds(x!, y!, canvas) || life! > ttl!) {
       initParticle(i)
     }
   }
@@ -160,17 +209,33 @@ export default function Vortex(props: VortexProps) {
     ttl: number,
     radius: number,
     hue: number,
-    ctx: CanvasRenderingContext2D
+    ctx: CanvasRenderingContext2D,
+    snowMode: boolean = false
   ) => {
     ctx.save()
-    ctx.lineCap = "round"
-    ctx.lineWidth = radius
-    ctx.strokeStyle = `hsla(${hue},100%,60%,${fadeInOut(life, ttl)})`
-    ctx.beginPath()
-    ctx.moveTo(x, y)
-    ctx.lineTo(x2, y2)
-    ctx.stroke()
-    ctx.closePath()
+
+    if (snowMode) {
+      // Draw snowflakes as soft white/blue circles
+      const opacity = fadeInOut(life, ttl) * 0.9
+      ctx.fillStyle = `hsla(${hue}, 20%, 98%, ${opacity})`
+      ctx.shadowColor = "rgba(255, 255, 255, 0.5)"
+      ctx.shadowBlur = 3
+      ctx.beginPath()
+      ctx.arc(x2, y2, radius, 0, TAU)
+      ctx.fill()
+      ctx.closePath()
+      ctx.shadowBlur = 0
+    } else {
+      ctx.lineCap = "round"
+      ctx.lineWidth = radius
+      ctx.strokeStyle = `hsla(${hue},100%,60%,${fadeInOut(life, ttl)})`
+      ctx.beginPath()
+      ctx.moveTo(x, y)
+      ctx.lineTo(x2, y2)
+      ctx.stroke()
+      ctx.closePath()
+    }
+
     ctx.restore()
   }
 
@@ -197,6 +262,18 @@ export default function Vortex(props: VortexProps) {
     ctx.restore()
     ctx.save()
     ctx.filter = "blur(4px) brightness(200%)"
+    ctx.globalCompositeOperation = "lighter"
+    ctx.drawImage(canvas, 0, 0)
+    ctx.restore()
+  }
+
+  const renderSnowGlow = (
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D
+  ) => {
+    // Subtle glow for snow - softer than default
+    ctx.save()
+    ctx.filter = "blur(2px) brightness(120%)"
     ctx.globalCompositeOperation = "lighter"
     ctx.drawImage(canvas, 0, 0)
     ctx.restore()

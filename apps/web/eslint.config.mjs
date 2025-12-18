@@ -1,32 +1,27 @@
-// Import the compatibility utility to handle old-style configs
-import { fixupConfigRules } from "@eslint/compat"
-import { FlatCompat } from "@eslint/eslintrc"
+// ESLint 9 flat config for Next.js
 import eslint from "@eslint/js"
+import nextPlugin from "@next/eslint-plugin-next"
+import tseslint from "@typescript-eslint/eslint-plugin"
 import tsParser from "@typescript-eslint/parser"
 import prettierPlugin from "eslint-plugin-prettier/recommended"
-import { defineConfig, globalIgnores } from "eslint/config"
+import reactPlugin from "eslint-plugin-react"
+import reactHooksPlugin from "eslint-plugin-react-hooks"
 
-// Temporarily removing tailwindcss plugin due to compatibility issues
-// import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
-
-// Create the compatibility instance
-const compat = new FlatCompat()
-
-// Define config array first
+// Define config array
 const config = [
   // Global ignores configuration
-  globalIgnores(
-    [
+  {
+    ignores: [
       "node_modules/**",
       ".next/**",
       ".contentlayer/**",
       ".turbo/**",
       "public/**"
-    ],
-    "Ignore build and generated directories"
-  ),
+    ]
+  },
 
   eslint.configs.recommended,
+
   {
     // Global settings
     languageOptions: {
@@ -38,17 +33,20 @@ const config = [
   // Base configuration for all files
   {
     files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+    plugins: {
+      react: reactPlugin,
+      "react-hooks": reactHooksPlugin,
+      "@next/next": nextPlugin
+    },
     rules: {
-      // Next rules
+      // Next.js rules
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
       "@next/next/no-html-link-for-pages": "off",
       "no-undef": "off",
 
-      // Tailwind rules - commenting out
-      // 'tailwindcss/no-custom-classname': 'off',
-      // 'tailwindcss/classnames-order': 'error',
-
-      // TypeScript rules
-      "@typescript-eslint/no-unused-vars": [
+      // JavaScript rules
+      "no-unused-vars": [
         "error",
         {
           argsIgnorePattern: "^_",
@@ -57,20 +55,12 @@ const config = [
         }
       ],
 
-      // JavaScript rules
-      "no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_"
-        }
-      ],
-
       // React rules
       "react/react-in-jsx-scope": "off",
-      "react/no-unknown-property": ["error", { ignore: ["tw"] }],
-
-      // Add react recommended rules manually
+      "react/no-unknown-property": [
+        "error",
+        { ignore: ["tw", "jsx", "global"] }
+      ],
       "react/display-name": "warn",
       "react/jsx-key": "warn",
       "react/jsx-no-comment-textnodes": "warn",
@@ -89,9 +79,12 @@ const config = [
       "react/no-string-refs": "warn",
       "react/no-unescaped-entities": "warn",
       "react/prop-types": "warn",
-      "react/require-render-return": "error"
+      "react/require-render-return": "error",
+
+      // React Hooks rules
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
     },
-    // Removed Tailwind settings
     settings: {
       react: {
         version: "detect"
@@ -105,33 +98,49 @@ const config = [
   // TypeScript specific configuration
   {
     files: ["**/*.ts", "**/*.tsx"],
+    plugins: {
+      "@typescript-eslint": tseslint
+    },
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: 2022,
         sourceType: "module"
       }
+    },
+    rules: {
+      // Disable base rule in favor of TypeScript rule
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_"
+        }
+      ],
+      // Allow function/type name collision (common pattern in React)
+      "no-redeclare": "off"
     }
   },
 
-  // Config files override
+  // Config files override (CommonJS)
   {
-    files: ["**/next.config.js", "**/*.config.js"],
+    files: ["**/next.config.js", "**/*.config.js", "**/*.config.cjs"],
+    languageOptions: {
+      globals: {
+        module: "readonly",
+        require: "readonly",
+        __dirname: "readonly"
+      }
+    },
     rules: {
       "@typescript-eslint/no-var-requires": "off"
     }
   },
 
-  // Use the compatibility utility for Next.js core-web-vitals
-  ...fixupConfigRules(
-    compat.config({
-      extends: ["next", "next/core-web-vitals", "next/typescript"]
-    })
-  ),
-
-  // Prettier
+  // Prettier (must be last)
   prettierPlugin
 ]
 
-// Then export that variable
-export default defineConfig(config)
+export default config
