@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef } from "react"
+import { useTheme } from "next-themes"
 import { motion } from "framer-motion"
 import { createNoise3D } from "simplex-noise"
 import { cn } from "@/lib/utils"
@@ -25,8 +26,15 @@ interface VortexProps {
 export default function Vortex(props: VortexProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef(null)
+  const { resolvedTheme } = useTheme()
+  const isDarkRef = useRef(true)
   const mode = props.mode || "default"
   const isSnowMode = mode === "snow"
+
+  // Track theme changes using ref so animation loop can access current value
+  useEffect(() => {
+    isDarkRef.current = resolvedTheme === "dark"
+  }, [resolvedTheme])
 
   // Snow mode uses different defaults
   const particleCount = props.particleCount || (isSnowMode ? 100 : 700)
@@ -215,10 +223,15 @@ export default function Vortex(props: VortexProps) {
     ctx.save()
 
     if (snowMode) {
-      // Draw snowflakes as soft white/blue circles
+      // Draw snowflakes - white in dark mode, black in light mode
       const opacity = fadeInOut(life, ttl) * 0.9
-      ctx.fillStyle = `hsla(${hue}, 20%, 98%, ${opacity})`
-      ctx.shadowColor = "rgba(255, 255, 255, 0.5)"
+      if (isDarkRef.current) {
+        ctx.fillStyle = `hsla(${hue}, 20%, 98%, ${opacity})`
+        ctx.shadowColor = "rgba(255, 255, 255, 0.5)"
+      } else {
+        ctx.fillStyle = `hsla(0, 0%, 15%, ${opacity})`
+        ctx.shadowColor = "rgba(0, 0, 0, 0.3)"
+      }
       ctx.shadowBlur = 3
       ctx.beginPath()
       ctx.arc(x2, y2, radius, 0, TAU)
@@ -246,7 +259,8 @@ export default function Vortex(props: VortexProps) {
   const resize = (canvas: HTMLCanvasElement) => {
     const { innerWidth, innerHeight } = window
     canvas.width = innerWidth
-    canvas.height = innerHeight
+    // Add extra height to account for any offset positioning of the container
+    canvas.height = innerHeight + 200
     center[0] = 0.5 * canvas.width
     center[1] = 0.5 * canvas.height
   }

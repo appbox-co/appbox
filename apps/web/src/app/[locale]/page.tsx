@@ -248,7 +248,7 @@ export default async function IndexPage() {
       </PromoHeroWrapper>
 
       {/* Background vortex/snow effect - outside of PromoHeroWrapper */}
-      <div className="fixed -top-40 left-0 -z-10 size-full overflow-hidden pointer-events-none">
+      <div className="fixed -top-40 left-0 -z-10 w-full h-[calc(100vh+10rem)] overflow-hidden pointer-events-none">
         <ClientVortexWrapper
           mode={CURRENT_PROMO_THEME === "holiday" ? "snow" : "default"}
           backgroundColor="transparent"

@@ -1,8 +1,17 @@
 #!/usr/bin/env sh
+
+# Get list of staged files before linting
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
 echo "Running linting checks before commit..."
 if ! pnpm run lint:fix; then
   echo "Linting failed! Fix the errors before committing."
   exit 1
+fi
+
+# Re-add any staged files that may have been modified by lint:fix
+if [ -n "$STAGED_FILES" ]; then
+  echo "$STAGED_FILES" | xargs -I {} sh -c 'git diff --quiet "{}" 2>/dev/null || git add "{}"'
 fi
 
 # Check if any MDX files or contentlayer config have been modified
@@ -23,4 +32,4 @@ if ! pnpm build; then
   echo "Build failed! Fix the errors before committing."
   exit 1
 fi
-echo "Build check successful." 
+echo "Build check successful."
