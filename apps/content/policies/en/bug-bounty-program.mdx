@@ -19,20 +19,83 @@ This bug bounty program applies to the following Appbox platforms:
 
 * Appbox Primary Website [https://www.appbox.co]
 * Appbox Control Panel [https://www.appbox.co/login]
-* Appbox Hosting Infrastructure [username.appboxes.co]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Infrastructure only, not customer applications**
+
+**Note:** While our hosting infrastructure (username.appboxes.co) is in scope, vulnerabilities in third-party applications deployed by customers are not. See exclusions below.
+
+## What Qualifies as a Valid Vulnerability
+
+To qualify for our bug bounty program, a submission must meet ALL of the following criteria:
+
+### 1. Demonstrate Actual Exploitation
+* Include a working proof of concept that demonstrates the vulnerability can be exploited
+* Show clear security impact, theoretical vulnerabilities without demonstrated harm do not qualify
+* Prove that an attacker could actually compromise user data, accounts, or system integrity
+
+### 2. Affect In-Scope Systems
+* The vulnerability must exist in Appbox's proprietary code or infrastructure
+* Must affect systems explicitly listed in "Program Coverage" above
+* Must be reproducible on our production or staging environments
+
+### 3. Be Previously Unreported
+* The vulnerability must be newly discovered and not already known to us
+* Duplicate reports or variations of known issues do not qualify
 
 ## Excluded Areas and Issues
 
-The following are considered outside the scope of our bug bounty program:
+The following are considered **outside the scope** of our bug bounty program:
 
-* WHMCS Client Area [https://billing.appbox.co] - Vulnerabilities should be reported directly to WHMCS through their own security program
+### Third-Party Systems and Integrations
+* WHMCS Client Area [https://billing.appbox.co] - Report to [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - Report to [Chatwoot Security](https://www.chatwoot.com/security)
+* **Customer-deployed applications** [app.username.appboxes.co] - Vulnerabilities in third-party applications (WordPress, Nextcloud, etc.) hosted on our infrastructure should be reported to the respective application vendors
+* Any other third-party services, plugins, or integrations we use
+* IP addresses or domains not directly controlled by Appbox
+* Legacy or deprecated systems no longer in active use
+
+**Out-of-Scope for Hosting Infrastructure:**
+* Vulnerabilities within customer-deployed application code (WordPress, Nextcloud, etc.)
+* Default configurations of third-party applications
+* Security issues specific to a particular application version
+
+### Security Headers and Hardening
+* Missing security headers (X-Frame-Options, COOP, COEP, MTA-STS, etc.) **unless** you demonstrate actual exploitation leading to data compromise
+* Missing `rel="noopener"` or `rel="noreferrer"` attributes
+* Server version disclosure or HTTP header information leakage
+* Cookie attributes on non-sensitive cookies (analytics, preferences, etc.)
+
+### Low-Impact Information Disclosure
+* Verbose error messages that don't expose sensitive data (passwords, tokens, PII)
+* Path disclosure without demonstrated path traversal or file access
+* Technology stack identification (PHP version, framework detection, etc.)
+* Generic application responses or behavior
+
+### Design Decisions and Theoretical Issues
+* Login CSRF (does not provide attacker access to victim accounts)
+* User enumeration via timing attacks or differential responses (unless part of a larger attack chain)
+* Clickjacking without demonstrated exploitation of sensitive functionality
+* CORS configurations on non-sensitive endpoints
+* Missing rate limiting **unless** you demonstrate actual abuse (DoS is still excluded)
+
+### Attack Prerequisites
 * Security issues that don't affect our default application configurations
-* Vulnerabilities in our containers that require non-standard configurations
+* Vulnerabilities requiring non-standard configurations
+* Vulnerabilities in our containers that require custom or modified setups
+* Issues requiring network-level compromise (MITM, DNS poisoning, ARP spoofing)
+
+### Prohibited Testing Methods
 * Timing-based information disclosure attacks
 * Process enumeration techniques
 * Any form of denial of service or high-volume attacks
 * Social engineering and phishing techniques
 * Automated security scanning that generates excessive traffic or loads
+* Testing non-functional features or pages (e.g., signup pages not yet in production)
+
+### Invalid Report Types
+* Reports based solely on automated scanner output without manual validation
+* Generic recommendations without demonstrating actual vulnerabilities
+* Best practice suggestions without security impact
+* Compliance observations (PCI-DSS, GDPR, etc.) without demonstrating exploitability
 
 ## Reward Structure
 
@@ -59,6 +122,19 @@ The following are considered outside the scope of our bug bounty program:
 
 Contributors who report valid vulnerabilities will be recognized in our Security Researchers Hall of Fame as a token of our appreciation.
 
+## Required Report Quality
+
+All vulnerability reports must include:
+
+* **Clear vulnerability description** - Explain what the vulnerability is and why it matters
+* **Affected system/URL** - Specify exactly where the vulnerability exists
+* **Step-by-step reproduction** - Detailed steps that allow us to reproduce the issue
+* **Working proof of concept** - Functional demonstration of exploitation (code, screenshots, video)
+* **Actual security impact** - Demonstrate what an attacker could accomplish, not theoretical possibilities
+* **Your own testing** - Validate findings manually, don't just forward scanner output
+
+Reports that lack these elements or consist of generic security recommendations will not qualify for rewards.
+
 ## Claiming Your Reward
 
 * You may choose between two reward options:  
@@ -76,6 +152,8 @@ Contributors who report valid vulnerabilities will be recognized in our Security
 * If you gain unexpected access to sensitive data: access only the minimum amount needed to demonstrate the issue, stop testing immediately, and report the vulnerability promptly
 * Use only your own test accounts for any interaction with our systems
 * Never attempt to extort Appbox based on your findings
+* **Verify your findings** - Test that your proof of concept actually works before submitting
+* **Focus on impact** - Prioritize vulnerabilities that could cause real harm over theoretical issues
 
 ## Legal Protection
 
@@ -94,4 +172,12 @@ To report a vulnerability, create a detailed ticket through our [contact us form
 
 * Your report should include comprehensive steps to reproduce the vulnerability. You may use this template as a guide: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
 * All program communications must go through our official Support Ticket Platform
-* Public disclosure of any vulnerability without explicit written permission from Appbox violates this program's terms and will disqualify you from receiving a reward 
+* Public disclosure of any vulnerability without explicit written permission from Appbox violates this program's terms and will disqualify you from receiving a reward
+
+## What Happens After You Report
+
+* **Valid vulnerabilities**: We will acknowledge your report, work on a fix, and process your reward
+* **Invalid reports**: We will explain why the report doesn't qualify and may provide guidance for future submissions
+* **Out-of-scope reports**: We will redirect you to the appropriate vendor or explain why the issue isn't covered
+
+We appreciate quality research and constructive contributions to our security. Thank you for helping keep Appbox secure.

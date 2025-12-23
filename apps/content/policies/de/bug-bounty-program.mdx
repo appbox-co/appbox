@@ -3,7 +3,7 @@ title: Bug Bounty Programm
 description: Unser Programm zur Meldung von Sicherheitslücken und Belohnungen
 ---
 
-Bei Appbox ist Sicherheit eine grundlegende Priorität. Wir ermutigen Sicherheitsforscher aktiv dabei zu helfen, unsere Plattform zu stärken, indem sie potenzielle Schwachstellen identifizieren und melden. Dieses Programm beschreibt unseren Ansatz für verantwortliche Sicherheitsforschung, wie wir mit Schwachstellenmeldungen umgehen und welche Belohnungen wir Forschern anbieten, die zur Verbesserung unserer Sicherheitslage beitragen.
+Bei Appbox ist Sicherheit eine grundlegende Priorität. Wir ermutigen Sicherheitsforscher aktiv dabei zu helfen, unsere Plattform zu stärken, indem sie potenzielle Schwachstellen identifizieren und melden. Dieses Programm beschreibt unseren Ansatz für verantwortungsvolle Sicherheitsforschung, wie wir mit Schwachstellenmeldungen umgehen und welche Belohnungen wir Forschern anbieten, die zur Verbesserung unserer Sicherheitslage beitragen.
 
 ## Unser Engagement
 
@@ -19,20 +19,83 @@ Dieses Bug Bounty Programm gilt für die folgenden Appbox-Plattformen:
 
 * Appbox Hauptwebsite [https://www.appbox.co]
 * Appbox Kontrollpanel [https://www.appbox.co/login]
-* Appbox Hosting-Infrastruktur [username.appboxes.co]
+* Appbox Hosting-Infrastruktur [username.appboxes.co] - **Nur Infrastruktur, keine Kundenanwendungen**
+
+**Hinweis:** Während unsere Hosting-Infrastruktur (username.appboxes.co) im Geltungsbereich liegt, sind Schwachstellen in von Kunden bereitgestellten Drittanbieter-Anwendungen ausgeschlossen. Siehe Ausschlüsse unten.
+
+## Was als gültige Schwachstelle qualifiziert
+
+Um für unser Bug Bounty Programm zu qualifizieren, muss eine Einreichung ALLE folgenden Kriterien erfüllen:
+
+### 1. Tatsächliche Ausnutzung demonstrieren
+* Ein funktionierender Proof of Concept einschließen, der zeigt, dass die Schwachstelle ausgenutzt werden kann
+* Klare Sicherheitsauswirkungen zeigen, theoretische Schwachstellen ohne nachgewiesenen Schaden qualifizieren nicht
+* Beweisen, dass ein Angreifer tatsächlich Benutzerdaten, Konten oder die Systemintegrität kompromittieren könnte
+
+### 2. Im Geltungsbereich liegende Systeme betreffen
+* Die Schwachstelle muss in Appbox' proprietärem Code oder Infrastruktur existieren
+* Muss Systeme betreffen, die explizit unter "Programm-Abdeckung" oben aufgeführt sind
+* Muss in unseren Produktions- oder Staging-Umgebungen reproduzierbar sein
+
+### 3. Zuvor nicht gemeldet sein
+* Die Schwachstelle muss neu entdeckt und uns noch nicht bekannt sein
+* Doppelte Meldungen oder Varianten bekannter Probleme qualifizieren nicht
 
 ## Ausgeschlossene Bereiche und Probleme
 
-Die folgenden gelten als außerhalb des Geltungsbereichs unseres Bug Bounty Programms:
+Die folgenden gelten als **außerhalb des Geltungsbereichs** unseres Bug Bounty Programms:
 
-* WHMCS Client Area [https://billing.appbox.co] - Schwachstellen sollten direkt an WHMCS über ihr eigenes Sicherheitsprogramm gemeldet werden
+### Drittanbietersysteme und Integrationen
+* WHMCS Client Area [https://billing.appbox.co] - Melden an [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot Chat-Widget - Melden an [Chatwoot Security](https://www.chatwoot.com/security)
+* **Von Kunden bereitgestellte Anwendungen** [app.username.appboxes.co] - Schwachstellen in Drittanbieter-Anwendungen (WordPress, Nextcloud, etc.), die auf unserer Infrastruktur gehostet werden, sollten den jeweiligen Anwendungsanbietern gemeldet werden
+* Alle anderen Drittanbieterdienste, Plugins oder Integrationen, die wir verwenden
+* IP-Adressen oder Domains, die nicht direkt von Appbox kontrolliert werden
+* Veraltete oder außer Betrieb genommene Systeme, die nicht mehr aktiv genutzt werden
+
+**Außerhalb des Geltungsbereichs für Hosting-Infrastruktur:**
+* Schwachstellen im von Kunden bereitgestellten Anwendungscode (WordPress, Nextcloud, etc.)
+* Standardkonfigurationen von Drittanbieter-Anwendungen
+* Sicherheitsprobleme, die spezifisch für eine bestimmte Anwendungsversion sind
+
+### Sicherheitsheader und Härtung
+* Fehlende Sicherheitsheader (X-Frame-Options, COOP, COEP, MTA-STS, etc.) **es sei denn**, ihr demonstriert eine tatsächliche Ausnutzung, die zu Datenkompromittierung führt
+* Fehlende `rel="noopener"` oder `rel="noreferrer"` Attribute
+* Server-Versionsoffenlegung oder HTTP-Header-Informationsleckage
+* Cookie-Attribute bei nicht-sensiblen Cookies (Analytics, Präferenzen, etc.)
+
+### Informationsoffenlegung mit geringem Einfluss
+* Ausführliche Fehlermeldungen, die keine sensiblen Daten offenlegen (Passwörter, Token, personenbezogene Daten)
+* Pfadoffenlegung ohne nachgewiesene Pfadtraversierung oder Dateizugriff
+* Identifizierung des Technologie-Stacks (PHP-Version, Framework-Erkennung, etc.)
+* Generische Anwendungsantworten oder -verhalten
+
+### Designentscheidungen und theoretische Probleme
+* Login-CSRF (bietet dem Angreifer keinen Zugang zu Opferkonten)
+* Benutzeraufzählung über Timing-Angriffe oder differenzielle Antworten (es sei denn Teil einer größeren Angriffskette)
+* Clickjacking ohne nachgewiesene Ausnutzung sensibler Funktionalität
+* CORS-Konfigurationen auf nicht-sensiblen Endpunkten
+* Fehlende Ratenbegrenzung **es sei denn**, ihr demonstriert tatsächlichen Missbrauch (DoS ist weiterhin ausgeschlossen)
+
+### Angriffsvoraussetzungen
 * Sicherheitsprobleme, die unsere Standard-Anwendungskonfigurationen nicht betreffen
-* Schwachstellen in unseren Containern, die nicht-standardmäßige Konfigurationen erfordern
-* Timing-basierte Informationsleckage-Angriffe
+* Schwachstellen, die nicht-standardmäßige Konfigurationen erfordern
+* Schwachstellen in unseren Containern, die benutzerdefinierte oder modifizierte Setups erfordern
+* Probleme, die eine Kompromittierung auf Netzwerkebene erfordern (MITM, DNS-Poisoning, ARP-Spoofing)
+
+### Verbotene Testmethoden
+* Timing-basierte Informationsoffenlegungs-Angriffe
 * Prozessaufzählungstechniken
 * Jede Form von Denial-of-Service oder hochvolumigen Angriffen
 * Social Engineering und Phishing-Techniken
 * Automatisierte Sicherheitsscans, die übermäßigen Traffic oder Lasten generieren
+* Testen von nicht-funktionalen Features oder Seiten (z.B. Registrierungsseiten, die noch nicht in Produktion sind)
+
+### Ungültige Berichtstypen
+* Berichte, die ausschließlich auf automatisierter Scanner-Ausgabe basieren ohne manuelle Validierung
+* Generische Empfehlungen ohne Nachweis tatsächlicher Schwachstellen
+* Best-Practice-Vorschläge ohne Sicherheitsauswirkung
+* Compliance-Beobachtungen (PCI-DSS, DSGVO, etc.) ohne Nachweis der Ausnutzbarkeit
 
 ## Belohnungsstruktur
 
@@ -46,18 +109,31 @@ Die folgenden gelten als außerhalb des Geltungsbereichs unseres Bug Bounty Prog
 | Authentifizierungs-Bypass                                    | EUR 500              | EUR 750              |
 | SQL Injection                                                | EUR 1000             | EUR 1500             |
 | Beliebige Code-Ausführung                                    | EUR 1000             | EUR 1500             |
-| Beliebige Code-Ausführung (mit Privilegienerweiterung)      | EUR 2000             | EUR 3000             |
+| Beliebige Code-Ausführung (mit Privilegienerweiterung)       | EUR 2000             | EUR 3000             |
 | Persistente Code-Änderung                                    | EUR 1000             | EUR 1500             |
 
 ### Hosting-Infrastruktur
 
-| Schwachstellentyp                                            | PayPal Belohnung | Service-Guthaben |
-| ------------------------------------------------------------ | ---------------- | ---------------- |
-| Authentifizierungs-Bypass (SSH, FTP, VPN, etc.)             | EUR 500          | EUR 750          |
-| Authentifizierungs-Bypass für unterstützte Apps             | EUR 100          | EUR 200          |
-| Lokale Privilegienerweiterung                               | EUR 500          | EUR 750          |
+| Schwachstellentyp                                | PayPal Belohnung | Service-Guthaben |
+| ------------------------------------------------ | ---------------- | ---------------- |
+| Authentifizierungs-Bypass (SSH, FTP, VPN, etc.)  | EUR 500          | EUR 750          |
+| Authentifizierungs-Bypass für unterstützte Apps  | EUR 100          | EUR 200          |
+| Lokale Privilegienerweiterung                    | EUR 500          | EUR 750          |
 
 Mitwirkende, die gültige Schwachstellen melden, werden in unserer Security Researchers Hall of Fame als Zeichen unserer Wertschätzung anerkannt.
+
+## Erforderliche Berichtsqualität
+
+Alle Schwachstellenberichte müssen enthalten:
+
+* **Klare Schwachstellenbeschreibung** - Erklärt, was die Schwachstelle ist und warum sie wichtig ist
+* **Betroffenes System/URL** - Gebt genau an, wo die Schwachstelle existiert
+* **Schritt-für-Schritt Reproduktion** - Detaillierte Schritte, die es uns ermöglichen, das Problem zu reproduzieren
+* **Funktionierender Proof of Concept** - Funktionale Demonstration der Ausnutzung (Code, Screenshots, Video)
+* **Tatsächliche Sicherheitsauswirkung** - Demonstriert, was ein Angreifer erreichen könnte, nicht theoretische Möglichkeiten
+* **Eure eigenen Tests** - Validiert Erkenntnisse manuell, leitet nicht einfach Scanner-Ausgaben weiter
+
+Berichte, denen diese Elemente fehlen oder die aus generischen Sicherheitsempfehlungen bestehen, qualifizieren nicht für Belohnungen.
 
 ## Eure Belohnung beanspruchen
 
@@ -76,6 +152,8 @@ Mitwirkende, die gültige Schwachstellen melden, werden in unserer Security Rese
 * Falls ihr unerwarteten Zugang zu sensiblen Daten erhaltet: greift nur auf die Mindestmenge zu, die nötig ist, um das Problem zu demonstrieren, stoppt die Tests sofort und meldet die Schwachstelle umgehend
 * Verwendet nur eure eigenen Testkonten für jede Interaktion mit unseren Systemen
 * Versucht niemals, Appbox basierend auf euren Erkenntnissen zu erpressen
+* **Überprüft eure Erkenntnisse** - Testet, dass euer Proof of Concept tatsächlich funktioniert, bevor ihr ihn einreicht
+* **Fokussiert euch auf die Auswirkung** - Priorisiert Schwachstellen, die echten Schaden verursachen könnten, gegenüber theoretischen Problemen
 
 ## Rechtsschutz
 
@@ -94,4 +172,12 @@ Um eine Schwachstelle zu melden, erstellt ein detailliertes Ticket über unser [
 
 * Euer Bericht sollte umfassende Schritte zur Reproduktion der Schwachstelle enthalten. Ihr könnt diese Vorlage als Leitfaden verwenden: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
 * Alle Programmkommunikationen müssen über unsere offizielle Support-Ticket-Plattform laufen
-* Die öffentliche Preisgabe jeder Schwachstelle ohne ausdrückliche schriftliche Genehmigung von Appbox verstößt gegen die Bedingungen dieses Programms und disqualifiziert euch vom Erhalt einer Belohnung 
+* Die öffentliche Preisgabe jeder Schwachstelle ohne ausdrückliche schriftliche Genehmigung von Appbox verstößt gegen die Bedingungen dieses Programms und disqualifiziert euch vom Erhalt einer Belohnung
+
+## Was nach eurer Meldung passiert
+
+* **Gültige Schwachstellen**: Wir werden eure Meldung bestätigen, an einer Behebung arbeiten und eure Belohnung bearbeiten
+* **Ungültige Berichte**: Wir werden erklären, warum der Bericht nicht qualifiziert und können Hinweise für zukünftige Einreichungen geben
+* **Außerhalb des Geltungsbereichs liegende Berichte**: Wir werden euch an den entsprechenden Anbieter weiterleiten oder erklären, warum das Problem nicht abgedeckt ist
+
+Wir schätzen qualitativ hochwertige Forschung und konstruktive Beiträge zu unserer Sicherheit. Vielen Dank, dass ihr helft, Appbox sicher zu halten.
