@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Script from "next/script"
 import { ArrowUpRightIcon } from "lucide-react"
@@ -29,7 +30,35 @@ import { CURRENT_PROMO_THEME, getPromoTheme } from "@/config/promo-theme"
 import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
 import { getPlans } from "@/lib/appbox/api/getPlans"
-import { cn } from "@/lib/utils"
+import { absoluteUrl, cn } from "@/lib/utils"
+
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const params = await props.params
+  const t = await getTranslations("site")
+
+  const title = t("meta_title")
+  const description = t("description")
+
+  return {
+    title,
+    description,
+    openGraph: {
+      type: "website",
+      title,
+      url: absoluteUrl(`/${params.locale}`),
+      description,
+      images: [
+        {
+          ...siteConfig.og.size,
+          url: siteConfig.og.image,
+          alt: siteConfig.name
+        }
+      ]
+    }
+  }
+}
 
 export default async function IndexPage() {
   const t = await getTranslations()

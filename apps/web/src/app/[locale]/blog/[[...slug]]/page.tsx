@@ -36,14 +36,15 @@ export async function generateMetadata(
 
   setRequestLocale(locale)
 
-  const [t, blogPost] = await Promise.all([
+  const [siteT, blogT, blogPost] = await Promise.all([
     getTranslations("site"),
+    getTranslations("blog"),
     getBlogFromParams({ params })
   ])
 
   if (!blogPost) {
-    const title = t("words.blog")
-    const description = t("description")
+    const title = `${siteT("words.blog")} - ${siteConfig.name}`
+    const description = blogT("meta_description")
 
     const tags = new Set(
       allBlogs

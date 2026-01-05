@@ -1,4 +1,5 @@
 // Make the StarRating component a Client Component since it's interactive
+import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
@@ -9,13 +10,69 @@ import DeployButton from "@/components/deploy-button"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { siteConfig } from "@/config/site"
 import { getAppDetails } from "@/lib/appbox/api/getAppDetails"
+import { absoluteUrl } from "@/lib/utils"
 
 interface AppDetailPageProps {
   params: Promise<{
     appName: string
     locale: string
   }>
+}
+
+export async function generateMetadata({
+  params
+}: AppDetailPageProps): Promise<Metadata> {
+  const resolvedParams = await params
+  const appName = resolvedParams.appName
+  const locale = resolvedParams.locale
+
+  try {
+    const appDetails = await getAppDetails(appName)
+
+    if (!appDetails) {
+      return {}
+    }
+
+    // Truncate description for meta tags (recommended ~155-160 chars)
+    const truncatedDescription =
+      appDetails.description.length > 155
+        ? appDetails.description.substring(0, 152) + "..."
+        : appDetails.description
+
+    const title = `${appDetails.display_name} - Deploy on ${siteConfig.name}`
+    const description = `${truncatedDescription} Deploy ${appDetails.display_name} with one click on Appbox.`
+
+    // Get app icon for OG image if available
+    let ogImage = siteConfig.og.image
+    if (appDetails.icon_image) {
+      if (appDetails.icon_image.startsWith("http")) {
+        ogImage = appDetails.icon_image
+      } else {
+        ogImage = `https://api.appbox.co/assets/images/apps/icons/${appDetails.icon_image}`
+      }
+    }
+
+    return {
+      title,
+      description,
+      openGraph: {
+        type: "website",
+        title,
+        url: absoluteUrl(`/${locale}/apps/${appName}`),
+        description,
+        images: [
+          {
+            url: ogImage,
+            alt: `${appDetails.display_name} - ${siteConfig.name}`
+          }
+        ]
+      }
+    }
+  } catch {
+    return {}
+  }
 }
 
 export default async function AppDetailPage({ params }: AppDetailPageProps) {

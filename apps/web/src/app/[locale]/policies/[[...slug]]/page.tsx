@@ -41,10 +41,33 @@ export async function generateMetadata(
 
   setRequestLocale(locale || routing.defaultLocale)
 
-  const policy = await getPolicyFromParams({ params })
+  const [t, policy] = await Promise.all([
+    getTranslations("policies"),
+    getPolicyFromParams({ params })
+  ])
 
   if (!policy) {
-    return {}
+    // Index page metadata
+    const title = `${t("title")} - ${siteConfig.name}`
+    const description = t("meta_description")
+
+    return {
+      title,
+      description,
+      openGraph: {
+        type: "website",
+        title,
+        url: absoluteUrl(`/${locale}/policies`),
+        description,
+        images: [
+          {
+            ...siteConfig.og.size,
+            url: siteConfig.og.image,
+            alt: siteConfig.name
+          }
+        ]
+      }
+    }
   }
 
   const [, ...policySlugList] = policy.slugAsParams.split("/")

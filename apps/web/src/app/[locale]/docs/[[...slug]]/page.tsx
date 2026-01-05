@@ -35,10 +35,33 @@ export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
 
   setRequestLocale(locale || routing.defaultLocale)
 
-  const doc = await getDocFromParams({ params })
+  const [t, doc] = await Promise.all([
+    getTranslations("docs"),
+    getDocFromParams({ params })
+  ])
 
   if (!doc) {
-    return {}
+    // Index page metadata
+    const title = `${t("index.title")} - ${siteConfig.name}`
+    const description = t("meta_description")
+
+    return {
+      title,
+      description,
+      openGraph: {
+        type: "website",
+        title,
+        url: absoluteUrl(`/${locale}/docs`),
+        description,
+        images: [
+          {
+            ...siteConfig.og.size,
+            url: siteConfig.og.image,
+            alt: siteConfig.name
+          }
+        ]
+      }
+    }
   }
 
   const [, ...docSlugList] = doc.slugAsParams.split("/")
