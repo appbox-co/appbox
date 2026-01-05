@@ -80,6 +80,7 @@ export function PromoHeroWrapper({
   const effectiveGradientFrom = gradientFrom || themeConfig.gradientFrom
   const effectiveGradientTo = gradientTo || themeConfig.gradientTo
   const isHoliday = theme === "holiday"
+  const isJanuarySale = theme === "january-sale"
 
   // If no promo, just render children without any wrapper styling
   if (!hasPromo) {
@@ -158,6 +159,46 @@ export function PromoHeroWrapper({
               style={{ animationDelay: "2.5s", animationDuration: "3.5s" }}
             >
               <Star className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
+            </div>
+          </>
+        ) : isJanuarySale ? (
+          <>
+            {/* January Sale: Gold stars and sparkles */}
+            <div
+              className="absolute top-[15%] left-[10%] animate-float opacity-15 dark:opacity-25"
+              style={{ animationDelay: "0s", animationDuration: "3s" }}
+            >
+              <Star className="w-8 h-8 text-amber-500 dark:text-amber-400" />
+            </div>
+            <div
+              className="absolute top-[20%] right-[15%] animate-float opacity-15 dark:opacity-25"
+              style={{ animationDelay: "0.5s", animationDuration: "3.5s" }}
+            >
+              <Star className="w-10 h-10 text-amber-600 dark:text-amber-300" />
+            </div>
+            <div
+              className="absolute bottom-[20%] left-[12%] animate-float opacity-15 dark:opacity-25"
+              style={{ animationDelay: "1s", animationDuration: "4s" }}
+            >
+              <Star className="w-6 h-6 text-yellow-500 dark:text-yellow-400" />
+            </div>
+            <div
+              className="absolute bottom-[25%] right-[10%] animate-float opacity-15 dark:opacity-25"
+              style={{ animationDelay: "1.5s", animationDuration: "3.2s" }}
+            >
+              <Star className="w-9 h-9 text-amber-500 dark:text-amber-400" />
+            </div>
+            <div
+              className="absolute top-[30%] left-[25%] animate-float opacity-10 dark:opacity-20"
+              style={{ animationDelay: "2s", animationDuration: "3.8s" }}
+            >
+              <Star className="w-5 h-5 text-yellow-600 dark:text-yellow-300" />
+            </div>
+            <div
+              className="absolute bottom-[35%] right-[25%] animate-float opacity-10 dark:opacity-20"
+              style={{ animationDelay: "2.5s", animationDuration: "3.3s" }}
+            >
+              <Star className="w-7 h-7 text-amber-400 dark:text-amber-300" />
             </div>
           </>
         ) : (

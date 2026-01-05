@@ -371,14 +371,20 @@ const Plans = ({
                               p.promotion.applies_to.includes(billingCycle[0])
                           )
 
-                          // Holiday theme uses green/red, Black Friday uses red gradient
+                          // Theme-specific gradient colors
                           const isHoliday = CURRENT_PROMO_THEME === "holiday"
+                          const isJanuarySale =
+                            CURRENT_PROMO_THEME === "january-sale"
                           const promoStartColor = isHoliday
                             ? "#16A34A"
-                            : "#DC2626"
+                            : isJanuarySale
+                              ? "#D4AF37"
+                              : "#DC2626"
                           const promoEndColor = isHoliday
                             ? "#DC2626"
-                            : "#F43F5E"
+                            : isJanuarySale
+                              ? "#F5E6A3"
+                              : "#F43F5E"
 
                           // Use theme gradient for promotions, otherwise use brand colors
                           const startColor = groupHasPromotion
@@ -402,7 +408,9 @@ const Plans = ({
                                 hasActivePromotion
                                   ? isHoliday
                                     ? "border-green-200 dark:border-green-900/40 shadow-sm shadow-green-100/20 dark:shadow-green-900/10"
-                                    : "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10"
+                                    : isJanuarySale
+                                      ? "border-amber-200 dark:border-amber-900/40 shadow-sm shadow-amber-100/20 dark:shadow-amber-900/10"
+                                      : "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10"
                                   : ""
                               }`}
                             >
@@ -411,9 +419,17 @@ const Plans = ({
                                 <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10">
                                   <Badge
                                     variant="secondary"
-                                    className="text-white text-xs font-bold px-2.5 py-0.5 shadow-lg border-0 uppercase tracking-wide bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 shadow-red-500/20"
+                                    className={`text-white text-xs font-bold px-2.5 py-0.5 shadow-lg border-0 uppercase tracking-wide ${
+                                      isJanuarySale
+                                        ? "bg-gradient-to-r from-amber-500 to-yellow-500 dark:from-amber-600 dark:to-yellow-600 shadow-amber-500/20"
+                                        : "bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 shadow-red-500/20"
+                                    }`}
                                   >
-                                    {isHoliday ? "🎄 " : ""}
+                                    {isHoliday
+                                      ? "🎄 "
+                                      : isJanuarySale
+                                        ? "✨ "
+                                        : ""}
                                     {plan.promotion?.badge_text}
                                   </Badge>
                                 </div>
@@ -548,17 +564,25 @@ const Plans = ({
                                     className={`mb-3 px-3 py-2 rounded-md border ${
                                       isHoliday
                                         ? "bg-gradient-to-r from-green-50 to-red-50 dark:from-green-950/30 dark:to-red-950/30 border-green-100 dark:border-green-900/40"
-                                        : "bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-red-100 dark:border-red-900/40"
+                                        : isJanuarySale
+                                          ? "bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border-amber-100 dark:border-amber-900/40"
+                                          : "bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-red-100 dark:border-red-900/40"
                                     }`}
                                   >
                                     <p
                                       className={`text-xs font-semibold whitespace-normal break-words ${
                                         isHoliday
                                           ? "text-green-700 dark:text-green-300"
-                                          : "text-red-700 dark:text-red-300"
+                                          : isJanuarySale
+                                            ? "text-amber-700 dark:text-amber-300"
+                                            : "text-red-700 dark:text-red-300"
                                       }`}
                                     >
-                                      {isHoliday ? "🎁 " : ""}
+                                      {isHoliday
+                                        ? "🎁 "
+                                        : isJanuarySale
+                                          ? "✨ "
+                                          : ""}
                                       {plan.promotion?.description}
                                     </p>
                                   </div>
@@ -572,7 +596,9 @@ const Plans = ({
                                       className={`text-2xl font-extrabold ${
                                         isHoliday
                                           ? "text-green-600 dark:text-green-400"
-                                          : "text-red-600 dark:text-red-400"
+                                          : isJanuarySale
+                                            ? "text-amber-600 dark:text-amber-400"
+                                            : "text-red-600 dark:text-red-400"
                                       }`}
                                     >
                                       {promotionalPricing.discounted_per_month}
@@ -587,12 +613,18 @@ const Plans = ({
                                     className={`mb-4 text-xs font-semibold ${
                                       isHoliday
                                         ? "text-green-600 dark:text-green-400"
-                                        : "text-red-600 dark:text-red-400"
+                                        : isJanuarySale
+                                          ? "text-amber-600 dark:text-amber-400"
+                                          : "text-red-600 dark:text-red-400"
                                     }`}
                                   >
-                                    {isHoliday ? "🎄 " : ""}Save{" "}
-                                    {promotionalPricing.total_savings} over 3
-                                    months
+                                    {isHoliday
+                                      ? "🎄 "
+                                      : isJanuarySale
+                                        ? "✨ "
+                                        : ""}
+                                    Save {promotionalPricing.total_savings} over
+                                    3 months
                                   </div>
                                 </>
                               ) : (
