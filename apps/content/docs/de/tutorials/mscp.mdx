@@ -1,0 +1,258 @@
+---
+title: Schnelle Dateiübertragungen mit mscp
+description: Erfahren Sie, wie Sie mscp (Multi-Threaded scp) für Hochgeschwindigkeits-Dateiübertragungen zu Ihrem Appbox-Server über mehrere SSH-Verbindungen nutzen können.
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** ist eine Multi-Threaded-Variante von `scp`, die Dateien über mehrere SSH (SFTP)-Verbindungen gleichzeitig kopiert. Dies ermöglicht deutlich schnellere Übertragungen für große Dateien und Verzeichnisse durch die Nutzung paralleler Verbindungen.
+
+## Voraussetzungen
+
+Bevor Sie mscp verwenden können, müssen Sie SFTPgo auf Ihrem Appbox-Server installieren, um Ihre SFTP-Zugangsdaten zu erhalten.
+
+### Schritt 1: SFTPgo installieren
+
+1. Besuchen Sie die [SFTPgo App-Seite](https://www.appbox.co/appstore/app/232) im Appbox App Store
+2. Klicken Sie auf **Installieren**, um SFTPgo zu Ihrem Server hinzuzufügen
+3. Nach der Installation erhalten Sie Ihre Verbindungsdaten:
+   - **Benutzername**: Ihr SFTP-Benutzername
+   - **Passwort**: Ihr SFTP-Passwort
+   - **Hostname**: z.B. `sftpgo.yourserver.appboxes.co`
+   - **SFTP-Port**: z.B. `25557`
+   - **FTP/FTPS-Port**: z.B. `25555`
+   - **WebDav-URL**: Für WebDAV-Zugriff
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">Hinweis</AlertTitle>
+  <AlertDescription className="pl-2">
+    Bewahren Sie Ihre SFTPgo-Zugangsdaten sicher auf. Sie benötigen Hostname, Benutzername, Passwort und SFTP-Port für mscp-Verbindungen.
+  </AlertDescription>
+</Alert>
+
+## mscp installieren
+
+Wählen Sie die Installationsmethode für Ihr Betriebssystem:
+
+### macOS
+
+#### Mit Homebrew (Empfohlen)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### Mit MacPorts
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp hat keine nativen Windows-Binärdateien, aber Sie können es über WSL (Windows Subsystem for Linux) verwenden:
+
+#### Schritt 1: WSL installieren
+
+Öffnen Sie PowerShell als Administrator und führen Sie aus:
+
+```powershell
+wsl --install
+```
+
+Starten Sie Ihren Computer neu, wenn Sie dazu aufgefordert werden.
+
+#### Schritt 2: mscp in WSL installieren
+
+Nachdem WSL eingerichtet ist (Ubuntu ist die Standardoption), öffnen Sie das WSL-Terminal und führen Sie aus:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Windows-Dateipfade in WSL</AlertTitle>
+  <AlertDescription className="pl-2">
+    In WSL sind Ihre Windows-Laufwerke unter `/mnt/` zugänglich. Zum Beispiel wird `C:\Users\IhrName\Downloads` zu `/mnt/c/Users/IhrName/Downloads`.
+  </AlertDescription>
+</Alert>
+
+### Aus dem Quellcode bauen
+
+Wenn für Ihr System keine Pakete verfügbar sind, können Sie mscp aus dem Quellcode bauen:
+
+```bash
+# Repository klonen
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Gepatchte libssh vorbereiten
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Build-Abhängigkeiten installieren
+bash ./scripts/install-build-deps.sh
+
+# Bauen
+mkdir build && cd build
+cmake ..
+make
+
+# Installieren
+sudo make install
+```
+
+## Grundlegende Verwendung
+
+Die mscp-Syntax ist ähnlich wie bei `scp`. Hier sind gängige Nutzungsmuster.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Wichtig: Verwenden Sie Ihren SFTP-Port</AlertTitle>
+  <AlertDescription className="pl-2">
+    In den folgenden Beispielen steht `25557` für den **SFTP-Port** aus Ihren SFTPgo-Einstellungen. Ersetzen Sie diesen durch Ihren tatsächlichen SFTP-Port, der in Ihrem SFTPgo Options-Panel angezeigt wird.
+  </AlertDescription>
+</Alert>
+
+### Datei auf Ihren Server hochladen
+
+```bash
+# -P gibt den SFTP-Port an (verwenden Sie Ihren SFTP-Port aus den SFTPgo-Einstellungen)
+mscp -P 25557 lokale_datei.zip benutzername@sftpgo.yourserver.appboxes.co:/pfad/zum/ziel/
+```
+
+### Verzeichnis hochladen
+
+Anders als bei `scp` benötigt mscp kein `-r` Flag für Verzeichnisse:
+
+```bash
+# -P 25557 ist der SFTP-Port aus Ihren SFTPgo Options
+mscp -P 25557 /lokales/verzeichnis benutzername@sftpgo.yourserver.appboxes.co:/remote/pfad/
+```
+
+### Datei von Ihrem Server herunterladen
+
+```bash
+# Ersetzen Sie 25557 durch Ihren tatsächlichen SFTP-Port
+mscp -P 25557 benutzername@sftpgo.yourserver.appboxes.co:/remote/datei.zip /lokales/ziel/
+```
+
+### Verzeichnis herunterladen
+
+```bash
+mscp -P 25557 benutzername@sftpgo.yourserver.appboxes.co:/remote/verzeichnis/ /lokaler/pfad/
+```
+
+## Erweiterte Optionen
+
+### Mehrere Verbindungen verwenden
+
+Standardmäßig verwendet mscp mehrere Verbindungen. Sie können die Anzahl der Verbindungen mit `-n` angeben:
+
+```bash
+mscp -P 25557 -n 8 grosse_datei.zip benutzername@sftpgo.yourserver.appboxes.co:/ziel/
+```
+
+### Fehlgeschlagene Übertragungen fortsetzen (Checkpointing)
+
+mscp unterstützt Checkpointing zum Fortsetzen unterbrochener Übertragungen:
+
+```bash
+# Checkpointing aktivieren
+mscp -P 25557 -C /pfad/zum/checkpoint.json grosse_datei.zip benutzername@server:/ziel/
+
+# Fehlgeschlagene Übertragung fortsetzen
+mscp -P 25557 -C /pfad/zum/checkpoint.json -r
+```
+
+### SSH-Schlüssel-Authentifizierung angeben
+
+Wenn Sie SSH-Schlüssel-Authentifizierung mit SFTPgo eingerichtet haben:
+
+```bash
+mscp -P 25557 -i ~/.ssh/ihr_schluessel lokale_datei.zip benutzername@sftpgo.yourserver.appboxes.co:/ziel/
+```
+
+### Bandbreite begrenzen
+
+Um die Übertragungsbandbreite zu begrenzen (nützlich bei geteilten Verbindungen):
+
+```bash
+mscp -P 25557 -l 10M lokale_datei.zip benutzername@sftpgo.yourserver.appboxes.co:/ziel/
+```
+
+## Beispiel: Vollständiger Workflow
+
+Hier ist ein vollständiges Beispiel mit den SFTPgo-Zugangsdaten von Appbox:
+
+```bash
+# Ihre Zugangsdaten setzen (ersetzen Sie diese durch Ihre Werte aus SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Ihr Hostname
+PORT="25557"                           # Ihr SFTP-Port (nicht FTP-Port!)
+USER="ihr_benutzername"                # Ihr Benutzername
+
+# Große Datei mit 4 Verbindungen hochladen
+mscp -P $PORT -n 4 ~/Downloads/grosses-backup.tar.gz $USER@$HOST:/backups/
+
+# Gesamtes Verzeichnis hochladen
+mscp -P $PORT ~/Projekte/meine-website/ $USER@$HOST:/www/
+
+# Dateien vom Server herunterladen
+mscp -P $PORT $USER@$HOST:/media/filme/ ~/Downloads/filme/
+```
+
+## Performance-Tipps
+
+1. **Mehr Verbindungen für große Dateien verwenden**: Erhöhen Sie den `-n` Wert für große Dateiübertragungen (z.B. `-n 8` oder `-n 16`)
+2. **Weniger Verbindungen für viele kleine Dateien**: Bei Verzeichnissen mit vielen kleinen Dateien können weniger Verbindungen effizienter sein
+3. **Komprimierung für Textdateien aktivieren**: mscp erbt die SSH-Komprimierung; verwenden Sie `-C` für textlastige Übertragungen
+4. **Checkpointing für sehr große Übertragungen verwenden**: Aktivieren Sie immer Checkpointing für Multi-Gigabyte-Übertragungen, um bei Unterbrechungen fortsetzen zu können
+
+## Fehlerbehebung
+
+### Verbindung abgelehnt
+
+Stellen Sie sicher, dass Sie den korrekten SFTP-Port aus Ihren SFTPgo-Einstellungen verwenden (nicht den FTP-Port):
+
+```bash
+mscp -P 25557 ...  # Verwenden Sie Ihren tatsächlichen SFTP-Port
+```
+
+### Zugriff verweigert
+
+Überprüfen Sie, ob Benutzername und Passwort korrekt sind. Sie können zuerst mit einem Standard-SFTP-Client testen:
+
+```bash
+sftp -P 25557 benutzername@sftpgo.yourserver.appboxes.co
+```
+
+### Langsame Übertragungen
+
+Versuchen Sie, die Anzahl der parallelen Verbindungen anzupassen:
+
+```bash
+mscp -P 25557 -n 16 ...  # Verbindungen erhöhen
+```
+
+## Weitere Ressourcen
+
+- [mscp GitHub-Repository](https://github.com/upa/mscp)
+- [mscp Dokumentation](https://github.com/upa/mscp#documentation)
+- [SFTPgo auf Appbox](https://www.appbox.co/appstore/app/232)
