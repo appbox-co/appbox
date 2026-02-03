@@ -629,7 +629,7 @@ const Plans = ({
 
                                   {/* Savings */}
                                   <div
-                                    className={`mb-4 text-xs font-semibold ${
+                                    className={`mb-4 text-xs font-semibold whitespace-normal break-words ${
                                       isHoliday
                                         ? "text-green-600 dark:text-green-400"
                                         : isJanuarySale

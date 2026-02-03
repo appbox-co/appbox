@@ -13,14 +13,14 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.2.0",
-    "@commitlint/config-conventional": "^20.2.0",
-    "eslint": "8.57.0",
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
+    "eslint": "9.39.2",
     "husky": "^9.1.7",
-    "pnpm": "^10.26.0",
-    "prettier": "^3.7.4",
+    "pnpm": "^10.28.2",
+    "prettier": "^3.8.1",
     "sharp": "^0.34.5",
-    "turbo": "^2.6.3",
+    "turbo": "^2.8.2",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@9.6.0",
@@ -28,6 +28,6 @@
     "node": ">=23"
   },
   "dependencies": {
-    "next": "^16.0.10"
+    "next": "^16.1.6"
   }
 }
