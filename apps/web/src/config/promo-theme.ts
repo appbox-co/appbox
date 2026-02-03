@@ -1,12 +1,12 @@
 // Promo Theme Configuration
 // Change this to switch between promotional themes
 
-export type PromoTheme = "black-friday" | "holiday" | "january-sale"
+export type PromoTheme = "black-friday" | "holiday" | "january-sale" | "welcome"
 
 // ============================================
 // ✨ CHANGE THIS TO SWITCH THEMES ✨
 // ============================================
-export const CURRENT_PROMO_THEME: PromoTheme = "january-sale"
+export const CURRENT_PROMO_THEME: PromoTheme = "welcome"
 // ============================================
 
 export const promoThemes = {
@@ -66,6 +66,25 @@ export const promoThemes = {
     // Icon colors
     iconColor: "text-amber-600 dark:text-amber-400",
     sparkleColor: "bg-amber-500 dark:bg-amber-300"
+  },
+  welcome: {
+    // Text
+    title: "Welcome Offer",
+    emoji: "💜",
+    // Colors - premium purple/violet
+    gradientFrom: "#8B5CF6",
+    gradientTo: "#A78BFA",
+    textColor: "text-violet-600 dark:text-violet-300",
+    badgeBg: "bg-violet-500/10 dark:bg-violet-400/10",
+    badgeBorder: "border-violet-500/20 dark:border-violet-400/20",
+    badgeText: "text-violet-700 dark:text-violet-300",
+    // Light mode background - soft purple tint
+    lightBgFrom: "from-violet-50",
+    lightBgVia: "via-white",
+    lightBgTo: "to-purple-50",
+    // Icon colors
+    iconColor: "text-violet-600 dark:text-violet-400",
+    sparkleColor: "bg-violet-500 dark:bg-violet-300"
   }
 } as const
 

@@ -375,16 +375,21 @@ const Plans = ({
                           const isHoliday = CURRENT_PROMO_THEME === "holiday"
                           const isJanuarySale =
                             CURRENT_PROMO_THEME === "january-sale"
+                          const isWelcome = CURRENT_PROMO_THEME === "welcome"
                           const promoStartColor = isHoliday
                             ? "#16A34A"
                             : isJanuarySale
                               ? "#D4AF37"
-                              : "#DC2626"
+                              : isWelcome
+                                ? "#8B5CF6"
+                                : "#DC2626"
                           const promoEndColor = isHoliday
                             ? "#DC2626"
                             : isJanuarySale
                               ? "#F5E6A3"
-                              : "#F43F5E"
+                              : isWelcome
+                                ? "#A78BFA"
+                                : "#F43F5E"
 
                           // Use theme gradient for promotions, otherwise use brand colors
                           const startColor = groupHasPromotion
@@ -410,7 +415,9 @@ const Plans = ({
                                     ? "border-green-200 dark:border-green-900/40 shadow-sm shadow-green-100/20 dark:shadow-green-900/10"
                                     : isJanuarySale
                                       ? "border-amber-200 dark:border-amber-900/40 shadow-sm shadow-amber-100/20 dark:shadow-amber-900/10"
-                                      : "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10"
+                                      : isWelcome
+                                        ? "border-violet-200 dark:border-violet-900/40 shadow-sm shadow-violet-100/20 dark:shadow-violet-900/10"
+                                        : "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10"
                                   : ""
                               }`}
                             >
@@ -422,14 +429,18 @@ const Plans = ({
                                     className={`text-white text-xs font-bold px-2.5 py-0.5 shadow-lg border-0 uppercase tracking-wide ${
                                       isJanuarySale
                                         ? "bg-gradient-to-r from-amber-500 to-yellow-500 dark:from-amber-600 dark:to-yellow-600 shadow-amber-500/20"
-                                        : "bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 shadow-red-500/20"
+                                        : isWelcome
+                                          ? "bg-gradient-to-r from-violet-500 to-purple-500 dark:from-violet-600 dark:to-purple-600 shadow-violet-500/20"
+                                          : "bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 shadow-red-500/20"
                                     }`}
                                   >
                                     {isHoliday
                                       ? "🎄 "
                                       : isJanuarySale
                                         ? "✨ "
-                                        : ""}
+                                        : isWelcome
+                                          ? "💜 "
+                                          : ""}
                                     {plan.promotion?.badge_text}
                                   </Badge>
                                 </div>
@@ -566,7 +577,9 @@ const Plans = ({
                                         ? "bg-gradient-to-r from-green-50 to-red-50 dark:from-green-950/30 dark:to-red-950/30 border-green-100 dark:border-green-900/40"
                                         : isJanuarySale
                                           ? "bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border-amber-100 dark:border-amber-900/40"
-                                          : "bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-red-100 dark:border-red-900/40"
+                                          : isWelcome
+                                            ? "bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 border-violet-100 dark:border-violet-900/40"
+                                            : "bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-red-100 dark:border-red-900/40"
                                     }`}
                                   >
                                     <p
@@ -575,14 +588,18 @@ const Plans = ({
                                           ? "text-green-700 dark:text-green-300"
                                           : isJanuarySale
                                             ? "text-amber-700 dark:text-amber-300"
-                                            : "text-red-700 dark:text-red-300"
+                                            : isWelcome
+                                              ? "text-violet-700 dark:text-violet-300"
+                                              : "text-red-700 dark:text-red-300"
                                       }`}
                                     >
                                       {isHoliday
                                         ? "🎁 "
                                         : isJanuarySale
                                           ? "✨ "
-                                          : ""}
+                                          : isWelcome
+                                            ? "💜 "
+                                            : ""}
                                       {plan.promotion?.description}
                                     </p>
                                   </div>
@@ -598,7 +615,9 @@ const Plans = ({
                                           ? "text-green-600 dark:text-green-400"
                                           : isJanuarySale
                                             ? "text-amber-600 dark:text-amber-400"
-                                            : "text-red-600 dark:text-red-400"
+                                            : isWelcome
+                                              ? "text-violet-600 dark:text-violet-400"
+                                              : "text-red-600 dark:text-red-400"
                                       }`}
                                     >
                                       {promotionalPricing.discounted_per_month}
@@ -615,16 +634,22 @@ const Plans = ({
                                         ? "text-green-600 dark:text-green-400"
                                         : isJanuarySale
                                           ? "text-amber-600 dark:text-amber-400"
-                                          : "text-red-600 dark:text-red-400"
+                                          : isWelcome
+                                            ? "text-violet-600 dark:text-violet-400"
+                                            : "text-red-600 dark:text-red-400"
                                     }`}
                                   >
                                     {isHoliday
                                       ? "🎄 "
                                       : isJanuarySale
                                         ? "✨ "
-                                        : ""}
-                                    Save {promotionalPricing.total_savings} over
-                                    3 months
+                                        : isWelcome
+                                          ? "💜 "
+                                          : ""}
+                                    Save {promotionalPricing.total_savings}
+                                    {plan.promotion?.duration_months === 1
+                                      ? " on your first month"
+                                      : ` over ${plan.promotion?.duration_months} months`}
                                   </div>
                                 </>
                               ) : (

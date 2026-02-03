@@ -34,11 +34,11 @@ const MOCK_PLANS_DATA: PlansData = {
           available: true,
           promotion: {
             active: true,
-            promo_code: "APPBOX30",
-            title: "30% Off for 3 Months",
-            description: "Save 30% on your first 3 months",
+            promo_code: "WELCOME",
+            title: "30% Off Your First Month",
+            description: "Save 30% on your first 1 month",
             discount_percentage: 30,
-            duration_months: 3,
+            duration_months: 1,
             applies_to: ["monthly"],
             discount_type: "percentage",
             auto_apply: true,
@@ -48,12 +48,12 @@ const MOCK_PLANS_DATA: PlansData = {
                   original_per_month: "€10.99",
                   discounted_per_month: "€7.69",
                   savings_per_month: "€3.30",
-                  total_savings: "€9.90"
+                  total_savings: "€3.30"
                 }
               }
             },
             terms:
-              "Discount applies to first 3 months only. Regular pricing applies after promotional period.",
+              "Discount applies to first 1 month only. Regular pricing applies after promotional period.",
             expiry_date: null,
             badge_text: "SAVE 30%"
           },
@@ -99,11 +99,11 @@ const MOCK_PLANS_DATA: PlansData = {
           available: true,
           promotion: {
             active: true,
-            promo_code: "APPBOX30",
-            title: "30% Off for 3 Months",
-            description: "Save 30% on your first 3 months",
+            promo_code: "WELCOME",
+            title: "30% Off Your First Month",
+            description: "Save 30% on your first 1 month",
             discount_percentage: 30,
-            duration_months: 3,
+            duration_months: 1,
             applies_to: ["monthly"],
             discount_type: "percentage",
             auto_apply: true,
@@ -113,12 +113,12 @@ const MOCK_PLANS_DATA: PlansData = {
                   original_per_month: "€16.19",
                   discounted_per_month: "€11.33",
                   savings_per_month: "€4.86",
-                  total_savings: "€14.58"
+                  total_savings: "€4.86"
                 }
               }
             },
             terms:
-              "Discount applies to first 3 months only. Regular pricing applies after promotional period.",
+              "Discount applies to first 1 month only. Regular pricing applies after promotional period.",
             expiry_date: null,
             badge_text: "SAVE 30%"
           },
@@ -173,11 +173,11 @@ const MOCK_PLANS_DATA: PlansData = {
           available: true,
           promotion: {
             active: true,
-            promo_code: "APPBOX30",
-            title: "30% Off for 3 Months",
-            description: "Save 30% on your first 3 months",
+            promo_code: "WELCOME",
+            title: "30% Off Your First Month",
+            description: "Save 30% on your first 1 month",
             discount_percentage: 30,
-            duration_months: 3,
+            duration_months: 1,
             applies_to: ["monthly"],
             discount_type: "percentage",
             auto_apply: true,
@@ -187,12 +187,12 @@ const MOCK_PLANS_DATA: PlansData = {
                   original_per_month: "€13.95",
                   discounted_per_month: "€9.77",
                   savings_per_month: "€4.19",
-                  total_savings: "€12.56"
+                  total_savings: "€4.19"
                 }
               }
             },
             terms:
-              "Discount applies to first 3 months only. Regular pricing applies after promotional period.",
+              "Discount applies to first 1 month only. Regular pricing applies after promotional period.",
             expiry_date: null,
             badge_text: "SAVE 30%"
           },
@@ -233,11 +233,11 @@ const MOCK_PLANS_DATA: PlansData = {
           available: true,
           promotion: {
             active: true,
-            promo_code: "APPBOX30",
-            title: "30% Off for 3 Months",
-            description: "Save 30% on your first 3 months",
+            promo_code: "WELCOME",
+            title: "30% Off Your First Month",
+            description: "Save 30% on your first 1 month",
             discount_percentage: 30,
-            duration_months: 3,
+            duration_months: 1,
             applies_to: ["monthly"],
             discount_type: "percentage",
             auto_apply: true,
@@ -247,12 +247,12 @@ const MOCK_PLANS_DATA: PlansData = {
                   original_per_month: "€24.45",
                   discounted_per_month: "€17.12",
                   savings_per_month: "€7.34",
-                  total_savings: "€22.01"
+                  total_savings: "€7.34"
                 }
               }
             },
             terms:
-              "Discount applies to first 3 months only. Regular pricing applies after promotional period.",
+              "Discount applies to first 1 month only. Regular pricing applies after promotional period.",
             expiry_date: null,
             badge_text: "SAVE 30%"
           },
@@ -309,11 +309,11 @@ const MOCK_PLANS_DATA: PlansData = {
           available: true,
           promotion: {
             active: true,
-            promo_code: "APPBOX30",
-            title: "30% Off for 3 Months",
-            description: "Save 30% on your first 3 months",
+            promo_code: "WELCOME",
+            title: "30% Off Your First Month",
+            description: "Save 30% on your first 1 month",
             discount_percentage: 30,
-            duration_months: 3,
+            duration_months: 1,
             applies_to: ["monthly"],
             discount_type: "percentage",
             auto_apply: true,
@@ -323,12 +323,12 @@ const MOCK_PLANS_DATA: PlansData = {
                   original_per_month: "€67.99",
                   discounted_per_month: "€47.59",
                   savings_per_month: "€20.40",
-                  total_savings: "€61.19"
+                  total_savings: "€20.40"
                 }
               }
             },
             terms:
-              "Discount applies to first 3 months only. Regular pricing applies after promotional period.",
+              "Discount applies to first 1 month only. Regular pricing applies after promotional period.",
             expiry_date: null,
             badge_text: "SAVE 30%"
           },

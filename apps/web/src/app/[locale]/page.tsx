@@ -78,6 +78,7 @@ export default async function IndexPage() {
         title: activePromotion.title,
         description: activePromotion.description,
         discount_percentage: activePromotion.discount_percentage,
+        duration_months: activePromotion.duration_months,
         badge_text: activePromotion.badge_text,
         cta_text: "View Deals",
         background_gradient: {
@@ -187,7 +188,7 @@ export default async function IndexPage() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  className="text-white"
+                  className="text-white shrink-0"
                 >
                   <path
                     d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
@@ -196,8 +197,11 @@ export default async function IndexPage() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                <span className="text-sm font-bold text-white uppercase tracking-wider">
-                  {promoBannerData.badge_text} for 3 months
+                <span className="text-sm font-bold text-white uppercase tracking-wider text-center whitespace-normal">
+                  {promoBannerData.badge_text}
+                  {promoBannerData.duration_months === 1
+                    ? " on your first month"
+                    : ` for ${promoBannerData.duration_months} months`}
                 </span>
               </div>
             </div>

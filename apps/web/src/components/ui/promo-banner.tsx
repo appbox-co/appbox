@@ -11,6 +11,7 @@ export interface PromoBannerData {
   title: string
   description: string
   discount_percentage: number
+  duration_months?: number
   badge_text: string
   cta_text?: string
   cta_link?: string
