@@ -10,11 +10,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.appbox.co"
+        hostname: "appbox.co"
       },
       {
         protocol: "https",
-        hostname: "api.appbox.co"
+        hostname: "**.appbox.co"
       }
     ]
   },
@@ -43,6 +43,12 @@ const nextConfig = {
         destination: "https://www.appbox.co/:path*",
         permanent: true
       }
+    ]
+  },
+  async rewrites() {
+    return [
+      // Email links use /abusecomplainant/:id?token= — serve en route without changing URL (avoids redirect loop with localePrefix as-needed)
+      { source: "/abusecomplainant/:id", destination: "/en/abusecomplainant/:id" }
     ]
   }
 }

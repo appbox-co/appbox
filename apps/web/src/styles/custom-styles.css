@@ -271,6 +271,15 @@ div.iubenda-uspr-btn {
   display: none !important;
 }
 
+/* Hide marketing-only widgets when inside the dashboard */
+.dashboard-layout #iubenda-cs-banner,
+.dashboard-layout .iubenda-cs-container,
+.dashboard-layout .woot-widget-holder,
+.dashboard-layout .woot--bubble-holder,
+.dashboard-layout .woot-widget-bubble {
+  display: none !important;
+}
+
 /* Opacity mask for right-side fade on horizontally scrollable containers */
 .mask-fade-right {
   -webkit-mask-image: linear-gradient(to right, black calc(100% - 64px), transparent 100%);

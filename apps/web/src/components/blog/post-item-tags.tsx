@@ -31,7 +31,7 @@ export function BlogPostItemTags({
     const uniqueTags = Array.from(new Set(tags))
 
     return uniqueTags
-  }, [post?.tags, limitOfTagsToDisplay, shouldDisplayEllipsis])
+  }, [post.tags, limitOfTagsToDisplay, shouldDisplayEllipsis])
 
   if (!tags) {
     return null

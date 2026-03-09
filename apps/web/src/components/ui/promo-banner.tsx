@@ -76,10 +76,10 @@ export function PromoBanner({ promo, onDismiss }: PromoBannerProps) {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true)
+    queueMicrotask(() => setIsMounted(true))
     const dismissed = sessionStorage.getItem("promo-banner-dismissed")
     if (dismissed === "true") {
-      setIsVisible(false)
+      queueMicrotask(() => setIsVisible(false))
     }
   }, [])
 

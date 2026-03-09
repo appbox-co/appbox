@@ -26,7 +26,7 @@ export function ClientGradientSwitcher(props: GradientSwitcherProps) {
       staticGradient.classList.add("opacity-0")
     }
 
-    setIsMounted(true)
+    queueMicrotask(() => setIsMounted(true))
   }, [])
 
   if (!isMounted) {

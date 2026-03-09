@@ -74,17 +74,17 @@ export const promoThemes = {
     // Colors - premium purple/violet
     gradientFrom: "#8B5CF6",
     gradientTo: "#A78BFA",
-    textColor: "text-violet-600 dark:text-violet-300",
-    badgeBg: "bg-violet-500/10 dark:bg-violet-400/10",
-    badgeBorder: "border-violet-500/20 dark:border-violet-400/20",
-    badgeText: "text-violet-700 dark:text-violet-300",
+    textColor: "text-indigo-600 dark:text-indigo-300",
+    badgeBg: "bg-indigo-500/10 dark:bg-indigo-400/10",
+    badgeBorder: "border-indigo-500/20 dark:border-indigo-400/20",
+    badgeText: "text-indigo-700 dark:text-indigo-300",
     // Light mode background - soft purple tint
-    lightBgFrom: "from-violet-50",
+    lightBgFrom: "from-indigo-50",
     lightBgVia: "via-white",
-    lightBgTo: "to-purple-50",
+    lightBgTo: "to-indigo-50",
     // Icon colors
-    iconColor: "text-violet-600 dark:text-violet-400",
-    sparkleColor: "bg-violet-500 dark:bg-violet-300"
+    iconColor: "text-indigo-600 dark:text-indigo-400",
+    sparkleColor: "bg-indigo-500 dark:bg-indigo-300"
   }
 } as const
 

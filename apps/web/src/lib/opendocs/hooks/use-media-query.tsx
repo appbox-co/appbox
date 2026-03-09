@@ -11,7 +11,7 @@ export function useMediaQuery(query: `(${string})`) {
     const mediaQueryList = matchMedia(query)
 
     mediaQueryList.addEventListener("change", onChange)
-    setMatches(mediaQueryList.matches)
+    queueMicrotask(() => setMatches(mediaQueryList.matches))
 
     return () => mediaQueryList.removeEventListener("change", onChange)
   }, [query])

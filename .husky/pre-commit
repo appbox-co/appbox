@@ -11,7 +11,10 @@ fi
 
 # Re-add any staged files that may have been modified by lint:fix
 if [ -n "$STAGED_FILES" ]; then
-  echo "$STAGED_FILES" | xargs -I {} sh -c 'git diff --quiet "{}" 2>/dev/null || git add "{}"'
+  echo "$STAGED_FILES" | while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    git diff --quiet "$f" 2>/dev/null || git add "$f"
+  done
 fi
 
 # Check if any MDX files or contentlayer config have been modified

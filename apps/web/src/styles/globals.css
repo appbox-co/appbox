@@ -18,6 +18,7 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --animate-pulse-glow: pulse-glow 1.75s infinite cubic-bezier(0, 0, 0, 1.5);
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
   --animate-in: fade-in var(--animate-duration-normal) ease-out;
   --animate-out: fade-out var(--animate-duration-normal) ease-in;
 
@@ -49,6 +50,19 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
   --color-card-primary: hsl(var(--card-primary));
+
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-hover: hsl(var(--sidebar-hover));
+  --color-sidebar-active: hsl(var(--sidebar-active));
+  --color-sidebar-text: hsl(var(--sidebar-text));
+  --color-sidebar-text-active: hsl(var(--sidebar-text-active));
+  --color-sidebar-icon: hsl(var(--sidebar-icon));
+  --color-sidebar-icon-active: hsl(var(--sidebar-icon-active));
+  --color-sidebar-avatar-bg: hsl(var(--sidebar-avatar-bg));
+  --color-header-bg: hsl(var(--header-bg));
+  --color-header-border: hsl(var(--header-border));
+  --color-tabbar-bg: hsl(var(--tabbar-bg));
+  --color-tabbar-active: hsl(var(--tabbar-active));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -142,6 +156,10 @@
     from { transform: translateX(0); }
     to { transform: translateX(-100%); }
   }
+  @keyframes caret-blink {
+    0%, 70%, 100% { opacity: 1; }
+    20%, 50% { opacity: 0; }
+  }
 }
 
 @utility container {
@@ -192,8 +210,8 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-active: 161 100% 69%;
+    --primary: 239 84% 67%;           /* #6366f1 indigo-500 */
+    --primary-active: 245 58% 58%;    /* #4f46e5 indigo-600 */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -205,31 +223,71 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 240 5% 64.9%;
+    --ring: 239 84% 67%;
     --radius: 0.5rem;
+
+    /* Dashboard layout tokens (light mode) */
+    --sidebar: 0 0% 100%;              /* white */
+    --sidebar-hover: 240 5% 96%;       /* slight gray on hover */
+    --sidebar-active: 240 5% 93%;      /* active state */
+    --sidebar-text: var(--muted-foreground);
+    --sidebar-text-active: var(--foreground);
+    --sidebar-icon: 218 13% 55%;       /* muted icon */
+    --sidebar-icon-active: 239 84% 67%; /* #6366f1 */
+    --sidebar-avatar-bg: 239 84% 67%;  /* #6366f1 */
+    --header-bg: 0 0% 100%;            /* white */
+    --header-border: var(--border);
+    --tabbar-bg: var(--input);
+    --tabbar-active: 239 84% 67%;      /* #6366f1 */
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-active: 161 100% 69%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 25%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 25%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 25%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 25%;
-    --input: 240 3.7% 25%;
-    --ring: 240 4.9% 83.9%;
+    /* Backgrounds */
+    --background: 228 18% 7%;         /* #0f1117 */
+    --card: 228 16% 13%;              /* #1a1d27 */
+    --card-foreground: 216 12% 91%;
+    --card-primary: 228 16% 13%;
+    --popover: 228 16% 13%;           /* #1a1d27 */
+    --popover-foreground: 216 12% 91%;
+    --input: 228 17% 17%;             /* slightly lighter for contrast */
+
+    /* Foregrounds */
+    --foreground: 216 12% 91%;        /* #e5e7eb */
+    --muted-foreground: 218 11% 65%;  /* #9ca3af */
+
+    /* Borders */
+    --border: 228 12% 32%;            /* visible border */
+    --ring: 235 82% 74%;              /* #818cf8 indigo-400 */
+
+    /* Primary (indigo) */
+    --primary: 235 82% 74%;           /* #818cf8 indigo-400 */
+    --primary-active: 239 84% 67%;    /* #6366f1 indigo-500 */
+    --primary-foreground: 228 18% 7%;
+    --accent: 228 15% 17%;            /* #252940 */
+    --accent-foreground: 225 91% 82%; /* #a5b4fc indigo-300 */
+
+    /* Muted */
+    --muted: 228 15% 17%;             /* #252940 */
+    --secondary: 228 12% 19%;         /* #2a2d3a */
+    --secondary-foreground: 216 12% 91%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;         /* #ef4444 */
+    --destructive-foreground: 0 0% 100%;
+
+    /* Dashboard layout tokens */
+    --sidebar: 228 17% 10%;           /* #141720 */
+    --sidebar-hover: 228 15% 17%;     /* #1e2235 */
+    --sidebar-active: 228 16% 20%;    /* #252940 */
+    --sidebar-text: var(--muted-foreground);
+    --sidebar-text-active: var(--accent-foreground);
+    --sidebar-icon: 218 13% 46%;      /* #6b7280 */
+    --sidebar-icon-active: 235 82% 74%; /* #818cf8 indigo-400 */
+    --sidebar-avatar-bg: 239 84% 67%;  /* #6366f1 indigo-500 */
+    --header-bg: var(--sidebar);
+    --header-border: var(--border);
+    --tabbar-bg: var(--input);
+    --tabbar-active: 239 30% 24%;     /* indigo-tinted tab active */
   }
 }
 
@@ -269,4 +327,35 @@ button:hover, a:hover, [role="button"]:hover, .interactive:hover {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@utility card-glow {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  &:hover {
+    box-shadow:
+      0 0 0 1px hsl(239 84% 67% / 0.12),
+      0 4px 20px hsl(239 84% 67% / 0.07),
+      0 1px 3px hsl(0 0% 0% / 0.2);
+    transform: translateY(-1px);
+  }
+}
+
+@utility gradient-badge {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+/* Collapsed sidebar: shrink the main content and header to match the 64px rail */
+@media (min-width: 1024px) {
+  html.sidebar-is-collapsed main {
+    margin-left: 4rem; /* 64px = w-16 */
+  }
+  html.sidebar-is-collapsed header {
+    left: 4rem;
+  }
+}
+
+/* Optional media anonymization for screenshot mode */
+html[data-marketing-screenshot-mode="true"] [data-anonymize-media] {
+  filter: grayscale(1) blur(2px);
+  opacity: 0.45;
 }

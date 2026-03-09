@@ -1,0 +1,381 @@
+"use client"
+
+import { useState } from "react"
+import { useTranslations } from "next-intl"
+import {
+  ArrowUpCircle,
+  Loader2,
+  Play,
+  RotateCcw,
+  Square,
+  Trash2,
+  Zap
+} from "lucide-react"
+import type { CustomButton } from "@/api/custom-buttons/custom-buttons"
+import {
+  useCustomButtons,
+  useTriggerCustomButton
+} from "@/api/custom-buttons/hooks/use-custom-buttons"
+import {
+  useRestartApp,
+  useStartApp,
+  useStopApp,
+  useSwitchVersion,
+  useUninstallApp,
+  useUpdateApp
+} from "@/api/installed-apps/hooks/use-installed-apps"
+import type { InstalledApp } from "@/api/installed-apps/installed-apps"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+
+interface AppActionsProps {
+  app: InstalledApp
+}
+
+export function AppActions({ app }: AppActionsProps) {
+  const t = useTranslations("appboxmanager.appDetail")
+  const [uninstallOpen, setUninstallOpen] = useState(false)
+  const [customConfirmId, setCustomConfirmId] = useState<number | null>(null)
+  const [selectedSwitchVersionId, setSelectedSwitchVersionId] = useState("")
+  const [switchConfirmOpen, setSwitchConfirmOpen] = useState(false)
+
+  const startMutation = useStartApp()
+  const stopMutation = useStopApp()
+  const restartMutation = useRestartApp()
+  const updateMutation = useUpdateApp()
+  const uninstallMutation = useUninstallApp()
+  const switchVersionMutation = useSwitchVersion()
+  const triggerMutation = useTriggerCustomButton()
+
+  const { data: customButtons = [] } = useCustomButtons(app.id)
+
+  const isRunning = app.status === "online"
+  // Both "offline" and "inactive" mean the app is not running
+  const isStopped = app.status === "offline" || app.status === "inactive"
+  // All action buttons should be disabled while a transition is in progress
+  const isTransitioning =
+    app.status === "installing" ||
+    app.status === "updating" ||
+    app.status === "deleting"
+
+  const latestVersion = app.available_versions?.[0]
+  const hasUpdate =
+    app.can_update && latestVersion && latestVersion.version !== app.version
+  const switchableVersions = (app.available_versions ?? []).filter(
+    (v) => v.version !== app.version
+  )
+  const showSwitcher = app.can_update && switchableVersions.length > 1
+  const selectedSwitchVersion = switchableVersions.find(
+    (v) => String(v.id) === selectedSwitchVersionId
+  )
+
+  const handleUninstall = () => {
+    uninstallMutation.mutate(app.id, {
+      onSuccess: () => {
+        setUninstallOpen(false)
+      }
+    })
+  }
+
+  return (
+    <>
+      <div className="flex flex-wrap gap-2">
+        {/* Start */}
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isRunning || isTransitioning || startMutation.isPending}
+          onClick={() => startMutation.mutate(app.id)}
+        >
+          {startMutation.isPending ? (
+            <Loader2 className="mr-1.5 size-4 animate-spin" />
+          ) : (
+            <Play className="mr-1.5 size-4" />
+          )}
+          {t("start")}
+        </Button>
+
+        {/* Stop */}
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isStopped || isTransitioning || stopMutation.isPending}
+          onClick={() => stopMutation.mutate(app.id)}
+        >
+          {stopMutation.isPending ? (
+            <Loader2 className="mr-1.5 size-4 animate-spin" />
+          ) : (
+            <Square className="mr-1.5 size-4" />
+          )}
+          {t("stop")}
+        </Button>
+
+        {/* Restart */}
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isStopped || isTransitioning || restartMutation.isPending}
+          onClick={() => restartMutation.mutate(app.id)}
+        >
+          {restartMutation.isPending ? (
+            <Loader2 className="mr-1.5 size-4 animate-spin" />
+          ) : (
+            <RotateCcw className="mr-1.5 size-4" />
+          )}
+          {t("restart")}
+        </Button>
+
+        {/* Update */}
+        {hasUpdate && (
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={updateMutation.isPending}
+            onClick={() =>
+              updateMutation.mutate({
+                id: app.id,
+                versionId: latestVersion.id
+              })
+            }
+          >
+            {updateMutation.isPending ? (
+              <Loader2 className="mr-1.5 size-4 animate-spin" />
+            ) : (
+              <ArrowUpCircle className="mr-1.5 size-4" />
+            )}
+            {t("update")} ({latestVersion.version})
+          </Button>
+        )}
+
+        {showSwitcher && (
+          <>
+            <Select
+              value={selectedSwitchVersionId}
+              onValueChange={(val) => {
+                setSelectedSwitchVersionId(val)
+                setSwitchConfirmOpen(true)
+              }}
+              disabled={isTransitioning || switchVersionMutation.isPending}
+            >
+              <SelectTrigger className="h-8 w-[220px] text-xs">
+                <SelectValue placeholder={t("switchVersion")} />
+              </SelectTrigger>
+              <SelectContent>
+                {switchableVersions.map((v) => (
+                  <SelectItem key={v.id} value={String(v.id)}>
+                    {v.version}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </>
+        )}
+
+        {/* Uninstall */}
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => setUninstallOpen(true)}
+        >
+          <Trash2 className="mr-1.5 size-4" />
+          {t("uninstall")}
+        </Button>
+
+        {/* Custom buttons — fetched from buttons/instance API */}
+        {customButtons.map((btn) => (
+          <CustomButtonItem
+            key={btn.id}
+            button={btn}
+            isTransitioning={isTransitioning}
+            isPending={triggerMutation.isPending && customConfirmId === btn.id}
+            onConfirm={() => {
+              setCustomConfirmId(btn.id)
+              triggerMutation.mutate(btn, {
+                onSettled: () => setCustomConfirmId(null)
+              })
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Uninstall confirmation dialog */}
+      <Dialog open={uninstallOpen} onOpenChange={setUninstallOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {t("uninstall")} {app.display_name}
+            </DialogTitle>
+            <DialogDescription>{t("confirmUninstall")}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setUninstallOpen(false)}
+              disabled={uninstallMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleUninstall}
+              disabled={uninstallMutation.isPending}
+            >
+              {uninstallMutation.isPending && (
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
+              )}
+              {t("uninstall")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={switchConfirmOpen} onOpenChange={setSwitchConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("switchVersion")}</DialogTitle>
+            <DialogDescription>
+              {selectedSwitchVersion
+                ? `Switch from version ${app.version} to ${selectedSwitchVersion.version}?`
+                : "Select a version to switch to."}
+            </DialogDescription>
+          </DialogHeader>
+          {switchVersionMutation.isError && (
+            <p className="text-sm text-destructive">
+              {switchVersionMutation.error?.message ||
+                "Failed to switch version."}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSwitchConfirmOpen(false)
+                setSelectedSwitchVersionId("")
+              }}
+              disabled={switchVersionMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                if (!selectedSwitchVersionId) return
+                switchVersionMutation.mutate(
+                  {
+                    id: app.id,
+                    versionId: Number(selectedSwitchVersionId)
+                  },
+                  {
+                    onSuccess: () => {
+                      setSwitchConfirmOpen(false)
+                      setSelectedSwitchVersionId("")
+                    }
+                  }
+                )
+              }}
+              disabled={
+                !selectedSwitchVersionId || switchVersionMutation.isPending
+              }
+            >
+              {switchVersionMutation.isPending && (
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
+              )}
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Custom button item with inline confirm dialog                             */
+/* -------------------------------------------------------------------------- */
+
+function CustomButtonItem({
+  button,
+  isTransitioning,
+  isPending,
+  onConfirm
+}: {
+  button: CustomButton
+  isTransitioning: boolean
+  isPending: boolean
+  onConfirm: () => void
+}) {
+  const [open, setOpen] = useState(false)
+
+  // Buttons that require additional form input are not yet supported
+  const requiresForm = !!button.inputForm
+
+  const handleConfirm = () => {
+    setOpen(false)
+    onConfirm()
+  }
+
+  return (
+    <>
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={isTransitioning || isPending || requiresForm}
+        onClick={() => setOpen(true)}
+        title={
+          requiresForm
+            ? "This button requires additional input via the classic interface"
+            : undefined
+        }
+        style={
+          button.iconColor
+            ? {
+                borderColor: `${button.iconColor}60`,
+                color: button.iconColor
+              }
+            : undefined
+        }
+      >
+        {isPending ? (
+          <Loader2 className="mr-1.5 size-4 animate-spin" />
+        ) : (
+          <Zap
+            className="mr-1.5 size-4"
+            style={button.iconColor ? { color: button.iconColor } : undefined}
+          />
+        )}
+        {button.label}
+      </Button>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{button.dialogTitle ?? button.label}</DialogTitle>
+            <DialogDescription>
+              {button.dialogText ??
+                `Are you sure you want to run ${button.label}?`}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleConfirm}>Run</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}

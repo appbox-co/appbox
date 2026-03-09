@@ -8,7 +8,9 @@ export function useIsMobile() {
   useEffect(() => {
     if (!window.matchMedia) return
 
-    setMobile(window.matchMedia("(pointer:coarse)").matches && mediaQuery)
+    queueMicrotask(() =>
+      setMobile(window.matchMedia("(pointer:coarse)").matches && mediaQuery)
+    )
   }, [mediaQuery])
 
   return isMobile

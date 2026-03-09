@@ -1,4 +1,4 @@
-import type { IconOptions } from "@/components/icons"
+import type { IconOptions } from "@/components/shared/icons"
 import type { LocalizedRecord } from "./i18n"
 
 export interface NavItem {

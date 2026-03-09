@@ -12,7 +12,7 @@ import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
-import { MobileLink } from "../mobile-link"
+import { MobileLink } from "../marketing/mobile-link"
 
 export interface DocsSidebarNavProps {
   items: NavItemWithChildren[]

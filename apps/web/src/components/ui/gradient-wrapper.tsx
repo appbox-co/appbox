@@ -16,7 +16,7 @@ interface GradientWrapperProps {
 export function GradientWrapper({
   width,
   height,
-  gradientColors = ["#7B68EE", "#7B68EE", "#3498DB"],
+  gradientColors = ["#6366f1", "#6366f1", "#3498DB"],
   strokeWidth = 1,
   className,
   opacity = 1

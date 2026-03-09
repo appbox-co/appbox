@@ -87,7 +87,7 @@ function SparklesText({
   // Now include generateStar in the dependency array
   useEffect(() => {
     const newSparkles = Array.from({ length: sparklesCount }, generateStar)
-    setSparkles(newSparkles)
+    queueMicrotask(() => setSparkles(newSparkles))
   }, [colors.first, colors.second, sparklesCount, generateStar])
 
   return (

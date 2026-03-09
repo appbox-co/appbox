@@ -33,8 +33,64 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 function DialogContent({
   className,
   children,
+  onKeyDown,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>) {
+  const handleKeyDown = React.useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event)
+      if (event.defaultPrevented) return
+      if (event.key !== "Enter") return
+      if (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey)
+        return
+      if (event.nativeEvent.isComposing) return
+
+      const target = event.target as HTMLElement | null
+      if (!target) return
+
+      const targetTag = target.tagName.toLowerCase()
+      if (targetTag === "textarea") return
+      if (
+        target.isContentEditable ||
+        target.closest("[contenteditable='true']")
+      )
+        return
+      if (target.closest("[data-disable-enter-submit='true']")) return
+
+      // Let native keyboard activation keep ownership for focused interactive controls.
+      if (targetTag === "button" || targetTag === "a") return
+
+      const contentEl = event.currentTarget as HTMLDivElement
+      const explicitSubmit = contentEl.querySelector<HTMLButtonElement>(
+        "[data-dialog-submit='true']:not([disabled])"
+      )
+      const nativeSubmit = contentEl.querySelector<HTMLButtonElement>(
+        "button[type='submit']:not([disabled])"
+      )
+
+      let fallbackSubmit: HTMLButtonElement | null = null
+      const footer = contentEl.querySelector<HTMLElement>(
+        "[data-slot='footer']"
+      )
+      if (footer) {
+        const footerButtons = Array.from(
+          footer.querySelectorAll<HTMLButtonElement>("button:not([disabled])")
+        )
+        if (footerButtons.length > 0) {
+          // Most dialogs render cancel first and primary action last.
+          fallbackSubmit = footerButtons[footerButtons.length - 1]
+        }
+      }
+
+      const submitButton = explicitSubmit ?? nativeSubmit ?? fallbackSubmit
+      if (!submitButton) return
+
+      event.preventDefault()
+      submitButton.click()
+    },
+    [onKeyDown]
+  )
+
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -44,6 +100,7 @@ function DialogContent({
           "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border p-6 shadow-lg duration-200 sm:rounded-lg",
           className
         )}
+        onKeyDown={handleKeyDown}
         {...props}
       >
         {children}

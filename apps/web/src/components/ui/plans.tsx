@@ -3,7 +3,7 @@
 import { cloneElement, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ChevronRight, Info } from "lucide-react"
+import { Check, ChevronRight, Info } from "lucide-react"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -108,6 +108,7 @@ export interface PlansData {
 
 interface PlansProps {
   data: Group[]
+  boostEnabled?: boolean
   messages: {
     billing_cycles: {
       monthly: string
@@ -203,6 +204,7 @@ function getPlanGradient(
 // The Plans component
 const Plans = ({
   data,
+  boostEnabled = false,
   messages,
   gradientStartColor = "#00CCB1",
   gradientEndColor = "#1CA0FB"
@@ -416,7 +418,7 @@ const Plans = ({
                                     : isJanuarySale
                                       ? "border-amber-200 dark:border-amber-900/40 shadow-sm shadow-amber-100/20 dark:shadow-amber-900/10"
                                       : isWelcome
-                                        ? "border-violet-200 dark:border-violet-900/40 shadow-sm shadow-violet-100/20 dark:shadow-violet-900/10"
+                                        ? "border-indigo-200 dark:border-indigo-900/40 shadow-sm shadow-indigo-100/20 dark:shadow-indigo-900/10"
                                         : "border-red-200 dark:border-red-900/40 shadow-sm shadow-red-100/20 dark:shadow-red-900/10"
                                   : ""
                               }`}
@@ -430,7 +432,7 @@ const Plans = ({
                                       isJanuarySale
                                         ? "bg-gradient-to-r from-amber-500 to-yellow-500 dark:from-amber-600 dark:to-yellow-600 shadow-amber-500/20"
                                         : isWelcome
-                                          ? "bg-gradient-to-r from-violet-500 to-purple-500 dark:from-violet-600 dark:to-purple-600 shadow-violet-500/20"
+                                          ? "bg-gradient-to-r from-indigo-500 to-indigo-600 dark:from-indigo-600 dark:to-indigo-700 shadow-indigo-500/20"
                                           : "bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-700 dark:to-rose-700 shadow-red-500/20"
                                     }`}
                                   >
@@ -490,22 +492,39 @@ const Plans = ({
                                 </span>
                               </div>
                               <div className="mb-4">
-                                <div className="flex items-center gap-1">
-                                  <h5 className="text-xl font-bold">
-                                    {plan.resources}
-                                  </h5>
-                                  <button
-                                    onClick={() =>
-                                      handleFAQClick("resource_multipliers")
-                                    }
-                                    className="opacity-60 hover:opacity-100 transition-opacity"
-                                  >
-                                    <Info className="h-4 w-4" />
-                                  </button>
-                                </div>
-                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                  {messages.card.resource_multiplier}
-                                </span>
+                                {boostEnabled ? (
+                                  <>
+                                    <div className="flex items-center gap-1">
+                                      <h5 className="text-xl font-bold">
+                                        Per-App Boost
+                                      </h5>
+                                      <button
+                                        onClick={() =>
+                                          handleFAQClick("resource_multipliers")
+                                        }
+                                        className="opacity-60 hover:opacity-100 transition-opacity"
+                                      >
+                                        <Info className="h-4 w-4" />
+                                      </button>
+                                    </div>
+                                    <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                                      <Check
+                                        className="h-4 w-4 text-emerald-500"
+                                        strokeWidth={3}
+                                      />
+                                      Included
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <h5 className="text-xl font-bold">
+                                      {plan.resources}
+                                    </h5>
+                                    <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                      Resource Multiplier
+                                    </span>
+                                  </>
+                                )}
                               </div>
                               {plan.raid && (
                                 <div className="mb-4">
@@ -578,7 +597,7 @@ const Plans = ({
                                         : isJanuarySale
                                           ? "bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border-amber-100 dark:border-amber-900/40"
                                           : isWelcome
-                                            ? "bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 border-violet-100 dark:border-violet-900/40"
+                                            ? "bg-gradient-to-r from-indigo-50 to-indigo-100 dark:from-indigo-950/30 dark:to-indigo-900/30 border-indigo-100 dark:border-indigo-900/40"
                                             : "bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-red-100 dark:border-red-900/40"
                                     }`}
                                   >
@@ -589,7 +608,7 @@ const Plans = ({
                                           : isJanuarySale
                                             ? "text-amber-700 dark:text-amber-300"
                                             : isWelcome
-                                              ? "text-violet-700 dark:text-violet-300"
+                                              ? "text-indigo-700 dark:text-indigo-300"
                                               : "text-red-700 dark:text-red-300"
                                       }`}
                                     >
@@ -616,7 +635,7 @@ const Plans = ({
                                           : isJanuarySale
                                             ? "text-amber-600 dark:text-amber-400"
                                             : isWelcome
-                                              ? "text-violet-600 dark:text-violet-400"
+                                              ? "text-indigo-600 dark:text-indigo-400"
                                               : "text-red-600 dark:text-red-400"
                                       }`}
                                     >
@@ -635,7 +654,7 @@ const Plans = ({
                                         : isJanuarySale
                                           ? "text-amber-600 dark:text-amber-400"
                                           : isWelcome
-                                            ? "text-violet-600 dark:text-violet-400"
+                                            ? "text-indigo-600 dark:text-indigo-400"
                                             : "text-red-600 dark:text-red-400"
                                     }`}
                                   >

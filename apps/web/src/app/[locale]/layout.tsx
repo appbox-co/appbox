@@ -4,17 +4,16 @@ import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/globals.css"
 import { NextIntlClientProvider } from "next-intl"
 import Script from "next/script"
-import { Analytics } from "@/components/analytics"
-import { PostHogProvider } from "@/components/providers/posthog-provider"
-import { TanstackQueryProvider } from "@/components/providers/query-provider"
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Analytics } from "@/components/marketing/analytics"
+import { MarketingScreenshotMode } from "@/components/marketing/marketing-screenshot-mode"
 import { siteConfig } from "@/config/site"
 import { routing } from "@/i18n/routing"
 import { fontSans } from "@/lib/fonts"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
+import { PostHogProvider } from "@/providers/posthog-provider"
+import { TanstackQueryProvider } from "@/providers/query-provider"
+import { ThemeProvider } from "@/providers/theme-provider"
 import "@/styles/custom-styles.css"
 
 interface AppLayoutProps {
@@ -165,11 +164,7 @@ export default async function RootLayout(props: AppLayoutProps) {
           fontSans.variable
         )}
       >
-        <Script
-          type="text/javascript"
-          src="//embeds.iubenda.com/widgets/03e26262-624c-4f5b-8687-f85ec29afd9f.js"
-          strategy="afterInteractive"
-        />
+        <MarketingScreenshotMode />
         <Script src="/b5tg/" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
@@ -194,17 +189,7 @@ export default async function RootLayout(props: AppLayoutProps) {
             <NextIntlClientProvider messages={messages}>
               <PostHogProvider>
                 <Analytics />
-                <div>
-                  <div className="relative z-10 flex min-h-screen flex-col">
-                    <SiteHeader />
-
-                    <main className="flex-1">{children}</main>
-
-                    <SiteFooter />
-                  </div>
-
-                  <div className="fixed left-0 top-0 size-full bg-linear-to-b from-[#a277ff] via-transparent to-transparent opacity-10" />
-                </div>
+                {children}
               </PostHogProvider>
             </NextIntlClientProvider>
           </TanstackQueryProvider>

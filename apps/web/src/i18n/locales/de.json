@@ -1,18 +1,19 @@
 {
+  "_locale": "de",
   "site": {
     "heading": "Apps in <span>Sekunden</span> deployen",
-    "subheading": "Hosten Sie {flipwords} mit einem Klick",
-    "description": "Überspringen Sie die komplexe Server-Einrichtung. Wählen Sie aus 60+ sofort einsatzbereiten Apps, klicken Sie auf Installieren und sind in Sekunden online. Leistungsstarkes Hosting ohne Kopfschmerzen.",
-    "meta_title": "Appbox - Apps in Sekunden Deployen | Ein-Klick App-Hosting",
+    "subheading": "{flipwords} mit einem Klick hosten",
+    "description": "Kein komplexes Server-Setup mehr. Wähle aus über 60 sofort einsatzbereiten Apps, klicke auf Installieren und du bist in Sekunden live. Leistungsstarkes Hosting ohne Kopfschmerzen.",
+    "meta_title": "Appbox - Apps in Sekunden deployen | One-Click App Hosting",
     "flipwords": [
-      "Websites",
+      "Webseiten",
       "Datenbanken",
-      "Server", 
-      "Übertragungen",
+      "Server",
+      "Transfers",
       "Tools",
       "Chat",
       "Speicher",
-      "Analytics",
+      "Analysen",
       "Monitoring",
       "Pipelines",
       "Netzwerke",
@@ -21,178 +22,216 @@
       "Dokumentation",
       "Tests"
     ],
-    "announcement": "Netzwerk-Upgrade & Black Friday Angebote",
+    "announcement": "The New Dashboard",
+    "announcement_tag": "Launch Day 1",
     "changelog": "Änderungsprotokoll",
-
     "buttons": {
-      "get_started": "Los geht's",
-      "browse_apps": "Apps durchsuchen",
+      "get_started": "Jetzt starten",
+      "browse_apps": "Apps entdecken",
       "toggle_menu": "Menü umschalten",
-      "toggle_language": "Sprache umschalten"
+      "toggle_language": "Sprache wechseln"
     },
-
     "words": {
       "menu": "Menü",
       "docs": "Dokumentation",
       "blog": "Blog"
     },
-
     "featured_cards": {
       "nextjs": {
-        "description": "Erstellt mit Next.js unter Verwendung des App-Routers."
+        "description": "Erstellt mit Next.js und App Router."
       },
-
       "shadcn": {
-        "description": "Auf Basis von Shadcn (site/components)."
+        "description": "Aufgebaut auf Shadcn (Seite/Komponenten)."
       },
-
       "tailwind": {
         "description": "Gestaltet mit Tailwind CSS."
       },
-
       "i18n": {
         "description": "Internationalisierungsunterstützung mit next-intl."
       },
-
       "more": {
-        "title": "und mehr!",
-        "description": "Viele weitere Funktionen wie Dokumente und Blogposts mit MDX, Dunkel- und Hellmodus, Suchbefehlspalette, internationalisierte Sitemap und mehr…"
+        "title": "und vieles mehr!",
+        "description": "Viele weitere Funktionen wie Dokumente und Blogbeiträge mit MDX, Dark- und Light-Modus, Such-Befehlspalette, internationalisierte Sitemap und mehr..."
       }
     },
-
     "footer": {
-      "copyright": "Urheberrecht © {year} Appbox. Alle Rechte vorbehalten."
+      "copyright": "Copyright © {year} Appbox. Alle Rechte vorbehalten."
     },
-
     "search": {
-      "search": "Suche",
+      "search": "Suchen",
       "no_results_found": "Keine Ergebnisse gefunden",
       "search_documentation": "Dokumentation durchsuchen",
-      "type_command_or_search": "Geben Sie einen Befehl oder Suchbegriff ein"
+      "type_command_or_search": "Befehl oder Suche eingeben"
     },
-
     "themes": {
-      "theme": "Thema",
+      "theme": "Design",
       "dark": "Dunkel",
       "light": "Hell",
       "system": "System"
     },
-
     "apps_section": {
-      "title": "Riesige Sammlung einsatzbereiter Anwendungen",
-      "description": "Hosten Sie alles von Datenbanken und Medienservern bis hin zu Entwicklungstools und Kommunikationsplattformen - setzen Sie Unternehmenssoftware mit nur wenigen Klicks ein"
+      "title": "Umfangreiche App-Sammlung zum Sofortdeployment",
+      "description": "Hoste alles von Datenbanken und Mediaservern bis hin zu Entwicklungstools und Kommunikationsplattformen – deploye Enterprise-Software mit wenigen Klicks"
     },
-
+    "dashboard_promo": {
+      "headline_1": "Das neue Dashboard.",
+      "headline_2": "Für euch gebaut.",
+      "description": "Ein komplett überarbeitetes Control Panel mit einheitlichem Dashboard, integriertem App Store und integrierter Zwei-Faktor-Authentifizierung. Schneller navigieren, leichter verstehen, bereit für alles, was kommt.",
+      "cta": "Zur vollständigen Ankündigung",
+      "features": {
+        "dashboard": {
+          "title": "Control Center.",
+          "description": "Blog-Updates, Service-Karten, Benachrichtigungen und neueste Apps, alles in einer operativen Ansicht."
+        },
+        "appstore": {
+          "title": "App Store.",
+          "description": "Klareres Browsen, bessere Detailseiten und ein kürzerer Weg von Entdeckung zu Installation."
+        },
+        "security": {
+          "title": "Zwei-Faktor-Auth.",
+          "description": "Integrierte 2FA mit Recovery Codes. In Sekunden im Konto aktivierbar."
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "Neu",
+      "headline_1": "VPS-Hosting.",
+      "headline_2": "Ein Klick.",
+      "description": "Deploye vollwertige Linux-VPS neben deinen Apps. Root-Zugriff, dedizierte Ressourcen und die Möglichkeit zum Boosten, alles direkt in Appbox.",
+      "description_combined": "Deploye Linux- und Windows-VPS neben deinen Apps. Root-Zugriff, Remote Desktop, dedizierte Ressourcen, alles direkt in Appbox.",
+      "group_label": "Linux VPS",
+      "cta": "VPS durchsuchen",
+      "features": {
+        "f1": { "title": "Voller Root-Zugriff", "description": "Komplette Kontrolle per SSH" },
+        "f2": { "title": "Skalierbare Ressourcen", "description": "RAM & CPU pro App boosten" },
+        "f3": { "title": "One-Click-Deploy", "description": "Ubuntu, Debian & mehr" }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "Neu",
+      "headline_1": "Windows-VPS.",
+      "headline_2": "Überall.",
+      "group_label": "Windows VPS",
+      "description": "Betreibe Windows Server auf deiner Appbox mit vollem Remote-Desktop-Zugriff. Perfekt für Windows-Anwendungen, Game-Server und Remote-Arbeitsplätze.",
+      "cta": "Windows-Apps durchsuchen",
+      "features": {
+        "f1": { "title": "Remote Desktop", "description": "Volle GUI von jedem Browser" },
+        "f2": { "title": "Windows Server", "description": "Jede Windows-Anwendung ausführen" },
+        "f3": { "title": "Ressourcen-Boost", "description": "Mehr Leistung nach Bedarf zuweisen" }
+      }
+    },
     "features": {
       "section": {
-        "title": "Leistungsstarke Funktionen für Alle",
-        "description": "Erleben Sie die volle Leistung Ihrer Appbox mit Funktionen, die sowohl für Anfänger als auch für Experten konzipiert sind"
+        "title": "Leistungsstarke Funktionen für alle",
+        "description": "Erlebe die volle Leistung deiner Appbox mit Funktionen, die sowohl für Einsteiger als auch für Experten entwickelt wurden"
       },
       "root_access": {
         "title": "Vollständiger Root-Zugriff",
-        "description": "Setzen Sie vollständige Betriebssystem-Apps wie Debian und Ubuntu mit SSH-Zugriff ein und erhalten Sie vollständige Kontrolle über Ihre Umgebung."
+        "description": "Deploye vollständige OS-Apps wie Debian und Ubuntu mit SSH-Zugriff und habe die vollständige Kontrolle über deine Umgebung."
       },
       "remote_desktop": {
         "title": "Remote Desktop",
-        "description": "Führen Sie UI-Anwendungen auf unseren Servern mit vollständigem Remote-Desktop-Zugriff auf Betriebssystem-Apps aus und bringen Sie Desktop-Erlebnisse in die Cloud."
+        "description": "Führe UI-Anwendungen auf unseren Servern mit vollständigem Remote-Desktop-Zugriff auf OS-Apps aus und bringe Desktop-Erlebnisse in die Cloud."
       },
       "one_click": {
-        "title": "Echte Ein-Klick-Installation",
-        "description": "Konfigurieren Sie alles während der Installation mit unseren optimierten Einrichtungsformularen - keine zusätzliche Konfiguration nach der Bereitstellung erforderlich."
+        "title": "Echte One-Click-Installationen",
+        "description": "Konfiguriere alles während der Installation mit unseren übersichtlichen Setup-Formularen – nach dem Deployment ist keine weitere Konfiguration erforderlich."
       },
       "community": {
         "title": "Aktive Community",
-        "description": "Treten Sie unserem florierenden Ökosystem bei, mit Community-App-Einreichungen, Dokumentationsbeiträgen und einem Open-Source-Webclient."
+        "description": "Werde Teil unseres lebendigen Ökosystems mit Community-App-Einreichungen, Dokumentationsbeiträgen und einem Open-Source-Webclient."
       },
       "security": {
         "title": "Sicherheit & Datenschutz",
-        "description": "Bei Appbox nehmen wir Sicherheit und Datenschutz ernst. Alle Apps laufen in separaten Namespaces ohne Root-Zugriff, was eine vollständige Isolierung zwischen Anwendungen gewährleistet. Unsere Infrastruktur ist mit einem Security-First-Ansatz konzipiert - von gehärteten Kerneln bis hin zu regelmäßigen Sicherheitsaudits. Für verbesserten Datenschutz ermöglicht unsere VPN-App, Ihren gesamten Datenverkehr über Ihre Appbox zu leiten, um sicherzustellen, dass Ihre Online-Aktivitäten privat und sicher bleiben. Mit Appbox erhalten Sie Sicherheitsfunktionen auf Unternehmensniveau in einem benutzerfreundlichen Paket."
+        "description": "Bei Appbox nehmen wir Sicherheit und Datenschutz ernst. Alle Apps laufen in separaten Namespaces ohne Root-Zugriff, was eine vollständige Isolation zwischen Anwendungen gewährleistet. Unsere Infrastruktur ist nach dem Security-First-Prinzip konzipiert – von gehärteten Kerneln bis hin zu regelmäßigen Sicherheitsaudits. Für erhöhten Datenschutz ermöglicht unsere VPN-App, den gesamten Datenverkehr über deine Appbox zu leiten und so deine Online-Aktivitäten privat und sicher zu halten."
       },
       "deploy_fast": {
-        "title": "Blitzschnelle Bereitstellung",
-        "description": "Mit unserer blitzschnellen, hochmodernen Hardware müssen Sie nicht auf die Installation Ihrer Apps warten."
+        "title": "In Sekunden deployen",
+        "description": "Mit unserer blitzschnellen, hochmodernen Hardware musst du nicht auf die Installation deiner Apps warten."
       },
       "custom_hardware": {
-        "title": "Maßgeschneiderte Hardware",
+        "title": "Eigene Hardware",
         "description": "Wir haben mit Branchenexperten zusammengearbeitet, um unsere eigene Hardware-Infrastruktur zu entwickeln, die Datenschutz, Sicherheit und optimale Leistung gewährleistet."
       },
       "custom_network": {
         "title": "Eigenes Netzwerk",
-        "description": "Wir besitzen unsere gesamte Netzwerkausrüstung und haben die Flexibilität, mit Netzwerken unserer Wahl zu peeren, was Ihre Verbindung viel schneller macht."
+        "description": "Wir besitzen alle unsere Netzwerkgeräte, was uns die Flexibilität gibt, mit Netzwerken unserer Wahl zu peeren und deine Verbindung deutlich schneller zu machen."
       },
       "support": {
-        "title": "Experten-Support",
-        "description": "Wir bieten Support über Tickets an, die nur von führenden Branchenexperten beantwortet werden."
+        "title": "Expertenunterstützung",
+        "description": "Wir bieten Support über Tickets an, die ausschließlich von branchenführenden Experten beantwortet werden."
       },
       "documentation": {
-        "title": "Umfassende Dokumentation",
-        "description": "Unser Open-Source-Dokumentationssystem ermöglicht Benutzerbeiträge und schafft eine umfangreiche, wertvolle Ressource, die ständig wächst."
+        "title": "Übersichtliche Dokumentation",
+        "description": "Unser Open-Source-Dokumentationssystem ermöglicht es Nutzern, Beiträge zu leisten und eine umfangreiche und wertvolle Ressource zu schaffen, die ständig wächst."
       }
     },
-
     "faq": {
       "section": {
         "title": "Häufig gestellte Fragen",
-        "description": "Finden Sie Antworten auf unsere häufigsten Fragen und entdecken Sie, wie Appbox Ihnen nutzen kann."
+        "description": "Finde Antworten auf unsere häufigsten Fragen und erfahre, wie Appbox dir nutzen kann."
       },
       "questions": {
         "payment_methods": {
-          "title": "Welche Zahlungsmethoden akzeptieren Sie?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten mehrere Zahlungsoptionen an, um Ihren Einkauf so reibungslos wie möglich zu gestalten:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Debit-/Kreditkarten<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (einschließlich Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Kryptowährungen<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">Wir bieten auch flexible Abrechnungszyklen an – monatlich, vierteljährlich, halbjährlich oder jährlich. Wenn Sie weitere Optionen wünschen, teilen Sie uns dies bitte mit.</p>"
+          "title": "Welche Zahlungsmethoden akzeptiert ihr?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten mehrere Zahlungsmöglichkeiten an, um deinen Kauf so reibungslos wie möglich zu gestalten:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Debit-/Kreditkarten<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (inkl. Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Kryptowährungen<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">Wir bieten außerdem flexible Abrechnungszyklen – monatlich, vierteljährlich, halbjährlich oder jährlich. Falls du weitere Optionen wünschst, lass es uns einfach wissen.</p>"
         },
         "deployment_time": {
           "title": "Wie schnell erhalte ich meine Appbox?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Sobald Ihre Zahlung bestätigt ist, stellt unser automatisiertes System Ihre Appbox sofort bereit. Alle Apps, die Sie beim Checkout ausgewählt haben, werden ebenfalls sofort eingerichtet, sodass Sie sie ohne Verzögerung nutzen können.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Sobald deine Zahlung bestätigt wurde, stellt unser automatisiertes System deine Appbox sofort bereit. Alle Apps, die du beim Checkout ausgewählt hast, werden ebenfalls sofort eingerichtet, sodass du sie ohne Verzögerung nutzen kannst.</p>"
         },
         "server_location": {
-          "title": "Wo befinden sich Ihre Server?",
+          "title": "Wo befinden sich eure Server?",
           "content": "<p class=\"mb-4 leading-relaxed\">Unsere Server befinden sich in dedizierten Racks im AMS5-Rechenzentrum in Amsterdam, Niederlande, und gewährleisten erstklassige Leistung und Zuverlässigkeit.</p>"
         },
         "root_access": {
-          "title": "Bieten Sie Root-Zugriff an?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Während unser App Store den Installationsprozess für Anwendungen vereinfacht, bieten wir auch Ubuntu- und Debian-Apps mit vollem Root-Zugriff an, wenn Sie vollständige Kontrolle benötigen.</p><p class=\"mb-4 leading-relaxed\">Bitte beachten Sie, dass Docker und Apps, die bestimmte Kernel-Module oder systemd benötigen, aufgrund von Sicherheitsrichtlinien nicht unterstützt werden. Wir entwickeln jedoch Optionen für virtuelle Maschinen, um Ihnen zu helfen, diese Einschränkungen zu umgehen.</p>"
+          "title": "Bietet ihr Root-Zugriff an?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Während unser App Store den Installationsprozess vereinfacht, bieten wir auch Ubuntu- und Debian-Apps mit vollständigem Root-Zugriff an, wenn du die vollständige Kontrolle benötigst.</p><p class=\"mb-4 leading-relaxed\">Bitte beachte, dass Docker und Apps, die bestimmte Kernel-Module oder systemd benötigen, aufgrund von Sicherheitsrichtlinien nicht unterstützt werden. Wir entwickeln jedoch Virtual-Machine-Optionen, um diese Einschränkungen zu umgehen.</p>"
         },
         "security": {
-          "title": "Welche Sicherheitsfunktionen bieten Sie an?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Wir nehmen Sicherheit ernst und implementieren mehrere Schutzebenen, um Ihre Daten zu schützen:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Jede Appbox läuft in ihrer eigenen Sandbox, um Ihre Daten zu isolieren</li><li>Alle Verbindungen nutzen HTTPS und verschlüsseln Daten während der Übertragung</li><li>Unbegrenzte VPN-Konten (für qualifizierte Pakete) ermöglichen es Ihnen, Ihren Datenverkehr über Appbox zu leiten</li><li>Tägliche Löschung von Protokollen (FTP, SSH, HTTP, VPN usw.) für zusätzlichen Datenschutz</li></ul>"
+          "title": "Welche Sicherheitsfunktionen bietet ihr an?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir nehmen Sicherheit ernst und implementieren mehrere Schutzebenen zum Schutz deiner Daten:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Jede Appbox läuft in ihrer eigenen Sandbox, um deine Daten zu isolieren</li><li>Alle Verbindungen nutzen HTTPS und verschlüsseln Daten bei der Übertragung</li><li>Unbegrenzte VPN-Konten (für qualifizierende Pakete) ermöglichen es dir, deinen Datenverkehr über Appbox zu leiten</li><li>Tägliche Log-Löschung (FTP, SSH, HTTP, VPN usw.) für zusätzlichen Datenschutz</li></ul>"
         },
         "data_access": {
-          "title": "Wie kann ich von meinem Computer auf meine Appbox-Daten zugreifen?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten mehrere bequeme Möglichkeiten, Ihre Appbox-Dateien und -Medien zu verwalten:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Verwenden Sie Synchronisierungs-Apps wie Resilio oder Syncthing, um Dateien automatisch aktuell zu halten.</li><li>Streamen Sie Medien von überall mit Plex, Navidrome oder ähnlichen Apps.</li><li>Laden Sie Dateien sicher mit FTP über TLS, HTTPS oder anderen Protokollen herunter.</li></ul><p class=\"mb-4 leading-relaxed\">Der App Store enthält verschiedene Apps, die Ihnen helfen, mit Ihren Daten auf die für Sie am besten geeignete Weise in Verbindung zu bleiben.</p>"
+          "title": "Wie kann ich von meinem Computer aus auf meine Appbox-Daten zugreifen?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten mehrere komfortable Möglichkeiten zur Verwaltung deiner Appbox-Dateien und Medien:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Verwende Sync-Apps wie Resilio oder Syncthing, um Dateien automatisch aktuell zu halten.</li><li>Streame Medien von überall mit Plex, Navidrome oder ähnlichen Apps.</li><li>Lade Dateien sicher über FTP über TLS, HTTPS oder andere Protokolle herunter.</li></ul><p class=\"mb-4 leading-relaxed\">Der App Store enthält verschiedene Apps, die dir helfen, auf die für dich am besten geeignete Weise mit deinen Daten verbunden zu bleiben.</p>"
         },
         "additional_software": {
           "title": "Kann ich Software installieren, die nicht im App Store verfügbar ist?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Auf jeden Fall. Unsere Betriebssystem-Apps ermöglichen es Ihnen, benutzerdefinierte Software zu installieren, und einige verfügen sogar über eine Remote-Desktop-Schnittstelle für ein vollständiges grafisches Erlebnis. Dies gibt Ihnen vollständige Freiheit, die Tools und Anwendungen auszuführen, die Sie benötigen.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Absolut. Unsere OS-Apps ermöglichen die Installation benutzerdefinierter Software, und einige verfügen sogar über eine Remote-Desktop-Oberfläche für ein vollständiges grafisches Erlebnis. So hast du die vollständige Freiheit, die Tools und Anwendungen auszuführen, die du benötigst.</p>"
         },
         "fuse_rclone": {
-          "title": "Erlauben Sie FuSE-Mounts oder Rclone?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Unsere Betriebssystem-Apps unterstützen FuSE vollständig, und wir bieten eine dedizierte Rclone-App im App Store für schnelle und einfache Cloud-Speicher-Integration an.</p>"
+          "title": "Erlaubt ihr FuSE-Mounts oder Rclone?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Unsere OS-Apps unterstützen FuSE vollständig, und wir bieten eine dedizierte Rclone-App im App Store für eine schnelle und einfache Cloud-Speicher-Integration an.</p>"
         },
         "refund_policy": {
-          "title": "Wie lautet Ihre Rückerstattungsrichtlinie?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten Neukunden ein 7-tägiges anteiliges Rückerstattungsfenster. Für Bestandskunden gelten unterschiedliche Kriterien für Rückerstattungen. Zahlungen mit Kryptowährungen, Käufe von dedizierten IP-Adressen und bestimmte andere Transaktionen sind nicht erstattungsfähig. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Lesen Sie unsere vollständige Rückerstattungsrichtlinie</a> für alle Details.</p>"
+          "title": "Was ist eure Rückerstattungsrichtlinie?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Wir bieten neuen Kunden ein 7-tägiges anteiliges Rückerstattungsfenster. Für Bestandskunden gelten andere Anspruchskriterien. Zahlungen mit Kryptowährungen, Käufe dedizierter IP-Adressen und bestimmte andere Transaktionen sind nicht erstattungsfähig. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Vollständige Rückerstattungsrichtlinie ansehen</a> für alle Details.</p>"
         },
         "custom_domain": {
           "title": "Kann ich meinen eigenen Domainnamen verwenden?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Sie können Ihre eigene Domain zuordnen und Subdomains für jede Anwendung einrichten. Fügen Sie einfach einen A-Eintrag in Ihrem DNS hinzu, der auf Ihre Appbox verweist, und wir kümmern uns um den Rest, um Sie reibungslos in Betrieb zu nehmen.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Du kannst deine eigene Domain zuordnen und Subdomains für jede Anwendung einrichten. Füge einfach einen A-Eintrag in deinem DNS hinzu, der auf deine Appbox zeigt, und wir kümmern uns um den Rest, damit du reibungslos loslegen kannst.</p>"
         },
         "upgrade_after_purchase": {
-          "title": "Kann ich nach dem Kauf ein Upgrade durchführen?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja, wir übertragen automatisch alles von Ihrem alten Plan auf Ihren neuen Plan.</p><p class=\"mb-4 leading-relaxed\">Alles bleibt gleich, Sie werden den Unterschied kaum bemerken. Das Einzige, was sich ändern könnte, sind bestimmte Portnummern, wenn Sie direkt über eine Portnummer auf eine App zugreifen, zum Beispiel FTP.</p>"
+          "title": "Kann ich nach dem Kauf upgraden?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, wir übertragen automatisch alles von deinem alten Plan auf deinen neuen Plan.</p><p class=\"mb-4 leading-relaxed\">Alles bleibt gleich, du wirst es kaum bemerken. Das Einzige, was sich ändern kann, sind bestimmte Portnummern, wenn du direkt über eine Portnummer auf eine App zugreifst, z. B. FTP.</p>"
         },
         "resource_multipliers": {
-          "title": "Was sind Ressourcen-Multiplikatoren?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Jede App hat Basis-Ressourcen zugewiesen, die auf der durchschnittlichen Nutzung durch Benutzer in den vergangenen Jahren basieren.</p><p class=\"mb-4 leading-relaxed\">Zum Beispiel hat PufferPanel Minecraft Management 10GB RAM, 20 CPUs und 12 App-Slots zugewiesen.</p><p class=\"mb-4 leading-relaxed\">Wenn Sie einen Plan mit einem höheren Ressourcen-Multiplikator kaufen, werden die RAM- und CPU-Ressourcen für jede App erhöht, während die App-Slots gleich bleiben.</p><p class=\"mb-4 leading-relaxed\">Zum Beispiel, wenn Sie einen NG-3500 mit einem 1x Ressourcen-Multiplikator gekauft haben, würde Ihrer PufferPanel-App aus dem obigen Beispiel 10GB RAM, 20 CPUs und 12 App-Slots zugewiesen.</p><p class=\"mb-4 leading-relaxed\">Wenn Sie jedoch einen NG-18000 mit einem 2x Ressourcen-Multiplikator gekauft haben, würde der PufferPanel-App 20GB RAM, 40 CPUs und immer noch 12 App-Slots zugewiesen (nur RAM und CPUs werden mit 2 multipliziert).</p><p class=\"mb-4 leading-relaxed\"><strong>Hinweis: Ressourcen-Multiplikatoren gelten nicht für VPS-Apps, diese haben statische Ressourcen.</strong></p><p class=\"mb-4 leading-relaxed\">Sie können den aktuellen Ressourcen-Multiplikator für jede App auf ihrer Installierten App-Seite einsehen, die Sie über den <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a> Link erreichen können.</p>"
+          "title": "Wie funktioniert Per-App-Boost?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Jede App startet mit Basis-RAM und Basis-CPU, abhängig von der gewählten Version. Per-App-Boost ermöglicht es dir, diese Ressourcen für einzelne Apps zu erhöhen, indem du zusätzliche App-Slots einsetzt.</p><p class=\"mb-4 leading-relaxed\">Jeder Boost-Slot fügt +10% Ressourcen für die jeweilige App hinzu. Du entscheidest, welche Apps mehr Leistung bekommen, und kannst den Boost jederzeit anpassen.</p><p class=\"mb-4 leading-relaxed\">Per-App-Boost ist in allen Plänen enthalten. Du kannst ihn beim Installieren oder auf der Installierte-App-Seite im <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a> konfigurieren.</p>"
         },
         "excluded_app_categories": {
           "title": "Was sind ausgeschlossene App-Kategorien?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Einige Pläne haben Einschränkungen für bestimmte App-Kategorien, die nicht auf ihnen installiert werden können. Diese werden \"Ausgeschlossene App-Kategorien\" genannt.</p><p class=\"mb-4 leading-relaxed\">Bei der Ansicht unserer Preispläne sehen Sie ausgeschlossene Kategorien als anklickbare Badges unter Plänen aufgelistet, die Einschränkungen haben. Dies hilft Ihnen zu verstehen, welche Arten von Apps auf diesem bestimmten Plan nicht verfügbar sein werden.</p><p class=\"mb-4 leading-relaxed\">Sie können auf jedes ausgeschlossene Kategorie-Badge klicken, um alle Apps in dieser Kategorie anzuzeigen, sodass Sie genau wissen, welche Anwendungen auf diesem Plan nicht installierbar wären.</p><p class=\"mb-4 leading-relaxed\">Wenn Sie Zugang zu Apps in einer ausgeschlossenen Kategorie benötigen, ziehen Sie die Wahl eines höherwertigen Plans in Betracht, der diese Einschränkungen nicht hat.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Einige Pläne haben Einschränkungen für bestimmte App-Kategorien, die nicht auf ihnen installiert werden können. Diese werden als \"Ausgeschlossene App-Kategorien\" bezeichnet.</p><p class=\"mb-4 leading-relaxed\">Wenn du unsere Preispläne ansiehst, siehst du ausgeschlossene Kategorien als anklickbare Badges unter Plänen mit Einschränkungen aufgelistet. Dies hilft dir zu verstehen, welche App-Typen für diesen bestimmten Plan nicht verfügbar sind.</p><p class=\"mb-4 leading-relaxed\">Du kannst auf einen beliebigen ausgeschlossenen Kategorie-Badge klicken, um alle Apps in dieser Kategorie anzuzeigen, sodass du genau weißt, welche Anwendungen auf diesem Plan nicht installierbar wären.</p><p class=\"mb-4 leading-relaxed\">Wenn du Zugang zu Apps in einer ausgeschlossenen Kategorie benötigst, erwäge einen höheren Plan zu wählen, der diese Einschränkungen nicht hat.</p>"
+        },
+        "vps": {
+          "title": "Wie bekomme ich einen VPS?",
+          "content": "<p class=\"mb-4 leading-relaxed\">VPS-Apps sind im <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">App Store</a> verfügbar, genau wie jede andere App. Wähle eine Linux- oder Windows-Distribution, installiere sie auf deiner Appbox und sie läuft neben deinen anderen Apps.</p><p class=\"mb-4 leading-relaxed\">Du kannst deinem VPS mit Per-App-Boost zusätzliche Ressourcen zuweisen und ihm mehr RAM und CPU geben, indem du zusätzliche App-Slots einsetzt. So kannst du deinen VPS optimal dimensionieren, ohne deinen gesamten Plan zu upgraden.</p>"
         }
       }
     },
-
     "navigation": {
-      "product": "Produkte",
+      "product": "Produkt",
       "resources": "Ressourcen",
       "pricing": "Preise",
       "features": "Funktionen",
@@ -202,147 +241,862 @@
       "faq": "FAQ",
       "service_status": "Dienststatus",
       "overview": "Übersicht der Funktionen",
-      "view_pricing": "Preispläne anzeigen",
+      "view_pricing": "Unsere Preispläne ansehen",
       "explore_apps": "Unsere Apps erkunden",
       "read_docs": "Dokumentation lesen",
       "latest_articles": "Neueste Artikel und Nachrichten",
       "faq_description": "Häufig gestellte Fragen",
-      "check_status": "Überprüfen Sie unseren Dienststatus"
+      "check_status": "Unseren Dienststatus prüfen",
+      "vps": "VPS",
+      "explore_vps": "VPS-Apps durchsuchen"
     },
-
     "external_links": {
       "billing": "Abrechnung",
-      "control_panel": "Kontrollpanel"
+      "control_panel": "Kontrollzentrum"
     }
   },
-
   "docs": {
     "on_this_page": "Auf dieser Seite",
     "edit_page_on_github": "Diese Seite auf GitHub bearbeiten",
-    "start_discussion_on_github": "Eine Diskussion auf GitHub starten",
+    "start_discussion_on_github": "Diskussion auf GitHub starten",
     "api_reference": "API-Referenz",
     "docs": "Dokumentation",
-    "source": "Quellcode",
-
+    "source": "Quelle",
     "not_found": {
       "description": "Das gesuchte Dokument existiert nicht.",
       "title": "Dokument nicht gefunden"
     },
-    "index_description": "Hier finden Sie Dokumentation zur Nutzung von Appbox, wie Sie zum Projekt beitragen können und vieles mehr.",
+    "index_description": "Finde Dokumentation zur Nutzung von Appbox, zum Beitragen zum Projekt und vieles mehr.",
     "index": {
       "title": "Dokumentation",
-      "section": "Bereich",
+      "section": "Abschnitt",
       "description": "Beschreibung",
       "documents": "Dokumente",
-      "view": "Ansehen"
+      "view": "Anzeigen"
     },
-    "meta_description": "Erfahren Sie, wie Sie Appbox mit unserer umfassenden Dokumentation nutzen. Finden Sie Anleitungen, Tutorials und API-Referenzen, um das Beste aus Ihrem Hosting herauszuholen."
+    "meta_description": "Lerne die Nutzung von Appbox mit unserer umfassenden Dokumentation. Finde Anleitungen, Tutorials und API-Referenzen, um das Beste aus deinem Hosting herauszuholen."
   },
-
   "blog": {
     "words": {
       "posts": "Beiträge",
       "by": "von"
     },
-
     "cards": {
       "min_read": "Min. Lesezeit"
     },
-
     "buttons": {
       "next": "Weiter",
       "previous": "Zurück",
       "rss_feed": "RSS-Feed",
-      "read_more": "mehr lesen",
-      "go_to_next_page": "Zur nächsten Seite gehen",
-      "go_to_previous_page": "Zur vorherigen Seite gehen"
+      "read_more": "Weiterlesen",
+      "go_to_next_page": "Nächste Seite",
+      "go_to_previous_page": "Vorherige Seite"
     },
-    "meta_description": "Lesen Sie die neuesten Nachrichten, Updates und Tutorials vom Appbox-Team. Bleiben Sie informiert über neue Funktionen, App-Veröffentlichungen und Hosting-Tipps."
+    "meta_description": "Lies die neuesten Nachrichten, Updates und Tutorials vom Appbox-Team. Bleibe über neue Funktionen, App-Veröffentlichungen und Hosting-Tipps informiert."
   },
-
   "plans": {
     "billing_cycles": {
       "monthly": "Monatlich",
       "quarterly": "Vierteljährlich",
       "semiannually": "Halbjährlich",
       "annually": "Jährlich",
-      "billed_every": "Abgerechnet alle [cycle]"
+      "billed_every": "Abgerechnet [cycle]"
     },
     "card": {
       "storage": "Speicher",
       "traffic": "Traffic",
-      "app_slots": "App-Slots",
+      "app_slots": "App Slots",
       "connection_speed": "Verbindungsgeschwindigkeit",
-      "resource_multiplier": "Ressourcen-Multiplikator",
+      "resource_multiplier": "Per-App Boost",
       "raid": "RAID",
       "disks": "Festplatten",
       "per_month": "/Monat",
       "order_now": "Jetzt bestellen",
-      "billed_as": "Abgerechnet",
+      "billed_as": "Abgerechnet als",
       "excluded_app_categories": "Ausgeschlossene App-Kategorien"
     }
   },
-
   "apps": {
     "title": "App-Bibliothek",
-    "description": "Erkunden Sie unsere riesige Sammlung von einsatzbereiten Apps",
-    "meta_description": "Durchsuchen Sie 60+ einsatzbereite Apps, darunter Datenbanken, Medienserver, Entwicklungstools und mehr. Ein-Klick-Installation mit Appbox-Hosting.",
+    "description": "Entdecke unsere umfangreiche Sammlung sofort einsetzbarer Apps",
+    "meta_description": "Durchsuche über 60 sofort einsatzbereite Apps, darunter Datenbanken, Mediaserver, Entwicklertools und mehr. One-Click-Installation mit Appbox Hosting.",
     "loading": "Apps werden geladen...",
-    "error": "Fehler beim Laden der Apps",
-    "no_results": "Keine Apps entsprechen Ihren Suchkriterien",
-    
+    "error": "Apps konnten nicht geladen werden",
+    "no_results": "Keine Apps entsprechen deinen Suchkriterien",
+    "back_to_apps": "Zurück zu Apps",
+    "app_not_found": "Die angeforderte App konnte nicht gefunden werden",
     "search": {
       "title": "Suche",
-      "description": "Finden Sie die perfekte App für Ihre Bedürfnisse",
-      "name_search": "Nach Namen suchen",
+      "description": "Finde die perfekte App für deine Bedürfnisse",
+      "name_search": "Nach Name suchen",
       "name_placeholder": "App-Name oder Stichwort",
       "category": "Kategorie",
       "all_categories": "Alle Kategorien",
-      "app_slots": "App-Slots",
-      "app_slots_placeholder": "Beliebige App-Slots",
+      "app_slots": "App Slots",
+      "app_slots_placeholder": "Beliebige App Slots",
       "sort_by": "Sortieren nach",
       "sort_popularity": "Beliebtheit",
       "sort_name": "Name (A-Z)",
       "sort_date": "Kürzlich hinzugefügt",
       "reset_filters": "Filter zurücksetzen"
     },
-    
     "card": {
-      "app_slots": "App-Slots",
-      "view_details": "Details anzeigen"
+      "app_slots": "App Slots",
+      "view_details": "Details ansehen"
     },
-    
     "detail": {
       "by": "von",
       "description": "Beschreibung",
       "app_info": "App-Informationen",
       "version": "Version",
-      "app_slots": "App-Slots",
+      "app_slots": "App Slots",
       "released": "Veröffentlicht",
-      "developer_site": "Entwickler-Website",
-      "visit_site": "Website besuchen",
-      "deploy_app": "Diese App deployen",
+      "developer_site": "Entwicklerseite",
+      "visit_site": "Seite besuchen",
+      "deploy_app": "App deployen",
       "community_ratings": "Community-Bewertungen",
-      "upvotes": "Gefällt mir",
-      "downvotes": "Gefällt mir nicht",
+      "upvotes": "Upvotes",
+      "downvotes": "Downvotes",
       "no_ratings_yet": "Noch keine Bewertungen",
       "deploy_dialog": {
-        "title": "App Deployen",
-        "question": "Haben Sie eine Appbox?",
+        "title": "App deployen",
+        "question": "Hast du eine Appbox?",
         "yes": "Ja, ich habe eine Appbox",
         "no": "Nein, ich brauche eine"
       }
     }
   },
-
   "home": {
     "connections_section": {
-      "title": "Verbundenes App-Ökosystem",
-      "description": "Jede App hat Dateisystemzugriff auf gemeinsame Teile anderer Apps, alle miteinander verbunden über eine sichere lokale Netzwerkbrücke."
+      "title": "Vernetztes App-Ökosystem",
+      "description": "Jede App hat Dateisystemzugriff auf gemeinsame Teile anderer Apps, alle über eine sichere lokale Netzwerkbrücke miteinander verbunden."
     }
   },
   "policies": {
     "title": "Richtlinien",
-    "meta_description": "Lesen Sie die Appbox-Richtlinien einschließlich Nutzungsbedingungen, Datenschutzrichtlinie, Rückerstattungsrichtlinie und mehr. Verstehen Sie Ihre Rechte und unsere Verpflichtungen."
+    "meta_description": "Lies die Appbox-Richtlinien, einschließlich Nutzungsbedingungen, Datenschutzrichtlinie, Rückerstattungsrichtlinie und mehr. Verstehe deine Rechte und unsere Verpflichtungen."
+  },
+  "auth": {
+    "login": {
+      "title": "Willkommen zurück",
+      "description": "Melde dich bei deinem Appbox-Konto an",
+      "email_label": "E-Mail",
+      "email_placeholder": "du@beispiel.de",
+      "email_error": "Bitte gib eine gültige E-Mail-Adresse ein",
+      "password_label": "Passwort",
+      "password_placeholder": "Passwort eingeben",
+      "password_error": "Passwort ist erforderlich",
+      "forgot_password": "Passwort vergessen?",
+      "submit": "Anmelden",
+      "external_signup": "Neu bei Appbox? Starte unter",
+      "error_invalid": "Ungültige E-Mail oder Passwort",
+      "error_generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "success": "Erfolgreich angemeldet",
+      "2fa_title": "Zwei-Faktor-Authentifizierung",
+      "2fa_description": "Gib den 6-stelligen Code aus deiner Authentifikator-App ein",
+      "2fa_code_label": "Bestätigungscode",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "Code muss 6 Stellen haben",
+      "2fa_submit": "Bestätigen",
+      "2fa_back": "Zurück zur Anmeldung",
+      "error_2fa_invalid": "Ungültiger Bestätigungscode"
+    },
+    "branding": {
+      "tagline": "Deine Cloud, deine Regeln",
+      "subtitle": "Deploye und verwalte leistungsstarke Anwendungen auf souveräner Infrastruktur, die wir besitzen und betreiben.",
+      "apps_count": "60+ sofort einsatzbereite Apps",
+      "one_click": "One-Click-Installation",
+      "network_speed": "10-Gbit/s-Netzwerk",
+      "always_secure": "Immer sicher",
+      "categories_label": "App-Kategorien",
+      "category_cloud": "Cloud",
+      "category_cms": "CMS",
+      "category_databases": "Datenbanken",
+      "category_music": "Musik",
+      "category_storage": "Speicher",
+      "category_gaming": "Gaming",
+      "category_development": "Entwicklung",
+      "category_virtual_servers": "Virtuelle Server"
+    },
+    "forgot": {
+      "title": "Passwort vergessen",
+      "description": "Gib deine E-Mail ein und wir senden dir einen Reset-Link",
+      "email_label": "E-Mail",
+      "email_placeholder": "du@beispiel.de",
+      "email_error": "Bitte gib eine gültige E-Mail-Adresse ein",
+      "submit": "Reset-Link senden",
+      "back_to_login": "Zurück zur Anmeldung",
+      "error_generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "success": "Reset-Link gesendet! Überprüfe deine E-Mails."
+    },
+    "reset": {
+      "title": "Passwort zurücksetzen",
+      "description": "Gib dein neues Passwort ein",
+      "password_label": "Neues Passwort",
+      "password_placeholder": "Neues Passwort eingeben",
+      "password_error": "Passwort muss mindestens 8 Zeichen lang sein",
+      "confirm_password_label": "Passwort bestätigen",
+      "confirm_password_placeholder": "Neues Passwort bestätigen",
+      "confirm_password_error": "Passwörter stimmen nicht überein",
+      "submit": "Passwort zurücksetzen",
+      "error_generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "success": "Passwort erfolgreich zurückgesetzt!"
+    },
+    "email_sent": {
+      "title": "Überprüfe deine E-Mails",
+      "description": "Wir haben dir eine E-Mail mit weiteren Anweisungen gesendet",
+      "check_inbox": "Falls du die E-Mail nicht siehst, überprüfe deinen Spam-Ordner. Der Link läuft in 24 Stunden ab.",
+      "back_to_login": "Zurück zur Anmeldung"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "appstore": "App Store",
+      "appboxes": "Appboxes",
+      "installed_apps": "Installierte Apps",
+      "domains": "Eigene Domains",
+      "account": "Konto",
+      "profile": "Profil",
+      "abuse_reports": "Missbrauchsmeldungen",
+      "two_factor": "Zwei-Faktor-Auth",
+      "service_status": "Dienststatus",
+      "support_billing": "Support & Abrechnung",
+      "add_appbox": "Appbox hinzufügen",
+      "knowledgebase": "Wissensdatenbank"
+    },
+    "header": {
+      "toggle_language": "Sprache wechseln",
+      "theme_dark": "Dunkel",
+      "theme_light": "Hell",
+      "theme_system": "System",
+      "profile": "Profil",
+      "security": "Sicherheit",
+      "sign_out": "Abmelden"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "services": "Deine Dienste",
+      "servicesDescription": "Deine aktiven Dienste und Ressourcen",
+      "storage": "Speicher",
+      "appSlots": "App Slots",
+      "network": "Netzwerk",
+      "upload": "Upload",
+      "download": "Download",
+      "multiplier": "Boost-Slots verwendet",
+      "viewCylo": "Details ansehen"
+    },
+    "twoFactor": {
+      "title": "Konto absichern",
+      "description": "Aktiviere die Zwei-Faktor-Authentifizierung für eine zusätzliche Sicherheitsebene.",
+      "enable": "2FA aktivieren",
+      "dismiss": "Schließen"
+    },
+    "notifications": {
+      "title": "Aktuelle Benachrichtigungen",
+      "viewAll": "Alle ansehen",
+      "empty": "Keine neuen Benachrichtigungen",
+      "dropdown_title": "Benachrichtigungen",
+      "mark_all_read": "Alle als gelesen markieren",
+      "no_notifications": "Keine neuen Benachrichtigungen",
+      "all_caught_up": "Alles erledigt",
+      "subtext": {
+        "instance_add": "Deine App ist installiert – sieh sie dir unten an!",
+        "instance_removed": "Die App wurde deinstalliert.",
+        "instance_removing": "Die App wird gerade deinstalliert.",
+        "instance_restart": "Die App wurde neu gestartet.",
+        "instance_updating": "Die App wird aktualisiert und ist vorübergehend offline.",
+        "instance_updated": "Die App wurde aktualisiert und ist jetzt einsatzbereit.",
+        "instance_stop": "Die App wurde gestoppt. Du musst sie erneut starten, um darauf zuzugreifen.",
+        "instance_start": "Die App wurde gestartet und sollte in Kürze erreichbar sein.",
+        "user_updated": "Deine Profilangaben wurden aktualisiert.",
+        "cylo_add": "Deine Appbox wurde eingerichtet – klicke unten, um sie aufzurufen.",
+        "cylo_remove": "Deine Appbox wurde deinstalliert.",
+        "cylo_migrating": "Deine Appbox wird auf einen anderen Datenträger/Server migriert. Wir benachrichtigen dich per E-Mail, sobald der Vorgang abgeschlossen ist.",
+        "cylo_migrated": "Deine Appbox wurde erfolgreich migriert. Alle Apps sollten jetzt wieder funktionieren.",
+        "cylo_userdecreasingquota": "Deiner Appbox geht der Speicherplatz aus. Du musst in Kürze Daten über den Tab 'Datei-Explorer' im Appbox-Dashboard löschen, damit sie online bleibt.",
+        "cylo_userlowquota": "Deine Appbox hat keinen Speicherplatz mehr und wurde vorübergehend heruntergefahren. Lösche Daten über den Tab 'Datei-Explorer' im Appbox-Dashboard, um sie wieder online zu bringen.",
+        "cylo_adminlowquota": "Eine Appbox hat wenig verfügbaren Speicherplatz.",
+        "cylo_brokenmount": "Bei deiner Appbox ist ein Einhängefehler aufgetreten. Bitte prüfe deine E-Mails für weitere Informationen.",
+        "cylo_usernormalquota": "Deine Appbox hat wieder genug Speicherplatz und funktioniert normal.",
+        "cylo_adminnormalquota": "Die Appbox hat nicht mehr wenig Speicherplatz und funktioniert wieder normal.",
+        "cylo_restarting": "Deine Appbox wird jetzt neu gestartet – deine Apps sind vorübergehend offline.",
+        "cylo_restarted": "Deine Appbox wurde neu gestartet. Deine Apps sollten in Kürze wieder online sein.",
+        "blog": "Wir haben gerade einen neuen Blogeintrag veröffentlicht – klicke unten, um ihn zu lesen!",
+        "hwfailure_newfailure": "Ein Server hat ein Problem. Bitte kümmere dich so schnell wie möglich darum!",
+        "criticalalert_newalert": "Neuer kritischer Alarm – bitte sofort prüfen!",
+        "abuse_unresolvable": "Ein neuer, nicht lösbarer Missbrauchsbericht wurde eingereicht.",
+        "abuse_reply": "Es gibt eine neue Nachricht im Missbrauchsbericht.",
+        "abuse_user_new": "Wir haben einen Missbrauchsbericht bezüglich deiner Appbox erhalten.",
+        "abuse_user_closed": "Wir haben einen Missbrauchsbericht bezüglich deiner Appbox geschlossen.",
+        "throttledcylo_throttled": "Eine Appbox wird gedrosselt.",
+        "throttledcylo_unthrottled": "Eine Appbox wird nicht mehr gedrosselt.",
+        "throttled_throttled": "Deine Appbox wird gedrosselt.",
+        "throttled_warning": "Deine Appbox verbraucht mehr Ressourcen als normal.",
+        "throttled_unthrottled": "Deine Appbox wird nicht mehr gedrosselt."
+      }
+    },
+    "newestApps": {
+      "title": "Neueste Apps",
+      "viewAll": "App Store durchsuchen"
+    },
+    "yourUpdates": {
+      "title": "Deine Updates",
+      "description": "Neueste Aktivitäten und neue Apps"
+    },
+    "recentlyUpdated": {
+      "title": "Kürzlich aktualisiert"
+    },
+    "blogPosts": {
+      "title": "Neueste Nachrichten",
+      "description": "Neuigkeiten und Updates von Appbox",
+      "readMore": "Weiterlesen"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "migrating": "Migration läuft",
+      "throttled": "Gedrosselt",
+      "lowQuota": "Niedriges Kontingent"
+    }
+  },
+  "appstore": {
+    "title": "App Store",
+    "subtitle": "Alle Server-Apps, die du brauchst, an einem Ort.",
+    "search": {
+      "placeholder": "Apps suchen...",
+      "results": "Suchergebnisse",
+      "noResults": "Keine Apps gefunden, die deiner Suche entsprechen.",
+      "noResultsDescription": "Versuche, deine Suche oder den Filter anzupassen, um das Gesuchte zu finden.",
+      "showing": "{count} Ergebnisse angezeigt"
+    },
+    "featured": {
+      "title": "Empfohlene Apps",
+      "description": "Handverlesene Apps, die wir empfehlen"
+    },
+    "top": {
+      "title": "Top Apps",
+      "description": "Beliebteste bei unseren Nutzern"
+    },
+    "new": {
+      "title": "Neue Apps",
+      "description": "Kürzlich zum Store hinzugefügt"
+    },
+    "categories": {
+      "title": "Kategorien",
+      "all": "Alle Kategorien"
+    },
+    "app": {
+      "getApp": "Holen",
+      "installed": "Installiert",
+      "restricted": "Eingeschränkt",
+      "disabled": "Deaktiviert",
+      "install": "Installieren",
+      "installing": "Wird installiert...",
+      "versions": "Versionen",
+      "version": "Version",
+      "appSlots": "App Slots",
+      "baseMemory": "Basisspeicher (GB)",
+      "baseCpus": "Basis-CPUs",
+      "added": "Hinzugefügt",
+      "changes": "Änderungen",
+      "changelog": "Änderungsprotokoll",
+      "releasedOn": "Veröffentlicht am",
+      "description": "Beschreibung",
+      "comments": "Kommentare",
+      "selectCylo": "Appbox auswählen",
+      "selectVersion": "Version auswählen",
+      "noSlots": "Keine freien App Slots verfügbar",
+      "rating": "{count} Bewertungen",
+      "screenshots": "Screenshots",
+      "by": "von",
+      "requiresSlots": "Benötigt {count} App Slot(s)",
+      "visitDeveloper": "Entwicklerseite besuchen",
+      "helpSupport": "Hilfe und Support",
+      "resourceNote": "Apps starten mit Basis-RAM und CPUs. Du kannst einzelne Apps boosten, indem du zusätzliche App-Slots nutzt (+10% pro Boost-Slot). Ein Wert von 0 bedeutet unbegrenzt.",
+      "upvote": "Upvoten",
+      "downvote": "Downvoten",
+      "installTitle": "{name} installieren",
+      "installSuccess": "App-Installation gestartet"
+    },
+    "sort": {
+      "newest": "Neueste",
+      "popular": "Beliebteste",
+      "updated": "Kürzlich aktualisiert",
+      "rating": "Bestbewertet",
+      "slots_asc": "Slots: Aufsteigend",
+      "slots_desc": "Slots: Absteigend"
+    },
+    "slots": {
+      "label": "Slots",
+      "all": "Alle Slots",
+      "slot": "{count} Slot",
+      "slots": "{count} Slots"
+    },
+    "showAll": "Alle anzeigen",
+    "install": {
+      "validation": {
+        "required": "Dieses Feld ist erforderlich",
+        "alphanumeric": "Nur Buchstaben und Zahlen sind erlaubt",
+        "notOnlyAlpha": "Muss mindestens eine Zahl oder ein Sonderzeichen enthalten",
+        "lowercase": "Muss einen Kleinbuchstaben enthalten",
+        "uppercase": "Muss einen Großbuchstaben enthalten",
+        "number": "Muss eine Zahl enthalten",
+        "specialChar": "Muss ein Sonderzeichen enthalten",
+        "invalidEmail": "Ungültige E-Mail-Adresse",
+        "invalidDate": "Ungültiges Datum",
+        "invalidFormat": "Ungültiges Format",
+        "minLength": "Mindestens {count} Zeichen",
+        "maxLength": "Maximal {count} Zeichen",
+        "subdomainInUse": "Diese Subdomain wird bereits verwendet, bitte versuche eine andere.",
+        "domainIpMismatch": "Die IP der Domain stimmt nicht mit dem Server überein.",
+        "selectDomain": "Bitte wähle eine Domain aus",
+        "validating": "Wird überprüft..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "Wähle zuerst eine Appbox aus",
+        "selectPlaceholder": "{label} auswählen...",
+        "searchPlaceholder": "{label} suchen...",
+        "noResults": "Keine Ergebnisse gefunden."
+      },
+      "domain": {
+        "subdomain": "Subdomain",
+        "domain": "Domain",
+        "selectAppboxFirst": "Wähle zuerst eine Appbox aus",
+        "selectDomain": "Domain auswählen...",
+        "searchDomains": "Domains suchen...",
+        "noDomainsMatch": "Keine Domains entsprechen deiner Suche.",
+        "noDomainsAvailable": "Keine Domains verfügbar.",
+        "domainSuffix": "Domain auswählen",
+        "appboxDomain": "Appbox-Domain",
+        "customDomains": "Eigene Domains"
+      },
+      "field": {
+        "enabled": "Aktiviert",
+        "disabled": "Deaktiviert",
+        "selectPlaceholder": "{label} auswählen"
+      },
+      "guard": {
+        "appDisabled": "Diese App ist vorübergehend wegen Wartungsarbeiten deaktiviert.",
+        "noCylos": "Du benötigst eine Appbox, bevor du Apps installieren kannst. Bestelle eine, um loszulegen.",
+        "getAppbox": "Appbox holen",
+        "restricted": "Diese App ist mit deinem aktuellen Paket nicht verfügbar. Klicke unten, um deinen Plan upzugraden und Zugang zu erhalten.",
+        "upgradePackage": "Paket upgraden",
+        "getAnotherAppbox": "Weitere Appbox holen",
+        "noSlots": "Diese App benötigt {count} App Slot(s), aber keine deiner Appboxes hat genügend freie Slots. Upgrade deinen Plan für mehr.",
+        "getMoreSlots": "Mehr App Slots holen",
+        "noMulti": "Diese App erlaubt nur eine Installation pro Appbox und ist bereits auf allen deinen berechtigten Appboxes installiert. Um eine weitere Instanz zu installieren, kannst du eine zusätzliche Appbox bestellen.",
+        "checkingAvailability": "Verfügbarkeit wird geprüft..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "Auf aktuellem Paket eingeschränkt",
+        "noFreeSlots": "Keine freien Slots ({used}/{total})",
+        "alreadyInstalled": "Bereits installiert",
+        "notEligible": "Nicht berechtigt",
+        "selectToSeeOptions": "Wähle eine Appbox aus, um Optionen zu sehen",
+        "upgradeThisAppbox": "Diese Appbox upgraden",
+        "alreadyInstalledDetail": "Diese App erlaubt nur eine Installation pro Appbox und ist hier bereits installiert. Um eine weitere Instanz zu installieren, bestelle eine zusätzliche Appbox.",
+        "noneEligible": "Keine deiner Appboxes ist derzeit berechtigt. Wähle eine oben aus, um zu sehen warum und wie du es beheben kannst.",
+        "restrictedSingle": "{name} ist nicht berechtigt – diese App ist auf ihrem aktuellen Paket eingeschränkt.",
+        "restrictedMultiple": "{count} Appboxes sind nicht berechtigt – diese App ist auf ihrem aktuellen Paket eingeschränkt.",
+        "upgradeName": "{name} upgraden",
+        "noSlotsSingle": "{name} hat nicht genügend freie App Slots.",
+        "noSlotsMultiple": "{count} Appboxes haben nicht genügend freie App Slots.",
+        "installedSingle": "{name} hat diese App bereits installiert.",
+        "installedMultiple": "{count} Appboxes haben diese App bereits installiert.",
+        "onePerAppbox": "Diese App erlaubt nur eine Installation pro Appbox.",
+        "slotsFree": "{count} Slots frei",
+        "migrating": "Appbox migriert gerade",
+        "migratingSingle": "{name} migriert gerade und ist vorübergehend für Installationen nicht verfügbar.",
+        "migratingMultiple": "{count} Appboxes migrieren gerade und sind vorübergehend für Installationen nicht verfügbar."
+      },
+      "dialog": {
+        "loadingVersions": "Versionen werden geladen...",
+        "defaultVersion": "(Standard)",
+        "cancel": "Abbrechen",
+        "installFailed": "Installation fehlgeschlagen. Bitte versuche es erneut."
+      },
+      "boost": {
+        "loading": "Boost-Optionen werden geladen...",
+        "title": "Boost-Slots",
+        "resourcePreview": "Ressourcen-Vorschau",
+        "multiplier": "Multiplikator",
+        "slotCost": "Slot-Kosten",
+        "ram": "RAM",
+        "cpus": "CPUs",
+        "cta": "Mehr Boost? Plan upgraden"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "Deine Appboxes",
+      "empty": "Du hast noch keine Appboxes.",
+      "getCylo": "Appbox holen",
+      "viewDetails": "Details ansehen",
+      "storage": "Speicher",
+      "appSlots": "App Slots",
+      "network": "Netzwerk",
+      "upload": "Upload",
+      "download": "Download",
+      "multiplier": "Boost-Slots verwendet",
+      "sortBy": "Sortieren nach",
+      "filterByStatus": "Nach Status filtern",
+      "allStatuses": "Alle Status",
+      "name": "Name",
+      "server": "Server",
+      "status": "Status"
+    },
+    "cyloDetail": {
+      "summary": "Zusammenfassung",
+      "fileExplorer": "Datei-Explorer",
+      "diskUsage": "Festplattennutzung",
+      "diskUtilization": "Festplattenauslastung (IO)",
+      "networkTraffic": "Netzwerkverkehr",
+      "installedApps": "Installierte Apps",
+      "alerts": "Warnungen",
+      "migrationProgress": "Migration läuft",
+      "lowQuota": "Niedriges Kontingent",
+      "throttled": "Festplatte gedrosselt",
+      "viewApp": "Ansehen",
+      "noAlerts": "Keine aktiven Warnungen",
+      "noApps": "Keine Apps auf dieser Appbox installiert.",
+      "backToAppboxes": "Appboxes",
+      "notFound": "Appbox nicht gefunden",
+      "notFoundDescription": "Die angeforderte Appbox konnte nicht gefunden werden.",
+      "bandwidth": "Bandbreite",
+      "uploadUsed": "Upload genutzt",
+      "downloadUsed": "Download genutzt",
+      "restart": "Neustart",
+      "restartTitle": "Appbox neustarten",
+      "restartDescription": "Dies startet Ihre Appbox neu. Alle installierten Apps werden offline sein, bis der Neustart abgeschlossen ist.",
+      "cancel": "Abbrechen"
+    },
+    "fileExplorer": {
+      "title": "Datei-Explorer",
+      "upload": "Hochladen",
+      "newFolder": "Neuer Ordner",
+      "rename": "Umbenennen",
+      "delete": "Löschen",
+      "download": "Herunterladen",
+      "name": "Name",
+      "size": "Größe",
+      "modified": "Geändert",
+      "type": "Typ",
+      "emptyDirectory": "Dieser Ordner ist leer",
+      "emptyDirectoryDescription": "Lade Dateien hoch oder erstelle einen neuen Ordner, um loszulegen.",
+      "newFolderTitle": "Neuer Ordner",
+      "newFolderPlaceholder": "Ordnername",
+      "newFolderDescription": "Gib einen Namen für den neuen Ordner ein.",
+      "renameTitle": "Umbenennen",
+      "renamePlaceholder": "Neuer Name",
+      "renameDescription": "Gib einen neuen Namen ein.",
+      "deleteTitle": "Löschen",
+      "deleteDescription": "Bist du sicher, dass du \"{name}\" löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "create": "Erstellen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "confirm": "Bestätigen",
+      "uploading": "Wird hochgeladen...",
+      "uploadSuccess": "Dateien erfolgreich hochgeladen",
+      "uploadError": "Dateien konnten nicht hochgeladen werden",
+      "createFolderSuccess": "Ordner erstellt",
+      "createFolderError": "Ordner konnte nicht erstellt werden",
+      "renameSuccess": "Erfolgreich umbenannt",
+      "renameError": "Umbenennen fehlgeschlagen",
+      "deleteSuccess": "Erfolgreich gelöscht",
+      "deleteError": "Löschen fehlgeschlagen",
+      "dropFilesHere": "Dateien hier ablegen zum Hochladen",
+      "root": "Startseite",
+      "listView": "Listenansicht",
+      "gridView": "Rasteransicht"
+    },
+    "installedApps": {
+      "title": "Installierte Apps",
+      "searchPlaceholder": "Installierte Apps suchen...",
+      "name": "Name",
+      "version": "Version",
+      "status": "Status",
+      "cylo": "Appbox",
+      "installedDate": "Installiert",
+      "empty": "Keine installierten Apps gefunden.",
+      "filterByCylo": "Nach Appbox filtern",
+      "allCylos": "Alle Appboxes",
+      "bulkSelected": "{count} ausgewählt"
+    },
+    "appDetail": {
+      "port": "Port",
+      "installDate": "Installationsdatum",
+      "server": "Server",
+      "customFields": "Konfiguration",
+      "actions": "Aktionen",
+      "start": "Starten",
+      "stop": "Stoppen",
+      "restart": "Neustarten",
+      "update": "Aktualisieren",
+      "uninstall": "Deinstallieren",
+      "switchVersion": "Version wechseln",
+      "boost": {
+        "title": "App-Boost",
+        "description": "Booste deine App, um ihre Ressourcen zu erhöhen. Unten kannst du die Anpassungen in der Vorschau sehen.",
+        "current": "Aktuelle Boost-Slots:",
+        "multiplier": "Multiplikator",
+        "preview": "Vorschau",
+        "resourcePreview": "Ressourcen-Vorschau",
+        "slotCost": "Slot-Kosten",
+        "ram": "RAM",
+        "cpus": "CPUs",
+        "apply": "Boost anwenden",
+        "applying": "Wird angewendet...",
+        "dockerLive": "Docker-Ressourcen werden ohne Neustart live aktualisiert.",
+        "vmRestart": "VM-Boosts erfordern einen Neustart, um die neuen Ressourcen anzuwenden.",
+        "getMore": "Mehr Boost? Plan upgraden"
+      },
+      "confirmUninstall": "Bist du sicher, dass du diese App deinstallieren möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "pinApp": "App anheften",
+      "unpinApp": "App lösen",
+      "backToInstalledApps": "Installierte Apps",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appboxes",
+      "backToDashboard": "Dashboard",
+      "notFound": "Installierte App nicht gefunden",
+      "notFoundDescription": "Die angeforderte installierte App konnte nicht gefunden werden.",
+      "version": "Version",
+      "cylo": "Appbox",
+      "appInfo": "App-Informationen",
+      "running": "Läuft",
+      "stopped": "Gestoppt",
+      "configuringApp": "{appName} wird konfiguriert...",
+      "sendingInstallPayload": "Installations-Payload wird an deine Appbox gesendet...",
+      "sendingUpdatePayload": "Update-Payload wird an deine Appbox gesendet...",
+      "tabOverview": "Übersicht",
+      "tabPorts": "Ports",
+      "tabConsole": "Konsole",
+      "consoleTitle": "VM-Konsole",
+      "consoleUnavailable": "Die Konsole ist nur verfügbar, wenn diese VM läuft und aktiviert ist.",
+      "consoleLoading": "Lade Konsolen-Verbindungsdaten...",
+      "consoleLoadError": "Konsolen-Verbindungsdaten konnten nicht geladen werden.",
+      "consolePortsMissing": "Für diese VM ist kein WebSocket-Konsolenendpunkt verfügbar.",
+      "consoleConnecting": "Verbinde...",
+      "consoleConnected": "Verbunden",
+      "consoleDisconnected": "Getrennt",
+      "consoleConnectionError": "Verbindung fehlgeschlagen",
+      "consoleReconnect": "Neu verbinden",
+      "consoleWebsocketEndpoint": "WebSocket-Endpunkt",
+      "portAssignments": "Port-Zuweisungen",
+      "internalIp": "Interne IP",
+      "hostIp": "Host-IP",
+      "internalPort": "Interner Port",
+      "hostPort": "Host-Port",
+      "protocol": "Protokoll",
+      "noPortAssignments": "Keine Port-Zuweisungen gefunden.",
+      "searchPorts": "Ports suchen…",
+      "customDomainsTitle": "Eigene Domains",
+      "customDomainsDescription": "Eigene Domains, die für diese App konfiguriert sind.",
+      "customDomainsAdd": "Domain hinzufügen",
+      "customDomainsAddTitle": "Eigene Domain hinzufügen",
+      "customDomainsAddDescription": "Verbinde eine eigene Domain mit dieser installierten App.",
+      "customDomainsDomain": "Domain",
+      "customDomainsPrimary": "Primär",
+      "customDomainsPrimaryYes": "Ja",
+      "customDomainsPrimaryNo": "Nein",
+      "customDomainsAdded": "Hinzugefügt",
+      "customDomainsConfig": "Konfig",
+      "customDomainsViewConfig": "Konfig anzeigen",
+      "customDomainsActions": "Aktionen",
+      "customDomainsSearch": "Domains suchen...",
+      "customDomainsEmpty": "Keine eigenen Domains gefunden.",
+      "customDomainsParentDomain": "Eltern-Domain",
+      "customDomainsLoadingDomains": "Domains werden geladen...",
+      "customDomainsSelectDomain": "Domain auswählen",
+      "customDomainsSubdomain": "Subdomain",
+      "customDomainsDomainSuffix": ".beispiel.de",
+      "customDomainsCancel": "Abbrechen",
+      "customDomainsSave": "Domain hinzufügen",
+      "customDomainsDelete": "Domain löschen",
+      "customDomainsDeleteTitle": "Domain löschen",
+      "customDomainsDeleteDescription": "Möchtest du diese Domain wirklich löschen?",
+      "customDomainsVmRestartWarning": "Wenn du eine andere Parent-Domain als deine user.appboxes.co-Domain verwendest, wird deine VM neu gestartet.",
+      "customDomainsClose": "Schließen",
+      "customDomainsConfigTitle": "SSL-Konfiguration für {domain}",
+      "customDomainsConfigDescription": "Kopiere den passenden Snippet in die Webserver-Konfiguration.",
+      "customDomainsSslQueued": "Die SSL-Zertifikatserstellung wurde in die Warteschlange gestellt und kann einige Minuten dauern.",
+      "customDomainsWildcardSsl": "Diese Domain verwendet bereits ein vorhandenes Wildcard-SSL-Zertifikat.",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "Datei",
+      "customDomainsConfigSnippet": "Konfiguration",
+      "customDomainsReloadCommand": "Reload-Befehl",
+      "customDomainsCopy": "Kopieren",
+      "customDomainsCopied": "Kopiert!",
+      "customDomainsSubdomainRequired": "Subdomain ist erforderlich.",
+      "customDomainsParentDomainRequired": "Bitte wähle eine Eltern-Domain aus.",
+      "customDomainsSubdomainInvalid": "Nur Buchstaben, Zahlen und Bindestriche sind erlaubt (kein Bindestrich am Anfang oder Ende).",
+      "customDomainsSubdomainLength": "Die Subdomain muss zwischen 2 und 30 Zeichen lang sein.",
+      "customDomainsSubdomainInUse": "Diese Subdomain wird bereits verwendet. Bitte wähle eine andere.",
+      "customDomainsSubdomainValidateFailed": "Subdomain kann derzeit nicht geprüft werden.",
+      "customDomainsDnsNotVerified": "DNS zeigt noch nicht auf den korrekten Server.",
+      "customDomainsDnsNotVerifiedExpected": "DNS zeigt nicht auf den korrekten Server. Erwartete IP: {ip}",
+      "customDomainsDnsCheckFailed": "DNS kann derzeit nicht verifiziert werden.",
+      "customDomainsAddFailed": "Eigene Domain konnte nicht hinzugefügt werden.",
+      "customDomainsDeleteFailed": "Domain konnte nicht gelöscht werden.",
+      "customDomainsConfigNotAvailable": "Konfigurations-Snippets sind für diese Domain nicht verfügbar.",
+      "customDomainsConfigFetchFailed": "Konfigurations-Snippets konnten nicht geladen werden.",
+      "customTablesTitle": "App Tables",
+      "customTablesLoading": "Eigene Tabellen werden geladen...",
+      "customTablesRowsUsage": "{current} von {max} Zeilen verwendet",
+      "customTablesAdd": "Zeile hinzufügen",
+      "customTablesAddTitle": "Zeile zu {label} hinzufügen",
+      "customTablesAddDescription": "Neuen Zeileneintrag erstellen.",
+      "customTablesEditTitle": "Zeile in {label} bearbeiten",
+      "customTablesEditDescription": "Werte der ausgewählten Zeile aktualisieren.",
+      "customTablesDeleteTitle": "Zeile löschen",
+      "customTablesDeleteDescription": "Möchtest du diese Zeile wirklich löschen?",
+      "customTablesDelete": "Löschen",
+      "customTablesSave": "Speichern",
+      "customTablesUpdate": "Aktualisieren",
+      "customTablesCancel": "Abbrechen",
+      "customTablesActions": "Aktionen",
+      "customTablesSearch": "{label} durchsuchen...",
+      "customTablesEmpty": "Keine Zeilen gefunden.",
+      "customTablesEnabled": "Aktiviert",
+      "customTablesDisabled": "Deaktiviert",
+      "customTablesValidationRequired": "Dieses Feld ist erforderlich.",
+      "customTablesValidationAlphanumeric": "Nur Buchstaben und Zahlen sind erlaubt.",
+      "customTablesValidationComplexPassword": "Muss Kleinbuchstaben, Großbuchstaben, Zahl und Sonderzeichen enthalten.",
+      "customTablesAddSuccess": "Zeile erfolgreich hinzugefügt.",
+      "customTablesEditSuccess": "Zeile erfolgreich aktualisiert.",
+      "customTablesDeleteSuccess": "Zeile erfolgreich gelöscht.",
+      "customTablesAddFailed": "Zeile konnte nicht hinzugefügt werden.",
+      "customTablesEditFailed": "Zeile konnte nicht aktualisiert werden.",
+      "customTablesDeleteFailed": "Zeile konnte nicht gelöscht werden."
+    },
+    "domains": {
+      "title": "Eigene Domains",
+      "pageDescription": "Eigene Domains, die du deinen installierten Apps hinzugefügt hast.",
+      "addDomain": "Domain hinzufügen",
+      "domain": "Domain",
+      "app": "App",
+      "ssl": "SSL",
+      "status": "Status",
+      "createdAt": "Erstellt",
+      "cylo": "Appbox",
+      "confirmDelete": "Bist du sicher, dass du diese Domain entfernen möchtest? Dies trennt sie von deiner App.",
+      "domainPlaceholder": "beispiel.de",
+      "selectCylo": "Appbox auswählen",
+      "selectApp": "App auswählen",
+      "empty": "Noch keine Domains konfiguriert.",
+      "emptyTitle": "Noch keine eigenen Domains",
+      "emptyDescription": "Eigene Domains können beim Installieren einer App hinzugefügt werden. Nur diese erscheinen hier, Plattform-Domains werden automatisch verwaltet.",
+      "goToAppStore": "Zum App Store",
+      "addDescription": "Weise eine Domain einer deiner installierten Apps zu.",
+      "deleteDomain": "Domain löschen",
+      "adding": "Wird hinzugefügt...",
+      "searchPlaceholder": "Domains suchen..."
+    }
+  },
+  "account": {
+    "title": "Konto",
+    "profile": {
+      "title": "Profil",
+      "email": "E-Mail",
+      "alias": "Anzeigename",
+      "aliasPlaceholder": "Anzeigenamen eingeben",
+      "save": "Änderungen speichern",
+      "memberSince": "Mitglied seit",
+      "twoFactorStatus": "Zwei-Faktor-Authentifizierung",
+      "twoFactorEnabled": "Aktiviert",
+      "twoFactorDisabled": "Nicht aktiviert",
+      "enable2FA": "2FA aktivieren",
+      "manage2FA": "2FA verwalten"
+    },
+    "password": {
+      "title": "Passwort ändern",
+      "current": "Aktuelles Passwort",
+      "new": "Neues Passwort",
+      "confirm": "Neues Passwort bestätigen",
+      "change": "Passwort ändern",
+      "success": "Passwort erfolgreich geändert",
+      "successSigningOut": "Passwort geändert. Sie werden von allen Sitzungen abgemeldet…",
+      "sessionWarning": "Das Ändern Ihres Passworts meldet Sie sofort von allen aktiven Sitzungen auf allen Geräten ab.",
+      "mismatch": "Passwörter stimmen nicht überein",
+      "minLength": "Passwort muss mindestens 8 Zeichen lang sein"
+    },
+    "abuse": {
+      "title": "Missbrauchsmeldungen",
+      "id": "ID",
+      "subject": "Betreff",
+      "status": "Status",
+      "date": "Datum",
+      "description": "Beschreibung",
+      "complainant": "Beschwerdeführer",
+      "adminResponse": "Admin-Antwort",
+      "noReports": "Keine Missbrauchsmeldungen gefunden.",
+      "statusOpen": "Offen",
+      "statusResolved": "Gelöst",
+      "statusClosed": "Geschlossen",
+      "backToList": "Zurück zu Missbrauchsmeldungen",
+      "reportDetails": "Meldungsdetails",
+      "conversation": "Unterhaltung"
+    },
+    "twoFactor": {
+      "title": "Zwei-Faktor-Authentifizierung",
+      "setup": "2FA einrichten",
+      "scanQR": "Scanne diesen QR-Code mit deiner Authentifikator-App",
+      "secretKey": "Oder gib diesen geheimen Schlüssel manuell ein:",
+      "enterCode": "Gib den 6-stelligen Code aus deiner Authentifikator-App ein",
+      "codePlaceholder": "000000",
+      "verify": "Bestätigen",
+      "backupCodes": "Backup-Codes",
+      "backupCodesDescription": "Bewahre diese Backup-Codes an einem sicheren Ort auf. Jeder Code kann nur einmal verwendet werden.",
+      "copyAll": "Alle kopieren",
+      "copied": "Kopiert!",
+      "done": "Fertig",
+      "disable": "2FA deaktivieren",
+      "disableWarning": "Das Deaktivieren von 2FA macht dein Konto weniger sicher.",
+      "disableConfirm": "Gib dein Passwort ein, um 2FA zu deaktivieren",
+      "disabled": "2FA wurde deaktiviert",
+      "generating": "Wird generiert...",
+      "verifying": "Wird überprüft...",
+      "next": "Weiter",
+      "back": "Zurück"
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "gerade eben",
+      "minutesAgo": "vor {count} Min.",
+      "hoursAgo": "vor {count} Std.",
+      "daysAgo": "vor {count} Tag(en)"
+    },
+    "errors": {
+      "loadFailed": "Daten konnten nicht geladen werden. Bitte versuche es erneut.",
+      "loadServicesFailed": "Dienste konnten nicht geladen werden. Bitte versuche es erneut.",
+      "loadAppsFailed": "Apps konnten nicht geladen werden.",
+      "loadNotificationsFailed": "Benachrichtigungen konnten nicht geladen werden.",
+      "loadBlogFailed": "Blogbeiträge konnten nicht geladen werden.",
+      "loadAppboxesFailed": "Appboxes konnten nicht geladen werden. Bitte versuche es erneut.",
+      "loadProfileFailed": "Profil konnte nicht geladen werden. Bitte versuche es erneut."
+    },
+    "empty": {
+      "noServices": "Keine Dienste gefunden. Besuche das Abrechnungsportal, um loszulegen.",
+      "noApps": "Keine neuen Apps verfügbar.",
+      "noRecentlyUpdated": "Keine kürzlich aktualisierten Apps.",
+      "noBlogPosts": "Keine Blogbeiträge verfügbar.",
+      "noAppboxes": "Besuche das Abrechnungsportal, um loszulegen.",
+      "noMatchingAppboxes": "Keine Appboxes entsprechen deinen Filtern."
+    },
+    "toast": {
+      "displayNameUpdated": "Anzeigename aktualisiert",
+      "displayNameFailed": "Anzeigename konnte nicht aktualisiert werden"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "migrating": "Migration läuft",
+      "throttled": "Gedrosselt",
+      "lowQuota": "Niedriges Kontingent"
+    }
   }
-} 
+}

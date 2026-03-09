@@ -1,8 +1,8 @@
 import type { ComponentProps } from "react"
 import { useMDXComponent } from "next-contentlayer2/hooks"
 import Image from "next/image"
-import { Callout } from "@/components/callout"
 import { CodeBlockWrapper } from "@/components/docs/mdx-components/code-block-wrapper"
+import { Callout } from "@/components/marketing/callout"
 import {
   Accordion,
   AccordionContent,
@@ -152,6 +152,7 @@ interface MdxProps {
 }
 
 export function Mdx({ code }: MdxProps) {
+  /* eslint-disable react-hooks/static-components -- MDX: component is dynamic per code string */
   const Component = useMDXComponent(code)
 
   return (
@@ -159,4 +160,5 @@ export function Mdx({ code }: MdxProps) {
       <Component components={components} />
     </div>
   )
+  /* eslint-enable react-hooks/static-components */
 }

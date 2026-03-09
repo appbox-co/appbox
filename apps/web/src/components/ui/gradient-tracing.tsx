@@ -35,9 +35,13 @@ export default function GradientTracing(props: GradientTracingProps) {
   const path3Length = 200
   const path4Length = 200
 
-  // Generate unique IDs for the gradients
-  const baseGradientId = `base-gradient-${Math.random().toString(36).substring(2, 9)}`
-  const glowGradientId = `glow-gradient-${Math.random().toString(36).substring(2, 9)}`
+  // Generate unique IDs for the gradients (stable per mount)
+  const [baseGradientId] = useState(() =>
+    `base-gradient-${Math.random().toString(36).substring(2, 9)}`
+  )
+  const [glowGradientId] = useState(() =>
+    `glow-gradient-${Math.random().toString(36).substring(2, 9)}`
+  )
 
   // State for the random glitch effect (foreground)
   const [outlineVisibility, setOutlineVisibility] = useState(true)

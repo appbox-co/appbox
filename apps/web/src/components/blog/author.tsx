@@ -11,7 +11,7 @@ import {
   CardTitle
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { Icons } from "../icons"
+import { Icons } from "../shared/icons"
 import { buttonVariants } from "../ui/button"
 
 export function AuthorCard({ post }: { post: Blog }) {

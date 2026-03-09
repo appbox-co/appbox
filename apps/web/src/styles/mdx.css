@@ -53,7 +53,7 @@ code[data-line-numbers] > [data-line]::before {
 
 [data-rehype-pretty-code-title]::before {
   content: '◯ ';
-  @apply text-purple-500;
+  @apply text-indigo-500;
 }
 
 [data-rehype-pretty-code-title] {
@@ -83,5 +83,5 @@ code[data-line-numbers] > [data-line]::before {
 }
 
 [data-chars-id='i'] {
-  @apply !text-purple-200 bg-purple-800/50 font-bold;
+  @apply !text-indigo-200 bg-indigo-800/50 font-bold;
 }
