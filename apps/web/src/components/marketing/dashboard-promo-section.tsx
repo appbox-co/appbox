@@ -6,14 +6,16 @@ const features = [
   {
     key: "dashboard",
     image: "/blog-images/day1-dashboard-overview.png",
+    origin: "left top",
     position: "14% top",
-    shiftY: "-8%"
+    shiftY: "-11%"
   },
   {
     key: "appstore",
     image: "/blog-images/day1-app-store.png",
+    origin: "top left",
     position: "14% top",
-    shiftY: "-10%"
+    shiftY: "-11%"
   },
   {
     key: "security",
