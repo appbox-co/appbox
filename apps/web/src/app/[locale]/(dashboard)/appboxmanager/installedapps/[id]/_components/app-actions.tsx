@@ -49,6 +49,7 @@ interface AppActionsProps {
 export function AppActions({ app }: AppActionsProps) {
   const t = useTranslations("appboxmanager.appDetail")
   const [uninstallOpen, setUninstallOpen] = useState(false)
+  const [updateConfirmOpen, setUpdateConfirmOpen] = useState(false)
   const [customConfirmId, setCustomConfirmId] = useState<number | null>(null)
   const [selectedSwitchVersionId, setSelectedSwitchVersionId] = useState("")
   const [switchConfirmOpen, setSwitchConfirmOpen] = useState(false)
@@ -145,12 +146,7 @@ export function AppActions({ app }: AppActionsProps) {
             variant="outline"
             size="sm"
             disabled={updateMutation.isPending}
-            onClick={() =>
-              updateMutation.mutate({
-                id: app.id,
-                versionId: latestVersion.id
-              })
-            }
+            onClick={() => setUpdateConfirmOpen(true)}
           >
             {updateMutation.isPending ? (
               <Loader2 className="mr-1.5 size-4 animate-spin" />
@@ -211,6 +207,51 @@ export function AppActions({ app }: AppActionsProps) {
           />
         ))}
       </div>
+
+      {/* Update confirmation dialog */}
+      <Dialog open={updateConfirmOpen} onOpenChange={setUpdateConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("update")}</DialogTitle>
+            <DialogDescription>
+              {latestVersion
+                ? `Update ${app.display_name} from version ${app.version} to ${latestVersion.version}?`
+                : ""}
+            </DialogDescription>
+          </DialogHeader>
+          {updateMutation.isError && (
+            <p className="text-sm text-destructive">
+              {updateMutation.error?.message ?? "Failed to update."}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setUpdateConfirmOpen(false)}
+              disabled={updateMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                if (!latestVersion) return
+                updateMutation.mutate(
+                  { id: app.id, versionId: latestVersion.id },
+                  {
+                    onSuccess: () => setUpdateConfirmOpen(false)
+                  }
+                )
+              }}
+              disabled={updateMutation.isPending}
+            >
+              {updateMutation.isPending && (
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
+              )}
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Uninstall confirmation dialog */}
       <Dialog open={uninstallOpen} onOpenChange={setUninstallOpen}>

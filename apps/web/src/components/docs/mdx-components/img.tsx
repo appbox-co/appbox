@@ -18,7 +18,7 @@ export const img = ({
 
   return (
     <Image
-      className={cn("rounded-md", className)}
+      className={cn("rounded-xl", className)}
       alt={alt ?? ""}
       src={src}
       style={{

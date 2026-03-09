@@ -552,11 +552,6 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                 emptyMessage="No versions available."
                 pageSize={5}
               />
-              {app.type === "docker" && (
-                <p className="mt-3 text-xs italic text-muted-foreground">
-                  {t("app.resourceNote")}
-                </p>
-              )}
             </CardContent>
           </Card>
 

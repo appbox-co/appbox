@@ -45,7 +45,7 @@ export async function DashboardPromoSection() {
         <div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-3">
           {features.map((feat) => (
             <div key={feat.key} className="group text-left">
-              <div className="aspect-3/4 overflow-hidden rounded-2xl ring-1 ring-border/50">
+              <div className="aspect-3/4 overflow-hidden rounded-2xl bg-[#100f15] ring-1 ring-border/50">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={feat.image}
