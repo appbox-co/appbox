@@ -133,6 +133,14 @@ export interface UiUpdateData {
   version: string
 }
 
+export interface AppBoostUpdatedData {
+  user_id: number
+  instance_id: number
+  cylo_id: number
+  boost_slots: number
+  resource_multiplier: number
+}
+
 export interface DomainChangedData {
   user_id: number
   instance_id: number

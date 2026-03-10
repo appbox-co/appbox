@@ -11,6 +11,7 @@ import type { Notification } from "@/api/notifications/notifications"
 import { WS_EVENTS, WS_SERVER_EVENTS } from "@/constants/events"
 import { queryKeys } from "@/constants/query-keys"
 import type {
+  AppBoostUpdatedData,
   CommentCreatedData,
   CommentDeletedData,
   CommentUpdatedData,
@@ -651,6 +652,34 @@ export function useWsQueryInvalidation(wsContext?: {
             })
           }
           break
+
+        case WS_EVENTS.APP_BOOST_UPDATED: {
+          const payload = data as unknown as AppBoostUpdatedData
+          const instanceId = Number(payload.instance_id)
+          const cyloId = Number(payload.cylo_id)
+
+          if (Number.isFinite(instanceId) && instanceId > 0) {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.installedApps.detail(instanceId)
+            })
+          }
+
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.installedApps.all
+          })
+
+          if (Number.isFinite(cyloId) && cyloId > 0) {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.installedApps.byCylo(cyloId)
+            })
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.cylos.detail(cyloId)
+            })
+          }
+
+          queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+          break
+        }
 
         case WS_EVENTS.COMMENT_CREATED: {
           const c = data as unknown as CommentCreatedData & { relid?: number }
