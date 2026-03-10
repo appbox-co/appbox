@@ -73,12 +73,22 @@ export function AppActions({ app }: AppActionsProps) {
     app.status === "updating" ||
     app.status === "deleting"
 
-  const latestVersion = app.available_versions?.[0]
-  const hasUpdate =
-    app.can_update && latestVersion && latestVersion.version !== app.version
-  const switchableVersions = (app.available_versions ?? []).filter(
-    (v) => v.version !== app.version
+  const defaultVersion = app.default_version?.trim()
+  const updateTargetVersion = (app.available_versions ?? []).find(
+    (v) => v.version === defaultVersion
   )
+  const updateVersionId = updateTargetVersion?.id ?? app.available_versions?.[0]?.id
+  const hasUpdate =
+    app.can_update &&
+    !!defaultVersion &&
+    defaultVersion.length > 0 &&
+    defaultVersion !== app.version
+  const switchableVersions = (app.available_versions ?? []).filter((v) => {
+    if (v.version === app.version) return false
+    // Avoid showing the default update target in both places.
+    if (hasUpdate && defaultVersion && v.version === defaultVersion) return false
+    return true
+  })
   const showSwitcher = app.can_update && switchableVersions.length >= 1
   const selectedSwitchVersion = switchableVersions.find(
     (v) => String(v.id) === selectedSwitchVersionId
@@ -153,7 +163,7 @@ export function AppActions({ app }: AppActionsProps) {
             ) : (
               <ArrowUpCircle className="mr-1.5 size-4" />
             )}
-            {t("update")} ({latestVersion.version})
+            {t("update")} ({defaultVersion})
           </Button>
         )}
 
@@ -214,8 +224,8 @@ export function AppActions({ app }: AppActionsProps) {
           <DialogHeader>
             <DialogTitle>{t("update")}</DialogTitle>
             <DialogDescription>
-              {latestVersion
-                ? `Update ${app.display_name} from version ${app.version} to ${latestVersion.version}?`
+              {hasUpdate && defaultVersion
+                ? `Update ${app.display_name} from version ${app.version} to ${defaultVersion}?`
                 : ""}
             </DialogDescription>
           </DialogHeader>
@@ -234,15 +244,20 @@ export function AppActions({ app }: AppActionsProps) {
             </Button>
             <Button
               onClick={() => {
-                if (!latestVersion) return
+                if (!hasUpdate || !updateVersionId) return
                 updateMutation.mutate(
-                  { id: app.id, versionId: latestVersion.id },
+                  {
+                    id: app.id,
+                    // Backend uses default version for this endpoint, but pass
+                    // matching version id when available for consistency.
+                    versionId: updateVersionId
+                  },
                   {
                     onSuccess: () => setUpdateConfirmOpen(false)
                   }
                 )
               }}
-              disabled={updateMutation.isPending}
+              disabled={updateMutation.isPending || !updateVersionId}
             >
               {updateMutation.isPending && (
                 <Loader2 className="mr-1.5 size-4 animate-spin" />

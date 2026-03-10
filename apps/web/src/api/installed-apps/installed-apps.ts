@@ -33,6 +33,8 @@ export interface InstalledApp {
   ram: number
   cpus: number
   can_update: boolean
+  /** App's backend default version string (update target). */
+  default_version: string
   custom_fields?: Record<string, CustomField>
   available_versions: { id: number; version: string }[]
 }
@@ -126,6 +128,7 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     ram: Number(raw.ram ?? raw.Memory ?? 0),
     cpus: Number(raw.cpus ?? raw.CPUs ?? 0),
     can_update: Number(app?.canUpdate ?? raw.canUpdate ?? 1) === 1,
+    default_version: String(app?.version ?? raw.latest_ver ?? ""),
     custom_fields: (app?.customFields ?? raw.customFields) as
       | Record<string, CustomField>
       | undefined,
