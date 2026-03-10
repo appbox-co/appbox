@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/dashboard/header"
 import { RouteHistoryTracker } from "@/components/dashboard/navigation/route-history-tracker"
 import { DashboardSidebar } from "@/components/dashboard/sidebar"
+import { UiUpdateRefreshDialog } from "@/components/dashboard/ui-update-refresh-dialog"
 import { WsEventBridge } from "@/components/dashboard/ws-event-bridge"
 import { Toaster } from "@/components/ui/sonner"
 import { getServerSession } from "@/lib/auth/session"
@@ -30,6 +31,7 @@ export default async function DashboardLayout({
       <AuthProvider user={session.user} cylos={session.cylos}>
         <WebSocketProvider>
           <WsEventBridge />
+          <UiUpdateRefreshDialog />
           <RouteHistoryTracker />
           <div className="relative min-h-screen bg-background">
             <DashboardSidebar />

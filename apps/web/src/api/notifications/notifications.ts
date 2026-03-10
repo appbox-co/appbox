@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "@/api/client"
+import { apiDelete, apiGet, apiPost } from "@/api/client"
 
 export interface Notification {
   id: number
@@ -68,4 +68,8 @@ export async function markNotificationRead(id: number): Promise<void> {
 
 export async function markAllNotificationsRead(): Promise<void> {
   return apiPost("notifications/all/read")
+}
+
+export async function deleteUiUpdateNotifications(): Promise<void> {
+  return apiDelete("notifications/UIUpdates")
 }
