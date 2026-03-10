@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react"
 import { useTranslations } from "next-intl"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import { ArrowLeft, Loader2 } from "lucide-react"
@@ -29,9 +29,12 @@ type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
   const t = useTranslations("auth.login")
-  const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") || "/dashboard"
+  const safeRedirect =
+    redirect.startsWith("/") && !redirect.startsWith("//")
+      ? redirect
+      : "/dashboard"
 
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [twoFactorToken, setTwoFactorToken] = useState("")
@@ -80,7 +83,7 @@ export default function LoginPage() {
       }
 
       toast.success(t("success"))
-      router.push(redirect)
+      window.location.assign(safeRedirect)
     } catch {
       toast.error(t("error_generic"))
     } finally {
@@ -117,9 +120,9 @@ export default function LoginPage() {
         // regenerate them before they get locked out. For low (but non-zero)
         // codes the dashboard banner will handle the nudge.
         if (data.recovery_codes_exhausted) {
-          router.push("/account/2fa-setup")
+          window.location.assign("/account/2fa-setup")
         } else {
-          router.push(redirect)
+          window.location.assign(safeRedirect)
         }
       } catch {
         toast.error(t("error_generic"))
@@ -129,7 +132,7 @@ export default function LoginPage() {
         setIsLoading(false)
       }
     },
-    [twoFactorToken, redirect, router, t]
+    [safeRedirect, t, twoFactorToken]
   )
 
   function handleOtpChange(value: string) {

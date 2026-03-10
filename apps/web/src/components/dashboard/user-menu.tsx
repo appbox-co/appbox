@@ -64,7 +64,12 @@ export function UserMenu() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem
+          onSelect={(event) => {
+            event.preventDefault()
+            void logout()
+          }}
+        >
           <LogOut className="mr-2 size-4" />
           {t("sign_out")}
         </DropdownMenuItem>

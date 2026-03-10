@@ -12,8 +12,7 @@ const protectedPatterns = [
   "/appstore"
 ]
 
-function isProtectedRoute(pathname: string): boolean {
-  // Strip locale prefix if present
+function normalizeAuthPath(pathname: string): string {
   const locales = routing.locales as readonly string[]
   let path = pathname
   for (const locale of locales) {
@@ -26,10 +25,27 @@ function isProtectedRoute(pathname: string): boolean {
       break
     }
   }
+  return path
+}
+
+function isProtectedRoute(pathname: string): boolean {
+  const path = normalizeAuthPath(pathname)
 
   return protectedPatterns.some(
     (pattern) => path.startsWith(pattern) || path === pattern
   )
+}
+
+function isLoginRoute(pathname: string): boolean {
+  const path = normalizeAuthPath(pathname)
+  return path === "/login"
+}
+
+function sanitizeRedirectTarget(target: string | null): string {
+  if (!target) return "/dashboard"
+  if (!target.startsWith("/") || target.startsWith("//")) return "/dashboard"
+  if (target === "/login") return "/dashboard"
+  return target
 }
 
 function getLocaleFromPath(pathname: string): string | null {
@@ -44,10 +60,18 @@ function getLocaleFromPath(pathname: string): string | null {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const token = request.cookies.get("authorization_token")?.value
+
+  // If a user is already authenticated, don't let them stay on the login page.
+  if (isLoginRoute(pathname) && token) {
+    const url = request.nextUrl.clone()
+    url.pathname = sanitizeRedirectTarget(url.searchParams.get("redirect"))
+    url.search = ""
+    return NextResponse.redirect(url)
+  }
 
   // Check if this is a protected route
   if (isProtectedRoute(pathname)) {
-    const token = request.cookies.get("authorization_token")?.value
     if (!token) {
       const locale = getLocaleFromPath(pathname)
       const loginPath = locale ? `/${locale}/login` : "/login"

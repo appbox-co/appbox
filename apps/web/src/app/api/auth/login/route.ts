@@ -9,6 +9,16 @@ const COOKIE_SECURE = process.env.COOKIE_SECURE
   ? process.env.COOKIE_SECURE === "true"
   : IS_PRODUCTION
 
+function getEffectiveCookieDomain(request: NextRequest): string | undefined {
+  if (COOKIE_DOMAIN) return COOKIE_DOMAIN
+  const host = request.headers.get("host") ?? ""
+  const hostname = host.split(":")[0]?.toLowerCase() ?? ""
+  if (hostname === "appbox.co" || hostname.endsWith(".appbox.co")) {
+    return ".appbox.co"
+  }
+  return undefined
+}
+
 /**
  * Extract the authorization_token value from the backend's Set-Cookie header(s).
  */
@@ -33,6 +43,9 @@ function extractTokenFromSetCookie(response: Response): string | null {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    const effectiveCookieDomain = getEffectiveCookieDomain(request)
+    const effectiveCookieSecure =
+      COOKIE_SECURE || request.nextUrl.protocol === "https:"
 
     // Backend expects: email, password, firstname, lastname
     const response = await fetch(
@@ -80,10 +93,10 @@ export async function POST(request: NextRequest) {
     if (token) {
       res.cookies.set("authorization_token", token, {
         httpOnly: true,
-        secure: COOKIE_SECURE,
+        secure: effectiveCookieSecure,
         sameSite: "strict",
         path: "/",
-        ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
+        ...(effectiveCookieDomain ? { domain: effectiveCookieDomain } : {}),
         maxAge: 60 * 60 * 24 * 30 // 30 days
       })
     }

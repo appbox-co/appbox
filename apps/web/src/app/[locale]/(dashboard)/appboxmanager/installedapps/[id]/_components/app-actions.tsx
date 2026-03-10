@@ -79,7 +79,7 @@ export function AppActions({ app }: AppActionsProps) {
   const switchableVersions = (app.available_versions ?? []).filter(
     (v) => v.version !== app.version
   )
-  const showSwitcher = app.can_update && switchableVersions.length > 1
+  const showSwitcher = app.can_update && switchableVersions.length >= 1
   const selectedSwitchVersion = switchableVersions.find(
     (v) => String(v.id) === selectedSwitchVersionId
   )
