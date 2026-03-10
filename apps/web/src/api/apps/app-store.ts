@@ -52,9 +52,10 @@ export interface AppStoreItem {
   updated_at: string
   categories: { key: number; label: string }[]
   default_version_id: number | null
-  default_version?: {
-    app_slots: number
+  default_version?: Partial<AppVersion> & {
+    app_slots?: number
   }
+  versions?: AppVersion[]
   enabled_version_count: number
   subdomain?: string
   customFields?: Record<string, CustomField>

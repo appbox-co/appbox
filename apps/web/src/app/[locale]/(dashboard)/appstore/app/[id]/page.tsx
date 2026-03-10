@@ -343,6 +343,9 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   }
 
   const requiredSlots = getEffectiveAppSlots(app)
+  const nestedVersions = app.versions ?? []
+  const versionRows = nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
+  const showVersionsLoading = nestedVersions.length === 0 && versionsLoading
   const appInstances = (installedApps ?? []).filter(
     (instance) => instance.app_id === app.id
   )
@@ -547,8 +550,8 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
             <CardContent>
               <DataTable
                 columns={versionColumns}
-                data={versions ?? []}
-                isLoading={versionsLoading}
+                data={versionRows}
+                isLoading={showVersionsLoading}
                 emptyMessage="No versions available."
                 pageSize={5}
               />

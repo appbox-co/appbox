@@ -18,11 +18,11 @@ const features = [
     shiftY: "-11%"
   },
   {
-    key: "security",
-    image: "/blog-images/day1-2fa-security.png",
-    origin: "6% 25%",
-    position: "6% 8%",
-    shiftX: "-58%"
+    key: "boost",
+    image: "/blog-images/day2-boost-install-dialog.png",
+    origin: "top left",
+    position: "left top",
+    shiftY: "0%"
   }
 ] as const
 
@@ -80,7 +80,7 @@ export async function DashboardPromoSection() {
 
         <div className="mt-12">
           <Link
-            href="/blog/launch-week-day-1-new-dashboard"
+            href="/blog"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-opacity hover:opacity-80"
           >
             {t("cta")}

@@ -210,7 +210,7 @@ export default async function IndexPage() {
             </div>
           )}
 
-          <Link href="/blog/launch-week-day-1-new-dashboard">
+          <Link href="/blog/launch-week-day-2-app-boost">
             <Announcement>
               <AnnouncementTag className="hidden sm:block">
                 <span className="hidden sm:inline mr-2">🚀</span>

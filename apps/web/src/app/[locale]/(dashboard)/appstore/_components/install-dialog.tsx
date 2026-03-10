@@ -1113,6 +1113,9 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
   const { cylos: sessionCylos, user } = useAuth()
   const { data: cylosSummary } = useCylosSummary()
   const { data: versions, isLoading: versionsLoading } = useAppVersions(app.id)
+  const nestedVersions = app.versions ?? []
+  const versionSource = nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
+  const versionSourceLoading = nestedVersions.length === 0 && versionsLoading
 
   // Session cylos are static (set once at layout render). Merge in the live
   // app_slots_used from useCylosSummary so slot calculations stay current
@@ -1197,6 +1200,9 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
   const selectedVersionId = selectedVersion
     ? Number(selectedVersion)
     : undefined
+  const fallbackVersionIdFromSource =
+    versionSource.find((v) => v.is_default === 1)?.id ??
+    (versionSource.length === 1 ? versionSource[0].id : undefined)
   const { data: selectedVersionApp } = useAppDetail(app.id, selectedVersionId)
 
   /* ----- Domain state (RequiresDomain) ----- */
@@ -1595,7 +1601,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
 
     const versionId = selectedVersion
       ? Number(selectedVersion)
-      : (app.default_version_id ?? 0)
+      : (app.default_version_id ?? fallbackVersionIdFromSource ?? 0)
 
     const payload: Record<string, unknown> = {
       app_id: app.id,
@@ -1653,17 +1659,19 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
   }
 
   const hasMultipleVersions =
-    (app.enabled_version_count ?? 0) > 1 && versions && versions.length > 1
+    (app.enabled_version_count ?? 0) > 1 && versionSource.length > 1
   const hasCustomFields = visibleFields.length > 0
   const isBlocked = installGuard !== null && !isAdmin
   const { data: boostInfo, isLoading: boostInfoLoading } = useAppBoostInfo(
     app.id,
     selectedCyloId
   )
-  const selectedVersionData = versions?.find(
+  const selectedVersionData = versionSource.find(
     (v) => String(v.id) === selectedVersion
   )
-  const defaultVersionData = versions?.find((v) => v.is_default === 1)
+  const defaultVersionData =
+    versionSource.find((v) => v.is_default === 1) ??
+    (versionSource.length === 1 ? versionSource[0] : undefined)
   const boostBaseMemory =
     selectedVersionData?.memory ??
     defaultVersionData?.memory ??
@@ -1801,7 +1809,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
           {!isBlocked && hasMultipleVersions && (
             <div className="space-y-2">
               <Label htmlFor="version-select">{t("app.selectVersion")}</Label>
-              {versionsLoading ? (
+              {versionSourceLoading ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Loader2 className="size-4 animate-spin" />
                   {t("install.dialog.loadingVersions")}
@@ -1815,7 +1823,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
                     <SelectValue placeholder={t("app.selectVersion")} />
                   </SelectTrigger>
                   <SelectContent>
-                    {versions?.map((version) => (
+                    {versionSource.map((version) => (
                       <SelectItem key={version.id} value={String(version.id)}>
                         <div className="flex items-center gap-2">
                           <span>{version.version}</span>
