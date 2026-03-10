@@ -56,13 +56,31 @@ export interface InstalledAppVncInfo {
  */
 
 function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
+  const flag = (value: unknown): boolean => {
+    if (typeof value === "boolean") return value
+    if (typeof value === "number") return value === 1
+    if (typeof value === "string") {
+      const normalized = value.trim().toLowerCase()
+      if (normalized === "1" || normalized === "true") return true
+      if (normalized === "0" || normalized === "false" || normalized === "")
+        return false
+    }
+    return false
+  }
+
+  const isDeleting = flag(raw.deleting)
+  const isUpdating = flag(raw.updating)
+  const isInstalling = flag(raw.installing)
+  const isEnabled = flag(raw.enabled)
+  const state = Number(raw.state ?? 0)
+
   // Derive a human-readable status string
   let status = "offline"
-  if (raw.deleting) status = "deleting"
-  else if (raw.updating) status = "updating"
-  else if (raw.installing) status = "installing"
-  else if (!raw.enabled) status = "inactive"
-  else if (raw.state === 1) status = "online"
+  if (isDeleting) status = "deleting"
+  else if (isUpdating) status = "updating"
+  else if (isInstalling) status = "installing"
+  else if (!isEnabled) status = "inactive"
+  else if (state === 1) status = "online"
 
   const app = raw.app as Record<string, unknown> | undefined
   const availableVersionsRaw =
@@ -94,8 +112,8 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     app_slots: Number(raw.app_slots ?? 1),
     install_date: raw.created_at ? String(raw.created_at) : "",
     app_type: String(app?.type ?? "docker"),
-    state: Number(raw.state ?? 0),
-    enabled: Boolean(raw.enabled),
+    state,
+    enabled: isEnabled,
     cylo_default: Number(raw.cylo_default ?? 0),
     multiple_domains: Number(
       app?.multiple_domains ?? raw.multiple_domains ?? 0

@@ -317,9 +317,12 @@ export default function InstalledAppDetailPage({
     // migration.progress for cylo details is routed on central WS via cylo:<id>
     subscribe(`cylo:${app.cylo_id}`)
     subscribe(`instance:${appId}`)
+    // Server-side job lifecycle events are broadcast on this channel.
+    subscribe("instance_events")
     return () => {
       unsubscribe(`cylo:${app.cylo_id}`)
       unsubscribe(`instance:${appId}`)
+      unsubscribe("instance_events")
       if (app.server_name) {
         disconnectFromServer(app.server_name)
       }
@@ -360,6 +363,10 @@ export default function InstalledAppDetailPage({
       queryClient.invalidateQueries({
         queryKey: queryKeys.installedApps.detail(appId)
       })
+      queryClient.refetchQueries({
+        queryKey: queryKeys.installedApps.detail(appId),
+        type: "active"
+      })
       queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
     },
     [appId, queryClient]
@@ -368,7 +375,7 @@ export default function InstalledAppDetailPage({
   const handleNotification = useCallback(
     (msg: { data: unknown }) => {
       const notif = msg.data as NotificationCreatedData
-      if (notif.type !== "instance" || notif.relid !== appId) return
+      if (notif.type !== "instance" || Number(notif.relid) !== appId) return
 
       if (notif.action === "removed") {
         pruneInstalledAppFromHistory(appId)
@@ -381,6 +388,10 @@ export default function InstalledAppDetailPage({
       if (notif.action === "add" || notif.action === "updated") {
         queryClient.invalidateQueries({
           queryKey: queryKeys.installedApps.detail(appId)
+        })
+        queryClient.refetchQueries({
+          queryKey: queryKeys.installedApps.detail(appId),
+          type: "active"
         })
         queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
       }
