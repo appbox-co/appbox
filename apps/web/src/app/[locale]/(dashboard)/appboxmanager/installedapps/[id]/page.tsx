@@ -486,6 +486,12 @@ export default function InstalledAppDetailPage({
           .map((v) => ({ id: v.id, version: v.version }))
           .filter((v) => v.id > 0 && v.version.length > 0)
   const effectiveStatus = cylo?.is_migrating ? "migrating" : app.status
+  const isAppOperational = app.enabled && app.state === 1
+  const actionsAvailable =
+    cylo?.status !== "suspended" &&
+    !TRANSITIONAL_STATUSES.has(effectiveStatus) &&
+    effectiveStatus !== "offline" &&
+    isAppOperational
   const appForActions = {
     ...app,
     status: effectiveStatus,
@@ -562,10 +568,8 @@ export default function InstalledAppDetailPage({
       {/* State alert banners: suspended appbox or transitional app state */}
       <AppAlerts app={app} cylo={cylo} job={job} showPayloadMessage={false} />
 
-      {/* Actions — hidden when appbox is suspended, app is transitional, or system-offline */}
-      {cylo?.status !== "suspended" &&
-        !TRANSITIONAL_STATUSES.has(effectiveStatus) &&
-        effectiveStatus !== "offline" && (
+      {/* Actions — shown only when app and appbox are operational */}
+      {actionsAvailable ? (
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base">{t("actions")}</CardTitle>
@@ -591,6 +595,18 @@ export default function InstalledAppDetailPage({
                   </Button>
                 )}
               </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">{t("actions")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Actions are unavailable while this app is inactive, offline, or
+                in a transition state.
+              </p>
             </CardContent>
           </Card>
         )}

@@ -6,7 +6,7 @@
     "meta_title": "Appbox - Deploy Apps in Seconds | One-Click App Hosting",
     "flipwords": [
       "websites",
-      "databases", 
+      "databases",
       "servers",
       "transfers",
       "tools",
@@ -101,9 +101,18 @@
       "group_label": "Linux VPS",
       "cta": "Browse VPS",
       "features": {
-        "f1": { "title": "Full Root Access", "description": "Complete control via SSH" },
-        "f2": { "title": "Scalable Resources", "description": "Boost RAM & CPU per app" },
-        "f3": { "title": "One-Click Deploy", "description": "Ubuntu, Debian & more" }
+        "f1": {
+          "title": "Full Root Access",
+          "description": "Complete control via SSH"
+        },
+        "f2": {
+          "title": "Scalable Resources",
+          "description": "Boost RAM & CPU per app"
+        },
+        "f3": {
+          "title": "One-Click Deploy",
+          "description": "Ubuntu, Debian & more"
+        }
       }
     },
     "windows_vps_promo": {
@@ -114,9 +123,18 @@
       "description": "Run Windows Server on your Appbox with full Remote Desktop access. Perfect for Windows-only software, game servers, and remote workstations.",
       "cta": "Browse Windows Apps",
       "features": {
-        "f1": { "title": "Remote Desktop", "description": "Full GUI from any browser" },
-        "f2": { "title": "Windows Server", "description": "Run any Windows application" },
-        "f3": { "title": "Resource Boost", "description": "Allocate more power as needed" }
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "Full GUI from any browser"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Run any Windows application"
+        },
+        "f3": {
+          "title": "Resource Boost",
+          "description": "Allocate more power as needed"
+        }
       }
     },
     "features": {
@@ -882,7 +900,8 @@
       "filterByStatus": "Status",
       "filterByCylo": "Appbox",
       "allCylos": "All Appboxes",
-      "bulkSelected": "{count} selected"
+      "bulkSelected": "{count} selected",
+      "bulkUnavailable": "{count, plural, one {# app unavailable} other {# apps unavailable}}"
     },
     "appDetail": {
       "port": "Port",

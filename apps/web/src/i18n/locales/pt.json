@@ -102,9 +102,18 @@
       "group_label": "Linux VPS",
       "cta": "Explorar VPS",
       "features": {
-        "f1": { "title": "Acesso Root Completo", "description": "Controle total via SSH" },
-        "f2": { "title": "Recursos Escaláveis", "description": "Impulsione RAM & CPU por app" },
-        "f3": { "title": "Deploy com Um Clique", "description": "Ubuntu, Debian & mais" }
+        "f1": {
+          "title": "Acesso Root Completo",
+          "description": "Controle total via SSH"
+        },
+        "f2": {
+          "title": "Recursos Escaláveis",
+          "description": "Impulsione RAM & CPU por app"
+        },
+        "f3": {
+          "title": "Deploy com Um Clique",
+          "description": "Ubuntu, Debian & mais"
+        }
       }
     },
     "windows_vps_promo": {
@@ -115,9 +124,18 @@
       "description": "Execute Windows Server na sua Appbox com acesso completo via Remote Desktop. Perfeito para software exclusivo do Windows, servidores de jogos e estações de trabalho remotas.",
       "cta": "Explorar Apps Windows",
       "features": {
-        "f1": { "title": "Remote Desktop", "description": "GUI completa de qualquer navegador" },
-        "f2": { "title": "Windows Server", "description": "Execute qualquer aplicação Windows" },
-        "f3": { "title": "Impulso de Recursos", "description": "Aloque mais poder conforme necessário" }
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "GUI completa de qualquer navegador"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Execute qualquer aplicação Windows"
+        },
+        "f3": {
+          "title": "Impulso de Recursos",
+          "description": "Aloque mais poder conforme necessário"
+        }
       }
     },
     "features": {
@@ -821,7 +839,8 @@
       "empty": "No installed apps found.",
       "filterByCylo": "Filter by appbox",
       "allCylos": "All Appboxes",
-      "bulkSelected": "{count} selected"
+      "bulkSelected": "{count} selected",
+      "bulkUnavailable": "{count, plural, one {# app indisponível} other {# apps indisponíveis}}"
     },
     "appDetail": {
       "port": "Port",

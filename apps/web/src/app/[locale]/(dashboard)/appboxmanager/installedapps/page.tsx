@@ -74,6 +74,27 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
   )
 }))
 
+function isTransitioningStatus(status: string): boolean {
+  return (
+    status === "migrating" ||
+    status === "installing" ||
+    status === "updating" ||
+    status === "deleting"
+  )
+}
+
+function isEligibleForBulkAction(
+  app: InstalledApp,
+  action: "start" | "stop" | "restart"
+): boolean {
+  const isStopped = app.status === "offline" || app.status === "inactive"
+  const isTransitioning = isTransitioningStatus(app.status)
+
+  if (action === "start") return !isTransitioning && isStopped
+  if (action === "stop") return !isTransitioning && app.status === "online"
+  return !isTransitioning && !isStopped
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Inline action buttons                                                      */
 /* -------------------------------------------------------------------------- */
@@ -470,19 +491,7 @@ export default function InstalledAppsPage() {
     clearSelection: () => void
   ) => {
     const eligibleIds = selectedRows
-      .filter((app) => {
-        const isStopped = app.status === "offline" || app.status === "inactive"
-        const isTransitioning =
-          app.status === "migrating" ||
-          app.status === "installing" ||
-          app.status === "updating" ||
-          app.status === "deleting"
-
-        if (action === "start") return !isTransitioning && isStopped
-        if (action === "stop")
-          return !isTransitioning && app.status === "online"
-        return !isTransitioning && !isStopped
-      })
+      .filter((app) => isEligibleForBulkAction(app, action))
       .map((app) => app.id)
 
     if (!eligibleIds.length) return
@@ -520,15 +529,39 @@ export default function InstalledAppsPage() {
         getRowId={(row) => String(row.id)}
         renderBulkActions={({ selectedRows, clearSelection }) =>
           selectedRows.length ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              {(() => {
+                const startEligible = selectedRows.some((app) =>
+                  isEligibleForBulkAction(app, "start")
+                )
+                const stopEligible = selectedRows.some((app) =>
+                  isEligibleForBulkAction(app, "stop")
+                )
+                const restartEligible = selectedRows.some((app) =>
+                  isEligibleForBulkAction(app, "restart")
+                )
+                const ineligibleCount = selectedRows.filter(
+                  (app) =>
+                    !isEligibleForBulkAction(app, "start") &&
+                    !isEligibleForBulkAction(app, "stop") &&
+                    !isEligibleForBulkAction(app, "restart")
+                ).length
+
+                return (
+                  <>
               <span className="text-xs text-muted-foreground">
                 {t("bulkSelected", { count: selectedRows.length })}
               </span>
+                    {ineligibleCount > 0 && (
+                      <span className="text-xs text-muted-foreground">
+                        {t("bulkUnavailable", { count: ineligibleCount })}
+                      </span>
+                    )}
               <Button
                 variant="outline"
                 size="sm"
                 className="h-9"
-                disabled={bulkAction !== null}
+                disabled={bulkAction !== null || !startEligible}
                 onClick={() =>
                   runBulkAction("start", selectedRows, clearSelection)
                 }
@@ -544,7 +577,7 @@ export default function InstalledAppsPage() {
                 variant="outline"
                 size="sm"
                 className="h-9"
-                disabled={bulkAction !== null}
+                disabled={bulkAction !== null || !stopEligible}
                 onClick={() =>
                   runBulkAction("stop", selectedRows, clearSelection)
                 }
@@ -560,7 +593,7 @@ export default function InstalledAppsPage() {
                 variant="outline"
                 size="sm"
                 className="h-9"
-                disabled={bulkAction !== null}
+                disabled={bulkAction !== null || !restartEligible}
                 onClick={() =>
                   runBulkAction("restart", selectedRows, clearSelection)
                 }
@@ -572,6 +605,9 @@ export default function InstalledAppsPage() {
                 )}
                 {tDetail("restart")}
               </Button>
+                  </>
+                )
+              })()}
             </div>
           ) : null
         }

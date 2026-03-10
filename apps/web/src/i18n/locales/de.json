@@ -102,9 +102,18 @@
       "group_label": "Linux VPS",
       "cta": "VPS durchsuchen",
       "features": {
-        "f1": { "title": "Voller Root-Zugriff", "description": "Komplette Kontrolle per SSH" },
-        "f2": { "title": "Skalierbare Ressourcen", "description": "RAM & CPU pro App boosten" },
-        "f3": { "title": "One-Click-Deploy", "description": "Ubuntu, Debian & mehr" }
+        "f1": {
+          "title": "Voller Root-Zugriff",
+          "description": "Komplette Kontrolle per SSH"
+        },
+        "f2": {
+          "title": "Skalierbare Ressourcen",
+          "description": "RAM & CPU pro App boosten"
+        },
+        "f3": {
+          "title": "One-Click-Deploy",
+          "description": "Ubuntu, Debian & mehr"
+        }
       }
     },
     "windows_vps_promo": {
@@ -115,9 +124,18 @@
       "description": "Betreibe Windows Server auf deiner Appbox mit vollem Remote-Desktop-Zugriff. Perfekt für Windows-Anwendungen, Game-Server und Remote-Arbeitsplätze.",
       "cta": "Windows-Apps durchsuchen",
       "features": {
-        "f1": { "title": "Remote Desktop", "description": "Volle GUI von jedem Browser" },
-        "f2": { "title": "Windows Server", "description": "Jede Windows-Anwendung ausführen" },
-        "f3": { "title": "Ressourcen-Boost", "description": "Mehr Leistung nach Bedarf zuweisen" }
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "Volle GUI von jedem Browser"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Jede Windows-Anwendung ausführen"
+        },
+        "f3": {
+          "title": "Ressourcen-Boost",
+          "description": "Mehr Leistung nach Bedarf zuweisen"
+        }
       }
     },
     "features": {
@@ -823,7 +841,8 @@
       "empty": "Keine installierten Apps gefunden.",
       "filterByCylo": "Nach Appbox filtern",
       "allCylos": "Alle Appboxes",
-      "bulkSelected": "{count} ausgewählt"
+      "bulkSelected": "{count} ausgewählt",
+      "bulkUnavailable": "{count, plural, one {# App nicht verfügbar} other {# Apps nicht verfügbar}}"
     },
     "appDetail": {
       "port": "Port",
