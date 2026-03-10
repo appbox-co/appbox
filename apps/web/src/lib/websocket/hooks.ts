@@ -285,6 +285,9 @@ export function useWsQueryInvalidation(wsContext?: {
               queryClient.invalidateQueries({
                 queryKey: queryKeys.installedApps.all
               })
+              queryClient.invalidateQueries({
+                queryKey: ["installedApps", "cylo"]
+              })
               // Slot usage is tracked on cylo summaries/details, not instance lists.
               queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
             } else if (notif.action === "add") {
@@ -293,7 +296,33 @@ export function useWsQueryInvalidation(wsContext?: {
               queryClient.invalidateQueries({
                 queryKey: queryKeys.installedApps.all
               })
+              queryClient.invalidateQueries({
+                queryKey: ["installedApps", "cylo"]
+              })
               queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+            } else if (notif.action === "updating") {
+              // Update started: refresh all installed-app list variants so
+              // appbox quick-lists and detail pages show transitional state.
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.installedApps.detail(instanceId)
+              })
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.installedApps.all
+              })
+              queryClient.invalidateQueries({
+                queryKey: ["installedApps", "cylo"]
+              })
+            } else if (notif.action === "updated") {
+              // Update finished: refresh instance and cylo-scoped app lists.
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.installedApps.detail(instanceId)
+              })
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.installedApps.all
+              })
+              queryClient.invalidateQueries({
+                queryKey: ["installedApps", "cylo"]
+              })
             } else if (notif.action === "removing") {
               // Optimistically mark the app as deleting so the detail page
               // reflects the change immediately without waiting for a refetch.
@@ -770,7 +799,39 @@ export function useWsQueryInvalidation(wsContext?: {
           }
           break
 
-        case WS_SERVER_EVENTS.JOB_STARTED:
+        case WS_SERVER_EVENTS.JOB_STARTED: {
+          const jobId = data.job_id != null ? Number(data.job_id) : NaN
+          const instanceId =
+            data.instance_id != null ? Number(data.instance_id) : NaN
+          const cyloId = data.cylo_id != null ? Number(data.cylo_id) : NaN
+          if (!isNaN(jobId)) {
+            queryClient.setQueryData(queryKeys.jobs.detail(jobId), data)
+          }
+          if (!isNaN(instanceId)) {
+            queryClient.setQueryData(
+              queryKeys.jobs.byInstance(instanceId),
+              data
+            )
+            // Keep app status lists fresh even when no notification event is emitted.
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.installedApps.detail(instanceId)
+            })
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.installedApps.all
+            })
+            queryClient.invalidateQueries({
+              queryKey: ["installedApps", "cylo"]
+            })
+          }
+          if (!isNaN(cyloId)) {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.cylos.detail(cyloId)
+            })
+            queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+          }
+          break
+        }
+
         case WS_SERVER_EVENTS.JOB_PROGRESS: {
           const jobId = data.job_id != null ? Number(data.job_id) : NaN
           const instanceId =
