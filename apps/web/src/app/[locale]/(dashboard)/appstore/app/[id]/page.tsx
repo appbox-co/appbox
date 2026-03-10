@@ -86,7 +86,11 @@ function useVersionColumns(appSlotsFallback: number): ColumnDef<AppVersion>[] {
     {
       accessorKey: "cpus",
       header: t("app.baseCpus"),
-      cell: ({ row }) => (row.original.cpus === 0 ? "∞" : row.original.cpus)
+      cell: ({ row }) => {
+        const cpus = Number(row.original.cpus ?? 0)
+        if (!Number.isFinite(cpus)) return "—"
+        return cpus === 0 ? "∞" : cpus
+      }
     },
     {
       accessorKey: "created_at",

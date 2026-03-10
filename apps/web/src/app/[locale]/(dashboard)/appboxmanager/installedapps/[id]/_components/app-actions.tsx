@@ -44,9 +44,10 @@ import {
 
 interface AppActionsProps {
   app: InstalledApp
+  startOnlyActionable?: boolean
 }
 
-export function AppActions({ app }: AppActionsProps) {
+export function AppActions({ app, startOnlyActionable = false }: AppActionsProps) {
   const t = useTranslations("appboxmanager.appDetail")
   const [uninstallOpen, setUninstallOpen] = useState(false)
   const [updateConfirmOpen, setUpdateConfirmOpen] = useState(false)
@@ -124,7 +125,12 @@ export function AppActions({ app }: AppActionsProps) {
         <Button
           variant="outline"
           size="sm"
-          disabled={isStopped || isTransitioning || stopMutation.isPending}
+          disabled={
+            startOnlyActionable ||
+            isStopped ||
+            isTransitioning ||
+            stopMutation.isPending
+          }
           onClick={() => stopMutation.mutate(app.id)}
         >
           {stopMutation.isPending ? (
@@ -139,7 +145,12 @@ export function AppActions({ app }: AppActionsProps) {
         <Button
           variant="outline"
           size="sm"
-          disabled={isStopped || isTransitioning || restartMutation.isPending}
+          disabled={
+            startOnlyActionable ||
+            isStopped ||
+            isTransitioning ||
+            restartMutation.isPending
+          }
           onClick={() => restartMutation.mutate(app.id)}
         >
           {restartMutation.isPending ? (
@@ -155,7 +166,7 @@ export function AppActions({ app }: AppActionsProps) {
           <Button
             variant="outline"
             size="sm"
-            disabled={updateMutation.isPending}
+            disabled={startOnlyActionable || updateMutation.isPending}
             onClick={() => setUpdateConfirmOpen(true)}
           >
             {updateMutation.isPending ? (
@@ -175,7 +186,11 @@ export function AppActions({ app }: AppActionsProps) {
                 setSelectedSwitchVersionId(val)
                 setSwitchConfirmOpen(true)
               }}
-              disabled={isTransitioning || switchVersionMutation.isPending}
+              disabled={
+                startOnlyActionable ||
+                isTransitioning ||
+                switchVersionMutation.isPending
+              }
             >
               <SelectTrigger className="h-8 w-[220px] text-xs">
                 <SelectValue placeholder={t("switchVersion")} />
@@ -195,6 +210,7 @@ export function AppActions({ app }: AppActionsProps) {
         <Button
           variant="destructive"
           size="sm"
+          disabled={startOnlyActionable}
           onClick={() => setUninstallOpen(true)}
         >
           <Trash2 className="mr-1.5 size-4" />
@@ -206,7 +222,7 @@ export function AppActions({ app }: AppActionsProps) {
           <CustomButtonItem
             key={btn.id}
             button={btn}
-            isTransitioning={isTransitioning}
+            isTransitioning={isTransitioning || startOnlyActionable}
             isPending={triggerMutation.isPending && customConfirmId === btn.id}
             onConfirm={() => {
               setCustomConfirmId(btn.id)

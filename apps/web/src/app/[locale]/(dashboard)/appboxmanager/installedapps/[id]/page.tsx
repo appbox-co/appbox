@@ -498,6 +498,11 @@ export default function InstalledAppDetailPage({
           .filter((v) => v.id > 0 && v.version.length > 0)
   const effectiveStatus = cylo?.is_migrating ? "migrating" : app.status
   const isAppOperational = app.enabled && app.state === 1
+  const isStartRecoverable =
+    cylo?.status !== "suspended" &&
+    !TRANSITIONAL_STATUSES.has(effectiveStatus) &&
+    app.state === 0 &&
+    !app.enabled
   const actionsAvailable =
     cylo?.status !== "suspended" &&
     !TRANSITIONAL_STATUSES.has(effectiveStatus) &&
@@ -580,14 +585,17 @@ export default function InstalledAppDetailPage({
       <AppAlerts app={app} cylo={cylo} job={job} showPayloadMessage={false} />
 
       {/* Actions — shown only when app and appbox are operational */}
-      {actionsAvailable ? (
+      {actionsAvailable || isStartRecoverable ? (
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base">{t("actions")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap items-center gap-2">
-                <AppActions app={appForActions} />
+                <AppActions
+                  app={appForActions}
+                  startOnlyActionable={isStartRecoverable}
+                />
                 {upgradeUrl && (
                   <Button
                     asChild

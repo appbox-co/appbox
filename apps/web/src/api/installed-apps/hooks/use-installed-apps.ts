@@ -184,6 +184,14 @@ export function useBoostApp() {
   return useMutation({
     mutationFn: ({ id, boostSlots }: { id: number; boostSlots: number }) =>
       boostInstance(id, boostSlots),
+    onMutate: ({ id }) => {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(
+          `appBoostMutation:${id}`,
+          String(Date.now())
+        )
+      }
+    },
     onSuccess: (_data, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.installedApps.detail(id)

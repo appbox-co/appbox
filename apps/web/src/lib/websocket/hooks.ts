@@ -121,6 +121,25 @@ function showNotificationToast(notif: NotificationCreatedData) {
   }
 }
 
+function shouldSuppressBoostToast(instanceId: number): boolean {
+  if (typeof window === "undefined") return false
+
+  const key = `appBoostMutation:${instanceId}`
+  const raw = sessionStorage.getItem(key)
+  if (!raw) return false
+
+  const ts = Number(raw)
+  if (!Number.isFinite(ts)) {
+    sessionStorage.removeItem(key)
+    return false
+  }
+
+  // Suppress only very recent local boost actions from this tab.
+  const isRecentLocalMutation = Date.now() - ts < 15_000
+  sessionStorage.removeItem(key)
+  return isRecentLocalMutation
+}
+
 type WsEventCallback<T = unknown> = (data: T, message: WsMessage<T>) => void
 
 function asCyloId(value: unknown): number | null {
@@ -678,6 +697,14 @@ export function useWsQueryInvalidation(wsContext?: {
           }
 
           queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+
+          if (
+            Number.isFinite(instanceId) &&
+            instanceId > 0 &&
+            !shouldSuppressBoostToast(instanceId)
+          ) {
+            toast("App boost settings were updated in another session.")
+          }
           break
         }
 
