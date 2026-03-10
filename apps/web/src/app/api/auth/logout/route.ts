@@ -38,23 +38,10 @@ function normalizedCookieDomainsForHost(host: string): (string | undefined)[] {
 }
 
 export async function POST(request: NextRequest) {
-  const debugEnabled = request.nextUrl.searchParams.get("debug") === "1"
   const incomingToken = request.cookies.get("authorization_token")?.value
   const host = request.headers.get("host") ?? ""
   const domainsToClear = normalizedCookieDomainsForHost(host)
   const secureForRequest = COOKIE_SECURE || request.nextUrl.protocol === "https:"
-  const debugInfo: Record<string, unknown> = {
-    host,
-    origin: request.headers.get("origin") ?? "",
-    cookieDomainConfig: COOKIE_DOMAIN ?? null,
-    cookieSecureConfig: COOKIE_SECURE,
-    cookieSecureEffective: secureForRequest,
-    hasIncomingAuthCookie: Boolean(incomingToken),
-    incomingTokenPrefix: incomingToken ? incomingToken.slice(0, 16) : null,
-    incomingCookies: request.cookies.getAll().map((c) => c.name),
-    domainsToClear: domainsToClear.map((d) => d ?? "(host-only)"),
-    clearedVariants: [] as Array<{ domain: string; sameSite: string }>
-  }
 
   try {
     if (incomingToken) {
@@ -83,9 +70,6 @@ export async function POST(request: NextRequest) {
       maxAge: 0,
       expires: new Date(0)
     })
-    ;(debugInfo.clearedVariants as Array<{ domain: string; sameSite: string }>).push(
-      { domain: domain ?? "(host-only)", sameSite: "lax" }
-    )
     res.cookies.set("authorization_token", "", {
       httpOnly: true,
       secure: secureForRequest,
@@ -95,14 +79,6 @@ export async function POST(request: NextRequest) {
       maxAge: 0,
       expires: new Date(0)
     })
-    ;(debugInfo.clearedVariants as Array<{ domain: string; sameSite: string }>).push(
-      { domain: domain ?? "(host-only)", sameSite: "strict" }
-    )
-  }
-
-  if (debugEnabled) {
-    console.info("[auth/logout] debug", debugInfo)
-    return NextResponse.json({ success: true, debug: debugInfo }, { headers: res.headers })
   }
   return res
 }

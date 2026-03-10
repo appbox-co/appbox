@@ -33,24 +33,12 @@ interface AuthProviderProps {
 export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
   const logout = useCallback(async () => {
     try {
-      const response = await fetch("/api/auth/logout?debug=1", {
+      await fetch("/api/auth/logout", {
         method: "POST",
         credentials: "include",
         cache: "no-store",
         keepalive: true
       })
-      const data = await response.json().catch(() => null)
-      if (data?.debug) {
-        const pretty = JSON.stringify(data.debug, null, 2)
-        console.debug(`[logout debug json]\n${pretty}`)
-        Object.entries(data.debug as Record<string, unknown>).forEach(
-          ([key, value]) => {
-            const rendered =
-              typeof value === "string" ? value : JSON.stringify(value)
-            console.debug(`[logout debug] ${key}: ${rendered}`)
-          }
-        )
-      }
     } catch {
       // Ignore errors
     }
