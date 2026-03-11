@@ -15,6 +15,7 @@ import {
   PageHeaderHeading
 } from "@/components/marketing/page-header"
 import { PromoHeroWrapper } from "@/components/marketing/promo-hero-wrapper"
+import { VpsLaunchPromoSection } from "@/components/marketing/vps-launch-promo-section"
 import { VpsPromoSection } from "@/components/marketing/vps-promo-section"
 import { Icons } from "@/components/shared/icons"
 import {
@@ -298,6 +299,8 @@ export default async function IndexPage() {
       </div>
 
       {launchWeekFlags.day_1 && <DashboardPromoSection />}
+
+      {launchWeekFlags.day_3 && <VpsLaunchPromoSection />}
 
       {launchWeekFlags.day_5 && (
         <VpsPromoSection showLinux={true} showWindows={true} />

@@ -44,22 +44,18 @@ export function AppFilterClient({
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // Get query parameters
-  const urlSearchTerm = searchParams.get("q") || ""
-  const urlCategory = searchParams.get("category") || "all"
-  const initialAppSlots = searchParams.get("slots")
+  // Derive filter values directly from URL search params so that browser
+  // back/forward stays in sync without needing setState inside an effect.
+  const selectedCategory = searchParams.get("category") || initialCategory || "all"
+  const appSlots = searchParams.get("slots")
     ? Number(searchParams.get("slots"))
     : null
-  const initialSortBy = searchParams.get("sort") || "name"
+  const sortBy = searchParams.get("sort") || "name"
 
-  // Set up state for filtering
   const apps = initialApps
-  const [searchTerm, setSearchTerm] = useState(initialSearch || urlSearchTerm)
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    initialCategory || urlCategory
+  const [searchTerm, setSearchTerm] = useState(
+    initialSearch || searchParams.get("q") || ""
   )
-  const [appSlots, setAppSlots] = useState<number | null>(initialAppSlots)
-  const [sortBy, setSortBy] = useState<string>(initialSortBy)
   const [filteredApps, setFilteredApps] = useState<App[]>(initialApps)
 
   // Track previous URL to prevent unnecessary updates
@@ -138,9 +134,18 @@ export function AppFilterClient({
 
   // Handlers for filter changes
   const handleSearchChange = (value: string) => setSearchTerm(value)
-  const handleCategoryChange = (value: string) => setSelectedCategory(value)
-  const handleAppSlotsChange = (value: number | null) => setAppSlots(value)
-  const handleSortChange = (value: string) => setSortBy(value)
+  const handleCategoryChange = useCallback(
+    (value: string) => updateUrl(searchTerm, value, appSlots, sortBy),
+    [searchTerm, appSlots, sortBy, updateUrl]
+  )
+  const handleAppSlotsChange = useCallback(
+    (value: number | null) => updateUrl(searchTerm, selectedCategory, value, sortBy),
+    [searchTerm, selectedCategory, sortBy, updateUrl]
+  )
+  const handleSortChange = useCallback(
+    (value: string) => updateUrl(searchTerm, selectedCategory, appSlots, value),
+    [searchTerm, selectedCategory, appSlots, updateUrl]
+  )
 
   return (
     <>

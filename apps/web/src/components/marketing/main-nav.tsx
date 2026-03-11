@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { Icons } from "@/components/shared/icons"
 import { Button } from "@/components/ui/button"
@@ -12,7 +11,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { launchWeekFlags } from "@/config/launch-week-flags"
-import { Link, usePathname } from "@/i18n/routing"
+import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 interface MenuItem {

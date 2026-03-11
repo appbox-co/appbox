@@ -15,7 +15,7 @@ const features = [
     image: "/blog-images/day1-app-store.png",
     origin: "top left",
     position: "14% top",
-    shiftY: "-11%"
+    shiftY: "-9%"
   },
   {
     key: "boost",
