@@ -10,6 +10,7 @@ import ClientStarRating from "@/components/marketing/client-star-rating"
 import DeployButton from "@/components/marketing/deploy-button"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
+import { MarkdownDescription } from "@/components/ui/markdown-description"
 import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
 import { absoluteUrl } from "@/lib/utils"
@@ -19,6 +20,18 @@ interface AppDetailPageProps {
     appName: string
     locale: string
   }>
+}
+
+function markdownToPlainText(content: string): string {
+  return content
+    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
+    .replace(/`{1,3}([^`]+)`{1,3}/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/\r?\n+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
 }
 
 export async function generateMetadata({
@@ -36,10 +49,11 @@ export async function generateMetadata({
     }
 
     // Truncate description for meta tags (recommended ~155-160 chars)
+    const plainDescription = markdownToPlainText(appDetails.description)
     const truncatedDescription =
-      appDetails.description.length > 155
-        ? appDetails.description.substring(0, 152) + "..."
-        : appDetails.description
+      plainDescription.length > 155
+        ? plainDescription.substring(0, 152) + "..."
+        : plainDescription
 
     const title = `${appDetails.display_name} - Deploy on ${siteConfig.name}`
     const description = `${truncatedDescription} Deploy ${appDetails.display_name} with one click on Appbox.`
@@ -272,11 +286,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
               <h2 className="mb-3 text-xl font-semibold">
                 {t("detail.description")}
               </h2>
-              <div className="prose dark:prose-invert max-w-none">
-                {appDetails.description.split("\n").map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
+              <MarkdownDescription content={appDetails.description} />
             </div>
           </div>
         </div>

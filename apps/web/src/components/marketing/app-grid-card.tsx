@@ -14,6 +14,18 @@ interface AppGridCardProps {
   categories: string[]
 }
 
+function markdownToPlainText(content: string): string {
+  return content
+    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
+    .replace(/`{1,3}([^`]+)`{1,3}/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/\r?\n+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
 export function AppGridCard({
   name,
   publisher,
@@ -52,6 +64,8 @@ export function AppGridCard({
     router.push(`/apps/${encodeURIComponent(name)}`)
   }
 
+  const descriptionPreview = markdownToPlainText(description)
+
   return (
     <Card
       className={cn(
@@ -78,7 +92,7 @@ export function AppGridCard({
         </div>
 
         <p className="text-muted-foreground mb-3 line-clamp-3 text-sm overflow-hidden text-ellipsis max-h-[4.5em]">
-          {description}
+          {descriptionPreview}
         </p>
 
         {categories.length > 0 && (

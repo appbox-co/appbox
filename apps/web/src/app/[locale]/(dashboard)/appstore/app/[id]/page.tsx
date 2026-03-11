@@ -42,6 +42,7 @@ import { HistoryBackButton } from "@/components/dashboard/navigation/history-bac
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { MarkdownDescription } from "@/components/ui/markdown-description"
 import { Separator } from "@/components/ui/separator"
 import { ROUTES } from "@/constants/routes"
 import { formatDate } from "@/lib/utils"
@@ -540,9 +541,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-                {app.description}
-              </div>
+              <MarkdownDescription content={app.description} />
             </CardContent>
           </Card>
 
