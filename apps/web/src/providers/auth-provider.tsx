@@ -32,17 +32,22 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
   const logout = useCallback(async () => {
-    try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-        cache: "no-store",
-        keepalive: true
-      })
-    } catch {
-      // Ignore errors
+    let cleared = false
+    for (let attempt = 0; attempt < 2 && !cleared; attempt++) {
+      try {
+        const res = await fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+          cache: "no-store"
+        })
+        // Consume the body so the browser fully processes the response
+        // (including Set-Cookie) before we navigate away.
+        await res.json().catch(() => {})
+        cleared = res.ok
+      } catch {
+        // Network error — retry once.
+      }
     }
-    // Force a full navigation so middleware/session checks use fresh cookies.
     window.location.assign("/login")
   }, [])
 
