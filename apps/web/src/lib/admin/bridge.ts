@@ -3,9 +3,8 @@
 
 import type { ComponentType } from "react"
 
-export const ADMIN_MODULE_AVAILABLE = true as const
+export const ADMIN_MODULE_AVAILABLE = false as const
 
-export async function loadAdminDashboardModule(): Promise<ComponentType> {
-  const mod = await import("../../../admin-module/src/entry")
-  return mod.default as ComponentType
+export async function loadAdminDashboardModule(): Promise<ComponentType | null> {
+  return null
 }
