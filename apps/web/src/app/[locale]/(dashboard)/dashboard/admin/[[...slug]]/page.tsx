@@ -1,12 +1,9 @@
 import { notFound } from "next/navigation"
-import {
-  ADMIN_MODULE_AVAILABLE,
-  loadAdminDashboardModule
-} from "@/lib/admin/bridge"
+import { ADMIN_MODULE_AVAILABLE, loadAdminModule } from "@/lib/admin/bridge"
 import { requireAdminSession } from "@/lib/auth/require-admin"
 
 interface AdminPageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string; slug?: string[] }>
 }
 
 export default async function AdminPage({ params }: AdminPageProps) {
@@ -17,10 +14,10 @@ export default async function AdminPage({ params }: AdminPageProps) {
     notFound()
   }
 
-  const AdminDashboardModule = await loadAdminDashboardModule()
-  if (!AdminDashboardModule) {
+  const { Shell } = await loadAdminModule()
+  if (!Shell) {
     notFound()
   }
 
-  return <AdminDashboardModule />
+  return <Shell />
 }

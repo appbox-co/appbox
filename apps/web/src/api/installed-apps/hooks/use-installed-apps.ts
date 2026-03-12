@@ -23,13 +23,13 @@ import {
 /*  Queries                                                                    */
 /* -------------------------------------------------------------------------- */
 
-export function useInstalledApps(cyloId?: number) {
+export function useInstalledApps(cyloId?: number, userIdOverride?: number) {
   const { user } = useAuth()
   return useQuery({
     queryKey: cyloId
       ? queryKeys.installedApps.byCylo(cyloId)
       : queryKeys.installedApps.all,
-    queryFn: () => getInstalledApps(cyloId, user.id)
+    queryFn: () => getInstalledApps(cyloId, userIdOverride ?? user.id)
   })
 }
 

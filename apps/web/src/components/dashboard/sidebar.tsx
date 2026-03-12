@@ -1,30 +1,73 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import {
   Activity,
   AlertTriangle,
+  AppWindow,
+  ArrowRightLeft,
   BookOpen,
+  Building2,
   ChevronLeft,
   ChevronRight,
+  Gauge,
   Globe,
+  Grid3x3,
+  HardDrive,
   HelpCircle,
   LayoutDashboard,
+  Mail,
+  MessageSquare,
+  Network,
+  Package,
   PlusCircle,
   Rocket,
   Server,
+  Settings,
   Shield,
+  ShieldBan,
   Store,
+  Tag,
   User,
-  UserCircle
+  UserCircle,
+  Users
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { ROUTES } from "@/constants/routes"
 import { Link, usePathname } from "@/i18n/routing"
 import { ADMIN_MODULE_AVAILABLE } from "@/lib/admin/availability"
+import type { AdminMenuItem } from "@/lib/admin/bridge"
 import { cn } from "@/lib/utils"
+import { useAdminMode } from "@/providers/admin-mode-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { SidebarNav } from "./sidebar-nav"
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  LayoutDashboard,
+  Users,
+  UserCircle,
+  MessageSquare,
+  HardDrive,
+  ArrowRightLeft,
+  Server,
+  Rocket,
+  AlertTriangle,
+  Activity,
+  Gauge,
+  Building2,
+  Globe,
+  Settings,
+  Tag,
+  ShieldBan,
+  Mail,
+  Package,
+  Network,
+  Store,
+  AppWindow,
+  Grid3x3,
+  Shield
+}
 
 function syncLayout(isCollapsed: boolean) {
   if (typeof document === "undefined") return
@@ -32,12 +75,10 @@ function syncLayout(isCollapsed: boolean) {
 }
 
 const MARKETING_WIDGET_SELECTORS = [
-  // iubenda — cookie banner, container, any injected root element
   "#iubenda-cs-banner",
   ".iubenda-cs-container",
   '[id^="iubenda"]',
   '[class*="iubenda-cs"]',
-  // chatwoot
   ".woot-widget-holder",
   ".woot--bubble-holder",
   ".woot-widget-bubble"
@@ -47,13 +88,12 @@ function removeMarketingWidgets() {
   MARKETING_WIDGET_SELECTORS.forEach((sel) => {
     document.querySelectorAll(sel).forEach((el) => el.remove())
   })
-  // Ask iubenda's own API to close if still initialising
   try {
     const iub = (window as Window & { _iub?: { cs?: { api?: { close?: () => void } } } })
       ._iub
     iub?.cs?.api?.close?.()
   } catch {
-    // Ignore if iubenda is unavailable
+    /* empty */
   }
 }
 
@@ -62,7 +102,6 @@ function useHideMarketingWidgets() {
     document.documentElement.classList.add("dashboard-layout")
     removeMarketingWidgets()
 
-    // Watch for widgets being re-injected into <body> after SPA navigation
     const observer = new MutationObserver((mutations) => {
       const hasRelevantAddition = mutations.some((m) =>
         Array.from(m.addedNodes).some(
@@ -82,6 +121,21 @@ function useHideMarketingWidgets() {
   }, [])
 }
 
+function mapRegistryToNavItems(
+  menu: AdminMenuItem[]
+): { title: string; href: string; icon?: LucideIcon; children?: { title: string; href: string; icon?: LucideIcon }[] }[] {
+  return menu.map((item) => ({
+    title: item.label,
+    href: item.href,
+    icon: ICON_MAP[item.iconKey],
+    children: item.children?.map((child) => ({
+      title: child.label,
+      href: child.href,
+      icon: ICON_MAP[child.iconKey]
+    }))
+  }))
+}
+
 interface DashboardSidebarProps {
   mobile?: boolean
   onNavigate?: () => void
@@ -95,13 +149,26 @@ export function DashboardSidebar({
   const { user } = useAuth()
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
+  const { isAdminMode } = useAdminMode()
   useHideMarketingWidgets()
   const canAccessAdmin = user.roles === "admin"
+
+  const [adminMenu, setAdminMenu] = useState<AdminMenuItem[] | null>(null)
+
+  useEffect(() => {
+    if (!canAccessAdmin || !ADMIN_MODULE_AVAILABLE) return
+    import("@/lib/admin/bridge").then((mod) => {
+      mod.loadAdminModule().then((result) => {
+        if (result.registry) {
+          setAdminMenu(result.registry.menu)
+        }
+      })
+    })
+  }, [canAccessAdmin])
 
   useEffect(() => {
     if (mobile) return
     const stored = localStorage.getItem("sidebar-collapsed")
-    // Default to collapsed if nothing stored yet
     const initial = stored === null ? true : stored === "true"
     queueMicrotask(() => {
       setCollapsed(initial)
@@ -117,7 +184,7 @@ export function DashboardSidebar({
     syncLayout(next)
   }
 
-  const navItems = [
+  const userNavItems = [
     {
       title: t("dashboard"),
       href: ROUTES.DASHBOARD,
@@ -173,15 +240,6 @@ export function DashboardSidebar({
       href: "/",
       icon: PlusCircle
     },
-    ...(canAccessAdmin && ADMIN_MODULE_AVAILABLE
-      ? [
-          {
-            title: t("admin"),
-            href: ROUTES.DASHBOARD_ADMIN,
-            icon: Shield
-          }
-        ]
-      : []),
     {
       title: t("knowledgebase"),
       href: "https://billing.appbox.co/index.php?rp=/knowledgebase",
@@ -190,12 +248,21 @@ export function DashboardSidebar({
     }
   ]
 
+  const adminNavItems = useMemo(
+    () => (adminMenu ? mapRegistryToNavItems(adminMenu) : []),
+    [adminMenu]
+  )
+
+  const navItems =
+    isAdminMode && canAccessAdmin && adminNavItems.length > 0
+      ? adminNavItems
+      : userNavItems
+
   const avatarInitial =
     user.alias?.[0]?.toUpperCase() || user.email[0].toUpperCase()
 
   const sidebarContent = (
     <>
-      {/* Logo / Avatar area */}
       <div
         className={cn(
           "flex h-[75px] items-center border-b border-border",
@@ -204,25 +271,32 @@ export function DashboardSidebar({
       >
         {!collapsed && (
           <Link
-            href={ROUTES.DASHBOARD}
+            href={isAdminMode ? ROUTES.DASHBOARD_ADMIN : ROUTES.DASHBOARD}
             className="flex items-center gap-3"
             onClick={onNavigate}
           >
             <div
               data-anonymize-initial
-              className="gradient-badge flex size-10 items-center justify-center rounded-lg text-white font-bold text-sm shadow-sm"
+              className={cn(
+                "flex size-10 items-center justify-center rounded-lg text-white font-bold text-sm shadow-sm",
+                isAdminMode ? "bg-primary" : "gradient-badge"
+              )}
             >
-              {avatarInitial}
+              {isAdminMode ? (
+                <Shield className="size-5" />
+              ) : (
+                avatarInitial
+              )}
             </div>
             <div className="flex flex-col">
               <span
                 data-anonymize
                 className="text-sm font-medium text-foreground truncate max-w-[150px]"
               >
-                {user.alias || user.email}
+                {isAdminMode ? "Admin Panel" : (user.alias || user.email)}
               </span>
               <span data-anonymize className="text-xs text-muted-foreground">
-                {user.email}
+                {isAdminMode ? user.email : user.email}
               </span>
             </div>
           </Link>
@@ -230,14 +304,20 @@ export function DashboardSidebar({
         {collapsed && (
           <div
             data-anonymize-initial
-            className="gradient-badge flex size-10 shrink-0 items-center justify-center rounded-lg text-white font-bold text-sm shadow-sm"
+            className={cn(
+              "flex size-10 shrink-0 items-center justify-center rounded-lg text-white font-bold text-sm shadow-sm",
+              isAdminMode ? "bg-primary" : "gradient-badge"
+            )}
           >
-            {avatarInitial}
+            {isAdminMode ? (
+              <Shield className="size-5" />
+            ) : (
+              avatarInitial
+            )}
           </div>
         )}
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4">
         <SidebarNav
           items={navItems}
@@ -247,7 +327,6 @@ export function DashboardSidebar({
         />
       </nav>
 
-      {/* Collapse button (desktop only) */}
       {!mobile && (
         <div className="border-t border-border p-2">
           <button
@@ -274,7 +353,6 @@ export function DashboardSidebar({
     </>
   )
 
-  // Mobile variant: render without fixed positioning so it works inside Sheet
   if (mobile) {
     return (
       <div className="flex h-full flex-col bg-[hsl(var(--sidebar))] border-r border-border">
@@ -283,7 +361,6 @@ export function DashboardSidebar({
     )
   }
 
-  // Desktop variant: fixed sidebar
   return (
     <aside
       className={cn(

@@ -117,6 +117,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
               <motion.circle
                 cx="12"
                 cy="12"
+                initial={{ r: 0, opacity: 0 }}
                 animate={{
                   r: isLight ? 4.5 : 0,
                   opacity: isLight ? 1 : 0
@@ -124,6 +125,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
                 transition={spring}
               />
               <motion.g
+                initial={{ opacity: 0, rotate: 45, scale: 0.4 }}
                 animate={{
                   opacity: isLight ? 1 : 0,
                   rotate: isLight ? 0 : 45,
@@ -146,6 +148,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
               {/* ── Moon (Lucide path — proper large crescent) ── */}
               <motion.path
                 d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                initial={{ opacity: 0, scale: 0.3, rotate: 30 }}
                 animate={{
                   opacity: isDark ? 1 : 0,
                   scale: isDark ? 1 : 0.3,
@@ -162,6 +165,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
                 width="18"
                 height="12"
                 rx="2"
+                initial={{ opacity: 0, scale: 0.4 }}
                 animate={{
                   opacity: isSystem ? 1 : 0,
                   scale: isSystem ? 1 : 0.4
@@ -174,6 +178,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
                 y1="16"
                 x2="12"
                 y2="20"
+                initial={{ opacity: 0 }}
                 animate={{ opacity: isSystem ? 1 : 0 }}
                 transition={spring}
               />
@@ -182,6 +187,7 @@ export function ThemeModeToggle({ messages }: ThemeModeToggleProps) {
                 y1="20"
                 x2="16"
                 y2="20"
+                initial={{ opacity: 0 }}
                 animate={{ opacity: isSystem ? 1 : 0 }}
                 transition={spring}
               />

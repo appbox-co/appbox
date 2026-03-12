@@ -3,8 +3,29 @@
 
 import type { ComponentType } from "react"
 
-export const ADMIN_MODULE_AVAILABLE = false as const
+export const ADMIN_MODULE_AVAILABLE = true as const
 
-export async function loadAdminDashboardModule(): Promise<ComponentType | null> {
-  return null
+export interface AdminMenuItem {
+  id: string
+  label: string
+  iconKey: string
+  href: string
+  children?: AdminMenuItem[]
+}
+
+export interface AdminRegistry {
+  menu: AdminMenuItem[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pages: { id: string; path: string; component: ComponentType<any> }[]
+}
+
+export async function loadAdminModule(): Promise<{
+  Shell: ComponentType
+  registry: AdminRegistry
+}> {
+  const mod = await import("../../../admin-module/src/entry")
+  return {
+    Shell: mod.default as ComponentType,
+    registry: mod.adminRegistry as AdminRegistry
+  }
 }

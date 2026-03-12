@@ -14,11 +14,12 @@ const ICON_BASE_URL = "https://api.appbox.co/assets/images/apps/icons/"
 interface AppStoreCardProps {
   app: AppStoreItem
   className?: string
+  href?: string
 }
 
-export function AppStoreCard({ app, className }: AppStoreCardProps) {
+export function AppStoreCard({ app, className, href }: AppStoreCardProps) {
   return (
-    <Link href={ROUTES.APP_STORE_APP(app.id)} className="group block h-full">
+    <Link href={href ?? ROUTES.APP_STORE_APP(app.id)} className="group block h-full">
       <Card className={cn("card-glow h-full overflow-hidden", className)}>
         <CardContent className="h-full p-4">
           <div className="flex h-full gap-3">

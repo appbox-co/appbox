@@ -16,13 +16,14 @@ import { formatBytes, formatStorageGB } from "@/lib/utils"
 
 interface CyloStatsProps {
   cylo: CyloDetail
+  userId?: number
 }
 
-export function CyloStats({ cylo }: CyloStatsProps) {
+export function CyloStats({ cylo, userId }: CyloStatsProps) {
   const t = useTranslations("appboxmanager")
   const { data: quota } = useCyloDiskQuota(cylo.id)
   const { data: bandwidth } = useCyloBandwidth(cylo.id)
-  const { data: installedApps } = useInstalledApps(cylo.id)
+  const { data: installedApps } = useInstalledApps(cylo.id, userId)
 
   const storageUsed = quota?.used_gb ?? cylo.storage_used
   const storageTotal = cylo.storage_total

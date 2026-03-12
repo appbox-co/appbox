@@ -1105,12 +1105,26 @@ interface InstallDialogProps {
   app: AppStoreItem
   open: boolean
   onOpenChange: (open: boolean) => void
+  targetUserId?: number
+  targetUserRole?: string
+  targetCylos?: Cylo[]
+  onInstalled?: (installedAppId: number) => void
 }
 
-export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
+export function InstallDialog({
+  app,
+  open,
+  onOpenChange,
+  targetUserId,
+  targetUserRole,
+  targetCylos,
+  onInstalled
+}: InstallDialogProps) {
   const t = useTranslations("appstore")
   const router = useRouter()
   const { cylos: sessionCylos, user } = useAuth()
+  const effectiveUserId = targetUserId ?? user?.id ?? 0
+  const effectiveUserRole = targetUserRole ?? user?.roles
   const { data: cylosSummary } = useCylosSummary()
   const { data: versions, isLoading: versionsLoading } = useAppVersions(app.id)
   const nestedVersions = app.versions ?? []
@@ -1121,13 +1135,14 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
   // app_slots_used from useCylosSummary so slot calculations stay current
   // after installs/uninstalls without requiring a full page reload.
   const realCylos = useMemo(() => {
+    if (targetCylos) return targetCylos
     if (!cylosSummary) return sessionCylos
     const slotMap = new Map(cylosSummary.map((s) => [s.id, s.app_slots_used]))
     return sessionCylos.map((c) => {
       const liveUsed = slotMap.get(c.id)
       return liveUsed !== undefined ? { ...c, app_slots_used: liveUsed } : c
     })
-  }, [sessionCylos, cylosSummary])
+  }, [targetCylos, sessionCylos, cylosSummary])
   const migratingCyloIds = useMemo(
     () =>
       new Set(
@@ -1155,8 +1170,10 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     devFlags?.noMulti ||
     devFlags?.mostNoMulti ||
     devFlags?.someNoMulti
-  const isAdmin =
-    devGuardActive || devFlags?.simulateUser ? false : user?.roles === "admin"
+  const effectiveIsAdmin =
+    devGuardActive || devFlags?.simulateUser
+      ? false
+      : effectiveUserRole === "admin"
 
   // When dev guard flags are active, inject fake whmcs_serviceid into cylos
   // that are missing one so upgrade buttons render during testing.
@@ -1338,7 +1355,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
             app.id,
             appCategoryIds,
             cylos,
-            user?.id ?? 0
+            effectiveUserId
           )
         if (!cancelled) {
           setRestrictedCyloIds(restricted)
@@ -1354,7 +1371,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     return () => {
       cancelled = true
     }
-  }, [open, app.id, app.categories, cylos, user?.id])
+  }, [open, app.id, app.categories, cylos, effectiveUserId])
 
   /* ----- Available cylos (filtered) ----- */
   const availableCylos = useMemo(() => {
@@ -1389,7 +1406,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     if (guardsLoading) return null
 
     // App disabled
-    if (app.enabled === 0 && !isAdmin) {
+    if (app.enabled === 0 && !effectiveIsAdmin) {
       return {
         type: "disabled",
         message: t("install.guard.appDisabled")
@@ -1397,7 +1414,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     }
 
     // No cylos at all
-    if (installableCylos.length === 0 && !isAdmin) {
+    if (installableCylos.length === 0 && !effectiveIsAdmin) {
       return {
         type: "no_cylo",
         message: t("install.guard.noCylos"),
@@ -1412,7 +1429,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     if (
       installableCylos.length > 0 &&
       installableCylos.every((c) => effectiveRestrictedCyloIds.has(c.id)) &&
-      !isAdmin
+      !effectiveIsAdmin
     ) {
       if (installableCylos.length === 1) {
         const restrictedServiceId = installableCylos[0].whmcs_serviceid ?? ""
@@ -1443,7 +1460,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
           c.app_slots - c.app_slots_used < requiredSlots ||
           devNoSlotsCyloIds.has(c.id)
       )
-    if (allUnrestrictedLackSlots && !isAdmin) {
+    if (allUnrestrictedLackSlots && !effectiveIsAdmin) {
       if (unrestricted.length === 1 && effectiveRestrictedCyloIds.size === 0) {
         const slotServiceId = unrestricted[0].whmcs_serviceid ?? ""
         const slotUpgradeUrl = slotServiceId
@@ -1463,7 +1480,11 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     }
 
     // allow_multiple=0 and all eligible cylos already have the app
-    if (app.allow_multiple === 0 && availableCylos.length === 0 && !isAdmin) {
+    if (
+      app.allow_multiple === 0 &&
+      availableCylos.length === 0 &&
+      !effectiveIsAdmin
+    ) {
       const eligibleWithoutMulti = installableCylos.filter(
         (c) =>
           !effectiveRestrictedCyloIds.has(c.id) &&
@@ -1491,7 +1512,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
     guardsLoading,
     app.enabled,
     app.allow_multiple,
-    isAdmin,
+    effectiveIsAdmin,
     installableCylos,
     effectiveRestrictedCyloIds,
     effectiveExistingAppCyloIds,
@@ -1607,7 +1628,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
       app_id: app.id,
       version_id: versionId,
       cylo_id: Number(selectedCylo),
-      user_id: user?.id
+      user_id: effectiveUserId
     }
 
     if (showBoostSlider && boostSlots > 0) {
@@ -1644,7 +1665,11 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
         }
       )
       onOpenChange(false)
-      router.push(ROUTES.INSTALLED_APP_DETAIL(result.id))
+      if (onInstalled) {
+        onInstalled(result.id)
+      } else {
+        router.push(ROUTES.INSTALLED_APP_DETAIL(result.id))
+      }
     } catch (error) {
       const parsed = parseInstallError(
         error,
@@ -1661,7 +1686,7 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
   const hasMultipleVersions =
     (app.enabled_version_count ?? 0) > 1 && versionSource.length > 1
   const hasCustomFields = visibleFields.length > 0
-  const isBlocked = installGuard !== null && !isAdmin
+  const isBlocked = installGuard !== null && !effectiveIsAdmin
   const { data: boostInfo, isLoading: boostInfoLoading } = useAppBoostInfo(
     app.id,
     selectedCyloId
@@ -1693,13 +1718,13 @@ export function InstallDialog({ app, open, onOpenChange }: InstallDialogProps) {
   )
   const showBoostSlider =
     !isBlocked &&
-    isLaunchWeekEnabled("day_2", isAdmin) &&
+    isLaunchWeekEnabled("day_2", effectiveIsAdmin) &&
     selectedCyloId > 0 &&
     (boostInfo?.boost_install_allowed ?? 0) === 1 &&
     maxInstallBoostSlots > 0
   const showBoostUnavailable =
     !isBlocked &&
-    isLaunchWeekEnabled("day_2", isAdmin) &&
+    isLaunchWeekEnabled("day_2", effectiveIsAdmin) &&
     selectedCyloId > 0 &&
     !boostInfoLoading &&
     !showBoostSlider

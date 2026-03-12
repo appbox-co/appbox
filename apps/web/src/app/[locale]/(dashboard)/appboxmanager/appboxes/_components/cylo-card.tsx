@@ -55,9 +55,10 @@ function storageBarColor(pct: number) {
 interface CyloCardProps {
   cylo: CyloSummary
   className?: string
+  detailHref?: string
 }
 
-export function CyloCard({ cylo, className }: CyloCardProps) {
+export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
   const t = useTranslations("appboxmanager")
 
   const { data: quota } = useCyloDiskQuota(cylo.id)
@@ -108,7 +109,7 @@ export function CyloCard({ cylo, className }: CyloCardProps) {
           <div className="min-w-0 flex-1">
             <CardTitle className="text-base">
               <Link
-                href={ROUTES.APPBOX_DETAIL(cylo.id)}
+                href={detailHref ?? ROUTES.APPBOX_DETAIL(cylo.id)}
                 className="hover:underline"
                 data-anonymize-single
               >
@@ -289,7 +290,7 @@ export function CyloCard({ cylo, className }: CyloCardProps) {
           />
 
           <Button variant="outline" size="sm" className="shrink-0" asChild>
-            <Link href={ROUTES.APPBOX_DETAIL(cylo.id)}>
+            <Link href={detailHref ?? ROUTES.APPBOX_DETAIL(cylo.id)}>
               {t("cylos.viewDetails")}
               <ExternalLink className="ml-1 size-3.5" />
             </Link>

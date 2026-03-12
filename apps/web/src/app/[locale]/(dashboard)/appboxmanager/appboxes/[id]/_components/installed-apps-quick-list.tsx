@@ -357,10 +357,12 @@ function useColumns(
 
 interface InstalledAppsQuickListProps {
   cyloId: number
+  userId?: number
 }
 
 export function InstalledAppsQuickList({
-  cyloId
+  cyloId,
+  userId
 }: InstalledAppsQuickListProps) {
   const t = useTranslations("appboxmanager")
   const tInstalled = useTranslations("appboxmanager.installedApps")
@@ -372,7 +374,7 @@ export function InstalledAppsQuickList({
   const startMutation = useStartApp()
   const stopMutation = useStopApp()
   const restartMutation = useRestartApp()
-  const { data: apps, isLoading } = useInstalledApps(cyloId)
+  const { data: apps, isLoading } = useInstalledApps(cyloId, userId)
   const { data: cylo } = useCylo(cyloId)
   const { data: pinnedApps } = usePinnedApps(cyloId)
   const appsWithEffectiveStatus = useMemo(

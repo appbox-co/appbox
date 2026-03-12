@@ -58,8 +58,11 @@ export function ImageCell({
 type StatusVariant =
   | "online"
   | "offline"
+  | "enabled"
+  | "disabled"
   | "migrating"
   | "installing"
+  | "uninstalling"
   | "error"
   | "pending"
   | "active"
@@ -71,13 +74,18 @@ const statusStyles: Record<StatusVariant, string> = {
     "bg-emerald-500/15 text-emerald-700 border-emerald-500/25 dark:text-emerald-400",
   active:
     "bg-emerald-500/15 text-emerald-700 border-emerald-500/25 dark:text-emerald-400",
+  enabled:
+    "bg-emerald-500/15 text-emerald-700 border-emerald-500/25 dark:text-emerald-400",
   offline: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
+  disabled: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   error: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   suspended: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   migrating:
     "bg-amber-500/15 text-amber-700 border-amber-500/25 dark:text-amber-400",
   installing:
     "bg-blue-500/15 text-blue-700 border-blue-500/25 dark:text-blue-400",
+  uninstalling:
+    "bg-orange-500/15 text-orange-700 border-orange-500/25 dark:text-orange-400",
   pending:
     "bg-amber-500/15 text-amber-700 border-amber-500/25 dark:text-amber-400",
   inactive: "bg-zinc-500/15 text-zinc-700 border-zinc-500/25 dark:text-zinc-400"
@@ -86,23 +94,27 @@ const statusStyles: Record<StatusVariant, string> = {
 const statusDotStyles: Record<StatusVariant, string> = {
   online: "bg-emerald-500",
   active: "bg-emerald-500",
+  enabled: "bg-emerald-500",
   offline: "bg-red-500",
+  disabled: "bg-red-500",
   error: "bg-red-500",
   suspended: "bg-red-500",
   migrating: "bg-amber-500 animate-pulse",
   installing: "bg-blue-500 animate-pulse",
+  uninstalling: "bg-orange-500 animate-pulse",
   pending: "bg-amber-500 animate-pulse",
   inactive: "bg-zinc-500"
 }
 
 interface StatusCellProps {
-  status: string
+  status: string | number | boolean | null | undefined
   label?: string
   className?: string
 }
 
 export function StatusCell({ status, label, className }: StatusCellProps) {
-  const normalised = (status ?? "inactive").toLowerCase() as StatusVariant
+  const rawStatus = String(status ?? "inactive")
+  const normalised = rawStatus.toLowerCase() as StatusVariant
   const style = statusStyles[normalised] ?? statusStyles.inactive
   const dotStyle = statusDotStyles[normalised] ?? statusDotStyles.inactive
 
@@ -112,7 +124,7 @@ export function StatusCell({ status, label, className }: StatusCellProps) {
       className={cn("gap-1.5 font-medium", style, className)}
     >
       <span className={cn("size-1.5 rounded-full", dotStyle)} />
-      {label ?? status}
+      {label ?? rawStatus}
     </Badge>
   )
 }
