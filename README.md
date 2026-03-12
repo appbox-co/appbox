@@ -49,13 +49,25 @@ This repository contains the open-source code for the [Appbox](https://www.appbo
    pnpm install
    ```
 
-3. Start the development server:
+3. (Internal use only) Enable admin module for admin instance:
+
+   ```bash
+   git submodule update --init --recursive apps/web/admin-module
+   ```
+
+   To refresh it later:
+
+   ```bash
+   git submodule update --remote apps/web/admin-module
+   ```
+
+4. Start the development server:
 
    ```bash
    pnpm dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Project Structure
 

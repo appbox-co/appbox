@@ -5,6 +5,7 @@ export const ROUTES = {
 
   // Dashboard
   DASHBOARD: "/dashboard",
+  DASHBOARD_ADMIN: "/dashboard/admin",
 
   // App Store
   APP_STORE: "/appstore",

@@ -21,6 +21,7 @@ import {
 } from "lucide-react"
 import { ROUTES } from "@/constants/routes"
 import { Link, usePathname } from "@/i18n/routing"
+import { ADMIN_MODULE_AVAILABLE } from "@/lib/admin/availability"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
 import { SidebarNav } from "./sidebar-nav"
@@ -95,6 +96,7 @@ export function DashboardSidebar({
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   useHideMarketingWidgets()
+  const canAccessAdmin = user.roles === "admin"
 
   useEffect(() => {
     if (mobile) return
@@ -171,6 +173,15 @@ export function DashboardSidebar({
       href: "/",
       icon: PlusCircle
     },
+    ...(canAccessAdmin && ADMIN_MODULE_AVAILABLE
+      ? [
+          {
+            title: t("admin"),
+            href: ROUTES.DASHBOARD_ADMIN,
+            icon: Shield
+          }
+        ]
+      : []),
     {
       title: t("knowledgebase"),
       href: "https://billing.appbox.co/index.php?rp=/knowledgebase",
