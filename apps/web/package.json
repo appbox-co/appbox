@@ -5,7 +5,7 @@
   "scripts": {
     "generate-favicons": "node ../../generate-favicons.js src/app/icon-dark.svg .",
     "admin:bridge": "node scripts/generate-admin-bridge.mjs",
-    "dev": "pnpm admin:bridge && source .env.local 2>/dev/null; next dev --turbopack -H ${DEV_HTTPS_HOST:-localhost} --experimental-https --experimental-https-key \"$DEV_HTTPS_KEY\" --experimental-https-cert \"$DEV_HTTPS_CERT\"",
+    "dev": "set -a; [ -f .env.local ] && . ./.env.local; set +a; pnpm admin:bridge && next dev --turbopack -H ${DEV_HTTPS_HOST:-localhost} --experimental-https --experimental-https-key \"$DEV_HTTPS_KEY\" --experimental-https-cert \"$DEV_HTTPS_CERT\"",
     "dev:http": "next dev --turbopack",
     "build": "pnpm admin:bridge && run-s contentlayer:build next:build",
     "start": "pnpm admin:bridge && node server.mjs",
