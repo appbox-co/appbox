@@ -42,10 +42,8 @@ export async function getRecentBlogPosts(
     if (!res.ok) return []
 
     const data = await res.json()
-    const items: BlogPost[] = (data.items ?? data ?? [])
-      .slice(0, limit)
-
-      .map((item: Record<string, unknown>, index: number) => ({
+    const items: BlogPost[] = (data.items ?? data ?? []).map(
+      (item: Record<string, unknown>, index: number) => ({
         id: (item.id as number | undefined) ?? index,
         title: String(item.title ?? ""),
         excerpt: (
@@ -63,8 +61,12 @@ export async function getRecentBlogPosts(
           ? getSlugFromBlogUrl(String(item.url))
           : String(item.id ?? ""),
         image: (item.image as string | undefined) ?? undefined
-      }))
+      })
+    )
+
     return items
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, limit)
   } catch {
     return []
   }
