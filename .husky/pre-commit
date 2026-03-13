@@ -17,6 +17,34 @@ if [ -n "$STAGED_FILES" ]; then
   done
 fi
 
+# Keep admin bridge files deterministic in commits.
+# You can still run locally with ENABLE_ADMIN_MODULE=true, but staged files
+# must remain in canonical "disabled" mode to avoid autofix churn.
+if git diff --cached --name-only | grep -E '^apps/web/src/lib/admin/(bridge|availability)\.ts$' >/dev/null; then
+  echo "Validating staged admin bridge files..."
+
+  STAGED_BRIDGE=$(git show :apps/web/src/lib/admin/bridge.ts 2>/dev/null || true)
+  STAGED_AVAILABILITY=$(git show :apps/web/src/lib/admin/availability.ts 2>/dev/null || true)
+
+  if ! echo "$STAGED_BRIDGE" | grep -q 'export const ADMIN_MODULE_AVAILABLE = false as const'; then
+    echo "apps/web/src/lib/admin/bridge.ts must have ADMIN_MODULE_AVAILABLE = false"
+    echo "Run: cd apps/web && pnpm admin:bridge"
+    exit 1
+  fi
+
+  if ! echo "$STAGED_BRIDGE" | grep -q 'return { Shell: null, registry: null }'; then
+    echo "apps/web/src/lib/admin/bridge.ts must export null loader return values"
+    echo "Run: cd apps/web && pnpm admin:bridge"
+    exit 1
+  fi
+
+  if ! echo "$STAGED_AVAILABILITY" | grep -q 'export const ADMIN_MODULE_AVAILABLE = false as const'; then
+    echo "apps/web/src/lib/admin/availability.ts must have ADMIN_MODULE_AVAILABLE = false"
+    echo "Run: cd apps/web && pnpm admin:bridge"
+    exit 1
+  fi
+fi
+
 # Check if any MDX files or contentlayer config have been modified
 if git diff --cached --name-only | grep -E '\.mdx$|contentlayer\.config\.ts$'; then
   echo "Content files changed, rebuilding contentlayer..."
