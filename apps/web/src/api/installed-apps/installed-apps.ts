@@ -35,6 +35,7 @@ export interface InstalledApp {
   can_update: boolean
   /** App's backend default version string (update target). */
   default_version: string
+  custom_description?: string
   custom_fields?: Record<string, CustomField>
   available_versions: { id: number; version: string }[]
 }
@@ -86,6 +87,15 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
   else if (state === 1) status = "online"
 
   const app = raw.app as Record<string, unknown> | undefined
+  const customDescriptionRaw =
+    app?.custom_field_postinstall_description ??
+    app?.customFieldPostinstallDescription ??
+    raw.custom_field_postinstall_description ??
+    raw.customFieldPostinstallDescription ??
+    app?.custom_description ??
+    app?.customDescription ??
+    raw.custom_description ??
+    raw.customDescription
   const availableVersionsRaw =
     raw.available_versions ??
     app?.available_versions ??
@@ -130,6 +140,8 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     cpus: Number(raw.cpus ?? raw.CPUs ?? 0),
     can_update: Number(app?.canUpdate ?? raw.canUpdate ?? 1) === 1,
     default_version: String(app?.version ?? raw.latest_ver ?? ""),
+    custom_description:
+      typeof customDescriptionRaw === "string" ? customDescriptionRaw : "",
     custom_fields: (app?.customFields ?? raw.customFields) as
       | Record<string, CustomField>
       | undefined,

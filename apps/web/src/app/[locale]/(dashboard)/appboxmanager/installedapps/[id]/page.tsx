@@ -518,6 +518,7 @@ export default function InstalledAppDetailPage({
     : null
   const isVmApp = app.app_type === "vm"
   const isVmFeatureEnabled = isLaunchWeekEnabled("day_3", isAdmin)
+  const customDescription = app.custom_description?.trim() ?? ""
 
   return (
     <div className="space-y-6">
@@ -682,6 +683,16 @@ export default function InstalledAppDetailPage({
                 value={app.server_name}
               />
             </div>
+            {customDescription && (
+              <div className="mt-4 rounded-xl border border-blue-200/60 bg-blue-50/60 p-4 dark:border-blue-500/20 dark:bg-blue-950/30">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-700/90 dark:text-blue-300/80">
+                  {t("appNote")}
+                </p>
+                <p className="mt-1 text-sm leading-6 text-blue-900 dark:text-blue-200/90">
+                  {customDescription}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Custom fields — hidden during transitional states as template vars aren't populated yet */}
