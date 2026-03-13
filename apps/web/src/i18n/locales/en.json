@@ -21,8 +21,8 @@
       "docs",
       "testing"
     ],
-    "announcement": "Virtual Private Servers",
-    "announcement_tag": "Launch Day 3",
+    "announcement": "Read all Launch Week posts",
+    "announcement_tag": "Launch Week",
     "changelog": "Changelog",
     "buttons": {
       "get_started": "Get Started",
@@ -94,9 +94,9 @@
     },
     "vps_launch_promo": {
       "headline_1": "Virtual Private Servers.",
-      "headline_2": "Real VMs. Real power.",
-      "description": "Full KVM virtual machines with root access, a built-in web console, and five Linux distros to choose from. Run Docker, snaps, flatpaks, and anything else you need.",
-      "cta": "Read the full announcement",
+      "headline_2": "Linux and Windows.",
+      "description": "Full KVM virtual machines with root access, a built-in web console, and your choice of Linux or Windows 11 Pro. Run Docker, snaps, flatpaks, or any Windows software you need.",
+      "cta": "Read the Launch Week posts",
       "features": {
         "console": {
           "title": "Web Console.",
@@ -107,8 +107,12 @@
           "description": "A full Ubuntu desktop in your browser with audio, mic, and real apps like VS Code and Discord."
         },
         "distros": {
-          "title": "Five Distros.",
-          "description": "Ubuntu, Debian, Arch Linux, Fedora, and Rocky Linux. Pick the one you know."
+          "title": "Six Linux Distros.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux, and AlmaLinux. Pick the one you know."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "A full Windows VM with RDP, your Appbox data on the Z: drive, and admin access."
         }
       }
     },
@@ -350,7 +354,10 @@
       "per_month": "/mo",
       "order_now": "Order Now",
       "billed_as": "Billed",
-      "excluded_app_categories": "Excluded App Categories"
+      "excluded_app_categories": "Excluded App Categories",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "Supported",
+      "windows_vps_dedicated_only": "Dedicated plans only (NG-18000+)"
     }
   },
   "apps": {
@@ -605,6 +612,7 @@
       "offline": "Offline",
       "restarting": "Restarting",
       "migrating": "Migrating",
+      "frozen": "Frozen",
       "throttled": "Throttled",
       "lowQuota": "Low Quota"
     }
@@ -959,6 +967,10 @@
         "vmRestart": "VM boosts require a restart to apply updated resources.",
         "getMore": "Want more boost? Upgrade your plan"
       },
+      "freeze": "Freeze",
+      "unfreeze": "Unfreeze",
+      "confirmFreeze": "Freezing this app will stop it and free its app slots. You can unfreeze it later to restore it.",
+      "confirmUnfreeze": "Unfreezing this app will consume app slots again. Continue?",
       "confirmUninstall": "Are you sure you want to uninstall this app? This action cannot be undone.",
       "pinApp": "Pin App",
       "unpinApp": "Unpin App",
@@ -1204,6 +1216,7 @@
       "offline": "Offline",
       "restarting": "Restarting",
       "migrating": "Migrating",
+      "frozen": "Frozen",
       "throttled": "Throttled",
       "lowQuota": "Low Quota"
     }

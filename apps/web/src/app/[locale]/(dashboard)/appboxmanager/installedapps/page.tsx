@@ -5,13 +5,15 @@ import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query"
 import type { ColumnDef } from "@tanstack/react-table"
-import { Loader2, Play, RotateCcw, Square, Star } from "lucide-react"
+import { Loader2, Play, RotateCcw, Snowflake, Square, Star } from "lucide-react"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import {
   useInstalledApps,
+  useFreezeApp,
   useRestartApp,
   useStartApp,
   useStopApp,
+  useUnfreezeApp,
   type InstalledApp
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import { usePinApp } from "@/api/pinned-apps/hooks/use-pinned-apps"
@@ -48,6 +50,7 @@ const STATUS_DOT_COLORS: Record<string, string> = {
   offline: "bg-red-500",
   inactive: "bg-zinc-500",
   restarting: "bg-sky-500",
+  frozen: "bg-cyan-500",
   migrating: "bg-amber-500",
   installing: "bg-blue-500",
   updating: "bg-blue-500",
@@ -59,6 +62,7 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
   "offline",
   "inactive",
   "restarting",
+  "frozen",
   "migrating",
   "installing",
   "updating",
@@ -79,6 +83,7 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
 function isTransitioningStatus(status: string): boolean {
   return (
     status === "restarting" ||
+    status === "frozen" ||
     status === "migrating" ||
     status === "installing" ||
     status === "updating" ||
@@ -88,14 +93,17 @@ function isTransitioningStatus(status: string): boolean {
 
 function isEligibleForBulkAction(
   app: InstalledApp,
-  action: "start" | "stop" | "restart"
+  action: "start" | "stop" | "restart" | "freeze" | "unfreeze"
 ): boolean {
   const isStopped = app.status === "offline" || app.status === "inactive"
-  const isTransitioning = isTransitioningStatus(app.status)
+  const isFrozen = app.status === "frozen"
+  const isTransitioning = isTransitioningStatus(app.status) && !isFrozen
 
-  if (action === "start") return !isTransitioning && isStopped
-  if (action === "stop") return !isTransitioning && app.status === "online"
-  return !isTransitioning && !isStopped
+  if (action === "start") return !isTransitioning && !isFrozen && isStopped
+  if (action === "stop") return !isTransitioning && !isFrozen && app.status === "online"
+  if (action === "restart") return !isTransitioning && !isFrozen && !isStopped
+  if (action === "freeze") return !isTransitioning && !isFrozen
+  return isFrozen
 }
 
 /* -------------------------------------------------------------------------- */
@@ -107,9 +115,12 @@ function RowActions({ app }: { app: InstalledApp }) {
   const startMutation = useStartApp()
   const stopMutation = useStopApp()
   const restartMutation = useRestartApp()
+  const freezeMutation = useFreezeApp()
+  const unfreezeMutation = useUnfreezeApp()
 
   const isRunning = app.status === "online"
   const isStopped = app.status === "offline" || app.status === "inactive"
+  const isFrozen = app.status === "frozen"
   const isTransitioning =
     app.status === "restarting" ||
     app.status === "migrating" ||
@@ -135,7 +146,9 @@ function RowActions({ app }: { app: InstalledApp }) {
               variant="ghost"
               size="icon"
               className="size-7"
-              disabled={isRunning || isTransitioning || startMutation.isPending}
+              disabled={
+                isRunning || isFrozen || isTransitioning || startMutation.isPending
+              }
               onClick={(e) =>
                 handleAction(e, () => startMutation.mutate(app.id))
               }
@@ -157,7 +170,9 @@ function RowActions({ app }: { app: InstalledApp }) {
               variant="ghost"
               size="icon"
               className="size-7"
-              disabled={isStopped || isTransitioning || stopMutation.isPending}
+              disabled={
+                isStopped || isFrozen || isTransitioning || stopMutation.isPending
+              }
               onClick={(e) =>
                 handleAction(e, () => stopMutation.mutate(app.id))
               }
@@ -180,7 +195,7 @@ function RowActions({ app }: { app: InstalledApp }) {
               size="icon"
               className="size-7"
               disabled={
-                isStopped || isTransitioning || restartMutation.isPending
+                isStopped || isTransitioning || isFrozen || restartMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => restartMutation.mutate(app.id))
@@ -194,6 +209,36 @@ function RowActions({ app }: { app: InstalledApp }) {
             </Button>
           </TooltipTrigger>
           <TooltipContent>{t("restart")}</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-7"
+              disabled={
+                isTransitioning ||
+                freezeMutation.isPending ||
+                unfreezeMutation.isPending
+              }
+              onClick={(e) =>
+                handleAction(e, () =>
+                  isFrozen
+                    ? unfreezeMutation.mutate(app.id)
+                    : freezeMutation.mutate(app.id)
+                )
+              }
+            >
+              {freezeMutation.isPending || unfreezeMutation.isPending ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : isFrozen ? (
+                <Play className="size-3.5" />
+              ) : (
+                <Snowflake className="size-3.5" />
+              )}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{isFrozen ? t("unfreeze") : t("freeze")}</TooltipContent>
         </Tooltip>
       </div>
     </TooltipProvider>
@@ -400,11 +445,13 @@ export default function InstalledAppsPage() {
   const tDetail = useTranslations("appboxmanager.appDetail")
   const router = useRouter()
   const [bulkAction, setBulkAction] = useState<
-    "start" | "stop" | "restart" | null
+    "start" | "stop" | "restart" | "freeze" | "unfreeze" | null
   >(null)
   const startMutation = useStartApp()
   const stopMutation = useStopApp()
   const restartMutation = useRestartApp()
+  const freezeMutation = useFreezeApp()
+  const unfreezeMutation = useUnfreezeApp()
 
   // Load all apps (limit=999 applied in the API function)
   const { data: apps, isLoading } = useInstalledApps()
@@ -490,7 +537,7 @@ export default function InstalledAppsPage() {
   }
 
   const runBulkAction = async (
-    action: "start" | "stop" | "restart",
+    action: "start" | "stop" | "restart" | "freeze" | "unfreeze",
     selectedRows: InstalledApp[],
     clearSelection: () => void
   ) => {
@@ -505,7 +552,11 @@ export default function InstalledAppsPage() {
         ? startMutation.mutateAsync
         : action === "stop"
           ? stopMutation.mutateAsync
-          : restartMutation.mutateAsync
+          : action === "restart"
+            ? restartMutation.mutateAsync
+            : action === "freeze"
+              ? freezeMutation.mutateAsync
+              : unfreezeMutation.mutateAsync
 
     setBulkAction(action)
     try {
@@ -544,11 +595,19 @@ export default function InstalledAppsPage() {
                 const restartEligible = selectedRows.some((app) =>
                   isEligibleForBulkAction(app, "restart")
                 )
+                const freezeEligible = selectedRows.some((app) =>
+                  isEligibleForBulkAction(app, "freeze")
+                )
+                const unfreezeEligible = selectedRows.some((app) =>
+                  isEligibleForBulkAction(app, "unfreeze")
+                )
                 const ineligibleCount = selectedRows.filter(
                   (app) =>
                     !isEligibleForBulkAction(app, "start") &&
                     !isEligibleForBulkAction(app, "stop") &&
-                    !isEligibleForBulkAction(app, "restart")
+                    !isEligibleForBulkAction(app, "restart") &&
+                    !isEligibleForBulkAction(app, "freeze") &&
+                    !isEligibleForBulkAction(app, "unfreeze")
                 ).length
 
                 return (
@@ -608,6 +667,38 @@ export default function InstalledAppsPage() {
                   <RotateCcw className="mr-1.5 size-3.5" />
                 )}
                 {tDetail("restart")}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9"
+                disabled={bulkAction !== null || !freezeEligible}
+                onClick={() =>
+                  runBulkAction("freeze", selectedRows, clearSelection)
+                }
+              >
+                {bulkAction === "freeze" ? (
+                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                ) : (
+                  <Snowflake className="mr-1.5 size-3.5" />
+                )}
+                {tDetail("freeze")}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9"
+                disabled={bulkAction !== null || !unfreezeEligible}
+                onClick={() =>
+                  runBulkAction("unfreeze", selectedRows, clearSelection)
+                }
+              >
+                {bulkAction === "unfreeze" ? (
+                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                ) : (
+                  <Play className="mr-1.5 size-3.5" />
+                )}
+                {tDetail("unfreeze")}
               </Button>
                   </>
                 )

@@ -16,7 +16,6 @@ import {
 } from "@/components/marketing/page-header"
 import { PromoHeroWrapper } from "@/components/marketing/promo-hero-wrapper"
 import { VpsLaunchPromoSection } from "@/components/marketing/vps-launch-promo-section"
-import { VpsPromoSection } from "@/components/marketing/vps-promo-section"
 import { Icons } from "@/components/shared/icons"
 import {
   Announcement,
@@ -211,7 +210,7 @@ export default async function IndexPage() {
             </div>
           )}
 
-          <Link href="/blog/launch-week-day-3-vps">
+          <Link href="/blog">
             <Announcement>
               <AnnouncementTag className="hidden sm:block">
                 <span className="hidden sm:inline mr-2">🚀</span>
@@ -302,10 +301,6 @@ export default async function IndexPage() {
 
       {launchWeekFlags.day_3 && <VpsLaunchPromoSection />}
 
-      {launchWeekFlags.day_5 && (
-        <VpsPromoSection showLinux={true} showWindows={true} />
-      )}
-
       <section id="plans-section" className="scroll-mt-4 pt-4">
         <Plans
           data={plansData.data}
@@ -329,7 +324,12 @@ export default async function IndexPage() {
               per_month: t("plans.card.per_month"),
               order_now: t("plans.card.order_now"),
               billed_as: t("plans.card.billed_as"),
-              excluded_app_categories: t("plans.card.excluded_app_categories")
+              excluded_app_categories: t("plans.card.excluded_app_categories"),
+              windows_vps: t("plans.card.windows_vps"),
+              windows_vps_supported: t("plans.card.windows_vps_supported"),
+              windows_vps_dedicated_only: t(
+                "plans.card.windows_vps_dedicated_only"
+              )
             }
           }}
         />

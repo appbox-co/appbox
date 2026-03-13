@@ -22,8 +22,8 @@
       "docs",
       "testing"
     ],
-    "announcement": "Servidores Virtuais Privados",
-    "announcement_tag": "Launch Day 3",
+    "announcement": "Ler todos os posts da Launch Week",
+    "announcement_tag": "Launch Week",
     "changelog": "Changelog",
     "buttons": {
       "get_started": "Get Started",
@@ -95,21 +95,25 @@
     },
     "vps_launch_promo": {
       "headline_1": "Servidores Virtuais Privados.",
-      "headline_2": "VMs reais. Poder real.",
-      "description": "Máquinas virtuais KVM completas com acesso root, console web integrado e cinco distribuições Linux. Execute Docker, snaps, flatpaks e muito mais.",
-      "cta": "Leia o anúncio completo",
+      "headline_2": "Linux e Windows.",
+      "description": "Maquinas virtuais KVM completas com acesso root, console web integrado e escolha entre Linux ou Windows 11 Pro. Execute Docker, snaps, flatpaks ou qualquer software Windows.",
+      "cta": "Leia os posts da Launch Week",
       "features": {
         "console": {
           "title": "Console Web.",
-          "description": "Um terminal baseado em navegador integrado ao painel. Impossível ficar trancado para fora."
+          "description": "Um terminal baseado em navegador integrado ao painel. Impossivel ficar trancado para fora."
         },
         "webtop": {
           "title": "Desktop Selkies.",
-          "description": "Um desktop Ubuntu completo no navegador com áudio, microfone e apps reais como VS Code e Discord."
+          "description": "Um desktop Ubuntu completo no navegador com audio, microfone e apps reais como VS Code e Discord."
         },
         "distros": {
-          "title": "Cinco Distros.",
-          "description": "Ubuntu, Debian, Arch Linux, Fedora e Rocky Linux. Escolha a que você conhece."
+          "title": "Seis Distros Linux.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux e AlmaLinux. Escolha a que voce conhece."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "Uma VM Windows completa com RDP, seus dados Appbox no drive Z: e acesso de administrador."
         }
       }
     },
@@ -351,7 +355,10 @@
       "per_month": "/mo",
       "order_now": "Order Now",
       "billed_as": "Billed",
-      "excluded_app_categories": "Excluded App Categories"
+      "excluded_app_categories": "Excluded App Categories",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "Suportado",
+      "windows_vps_dedicated_only": "Apenas planos dedicados (NG-18000+)"
     }
   },
   "apps": {
@@ -602,6 +609,7 @@
       "offline": "Offline",
       "restarting": "Reiniciando",
       "migrating": "Migrating",
+      "frozen": "Congelado",
       "throttled": "Throttled",
       "lowQuota": "Low Quota"
     }
@@ -898,6 +906,10 @@
         "vmRestart": "VM boosts require a restart to apply updated resources.",
         "getMore": "Want more boost? Upgrade your plan"
       },
+      "freeze": "Congelar",
+      "unfreeze": "Descongelar",
+      "confirmFreeze": "Congelar este aplicativo irá pará-lo e liberar seus slots. Você pode descongelá-lo depois para restaurá-lo.",
+      "confirmUnfreeze": "Descongelar este aplicativo vai consumir slots novamente. Continuar?",
       "confirmUninstall": "Are you sure you want to uninstall this app? This action cannot be undone.",
       "pinApp": "Pin App",
       "unpinApp": "Unpin App",
@@ -1137,6 +1149,7 @@
       "offline": "Offline",
       "restarting": "Reiniciando",
       "migrating": "Migrating",
+      "frozen": "Congelado",
       "throttled": "Throttled",
       "lowQuota": "Low Quota"
     }

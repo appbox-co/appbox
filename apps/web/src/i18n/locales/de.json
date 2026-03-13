@@ -22,8 +22,8 @@
       "Dokumentation",
       "Tests"
     ],
-    "announcement": "Virtuelle Private Server",
-    "announcement_tag": "Launch Day 3",
+    "announcement": "Alle Launch-Week-Beitraege lesen",
+    "announcement_tag": "Launch Week",
     "changelog": "Änderungsprotokoll",
     "buttons": {
       "get_started": "Jetzt starten",
@@ -95,21 +95,25 @@
     },
     "vps_launch_promo": {
       "headline_1": "Virtuelle Private Server.",
-      "headline_2": "Echte VMs. Echte Power.",
-      "description": "Vollständige KVM-VMs mit Root-Zugriff, integrierter Web-Konsole und fünf Linux-Distributionen zur Auswahl. Docker, Snaps, Flatpaks und mehr.",
-      "cta": "Die vollständige Ankündigung lesen",
+      "headline_2": "Linux und Windows.",
+      "description": "Vollstaendige KVM-VMs mit Root-Zugriff, integrierter Web-Konsole und der Wahl zwischen Linux oder Windows 11 Pro. Docker, Snaps, Flatpaks oder jede Windows-Software.",
+      "cta": "Launch-Week-Beitraege lesen",
       "features": {
         "console": {
           "title": "Web-Konsole.",
-          "description": "Ein browserbasiertes Terminal direkt im Dashboard. Ausgesperrt werden ist unmöglich."
+          "description": "Ein browserbasiertes Terminal direkt im Dashboard. Ausgesperrt werden ist unmoeglich."
         },
         "webtop": {
           "title": "Selkies Desktop.",
-          "description": "Ein vollständiger Ubuntu-Desktop im Browser mit Audio, Mikrofon und echten Apps wie VS Code und Discord."
+          "description": "Ein vollstaendiger Ubuntu-Desktop im Browser mit Audio, Mikrofon und echten Apps wie VS Code und Discord."
         },
         "distros": {
-          "title": "Fünf Distros.",
-          "description": "Ubuntu, Debian, Arch Linux, Fedora und Rocky Linux. Wähle die Distribution, die du kennst."
+          "title": "Sechs Linux-Distros.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux und AlmaLinux. Waehle die Distribution, die du kennst."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "Eine vollstaendige Windows-VM mit RDP, Appbox-Daten auf dem Z:-Laufwerk und Admin-Zugriff."
         }
       }
     },
@@ -351,7 +355,10 @@
       "per_month": "/Monat",
       "order_now": "Jetzt bestellen",
       "billed_as": "Abgerechnet als",
-      "excluded_app_categories": "Ausgeschlossene App-Kategorien"
+      "excluded_app_categories": "Ausgeschlossene App-Kategorien",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "Unterstuetzt",
+      "windows_vps_dedicated_only": "Nur dedizierte Plaene (NG-18000+)"
     }
   },
   "apps": {
@@ -602,6 +609,7 @@
       "offline": "Offline",
       "restarting": "Neustart",
       "migrating": "Migration läuft",
+      "frozen": "Eingefroren",
       "throttled": "Gedrosselt",
       "lowQuota": "Niedriges Kontingent"
     }
@@ -900,6 +908,10 @@
         "vmRestart": "VM-Boosts erfordern einen Neustart, um die neuen Ressourcen anzuwenden.",
         "getMore": "Mehr Boost? Plan upgraden"
       },
+      "freeze": "Einfrieren",
+      "unfreeze": "Auftauen",
+      "confirmFreeze": "Das Einfrieren dieser App stoppt sie und gibt ihre App-Slots frei. Du kannst sie später wieder auftauen.",
+      "confirmUnfreeze": "Beim Auftauen dieser App werden wieder App-Slots belegt. Fortfahren?",
       "confirmUninstall": "Bist du sicher, dass du diese App deinstallieren möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
       "pinApp": "App anheften",
       "unpinApp": "App lösen",
@@ -1143,6 +1155,7 @@
       "offline": "Offline",
       "restarting": "Neustart",
       "migrating": "Migration läuft",
+      "frozen": "Eingefroren",
       "throttled": "Gedrosselt",
       "lowQuota": "Niedriges Kontingent"
     }

@@ -15,6 +15,7 @@ import {
   Package,
   Play,
   RotateCcw,
+  Snowflake,
   Square
 } from "lucide-react"
 import type { AppVersion } from "@/api/apps/app-store"
@@ -26,9 +27,11 @@ import {
 } from "@/api/apps/hooks/use-app-store"
 import {
   useInstalledApps,
+  useFreezeApp,
   useRestartApp,
   useStartApp,
   useStopApp,
+  useUnfreezeApp,
   type InstalledApp
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import { Comments } from "@/components/dashboard/comments"
@@ -114,9 +117,12 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
   const startMutation = useStartApp()
   const stopMutation = useStopApp()
   const restartMutation = useRestartApp()
+  const freezeMutation = useFreezeApp()
+  const unfreezeMutation = useUnfreezeApp()
 
   const isRunning = app.status === "online"
   const isStopped = app.status === "offline" || app.status === "inactive"
+  const isFrozen = app.status === "frozen"
   const isTransitioning =
     app.status === "restarting" ||
     app.status === "installing" ||
@@ -137,7 +143,9 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
         variant="ghost"
         size="icon"
         className="size-7"
-        disabled={isRunning || isTransitioning || startMutation.isPending}
+        disabled={
+          isRunning || isFrozen || isTransitioning || startMutation.isPending
+        }
         onClick={(e) => handleAction(e, () => startMutation.mutate(app.id))}
       >
         {startMutation.isPending ? (
@@ -150,7 +158,9 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
         variant="ghost"
         size="icon"
         className="size-7"
-        disabled={isStopped || isTransitioning || stopMutation.isPending}
+        disabled={
+          isStopped || isFrozen || isTransitioning || stopMutation.isPending
+        }
         onClick={(e) => handleAction(e, () => stopMutation.mutate(app.id))}
       >
         {stopMutation.isPending ? (
@@ -163,13 +173,34 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
         variant="ghost"
         size="icon"
         className="size-7"
-        disabled={isStopped || isTransitioning || restartMutation.isPending}
+        disabled={isStopped || isFrozen || isTransitioning || restartMutation.isPending}
         onClick={(e) => handleAction(e, () => restartMutation.mutate(app.id))}
       >
         {restartMutation.isPending ? (
           <Loader2 className="size-3.5 animate-spin" />
         ) : (
           <RotateCcw className="size-3.5" />
+        )}
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-7"
+        disabled={
+          isTransitioning || freezeMutation.isPending || unfreezeMutation.isPending
+        }
+        onClick={(e) =>
+          handleAction(e, () =>
+            isFrozen ? unfreezeMutation.mutate(app.id) : freezeMutation.mutate(app.id)
+          )
+        }
+      >
+        {freezeMutation.isPending || unfreezeMutation.isPending ? (
+          <Loader2 className="size-3.5 animate-spin" />
+        ) : isFrozen ? (
+          <Play className="size-3.5" />
+        ) : (
+          <Snowflake className="size-3.5" />
         )}
       </Button>
     </div>
@@ -313,7 +344,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   const tDetail = useTranslations("appboxmanager.appDetail")
   const [installOpen, setInstallOpen] = useState(false)
   const [bulkAction, setBulkAction] = useState<
-    "start" | "stop" | "restart" | null
+    "start" | "stop" | "restart" | "freeze" | "unfreeze" | null
   >(null)
 
   const { data: app, isLoading, error } = useAppDetail(appId)
@@ -323,6 +354,8 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   const startMutation = useStartApp()
   const stopMutation = useStopApp()
   const restartMutation = useRestartApp()
+  const freezeMutation = useFreezeApp()
+  const unfreezeMutation = useUnfreezeApp()
   const voteMutation = useVoteApp(appId)
 
   const versionColumns = useVersionColumns(Number(app?.app_slots ?? 0))
@@ -369,7 +402,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   }
 
   const runBulkAction = async (
-    action: "start" | "stop" | "restart",
+    action: "start" | "stop" | "restart" | "freeze" | "unfreeze",
     selectedRows: InstalledApp[],
     clearSelection: () => void
   ) => {
@@ -378,16 +411,19 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
         const isStopped =
           installedApp.status === "offline" ||
           installedApp.status === "inactive"
+        const isFrozen = installedApp.status === "frozen"
         const isTransitioning =
           installedApp.status === "restarting" ||
           installedApp.status === "installing" ||
           installedApp.status === "updating" ||
           installedApp.status === "deleting"
 
-        if (action === "start") return !isTransitioning && isStopped
+        if (action === "start") return !isTransitioning && !isFrozen && isStopped
         if (action === "stop")
-          return !isTransitioning && installedApp.status === "online"
-        return !isTransitioning && !isStopped
+          return !isTransitioning && !isFrozen && installedApp.status === "online"
+        if (action === "restart") return !isTransitioning && !isFrozen && !isStopped
+        if (action === "freeze") return !isTransitioning && !isFrozen
+        return isFrozen
       })
       .map((installedApp) => installedApp.id)
 
@@ -398,7 +434,11 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
         ? startMutation.mutateAsync
         : action === "stop"
           ? stopMutation.mutateAsync
-          : restartMutation.mutateAsync
+          : action === "restart"
+            ? restartMutation.mutateAsync
+            : action === "freeze"
+              ? freezeMutation.mutateAsync
+              : unfreezeMutation.mutateAsync
 
     setBulkAction(action)
     try {
@@ -593,7 +633,21 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         variant="outline"
                         size="sm"
                         className="h-9"
-                        disabled={bulkAction !== null}
+                        disabled={
+                          bulkAction !== null ||
+                          !selectedRows.some((installedApp) => {
+                            const isStopped =
+                              installedApp.status === "offline" ||
+                              installedApp.status === "inactive"
+                            const isFrozen = installedApp.status === "frozen"
+                            const isTransitioning =
+                              installedApp.status === "restarting" ||
+                              installedApp.status === "installing" ||
+                              installedApp.status === "updating" ||
+                              installedApp.status === "deleting"
+                            return !isTransitioning && !isFrozen && isStopped
+                          })
+                        }
                         onClick={() =>
                           runBulkAction("start", selectedRows, clearSelection)
                         }
@@ -609,7 +663,22 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         variant="outline"
                         size="sm"
                         className="h-9"
-                        disabled={bulkAction !== null}
+                        disabled={
+                          bulkAction !== null ||
+                          !selectedRows.some((installedApp) => {
+                            const isFrozen = installedApp.status === "frozen"
+                            const isTransitioning =
+                              installedApp.status === "restarting" ||
+                              installedApp.status === "installing" ||
+                              installedApp.status === "updating" ||
+                              installedApp.status === "deleting"
+                            return (
+                              !isTransitioning &&
+                              !isFrozen &&
+                              installedApp.status === "online"
+                            )
+                          })
+                        }
                         onClick={() =>
                           runBulkAction("stop", selectedRows, clearSelection)
                         }
@@ -625,7 +694,21 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         variant="outline"
                         size="sm"
                         className="h-9"
-                        disabled={bulkAction !== null}
+                        disabled={
+                          bulkAction !== null ||
+                          !selectedRows.some((installedApp) => {
+                            const isStopped =
+                              installedApp.status === "offline" ||
+                              installedApp.status === "inactive"
+                            const isFrozen = installedApp.status === "frozen"
+                            const isTransitioning =
+                              installedApp.status === "restarting" ||
+                              installedApp.status === "installing" ||
+                              installedApp.status === "updating" ||
+                              installedApp.status === "deleting"
+                            return !isTransitioning && !isFrozen && !isStopped
+                          })
+                        }
                         onClick={() =>
                           runBulkAction("restart", selectedRows, clearSelection)
                         }
@@ -636,6 +719,54 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                           <RotateCcw className="mr-1.5 size-3.5" />
                         )}
                         {tDetail("restart")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-9"
+                        disabled={
+                          bulkAction !== null ||
+                          !selectedRows.some((installedApp) => {
+                            const isFrozen = installedApp.status === "frozen"
+                            const isTransitioning =
+                              installedApp.status === "restarting" ||
+                              installedApp.status === "installing" ||
+                              installedApp.status === "updating" ||
+                              installedApp.status === "deleting"
+                            return !isTransitioning && !isFrozen
+                          })
+                        }
+                        onClick={() =>
+                          runBulkAction("freeze", selectedRows, clearSelection)
+                        }
+                      >
+                        {bulkAction === "freeze" ? (
+                          <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                        ) : (
+                          <Snowflake className="mr-1.5 size-3.5" />
+                        )}
+                        {tDetail("freeze")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-9"
+                        disabled={
+                          bulkAction !== null ||
+                          !selectedRows.some(
+                            (installedApp) => installedApp.status === "frozen"
+                          )
+                        }
+                        onClick={() =>
+                          runBulkAction("unfreeze", selectedRows, clearSelection)
+                        }
+                      >
+                        {bulkAction === "unfreeze" ? (
+                          <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                        ) : (
+                          <Play className="mr-1.5 size-3.5" />
+                        )}
+                        {tDetail("unfreeze")}
                       </Button>
                     </div>
                   ) : null

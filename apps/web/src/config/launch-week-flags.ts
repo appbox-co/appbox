@@ -4,7 +4,7 @@ export const launchWeekFlags = {
   day_2: true,
   day_3: true,
   day_4: true,
-  day_5: false
+  day_5: true
 } as const
 
 type FlagKey = keyof typeof launchWeekFlags

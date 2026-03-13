@@ -129,6 +129,9 @@ interface PlansProps {
       order_now: string
       billed_as: string
       excluded_app_categories: string
+      windows_vps: string
+      windows_vps_supported: string
+      windows_vps_dedicated_only: string
     }
   }
   gradientStartColor?: string
@@ -209,6 +212,23 @@ const Plans = ({
   gradientStartColor = "#00CCB1",
   gradientEndColor = "#1CA0FB"
 }: PlansProps) => {
+  const getPlanTierValue = (plan: Plan): number | null => {
+    const source = `${plan.short_title} ${plan.title}`
+    const match = source.match(/NG[-\s]?(\d+)/i)
+    if (!match) return null
+
+    const value = Number.parseInt(match[1], 10)
+    return Number.isNaN(value) ? null : value
+  }
+
+  const supportsWindowsVps = (plan: Plan, group: Group): boolean => {
+    const groupDescriptor = `${group.slug} ${group.title} ${group.short_title}`.toLowerCase()
+    if (groupDescriptor.includes("dedicated")) return true
+
+    const tier = getPlanTierValue(plan)
+    return tier !== null && tier >= 18000
+  }
+
   const [billingCycle, setBillingCycle] = useState<BillingCycle>([
     "monthly",
     "1M"
@@ -482,6 +502,26 @@ const Plans = ({
                                 <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
                                   {messages.card.app_slots}
                                 </span>
+                              </div>
+                              <div className="mb-4">
+                                <div className="flex items-center gap-1">
+                                  <h5 className="text-xl font-bold">
+                                    {messages.card.windows_vps}
+                                  </h5>
+                                </div>
+                                {supportsWindowsVps(plan, group) ? (
+                                  <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                    <Check
+                                      className="h-4 w-4 text-emerald-500"
+                                      strokeWidth={3}
+                                    />
+                                    {messages.card.windows_vps_supported}
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                    {messages.card.windows_vps_dedicated_only}
+                                  </span>
+                                )}
                               </div>
                               <div className="mb-4">
                                 <h5 className="text-xl font-bold">

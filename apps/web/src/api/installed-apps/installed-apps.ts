@@ -73,14 +73,15 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
   const isDeleting = flag(raw.deleting)
   const isUpdating = flag(raw.updating)
   const isInstalling = flag(raw.installing)
+  const isFrozen = flag(raw.frozen)
   const isEnabled = flag(raw.enabled)
   const state = Number(raw.state ?? 0)
 
-  // Derive a human-readable status string
   let status = "offline"
   if (isDeleting) status = "deleting"
   else if (isUpdating) status = "updating"
   else if (isInstalling) status = "installing"
+  else if (isFrozen) status = "frozen"
   else if (!isEnabled) status = "inactive"
   else if (state === 1) status = "online"
 
@@ -223,6 +224,14 @@ export async function switchVersion(
   return apiPost<{ job_id: number }>(`apps/instances/switchversion/${id}`, {
     version_id: versionId
   })
+}
+
+export async function freezeApp(id: number): Promise<void> {
+  return apiPut(`apps/instances/${id}/freeze`)
+}
+
+export async function unfreezeApp(id: number): Promise<void> {
+  return apiPut(`apps/instances/${id}/unfreeze`)
 }
 
 export async function boostInstance(

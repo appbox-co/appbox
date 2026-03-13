@@ -6,6 +6,7 @@ import type { JobProgressData } from "@/lib/websocket/types"
 import { useAuth } from "@/providers/auth-provider"
 import {
   boostInstance,
+  freezeApp,
   getInstalledApp,
   getInstalledApps,
   getInstalledAppVncInfo,
@@ -13,6 +14,7 @@ import {
   startApp,
   stopApp,
   switchVersion,
+  unfreezeApp,
   uninstallApp,
   updateApp,
   type InstalledApp,
@@ -175,6 +177,66 @@ export function useSwitchVersion() {
       queryClient.invalidateQueries({
         queryKey: queryKeys.installedApps.all
       })
+    }
+  })
+}
+
+export function useFreezeApp() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) => freezeApp(id),
+    onSuccess: (_data, id) => {
+      const detailCached = queryClient.getQueryData<InstalledApp>(
+        queryKeys.installedApps.detail(id)
+      )
+      const cyloId = detailCached?.cylo_id
+
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.installedApps.detail(id)
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.installedApps.all
+      })
+      queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+
+      if (cyloId) {
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.installedApps.byCylo(cyloId)
+        })
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cylos.detail(cyloId)
+        })
+      }
+    }
+  })
+}
+
+export function useUnfreezeApp() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) => unfreezeApp(id),
+    onSuccess: (_data, id) => {
+      const detailCached = queryClient.getQueryData<InstalledApp>(
+        queryKeys.installedApps.detail(id)
+      )
+      const cyloId = detailCached?.cylo_id
+
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.installedApps.detail(id)
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.installedApps.all
+      })
+      queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+
+      if (cyloId) {
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.installedApps.byCylo(cyloId)
+        })
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cylos.detail(cyloId)
+        })
+      }
     }
   })
 }

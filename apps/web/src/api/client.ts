@@ -17,10 +17,65 @@ class ApiError extends Error {
   }
 }
 
+function parseJsonSafe(value: string): unknown | null {
+  try {
+    return JSON.parse(value)
+  } catch {
+    return null
+  }
+}
+
+function getNestedMessage(value: unknown): string | null {
+  if (typeof value === "string") {
+    const trimmed = value.trim()
+    if (!trimmed) return null
+    const nested = parseJsonSafe(trimmed)
+    if (nested !== null) {
+      return getNestedMessage(nested) ?? trimmed
+    }
+    return trimmed
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const msg = getNestedMessage(item)
+      if (msg) return msg
+    }
+    return null
+  }
+
+  if (value && typeof value === "object") {
+    const obj = value as {
+      message?: unknown
+      error?: unknown
+      developer?: unknown
+    }
+    const directMessage = getNestedMessage(obj.message)
+    if (directMessage) return directMessage
+    const errorMessage = getNestedMessage(obj.error)
+    if (errorMessage) return errorMessage
+    const developerMessage = getNestedMessage(obj.developer)
+    if (developerMessage) return developerMessage
+  }
+
+  return null
+}
+
+function extractApiErrorMessage(errorBody: string): string {
+  const parsed = parseJsonSafe(errorBody)
+  const message = getNestedMessage(parsed ?? errorBody)
+  if (message) return message
+  return errorBody
+}
+
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const errorBody = await response.text().catch(() => "Unknown error")
-    throw new ApiError(response.status, response.statusText, errorBody)
+    throw new ApiError(
+      response.status,
+      response.statusText,
+      extractApiErrorMessage(errorBody)
+    )
   }
   // 204 No Content or empty body — return undefined rather than crashing on JSON.parse
   const contentLength = response.headers.get("content-length")

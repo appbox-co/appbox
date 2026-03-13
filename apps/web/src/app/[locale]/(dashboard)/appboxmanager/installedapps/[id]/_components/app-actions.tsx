@@ -7,6 +7,7 @@ import {
   Loader2,
   Play,
   RotateCcw,
+  Snowflake,
   Square,
   Trash2,
   Zap
@@ -17,15 +18,19 @@ import {
   useTriggerCustomButton
 } from "@/api/custom-buttons/hooks/use-custom-buttons"
 import {
+  useFreezeApp,
   useRestartApp,
   useStartApp,
   useStopApp,
   useSwitchVersion,
+  useUnfreezeApp,
   useUninstallApp,
   useUpdateApp
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { useCylo } from "@/api/cylos/hooks/use-cylos"
+import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
+import { useAuth } from "@/providers/auth-provider"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -50,9 +55,12 @@ interface AppActionsProps {
 
 export function AppActions({ app, startOnlyActionable = false }: AppActionsProps) {
   const t = useTranslations("appboxmanager.appDetail")
+  const { isAdmin } = useAuth()
   const { data: cylo } = useCylo(app.cylo_id)
   const [uninstallOpen, setUninstallOpen] = useState(false)
   const [updateConfirmOpen, setUpdateConfirmOpen] = useState(false)
+  const [freezeConfirmOpen, setFreezeConfirmOpen] = useState(false)
+  const [unfreezeConfirmOpen, setUnfreezeConfirmOpen] = useState(false)
   const [customConfirmId, setCustomConfirmId] = useState<number | null>(null)
   const [selectedSwitchVersionId, setSelectedSwitchVersionId] = useState("")
   const [switchConfirmOpen, setSwitchConfirmOpen] = useState(false)
@@ -63,17 +71,20 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
   const updateMutation = useUpdateApp()
   const uninstallMutation = useUninstallApp()
   const switchVersionMutation = useSwitchVersion()
+  const freezeMutation = useFreezeApp()
+  const unfreezeMutation = useUnfreezeApp()
   const triggerMutation = useTriggerCustomButton()
 
   const { data: customButtons = [] } = useCustomButtons(app.id)
 
+  const freezeEnabled = isLaunchWeekEnabled("day_5", isAdmin)
+  const isFrozen = app.status === "frozen"
   const isRunning = app.status === "online"
-  // Both "offline" and "inactive" mean the app is not running
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isCyloRestarting = cylo?.status === "restarting"
-  // All action buttons should be disabled while a transition is in progress
   const isTransitioning =
     isCyloRestarting ||
+    isFrozen ||
     app.status === "restarting" ||
     app.status === "installing" ||
     app.status === "updating" ||
@@ -212,6 +223,42 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
           </>
         )}
 
+        {/* Freeze / Unfreeze */}
+        {freezeEnabled && !isFrozen && (
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={
+              startOnlyActionable ||
+              isTransitioning ||
+              freezeMutation.isPending
+            }
+            onClick={() => setFreezeConfirmOpen(true)}
+          >
+            {freezeMutation.isPending ? (
+              <Loader2 className="mr-1.5 size-4 animate-spin" />
+            ) : (
+              <Snowflake className="mr-1.5 size-4" />
+            )}
+            {t("freeze")}
+          </Button>
+        )}
+        {freezeEnabled && isFrozen && (
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={unfreezeMutation.isPending}
+            onClick={() => setUnfreezeConfirmOpen(true)}
+          >
+            {unfreezeMutation.isPending ? (
+              <Loader2 className="mr-1.5 size-4 animate-spin" />
+            ) : (
+              <Play className="mr-1.5 size-4" />
+            )}
+            {t("unfreeze")}
+          </Button>
+        )}
+
         {/* Uninstall */}
         <Button
           variant="destructive"
@@ -282,6 +329,80 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
               disabled={updateMutation.isPending || !updateVersionId}
             >
               {updateMutation.isPending && (
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
+              )}
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Freeze confirmation dialog */}
+      <Dialog open={freezeConfirmOpen} onOpenChange={setFreezeConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("freeze")} {app.display_name}</DialogTitle>
+            <DialogDescription>{t("confirmFreeze")}</DialogDescription>
+          </DialogHeader>
+          {freezeMutation.isError && (
+            <p className="text-sm text-destructive">
+              {freezeMutation.error?.message ?? "Failed to freeze."}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setFreezeConfirmOpen(false)}
+              disabled={freezeMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                freezeMutation.mutate(app.id, {
+                  onSuccess: () => setFreezeConfirmOpen(false)
+                })
+              }}
+              disabled={freezeMutation.isPending}
+            >
+              {freezeMutation.isPending && (
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
+              )}
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Unfreeze confirmation dialog */}
+      <Dialog open={unfreezeConfirmOpen} onOpenChange={setUnfreezeConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("unfreeze")} {app.display_name}</DialogTitle>
+            <DialogDescription>{t("confirmUnfreeze")}</DialogDescription>
+          </DialogHeader>
+          {unfreezeMutation.isError && (
+            <p className="text-sm text-destructive">
+              {unfreezeMutation.error?.message ?? "Failed to unfreeze."}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setUnfreezeConfirmOpen(false)}
+              disabled={unfreezeMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                unfreezeMutation.mutate(app.id, {
+                  onSuccess: () => setUnfreezeConfirmOpen(false)
+                })
+              }}
+              disabled={unfreezeMutation.isPending}
+            >
+              {unfreezeMutation.isPending && (
                 <Loader2 className="mr-1.5 size-4 animate-spin" />
               )}
               Confirm

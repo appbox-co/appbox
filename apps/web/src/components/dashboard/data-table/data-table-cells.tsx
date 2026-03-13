@@ -64,6 +64,7 @@ type StatusVariant =
   | "installing"
   | "uninstalling"
   | "restarting"
+  | "frozen"
   | "error"
   | "pending"
   | "active"
@@ -89,6 +90,8 @@ const statusStyles: Record<StatusVariant, string> = {
     "bg-orange-500/15 text-orange-700 border-orange-500/25 dark:text-orange-400",
   restarting:
     "bg-sky-500/15 text-sky-700 border-sky-500/25 dark:text-sky-400",
+  frozen:
+    "bg-cyan-500/15 text-cyan-700 border-cyan-500/25 dark:text-cyan-400",
   pending:
     "bg-amber-500/15 text-amber-700 border-amber-500/25 dark:text-amber-400",
   inactive: "bg-zinc-500/15 text-zinc-700 border-zinc-500/25 dark:text-zinc-400"
@@ -106,6 +109,7 @@ const statusDotStyles: Record<StatusVariant, string> = {
   installing: "bg-blue-500 animate-pulse",
   uninstalling: "bg-orange-500 animate-pulse",
   restarting: "bg-sky-500 animate-pulse",
+  frozen: "bg-cyan-500",
   pending: "bg-amber-500 animate-pulse",
   inactive: "bg-zinc-500"
 }

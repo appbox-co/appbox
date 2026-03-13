@@ -1,0 +1,82 @@
+---
+title: Launch Week Tag 4 - Mehrere Domains fuer VPS-Apps
+date: 2026-03-12 10:00:00
+excerpt: Tag 4 der Launch Week. VPS-Apps unterstuetzen jetzt mehrere Domains - beliebig viele Custom Domains und Appbox-Subdomains, jeweils mit automatischem SSL.
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Tag 4: Mehrere Domains fuer VPS-Apps
+
+Tag 4. Gestern gab es vollwertige virtuelle Maschinen, heute bekommen sie vernuenftiges Domain-Handling.
+
+Beim Launch von VPS an Tag 3 hatte jede VM genau eine Domain. Fuer viele Szenarien reicht das, aber wenn du Webserver in deiner VPS betreibst - und das tun viele - brauchst du mehrere Domains auf derselben Maschine, jeweils mit passendem SSL und eigener Webserver-Konfiguration.
+
+Ab heute unterstuetzen VPS-Apps **mehrere Domains**. Fuege beliebig viele `*.user.appboxes.co`-Subdomains hinzu, nutze eigene Domains oder kombiniere beides. Jede Domain bekommt SSL und eine sofort nutzbare Server-Konfiguration.
+
+## So funktioniert es
+
+Oeffne eine laufende VPS-App und du findest auf der Detailseite die Karte **Custom Domains**. Dort siehst du alle Domains in einer durchsuchbaren und sortierbaren Tabelle - inklusive Primary-Status und Hinzufuegezeitpunkt.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom-Domains-Tabelle auf der Detailseite einer VPS-App" width="860" />
+</p>
+
+Klicke zum Hinzufuegen auf **Add Domain**. Domain auswaehlen, Subdomain eintragen, fertig.
+
+## Appbox-Subdomains
+
+Am schnellsten geht es mit deiner bestehenden Appbox-Domain. Waehle `user.appboxes.co` als Basis, trage die Subdomain ein, und die Domain ist direkt verifiziert.
+
+Ideal fuer schnelle Projekt-URLs, Staging-Umgebungen oder mehrere Services auf derselben VPS. Du willst `api.user.appboxes.co` fuer dein Backend und `app.user.appboxes.co` fuer dein Frontend? Beides in unter einer Minute.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Hinzufuegen einer Appbox-Subdomain zu einer VPS" width="560" />
+</p>
+
+Da diese Domains unter deinem bestehenden Appbox-Wildcard-Zertifikat laufen, ist SSL sofort aktiv. Kein Warten, keine manuelle Zertifikats-Erstellung.
+
+## Eigene Domains
+
+Du kannst auch eigene Domains auf deine VPS zeigen lassen. Waehle eine bestehende Base-Domain (oder lege direkt im Dialog eine neue an), trage die Subdomain ein, und die UI fuehrt dich durch das DNS-Setup.
+
+Der Dialog zeigt den exakten A-Record, den du setzen musst - Hostname, Ziel-IP, alles konkret. Zusaetzlich gibt es Hinweise fuer Cloudflare und andere gaengige DNS-Provider.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Custom Domain mit DNS-Verifizierung und Provider-Hinweisen hinzufuegen" width="560" />
+</p>
+
+Sobald DNS auf die richtige IP zeigt, klickst du **Verify Again** und das System bestaetigt den Eintrag vor dem finalen Hinzufuegen.
+
+## SSL und Webserver-Konfiguration
+
+Jede hinzugefuegte Domain bekommt SSL. Bei Appbox-Subdomains ueber das bestehende Wildcard-Zertifikat, bei Custom Domains mit automatischer Zertifikatsbereitstellung.
+
+Fuer VPS-Nutzer besonders praktisch: Jede Domain hat einen **View Config**-Button mit direkt nutzbaren Snippets fuer Nginx und Apache. Darin sind `server_name`, Zertifikatspfade, Cipher Suites und Protokoll-Settings bereits korrekt enthalten. Snippet kopieren, in der VM einfuegen, Webserver reloaden, live.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL-Konfigurations-Snippets fuer Nginx und Apache" width="560" />
+</p>
+
+Kein Raetseln ueber Datei-Pfade. Kein Suchen nach Zertifikatsorten. Keine Handarbeit bei Cipher-Strings.
+
+## Warum das wichtig ist
+
+Eine VPS mit nur einer Domain ist schnell ein Bottleneck:
+
+- Web-App plus API? Mindestens zwei Domains.
+- Mehrere Sites auf derselben VM? Jede braucht ihre eigene Domain.
+- Staging neben Production? Noch eine Domain.
+- Lokale Entwicklung mit realen Hosts testen? Wieder eine Domain.
+
+## Tag 4 ist jetzt live
+
+Mehrdomain-Support ist ab sofort fuer alle VPS-Apps verfuegbar. Oeffne deine VPS, scrolle zu Custom Domains und leg los.
+
+Morgen ist Tag 5, und wir haben eine Ueberraschung.
+
+---
+
+*Feedback oder einen Fehler gefunden? Schreib uns an support@appbox.co oder eroeffne ein Ticket auf [billing.appbox.co](https://billing.appbox.co/submitticket.php).*
+
