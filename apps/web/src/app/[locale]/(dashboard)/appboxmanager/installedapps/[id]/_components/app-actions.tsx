@@ -73,6 +73,7 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
     app.status === "installing" ||
     app.status === "updating" ||
     app.status === "deleting"
+  const isRecoverableStopped = !app.enabled && app.state === 0
 
   const defaultVersion = app.default_version?.trim()
   const updateTargetVersion = (app.available_versions ?? []).find(
@@ -210,7 +211,7 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
         <Button
           variant="destructive"
           size="sm"
-          disabled={startOnlyActionable}
+          disabled={startOnlyActionable && !isRecoverableStopped}
           onClick={() => setUninstallOpen(true)}
         >
           <Trash2 className="mr-1.5 size-4" />
