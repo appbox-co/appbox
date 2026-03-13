@@ -87,6 +87,7 @@ export function ServiceOverviewCard({
     storageTotal > 0 ? Math.round((storageUsed / storageTotal) * 100) : 0
 
   const isOnline = cylo.status === "online"
+  const isRestarting = cylo.status === "restarting"
 
   return (
     <Card className={cn("card-glow relative flex overflow-hidden", className)}>
@@ -134,7 +135,11 @@ export function ServiceOverviewCard({
               <span
                 className={cn(
                   "mt-px size-2 shrink-0 rounded-full",
-                  isOnline ? "bg-emerald-500" : "bg-red-500"
+                  isRestarting
+                    ? "bg-sky-500 animate-pulse"
+                    : isOnline
+                      ? "bg-emerald-500"
+                      : "bg-red-500"
                 )}
               />
               <Link
@@ -153,6 +158,11 @@ export function ServiceOverviewCard({
 
           {/* Secondary state badges */}
           <div className="flex shrink-0 flex-wrap items-center gap-1">
+            {isRestarting && (
+              <Badge className="h-4 animate-pulse border-sky-500/25 bg-sky-500/15 px-1 py-0 text-[9px] text-sky-600 dark:text-sky-400">
+                {t("status.restarting")}
+              </Badge>
+            )}
             {cylo.is_migrating && (
               <Badge className="h-4 animate-pulse border-amber-500/25 bg-amber-500/15 px-1 py-0 text-[9px] text-amber-600 dark:text-amber-400">
                 {t("status.migrating")}

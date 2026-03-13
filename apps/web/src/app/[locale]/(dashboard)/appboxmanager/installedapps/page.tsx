@@ -47,6 +47,7 @@ const STATUS_DOT_COLORS: Record<string, string> = {
   online: "bg-emerald-500",
   offline: "bg-red-500",
   inactive: "bg-zinc-500",
+  restarting: "bg-sky-500",
   migrating: "bg-amber-500",
   installing: "bg-blue-500",
   updating: "bg-blue-500",
@@ -57,6 +58,7 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
   "online",
   "offline",
   "inactive",
+  "restarting",
   "migrating",
   "installing",
   "updating",
@@ -76,6 +78,7 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
 
 function isTransitioningStatus(status: string): boolean {
   return (
+    status === "restarting" ||
     status === "migrating" ||
     status === "installing" ||
     status === "updating" ||
@@ -108,6 +111,7 @@ function RowActions({ app }: { app: InstalledApp }) {
   const isRunning = app.status === "online"
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isTransitioning =
+    app.status === "restarting" ||
     app.status === "migrating" ||
     app.status === "installing" ||
     app.status === "updating" ||

@@ -180,6 +180,9 @@ export default function AppboxesPage() {
               <SelectItem value="all">{t("cylos.allStatuses")}</SelectItem>
               <SelectItem value="online">{tc("status.online")}</SelectItem>
               <SelectItem value="offline">{tc("status.offline")}</SelectItem>
+              <SelectItem value="restarting">
+                {tc("status.restarting")}
+              </SelectItem>
               <SelectItem value="migrating">
                 {tc("status.migrating")}
               </SelectItem>

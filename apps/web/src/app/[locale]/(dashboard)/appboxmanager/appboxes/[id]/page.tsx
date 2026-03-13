@@ -395,6 +395,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
           variant="outline"
           size="sm"
           disabled={
+            cylo.status === "restarting" ||
             cylo.status === "migrating" ||
             cylo.status === "installing" ||
             restartMutation.isPending

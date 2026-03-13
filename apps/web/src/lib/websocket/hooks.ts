@@ -494,35 +494,73 @@ export function useWsQueryInvalidation(wsContext?: {
                 queryKey: queryKeys.installedApps.all
               })
             } else if (notif.action === "restarting") {
-              // Optimistically mark every installed app on this cylo as offline
-              // so the UI reflects the restart state immediately without waiting
-              // for a round-trip refetch (which might still return "online" anyway).
-              const markOffline = (app: InstalledApp): InstalledApp => ({
+              // Optimistically mark the cylo as restarting
+              queryClient.setQueryData<CyloDetail>(
+                queryKeys.cylos.detail(cyloId),
+                (prev) =>
+                  prev ? { ...prev, status: "restarting" } : prev
+              )
+              queryClient.setQueriesData<CyloSummary[]>(
+                { queryKey: queryKeys.cylos.all },
+                (prev) =>
+                  Array.isArray(prev)
+                    ? prev.map((c) =>
+                        c.id === cyloId
+                          ? { ...c, status: "restarting" }
+                          : c
+                      )
+                    : prev
+              )
+
+              // Mark every installed app on this cylo as restarting
+              const markRestarting = (app: InstalledApp): InstalledApp => ({
                 ...app,
-                status: "offline"
+                status: "restarting"
               })
 
               queryClient.setQueryData<InstalledApp[]>(
                 queryKeys.installedApps.byCylo(cyloId),
-                (prev) => prev?.map(markOffline)
+                (prev) => prev?.map(markRestarting)
               )
-              // Also patch the flat "all" list and any individual detail caches
               queryClient.setQueriesData<InstalledApp[] | InstalledApp>(
                 { queryKey: queryKeys.installedApps.all },
                 (prev) => {
                   if (!prev) return prev
                   if (Array.isArray(prev)) {
                     return prev.map((app) =>
-                      app.cylo_id === cyloId ? markOffline(app) : app
+                      app.cylo_id === cyloId ? markRestarting(app) : app
                     )
                   }
-                  // Single app detail cache
                   return (prev as InstalledApp).cylo_id === cyloId
-                    ? markOffline(prev as InstalledApp)
+                    ? markRestarting(prev as InstalledApp)
                     : prev
                 }
               )
             } else if (notif.action === "restarted") {
+              // Clear the restarting flag on the cylo
+              queryClient.setQueryData<CyloDetail>(
+                queryKeys.cylos.detail(cyloId),
+                (prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        status:
+                          prev.status === "restarting" ? "online" : prev.status
+                      }
+                    : prev
+              )
+              queryClient.setQueriesData<CyloSummary[]>(
+                { queryKey: queryKeys.cylos.all },
+                (prev) =>
+                  Array.isArray(prev)
+                    ? prev.map((c) =>
+                        c.id === cyloId && c.status === "restarting"
+                          ? { ...c, status: "online" }
+                          : c
+                      )
+                    : prev
+              )
+
               // Refetch real statuses once the restart is complete
               queryClient.invalidateQueries({
                 queryKey: queryKeys.installedApps.byCylo(cyloId)

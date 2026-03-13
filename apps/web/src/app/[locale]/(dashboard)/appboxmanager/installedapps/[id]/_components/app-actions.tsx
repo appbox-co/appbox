@@ -25,6 +25,7 @@ import {
   useUpdateApp
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
+import { useCylo } from "@/api/cylos/hooks/use-cylos"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -49,6 +50,7 @@ interface AppActionsProps {
 
 export function AppActions({ app, startOnlyActionable = false }: AppActionsProps) {
   const t = useTranslations("appboxmanager.appDetail")
+  const { data: cylo } = useCylo(app.cylo_id)
   const [uninstallOpen, setUninstallOpen] = useState(false)
   const [updateConfirmOpen, setUpdateConfirmOpen] = useState(false)
   const [customConfirmId, setCustomConfirmId] = useState<number | null>(null)
@@ -68,8 +70,11 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
   const isRunning = app.status === "online"
   // Both "offline" and "inactive" mean the app is not running
   const isStopped = app.status === "offline" || app.status === "inactive"
+  const isCyloRestarting = cylo?.status === "restarting"
   // All action buttons should be disabled while a transition is in progress
   const isTransitioning =
+    isCyloRestarting ||
+    app.status === "restarting" ||
     app.status === "installing" ||
     app.status === "updating" ||
     app.status === "deleting"

@@ -107,12 +107,12 @@ export async function getCylosSummary(userId?: number): Promise<CyloSummary[]> {
   const items = res.items ?? []
   return items.map((c: unknown) => {
     const row = c as Record<string, unknown>
-    // Derive a human-readable status string from backend integers
-    let status = "offline"
+    // Derive a human-readable status string from backend fields
+    let status = "online"
     if (row.migrating) status = "migrating"
     else if (row.installing) status = "installing"
     else if (!row.enabled) status = "suspended"
-    else if (row.state === 1) status = "online"
+    else if (Number(row.restarting ?? 0) === 1) status = "restarting"
 
     return {
       id: Number(row.id),
@@ -139,17 +139,17 @@ export async function getCylosSummary(userId?: number): Promise<CyloSummary[]> {
 
 /**
  * Backend returns raw DB column names that differ from our frontend types.
- * Key mappings: cyloname→name, state→status, storage_limit→storage_total, etc.
+ * Key mappings: cyloname→name, restarting→status, storage_limit→storage_total, etc.
  */
 export async function getCylo(id: number): Promise<CyloDetail> {
   const raw = await apiGet<Record<string, unknown>>(`cylos/${id}`)
 
-  // Derive a human-readable status string from backend integers
-  let status = "offline"
+  // Derive a human-readable status string from backend fields
+  let status = "online"
   if (raw.migrating) status = "migrating"
   else if (raw.installing) status = "installing"
   else if (!raw.enabled) status = "suspended"
-  else if (raw.state === 1) status = "online"
+  else if (Number(raw.restarting ?? 0) === 1) status = "restarting"
 
   let migrationProgress: MigrationProgress | undefined
   if (raw.migrating) {

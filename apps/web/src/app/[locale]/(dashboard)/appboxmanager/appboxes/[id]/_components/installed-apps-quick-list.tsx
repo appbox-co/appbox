@@ -48,6 +48,7 @@ const STATUS_DOT_COLORS: Record<string, string> = {
   online: "bg-emerald-500",
   offline: "bg-red-500",
   inactive: "bg-zinc-500",
+  restarting: "bg-sky-500",
   migrating: "bg-amber-500",
   installing: "bg-blue-500",
   updating: "bg-blue-500",
@@ -58,6 +59,7 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
   "online",
   "offline",
   "inactive",
+  "restarting",
   "migrating",
   "installing",
   "updating",
@@ -79,7 +81,13 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
 /*  Inline action buttons                                                      */
 /* -------------------------------------------------------------------------- */
 
-function RowActions({ app }: { app: InstalledApp }) {
+function RowActions({
+  app,
+  cyloRestarting
+}: {
+  app: InstalledApp
+  cyloRestarting: boolean
+}) {
   const t = useTranslations("appboxmanager.appDetail")
   const startMutation = useStartApp()
   const stopMutation = useStopApp()
@@ -88,6 +96,8 @@ function RowActions({ app }: { app: InstalledApp }) {
   const isRunning = app.status === "online"
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isTransitioning =
+    cyloRestarting ||
+    app.status === "restarting" ||
     app.status === "migrating" ||
     app.status === "installing" ||
     app.status === "updating" ||
@@ -344,7 +354,12 @@ function useColumns(
         id: "actions",
         header: "",
         enableHiding: false,
-        cell: ({ row }) => <RowActions app={row.original} />
+        cell: ({ row }) => (
+          <RowActions
+            app={row.original}
+            cyloRestarting={row.original.status === "restarting"}
+          />
+        )
       }
     ],
     [t, cyloId, pinnedApps]
@@ -381,9 +396,14 @@ export function InstalledAppsQuickList({
     () =>
       (apps ?? []).map((app) => ({
         ...app,
-        status: cylo?.is_migrating ? "migrating" : app.status
+        status:
+          cylo?.status === "restarting"
+            ? "restarting"
+            : cylo?.is_migrating
+              ? "migrating"
+              : app.status
       })),
-    [apps, cylo?.is_migrating]
+    [apps, cylo?.is_migrating, cylo?.status]
   )
   const columns = useColumns(cyloId, pinnedApps ?? [])
 
@@ -424,6 +444,7 @@ export function InstalledAppsQuickList({
       .filter((app) => {
         const isStopped = app.status === "offline" || app.status === "inactive"
         const isTransitioning =
+          app.status === "restarting" ||
           app.status === "migrating" ||
           app.status === "installing" ||
           app.status === "updating" ||

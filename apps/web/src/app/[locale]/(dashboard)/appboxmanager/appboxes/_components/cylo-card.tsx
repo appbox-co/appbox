@@ -35,6 +35,8 @@ function getStatusBadgeClass(status: string) {
       return "bg-emerald-500/15 text-emerald-600 border-emerald-500/25 dark:text-emerald-400"
     case "migrating":
       return "bg-amber-500/15 text-amber-600 border-amber-500/25 dark:text-amber-400"
+    case "restarting":
+      return "bg-sky-500/15 text-sky-600 border-sky-500/25 dark:text-sky-400"
     case "offline":
       return "bg-red-500/15 text-red-600 border-red-500/25 dark:text-red-400"
     default:
@@ -128,7 +130,7 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
               className={cn(
                 "text-[10px]",
                 getStatusBadgeClass(cylo.status),
-                cylo.status === "migrating" && "animate-pulse"
+                (cylo.status === "migrating" || cylo.status === "restarting") && "animate-pulse"
               )}
             >
               {cylo.status}

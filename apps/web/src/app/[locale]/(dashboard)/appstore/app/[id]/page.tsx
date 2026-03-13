@@ -118,6 +118,7 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
   const isRunning = app.status === "online"
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isTransitioning =
+    app.status === "restarting" ||
     app.status === "installing" ||
     app.status === "updating" ||
     app.status === "deleting"
@@ -378,6 +379,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
           installedApp.status === "offline" ||
           installedApp.status === "inactive"
         const isTransitioning =
+          installedApp.status === "restarting" ||
           installedApp.status === "installing" ||
           installedApp.status === "updating" ||
           installedApp.status === "deleting"
