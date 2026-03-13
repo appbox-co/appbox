@@ -3,7 +3,7 @@
 
 import type { ComponentType } from "react"
 
-export const ADMIN_MODULE_AVAILABLE = true as const
+export const ADMIN_MODULE_AVAILABLE = false as const
 
 export interface AdminMenuItem {
   id: string
@@ -20,12 +20,8 @@ export interface AdminRegistry {
 }
 
 export async function loadAdminModule(): Promise<{
-  Shell: ComponentType
-  registry: AdminRegistry
+  Shell: ComponentType | null
+  registry: AdminRegistry | null
 }> {
-  const mod = await import("../../../admin-module/src/entry")
-  return {
-    Shell: mod.default as ComponentType,
-    registry: mod.adminRegistry as AdminRegistry
-  }
+  return { Shell: null, registry: null }
 }
