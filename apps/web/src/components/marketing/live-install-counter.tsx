@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import { animate, useMotionValue } from "framer-motion"
 
-const DEV_FALLBACK = process.env.NODE_ENV === "development" ? 48_347 : null
-
 async function fetchInstallCount(): Promise<number | null> {
   try {
     const domain = process.env.NEXT_PUBLIC_DOMAIN || "appbox.co"
@@ -19,7 +17,7 @@ async function fetchInstallCount(): Promise<number | null> {
 }
 
 export function LiveInstallCounter() {
-  const [count, setCount] = useState<number | null>(DEV_FALLBACK)
+  const [count, setCount] = useState<number | null>(null)
   const motionValue = useMotionValue(0)
   const [display, setDisplay] = useState("0")
   const isFirstLoad = useRef(true)
@@ -55,8 +53,6 @@ export function LiveInstallCounter() {
       setDisplay(Math.round(v).toLocaleString())
     })
   }, [motionValue])
-
-  if (count === null) return null
 
   return (
     <div className="flex items-center justify-center gap-2.5 py-4">
