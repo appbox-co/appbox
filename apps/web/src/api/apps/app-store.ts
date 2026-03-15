@@ -412,6 +412,38 @@ export interface AppRestriction {
   package_id: number
 }
 
+export interface PackageSummary {
+  id: number
+  display_name: string
+  sort_order?: number | null
+  hidden?: number | null
+  brand_id?: number | null
+}
+
+/**
+ * Fetch package catalog for resolving package IDs and display ordering.
+ * Backend: GET /v1/packages
+ */
+export async function getPackages(): Promise<PackageSummary[]> {
+  const res = await apiGet<{ items: Record<string, unknown>[] }>(
+    "packages?limit=999&orderby=sort_order"
+  )
+  const items = res.items ?? []
+
+  return items.map((raw) => ({
+    id: Number(raw.id ?? 0),
+    display_name: String(raw.display_name ?? ""),
+    sort_order:
+      raw.sort_order == null || raw.sort_order === ""
+        ? null
+        : Number(raw.sort_order),
+    hidden:
+      raw.hidden == null || raw.hidden === "" ? null : Number(raw.hidden),
+    brand_id:
+      raw.brand_id == null || raw.brand_id === "" ? null : Number(raw.brand_id)
+  }))
+}
+
 /**
  * Fetch app/category restrictions for a specific package.
  * Backend: GET /v1/apprestrictedcategories?where=arc.package_id&eq={id}

@@ -21,7 +21,10 @@ import type {
 import {
   computeInstallGuards,
   fetchSearchFieldOptions,
-  getEffectiveAppSlots
+  getEffectiveAppSlots,
+  getAppRestrictions,
+  getPackages,
+  isAppRestrictedForPackage
 } from "@/api/apps/app-store"
 import {
   useAppBoostInfo,
@@ -30,6 +33,7 @@ import {
   useInstallApp
 } from "@/api/apps/hooks/use-app-store"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
+import { usePlans } from "@/api/appbox/hooks/use-plans"
 import { BoostSlider } from "@/components/dashboard/boost-slider"
 import { FormFieldRenderer } from "@/components/dashboard/dynamic-form/form-field-renderer"
 import { Button } from "@/components/ui/button"
@@ -795,7 +799,8 @@ function CyloSelector({
   onSelectCylo,
   guardsLoading,
   label,
-  noSlotsLabel
+  noSlotsLabel,
+  minimumRequiredPlan
 }: {
   cylos: Cylo[]
   availableCylos: Cylo[]
@@ -810,6 +815,7 @@ function CyloSelector({
   guardsLoading: boolean
   label: string
   noSlotsLabel: string
+  minimumRequiredPlan: string | null
 }) {
   const t = useTranslations("appstore")
   const hiddenCount = cylos.length - availableCylos.length
@@ -838,7 +844,11 @@ function CyloSelector({
   function getIneligibleReason(c: Cylo) {
     if (migratingCyloIds.has(c.id)) return t("install.cyloSelector.migrating")
     if (restrictedCyloIds.has(c.id))
-      return t("install.cyloSelector.restrictedOnPackage")
+      return minimumRequiredPlan
+        ? t("install.cyloSelector.restrictedOnPackageMinPlan", {
+            plan: minimumRequiredPlan
+          })
+        : t("install.cyloSelector.restrictedOnPackage")
     if (
       c.app_slots - c.app_slots_used < requiredSlots ||
       devNoSlotsCyloIds.has(c.id)
@@ -1123,6 +1133,7 @@ export function InstallDialog({
   const t = useTranslations("appstore")
   const router = useRouter()
   const { cylos: sessionCylos, user } = useAuth()
+  const { plans } = usePlans()
   const effectiveUserId = targetUserId ?? user?.id ?? 0
   const effectiveUserRole = targetUserRole ?? user?.roles
   const { data: cylosSummary } = useCylosSummary()
@@ -1247,6 +1258,131 @@ export function InstallDialog({
 
   const requiresDomain = app.RequiresDomain === 1
   const requiredSlots = getEffectiveAppSlots(app)
+  const appCategoryIds = useMemo(
+    () =>
+      (app.categories ?? [])
+        .map((c) =>
+          typeof c.key === "number" ? c.key : parseInt(String(c.key), 10)
+        )
+        .filter((id) => Number.isFinite(id)),
+    [app.categories]
+  )
+
+  const [restrictedPlanPackageIds, setRestrictedPlanPackageIds] = useState<
+    Set<number> | null
+  >(null)
+  const [minimumPlanLabel, setMinimumPlanLabel] = useState<string | null>(null)
+
+  useEffect(() => {
+    const groups = plans?.data
+    if (!groups) {
+      setRestrictedPlanPackageIds(null)
+      setMinimumPlanLabel(null)
+      return
+    }
+
+    const sortedPlans = groups
+      .slice()
+      .sort((a, b) => a.sort - b.sort)
+      .flatMap((group) =>
+        group.plans
+          .slice()
+          .sort((a, b) => a.sort - b.sort)
+          .filter((plan) => plan.available !== false)
+      )
+    const planNameByNormalizedName = new Map<string, string>()
+    for (const plan of sortedPlans) {
+      const label = plan.short_title?.trim() || plan.title?.trim() || ""
+      if (!label) continue
+      planNameByNormalizedName.set(label.toLowerCase(), label)
+    }
+
+    if (planNameByNormalizedName.size === 0) {
+      setRestrictedPlanPackageIds(new Set())
+      setMinimumPlanLabel(null)
+      return
+    }
+
+    let cancelled = false
+    const run = async () => {
+      try {
+        const packages = await getPackages()
+        const candidatePackages = packages
+          .filter(
+            (pkg) =>
+              pkg.id > 0 &&
+              pkg.display_name &&
+              pkg.hidden !== 1 &&
+              planNameByNormalizedName.has(pkg.display_name.toLowerCase())
+          )
+          .sort((a, b) => {
+            const aOrder =
+              typeof a.sort_order === "number" ? a.sort_order : Number.MAX_SAFE_INTEGER
+            const bOrder =
+              typeof b.sort_order === "number" ? b.sort_order : Number.MAX_SAFE_INTEGER
+            return aOrder - bOrder
+          })
+        const packageIds = candidatePackages.map((pkg) => pkg.id)
+        if (packageIds.length === 0) {
+          if (!cancelled) {
+            setRestrictedPlanPackageIds(new Set())
+            setMinimumPlanLabel(null)
+          }
+          return
+        }
+
+        const restrictionsPerPackage = await Promise.all(
+          packageIds.map(async (packageId) => {
+            const restrictions = await getAppRestrictions(packageId)
+            return {
+              packageId,
+              restricted: isAppRestrictedForPackage(
+                app.id,
+                appCategoryIds,
+                restrictions
+              )
+            }
+          })
+        )
+
+        if (cancelled) return
+        const restricted = new Set(
+          restrictionsPerPackage
+            .filter((entry) => entry.restricted)
+            .map((entry) => entry.packageId)
+        )
+        setRestrictedPlanPackageIds(restricted)
+
+        const firstEligiblePackage = candidatePackages.find(
+          (pkg) => !restricted.has(pkg.id)
+        )
+        if (firstEligiblePackage) {
+          setMinimumPlanLabel(
+            planNameByNormalizedName.get(
+              firstEligiblePackage.display_name.toLowerCase()
+            ) || firstEligiblePackage.display_name
+          )
+        } else {
+          setMinimumPlanLabel(null)
+        }
+      } catch {
+        if (!cancelled) {
+          setRestrictedPlanPackageIds(null)
+          setMinimumPlanLabel(null)
+        }
+      }
+    }
+
+    void run()
+    return () => {
+      cancelled = true
+    }
+  }, [plans, app.id, appCategoryIds])
+
+  const minimumRequiredPlan = useMemo(() => {
+    if (restrictedPlanPackageIds == null) return null
+    return minimumPlanLabel
+  }, [restrictedPlanPackageIds, minimumPlanLabel])
 
   // Dev override: mark cylos as restricted
   const effectiveRestrictedCyloIds = useMemo(() => {
@@ -1347,9 +1483,6 @@ export function InstallDialog({
     const run = async () => {
       setGuardsLoading(true)
       try {
-        const appCategoryIds = (app.categories ?? []).map((c) =>
-          typeof c.key === "number" ? c.key : parseInt(String(c.key), 10)
-        )
         const { restrictedCyloIds: restricted, existingAppCyloIds: existing } =
           await computeInstallGuards(
             app.id,
@@ -1371,7 +1504,7 @@ export function InstallDialog({
     return () => {
       cancelled = true
     }
-  }, [open, app.id, app.categories, cylos, effectiveUserId])
+  }, [open, app.id, appCategoryIds, cylos, effectiveUserId])
 
   /* ----- Available cylos (filtered) ----- */
   const availableCylos = useMemo(() => {
@@ -1439,7 +1572,11 @@ export function InstallDialog({
 
         return {
           type: "restricted",
-          message: t("install.guard.restricted"),
+          message: minimumRequiredPlan
+            ? t("install.guard.restrictedMinPlan", {
+                plan: minimumRequiredPlan
+              })
+            : t("install.guard.restricted"),
           actionLabel: restrictedServiceId
             ? t("install.guard.upgradePackage")
             : t("install.guard.getAnotherAppbox"),
@@ -1519,6 +1656,7 @@ export function InstallDialog({
     devNoSlotsCyloIds,
     requiredSlots,
     availableCylos,
+    minimumRequiredPlan,
     t
   ])
 
@@ -1827,6 +1965,7 @@ export function InstallDialog({
               guardsLoading={guardsLoading}
               label={t("app.selectCylo")}
               noSlotsLabel={t("app.noSlots")}
+              minimumRequiredPlan={minimumRequiredPlan}
             />
           )}
 

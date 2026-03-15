@@ -19,6 +19,12 @@ export function useCustomButtons(instanceId: number) {
 
 export function useTriggerCustomButton() {
   return useMutation({
-    mutationFn: (button: CustomButton) => triggerCustomButton(button)
+    mutationFn: ({
+      button,
+      payload
+    }: {
+      button: CustomButton
+      payload?: Record<string, unknown>
+    }) => triggerCustomButton(button, payload)
   })
 }

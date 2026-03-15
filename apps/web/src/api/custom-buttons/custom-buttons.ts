@@ -20,7 +20,28 @@ export interface CustomButton {
   inputForm?: {
     typeOf: string
     inputFormId: number
-    fields: unknown[]
+    fields: Record<
+      string,
+      {
+        label: string
+        type: string
+        width?: number
+        defaultValue?: string | number | boolean
+        validate?: (
+          | string
+          | {
+              name?: string
+              params?: Record<string, unknown>
+              minLength?: number
+              maxLength?: number
+            }
+        )[]
+        params?: {
+          menuItems?: Record<string, string>
+          [key: string]: unknown
+        }
+      }
+    >
   }
 }
 
@@ -37,16 +58,27 @@ export async function getCustomButtons(
   return res?.customButtons ?? []
 }
 
-export async function triggerCustomButton(button: CustomButton): Promise<void> {
+export async function triggerCustomButton(
+  button: CustomButton,
+  payload?: Record<string, unknown>
+): Promise<void> {
   const route = button.APIRoute
+  const hasPayload = !!payload && Object.keys(payload).length > 0
   switch (button.APIMethod?.toLowerCase()) {
     case "put":
-      await apiPut(route)
+      await apiPut(route, hasPayload ? payload : undefined)
       break
     case "get":
-      await apiGet(route)
+      if (hasPayload) {
+        const params = Object.fromEntries(
+          Object.entries(payload).map(([key, value]) => [key, String(value)])
+        )
+        await apiGet(route, { params })
+      } else {
+        await apiGet(route)
+      }
       break
     default:
-      await apiPost(route)
+      await apiPost(route, hasPayload ? payload : undefined)
   }
 }

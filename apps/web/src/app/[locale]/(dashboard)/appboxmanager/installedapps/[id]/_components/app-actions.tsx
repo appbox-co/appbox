@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import {
   ArrowUpCircle,
@@ -12,6 +12,7 @@ import {
   Trash2,
   Zap
 } from "lucide-react"
+import type { ControllerRenderProps, FieldValues } from "react-hook-form"
 import type { CustomButton } from "@/api/custom-buttons/custom-buttons"
 import {
   useCustomButtons,
@@ -31,6 +32,7 @@ import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { useCylo } from "@/api/cylos/hooks/use-cylos"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { useAuth } from "@/providers/auth-provider"
+import { FormFieldRenderer } from "@/components/dashboard/dynamic-form/form-field-renderer"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -47,10 +49,165 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import type { FormFieldConfig } from "@/types/dashboard"
 
 interface AppActionsProps {
   app: InstalledApp
   startOnlyActionable?: boolean
+}
+
+type ButtonFieldValidation =
+  | string
+  | {
+      name?: string
+      params?: Record<string, unknown>
+      minLength?: number
+      maxLength?: number
+    }
+
+type ButtonField = {
+  label: string
+  type: string
+  width?: number
+  defaultValue?: string | number | boolean
+  validate?: ButtonFieldValidation[]
+  params?: {
+    menuItems?: Record<string, string>
+    regex?: string
+    errorText?: string
+    [key: string]: unknown
+  }
+}
+
+type TranslateFn = (
+  key: string,
+  values?: Record<string, string | number>
+) => string
+
+const HIDDEN_BUTTON_FIELD_TYPES = new Set(["hidden", "spacer"])
+const PASSWORD_BUTTON_FIELD_TYPES = new Set([
+  "password",
+  "passwordAlphaNumeric",
+  "complexPassword"
+])
+
+function isButtonFieldRequired(field: ButtonField): boolean {
+  if (!field.validate) return false
+  return field.validate.some((r) => r === "required")
+}
+
+function mapButtonFieldToConfig(name: string, field: ButtonField): FormFieldConfig {
+  const required = isButtonFieldRequired(field)
+  const base = {
+    name,
+    label: field.label,
+    required
+  }
+
+  if (field.type === "selector") {
+    const menuItems = field.params?.menuItems
+    return {
+      ...base,
+      type: "select",
+      options: menuItems
+        ? Object.entries(menuItems).map(([value, label]) => ({ value, label }))
+        : []
+    }
+  }
+
+  if (field.type === "switch") {
+    return { ...base, type: "toggle" }
+  }
+
+  if (field.type === "textArea") {
+    return { ...base, type: "textarea" }
+  }
+
+  if (PASSWORD_BUTTON_FIELD_TYPES.has(field.type)) {
+    return { ...base, type: "password" }
+  }
+
+  if (field.type === "email") return { ...base, type: "email" }
+  if (field.type === "number") return { ...base, type: "number" }
+
+  // Fallback for dynamicText/search/date/staticText and unknown text-like fields.
+  return { ...base, type: "text" }
+}
+
+function validateButtonField(
+  value: string,
+  field: ButtonField,
+  t: TranslateFn
+): string | null {
+  const rules = field.validate
+  if (!rules || rules.length === 0) return null
+
+  for (const rule of rules) {
+    if (typeof rule === "string") {
+      switch (rule) {
+        case "required":
+          if (!value || value.trim() === "")
+            return t("customButtonValidation.required")
+          break
+        case "alphanumeric":
+          if (value && !/^[a-zA-Z0-9]+$/.test(value)) {
+            return t("customButtonValidation.alphanumeric")
+          }
+          break
+        case "notOnlyAlpha":
+          if (value && /^[a-zA-Z]+$/.test(value)) {
+            return t("customButtonValidation.notOnlyAlpha")
+          }
+          break
+        case "complexPassword":
+          if (value) {
+            if (!/[a-z]/.test(value))
+              return t("customButtonValidation.lowercase")
+            if (!/[A-Z]/.test(value))
+              return t("customButtonValidation.uppercase")
+            if (!/[0-9]/.test(value)) return t("customButtonValidation.number")
+            if (!/[^a-zA-Z0-9]/.test(value)) {
+              return t("customButtonValidation.specialChar")
+            }
+          }
+          break
+        case "email":
+          if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            return t("customButtonValidation.invalidEmail")
+          }
+          break
+        case "date":
+          if (value && isNaN(Date.parse(value)))
+            return t("customButtonValidation.invalidDate")
+          break
+        case "domain":
+        case "depends":
+          break
+      }
+    } else if (typeof rule === "object") {
+      if (rule.minLength != null && value.length < rule.minLength) {
+        return t("customButtonValidation.minLength", { count: rule.minLength })
+      }
+      if (rule.maxLength != null && value.length > rule.maxLength) {
+        return t("customButtonValidation.maxLength", { count: rule.maxLength })
+      }
+      if (rule.name === "matches" && rule.params) {
+        const regex = rule.params.regex as string | undefined
+        const errorText =
+          (rule.params.errorText as string | undefined) ??
+          t("customButtonValidation.invalidFormat")
+        if (regex && value) {
+          try {
+            if (!new RegExp(regex).test(value)) return errorText
+          } catch {
+            // Ignore invalid backend regex and allow submission.
+          }
+        }
+      }
+    }
+  }
+
+  return null
 }
 
 export function AppActions({ app, startOnlyActionable = false }: AppActionsProps) {
@@ -277,9 +434,9 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
             button={btn}
             isTransitioning={isTransitioning || startOnlyActionable}
             isPending={triggerMutation.isPending && customConfirmId === btn.id}
-            onConfirm={() => {
+            onConfirm={(payload) => {
               setCustomConfirmId(btn.id)
-              triggerMutation.mutate(btn, {
+              triggerMutation.mutate({ button: btn, payload }, {
                 onSettled: () => setCustomConfirmId(null)
               })
             }}
@@ -514,16 +671,86 @@ function CustomButtonItem({
   button: CustomButton
   isTransitioning: boolean
   isPending: boolean
-  onConfirm: () => void
+  onConfirm: (payload?: Record<string, unknown>) => void
 }) {
+  const t = useTranslations("appboxmanager.appDetail")
   const [open, setOpen] = useState(false)
+  const [fieldValues, setFieldValues] = useState<Record<string, string>>({})
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
-  // Buttons that require additional form input are not yet supported
-  const requiresForm = !!button.inputForm
+  const formFields = useMemo(() => {
+    const fields = button.inputForm?.fields
+    if (!fields || typeof fields !== "object") return []
+    return Object.entries(fields).filter(([, field]) => {
+      return (
+        !!field &&
+        typeof field === "object" &&
+        !HIDDEN_BUTTON_FIELD_TYPES.has(field.type)
+      )
+    }) as Array<[string, ButtonField]>
+  }, [button.inputForm?.fields])
+
+  const hasForm = formFields.length > 0
+
+  const openDialog = () => {
+    if (hasForm) {
+      const nextValues: Record<string, string> = {}
+      formFields.forEach(([name, field]) => {
+        const defaultValue = field.defaultValue
+        if (typeof defaultValue === "boolean") {
+          nextValues[name] = defaultValue ? "1" : "0"
+        } else if (defaultValue == null) {
+          nextValues[name] = ""
+        } else {
+          nextValues[name] = String(defaultValue)
+        }
+      })
+      setFieldValues(nextValues)
+      setFieldErrors({})
+    }
+    setOpen(true)
+  }
+
+  const handleFieldChange = (name: string, value: string) => {
+    setFieldValues((prev) => ({ ...prev, [name]: value }))
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev
+      const next = { ...prev }
+      delete next[name]
+      return next
+    })
+  }
 
   const handleConfirm = () => {
+    if (hasForm) {
+      const errors: Record<string, string> = {}
+      formFields.forEach(([name, field]) => {
+        const value = fieldValues[name] ?? ""
+        const error = validateButtonField(value, field, t)
+        if (error) errors[name] = error
+      })
+      if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors)
+        return
+      }
+    }
+
+    const payload: Record<string, unknown> = {}
+    if (hasForm) {
+      formFields.forEach(([name, field]) => {
+        const raw = fieldValues[name] ?? ""
+        if (field.type === "number") {
+          payload[name] = raw === "" ? null : Number(raw)
+        } else if (field.type === "switch") {
+          payload[name] = raw === "1" || raw === "true" ? 1 : 0
+        } else {
+          payload[name] = raw
+        }
+      })
+    }
+
     setOpen(false)
-    onConfirm()
+    onConfirm(hasForm ? payload : undefined)
   }
 
   return (
@@ -531,13 +758,8 @@ function CustomButtonItem({
       <Button
         variant="outline"
         size="sm"
-        disabled={isTransitioning || isPending || requiresForm}
-        onClick={() => setOpen(true)}
-        title={
-          requiresForm
-            ? "This button requires additional input via the classic interface"
-            : undefined
-        }
+        disabled={isTransitioning || isPending}
+        onClick={openDialog}
         style={
           button.iconColor
             ? {
@@ -567,6 +789,54 @@ function CustomButtonItem({
                 `Are you sure you want to run ${button.label}?`}
             </DialogDescription>
           </DialogHeader>
+          {hasForm && (
+            <div className="space-y-4">
+              {formFields.map(([name, field]) => {
+                const config = mapButtonFieldToConfig(name, field)
+                const controllerField = {
+                  name,
+                  value: fieldValues[name] ?? "",
+                  onBlur: () => undefined,
+                  ref: () => undefined,
+                  onChange: (
+                    next:
+                      | string
+                      | number
+                      | boolean
+                      | { target?: { value?: unknown } }
+                      | undefined
+                  ) => {
+                    if (typeof next === "string" || typeof next === "number") {
+                      handleFieldChange(name, String(next))
+                      return
+                    }
+                    if (typeof next === "boolean") {
+                      handleFieldChange(name, next ? "1" : "0")
+                      return
+                    }
+                    const targetValue = next?.target?.value
+                    if (
+                      typeof targetValue === "string" ||
+                      typeof targetValue === "number"
+                    ) {
+                      handleFieldChange(name, String(targetValue))
+                      return
+                    }
+                    handleFieldChange(name, "")
+                  }
+                } as unknown as ControllerRenderProps<FieldValues, string>
+
+                return (
+                  <FormFieldRenderer
+                    key={name}
+                    config={config}
+                    field={controllerField}
+                    error={fieldErrors[name]}
+                  />
+                )
+              })}
+            </div>
+          )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel
