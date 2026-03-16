@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useMemo, useState } from "react"
+import { use, useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
@@ -19,7 +19,12 @@ import {
   Square
 } from "lucide-react"
 import type { AppVersion } from "@/api/apps/app-store"
-import { getEffectiveAppSlots } from "@/api/apps/app-store"
+import {
+  getEffectiveAppSlots,
+  getAppRestrictions,
+  getPackages,
+  isAppRestrictedForPackage
+} from "@/api/apps/app-store"
 import {
   useAppDetail,
   useAppVersions,
@@ -49,11 +54,13 @@ import { MarkdownDescription } from "@/components/ui/markdown-description"
 import { Separator } from "@/components/ui/separator"
 import { ROUTES } from "@/constants/routes"
 import { formatDate } from "@/lib/utils"
+import { useAuth } from "@/providers/auth-provider"
 import { AppDevPanel } from "../../_components/app-dev-panel"
 import { AppRating } from "../../_components/app-rating"
 import { InstallDialog } from "../../_components/install-dialog"
 
 const ICON_BASE_URL = "https://api.appbox.co/assets/images/apps/icons/"
+const BILLING_BASE_URL = "https://billing.appbox.co"
 
 /* -------------------------------------------------------------------------- */
 /*  Version columns                                                            */
@@ -342,6 +349,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   const t = useTranslations("appstore")
   const tInstalled = useTranslations("appboxmanager.installedApps")
   const tDetail = useTranslations("appboxmanager.appDetail")
+  const { cylos } = useAuth()
   const [installOpen, setInstallOpen] = useState(false)
   const [bulkAction, setBulkAction] = useState<
     "start" | "stop" | "restart" | "freeze" | "unfreeze" | null
@@ -360,6 +368,146 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
 
   const versionColumns = useVersionColumns(Number(app?.app_slots ?? 0))
   const installedInstanceColumns = useInstalledInstanceColumns()
+  const [minimumRequiredPlan, setMinimumRequiredPlan] = useState<string | null>(
+    null
+  )
+  const [showMinimumPlanHint, setShowMinimumPlanHint] = useState(false)
+  const [restrictedPackageIds, setRestrictedPackageIds] = useState<Set<number>>(
+    new Set()
+  )
+  const appCategoryIds = useMemo(
+    () =>
+      (app?.categories ?? [])
+        .map((cat) =>
+          typeof cat.key === "number" ? cat.key : parseInt(String(cat.key), 10)
+        )
+        .filter((id) => Number.isFinite(id)),
+    [app?.categories]
+  )
+
+  useEffect(() => {
+    if (!app) {
+      setMinimumRequiredPlan(null)
+      setShowMinimumPlanHint(false)
+      setRestrictedPackageIds(new Set())
+      return
+    }
+
+    let cancelled = false
+    const run = async () => {
+      try {
+        const packages = await getPackages()
+        const candidatePackages = packages
+          .filter(
+            (pkg) =>
+              pkg.id > 0 &&
+              pkg.display_name &&
+              pkg.hidden !== 1 &&
+              /^[A-Za-z]+-/.test(pkg.display_name)
+          )
+          .sort((a, b) => {
+            const aOrder =
+              typeof a.sort_order === "number"
+                ? a.sort_order
+                : Number.MAX_SAFE_INTEGER
+            const bOrder =
+              typeof b.sort_order === "number"
+                ? b.sort_order
+                : Number.MAX_SAFE_INTEGER
+            return aOrder - bOrder
+          })
+
+        if (candidatePackages.length === 0) {
+          if (!cancelled) {
+            setMinimumRequiredPlan(null)
+            setShowMinimumPlanHint(false)
+            setRestrictedPackageIds(new Set())
+          }
+          return
+        }
+
+        const restrictionChecks = await Promise.allSettled(
+          candidatePackages.map(async (pkg) => {
+            const restrictions = await getAppRestrictions(pkg.id)
+            return {
+              id: pkg.id,
+              restricted: isAppRestrictedForPackage(
+                app.id,
+                appCategoryIds,
+                restrictions
+              )
+            }
+          })
+        )
+
+        if (cancelled) return
+
+        const resolved = restrictionChecks
+          .filter(
+            (result): result is PromiseFulfilledResult<{
+              id: number
+              restricted: boolean
+            }> => result.status === "fulfilled"
+          )
+          .map((result) => result.value)
+
+        if (resolved.length === 0) {
+          setMinimumRequiredPlan(null)
+          setShowMinimumPlanHint(false)
+          setRestrictedPackageIds(new Set())
+          return
+        }
+
+        const restrictedIds = new Set(
+          resolved.filter((row) => row.restricted).map((row) => row.id)
+        )
+        const firstEligible = candidatePackages.find(
+          (pkg) => !restrictedIds.has(pkg.id)
+        )
+
+        setMinimumRequiredPlan(firstEligible?.display_name ?? null)
+
+        const userPackageIds = new Set(
+          (cylos ?? [])
+            .map((cylo) => Number(cylo.package_id))
+            .filter((packageId) => Number.isFinite(packageId) && packageId > 0)
+        )
+
+        // Show the pre-install warning only if every user Appbox package
+        // is restricted for this app (or user has no Appboxes yet).
+        const shouldShowHint =
+          userPackageIds.size === 0
+            ? restrictedIds.size > 0
+            : [...userPackageIds].every((packageId) =>
+                restrictedIds.has(packageId)
+              )
+
+        setShowMinimumPlanHint(shouldShowHint)
+        setRestrictedPackageIds(restrictedIds)
+      } catch {
+        if (!cancelled) {
+          setMinimumRequiredPlan(null)
+          setShowMinimumPlanHint(false)
+          setRestrictedPackageIds(new Set())
+        }
+      }
+    }
+
+    void run()
+    return () => {
+      cancelled = true
+    }
+  }, [app, appCategoryIds, cylos])
+
+  const upgradeCtaUrl = useMemo(() => {
+    const restrictedCylo = (cylos ?? []).find(
+      (cylo) =>
+        restrictedPackageIds.has(Number(cylo.package_id)) &&
+        !!cylo.whmcs_serviceid
+    )
+    if (!restrictedCylo?.whmcs_serviceid) return null
+    return `${BILLING_BASE_URL}/upgrade.php?type=package&id=${restrictedCylo.whmcs_serviceid}`
+  }, [cylos, restrictedPackageIds])
 
   if (isLoading) return <DetailSkeleton />
 
@@ -500,6 +648,31 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
           >
             {app.enabled === 0 ? t("app.disabled") : t("app.getApp")}
           </Button>
+          {showMinimumPlanHint && minimumRequiredPlan && (
+            <div className="space-y-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3.5 py-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs text-amber-400/80">
+                  {t("app.minimumPlanLabel")}
+                </span>
+                <span className="text-xs font-semibold text-amber-300">
+                  {minimumRequiredPlan}
+                </span>
+              </div>
+              {upgradeCtaUrl && (
+                <Button
+                  size="sm"
+                  className="h-8 w-full gap-1.5 border-amber-500/30 bg-amber-500/15 text-xs text-amber-300 hover:bg-amber-500/25"
+                  variant="outline"
+                  asChild
+                >
+                  <a href={upgradeCtaUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="size-3" />
+                    {t("install.guard.upgradePackage")}
+                  </a>
+                </Button>
+              )}
+            </div>
+          )}
 
           {/* Metadata */}
           <div className="space-y-2 text-sm">
