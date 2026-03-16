@@ -425,10 +425,13 @@ export interface PackageSummary {
  * Backend: GET /v1/packages
  */
 export async function getPackages(): Promise<PackageSummary[]> {
-  const res = await apiGet<{ items: Record<string, unknown>[] }>(
+  const res = await apiGet<{
+    items?: Record<string, unknown>[]
+    results?: Record<string, unknown>[]
+  } | Record<string, unknown>[]>(
     "packages?limit=999&orderby=sort_order"
   )
-  const items = res.items ?? []
+  const items = Array.isArray(res) ? res : (res.items ?? res.results ?? [])
 
   return items.map((raw) => ({
     id: Number(raw.id ?? 0),

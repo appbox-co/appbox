@@ -33,7 +33,6 @@ import {
   useInstallApp
 } from "@/api/apps/hooks/use-app-store"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
-import { usePlans } from "@/api/appbox/hooks/use-plans"
 import { BoostSlider } from "@/components/dashboard/boost-slider"
 import { FormFieldRenderer } from "@/components/dashboard/dynamic-form/form-field-renderer"
 import { Button } from "@/components/ui/button"
@@ -909,7 +908,10 @@ function CyloSelector({
               value={ineligibleSelection}
               onValueChange={setIneligibleSelection}
             >
-              <SelectTrigger id="cylo-select">
+              <SelectTrigger
+                id="cylo-select"
+                className="[&>span]:max-w-[calc(100%-1.25rem)] [&>span]:truncate"
+              >
                 <SelectValue
                   placeholder={t("install.cyloSelector.selectToSeeOptions")}
                 />
@@ -917,10 +919,10 @@ function CyloSelector({
               <SelectContent>
                 {cylos.map((c) => (
                   <SelectItem key={c.id} value={String(c.id)}>
-                    <div className="flex items-center gap-2">
-                      <Package className="size-3.5 text-muted-foreground" />
-                      <span>{c.display_name}</span>
-                      <span className="text-xs text-muted-foreground">
+                    <div className="flex min-w-0 items-start gap-2">
+                      <Package className="mt-0.5 size-3.5 shrink-0 text-muted-foreground" />
+                      <span className="truncate">{c.display_name}</span>
+                      <span className="min-w-0 text-xs text-muted-foreground whitespace-normal wrap-break-word">
                         — {getIneligibleReason(c)}
                       </span>
                     </div>
@@ -932,7 +934,7 @@ function CyloSelector({
             {/* Show action for the selected ineligible appbox */}
             {selectedIneligibleCylo && (
               <div className="rounded-md border border-muted bg-muted/20 p-3 text-sm">
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground wrap-break-word">
                   <span className="font-medium text-foreground">
                     {selectedIneligibleCylo.display_name}
                   </span>{" "}
@@ -1133,7 +1135,6 @@ export function InstallDialog({
   const t = useTranslations("appstore")
   const router = useRouter()
   const { cylos: sessionCylos, user } = useAuth()
-  const { plans } = usePlans()
   const effectiveUserId = targetUserId ?? user?.id ?? 0
   const effectiveUserRole = targetUserRole ?? user?.roles
   const { data: cylosSummary } = useCylosSummary()
@@ -1268,41 +1269,10 @@ export function InstallDialog({
     [app.categories]
   )
 
-  const [restrictedPlanPackageIds, setRestrictedPlanPackageIds] = useState<
-    Set<number> | null
-  >(null)
   const [minimumPlanLabel, setMinimumPlanLabel] = useState<string | null>(null)
+  const [minimumPlanResolved, setMinimumPlanResolved] = useState(false)
 
   useEffect(() => {
-    const groups = plans?.data
-    if (!groups) {
-      setRestrictedPlanPackageIds(null)
-      setMinimumPlanLabel(null)
-      return
-    }
-
-    const sortedPlans = groups
-      .slice()
-      .sort((a, b) => a.sort - b.sort)
-      .flatMap((group) =>
-        group.plans
-          .slice()
-          .sort((a, b) => a.sort - b.sort)
-          .filter((plan) => plan.available !== false)
-      )
-    const planNameByNormalizedName = new Map<string, string>()
-    for (const plan of sortedPlans) {
-      const label = plan.short_title?.trim() || plan.title?.trim() || ""
-      if (!label) continue
-      planNameByNormalizedName.set(label.toLowerCase(), label)
-    }
-
-    if (planNameByNormalizedName.size === 0) {
-      setRestrictedPlanPackageIds(new Set())
-      setMinimumPlanLabel(null)
-      return
-    }
-
     let cancelled = false
     const run = async () => {
       try {
@@ -1313,29 +1283,35 @@ export function InstallDialog({
               pkg.id > 0 &&
               pkg.display_name &&
               pkg.hidden !== 1 &&
-              planNameByNormalizedName.has(pkg.display_name.toLowerCase())
+              // Exclude legacy numeric package names (e.g. "1000"), keep sellable
+              // tiered package labels like BG-2000 / NG-18000 / NG-Ultima.
+              /^[A-Za-z]+-/.test(pkg.display_name)
           )
           .sort((a, b) => {
             const aOrder =
-              typeof a.sort_order === "number" ? a.sort_order : Number.MAX_SAFE_INTEGER
+              typeof a.sort_order === "number"
+                ? a.sort_order
+                : Number.MAX_SAFE_INTEGER
             const bOrder =
-              typeof b.sort_order === "number" ? b.sort_order : Number.MAX_SAFE_INTEGER
+              typeof b.sort_order === "number"
+                ? b.sort_order
+                : Number.MAX_SAFE_INTEGER
             return aOrder - bOrder
           })
-        const packageIds = candidatePackages.map((pkg) => pkg.id)
-        if (packageIds.length === 0) {
+        if (candidatePackages.length === 0) {
           if (!cancelled) {
-            setRestrictedPlanPackageIds(new Set())
             setMinimumPlanLabel(null)
+            setMinimumPlanResolved(true)
           }
           return
         }
 
-        const restrictionsPerPackage = await Promise.all(
-          packageIds.map(async (packageId) => {
-            const restrictions = await getAppRestrictions(packageId)
+        const restrictionsPerPackage = await Promise.allSettled(
+          candidatePackages.map(async (pkg) => {
+            const restrictions = await getAppRestrictions(pkg.id)
             return {
-              packageId,
+              packageId: pkg.id,
+              packageName: pkg.display_name,
               restricted: isAppRestrictedForPackage(
                 app.id,
                 appCategoryIds,
@@ -1346,29 +1322,37 @@ export function InstallDialog({
         )
 
         if (cancelled) return
-        const restricted = new Set(
-          restrictionsPerPackage
-            .filter((entry) => entry.restricted)
-            .map((entry) => entry.packageId)
-        )
-        setRestrictedPlanPackageIds(restricted)
 
-        const firstEligiblePackage = candidatePackages.find(
-          (pkg) => !restricted.has(pkg.id)
-        )
-        if (firstEligiblePackage) {
-          setMinimumPlanLabel(
-            planNameByNormalizedName.get(
-              firstEligiblePackage.display_name.toLowerCase()
-            ) || firstEligiblePackage.display_name
+        const successful = restrictionsPerPackage
+          .filter(
+            (result): result is PromiseFulfilledResult<{
+              packageId: number
+              packageName: string
+              restricted: boolean
+            }> => result.status === "fulfilled"
           )
-        } else {
+          .map((result) => result.value)
+
+        if (successful.length === 0) {
           setMinimumPlanLabel(null)
+          setMinimumPlanResolved(false)
+          return
         }
+
+        const byId = new Map<number, (typeof successful)[number]>(
+          successful.map((entry) => [entry.packageId, entry])
+        )
+        const firstEligible = candidatePackages.find((pkg) => {
+          const row = byId.get(pkg.id)
+          return row != null && !row.restricted
+        })
+
+        setMinimumPlanLabel(firstEligible?.display_name ?? null)
+        setMinimumPlanResolved(true)
       } catch {
         if (!cancelled) {
-          setRestrictedPlanPackageIds(null)
           setMinimumPlanLabel(null)
+          setMinimumPlanResolved(false)
         }
       }
     }
@@ -1377,12 +1361,12 @@ export function InstallDialog({
     return () => {
       cancelled = true
     }
-  }, [plans, app.id, appCategoryIds])
+  }, [app.id, appCategoryIds])
 
   const minimumRequiredPlan = useMemo(() => {
-    if (restrictedPlanPackageIds == null) return null
+    if (!minimumPlanResolved) return null
     return minimumPlanLabel
-  }, [restrictedPlanPackageIds, minimumPlanLabel])
+  }, [minimumPlanResolved, minimumPlanLabel])
 
   // Dev override: mark cylos as restricted
   const effectiveRestrictedCyloIds = useMemo(() => {
