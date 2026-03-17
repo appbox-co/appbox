@@ -37,6 +37,7 @@ export interface AddInstanceDomainPayload {
 export interface ConfigSnippetItem {
   file?: string
   config?: string
+  enable_command?: string
   reload_command?: string
   notes?: string
 }

@@ -55,18 +55,21 @@ function SnippetBlock({
   fileLabel,
   configLabel,
   commandLabel,
+  notesLabel,
   copyLabel,
   copiedLabel,
   copiedItem,
   onCopy,
   file,
   config,
-  command
+  command,
+  notes
 }: {
   title: string
   fileLabel: string
   configLabel: string
   commandLabel: string
+  notesLabel: string
   copyLabel: string
   copiedLabel: string
   copiedItem: string | null
@@ -74,6 +77,7 @@ function SnippetBlock({
   file?: string
   config?: string
   command?: string
+  notes?: string
 }) {
   if (!config) return null
 
@@ -146,6 +150,13 @@ function SnippetBlock({
             {command}
           </pre>
         </div>
+      )}
+
+      {notes && (
+        <p className="text-xs italic text-muted-foreground">
+          <span className="font-medium not-italic">{notesLabel}: </span>
+          {notes}
+        </p>
       )}
     </div>
   )
@@ -652,13 +663,18 @@ export function CustomDomainsCard({
               fileLabel={t("customDomainsFile")}
               configLabel={t("customDomainsConfigSnippet")}
               commandLabel={t("customDomainsReloadCommand")}
+              notesLabel={t("customDomainsNotes")}
               copyLabel={t("customDomainsCopy")}
               copiedLabel={t("customDomainsCopied")}
               copiedItem={copiedItem}
               onCopy={handleCopy}
               file={configData?.config_snippets?.nginx?.file}
               config={configData?.config_snippets?.nginx?.config}
-              command={configData?.config_snippets?.nginx?.reload_command}
+              command={
+                configData?.config_snippets?.nginx?.enable_command ??
+                configData?.config_snippets?.nginx?.reload_command
+              }
+              notes={configData?.config_snippets?.nginx?.notes}
             />
 
             <SnippetBlock
@@ -666,13 +682,18 @@ export function CustomDomainsCard({
               fileLabel={t("customDomainsFile")}
               configLabel={t("customDomainsConfigSnippet")}
               commandLabel={t("customDomainsReloadCommand")}
+              notesLabel={t("customDomainsNotes")}
               copyLabel={t("customDomainsCopy")}
               copiedLabel={t("customDomainsCopied")}
               copiedItem={copiedItem}
               onCopy={handleCopy}
               file={configData?.config_snippets?.apache?.file}
               config={configData?.config_snippets?.apache?.config}
-              command={configData?.config_snippets?.apache?.reload_command}
+              command={
+                configData?.config_snippets?.apache?.enable_command ??
+                configData?.config_snippets?.apache?.reload_command
+              }
+              notes={configData?.config_snippets?.apache?.notes}
             />
           </div>
 
