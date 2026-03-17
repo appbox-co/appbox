@@ -148,6 +148,36 @@ To add new documentation:
 
 For more details, see our [Adding New Docs](./apps/content/docs/en/adding-new-docs.mdx) guide.
 
+## Submit Your Own App
+
+Appbox welcomes community-submitted apps — whether you've built your own application or you're packaging an existing open-source app from another developer for the platform.
+
+**Get started with our example app:** [github.com/appbox-co/example-app](https://github.com/appbox-co/example-app)
+
+The example repository includes everything you need:
+
+- **`appbox.yml`** — Single configuration file defining your app's metadata, ports, volumes, environment variables, and custom fields
+- **`Dockerfile`** — Container image wrapping an upstream image with the Appbox entrypoint
+- **`entrypoint.sh`** — Lifecycle script handling first-run setup, upgrades, and platform callbacks
+- **`moduser.sh`** — Password recovery script (required for all apps)
+- **Full documentation** — Schema reference, template variables, field types, validation rules, and a testing framework
+
+### Key requirements
+
+- Apps must be fully self-contained in a **single Docker container** (no docker-compose or external dependencies)
+- The main process must run as **UID 1000** inside the container
+- All apps must include an **entrypoint lifecycle** (setup, upgrade detection, API callback) and a **password change script** (`moduser.sh`)
+- Apps should be **secure by default** — strong password validation, no default credentials, public registration disabled
+
+### How to submit
+
+1. Package your app following the [example-app](https://github.com/appbox-co/example-app) template
+2. Test all three container states (fresh install, upgrade, restart) using the included [testing framework](https://github.com/appbox-co/example-app/blob/main/TESTING.md)
+3. Push your image to the Appbox registry
+4. Open a [support ticket](https://billing.appbox.co/submitticket.php?step=2&deptid=1) with your app details
+
+Our team reviews every submission for security, stability, and adherence to platform conventions.
+
 ## Community
 
 - [Support Tickets](https://billing.appbox.co/submitticket.php?step=2&deptid=3) - Get help with your service
