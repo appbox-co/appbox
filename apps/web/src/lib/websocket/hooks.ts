@@ -373,6 +373,23 @@ export function useWsQueryInvalidation(wsContext?: {
               })
               queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
             }
+
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "installedApps", instanceId]
+            })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "installedApps"]
+            })
+            if (
+              notif.action === "installing" ||
+              notif.action === "add" ||
+              notif.action === "removed"
+            ) {
+              queryClient.invalidateQueries({
+                queryKey: ["admin", "cylos"]
+              })
+            }
           }
 
           // Keep the UI in sync when the appbox state changes.
@@ -392,6 +409,21 @@ export function useWsQueryInvalidation(wsContext?: {
               queryKey: queryKeys.cylos.detail(cyloId)
             })
             queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "cylos", cyloId]
+            })
+            queryClient.invalidateQueries({ queryKey: ["admin", "cylos"] })
+            if (
+              notif.action === "userlowquota" ||
+              notif.action === "usernormalquota" ||
+              notif.action === "adminlowquota" ||
+              notif.action === "adminnormalquota"
+            ) {
+              queryClient.invalidateQueries({
+                queryKey: ["admin", "lowQuota"]
+              })
+            }
 
             if (notif.action === "migrating") {
               // Optimistically mark this appbox as migrating in both summary/detail caches.
@@ -569,6 +601,24 @@ export function useWsQueryInvalidation(wsContext?: {
                 queryKey: queryKeys.installedApps.all
               })
             }
+
+            if (
+              notif.action === "migrating" ||
+              notif.action === "migrated" ||
+              notif.action === "restarted"
+            ) {
+              queryClient.invalidateQueries({
+                queryKey: ["admin", "installedApps"]
+              })
+            }
+            if (
+              notif.action === "migrating" ||
+              notif.action === "migrated"
+            ) {
+              queryClient.invalidateQueries({
+                queryKey: ["admin", "migrations"]
+              })
+            }
           }
           break
         }
@@ -678,6 +728,13 @@ export function useWsQueryInvalidation(wsContext?: {
                   : prev
               }
             )
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "cylos", cyloId]
+            })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "migrations"]
+            })
           }
           break
 
@@ -694,6 +751,17 @@ export function useWsQueryInvalidation(wsContext?: {
             queryClient.invalidateQueries({
               queryKey: queryKeys.installedApps.all
             })
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "cylos", cyloId]
+            })
+            queryClient.invalidateQueries({ queryKey: ["admin", "cylos"] })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "installedApps"]
+            })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "migrations"]
+            })
           }
           break
 
@@ -707,6 +775,26 @@ export function useWsQueryInvalidation(wsContext?: {
             queryClient.invalidateQueries({
               queryKey: queryKeys.cylos.all
             })
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "cylos", data.cylo_id]
+            })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "cylos"]
+            })
+            if (
+              message.event === WS_EVENTS.CYLO_QUOTA_LOW ||
+              message.event === WS_EVENTS.CYLO_QUOTA_NORMAL
+            ) {
+              queryClient.invalidateQueries({
+                queryKey: ["admin", "lowQuota"]
+              })
+            }
+            if (message.event === WS_EVENTS.CYLO_THROTTLE_CHANGED) {
+              queryClient.invalidateQueries({
+                queryKey: ["admin", "throttles"]
+              })
+            }
           }
           break
 
@@ -736,6 +824,12 @@ export function useWsQueryInvalidation(wsContext?: {
 
           queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
 
+          // Admin module uses a separate query-key namespace
+          queryClient.invalidateQueries({
+            queryKey: ["admin", "installedApps"]
+          })
+          queryClient.invalidateQueries({ queryKey: ["admin", "cylos"] })
+
           if (
             Number.isFinite(instanceId) &&
             instanceId > 0 &&
@@ -747,6 +841,7 @@ export function useWsQueryInvalidation(wsContext?: {
         }
 
         case WS_EVENTS.COMMENT_CREATED: {
+          queryClient.invalidateQueries({ queryKey: ["admin", "comments"] })
           const c = data as unknown as CommentCreatedData & { relid?: number }
           if (typeof c.type === "string" && typeof c.relid === "number") {
             queryClient.invalidateQueries({
@@ -803,6 +898,7 @@ export function useWsQueryInvalidation(wsContext?: {
         }
 
         case WS_EVENTS.COMMENT_UPDATED: {
+          queryClient.invalidateQueries({ queryKey: ["admin", "comments"] })
           const cu = data as unknown as CommentUpdatedData & { relid?: number }
           if (typeof cu.type === "string" && typeof cu.relid === "number") {
             queryClient.invalidateQueries({
@@ -837,6 +933,7 @@ export function useWsQueryInvalidation(wsContext?: {
         }
 
         case WS_EVENTS.COMMENT_DELETED: {
+          queryClient.invalidateQueries({ queryKey: ["admin", "comments"] })
           const cd = data as unknown as CommentDeletedData & { relid?: number }
           if (typeof cd.type === "string" && typeof cd.relid === "number") {
             queryClient.invalidateQueries({
@@ -867,6 +964,7 @@ export function useWsQueryInvalidation(wsContext?: {
         }
 
         case WS_EVENTS.COMMENT_VOTED: {
+          queryClient.invalidateQueries({ queryKey: ["admin", "comments"] })
           const cv = data as { app_id?: number; type?: string; relid?: number }
           if (
             typeof cv.type === "string" &&
@@ -889,6 +987,9 @@ export function useWsQueryInvalidation(wsContext?: {
           if (typeof data.instance_id === "number") {
             queryClient.invalidateQueries({
               queryKey: queryKeys.installedApps.detail(data.instance_id)
+            })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "installedApps", data.instance_id]
             })
           }
           break
@@ -916,12 +1017,19 @@ export function useWsQueryInvalidation(wsContext?: {
             queryClient.invalidateQueries({
               queryKey: ["installedApps", "cylo"]
             })
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "installedApps"]
+            })
           }
           if (!isNaN(cyloId)) {
             queryClient.invalidateQueries({
               queryKey: queryKeys.cylos.detail(cyloId)
             })
             queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "cylos"]
+            })
           }
           break
         }
@@ -952,6 +1060,10 @@ export function useWsQueryInvalidation(wsContext?: {
             })
             queryClient.invalidateQueries({
               queryKey: queryKeys.installedApps.detail(instanceId)
+            })
+            // Admin module uses a separate query-key namespace
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "installedApps", instanceId]
             })
           }
           break

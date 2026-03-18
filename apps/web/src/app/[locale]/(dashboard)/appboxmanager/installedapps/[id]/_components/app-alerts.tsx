@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react"
 import { useTranslations } from "next-intl"
-import { ArrowUpCircle, Ban, Download, Trash2, Zap } from "lucide-react"
+import { AlertTriangle, ArrowUpCircle, Ban, Download, Trash2, Zap } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import type { CyloDetail } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
@@ -3315,27 +3315,55 @@ export function AppAlerts({
     )
   }
 
+  /* ── Low quota banner — stacks above job/state banners ── */
+  const lowQuotaBanner = cylo?.is_low_quota ? (
+    <AlertBanner
+      icon={AlertTriangle}
+      color="#ef4444"
+      label={cyloT("lowQuota")}
+      description={
+        cylo.low_quota_details
+          ? cyloT("lowQuotaMessage", {
+              available: (
+                cylo.low_quota_details.available_kib /
+                1024 /
+                1024
+              ).toFixed(2)
+            })
+          : "Disk space is critically low. All apps on this appbox have been stopped."
+      }
+      details={
+        cylo.low_quota_details ? (
+          <p className="text-[10px] text-muted-foreground">
+            {cyloT("lowQuotaHint")}
+          </p>
+        ) : null
+      }
+    />
+  ) : null
+
   /* ── Live job banner — takes priority over status-derived banners ── */
   if (job) {
-    // Inherit the colour/icon from the transitional state if applicable,
-    // otherwise fall back to the generic purple "running" style.
     const config = STATE_CONFIG[app.status]
     const color = config?.color ?? "#8b5cf6"
     const Icon = config?.icon ?? Zap
     const label = config?.label ?? "Running"
     return (
-      <AlertBanner
-        icon={Icon}
-        color={color}
-        label={label}
-        description={
-          getTransitionalDescription(app, job, showPayloadMessage, t) ??
-          job.status ??
-          `A job is currently running on ${app.display_name}.`
-        }
-      >
-        <JobProgress job={job} color={color} />
-      </AlertBanner>
+      <>
+        {lowQuotaBanner}
+        <AlertBanner
+          icon={Icon}
+          color={color}
+          label={label}
+          description={
+            getTransitionalDescription(app, job, showPayloadMessage, t) ??
+            job.status ??
+            `A job is currently running on ${app.display_name}.`
+          }
+        >
+          <JobProgress job={job} color={color} />
+        </AlertBanner>
+      </>
     )
   }
 
@@ -3348,16 +3376,19 @@ export function AppAlerts({
       getTransitionalDescription(app, undefined, showPayloadMessage, t) ??
       description(app)
     return (
-      <AlertBanner
-        icon={icon}
-        color={color}
-        label={label}
-        description={descriptionText}
-      >
-        {showProgress && <JobProgress job={undefined} color={color} />}
-      </AlertBanner>
+      <>
+        {lowQuotaBanner}
+        <AlertBanner
+          icon={icon}
+          color={color}
+          label={label}
+          description={descriptionText}
+        >
+          {showProgress && <JobProgress job={undefined} color={color} />}
+        </AlertBanner>
+      </>
     )
   }
 
-  return null
+  return lowQuotaBanner
 }
