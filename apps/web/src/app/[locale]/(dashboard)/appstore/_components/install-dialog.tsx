@@ -358,8 +358,9 @@ function SearchFieldInput({
   error,
   onChange,
   selectedCyloId,
-  appId,
-  selectedVersionId
+  selectedVersionId,
+  customFields,
+  fieldValues
 }: {
   fname: string
   field: CustomField
@@ -367,8 +368,9 @@ function SearchFieldInput({
   error?: string
   onChange: (fname: string, value: string) => void
   selectedCyloId: string
-  appId: number
   selectedVersionId?: number
+  customFields: Record<string, CustomField>
+  fieldValues: Record<string, string>
 }) {
   const t = useTranslations("appstore")
   const [open, setOpen] = useState(false)
@@ -395,8 +397,11 @@ function SearchFieldInput({
           for (const [paramKey, sourceField] of Object.entries(mapping)) {
             if (sourceField === "cylo_id" && selectedCyloId) {
               filters[paramKey] = selectedCyloId
-            } else if (sourceField === "TARGET_APP_ID") {
-              filters[paramKey] = String(appId)
+            } else if (sourceField in customFields) {
+              const resolved =
+                fieldValues[sourceField] ??
+                String(customFields[sourceField]?.defaultValue ?? "")
+              if (resolved) filters[paramKey] = resolved
             }
           }
         }
@@ -406,7 +411,7 @@ function SearchFieldInput({
       filters.version_id = String(selectedVersionId)
     }
     return filters
-  }, [depends, selectedCyloId, appId, selectedVersionId])
+  }, [depends, selectedCyloId, customFields, fieldValues, selectedVersionId])
 
   useEffect(() => {
     if (!apiRoute || !selectedCyloId) {
@@ -565,8 +570,9 @@ function CustomFieldInput({
   error,
   onChange,
   selectedCyloId,
-  appId,
-  selectedVersionId
+  selectedVersionId,
+  customFields,
+  fieldValues
 }: {
   fname: string
   field: CustomField
@@ -574,8 +580,9 @@ function CustomFieldInput({
   error?: string
   onChange: (fname: string, value: string) => void
   selectedCyloId: string
-  appId: number
   selectedVersionId?: number
+  customFields: Record<string, CustomField>
+  fieldValues: Record<string, string>
 }) {
   const t = useTranslations("appstore")
   const fieldType = field.type
@@ -589,8 +596,9 @@ function CustomFieldInput({
         error={error}
         onChange={onChange}
         selectedCyloId={selectedCyloId}
-        appId={appId}
         selectedVersionId={selectedVersionId}
+        customFields={customFields}
+        fieldValues={fieldValues}
       />
     )
   }
@@ -2073,8 +2081,9 @@ export function InstallDialog({
                   error={fieldErrors[fname]}
                   onChange={handleFieldChange}
                   selectedCyloId={selectedCylo}
-                  appId={app.id}
                   selectedVersionId={selectedVersionId}
+                  customFields={customFields}
+                  fieldValues={fieldValues}
                 />
               ))}
             </div>
