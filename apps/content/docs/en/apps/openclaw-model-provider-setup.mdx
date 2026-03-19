@@ -15,6 +15,66 @@ After install, add your provider credentials from the OpenClaw dashboard.
 4. Add a provider entry for the model vendor you want to use (OpenRouter, Anthropic, OpenAI, Google, xAI, Mistral, etc.).
 5. Save and apply configuration changes.
 
+## Getting API keys (with dashboard links)
+
+Use these provider consoles to generate keys, then paste them into OpenClaw `Config > Secrets > Raw`.
+
+### Recommended first: OpenRouter (best default for most users)
+
+Why we recommend it:
+
+- It gives one key for many model vendors.
+- You can use `openrouter/auto`, which can switch models based on task difficulty.
+- `auto` can reduce cost by routing simpler tasks to cheaper models.
+
+How to get a key:
+
+1. Go to [OpenRouter](https://openrouter.ai/) and sign in.
+2. Open [API Keys settings](https://openrouter.ai/settings/keys).
+3. Click **Create** and copy the key (shown once).
+4. Paste it into OpenClaw as `models.providers.openrouter.apiKey`.
+
+<img src="/blog-images/openclaw-openrouter-api-key-tutorial.webp" alt="OpenRouter API keys page screenshot from a public tutorial" width="860" />
+Source tutorial: [How to Get an OpenRouter API Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+How to get a key:
+
+1. Sign in to [OpenAI Platform](https://platform.openai.com/).
+2. Open [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Click **Create new secret key**.
+4. Copy it immediately (OpenAI only shows the full value once).
+
+<img src="/blog-images/openclaw-openai-api-key-tutorial.jpg" alt="OpenAI API key settings screenshot from a public tutorial" width="860" />
+Source tutorial: [How to Get an OpenAI API Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+How to get a key:
+
+1. Sign in to [Anthropic Console](https://console.anthropic.com/).
+2. Open [API Keys](https://console.anthropic.com/settings/keys).
+3. Click **Create Key**.
+4. Copy the key immediately (shown once).
+
+<img src="/blog-images/openclaw-anthropic-api-key-tutorial.png" alt="Anthropic API key creation screenshot from a public tutorial" width="860" />
+Source tutorial: [How to get your Claude API key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini via AI Studio)
+
+How to get a key:
+
+1. Open [Google AI Studio](https://aistudio.google.com/).
+2. Go to [API Keys](https://aistudio.google.com/app/apikey).
+3. Click **Create API key** (new or existing project).
+4. Copy and save the key.
+
+<img src="/blog-images/openclaw-google-api-key-tutorial.png" alt="Google AI Studio API key creation screenshot from a public tutorial" width="860" />
+Source tutorial: [Get Google AI API Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Note: provider dashboards can change frequently and may show a login prompt depending on your session state.
+
 ## Major provider examples
 
 Use one provider block at a time first, confirm it works, then add more providers.
