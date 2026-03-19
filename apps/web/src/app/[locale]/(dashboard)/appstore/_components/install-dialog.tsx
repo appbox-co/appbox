@@ -82,7 +82,7 @@ import { DomainSection, type DomainSectionState } from "./domain-section"
 const BILLING_BASE_URL = "https://billing.appbox.co"
 const MARKETING_URL = "/"
 
-const SKIP_INPUT_TYPES = new Set(["hidden", "spacer"])
+const SKIP_INPUT_TYPES = new Set(["hidden", "spacer", "generatedPassword"])
 
 const PASSWORD_INPUT_TYPES = new Set([
   "password",

@@ -372,6 +372,20 @@ export function useWsQueryInvalidation(wsContext?: {
                 queryKey: queryKeys.installedApps.all
               })
               queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+            } else if (
+              notif.action === "start" ||
+              notif.action === "stop" ||
+              notif.action === "restart"
+            ) {
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.installedApps.detail(instanceId)
+              })
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.installedApps.all
+              })
+              queryClient.invalidateQueries({
+                queryKey: ["installedApps", "cylo"]
+              })
             }
 
             // Admin module uses a separate query-key namespace

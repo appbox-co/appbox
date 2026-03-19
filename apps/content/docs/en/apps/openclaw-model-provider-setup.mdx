@@ -1,0 +1,263 @@
+---
+title: OpenClaw model provider setup
+description: Configure OpenClaw with any model provider API key after installation.
+sort: 1
+---
+
+OpenClaw is installed without requiring a model API key in Appbox.  
+After install, add your provider credentials from the OpenClaw dashboard.
+
+## Where to configure provider auth
+
+1. Open your OpenClaw dashboard URL from the installed app details page.
+2. Go to **Config > Secrets**.
+3. Select **Raw** rather than Form.
+4. Add a provider entry for the model vendor you want to use (OpenRouter, Anthropic, OpenAI, Google, xAI, Mistral, etc.).
+5. Save and apply configuration changes.
+
+## Major provider examples
+
+Use one provider block at a time first, confirm it works, then add more providers.
+
+### OpenRouter
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  }
+}
+```
+
+### OpenAI
+
+```json
+{
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  }
+}
+```
+
+### Anthropic
+
+```json
+{
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  }
+}
+```
+
+### Google (Gemini)
+
+```json
+{
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  }
+}
+```
+
+### xAI (Grok)
+
+```json
+{
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  }
+}
+```
+
+### Mistral
+
+```json
+{
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  }
+}
+```
+
+### Together AI
+
+```json
+{
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  }
+}
+```
+
+## Bedrock note (no API key)
+
+Amazon Bedrock uses AWS credentials (for example `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) rather than an API key. A minimal provider entry looks like:
+
+```json
+{
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  }
+}
+```
+
+## Notes
+
+- Gateway auth token and model provider API keys are different settings.
+- If you get a provider error (for example missing Anthropic key), update your default model to a provider you have configured.
+- If a provider fails validation, first ensure required provider fields are present (`baseUrl`, `models`, and `apiKey` where applicable).
+
+## Official provider docs
+
+- [OpenClaw provider directory](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)

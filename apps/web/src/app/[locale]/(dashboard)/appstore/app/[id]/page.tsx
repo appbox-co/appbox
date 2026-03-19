@@ -699,6 +699,23 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                 </a>
               </Button>
             )}
+            {app.documentation_url && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start gap-2 text-xs text-muted-foreground"
+                asChild
+              >
+                <a
+                  href={app.documentation_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <HelpCircle className="size-3.5" />
+                  Documentation
+                </a>
+              </Button>
+            )}
             {app.helpsite && (
               <Button
                 variant="ghost"

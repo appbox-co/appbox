@@ -46,6 +46,7 @@ export interface AppStoreItem {
   enabled: number
   allow_multiple: number
   devsite: string
+  documentation_url?: string
   helpsite: string
   type: string
   created_at: string

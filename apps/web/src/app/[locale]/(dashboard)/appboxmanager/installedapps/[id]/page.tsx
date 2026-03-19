@@ -132,7 +132,8 @@ const HIDDEN_TYPES = new Set(["hidden", "spacer"])
 const PASSWORD_TYPES = new Set([
   "password",
   "passwordAlphaNumeric",
-  "complexPassword"
+  "complexPassword",
+  "generatedPassword"
 ])
 const URL_TYPES = new Set(["externalURL", "clientURL"])
 

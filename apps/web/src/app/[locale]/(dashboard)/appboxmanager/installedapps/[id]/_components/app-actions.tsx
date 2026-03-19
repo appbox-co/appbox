@@ -84,7 +84,7 @@ type TranslateFn = (
   values?: Record<string, string | number>
 ) => string
 
-const HIDDEN_BUTTON_FIELD_TYPES = new Set(["hidden", "spacer"])
+const HIDDEN_BUTTON_FIELD_TYPES = new Set(["hidden", "spacer", "generatedPassword"])
 const PASSWORD_BUTTON_FIELD_TYPES = new Set([
   "password",
   "passwordAlphaNumeric",
