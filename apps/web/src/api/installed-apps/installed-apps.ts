@@ -36,6 +36,7 @@ export interface InstalledApp {
   /** App's backend default version string (update target). */
   default_version: string
   custom_description?: string
+  documentation_url?: string
   custom_fields?: Record<string, CustomField>
   available_versions: { id: number; version: string }[]
 }
@@ -142,6 +143,10 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     default_version: String(app?.version ?? raw.latest_ver ?? ""),
     custom_description:
       typeof customDescriptionRaw === "string" ? customDescriptionRaw : "",
+    documentation_url:
+      typeof (app?.documentation_url ?? raw.documentation_url) === "string"
+        ? String(app?.documentation_url ?? raw.documentation_url)
+        : undefined,
     custom_fields: (app?.customFields ?? raw.customFields) as
       | Record<string, CustomField>
       | undefined,

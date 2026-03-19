@@ -14,6 +14,7 @@ import {
   ExternalLink,
   Eye,
   EyeOff,
+  HelpCircle,
   Layers,
   Loader2,
   Package,
@@ -659,7 +660,32 @@ export default function InstalledAppDetailPage({
         <TabsContent value="overview" className="mt-6 space-y-6">
           {/* Info grid */}
           <div>
-            <h2 className="mb-4 text-lg font-semibold">{t("appInfo")}</h2>
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-lg font-semibold">{t("appInfo")}</h2>
+              {app.documentation_url && (
+                <Button variant="outline" size="sm" asChild>
+                  <a
+                    href={app.documentation_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <HelpCircle className="mr-1.5 size-3.5" />
+                    Documentation
+                    <ExternalLink className="ml-1.5 size-3 opacity-60" />
+                  </a>
+                </Button>
+              )}
+            </div>
+            {customDescription && (
+              <div className="mb-4 rounded-xl border border-blue-200/60 bg-blue-50/60 p-4 dark:border-blue-500/20 dark:bg-blue-950/30">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-700/90 dark:text-blue-300/80">
+                  {t("appNote")}
+                </p>
+                <p className="mt-1 text-sm leading-6 text-blue-900 dark:text-blue-200/90">
+                  {customDescription}
+                </p>
+              </div>
+            )}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <InfoCard
                 icon={<Package className="size-4" />}
@@ -684,16 +710,6 @@ export default function InstalledAppDetailPage({
                 value={app.server_name}
               />
             </div>
-            {customDescription && (
-              <div className="mt-4 rounded-xl border border-blue-200/60 bg-blue-50/60 p-4 dark:border-blue-500/20 dark:bg-blue-950/30">
-                <p className="text-xs font-semibold uppercase tracking-wide text-blue-700/90 dark:text-blue-300/80">
-                  {t("appNote")}
-                </p>
-                <p className="mt-1 text-sm leading-6 text-blue-900 dark:text-blue-200/90">
-                  {customDescription}
-                </p>
-              </div>
-            )}
           </div>
 
           {/* Custom fields — hidden during transitional states as template vars aren't populated yet */}
