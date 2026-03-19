@@ -1,0 +1,323 @@
+---
+title: Configuração do fornecedor de modelos OpenClaw
+description: Configure o OpenClaw com a chave de API de qualquer fornecedor de modelos após a instalação.
+sort: 1
+---
+
+O OpenClaw é instalado sem exigir uma chave de API de modelo no Appbox.  
+Após instalar, adicione as credenciais do fornecedor no painel do OpenClaw.
+
+## Obter chaves de API (com links para os painéis)
+
+Use estes painéis dos fornecedores para gerar chaves e depois cole-as no OpenClaw em **Config > Secrets > Raw**.
+
+### Recomendado primeiro: OpenRouter (melhor padrão para a maioria)
+
+Por que recomendamos:
+
+- Uma só chave para vários fornecedores de modelos.
+- Pode usar `openrouter/auto`, que alterna modelos conforme a dificuldade da tarefa.
+- `auto` pode reduzir custos ao encaminhar tarefas simples para modelos mais baratos.
+
+Como obter uma chave:
+
+1. Aceda a [OpenRouter](https://openrouter.ai/) e inicie sessão.
+2. Abra as [definições de API Keys](https://openrouter.ai/settings/keys).
+3. Clique em **Create** e copie a chave (mostrada uma vez).
+4. Cole no OpenClaw como `models.providers.openrouter.apiKey`.
+
+<img src="/blog-images/openclaw-openrouter-api-key-tutorial.webp" alt="Captura da página de chaves API do OpenRouter de um tutorial público" width="860" />
+Tutorial de origem: [How to Get an OpenRouter API Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Como obter uma chave:
+
+1. Inicie sessão na [OpenAI Platform](https://platform.openai.com/).
+2. Abra [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Clique em **Create new secret key**.
+4. Copie de imediato (a OpenAI só mostra o valor completo uma vez).
+
+<img src="/blog-images/openclaw-openai-api-key-tutorial.jpg" alt="Captura das definições de chave API da OpenAI de um tutorial público" width="860" />
+Tutorial de origem: [How to Get an OpenAI API Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Como obter uma chave:
+
+1. Inicie sessão na [Anthropic Console](https://console.anthropic.com/).
+2. Abra [API Keys](https://console.anthropic.com/settings/keys).
+3. Clique em **Create Key**.
+4. Copie a chave de imediato (mostrada uma vez).
+
+<img src="/blog-images/openclaw-anthropic-api-key-tutorial.png" alt="Captura da criação de chave API Anthropic de um tutorial público" width="860" />
+Tutorial de origem: [How to get your Claude API key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini via AI Studio)
+
+Como obter uma chave:
+
+1. Abra o [Google AI Studio](https://aistudio.google.com/).
+2. Vá a [API Keys](https://aistudio.google.com/app/apikey).
+3. Clique em **Create API key** (projeto novo ou existente).
+4. Copie e guarde a chave.
+
+<img src="/blog-images/openclaw-google-api-key-tutorial.png" alt="Captura da criação de chave API no Google AI Studio de um tutorial público" width="860" />
+Tutorial de origem: [Get Google AI API Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Nota: os painéis dos fornecedores mudam com frequência e podem pedir login conforme o estado da sessão.
+
+## Onde configurar a autenticação do fornecedor
+
+1. Abra o URL do painel OpenClaw na página de detalhes da app instalada.
+2. Vá a **Config > Secrets**.
+3. Escolha **Raw** em vez de Form.
+4. Adicione uma entrada de fornecedor para o vendedor de modelos que pretende (OpenRouter, Anthropic, OpenAI, Google, xAI, Mistral, etc.).
+5. Guarde e aplique as alterações de configuração.
+
+## Exemplos dos principais fornecedores
+
+Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só depois adicione mais.
+
+### OpenRouter
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  }
+}
+```
+
+### OpenAI
+
+```json
+{
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  }
+}
+```
+
+### Anthropic
+
+```json
+{
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  }
+}
+```
+
+### Google (Gemini)
+
+```json
+{
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  }
+}
+```
+
+### xAI (Grok)
+
+```json
+{
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  }
+}
+```
+
+### Mistral
+
+```json
+{
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  }
+}
+```
+
+### Together AI
+
+```json
+{
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  }
+}
+```
+
+## Nota sobre Bedrock (sem chave de API)
+
+O Amazon Bedrock usa credenciais AWS (por exemplo `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) em vez de uma chave de API. Uma entrada mínima de fornecedor fica assim:
+
+```json
+{
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  }
+}
+```
+
+## Notas
+
+- O token de autenticação do gateway e as chaves de API dos fornecedores de modelos são definições diferentes.
+- Se aparecer um erro do fornecedor (por exemplo chave Anthropic em falta), atualize o modelo predefinido para um fornecedor que tenha configurado.
+- Se a validação de um fornecedor falhar, confirme primeiro que os campos necessários estão preenchidos (`baseUrl`, `models` e `apiKey` quando aplicável).
+
+## Documentação oficial dos fornecedores
+
+- [OpenClaw provider directory](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)

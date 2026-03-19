@@ -37,6 +37,10 @@ function getStatusBadgeClass(status: string) {
       return "bg-amber-500/15 text-amber-600 border-amber-500/25 dark:text-amber-400"
     case "restarting":
       return "bg-sky-500/15 text-sky-600 border-sky-500/25 dark:text-sky-400"
+    case "installing":
+      return "bg-violet-500/15 text-violet-600 border-violet-500/25 dark:text-violet-400"
+    case "suspended":
+      return "bg-rose-500/15 text-rose-700 border-rose-500/25 dark:text-rose-400"
     case "offline":
       return "bg-red-500/15 text-red-600 border-red-500/25 dark:text-red-400"
     default:
@@ -62,6 +66,7 @@ interface CyloCardProps {
 
 export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
   const t = useTranslations("appboxmanager")
+  const tc = useTranslations("common")
 
   const { data: quota } = useCyloDiskQuota(cylo.id)
   const { data: bandwidth } = useCyloBandwidth(cylo.id)
@@ -72,6 +77,16 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
   const { data: installedApps } = useInstalledApps(cylo.id)
   const totalBoostSlots =
     installedApps?.reduce((sum, app) => sum + (app.boost_slots ?? 0), 0) ?? 0
+
+  const statusLabel =
+    {
+      online: tc("status.online"),
+      offline: tc("status.offline"),
+      restarting: tc("status.restarting"),
+      migrating: tc("status.migrating"),
+      installing: tc("status.installing"),
+      suspended: tc("status.suspended")
+    }[cylo.status] ?? cylo.status
 
   /* ---- Storage ---- */
   const storageUsed = quota?.used_gb ?? cylo.storage_used
@@ -130,10 +145,13 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
               className={cn(
                 "text-[10px]",
                 getStatusBadgeClass(cylo.status),
-                (cylo.status === "migrating" || cylo.status === "restarting") && "animate-pulse"
+                (cylo.status === "migrating" ||
+                  cylo.status === "restarting" ||
+                  cylo.status === "installing") &&
+                  "animate-pulse"
               )}
             >
-              {cylo.status}
+              {statusLabel}
             </Badge>
             {cylo.is_throttled && (
               <Badge
