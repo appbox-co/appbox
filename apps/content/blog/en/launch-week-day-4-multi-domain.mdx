@@ -20,7 +20,7 @@ Today, VPS apps support **multiple domains**. Add as many `*.user.appboxes.co` s
 Open any running VPS app and you'll find a **Custom Domains** card on the detail page. This is where all your domains live - a searchable, sortable table showing every domain attached to that VPS, which one is primary, and when it was added.
 
 <p align="center">
-  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains table on a VPS app detail page" width="860" />
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains table on a VPS app detail page" width="860" className="mt-8 mb-10" />
 </p>
 
 To add a new domain, click **Add Domain**. You'll pick a parent domain and enter a subdomain, and the system takes care of the rest.
@@ -32,7 +32,7 @@ The fastest way to add a domain is using your existing Appbox domain. Pick your 
 This is great for spinning up quick project URLs, staging environments, or just giving different services on your VPS their own address. Need `api.user.appboxes.co` for your backend and `app.user.appboxes.co` for your frontend? Add both in under a minute.
 
 <p align="center">
-  <img src="/blog-images/day4-add-subdomain.png" alt="Adding an Appbox subdomain to a VPS" width="560" />
+  <img src="/blog-images/day4-add-subdomain.png" alt="Adding an Appbox subdomain to a VPS" width="560" className="mt-8 mb-10" />
 </p>
 
 Since these sit under your existing Appbox wildcard certificate, SSL is automatic. No waiting, no certificate generation, no configuration.
@@ -44,7 +44,7 @@ You can also point your own domains at your VPS. Select your custom base domain 
 The dialog shows you the exact A record to create - the hostname, the IP address, everything. It even has provider-specific instructions for Cloudflare and other popular DNS providers, so you don't need to go looking up how to add an A record.
 
 <p align="center">
-  <img src="/blog-images/day4-add-custom-domain.png" alt="Adding a custom domain with DNS verification and provider-specific instructions" width="560" />
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Adding a custom domain with DNS verification and provider-specific instructions" width="560" className="mt-8 mb-10" />
 </p>
 
 Once your DNS is pointing to the right IP, hit **Verify Again** and the system confirms the record is correct before adding the domain.
@@ -56,7 +56,7 @@ Every domain you add gets SSL. For Appbox subdomains, this uses the existing wil
 Here's the part that makes this genuinely useful for VPS users: each domain comes with a **View Config** button that gives you ready-to-paste configuration snippets for both Nginx and Apache. The config includes the correct `server_name`, SSL certificate paths, cipher suites, and protocol settings. Copy the snippet, drop it into your web server config inside the VM, reload, and you're serving traffic on that domain.
 
 <p align="center">
-  <img src="/blog-images/day4-ssl-config.png" alt="SSL configuration snippets for Nginx and Apache" width="560" />
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL configuration snippets for Nginx and Apache" width="560" className="mt-8 mb-10" />
 </p>
 
 No guessing at file paths. No hunting for certificate locations. No figuring out cipher strings. It's all there, ready to copy.

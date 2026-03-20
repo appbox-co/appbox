@@ -20,7 +20,7 @@ Ab heute unterstuetzen VPS-Apps **mehrere Domains**. Fuege beliebig viele `*.use
 Oeffne eine laufende VPS-App und du findest auf der Detailseite die Karte **Custom Domains**. Dort siehst du alle Domains in einer durchsuchbaren und sortierbaren Tabelle - inklusive Primary-Status und Hinzufuegezeitpunkt.
 
 <p align="center">
-  <img src="/blog-images/day4-domains-table.png" alt="Custom-Domains-Tabelle auf der Detailseite einer VPS-App" width="860" />
+  <img src="/blog-images/day4-domains-table.png" alt="Custom-Domains-Tabelle auf der Detailseite einer VPS-App" width="860" className="mt-8 mb-10" />
 </p>
 
 Klicke zum Hinzufuegen auf **Add Domain**. Domain auswaehlen, Subdomain eintragen, fertig.
@@ -32,7 +32,7 @@ Am schnellsten geht es mit deiner bestehenden Appbox-Domain. Waehle `user.appbox
 Ideal fuer schnelle Projekt-URLs, Staging-Umgebungen oder mehrere Services auf derselben VPS. Du willst `api.user.appboxes.co` fuer dein Backend und `app.user.appboxes.co` fuer dein Frontend? Beides in unter einer Minute.
 
 <p align="center">
-  <img src="/blog-images/day4-add-subdomain.png" alt="Hinzufuegen einer Appbox-Subdomain zu einer VPS" width="560" />
+  <img src="/blog-images/day4-add-subdomain.png" alt="Hinzufuegen einer Appbox-Subdomain zu einer VPS" width="560" className="mt-8 mb-10" />
 </p>
 
 Da diese Domains unter deinem bestehenden Appbox-Wildcard-Zertifikat laufen, ist SSL sofort aktiv. Kein Warten, keine manuelle Zertifikats-Erstellung.
@@ -44,7 +44,7 @@ Du kannst auch eigene Domains auf deine VPS zeigen lassen. Waehle eine bestehend
 Der Dialog zeigt den exakten A-Record, den du setzen musst - Hostname, Ziel-IP, alles konkret. Zusaetzlich gibt es Hinweise fuer Cloudflare und andere gaengige DNS-Provider.
 
 <p align="center">
-  <img src="/blog-images/day4-add-custom-domain.png" alt="Custom Domain mit DNS-Verifizierung und Provider-Hinweisen hinzufuegen" width="560" />
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Custom Domain mit DNS-Verifizierung und Provider-Hinweisen hinzufuegen" width="560" className="mt-8 mb-10" />
 </p>
 
 Sobald DNS auf die richtige IP zeigt, klickst du **Verify Again** und das System bestaetigt den Eintrag vor dem finalen Hinzufuegen.
@@ -56,7 +56,7 @@ Jede hinzugefuegte Domain bekommt SSL. Bei Appbox-Subdomains ueber das bestehend
 Fuer VPS-Nutzer besonders praktisch: Jede Domain hat einen **View Config**-Button mit direkt nutzbaren Snippets fuer Nginx und Apache. Darin sind `server_name`, Zertifikatspfade, Cipher Suites und Protokoll-Settings bereits korrekt enthalten. Snippet kopieren, in der VM einfuegen, Webserver reloaden, live.
 
 <p align="center">
-  <img src="/blog-images/day4-ssl-config.png" alt="SSL-Konfigurations-Snippets fuer Nginx und Apache" width="560" />
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL-Konfigurations-Snippets fuer Nginx und Apache" width="560" className="mt-8 mb-10" />
 </p>
 
 Kein Raetseln ueber Datei-Pfade. Kein Suchen nach Zertifikatsorten. Keine Handarbeit bei Cipher-Strings.

@@ -72,8 +72,9 @@ Source tutorial: [Get Google AI API Key](https://www.testingdocs.com/get-google-
 1. Open your OpenClaw dashboard URL from the installed app details page.
 2. Go to **Config > Secrets**.
 3. Select **Raw** rather than Form.
-4. **Merge** the provider settings from the examples below into your existing config (see [How this fits in the full file](#how-this-fits-in-the-full-file)) — do not replace the whole file unless you intend to reset gateway, skills, and other Appbox defaults.
-5. Save and apply configuration changes.
+4. Click the Reveal sensitive values button (which looks like an eye with a strike through)
+5. **Merge** the provider settings from the examples below into your existing config (see [How this fits in the full file](#how-this-fits-in-the-full-file)) — do not replace the whole file unless you intend to reset gateway, skills, and other Appbox defaults.
+6. Save and apply configuration changes.
 
 ### How this fits in the full file
 
@@ -86,58 +87,63 @@ Source tutorial: [Get Google AI API Key](https://www.testingdocs.com/get-google-
 
 If `models` or `agents` already exist, merge new keys into those objects instead of duplicating them.
 
-Below is an example of **one** full Raw file shape (JSON5-style as the dashboard often shows it). Your real file may include more fields (e.g. richer model metadata). The **provider blocks** in the examples further down are the parts you align with `models` and `agents` here.
+Below is an example of **one** full Raw file shape as **JSON** (the editor may also accept JSON5-style quotes in practice). Your real file may include more fields (e.g. richer model metadata, `meta`). The **provider blocks** in the examples further down are the parts you align with `models` and `agents` here.
 
-```js
+```json
 {
-  models: {
-    providers: {
-      openrouter: {
-        baseUrl: 'https://openrouter.ai/api/v1',
-        apiKey: 'YOUR_OPENROUTER_KEY',
-        models: [
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
           {
-            id: 'auto',
-            name: 'Auto (OpenRouter)',
-            reasoning: false,
-            input: ['text'],
-            cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-            contextWindow: 200000,
-            maxTokens: 8192,
-          },
-        ],
-      },
-    },
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
   },
-  agents: {
-    defaults: {
-      model: {
-        primary: 'openrouter/auto',
-      },
-    },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
   },
-  commands: {
-    native: 'auto',
-    nativeSkills: 'auto',
-    restart: true,
-    ownerDisplay: 'raw',
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
   },
-  gateway: {
-    bind: 'lan',
-    controlUi: {
-      dangerouslyAllowHostHeaderOriginFallback: true,
-      dangerouslyDisableDeviceAuth: true,
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
     },
-    auth: {
-      mode: 'token',
-      token: 'YOUR_GATEWAY_TOKEN',
-    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
   },
-  skills: {
-    load: {
-      extraDirs: ['/app/skills'],
-    },
-  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
 }
 ```
 
@@ -321,7 +327,7 @@ Use one provider block at a time first, confirm it works, then add more provider
 
 ### Together AI
 
-```text
+```json
 ...
   },
   "models": {

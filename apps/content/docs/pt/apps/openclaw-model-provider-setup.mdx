@@ -72,17 +72,92 @@ Tutorial de origem: [Get Google AI API Key](https://www.testingdocs.com/get-goog
 1. Abra o URL do painel OpenClaw na página de detalhes da app instalada.
 2. Vá a **Config > Secrets**.
 3. Escolha **Raw** em vez de Form.
-4. Adicione uma entrada de fornecedor para o vendedor de modelos que pretende (OpenRouter, Anthropic, OpenAI, Google, xAI, Mistral, etc.).
-5. Guarde e aplique as alterações de configuração.
+4. Clique no botão para revelar valores sensíveis (ícone de olho riscado).
+5. **Mescle** as definições do fornecedor dos exemplos abaixo com a sua configuração existente (veja [Como isto se encaixa no ficheiro completo](#como-isto-se-encaixa-no-ficheiro-completo)) — não substitua o ficheiro inteiro a menos que pretenda repor o gateway, skills e outros predefinidos da Appbox.
+6. Guarde e aplique as alterações de configuração.
+
+### Como isto se encaixa no ficheiro completo
+
+**Config > Secrets > Raw** edita a configuração **completa** do OpenClaw num único objeto. Na Appbox, esse ficheiro já inclui entradas como `gateway` (bind, autenticação por token, Control UI), `skills.load.extraDirs` (skills incluídas), `commands` e por vezes `meta`. Os excertos na secção [Exemplos dos principais fornecedores](#exemplos-dos-principais-fornecedores) mostram apenas o necessário para modelos: a árvore `models` e `agents.defaults.model.primary`.
+
+**O que fazer:** mantenha as chaves de topo existentes (`gateway`, `skills`, `commands`, etc.) e **adicione ou atualize** estas duas secções:
+
+- **`models.providers`** — adicione o seu fornecedor (por exemplo `openrouter`) com `apiKey`, `baseUrl` quando necessário e a lista `models`.
+- **`agents.defaults.model.primary`** — defina a cadeia do modelo predefinido (por exemplo `openrouter/auto`) para o agente usar esse fornecedor.
+
+Se `models` ou `agents` já existirem, mescle novas chaves nesses objetos em vez de os duplicar.
+
+Abaixo está um exemplo de **um** ficheiro Raw completo em **JSON** (o editor pode na prática aceitar estilo JSON5 em aspas). O seu ficheiro real pode ter mais campos (por exemplo metadados de modelo mais ricos, `meta`). Os **blocos de fornecedor** nos exemplos mais abaixo são as partes que deve alinhar com `models` e `agents` aqui.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Token do gateway vs. chave API do fornecedor:** `gateway.auth.token` serve apenas para iniciar sessão na Control UI / gateway do OpenClaw. `models.providers.*.apiKey` é a chave do fornecedor de LLM (OpenRouter, OpenAI, etc.) — são coisas diferentes.
 
 ## Exemplos dos principais fornecedores
 
-Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só depois adicione mais.
+Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só depois adicione mais. Cada exemplo abaixo é um **fragmento para fundir**: `...` representa configuração omitida (linhas acima ou abaixo), e o `},` antes de `"models"` fecha a chave que está acima de `models` no seu ficheiro (por exemplo `skills` ou `commands`). Os excertos não são JSON válidos por si só — funda as secções `models` e `agents` no objeto raiz.
 
 ### OpenRouter
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "openrouter": {
@@ -103,14 +178,15 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "openrouter/auto"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### OpenAI
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "openai": {
@@ -131,14 +207,15 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "openai/gpt-5.4"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Anthropic
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "anthropic": {
@@ -159,14 +236,15 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "anthropic/claude-opus-4-6"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Google (Gemini)
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "google": {
@@ -186,14 +264,15 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "google/gemini-3.1-pro-preview"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### xAI (Grok)
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "xai": {
@@ -213,14 +292,15 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "xai/grok-4"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Mistral
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "mistral": {
@@ -241,14 +321,15 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "mistral/mistral-large-latest"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Together AI
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "together": {
@@ -269,8 +350,8 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
         "primary": "together/moonshotai/Kimi-K2.5"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ## Nota sobre Bedrock (sem chave de API)
@@ -278,7 +359,8 @@ Use primeiro um bloco de fornecedor de cada vez, confirme que funciona e só dep
 O Amazon Bedrock usa credenciais AWS (por exemplo `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) em vez de uma chave de API. Uma entrada mínima de fornecedor fica assim:
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "amazon-bedrock": {
@@ -300,8 +382,8 @@ O Amazon Bedrock usa credenciais AWS (por exemplo `AWS_ACCESS_KEY_ID`, `AWS_SECR
         "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ## Notas

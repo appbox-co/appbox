@@ -14,6 +14,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading
 } from "@/components/marketing/page-header"
+import { OpenClawPromoSection } from "@/components/marketing/openclaw-promo-section"
 import { VpsLaunchPromoSection } from "@/components/marketing/vps-launch-promo-section"
 import { Icons } from "@/components/shared/icons"
 import {
@@ -290,6 +291,8 @@ export default async function IndexPage() {
       {launchWeekFlags.day_1 && <DashboardPromoSection />}
 
       {launchWeekFlags.day_3 && <VpsLaunchPromoSection />}
+
+      <OpenClawPromoSection />
 
       <section id="plans-section" className="scroll-mt-4 pt-4">
         <Plans
