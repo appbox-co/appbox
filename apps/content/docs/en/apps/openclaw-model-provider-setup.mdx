@@ -72,17 +72,86 @@ Source tutorial: [Get Google AI API Key](https://www.testingdocs.com/get-google-
 1. Open your OpenClaw dashboard URL from the installed app details page.
 2. Go to **Config > Secrets**.
 3. Select **Raw** rather than Form.
-4. Add a provider entry for the model vendor you want to use (OpenRouter, Anthropic, OpenAI, Google, xAI, Mistral, etc.).
+4. **Merge** the provider settings from the examples below into your existing config (see [How this fits in the full file](#how-this-fits-in-the-full-file)) — do not replace the whole file unless you intend to reset gateway, skills, and other Appbox defaults.
 5. Save and apply configuration changes.
+
+### How this fits in the full file
+
+**Config > Secrets > Raw** edits the **entire** OpenClaw config in one object. On Appbox, that file already includes things like `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (bundled skills), `commands`, and sometimes `meta`. The snippets in the [Major provider examples](#major-provider-examples) section only show the pieces you need for models: the `models` tree and `agents.defaults.model.primary`.
+
+**What to do:** keep your existing top-level keys (`gateway`, `skills`, `commands`, etc.) and **add or update** these two sections:
+
+- **`models.providers`** — add your provider (e.g. `openrouter`) and its `apiKey`, `baseUrl` where required, and `models` list.
+- **`agents.defaults.model.primary`** — set the default model string (e.g. `openrouter/auto`) so the agent uses that provider.
+
+If `models` or `agents` already exist, merge new keys into those objects instead of duplicating them.
+
+Below is an example of **one** full Raw file shape (JSON5-style as the dashboard often shows it). Your real file may include more fields (e.g. richer model metadata). The **provider blocks** in the examples further down are the parts you align with `models` and `agents` here.
+
+```js
+{
+  models: {
+    providers: {
+      openrouter: {
+        baseUrl: 'https://openrouter.ai/api/v1',
+        apiKey: 'YOUR_OPENROUTER_KEY',
+        models: [
+          {
+            id: 'auto',
+            name: 'Auto (OpenRouter)',
+            reasoning: false,
+            input: ['text'],
+            cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+            contextWindow: 200000,
+            maxTokens: 8192,
+          },
+        ],
+      },
+    },
+  },
+  agents: {
+    defaults: {
+      model: {
+        primary: 'openrouter/auto',
+      },
+    },
+  },
+  commands: {
+    native: 'auto',
+    nativeSkills: 'auto',
+    restart: true,
+    ownerDisplay: 'raw',
+  },
+  gateway: {
+    bind: 'lan',
+    controlUi: {
+      dangerouslyAllowHostHeaderOriginFallback: true,
+      dangerouslyDisableDeviceAuth: true,
+    },
+    auth: {
+      mode: 'token',
+      token: 'YOUR_GATEWAY_TOKEN',
+    },
+  },
+  skills: {
+    load: {
+      extraDirs: ['/app/skills'],
+    },
+  },
+}
+```
+
+> **Gateway token vs provider API key:** `gateway.auth.token` is only for logging into the OpenClaw Control UI / gateway. `models.providers.*.apiKey` is your LLM vendor key (OpenRouter, OpenAI, etc.) — they are different.
 
 ## Major provider examples
 
-Use one provider block at a time first, confirm it works, then add more providers.
+Use one provider block at a time first, confirm it works, then add more providers. Each example below is a **merge fragment**: `...` is omitted config (lines above or below), and the `},` before `"models"` is the close of whatever key sits above `models` in your file (for example `skills` or `commands`). The snippets are not valid JSON by themselves — merge the `models` and `agents` sections into your root object.
 
 ### OpenRouter
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "openrouter": {
@@ -103,14 +172,15 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "openrouter/auto"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### OpenAI
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "openai": {
@@ -131,14 +201,15 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "openai/gpt-5.4"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Anthropic
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "anthropic": {
@@ -159,14 +230,15 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "anthropic/claude-opus-4-6"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Google (Gemini)
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "google": {
@@ -186,14 +258,15 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "google/gemini-3.1-pro-preview"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### xAI (Grok)
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "xai": {
@@ -213,14 +286,15 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "xai/grok-4"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Mistral
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "mistral": {
@@ -241,14 +315,15 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "mistral/mistral-large-latest"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ### Together AI
 
-```json
-{
+```text
+...
+  },
   "models": {
     "providers": {
       "together": {
@@ -269,8 +344,8 @@ Use one provider block at a time first, confirm it works, then add more provider
         "primary": "together/moonshotai/Kimi-K2.5"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ## Bedrock note (no API key)
@@ -278,7 +353,8 @@ Use one provider block at a time first, confirm it works, then add more provider
 Amazon Bedrock uses AWS credentials (for example `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) rather than an API key. A minimal provider entry looks like:
 
 ```json
-{
+...
+  },
   "models": {
     "providers": {
       "amazon-bedrock": {
@@ -300,8 +376,8 @@ Amazon Bedrock uses AWS credentials (for example `AWS_ACCESS_KEY_ID`, `AWS_SECRE
         "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
       }
     }
-  }
-}
+  },
+...
 ```
 
 ## Notes

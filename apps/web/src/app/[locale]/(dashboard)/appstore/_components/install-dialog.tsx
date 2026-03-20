@@ -1248,7 +1248,9 @@ export function InstallDialog({
     selectedDomainId: "",
     // Pre-fill with app's default subdomain, falling back to display_name (same logic as backend)
     subdomain:
-      app.subdomain ||
+      (app.subdomain
+        ? app.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, "")
+        : "") ||
       app.display_name.toLowerCase().replace(/[^a-z0-9-]/g, "") ||
       "",
     dnsVerified: false
@@ -1672,7 +1674,9 @@ export function InstallDialog({
 
   // Reset domain state when cylo changes, but preserve the default subdomain
   const defaultSubdomain =
-    app.subdomain ||
+    (app.subdomain
+      ? app.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, "")
+      : "") ||
     app.display_name.toLowerCase().replace(/[^a-z0-9-]/g, "") ||
     ""
   useEffect(() => {
@@ -1724,8 +1728,12 @@ export function InstallDialog({
       } else {
         setDomainError(undefined)
       }
-      if (!domainState.subdomain || domainState.subdomain.trim() === "") {
+      const trimmedSub = domainState.subdomain.trim()
+      if (!trimmedSub) {
         setSubdomainError(t("install.validation.required"))
+        valid = false
+      } else if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(trimmedSub)) {
+        setSubdomainError(t("install.validation.invalidSubdomain"))
         valid = false
       } else {
         setSubdomainError(undefined)
@@ -1772,7 +1780,7 @@ export function InstallDialog({
         (domainState.domainType === "appbox"
           ? String(selectedCyloData?.domain_id ?? "")
           : "")
-      payload.subdomain = domainState.subdomain
+      payload.subdomain = domainState.subdomain.trim()
       payload.domain_id = Number(effectiveDomainId)
     }
 

@@ -416,7 +416,8 @@ export function DomainSection({
 
   const handleSubdomainChange = useCallback(
     (value: string) => {
-      onChange({ subdomain: value, dnsVerified: false })
+      const sanitized = value.toLowerCase().replace(/[^a-z0-9-]/g, "")
+      onChange({ subdomain: sanitized, dnsVerified: false })
       onSubdomainError(undefined)
     },
     [onChange, onSubdomainError]
