@@ -44,38 +44,43 @@ export async function DashboardPromoSection() {
           {t("description")}
         </p>
 
-        <div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-3">
-          {features.map((feat) => (
-            <div key={feat.key} className="group text-left">
-              <div className="aspect-3/4 overflow-hidden rounded-2xl bg-[#100f15] ring-1 ring-border/50">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={feat.image}
-                  alt={t(`features.${feat.key}.title`)}
-                  loading="lazy"
-                  style={{
-                    transformOrigin:
-                      "origin" in feat ? feat.origin : "top left",
-                    objectPosition:
-                      "position" in feat ? feat.position : "left top",
-                    transform: `translate(${"shiftX" in feat ? feat.shiftX : "0%"}, ${"shiftY" in feat ? feat.shiftY : "0%"}) scale(1.5)`
-                  }}
-                  className="size-full object-cover transition-transform duration-500"
-                />
+        <div className="relative mt-16">
+          <div className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 scrollbar-none sm:mx-auto sm:grid sm:max-w-5xl sm:grid-cols-3 sm:overflow-x-visible sm:px-0 sm:pb-0">
+            {features.map((feat) => (
+              <div
+                key={feat.key}
+                className="w-[72vw] shrink-0 snap-center text-left sm:w-auto"
+              >
+                <div className="aspect-3/4 overflow-hidden rounded-2xl bg-[#100f15] ring-1 ring-border/50">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={feat.image}
+                    alt={t(`features.${feat.key}.title`)}
+                    loading="lazy"
+                    style={{
+                      transformOrigin:
+                        "origin" in feat ? feat.origin : "top left",
+                      objectPosition:
+                        "position" in feat ? feat.position : "left top",
+                      transform: `translate(${"shiftX" in feat ? feat.shiftX : "0%"}, ${"shiftY" in feat ? feat.shiftY : "0%"}) scale(1.5)`
+                    }}
+                    className="size-full object-cover transition-transform duration-500"
+                  />
+                </div>
+                <div className="mt-5 px-1">
+                  <h3 className="text-base font-semibold leading-snug">
+                    <span className="text-foreground">
+                      {t(`features.${feat.key}.title`)}
+                    </span>
+                    <span className="font-normal text-muted-foreground">
+                      {" "}
+                      {t(`features.${feat.key}.description`)}
+                    </span>
+                  </h3>
+                </div>
               </div>
-              <div className="mt-5 px-1">
-                <h3 className="text-base font-semibold leading-snug">
-                  <span className="text-foreground">
-                    {t(`features.${feat.key}.title`)}
-                  </span>
-                  <span className="font-normal text-muted-foreground">
-                    {" "}
-                    {t(`features.${feat.key}.description`)}
-                  </span>
-                </h3>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="mt-12">
