@@ -355,14 +355,9 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
           const progress = cylo.migration_progress
           const totalBytes = Number(progress?.pre_migration_space_used ?? 0)
           const transferredBytes = Number(progress?.total_sent ?? 0)
-          const transferPercent = Number(progress?.transferred_percent ?? 0)
-          const transferComplete =
-            progress?.phase === 5 && transferPercent >= 100
-          const migrationStatusText = transferComplete
-            ? "Installing apps on new server"
-            : progress
-              ? t(PHASE_KEYS[progress.phase] ?? "migrationPhase5")
-              : "Migration is in progress…"
+          const migrationStatusText = progress
+            ? t(PHASE_KEYS[progress.phase] ?? "migrationPhase5")
+            : "Migration is in progress…"
 
           return (
             <MigrationAlert
@@ -372,11 +367,10 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
               progress={progress?.complete}
               from={progress?.old_server_name}
               to={progress?.new_server_name}
-              eta={transferComplete ? undefined : (progress?.ETA ?? undefined)}
+              eta={progress?.phase === 5 ? (progress?.ETA ?? undefined) : undefined}
               live={progress ? progress.live_migration === 1 : undefined}
               transferredText={
                 progress &&
-                !transferComplete &&
                 progress.phase === 5 &&
                 totalBytes > 0
                   ? t("migrationTransferred", {
