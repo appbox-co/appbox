@@ -57,6 +57,7 @@ import { formatDate } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
 import { AppDevPanel } from "../../_components/app-dev-panel"
 import { AppRating } from "../../_components/app-rating"
+import { AppScreenshots } from "../../_components/app-screenshots"
 import { InstallDialog } from "../../_components/install-dialog"
 
 const ICON_BASE_URL = "https://api.appbox.co/assets/images/apps/icons/"
@@ -793,6 +794,20 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
               <MarkdownDescription content={app.description} />
             </CardContent>
           </Card>
+
+          {/* Screenshots */}
+          {!!app.marketing_content && (
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base">
+                  {t("app.screenshots")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AppScreenshots marketingContent={app.marketing_content} />
+              </CardContent>
+            </Card>
+          )}
 
           {/* Versions table */}
           <Card>

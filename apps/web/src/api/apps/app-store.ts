@@ -61,6 +61,7 @@ export interface AppStoreItem {
   subdomain?: string
   customFields?: Record<string, CustomField>
   custom_field_preinstall_description?: string
+  marketing_content?: unknown
   RequiresDomain: number
 }
 
