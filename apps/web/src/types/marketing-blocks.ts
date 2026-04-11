@@ -4,6 +4,7 @@ export interface HeroBlock {
   subheadline?: string
   cta_text?: string
   cta_url?: string
+  website_url?: string
   gradient_from?: string
   gradient_to?: string
   badge?: string

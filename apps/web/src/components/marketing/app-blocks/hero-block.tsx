@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
+import { ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { BorderBeam } from "@/components/ui/border-beam"
 import { Button } from "@/components/ui/button"
@@ -334,16 +335,30 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
           </motion.p>
         )}
 
-        {block.cta_text && (
+        {(block.cta_text || block.website_url) && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="relative z-10 flex w-full items-center justify-center py-4 md:pb-10"
+            transition={{ duration: 0.4, delay: 0 }}
+            className="relative z-10 flex w-full flex-col items-center justify-center gap-3 py-4 sm:flex-row md:pb-10"
           >
-            <Button size="lg" onClick={() => setDeployOpen(true)}>
-              {block.cta_text}
-            </Button>
+            {block.cta_text && (
+              <Button size="lg" onClick={() => setDeployOpen(true)}>
+                {block.cta_text}
+              </Button>
+            )}
+            {block.website_url && (
+              <Button variant="outline" size="lg" asChild>
+                <a
+                  href={block.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit Website
+                  <ExternalLink className="ml-2 size-4" />
+                </a>
+              </Button>
+            )}
           </motion.div>
         )}
       </div>
