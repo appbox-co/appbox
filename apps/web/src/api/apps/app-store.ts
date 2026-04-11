@@ -426,12 +426,13 @@ export interface PackageSummary {
  * Backend: GET /v1/packages
  */
 export async function getPackages(): Promise<PackageSummary[]> {
-  const res = await apiGet<{
-    items?: Record<string, unknown>[]
-    results?: Record<string, unknown>[]
-  } | Record<string, unknown>[]>(
-    "packages?limit=999&orderby=sort_order"
-  )
+  const res = await apiGet<
+    | {
+        items?: Record<string, unknown>[]
+        results?: Record<string, unknown>[]
+      }
+    | Record<string, unknown>[]
+  >("packages?limit=999&orderby=sort_order")
   const items = Array.isArray(res) ? res : (res.items ?? res.results ?? [])
 
   return items.map((raw) => ({
@@ -441,8 +442,7 @@ export async function getPackages(): Promise<PackageSummary[]> {
       raw.sort_order == null || raw.sort_order === ""
         ? null
         : Number(raw.sort_order),
-    hidden:
-      raw.hidden == null || raw.hidden === "" ? null : Number(raw.hidden),
+    hidden: raw.hidden == null || raw.hidden === "" ? null : Number(raw.hidden),
     brand_id:
       raw.brand_id == null || raw.brand_id === "" ? null : Number(raw.brand_id)
   }))

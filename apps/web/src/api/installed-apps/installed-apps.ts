@@ -98,10 +98,7 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     raw.custom_description ??
     raw.customDescription
   const availableVersionsRaw =
-    raw.available_versions ??
-    app?.available_versions ??
-    app?.versions ??
-    []
+    raw.available_versions ?? app?.available_versions ?? app?.versions ?? []
   const availableVersions = Array.isArray(availableVersionsRaw)
     ? availableVersionsRaw
         .map((v: Record<string, unknown>) => ({

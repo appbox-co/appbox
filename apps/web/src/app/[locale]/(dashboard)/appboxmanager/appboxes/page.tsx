@@ -190,7 +190,9 @@ export default function AppboxesPage() {
                 {tc("status.throttled")}
               </SelectItem>
               <SelectItem value="low-quota">{tc("status.lowQuota")}</SelectItem>
-              <SelectItem value="suspended">{tc("status.suspended")}</SelectItem>
+              <SelectItem value="suspended">
+                {tc("status.suspended")}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>

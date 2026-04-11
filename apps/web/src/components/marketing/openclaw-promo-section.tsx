@@ -2,12 +2,7 @@ import { getTranslations } from "next-intl/server"
 import { ArrowRight } from "lucide-react"
 import { Link } from "@/i18n/routing"
 
-const capabilities = [
-  "chat",
-  "filesystem",
-  "browser",
-  "tools"
-] as const
+const capabilities = ["chat", "filesystem", "browser", "tools"] as const
 
 export async function OpenClawPromoSection() {
   const t = await getTranslations("site.openclaw_promo")
@@ -42,7 +37,9 @@ export async function OpenClawPromoSection() {
               alt={t("image_alt")}
               loading="lazy"
               className="size-full object-cover object-top"
-              style={{ maskImage: "linear-gradient(to bottom, black 80%, transparent)" }}
+              style={{
+                maskImage: "linear-gradient(to bottom, black 80%, transparent)"
+              }}
             />
           </div>
         </div>
@@ -84,19 +81,43 @@ function CapabilityIcon({ which }: { which: (typeof capabilities)[number] }) {
   switch (which) {
     case "chat":
       return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={cls}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={cls}
+        >
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
       )
     case "filesystem":
       return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={cls}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={cls}
+        >
           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
         </svg>
       )
     case "browser":
       return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={cls}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={cls}
+        >
           <circle cx="12" cy="12" r="10" />
           <line x1="2" y1="12" x2="22" y2="12" />
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -104,7 +125,15 @@ function CapabilityIcon({ which }: { which: (typeof capabilities)[number] }) {
       )
     case "tools":
       return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={cls}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={cls}
+        >
           <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
         </svg>
       )

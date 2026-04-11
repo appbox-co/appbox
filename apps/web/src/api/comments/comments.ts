@@ -122,12 +122,16 @@ export async function createCommentByType(data: {
   const params: Record<string, string> | undefined = data.token
     ? { token: data.token }
     : undefined
-  return apiPut<Comment>("comments", {
-    type: data.type,
-    relid: data.relid,
-    comment: data.comment,
-    parent: data.parent_id ?? 0
-  }, { params })
+  return apiPut<Comment>(
+    "comments",
+    {
+      type: data.type,
+      relid: data.relid,
+      comment: data.comment,
+      parent: data.parent_id ?? 0
+    },
+    { params }
+  )
 }
 
 /**

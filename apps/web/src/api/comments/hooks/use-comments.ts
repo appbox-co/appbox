@@ -259,7 +259,9 @@ export function useVoteCommentByType(
       id: number
       direction: "up" | "down" | null
     }) =>
-      direction === null ? deleteVote(id, token) : voteComment(id, direction, token),
+      direction === null
+        ? deleteVote(id, token)
+        : voteComment(id, direction, token),
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.comments.byType(type, relId, token)

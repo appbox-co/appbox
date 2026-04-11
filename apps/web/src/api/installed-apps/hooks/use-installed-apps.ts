@@ -248,10 +248,7 @@ export function useBoostApp() {
       boostInstance(id, boostSlots),
     onMutate: ({ id }) => {
       if (typeof window !== "undefined") {
-        sessionStorage.setItem(
-          `appBoostMutation:${id}`,
-          String(Date.now())
-        )
+        sessionStorage.setItem(`appBoostMutation:${id}`, String(Date.now()))
       }
     },
     onSuccess: (_data, { id }) => {

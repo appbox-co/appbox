@@ -8,7 +8,7 @@ interface MarketingLayoutProps {
 
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
-    <div>
+    <div className="overflow-x-clip">
       <Script
         type="text/javascript"
         src="//embeds.iubenda.com/widgets/03e26262-624c-4f5b-8687-f85ec29afd9f.js"

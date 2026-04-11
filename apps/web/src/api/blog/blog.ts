@@ -54,9 +54,7 @@ export async function getRecentBlogPosts(
           (item.summary as string | undefined) ??
           ""
         ).slice(0, 200),
-        date: String(
-          item.date_modified ?? item.date_published ?? ""
-        ),
+        date: String(item.date_modified ?? item.date_published ?? ""),
         slug: item.url
           ? getSlugFromBlogUrl(String(item.url))
           : String(item.id ?? ""),

@@ -20,8 +20,8 @@ import {
 } from "lucide-react"
 import type { AppVersion } from "@/api/apps/app-store"
 import {
-  getEffectiveAppSlots,
   getAppRestrictions,
+  getEffectiveAppSlots,
   getPackages,
   isAppRestrictedForPackage
 } from "@/api/apps/app-store"
@@ -31,8 +31,8 @@ import {
   useVoteApp
 } from "@/api/apps/hooks/use-app-store"
 import {
-  useInstalledApps,
   useFreezeApp,
+  useInstalledApps,
   useRestartApp,
   useStartApp,
   useStopApp,
@@ -180,7 +180,9 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
         variant="ghost"
         size="icon"
         className="size-7"
-        disabled={isStopped || isFrozen || isTransitioning || restartMutation.isPending}
+        disabled={
+          isStopped || isFrozen || isTransitioning || restartMutation.isPending
+        }
         onClick={(e) => handleAction(e, () => restartMutation.mutate(app.id))}
       >
         {restartMutation.isPending ? (
@@ -194,11 +196,15 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
         size="icon"
         className="size-7"
         disabled={
-          isTransitioning || freezeMutation.isPending || unfreezeMutation.isPending
+          isTransitioning ||
+          freezeMutation.isPending ||
+          unfreezeMutation.isPending
         }
         onClick={(e) =>
           handleAction(e, () =>
-            isFrozen ? unfreezeMutation.mutate(app.id) : freezeMutation.mutate(app.id)
+            isFrozen
+              ? unfreezeMutation.mutate(app.id)
+              : freezeMutation.mutate(app.id)
           )
         }
       >
@@ -444,7 +450,9 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
 
         const resolved = restrictionChecks
           .filter(
-            (result): result is PromiseFulfilledResult<{
+            (
+              result
+            ): result is PromiseFulfilledResult<{
               id: number
               restricted: boolean
             }> => result.status === "fulfilled"
@@ -531,7 +539,8 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
 
   const requiredSlots = getEffectiveAppSlots(app)
   const nestedVersions = app.versions ?? []
-  const versionRows = nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
+  const versionRows =
+    nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
   const showVersionsLoading = nestedVersions.length === 0 && versionsLoading
   const appInstances = (installedApps ?? []).filter(
     (instance) => instance.app_id === app.id
@@ -566,10 +575,14 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
           installedApp.status === "updating" ||
           installedApp.status === "deleting"
 
-        if (action === "start") return !isTransitioning && !isFrozen && isStopped
+        if (action === "start")
+          return !isTransitioning && !isFrozen && isStopped
         if (action === "stop")
-          return !isTransitioning && !isFrozen && installedApp.status === "online"
-        if (action === "restart") return !isTransitioning && !isFrozen && !isStopped
+          return (
+            !isTransitioning && !isFrozen && installedApp.status === "online"
+          )
+        if (action === "restart")
+          return !isTransitioning && !isFrozen && !isStopped
         if (action === "freeze") return !isTransitioning && !isFrozen
         return isFrozen
       })
@@ -665,7 +678,11 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                   variant="outline"
                   asChild
                 >
-                  <a href={upgradeCtaUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={upgradeCtaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ExternalLink className="size-3" />
                     {t("install.guard.upgradePackage")}
                   </a>
@@ -948,7 +965,11 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                           )
                         }
                         onClick={() =>
-                          runBulkAction("unfreeze", selectedRows, clearSelection)
+                          runBulkAction(
+                            "unfreeze",
+                            selectedRows,
+                            clearSelection
+                          )
                         }
                       >
                         {bulkAction === "unfreeze" ? (

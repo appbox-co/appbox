@@ -207,19 +207,19 @@ export function AppConnectionsShowcase({
 
           {/* Animated beams connecting apps to center - only when JS is enabled */}
           {isClient && inView && refsReady && appRefs.length > 0 && (
-              <>
-                {appRefs.map((appRef, i) => (
-                  <AnimatedBeam
-                    key={`beam-${i}`}
-                    containerRef={containerRef}
-                    fromRef={appRef}
-                    toRef={centerRef}
-                    curvature={curvatures[i] ?? 0}
-                    reverse={i % 2 === 0}
-                  />
-                ))}
-              </>
-            )}
+            <>
+              {appRefs.map((appRef, i) => (
+                <AnimatedBeam
+                  key={`beam-${i}`}
+                  containerRef={containerRef}
+                  fromRef={appRef}
+                  toRef={centerRef}
+                  curvature={curvatures[i] ?? 0}
+                  reverse={i % 2 === 0}
+                />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </section>

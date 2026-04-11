@@ -1,6 +1,18 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
+import type { CustomField } from "@/api/apps/app-store"
+import type { MarketingContent } from "@/types/marketing-blocks"
+
+export interface AppVersion {
+  id: number
+  version: string
+  app_slots: number | null
+  memory: number
+  cpus: number
+  created_at: string
+  changes: string | null
+}
 
 export interface AppDetails {
   id: number
@@ -18,6 +30,10 @@ export interface AppDetails {
   icon_image: string
   devsite: string
   categories: string[]
+  marketing_content?: MarketingContent | null
+  versions?: AppVersion[]
+  customFields?: Record<string, CustomField>
+  custom_field_preinstall_description?: string | null
 }
 
 async function fetchAppDetails(appName: string): Promise<AppDetails> {

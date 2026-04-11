@@ -2,7 +2,14 @@
 
 import type { CSSProperties } from "react"
 import { useTranslations } from "next-intl"
-import { AlertTriangle, ArrowUpCircle, Ban, Download, Trash2, Zap } from "lucide-react"
+import {
+  AlertTriangle,
+  ArrowUpCircle,
+  Ban,
+  Download,
+  Trash2,
+  Zap
+} from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import type { CyloDetail } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
@@ -224,7 +231,8 @@ const generateStaticElements = () => {
     let currentX = -100
 
     while (currentX < 2600) {
-      const width = layer.baseWidth + prng(currentX + layer.seed) * layer.varWidth
+      const width =
+        layer.baseWidth + prng(currentX + layer.seed) * layer.varWidth
       const nextX = currentX + width
       const midX = currentX + width / 2
 

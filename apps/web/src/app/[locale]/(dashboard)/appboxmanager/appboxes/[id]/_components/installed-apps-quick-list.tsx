@@ -4,11 +4,19 @@ import { useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { ColumnDef } from "@tanstack/react-table"
-import { Loader2, Package, Play, RotateCcw, Snowflake, Square, Star } from "lucide-react"
+import {
+  Loader2,
+  Package,
+  Play,
+  RotateCcw,
+  Snowflake,
+  Square,
+  Star
+} from "lucide-react"
 import { useCylo } from "@/api/cylos/hooks/use-cylos"
 import {
-  useInstalledApps,
   useFreezeApp,
+  useInstalledApps,
   useRestartApp,
   useStartApp,
   useStopApp,
@@ -128,7 +136,10 @@ function RowActions({
               size="icon"
               className="size-7"
               disabled={
-                isRunning || isFrozen || isTransitioning || startMutation.isPending
+                isRunning ||
+                isFrozen ||
+                isTransitioning ||
+                startMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => startMutation.mutate(app.id))
@@ -151,7 +162,10 @@ function RowActions({
               size="icon"
               className="size-7"
               disabled={
-                isStopped || isFrozen || isTransitioning || stopMutation.isPending
+                isStopped ||
+                isFrozen ||
+                isTransitioning ||
+                stopMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => stopMutation.mutate(app.id))
@@ -174,7 +188,10 @@ function RowActions({
               size="icon"
               className="size-7"
               disabled={
-                isStopped || isFrozen || isTransitioning || restartMutation.isPending
+                isStopped ||
+                isFrozen ||
+                isTransitioning ||
+                restartMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => restartMutation.mutate(app.id))
@@ -217,7 +234,9 @@ function RowActions({
               )}
             </Button>
           </TooltipTrigger>
-          <TooltipContent>{isFrozen ? t("unfreeze") : t("freeze")}</TooltipContent>
+          <TooltipContent>
+            {isFrozen ? t("unfreeze") : t("freeze")}
+          </TooltipContent>
         </Tooltip>
       </div>
     </TooltipProvider>
@@ -494,9 +513,12 @@ export function InstalledAppsQuickList({
           app.status === "updating" ||
           app.status === "deleting"
 
-        if (action === "start") return !isTransitioning && !isFrozen && isStopped
-        if (action === "stop") return !isTransitioning && !isFrozen && app.status === "online"
-        if (action === "restart") return !isTransitioning && !isFrozen && !isStopped
+        if (action === "start")
+          return !isTransitioning && !isFrozen && isStopped
+        if (action === "stop")
+          return !isTransitioning && !isFrozen && app.status === "online"
+        if (action === "restart")
+          return !isTransitioning && !isFrozen && !isStopped
         if (action === "freeze") return !isTransitioning && !isFrozen
         return isFrozen
       })
@@ -611,7 +633,11 @@ export function InstalledAppsQuickList({
                           app.status === "installing" ||
                           app.status === "updating" ||
                           app.status === "deleting"
-                        return !isTransitioning && !isFrozen && app.status === "online"
+                        return (
+                          !isTransitioning &&
+                          !isFrozen &&
+                          app.status === "online"
+                        )
                       })
                     }
                     onClick={() =>

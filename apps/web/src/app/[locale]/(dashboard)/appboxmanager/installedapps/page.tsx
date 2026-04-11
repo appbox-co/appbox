@@ -8,8 +8,8 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { Loader2, Play, RotateCcw, Snowflake, Square, Star } from "lucide-react"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import {
-  useInstalledApps,
   useFreezeApp,
+  useInstalledApps,
   useRestartApp,
   useStartApp,
   useStopApp,
@@ -100,7 +100,8 @@ function isEligibleForBulkAction(
   const isTransitioning = isTransitioningStatus(app.status) && !isFrozen
 
   if (action === "start") return !isTransitioning && !isFrozen && isStopped
-  if (action === "stop") return !isTransitioning && !isFrozen && app.status === "online"
+  if (action === "stop")
+    return !isTransitioning && !isFrozen && app.status === "online"
   if (action === "restart") return !isTransitioning && !isFrozen && !isStopped
   if (action === "freeze") return !isTransitioning && !isFrozen
   return isFrozen
@@ -147,7 +148,10 @@ function RowActions({ app }: { app: InstalledApp }) {
               size="icon"
               className="size-7"
               disabled={
-                isRunning || isFrozen || isTransitioning || startMutation.isPending
+                isRunning ||
+                isFrozen ||
+                isTransitioning ||
+                startMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => startMutation.mutate(app.id))
@@ -171,7 +175,10 @@ function RowActions({ app }: { app: InstalledApp }) {
               size="icon"
               className="size-7"
               disabled={
-                isStopped || isFrozen || isTransitioning || stopMutation.isPending
+                isStopped ||
+                isFrozen ||
+                isTransitioning ||
+                stopMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => stopMutation.mutate(app.id))
@@ -195,7 +202,10 @@ function RowActions({ app }: { app: InstalledApp }) {
               size="icon"
               className="size-7"
               disabled={
-                isStopped || isTransitioning || isFrozen || restartMutation.isPending
+                isStopped ||
+                isTransitioning ||
+                isFrozen ||
+                restartMutation.isPending
               }
               onClick={(e) =>
                 handleAction(e, () => restartMutation.mutate(app.id))
@@ -238,7 +248,9 @@ function RowActions({ app }: { app: InstalledApp }) {
               )}
             </Button>
           </TooltipTrigger>
-          <TooltipContent>{isFrozen ? t("unfreeze") : t("freeze")}</TooltipContent>
+          <TooltipContent>
+            {isFrozen ? t("unfreeze") : t("freeze")}
+          </TooltipContent>
         </Tooltip>
       </div>
     </TooltipProvider>
@@ -612,94 +624,94 @@ export default function InstalledAppsPage() {
 
                 return (
                   <>
-              <span className="text-xs text-muted-foreground">
-                {t("bulkSelected", { count: selectedRows.length })}
-              </span>
+                    <span className="text-xs text-muted-foreground">
+                      {t("bulkSelected", { count: selectedRows.length })}
+                    </span>
                     {ineligibleCount > 0 && (
                       <span className="text-xs text-muted-foreground">
                         {t("bulkUnavailable", { count: ineligibleCount })}
                       </span>
                     )}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9"
-                disabled={bulkAction !== null || !startEligible}
-                onClick={() =>
-                  runBulkAction("start", selectedRows, clearSelection)
-                }
-              >
-                {bulkAction === "start" ? (
-                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
-                ) : (
-                  <Play className="mr-1.5 size-3.5" />
-                )}
-                {tDetail("start")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9"
-                disabled={bulkAction !== null || !stopEligible}
-                onClick={() =>
-                  runBulkAction("stop", selectedRows, clearSelection)
-                }
-              >
-                {bulkAction === "stop" ? (
-                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
-                ) : (
-                  <Square className="mr-1.5 size-3.5" />
-                )}
-                {tDetail("stop")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9"
-                disabled={bulkAction !== null || !restartEligible}
-                onClick={() =>
-                  runBulkAction("restart", selectedRows, clearSelection)
-                }
-              >
-                {bulkAction === "restart" ? (
-                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
-                ) : (
-                  <RotateCcw className="mr-1.5 size-3.5" />
-                )}
-                {tDetail("restart")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9"
-                disabled={bulkAction !== null || !freezeEligible}
-                onClick={() =>
-                  runBulkAction("freeze", selectedRows, clearSelection)
-                }
-              >
-                {bulkAction === "freeze" ? (
-                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
-                ) : (
-                  <Snowflake className="mr-1.5 size-3.5" />
-                )}
-                {tDetail("freeze")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9"
-                disabled={bulkAction !== null || !unfreezeEligible}
-                onClick={() =>
-                  runBulkAction("unfreeze", selectedRows, clearSelection)
-                }
-              >
-                {bulkAction === "unfreeze" ? (
-                  <Loader2 className="mr-1.5 size-3.5 animate-spin" />
-                ) : (
-                  <Play className="mr-1.5 size-3.5" />
-                )}
-                {tDetail("unfreeze")}
-              </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9"
+                      disabled={bulkAction !== null || !startEligible}
+                      onClick={() =>
+                        runBulkAction("start", selectedRows, clearSelection)
+                      }
+                    >
+                      {bulkAction === "start" ? (
+                        <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                      ) : (
+                        <Play className="mr-1.5 size-3.5" />
+                      )}
+                      {tDetail("start")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9"
+                      disabled={bulkAction !== null || !stopEligible}
+                      onClick={() =>
+                        runBulkAction("stop", selectedRows, clearSelection)
+                      }
+                    >
+                      {bulkAction === "stop" ? (
+                        <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                      ) : (
+                        <Square className="mr-1.5 size-3.5" />
+                      )}
+                      {tDetail("stop")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9"
+                      disabled={bulkAction !== null || !restartEligible}
+                      onClick={() =>
+                        runBulkAction("restart", selectedRows, clearSelection)
+                      }
+                    >
+                      {bulkAction === "restart" ? (
+                        <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                      ) : (
+                        <RotateCcw className="mr-1.5 size-3.5" />
+                      )}
+                      {tDetail("restart")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9"
+                      disabled={bulkAction !== null || !freezeEligible}
+                      onClick={() =>
+                        runBulkAction("freeze", selectedRows, clearSelection)
+                      }
+                    >
+                      {bulkAction === "freeze" ? (
+                        <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                      ) : (
+                        <Snowflake className="mr-1.5 size-3.5" />
+                      )}
+                      {tDetail("freeze")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9"
+                      disabled={bulkAction !== null || !unfreezeEligible}
+                      onClick={() =>
+                        runBulkAction("unfreeze", selectedRows, clearSelection)
+                      }
+                    >
+                      {bulkAction === "unfreeze" ? (
+                        <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                      ) : (
+                        <Play className="mr-1.5 size-3.5" />
+                      )}
+                      {tDetail("unfreeze")}
+                    </Button>
                   </>
                 )
               })()}

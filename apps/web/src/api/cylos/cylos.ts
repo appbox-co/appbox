@@ -121,8 +121,7 @@ export async function getCylosSummary(userId?: number): Promise<CyloSummary[]> {
       status,
       storage_used: 0, // Not provided in list endpoint
       storage_total: Number(row.storage_limit ?? 0), // DB stores GB
-      app_slots_used:
-        Number(row.app_slots ?? 0) - Number(row.free_slots ?? 0),
+      app_slots_used: Number(row.app_slots ?? 0) - Number(row.free_slots ?? 0),
       app_slots_total: Number(row.app_slots ?? 0),
       upload_used: 0,
       download_used: 0,
@@ -191,8 +190,7 @@ export async function getCylo(id: number): Promise<CyloDetail> {
     package_name: String(raw.package_name ?? ""),
     storage_used: 0, // Not directly available from this endpoint
     storage_total: Number(raw.storage_limit ?? 0), // DB stores GB
-    app_slots_used:
-      Number(raw.app_slots ?? 0) - Number(raw.free_slots ?? 0),
+    app_slots_used: Number(raw.app_slots ?? 0) - Number(raw.free_slots ?? 0),
     app_slots_total: Number(raw.app_slots ?? 0),
     upload_used: 0,
     download_used: 0,

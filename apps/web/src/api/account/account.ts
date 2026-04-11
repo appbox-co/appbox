@@ -210,9 +210,7 @@ export async function getAbuseReports(userId?: number): Promise<AbuseReport[]> {
 /**
  * Backend: GET /v1/abuse/{id} (accepts id or isp_id). Returns full report with timeline.
  */
-export async function getAbuseReport(
-  id: number
-): Promise<AbuseReportDetail> {
+export async function getAbuseReport(id: number): Promise<AbuseReportDetail> {
   const raw = await apiGet<RawAbuseDetail>(`abuse/${id}`)
   return rawToDetail(raw)
 }
@@ -225,9 +223,12 @@ export async function getAbuseReportWithToken(
   id: number | string,
   token: string
 ): Promise<AbuseReportDetail> {
-  const raw = await apiGet<RawAbuseDetail>(`abuse/${encodeURIComponent(String(id))}`, {
-    params: { token }
-  })
+  const raw = await apiGet<RawAbuseDetail>(
+    `abuse/${encodeURIComponent(String(id))}`,
+    {
+      params: { token }
+    }
+  )
   return rawToDetail(raw)
 }
 
@@ -258,7 +259,11 @@ export async function resolveAbuseReportWithToken(
   abuseId: number | string,
   token: string
 ): Promise<void> {
-  await apiPost(`abuse/resolve/${encodeURIComponent(String(abuseId))}`, {}, { params: { token } })
+  await apiPost(
+    `abuse/resolve/${encodeURIComponent(String(abuseId))}`,
+    {},
+    { params: { token } }
+  )
 }
 
 /**

@@ -8,13 +8,14 @@ import { AppsMarquee } from "@/components/marketing/apps-marquee"
 import { DashboardPromoSection } from "@/components/marketing/dashboard-promo-section"
 import { FAQSection } from "@/components/marketing/faq-section"
 import { FeaturesSection } from "@/components/marketing/features-section"
+import { LiveInstallCounter } from "@/components/marketing/live-install-counter"
+import { OpenClawPromoSection } from "@/components/marketing/openclaw-promo-section"
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading
 } from "@/components/marketing/page-header"
-import { OpenClawPromoSection } from "@/components/marketing/openclaw-promo-section"
 import { VpsLaunchPromoSection } from "@/components/marketing/vps-launch-promo-section"
 import { Icons } from "@/components/shared/icons"
 import {
@@ -25,7 +26,6 @@ import {
 import { buttonVariants } from "@/components/ui/button"
 import { ClientVortexWrapper } from "@/components/ui/client-vortex-wrapper"
 import { FlipWords } from "@/components/ui/flip-words"
-import { LiveInstallCounter } from "@/components/marketing/live-install-counter"
 import { ClientGradientSwitcher } from "@/components/ui/gradient-client-switcher"
 import { GradientWrapper } from "@/components/ui/gradient-wrapper"
 import Plans from "@/components/ui/plans"
@@ -108,21 +108,61 @@ export default async function IndexPage() {
     <div className="container relative">
       {/* Hero Section */}
       <div className="relative pt-8 md:pt-12 overflow-hidden">
-        <style dangerouslySetInnerHTML={{ __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           @keyframes hero-float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(5deg); }
           }
-        `}} />
+        `
+          }}
+        />
 
         {/* Floating stars */}
         {[
-          { top: "8%", left: "8%", size: "w-6 h-6", delay: "0s", duration: "3s" },
-          { top: "15%", right: "10%", size: "w-8 h-8", delay: "1.5s", duration: "4s" },
-          { bottom: "30%", left: "5%", size: "w-5 h-5", delay: "0.5s", duration: "3.5s" },
-          { bottom: "20%", right: "8%", size: "w-7 h-7", delay: "2s", duration: "3.2s" },
-          { top: "35%", left: "15%", size: "w-4 h-4", delay: "1s", duration: "3.8s" },
-          { top: "25%", right: "20%", size: "w-5 h-5", delay: "2.5s", duration: "3.3s" },
+          {
+            top: "8%",
+            left: "8%",
+            size: "w-6 h-6",
+            delay: "0s",
+            duration: "3s"
+          },
+          {
+            top: "15%",
+            right: "10%",
+            size: "w-8 h-8",
+            delay: "1.5s",
+            duration: "4s"
+          },
+          {
+            bottom: "30%",
+            left: "5%",
+            size: "w-5 h-5",
+            delay: "0.5s",
+            duration: "3.5s"
+          },
+          {
+            bottom: "20%",
+            right: "8%",
+            size: "w-7 h-7",
+            delay: "2s",
+            duration: "3.2s"
+          },
+          {
+            top: "35%",
+            left: "15%",
+            size: "w-4 h-4",
+            delay: "1s",
+            duration: "3.8s"
+          },
+          {
+            top: "25%",
+            right: "20%",
+            size: "w-5 h-5",
+            delay: "2.5s",
+            duration: "3.3s"
+          }
         ].map((star, i) => (
           <div
             key={i}
@@ -133,7 +173,7 @@ export default async function IndexPage() {
               right: star.right,
               bottom: star.bottom,
               animation: `hero-float ${star.duration} ease-in-out infinite`,
-              animationDelay: star.delay,
+              animationDelay: star.delay
             }}
           >
             <svg

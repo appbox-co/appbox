@@ -88,10 +88,8 @@ const statusStyles: Record<StatusVariant, string> = {
     "bg-blue-500/15 text-blue-700 border-blue-500/25 dark:text-blue-400",
   uninstalling:
     "bg-orange-500/15 text-orange-700 border-orange-500/25 dark:text-orange-400",
-  restarting:
-    "bg-sky-500/15 text-sky-700 border-sky-500/25 dark:text-sky-400",
-  frozen:
-    "bg-cyan-500/15 text-cyan-700 border-cyan-500/25 dark:text-cyan-400",
+  restarting: "bg-sky-500/15 text-sky-700 border-sky-500/25 dark:text-sky-400",
+  frozen: "bg-cyan-500/15 text-cyan-700 border-cyan-500/25 dark:text-cyan-400",
   pending:
     "bg-amber-500/15 text-amber-700 border-amber-500/25 dark:text-amber-400",
   inactive: "bg-zinc-500/15 text-zinc-700 border-zinc-500/25 dark:text-zinc-400"

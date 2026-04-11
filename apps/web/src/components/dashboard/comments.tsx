@@ -146,11 +146,7 @@ interface CommentFormProps {
   placeholder?: string
 }
 
-function CommentForm({
-  parentId,
-  onCancel,
-  placeholder
-}: CommentFormProps) {
+function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
   const ctx = useContext(CommentContext)
   const [text, setText] = useState("")
   const createByApp = useCreateComment(ctx.mode === "app" ? ctx.appId : 0)

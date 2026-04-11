@@ -1,4 +1,4 @@
-import type { Node } from "unist-builder/lib"
+import type { Node } from "unist"
 import { visit } from "unist-util-visit"
 import type { UnistNode } from "../types/unist"
 

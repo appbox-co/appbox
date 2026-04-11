@@ -46,7 +46,8 @@ export function AppFilterClient({
 
   // Derive filter values directly from URL search params so that browser
   // back/forward stays in sync without needing setState inside an effect.
-  const selectedCategory = searchParams.get("category") || initialCategory || "all"
+  const selectedCategory =
+    searchParams.get("category") || initialCategory || "all"
   const appSlots = searchParams.get("slots")
     ? Number(searchParams.get("slots"))
     : null
@@ -139,7 +140,8 @@ export function AppFilterClient({
     [searchTerm, appSlots, sortBy, updateUrl]
   )
   const handleAppSlotsChange = useCallback(
-    (value: number | null) => updateUrl(searchTerm, selectedCategory, value, sortBy),
+    (value: number | null) =>
+      updateUrl(searchTerm, selectedCategory, value, sortBy),
     [searchTerm, selectedCategory, sortBy, updateUrl]
   )
   const handleSortChange = useCallback(

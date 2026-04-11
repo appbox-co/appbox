@@ -89,8 +89,9 @@ function removeMarketingWidgets() {
     document.querySelectorAll(sel).forEach((el) => el.remove())
   })
   try {
-    const iub = (window as Window & { _iub?: { cs?: { api?: { close?: () => void } } } })
-      ._iub
+    const iub = (
+      window as Window & { _iub?: { cs?: { api?: { close?: () => void } } } }
+    )._iub
     iub?.cs?.api?.close?.()
   } catch {
     /* empty */
@@ -121,9 +122,12 @@ function useHideMarketingWidgets() {
   }, [])
 }
 
-function mapRegistryToNavItems(
-  menu: AdminMenuItem[]
-): { title: string; href: string; icon?: LucideIcon; children?: { title: string; href: string; icon?: LucideIcon }[] }[] {
+function mapRegistryToNavItems(menu: AdminMenuItem[]): {
+  title: string
+  href: string
+  icon?: LucideIcon
+  children?: { title: string; href: string; icon?: LucideIcon }[]
+}[] {
   return menu.map((item) => ({
     title: item.label,
     href: item.href,
@@ -282,18 +286,14 @@ export function DashboardSidebar({
                 isAdminMode ? "bg-primary" : "gradient-badge"
               )}
             >
-              {isAdminMode ? (
-                <Shield className="size-5" />
-              ) : (
-                avatarInitial
-              )}
+              {isAdminMode ? <Shield className="size-5" /> : avatarInitial}
             </div>
             <div className="flex flex-col">
               <span
                 data-anonymize
                 className="text-sm font-medium text-foreground truncate max-w-[150px]"
               >
-                {isAdminMode ? "Admin Panel" : (user.alias || user.email)}
+                {isAdminMode ? "Admin Panel" : user.alias || user.email}
               </span>
               <span data-anonymize className="text-xs text-muted-foreground">
                 {isAdminMode ? user.email : user.email}
@@ -309,11 +309,7 @@ export function DashboardSidebar({
               isAdminMode ? "bg-primary" : "gradient-badge"
             )}
           >
-            {isAdminMode ? (
-              <Shield className="size-5" />
-            ) : (
-              avatarInitial
-            )}
+            {isAdminMode ? <Shield className="size-5" /> : avatarInitial}
           </div>
         )}
       </div>

@@ -212,7 +212,11 @@ export function ClientAppConnections({
           })}
 
           {/* Animated beams connecting apps to center - only when JS is enabled and positions are stable */}
-          {isClient && showBeams && inView && refsReady && appRefs.length > 0 && (
+          {isClient &&
+            showBeams &&
+            inView &&
+            refsReady &&
+            appRefs.length > 0 && (
               <div
                 className="beam-container"
                 style={{

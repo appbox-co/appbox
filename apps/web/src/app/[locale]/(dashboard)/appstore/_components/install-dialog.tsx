@@ -21,8 +21,8 @@ import type {
 import {
   computeInstallGuards,
   fetchSearchFieldOptions,
-  getEffectiveAppSlots,
   getAppRestrictions,
+  getEffectiveAppSlots,
   getPackages,
   isAppRestrictedForPackage
 } from "@/api/apps/app-store"
@@ -1148,7 +1148,8 @@ export function InstallDialog({
   const { data: cylosSummary } = useCylosSummary()
   const { data: versions, isLoading: versionsLoading } = useAppVersions(app.id)
   const nestedVersions = app.versions ?? []
-  const versionSource = nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
+  const versionSource =
+    nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
   const versionSourceLoading = nestedVersions.length === 0 && versionsLoading
 
   // Session cylos are static (set once at layout render). Merge in the live
@@ -1335,7 +1336,9 @@ export function InstallDialog({
 
         const successful = restrictionsPerPackage
           .filter(
-            (result): result is PromiseFulfilledResult<{
+            (
+              result
+            ): result is PromiseFulfilledResult<{
               packageId: number
               packageName: string
               restricted: boolean

@@ -589,49 +589,44 @@ export default function InstalledAppDetailPage({
 
       {/* Actions — shown only when app and appbox are operational */}
       {actionsAvailable || isStartRecoverable ? (
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">{t("actions")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap items-center gap-2">
-                <AppActions
-                  app={appForActions}
-                  startOnlyActionable={isStartRecoverable}
-                />
-                {upgradeUrl && (
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="ml-auto"
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">{t("actions")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap items-center gap-2">
+              <AppActions
+                app={appForActions}
+                startOnlyActionable={isStartRecoverable}
+              />
+              {upgradeUrl && (
+                <Button asChild variant="outline" size="sm" className="ml-auto">
+                  <a
+                    href={upgradeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <a
-                      href={upgradeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Upgrade
-                      <ExternalLink className="ml-1.5 size-3.5" />
-                    </a>
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">{t("actions")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Actions are unavailable while this app is inactive, offline, or
-                in a transition state.
-              </p>
-            </CardContent>
-          </Card>
-        )}
+                    Upgrade
+                    <ExternalLink className="ml-1.5 size-3.5" />
+                  </a>
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">{t("actions")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Actions are unavailable while this app is inactive, offline, or in
+              a transition state.
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {isLaunchWeekEnabled("day_2", isAdmin) && app.use_boost_system === 1 && (
         <BoostCard

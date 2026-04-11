@@ -1,8 +1,8 @@
 "use client"
 
 import { use, useMemo, useState } from "react"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useSearchParams } from "next/navigation"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   AlertCircle,
   CheckCircle2,
@@ -12,11 +12,12 @@ import {
 } from "lucide-react"
 import {
   ABUSE_STATUS_LABELS,
-  type AbuseReportDetail,
-  type AbuseTimelineEntry,
   getAbuseReportWithToken,
-  resolveAbuseReportWithToken
+  resolveAbuseReportWithToken,
+  type AbuseReportDetail,
+  type AbuseTimelineEntry
 } from "@/api/account/account"
+import { Comments } from "@/components/dashboard/comments"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -27,7 +28,6 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog"
-import { Comments } from "@/components/dashboard/comments"
 
 /* -------------------------------------------------------------------------- */
 /*  Complainant resolve button: label and enabled per status                  */
@@ -60,8 +60,7 @@ function canComplainantResolve(statusCode: number): boolean {
 /* -------------------------------------------------------------------------- */
 
 const TIMELINE_MESSAGES: Record<number, string> = {
-  [-1]:
-    "The case has been created and is awaiting investigation.",
+  [-1]: "The case has been created and is awaiting investigation.",
   0: "The user has resolved the case and the files have been deleted.",
   1: "The user has not responded to the case and the files have been quarantined.",
   2: "The case was resolved automatically and the files have been deleted.",
@@ -138,9 +137,11 @@ export default function AbuseComplainantPage({
   }, [report?.timeline])
 
   const resolveLabel = report
-    ? COMPLAINANT_RESOLVE_LABELS[report.statusCode] ?? report.status
+    ? (COMPLAINANT_RESOLVE_LABELS[report.statusCode] ?? report.status)
     : ""
-  const resolveEnabled = report ? canComplainantResolve(report.statusCode) : false
+  const resolveEnabled = report
+    ? canComplainantResolve(report.statusCode)
+    : false
 
   if (!token) {
     return (
@@ -316,10 +317,16 @@ function TimelineList({ timeline }: { timeline: AbuseTimelineEntry[] }) {
   return (
     <ul className="space-y-4">
       {timeline.map((entry) => {
-        const label = ABUSE_STATUS_LABELS[entry.status] ?? `Status ${entry.status}`
+        const label =
+          ABUSE_STATUS_LABELS[entry.status] ?? `Status ${entry.status}`
         const message = TIMELINE_MESSAGES[entry.status] ?? ""
         return (
-          <li key={entry.id ?? `${entry.abuse_id}-${entry.status}-${entry.created_at}`}>
+          <li
+            key={
+              entry.id ??
+              `${entry.abuse_id}-${entry.status}-${entry.created_at}`
+            }
+          >
             <div className="flex gap-3">
               <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
                 <CheckCircle2 className="size-4 text-muted-foreground" />
@@ -330,7 +337,9 @@ function TimelineList({ timeline }: { timeline: AbuseTimelineEntry[] }) {
                   {formatRelativeTime(entry.created_at)}
                 </p>
                 {message && (
-                  <p className="mt-1 text-sm text-muted-foreground">{message}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {message}
+                  </p>
                 )}
               </div>
             </div>

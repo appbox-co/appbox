@@ -367,12 +367,12 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
               progress={progress?.complete}
               from={progress?.old_server_name}
               to={progress?.new_server_name}
-              eta={progress?.phase === 5 ? (progress?.ETA ?? undefined) : undefined}
+              eta={
+                progress?.phase === 5 ? (progress?.ETA ?? undefined) : undefined
+              }
               live={progress ? progress.live_migration === 1 : undefined}
               transferredText={
-                progress &&
-                progress.phase === 5 &&
-                totalBytes > 0
+                progress && progress.phase === 5 && totalBytes > 0
                   ? t("migrationTransferred", {
                       sent: (transferredBytes / 1024 / 1024 / 1024).toFixed(2),
                       total: (totalBytes / 1024 / 1024 / 1024).toFixed(2)

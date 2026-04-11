@@ -543,17 +543,14 @@ export function useWsQueryInvalidation(wsContext?: {
               // Optimistically mark the cylo as restarting
               queryClient.setQueryData<CyloDetail>(
                 queryKeys.cylos.detail(cyloId),
-                (prev) =>
-                  prev ? { ...prev, status: "restarting" } : prev
+                (prev) => (prev ? { ...prev, status: "restarting" } : prev)
               )
               queryClient.setQueriesData<CyloSummary[]>(
                 { queryKey: queryKeys.cylos.all },
                 (prev) =>
                   Array.isArray(prev)
                     ? prev.map((c) =>
-                        c.id === cyloId
-                          ? { ...c, status: "restarting" }
-                          : c
+                        c.id === cyloId ? { ...c, status: "restarting" } : c
                       )
                     : prev
               )
@@ -625,10 +622,7 @@ export function useWsQueryInvalidation(wsContext?: {
                 queryKey: ["admin", "installedApps"]
               })
             }
-            if (
-              notif.action === "migrating" ||
-              notif.action === "migrated"
-            ) {
+            if (notif.action === "migrating" || notif.action === "migrated") {
               queryClient.invalidateQueries({
                 queryKey: ["admin", "migrations"]
               })
@@ -980,10 +974,7 @@ export function useWsQueryInvalidation(wsContext?: {
         case WS_EVENTS.COMMENT_VOTED: {
           queryClient.invalidateQueries({ queryKey: ["admin", "comments"] })
           const cv = data as { app_id?: number; type?: string; relid?: number }
-          if (
-            typeof cv.type === "string" &&
-            typeof cv.relid === "number"
-          ) {
+          if (typeof cv.type === "string" && typeof cv.relid === "number") {
             queryClient.invalidateQueries({
               queryKey: queryKeys.comments.byType(cv.type, cv.relid)
             })

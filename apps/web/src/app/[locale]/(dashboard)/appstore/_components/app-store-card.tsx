@@ -19,7 +19,10 @@ interface AppStoreCardProps {
 
 export function AppStoreCard({ app, className, href }: AppStoreCardProps) {
   return (
-    <Link href={href ?? ROUTES.APP_STORE_APP(app.id)} className="group block h-full">
+    <Link
+      href={href ?? ROUTES.APP_STORE_APP(app.id)}
+      className="group block h-full"
+    >
       <Card className={cn("card-glow h-full overflow-hidden", className)}>
         <CardContent className="h-full p-4">
           <div className="flex h-full gap-3">

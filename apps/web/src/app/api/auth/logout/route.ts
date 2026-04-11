@@ -21,7 +21,9 @@ function normalizedCookieDomainsFromConfig(): (string | undefined)[] {
 }
 
 function normalizedCookieDomainsForHost(host: string): (string | undefined)[] {
-  const values = new Set<string | undefined>(normalizedCookieDomainsFromConfig())
+  const values = new Set<string | undefined>(
+    normalizedCookieDomainsFromConfig()
+  )
   const hostname = host.split(":")[0]?.toLowerCase() ?? ""
 
   if (!hostname || !hostname.includes(".") || hostname === "localhost") {
@@ -60,7 +62,8 @@ export async function POST(request: NextRequest) {
   const incomingToken = request.cookies.get("authorization_token")?.value
   const host = request.headers.get("host") ?? ""
   const domainsToClear = normalizedCookieDomainsForHost(host)
-  const secureForRequest = COOKIE_SECURE || request.nextUrl.protocol === "https:"
+  const secureForRequest =
+    COOKIE_SECURE || request.nextUrl.protocol === "https:"
 
   try {
     if (incomingToken) {

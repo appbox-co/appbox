@@ -18,6 +18,7 @@ import {
   useCustomButtons,
   useTriggerCustomButton
 } from "@/api/custom-buttons/hooks/use-custom-buttons"
+import { useCylo } from "@/api/cylos/hooks/use-cylos"
 import {
   useFreezeApp,
   useRestartApp,
@@ -29,9 +30,6 @@ import {
   useUpdateApp
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
-import { useCylo } from "@/api/cylos/hooks/use-cylos"
-import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
-import { useAuth } from "@/providers/auth-provider"
 import { FormFieldRenderer } from "@/components/dashboard/dynamic-form/form-field-renderer"
 import { Button } from "@/components/ui/button"
 import {
@@ -49,6 +47,8 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
+import { useAuth } from "@/providers/auth-provider"
 import type { FormFieldConfig } from "@/types/dashboard"
 
 interface AppActionsProps {
@@ -84,7 +84,11 @@ type TranslateFn = (
   values?: Record<string, string | number>
 ) => string
 
-const HIDDEN_BUTTON_FIELD_TYPES = new Set(["hidden", "spacer", "generatedPassword"])
+const HIDDEN_BUTTON_FIELD_TYPES = new Set([
+  "hidden",
+  "spacer",
+  "generatedPassword"
+])
 const PASSWORD_BUTTON_FIELD_TYPES = new Set([
   "password",
   "passwordAlphaNumeric",
@@ -96,7 +100,10 @@ function isButtonFieldRequired(field: ButtonField): boolean {
   return field.validate.some((r) => r === "required")
 }
 
-function mapButtonFieldToConfig(name: string, field: ButtonField): FormFieldConfig {
+function mapButtonFieldToConfig(
+  name: string,
+  field: ButtonField
+): FormFieldConfig {
   const required = isButtonFieldRequired(field)
   const base = {
     name,
@@ -210,7 +217,10 @@ function validateButtonField(
   return null
 }
 
-export function AppActions({ app, startOnlyActionable = false }: AppActionsProps) {
+export function AppActions({
+  app,
+  startOnlyActionable = false
+}: AppActionsProps) {
   const t = useTranslations("appboxmanager.appDetail")
   const { isAdmin } = useAuth()
   const { data: cylo } = useCylo(app.cylo_id)
@@ -252,7 +262,8 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
   const updateTargetVersion = (app.available_versions ?? []).find(
     (v) => v.version === defaultVersion
   )
-  const updateVersionId = updateTargetVersion?.id ?? app.available_versions?.[0]?.id
+  const updateVersionId =
+    updateTargetVersion?.id ?? app.available_versions?.[0]?.id
   const hasUpdate =
     app.can_update &&
     !!defaultVersion &&
@@ -261,7 +272,8 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
   const switchableVersions = (app.available_versions ?? []).filter((v) => {
     if (v.version === app.version) return false
     // Avoid showing the default update target in both places.
-    if (hasUpdate && defaultVersion && v.version === defaultVersion) return false
+    if (hasUpdate && defaultVersion && v.version === defaultVersion)
+      return false
     return true
   })
   const showSwitcher = app.can_update && switchableVersions.length >= 1
@@ -386,9 +398,7 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
             variant="outline"
             size="sm"
             disabled={
-              startOnlyActionable ||
-              isTransitioning ||
-              freezeMutation.isPending
+              startOnlyActionable || isTransitioning || freezeMutation.isPending
             }
             onClick={() => setFreezeConfirmOpen(true)}
           >
@@ -436,9 +446,12 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
             isPending={triggerMutation.isPending && customConfirmId === btn.id}
             onConfirm={(payload) => {
               setCustomConfirmId(btn.id)
-              triggerMutation.mutate({ button: btn, payload }, {
-                onSettled: () => setCustomConfirmId(null)
-              })
+              triggerMutation.mutate(
+                { button: btn, payload },
+                {
+                  onSettled: () => setCustomConfirmId(null)
+                }
+              )
             }}
           />
         ))}
@@ -498,7 +511,9 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
       <Dialog open={freezeConfirmOpen} onOpenChange={setFreezeConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("freeze")} {app.display_name}</DialogTitle>
+            <DialogTitle>
+              {t("freeze")} {app.display_name}
+            </DialogTitle>
             <DialogDescription>{t("confirmFreeze")}</DialogDescription>
           </DialogHeader>
           {freezeMutation.isError && (
@@ -535,7 +550,9 @@ export function AppActions({ app, startOnlyActionable = false }: AppActionsProps
       <Dialog open={unfreezeConfirmOpen} onOpenChange={setUnfreezeConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("unfreeze")} {app.display_name}</DialogTitle>
+            <DialogTitle>
+              {t("unfreeze")} {app.display_name}
+            </DialogTitle>
             <DialogDescription>{t("confirmUnfreeze")}</DialogDescription>
           </DialogHeader>
           {unfreezeMutation.isError && (

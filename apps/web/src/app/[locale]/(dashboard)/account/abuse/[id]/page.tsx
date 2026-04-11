@@ -14,12 +14,12 @@ import {
 } from "lucide-react"
 import { ABUSE_STATUS_LABELS } from "@/api/account/account"
 import { useAbuseReport } from "@/api/account/hooks/use-account"
+import { Comments } from "@/components/dashboard/comments"
 import { HistoryBackButton } from "@/components/dashboard/navigation/history-back-button"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Comments } from "@/components/dashboard/comments"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
 
@@ -167,7 +167,10 @@ export default function AbuseReportDetailPage({
       {/* Header */}
       <div className="flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-bold tracking-tight">{report.subject}</h1>
-        <AbuseStatusBadge status={report.status} statusCode={report.statusCode} />
+        <AbuseStatusBadge
+          status={report.status}
+          statusCode={report.statusCode}
+        />
       </div>
 
       <Card>
@@ -201,7 +204,10 @@ export default function AbuseReportDetailPage({
               <p className="text-xs font-medium uppercase text-muted-foreground">
                 {t("abuse.status")}
               </p>
-              <AbuseStatusBadge status={report.status} statusCode={report.statusCode} />
+              <AbuseStatusBadge
+                status={report.status}
+                statusCode={report.statusCode}
+              />
             </div>
             <div className="space-y-1">
               <p className="text-xs font-medium uppercase text-muted-foreground">
@@ -273,7 +279,12 @@ export default function AbuseReportDetailPage({
 function TimelineList({
   timeline
 }: {
-  timeline: { id?: number; abuse_id: number; status: number; created_at: string }[]
+  timeline: {
+    id?: number
+    abuse_id: number
+    status: number
+    created_at: string
+  }[]
 }) {
   if (timeline.length === 0) {
     return (
@@ -283,10 +294,16 @@ function TimelineList({
   return (
     <ul className="space-y-4">
       {timeline.map((entry) => {
-        const label = ABUSE_STATUS_LABELS[entry.status] ?? `Status ${entry.status}`
+        const label =
+          ABUSE_STATUS_LABELS[entry.status] ?? `Status ${entry.status}`
         const message = TIMELINE_MESSAGES[entry.status] ?? ""
         return (
-          <li key={entry.id ?? `${entry.abuse_id}-${entry.status}-${entry.created_at}`}>
+          <li
+            key={
+              entry.id ??
+              `${entry.abuse_id}-${entry.status}-${entry.created_at}`
+            }
+          >
             <div className="flex gap-3">
               <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
                 <CheckCircle2 className="size-4 text-muted-foreground" />
@@ -297,7 +314,9 @@ function TimelineList({
                   {formatRelativeTime(entry.created_at)}
                 </p>
                 {message && (
-                  <p className="mt-1 text-sm text-muted-foreground">{message}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {message}
+                  </p>
                 )}
               </div>
             </div>

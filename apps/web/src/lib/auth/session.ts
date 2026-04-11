@@ -104,8 +104,7 @@ export async function validateSession(
           disk_quota: c.storage_limit ?? 0,
           disk_used: 0,
           app_slots: Number(c.app_slots ?? 0),
-          app_slots_used:
-            Number(c.app_slots ?? 0) - Number(c.free_slots ?? 0),
+          app_slots_used: Number(c.app_slots ?? 0) - Number(c.free_slots ?? 0),
           resource_multiplier: Number(
             c.resource_multiplier_current ?? c.resource_multiplier ?? 1
           ),

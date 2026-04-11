@@ -222,7 +222,8 @@ const Plans = ({
   }
 
   const supportsWindowsVps = (plan: Plan, group: Group): boolean => {
-    const groupDescriptor = `${group.slug} ${group.title} ${group.short_title}`.toLowerCase()
+    const groupDescriptor =
+      `${group.slug} ${group.title} ${group.short_title}`.toLowerCase()
     if (groupDescriptor.includes("dedicated")) return true
 
     const tier = getPlanTierValue(plan)
