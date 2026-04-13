@@ -115,6 +115,11 @@ function mapColumnToFormConfig(column: CustomTableColumn): FormFieldConfig {
   return { ...base, type: "text" }
 }
 
+function isExternalLinkColumn(column: CustomTableColumn): boolean {
+  const fieldType = column.type ?? column.inputField?.type
+  return fieldType === "externalURL" || fieldType === "clientURL"
+}
+
 function isDataColumn(column: CustomTableColumn): boolean {
   return (
     column.name.endsWith(":value") &&
@@ -153,14 +158,19 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     [orderedColumns]
   )
 
+  const inputDataColumns = useMemo(
+    () => dataColumns.filter((col) => !isExternalLinkColumn(col)),
+    [dataColumns]
+  )
+
   const editableFieldSet = useMemo(
     () => new Set(table.editableFields ?? []),
     [table.editableFields]
   )
 
   const editableColumnsForEdit = useMemo(() => {
-    if (editableFieldSet.size === 0) return dataColumns
-    return dataColumns.filter((col) => editableFieldSet.has(col.name))
+    const base = editableFieldSet.size === 0 ? dataColumns : dataColumns.filter((col) => editableFieldSet.has(col.name))
+    return base.filter((col) => !isExternalLinkColumn(col))
   }, [dataColumns, editableFieldSet])
 
   const canAdd = table.enableAdding
@@ -184,7 +194,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   )
 
   const openAdd = () => {
-    initializeForm(dataColumns, null)
+    initializeForm(inputDataColumns, null)
     setAddOpen(true)
   }
 
@@ -215,7 +225,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   }
 
   const handleAdd = async () => {
-    if (!validateForm(dataColumns)) return
+    if (!validateForm(inputDataColumns)) return
     try {
       await addMutation.mutateAsync(formValues)
       setAddOpen(false)
@@ -496,7 +506,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
               {t("customTablesAddDescription")}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 py-2">{renderFormFields(dataColumns)}</div>
+          <div className="space-y-4 py-2">{renderFormFields(inputDataColumns)}</div>
           <DialogFooter>
             <Button
               variant="outline"
