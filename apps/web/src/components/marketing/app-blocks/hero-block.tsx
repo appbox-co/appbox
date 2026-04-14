@@ -182,7 +182,7 @@ function GlowingBeams({
   return (
     <div
       className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      style={{ width: s, height: s }}
+      style={{ width: s, height: s, willChange: "transform" }}
     >
       <svg
         width={s}
@@ -191,13 +191,6 @@ function GlowingBeams({
         fill="none"
         className="absolute inset-0"
       >
-        <defs>
-          <filter id="circuit-glow">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
-
         {traces.map((t, i) => (
           <g key={i}>
             <path
@@ -210,17 +203,15 @@ function GlowingBeams({
             <path
               d={t.d}
               stroke={t.color}
-              strokeWidth="3"
-              opacity="0.05"
+              strokeWidth="3.5"
+              opacity="0.06"
               fill="none"
-              filter="url(#circuit-glow)"
             />
             <path
               d={t.d}
               stroke={t.color}
               strokeWidth="1.5"
               fill="none"
-              filter="url(#circuit-glow)"
               strokeDasharray={`25 ${t.length}`}
               opacity="0.5"
             >
@@ -261,7 +252,8 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
             <div
               className="absolute -inset-8 rounded-full opacity-30 blur-2xl"
               style={{
-                background: `radial-gradient(circle, ${gradientFrom}, ${gradientTo}, transparent 70%)`
+                background: `radial-gradient(circle, ${gradientFrom}, ${gradientTo}, transparent 70%)`,
+                willChange: "transform"
               }}
             />
             {/* Beams extending beyond the icon */}
@@ -292,7 +284,8 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
               <div
                 className="absolute -inset-px -z-10 rounded-2xl opacity-40 blur-md"
                 style={{
-                  background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`
+                  background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+                  willChange: "transform"
                 }}
               />
             </div>
