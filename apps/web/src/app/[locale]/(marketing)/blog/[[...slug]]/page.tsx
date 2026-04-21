@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
@@ -11,7 +10,6 @@ import { PaginatedBlogPosts } from "@/components/blog/paginated-posts"
 import { BlogPostTags } from "@/components/blog/post-tags"
 import { Mdx } from "@/components/docs/mdx"
 import { DashboardTableOfContents } from "@/components/docs/toc"
-import { Icons } from "@/components/shared/icons"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { siteConfig } from "@/config/site"
 import { routing } from "@/i18n/routing"
@@ -23,6 +21,10 @@ interface BlogPageProps {
   params: Promise<{
     slug: string[]
     locale: LocaleOptions
+  }>
+  searchParams: Promise<{
+    page?: string
+    tag?: string
   }>
 }
 
@@ -150,6 +152,7 @@ export async function generateStaticParams(): Promise<
 
 export default async function BlogPage(props: BlogPageProps) {
   const params = await props.params
+  const searchParams = await props.searchParams
   const locale = params.locale || routing.defaultLocale
 
   setRequestLocale(locale)
@@ -158,33 +161,27 @@ export default async function BlogPage(props: BlogPageProps) {
   const blogPost = await getBlogFromParams({ params })
 
   if (!blogPost) {
+    const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1
+    const currentTag = searchParams.tag ?? null
+
     return (
-      <Suspense
-        fallback={
-          <div className="flex h-64 w-full flex-1 items-center justify-center md:h-96">
-            <Icons.spinner
-              className="size-full max-h-32 min-h-20 min-w-20 max-w-32 animate-spin"
-              strokeWidth="1"
-            />
-          </div>
-        }
-      >
-        <PaginatedBlogPosts
-          posts={allBlogs}
-          locale={locale}
-          perPage={6}
-          messages={{
-            by: t("blog.words.by"),
-            next: t("blog.buttons.next"),
-            min_read: t("blog.cards.min_read"),
-            previous: t("blog.buttons.previous"),
-            rss_feed: t("blog.buttons.rss_feed"),
-            read_more: t("blog.buttons.read_more"),
-            go_to_next_page: t("blog.buttons.go_to_next_page"),
-            go_to_previous_page: t("blog.buttons.go_to_previous_page")
-          }}
-        />
-      </Suspense>
+      <PaginatedBlogPosts
+        posts={allBlogs}
+        locale={locale}
+        perPage={6}
+        currentPage={currentPage}
+        currentTag={currentTag}
+        messages={{
+          by: t("blog.words.by"),
+          next: t("blog.buttons.next"),
+          min_read: t("blog.cards.min_read"),
+          previous: t("blog.buttons.previous"),
+          rss_feed: t("blog.buttons.rss_feed"),
+          read_more: t("blog.buttons.read_more"),
+          go_to_next_page: t("blog.buttons.go_to_next_page"),
+          go_to_previous_page: t("blog.buttons.go_to_previous_page")
+        }}
+      />
     )
   }
 

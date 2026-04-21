@@ -1,6 +1,3 @@
-"use client"
-
-import { motion } from "framer-motion"
 import {
   Cloud,
   Code,
@@ -110,30 +107,23 @@ export function CalloutBlock({ block }: CalloutBlockProps) {
 
   return (
     <section className="py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.5 }}
-      >
-        <Alert className={cn("mx-auto max-w-3xl", config.className)}>
-          <div className="flex gap-4">
-            {resolved.type === "lucide" ? (
-              <resolved.Icon className="mt-0.5 size-5 shrink-0" />
-            ) : (
-              <span className="text-2xl">{resolved.text}</span>
-            )}
-            <div>
-              <AlertTitle className="text-base font-semibold">
-                {block.title}
-              </AlertTitle>
-              <AlertDescription className="text-muted-foreground mt-1 leading-relaxed">
-                {block.body}
-              </AlertDescription>
-            </div>
+      <Alert className={cn("mx-auto max-w-3xl", config.className)}>
+        <div className="flex gap-4">
+          {resolved.type === "lucide" ? (
+            <resolved.Icon className="mt-0.5 size-5 shrink-0" />
+          ) : (
+            <span className="text-2xl">{resolved.text}</span>
+          )}
+          <div>
+            <AlertTitle className="text-base font-semibold">
+              {block.title}
+            </AlertTitle>
+            <AlertDescription className="text-muted-foreground mt-1 leading-relaxed">
+              {block.body}
+            </AlertDescription>
           </div>
-        </Alert>
-      </motion.div>
+        </div>
+      </Alert>
     </section>
   )
 }

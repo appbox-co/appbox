@@ -4,14 +4,14 @@ import * as React from "react"
 import { useTranslations } from "next-intl"
 import { ChevronDown } from "lucide-react"
 import { Icons } from "@/components/shared/icons"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { launchWeekFlags } from "@/config/launch-week-flags"
-import { Link, usePathname, useRouter } from "@/i18n/routing"
+import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 interface MenuItem {
@@ -25,9 +25,13 @@ interface MenuItem {
   descriptionKey?: string
 }
 
+const navButtonClass = cn(
+  buttonVariants({ variant: "ghost" }),
+  "h-9 px-3 text-sm font-medium"
+)
+
 export function MainNav() {
   const pathname = usePathname()
-  const router = useRouter()
   const t = useTranslations("site.navigation")
 
   const components: MenuItem[] = [
@@ -81,10 +85,9 @@ export function MainNav() {
     }
   ]
 
-  const handlePricingClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-
+  const handlePricingClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/") {
+      e.preventDefault()
       const plansSection = document.getElementById("plans-section")
       if (plansSection) {
         const headerHeight = 60
@@ -95,19 +98,7 @@ export function MainNav() {
           behavior: "smooth"
         })
       }
-    } else {
-      router.push("/#plans-section")
     }
-  }
-
-  const handleAppsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    router.push("/apps")
-  }
-
-  const handleVpsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    router.push("/apps?category=VPS")
   }
 
   return (
@@ -117,28 +108,20 @@ export function MainNav() {
       </Link>
 
       <nav className="flex items-center gap-1">
-        <Button
-          variant="ghost"
-          className="h-9 px-3 text-sm font-medium"
+        <Link
+          href="/#plans-section"
           onClick={handlePricingClick}
+          className={navButtonClass}
         >
           {t("pricing")}
-        </Button>
-        <Button
-          variant="ghost"
-          className="h-9 px-3 text-sm font-medium"
-          onClick={handleAppsClick}
-        >
+        </Link>
+        <Link href="/apps" className={navButtonClass}>
           {t("apps")}
-        </Button>
+        </Link>
         {launchWeekFlags.day_3 && (
-          <Button
-            variant="ghost"
-            className="h-9 px-3 text-sm font-medium"
-            onClick={handleVpsClick}
-          >
+          <Link href="/apps?category=VPS" className={navButtonClass}>
             {t("vps")}
-          </Button>
+          </Link>
         )}
 
         {components.map((group) => (
@@ -153,30 +136,74 @@ function NavDropdown({ group }: { group: MenuItem }) {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-9 px-3 text-sm font-medium gap-1">
+    <>
+      {/* JS-enabled: Radix dropdown */}
+      <span className="js-only-nav">
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="h-9 px-3 text-sm font-medium gap-1"
+            >
+              {group.title}
+              <ChevronDown
+                className={cn(
+                  "size-3 transition-transform duration-200",
+                  open && "rotate-180"
+                )}
+              />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-[500px] p-2">
+            <ul className="grid gap-1 lg:grid-cols-2">
+              {group.children?.map((item) => (
+                <NavDropdownItem
+                  key={item.translationKey}
+                  item={item}
+                  onSelect={() => setOpen(false)}
+                />
+              ))}
+            </ul>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </span>
+
+      {/* No-JS fallback: native <details> dropdown */}
+      <details className="noscript-only-nav hidden relative">
+        <summary
+          className={cn(
+            navButtonClass,
+            "list-none cursor-pointer gap-1 [&::-webkit-details-marker]:hidden"
+          )}
+        >
           {group.title}
-          <ChevronDown
-            className={cn(
-              "size-3 transition-transform duration-200",
-              open && "rotate-180"
-            )}
-          />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-[500px] p-2">
-        <ul className="grid gap-1 lg:grid-cols-2">
-          {group.children?.map((item) => (
-            <NavDropdownItem
-              key={item.translationKey}
-              item={item}
-              onSelect={() => setOpen(false)}
-            />
-          ))}
+          <ChevronDown className="size-3" />
+        </summary>
+        <ul className="absolute left-0 top-full z-50 mt-2 grid w-[300px] gap-1 rounded-md border bg-popover p-2 shadow-md">
+          {group.children?.map((item) => {
+            const linkProps = item.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {}
+            return (
+              <li key={item.translationKey}>
+                <Link
+                  href={item.href || "#"}
+                  {...linkProps}
+                  className="flex items-start gap-3 rounded-md p-3 hover:bg-accent hover:text-accent-foreground transition-colors"
+                >
+                  {item.icon && (
+                    <item.icon className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+                  )}
+                  <span className="text-sm font-medium leading-none">
+                    {item.title}
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
         </ul>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </details>
+    </>
   )
 }
 

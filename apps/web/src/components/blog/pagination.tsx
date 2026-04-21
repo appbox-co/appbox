@@ -1,7 +1,3 @@
-"use client"
-
-import { useMemo } from "react"
-import { useSearchParams } from "next/navigation"
 import {
   PaginationContent,
   PaginationEllipsis,
@@ -15,7 +11,9 @@ import { cn } from "@/lib/utils"
 
 interface PaginationProps {
   numberOfPages: number
+  currentPage: number
   pagesToShow?: number
+  currentTag?: string | null
 
   messages: {
     next: string
@@ -25,45 +23,48 @@ interface PaginationProps {
   }
 }
 
+function buildPageHref(page: number, tag: string | null | undefined): string {
+  const params = new URLSearchParams()
+  if (tag) params.set("tag", tag)
+  if (page > 1) params.set("page", String(page))
+  const qs = params.toString()
+  return qs ? `?${qs}` : "?"
+}
+
 export function Pagination({
   messages,
   numberOfPages,
+  currentPage,
+  currentTag,
   pagesToShow = 5
 }: PaginationProps) {
-  const searchParams = useSearchParams()
-
-  const currentPage = useMemo(() => {
-    const page = searchParams.get("page")
-
-    return page ? parseInt(page, 10) : 1
-  }, [searchParams])
-
   const hasPreviousPage = currentPage > 1
   const hasNextPage = currentPage < numberOfPages
 
-  const visiblePages = useMemo(() => {
-    if (numberOfPages <= pagesToShow) {
-      return Array.from({ length: numberOfPages }, (_, index) => index + 1)
-    }
-
+  let visiblePages: number[]
+  if (numberOfPages <= pagesToShow) {
+    visiblePages = Array.from({ length: numberOfPages }, (_, index) => index + 1)
+  } else {
     const startPages = [1, 2]
     const endPages = [numberOfPages - 1, numberOfPages]
-
-    const middlePages = [currentPage - 1, currentPage, currentPage + 1].filter(
-      (page) => page > 2 && page < numberOfPages - 1
-    )
-
-    const allPages = [...startPages, ...middlePages, ...endPages]
-
-    return [...new Set(allPages)]
-  }, [currentPage, numberOfPages, pagesToShow])
+    const middlePages = [
+      currentPage - 1,
+      currentPage,
+      currentPage + 1
+    ].filter((page) => page > 2 && page < numberOfPages - 1)
+    visiblePages = [...new Set([...startPages, ...middlePages, ...endPages])]
+  }
 
   return (
     <RawPagination className="flex justify-center overflow-x-auto">
       <PaginationContent className="flex flex-wrap items-end space-x-2 space-y-2 sm:space-x-3 sm:space-y-0">
         <PaginationItem>
           <PaginationPrevious
-            href={hasPreviousPage ? `?page=${currentPage - 1}` : "#"}
+            href={
+              hasPreviousPage
+                ? buildPageHref(currentPage - 1, currentTag)
+                : "#"
+            }
             aria-label={messages.go_to_previous_page}
             className={cn({
               "opacity-50 pointer-events-none": !hasPreviousPage
@@ -89,7 +90,9 @@ export function Pagination({
               {shouldDisplayEllipsis ? (
                 <PaginationEllipsis />
               ) : (
-                <PaginationLink href={`?page=${page}`}>{page}</PaginationLink>
+                <PaginationLink href={buildPageHref(page, currentTag)}>
+                  {page}
+                </PaginationLink>
               )}
             </PaginationItem>
           )
@@ -97,7 +100,9 @@ export function Pagination({
 
         <PaginationItem>
           <PaginationNext
-            href={hasNextPage ? `?page=${currentPage + 1}` : "#"}
+            href={
+              hasNextPage ? buildPageHref(currentPage + 1, currentTag) : "#"
+            }
             aria-label={messages.go_to_next_page}
             className={cn({ "opacity-50 pointer-events-none": !hasNextPage })}
           >

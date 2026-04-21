@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import {
   Cloud,
   Code,
@@ -75,35 +74,6 @@ interface FeaturesBlockProps {
   block: FeaturesBlockType
 }
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08 }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.4, 0.25, 1] as const }
-  }
-}
-
-const bentoItemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 100,
-      damping: 12
-    }
-  }
-}
-
 function FeatureCard({ item }: { item: FeatureItem }) {
   const IconComponent = iconMap[item.icon]
 
@@ -158,32 +128,14 @@ function getBentoSpan(index: number, total: number): string {
 }
 
 function BentoGrid({ items }: { items: FeatureItem[] }) {
-  const bentoContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 }
-    }
-  }
-
   return (
-    <motion.div
-      variants={bentoContainerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      className="grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 md:grid-cols-3"
-    >
+    <div className="grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 md:grid-cols-3">
       {items.map((item, i) => (
-        <motion.div
-          key={i}
-          variants={bentoItemVariants}
-          className={getBentoSpan(i, items.length)}
-        >
+        <div key={i} className={getBentoSpan(i, items.length)}>
           <FeatureCard item={item} />
-        </motion.div>
+        </div>
       ))}
-    </motion.div>
+    </div>
   )
 }
 
@@ -195,11 +147,7 @@ function StandardGrid({
   columns: number
 }) {
   return (
-    <motion.ul
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
+    <ul
       className={cn(
         "grid list-none gap-4",
         columns === 2 && "grid-cols-1 md:grid-cols-2",
@@ -208,11 +156,11 @@ function StandardGrid({
       )}
     >
       {items.map((item, i) => (
-        <motion.li key={i} variants={itemVariants} className="min-h-[10rem]">
+        <li key={i} className="min-h-[10rem]">
           <FeatureCard item={item} />
-        </motion.li>
+        </li>
       ))}
-    </motion.ul>
+    </ul>
   )
 }
 
@@ -223,13 +171,7 @@ export function FeaturesBlock({ block }: FeaturesBlockProps) {
   return (
     <section className="py-16">
       {(block.title || block.subtitle) && (
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto mb-12 max-w-3xl text-center"
-        >
+        <div className="mx-auto mb-12 max-w-3xl text-center">
           {block.title && (
             <h2 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl">
               <span className="bg-linear-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
@@ -242,7 +184,7 @@ export function FeaturesBlock({ block }: FeaturesBlockProps) {
               {block.subtitle}
             </p>
           )}
-        </motion.div>
+        </div>
       )}
 
       {layout === "bento" ? (

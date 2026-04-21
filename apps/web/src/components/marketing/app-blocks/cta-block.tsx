@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
@@ -33,13 +32,7 @@ export function CtaBlock({ block, appId }: CtaBlockProps) {
 
   return (
     <section className="py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6 }}
-        className="group relative mx-auto max-w-3xl overflow-hidden rounded-2xl p-px"
-      >
+      <div className="group relative mx-auto max-w-3xl overflow-hidden rounded-2xl p-px">
         <div
           className="absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-100"
           style={{
@@ -89,7 +82,7 @@ export function CtaBlock({ block, appId }: CtaBlockProps) {
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <Dialog open={deployOpen} onOpenChange={setDeployOpen}>
         <DialogContent className="sm:max-w-md">

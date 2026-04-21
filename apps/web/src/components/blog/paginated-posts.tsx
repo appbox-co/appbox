@@ -1,7 +1,3 @@
-"use client"
-
-import { useMemo } from "react"
-import { useSearchParams } from "next/navigation"
 import type { Blog } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 import Balancer from "react-wrap-balancer"
@@ -23,6 +19,8 @@ interface PaginatedBlogPostsProps {
   posts: Blog[]
   perPage?: number
   locale: LocaleOptions
+  currentPage: number
+  currentTag: string | null
 
   messages: {
     by: string
@@ -40,49 +38,25 @@ export function PaginatedBlogPosts({
   posts,
   locale,
   messages,
+  currentPage,
+  currentTag,
   perPage = 10
 }: PaginatedBlogPostsProps) {
-  const searchParams = useSearchParams()
-  const tag = searchParams.get("tag")
+  const filteredByTag = currentTag
+    ? posts.filter((post) => post.tags?.includes(decodeURI(currentTag)))
+    : posts
 
-  const currentPage = useMemo(() => {
-    const page = searchParams.get("page")
+  const sortedPosts = filteredByTag
+    .filter((post) => {
+      const [localeFromSlug] = post.slugAsParams.split("/")
+      return localeFromSlug === locale
+    })
+    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
-    return page ? parseInt(page, 10) : 1
-  }, [searchParams])
-
-  const blogPosts = useMemo(() => {
-    let blogPosts = posts
-
-    if (tag) {
-      blogPosts = blogPosts.filter((post) =>
-        post.tags?.includes(decodeURI(tag))
-      )
-    }
-
-    return blogPosts
-  }, [posts, tag])
-
-  const sortedPosts = useMemo(
-    () =>
-      blogPosts
-        .filter((post) => {
-          const [localeFromSlug] = post.slugAsParams.split("/")
-
-          return localeFromSlug === locale
-        })
-        .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date))),
-    [blogPosts, locale]
-  )
-
-  const totalOfPages = useMemo(
-    () => Math.ceil(sortedPosts.length / perPage),
-    [sortedPosts.length, perPage]
-  )
-
-  const paginatedPosts = useMemo(
-    () => sortedPosts.slice((currentPage - 1) * perPage, currentPage * perPage),
-    [sortedPosts, currentPage, perPage]
+  const totalOfPages = Math.ceil(sortedPosts.length / perPage)
+  const paginatedPosts = sortedPosts.slice(
+    (currentPage - 1) * perPage,
+    currentPage * perPage
   )
 
   return (
@@ -139,7 +113,7 @@ export function PaginatedBlogPosts({
                 </p>
               </div>
 
-              <BlogPostItemTags post={post} />
+              <BlogPostItemTags post={post} currentTag={currentTag} />
 
               <Link
                 href={postLink}
@@ -160,6 +134,8 @@ export function PaginatedBlogPosts({
         pagesToShow={10}
         messages={messages}
         numberOfPages={totalOfPages}
+        currentPage={currentPage}
+        currentTag={currentTag}
       />
     </main>
   )

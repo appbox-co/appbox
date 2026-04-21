@@ -20,6 +20,22 @@ export async function SiteHeader() {
 
   return (
     <header className={"sticky top-0 z-50 w-full"}>
+      {/* No-JS fallback styles for navigation. With JS enabled, .noscript-only-nav*
+          classes are hidden by Tailwind's `hidden` class and Radix dropdowns/sheets
+          handle interactions. With JS disabled, the noscript <style> below flips
+          visibility so native <details> menus take over and broken JS-only triggers
+          are hidden. The "-mobile" variant is scoped to sub-md screens so the
+          hamburger fallback doesn't appear on desktop. */}
+      <noscript>
+        <style
+          dangerouslySetInnerHTML={{
+            __html:
+              ".js-only-nav{display:none!important}" +
+              ".noscript-only-nav,.noscript-only-nav-mobile{display:revert!important}" +
+              "@media(min-width:768px){.noscript-only-nav-mobile{display:none!important}}"
+          }}
+        />
+      </noscript>
       <div className="absolute inset-0 backdrop-blur-sm"></div>
       <div className="container relative flex h-14 max-w-(--breakpoint-2xl) items-center">
         <MainNav />

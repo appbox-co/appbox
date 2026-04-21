@@ -1,7 +1,3 @@
-"use client"
-
-import { useMemo } from "react"
-import { useSearchParams } from "next/navigation"
 import type { Blog } from "contentlayer/generated"
 import { Link } from "@/i18n/routing"
 import { Badge } from "../ui/badge"
@@ -9,39 +5,32 @@ import { PaginationEllipsis } from "../ui/pagination"
 
 export function BlogPostItemTags({
   post,
+  currentTag,
   limitOfTagsToDisplay = 5
 }: {
   post: Blog
+  currentTag?: string | null
   limitOfTagsToDisplay?: number
 }) {
-  const searchParams = useSearchParams()
-
   const totalOfTags = post?.tags?.length || 0
   const shouldDisplayEllipsis = totalOfTags > limitOfTagsToDisplay
 
-  const tags = useMemo(() => {
-    if (!post?.tags) {
-      return null
-    }
-
-    const tags = shouldDisplayEllipsis
-      ? post.tags.slice(0, limitOfTagsToDisplay)
-      : post.tags
-
-    const uniqueTags = Array.from(new Set(tags))
-
-    return uniqueTags
-  }, [post.tags, limitOfTagsToDisplay, shouldDisplayEllipsis])
-
-  if (!tags) {
+  if (!post?.tags) {
     return null
   }
 
+  const tagsToShow = shouldDisplayEllipsis
+    ? post.tags.slice(0, limitOfTagsToDisplay)
+    : post.tags
+
+  const uniqueTags = Array.from(new Set(tagsToShow))
+
+  const activeTag = currentTag ?? ""
+
   return (
     <div className="flex w-fit flex-wrap items-center gap-2 pt-4">
-      {tags.map((tag) => {
-        const currentTag = searchParams.get("tag") || ""
-        const isCurrentTagActive = tag === currentTag
+      {uniqueTags.map((tag) => {
+        const isCurrentTagActive = tag === activeTag
 
         const href = isCurrentTagActive
           ? "/blog"

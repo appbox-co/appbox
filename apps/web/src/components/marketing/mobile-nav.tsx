@@ -13,8 +13,9 @@ import {
 } from "@/components/ui/sheet"
 import { launchWeekFlags } from "@/config/launch-week-flags"
 import { siteConfig } from "@/config/site"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
+import { cn } from "@/lib/utils"
 import { DocsSidebarNav } from "../docs/sidebar-nav"
 import { Button } from "../ui/button"
 import { ScrollArea } from "../ui/scroll-area"
@@ -159,16 +160,87 @@ export function MobileNav({ messages }: MobileNavProps) {
   }
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+    <>
+      {/* No-JS fallback: native <details> dropdown (mobile-only via noscript CSS) */}
+      <details className="noscript-only-nav-mobile hidden mr-2">
+        <summary
+          className={cn(
+            "inline-flex items-center justify-center rounded-md px-0 text-base h-9 w-9 cursor-pointer list-none",
+            "[&::-webkit-details-marker]:hidden"
+          )}
         >
           <Icons.menu className="size-5" />
           <span className="sr-only">{messages.toggleMenu}</span>
-        </Button>
-      </SheetTrigger>
+        </summary>
+
+        <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-[80vh] overflow-y-auto border-t bg-background p-6 shadow-lg">
+          <Link
+            href="/"
+            className="mb-4 flex items-center font-bold"
+          >
+            <Icons.emblem className="mr-2 size-4" />
+            {siteConfig.name}
+          </Link>
+
+          <div className="mb-6 flex flex-col space-y-3">
+            <Link
+              href="https://billing.appbox.co"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center font-medium"
+            >
+              {tExt("billing")}
+            </Link>
+            <Link
+              href="https://www.appbox.co/login"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center font-medium"
+            >
+              {tExt("control_panel")}
+            </Link>
+          </div>
+
+          <div className="mb-6 flex flex-col space-y-5">
+            {mobileNavItems.map((category) => (
+              <div
+                key={category.translationKey}
+                className="flex flex-col space-y-3"
+              >
+                <h3 className="text-muted-foreground text-sm font-medium">
+                  {category.title}
+                </h3>
+                <div className="flex flex-col space-y-2 pl-2">
+                  {category.children?.map((item) => (
+                    <Link
+                      key={item.translationKey}
+                      href={item.href || "#"}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                      className="flex items-center"
+                    >
+                      {item.icon && <item.icon className="mr-2 size-4" />}
+                      <span>{item.title}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </details>
+
+      {/* JS-enabled: Radix Sheet */}
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <Button
+            variant="ghost"
+            className="js-only-nav mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+          >
+            <Icons.menu className="size-5" />
+            <span className="sr-only">{messages.toggleMenu}</span>
+          </Button>
+        </SheetTrigger>
 
       <SheetContent side="left" className="pr-0">
         <SheetTitle className="sr-only">{messages.menu}</SheetTitle>
@@ -258,7 +330,8 @@ export function MobileNav({ messages }: MobileNavProps) {
             )}
           </div>
         </ScrollArea>
-      </SheetContent>
-    </Sheet>
+        </SheetContent>
+      </Sheet>
+    </>
   )
 }

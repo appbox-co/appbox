@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
 import { ChevronDown, Eye, EyeOff, Package, Sparkles, Zap } from "lucide-react"
 import type { CustomField } from "@/api/apps/app-store"
 import { Button } from "@/components/ui/button"
@@ -283,13 +282,7 @@ export function InstallPreview({
 
   return (
     <section className="py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5 }}
-        className="mx-auto max-w-lg"
-      >
+      <div className="mx-auto max-w-lg">
         <h2 className="text-center font-heading text-4xl font-bold tracking-tight sm:text-5xl">
           <span className="bg-linear-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
             Install in seconds
@@ -443,7 +436,7 @@ export function InstallPreview({
         <p className="mt-4 text-center text-xs text-muted-foreground">
           This is a preview of the install form. Sign up to deploy for real.
         </p>
-      </motion.div>
+      </div>
     </section>
   )
 }

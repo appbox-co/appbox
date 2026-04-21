@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
 import { ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { BorderBeam } from "@/components/ui/border-beam"
@@ -242,12 +241,7 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
     <section className="relative overflow-x-clip pt-8 md:pt-12">
       <div className="mx-auto flex max-w-[980px] flex-col items-center gap-2 py-8 md:pb-8">
         {iconUrl && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
-            className="relative mb-6"
-          >
+          <div className="relative mb-6">
             {/* Glow backdrop */}
             <div
               className="absolute -inset-8 rounded-full opacity-30 blur-2xl"
@@ -289,52 +283,32 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
                 }}
               />
             </div>
-          </motion.div>
+          </div>
         )}
 
         {block.badge && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative z-10"
-          >
+          <div className="relative z-10">
             <Badge
               variant="secondary"
               className="mb-4 px-4 py-1.5 text-sm font-medium"
             >
               {block.badge}
             </Badge>
-          </motion.div>
+          </div>
         )}
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="relative z-10 text-center text-3xl font-bold leading-tight tracking-tighter dark:bg-linear-to-r dark:from-slate-50 dark:to-slate-200 dark:bg-clip-text dark:text-transparent md:text-6xl lg:text-7xl lg:leading-[1.1]"
-        >
+        <h1 className="relative z-10 text-center text-3xl font-bold leading-tight tracking-tighter dark:bg-linear-to-r dark:from-slate-50 dark:to-slate-200 dark:bg-clip-text dark:text-transparent md:text-6xl lg:text-7xl lg:leading-[1.1]">
           {block.headline}
-        </motion.h1>
+        </h1>
 
         {block.subheadline && (
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-muted-foreground relative z-10 mx-auto mt-4 max-w-[750px] text-center text-lg sm:text-xl"
-          >
+          <p className="text-muted-foreground relative z-10 mx-auto mt-4 max-w-[750px] text-center text-lg sm:text-xl">
             {block.subheadline}
-          </motion.p>
+          </p>
         )}
 
         {(block.cta_text || block.website_url) && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0 }}
-            className="relative z-10 flex w-full flex-col items-center justify-center gap-3 py-4 sm:flex-row md:pb-10"
-          >
+          <div className="relative z-10 flex w-full flex-col items-center justify-center gap-3 py-4 sm:flex-row md:pb-10">
             {block.cta_text && (
               <Button size="lg" onClick={() => setDeployOpen(true)}>
                 {block.cta_text}
@@ -352,7 +326,7 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
                 </a>
               </Button>
             )}
-          </motion.div>
+          </div>
         )}
       </div>
 

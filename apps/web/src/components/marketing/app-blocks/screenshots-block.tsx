@@ -29,19 +29,6 @@ function beamPhaseOffset(src: string, index: number): number {
   return (t - Math.floor(t)) * 180
 }
 
-const imageVariants = {
-  hidden: { opacity: 0, scale: 0.97 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delay: i * 0.12,
-      duration: 0.5,
-      ease: [0.25, 0.4, 0.25, 1] as const
-    }
-  })
-}
-
 export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
   const imageCount = block.images.length
   const offsets = useMemo(
@@ -100,15 +87,9 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
   return (
     <section className="py-16">
       {block.title && (
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 text-center font-heading text-4xl font-bold tracking-tight sm:text-5xl"
-        >
+        <h2 className="mb-10 text-center font-heading text-4xl font-bold tracking-tight sm:text-5xl">
           {block.title}
-        </motion.h2>
+        </h2>
       )}
 
       <div
@@ -120,13 +101,8 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
         )}
       >
         {block.images.map((image, i) => (
-          <motion.div
+          <div
             key={i}
-            custom={i}
-            variants={imageVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             className="group relative cursor-pointer rounded-xl p-2"
             onClick={() => open(i)}
           >
@@ -160,7 +136,7 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
                 }
               />
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
