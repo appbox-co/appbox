@@ -552,7 +552,6 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
           <InstalledAppsQuickList cyloId={cyloId} />
         </TabsContent>
 
-        {/* ── File Explorer tab ─────────────────────────────────────────── */}
         <TabsContent value="file-explorer" className="mt-6">
           <FileExplorer cyloId={cyloId} serverName={cylo?.server_name} />
         </TabsContent>

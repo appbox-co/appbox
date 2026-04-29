@@ -12,6 +12,8 @@ export interface AppVersion {
   cpus: number
   created_at: string
   changes: string | null
+  custom_field_preinstall_description?: string | null
+  custom_field_postinstall_description?: string | null
 }
 
 export interface AppDetails {
@@ -34,6 +36,7 @@ export interface AppDetails {
   versions?: AppVersion[]
   customFields?: Record<string, CustomField>
   custom_field_preinstall_description?: string | null
+  custom_field_postinstall_description?: string | null
 }
 
 async function fetchAppDetails(appName: string): Promise<AppDetails> {

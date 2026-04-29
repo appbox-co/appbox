@@ -398,7 +398,9 @@ export function AppActions({
             variant="outline"
             size="sm"
             disabled={
-              startOnlyActionable || isTransitioning || freezeMutation.isPending
+              (startOnlyActionable && !isStopped) ||
+              isTransitioning ||
+              freezeMutation.isPending
             }
             onClick={() => setFreezeConfirmOpen(true)}
           >

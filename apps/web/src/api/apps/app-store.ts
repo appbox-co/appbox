@@ -60,7 +60,8 @@ export interface AppStoreItem {
   enabled_version_count: number
   subdomain?: string
   customFields?: Record<string, CustomField>
-  custom_field_preinstall_description?: string
+  custom_field_preinstall_description?: string | null
+  custom_field_postinstall_description?: string | null
   marketing_content?: unknown
   RequiresDomain: number
 }
@@ -95,6 +96,8 @@ export interface AppVersion {
   enabled: number
   is_default: number
   image?: string
+  custom_field_preinstall_description?: string | null
+  custom_field_postinstall_description?: string | null
   created_at: string
 }
 
@@ -292,6 +295,14 @@ export async function getAppVersions(appId: number): Promise<AppVersion[]> {
         typeof item.image === "string" && item.image.length > 0
           ? item.image
           : undefined,
+      custom_field_preinstall_description:
+        typeof item.custom_field_preinstall_description === "string"
+          ? item.custom_field_preinstall_description
+          : null,
+      custom_field_postinstall_description:
+        typeof item.custom_field_postinstall_description === "string"
+          ? item.custom_field_postinstall_description
+          : null,
       created_at: String(item.created_at ?? "")
     } satisfies AppVersion
   })

@@ -520,7 +520,9 @@ export default function InstalledAppDetailPage({
     : null
   const isVmApp = app.app_type === "vm"
   const isVmFeatureEnabled = isLaunchWeekEnabled("day_3", isAdmin)
-  const customDescription = app.custom_description?.trim() ?? ""
+  const customDescription =
+    (app.custom_field_postinstall_description ?? app.custom_description)?.trim() ??
+    ""
 
   return (
     <div className="space-y-6">

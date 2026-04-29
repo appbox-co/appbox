@@ -1838,6 +1838,11 @@ export function InstallDialog({
   const defaultVersionData =
     versionSource.find((v) => v.is_default === 1) ??
     (versionSource.length === 1 ? versionSource[0] : undefined)
+  const preinstallDescription =
+    selectedVersionApp?.custom_field_preinstall_description ??
+    selectedVersionData?.custom_field_preinstall_description ??
+    defaultVersionData?.custom_field_preinstall_description ??
+    app.custom_field_preinstall_description
   const boostBaseMemory =
     selectedVersionData?.memory ??
     defaultVersionData?.memory ??
@@ -2074,9 +2079,9 @@ export function InstallDialog({
           )}
 
           {/* Pre-install description */}
-          {!isBlocked && app.custom_field_preinstall_description && (
+          {!isBlocked && preinstallDescription && (
             <div className="rounded-md border bg-muted/50 p-3 text-sm text-muted-foreground">
-              {app.custom_field_preinstall_description}
+              {preinstallDescription}
             </div>
           )}
 
