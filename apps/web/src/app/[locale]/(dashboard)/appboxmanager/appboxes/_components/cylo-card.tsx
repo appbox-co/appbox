@@ -1,14 +1,8 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import Link from "next/link"
-import {
-  ArrowDownToLine,
-  ArrowUpFromLine,
-  ExternalLink,
-  Rocket,
-  Server
-} from "lucide-react"
+import { useRouter } from "next/navigation"
+import { ArrowDownToLine, ArrowUpFromLine, Rocket, Server } from "lucide-react"
 import type { CyloSummary } from "@/api/cylos/cylos"
 import {
   useCyloBandwidth,
@@ -20,7 +14,6 @@ import { usePinnedApps } from "@/api/pinned-apps/hooks/use-pinned-apps"
 import { AppIconStrip } from "@/components/dashboard/app-icon-strip"
 import { SingleSparkline, Sparkline } from "@/components/dashboard/sparkline"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ROUTES } from "@/constants/routes"
 import { cn, formatBytes, formatStorageGB } from "@/lib/utils"
@@ -67,6 +60,7 @@ interface CyloCardProps {
 export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
   const t = useTranslations("appboxmanager")
   const tc = useTranslations("common")
+  const router = useRouter()
 
   const { data: quota } = useCyloDiskQuota(cylo.id)
   const { data: bandwidth } = useCyloBandwidth(cylo.id)
@@ -110,11 +104,26 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
   const diskCurrent = diskIoData.length
     ? Math.round(diskIoData[diskIoData.length - 1])
     : null
+  const appboxHref = detailHref ?? ROUTES.APPBOX_DETAIL(cylo.id)
+
+  const navigateToAppbox = () => {
+    router.push(appboxHref)
+  }
 
   return (
     <Card
+      role="link"
+      tabIndex={0}
+      aria-label={t("cylos.viewDetails")}
+      onClick={navigateToAppbox}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault()
+          navigateToAppbox()
+        }
+      }}
       className={cn(
-        "group relative flex flex-col overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5",
+        "group relative flex cursor-pointer flex-col overflow-hidden transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className
       )}
     >
@@ -125,13 +134,7 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <CardTitle className="text-base">
-              <Link
-                href={detailHref ?? ROUTES.APPBOX_DETAIL(cylo.id)}
-                className="hover:underline"
-                data-anonymize-single
-              >
-                {cylo.name}
-              </Link>
+              <span data-anonymize-single>{cylo.name}</span>
             </CardTitle>
             <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
               <Server className="size-3" />
@@ -300,21 +303,20 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
           </div>
         </div>
 
-        {/* ── Footer: app icons + View Details ───────────────────────────── */}
+        {/* ── Footer: app icons ──────────────────────────────────────────── */}
         <div className="mt-auto flex items-center gap-2">
-          <AppIconStrip
-            pinnedApps={pinnedApps}
-            installedApps={installedApps}
-            iconSize="size-8"
-            stopPropagation
-          />
-
-          <Button variant="outline" size="sm" className="shrink-0" asChild>
-            <Link href={detailHref ?? ROUTES.APPBOX_DETAIL(cylo.id)}>
-              {t("cylos.viewDetails")}
-              <ExternalLink className="ml-1 size-3.5" />
-            </Link>
-          </Button>
+          <div
+            className="min-w-0 flex-1"
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => event.stopPropagation()}
+          >
+            <AppIconStrip
+              pinnedApps={pinnedApps}
+              installedApps={installedApps}
+              iconSize="size-8"
+              stopPropagation
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

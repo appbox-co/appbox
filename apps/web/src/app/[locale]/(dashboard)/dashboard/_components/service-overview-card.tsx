@@ -1,11 +1,10 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
-  ExternalLink,
   Layers,
   Rocket,
   Server
@@ -16,7 +15,6 @@ import { useInstalledApps } from "@/api/installed-apps/hooks/use-installed-apps"
 import { usePinnedApps } from "@/api/pinned-apps/hooks/use-pinned-apps"
 import { AppIconStrip } from "@/components/dashboard/app-icon-strip"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
   Tooltip,
@@ -59,6 +57,7 @@ export function ServiceOverviewCard({
   hideCyloDefaultApps = false
 }: ServiceOverviewCardProps) {
   const t = useTranslations("dashboard")
+  const router = useRouter()
   const { data: quota } = useCyloDiskQuota(cylo.id)
   const { data: bandwidth } = useCyloBandwidth(cylo.id)
   const { data: pinnedApps } = usePinnedApps(cylo.id)
@@ -89,9 +88,29 @@ export function ServiceOverviewCard({
   const isOnline = cylo.status === "online"
   const isRestarting = cylo.status === "restarting"
   const isSuspended = cylo.status === "suspended"
+  const appboxHref = ROUTES.APPBOX_DETAIL(cylo.id)
+
+  const navigateToAppbox = () => {
+    router.push(appboxHref)
+  }
 
   return (
-    <Card className={cn("card-glow relative flex overflow-hidden", className)}>
+    <Card
+      role="link"
+      tabIndex={0}
+      aria-label={t("overview.viewCylo")}
+      onClick={navigateToAppbox}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault()
+          navigateToAppbox()
+        }
+      }}
+      className={cn(
+        "card-glow relative flex cursor-pointer overflow-hidden transition-colors hover:border-primary/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        className
+      )}
+    >
       {/* ── Left: vertical storage strip ───────────────────────────────── */}
       <TooltipProvider delayDuration={150}>
         <Tooltip>
@@ -145,13 +164,12 @@ export function ServiceOverviewCard({
                         : "bg-red-500"
                 )}
               />
-              <Link
-                href={ROUTES.APPBOX_DETAIL(cylo.id)}
-                className="truncate font-semibold leading-tight hover:underline"
+              <span
+                className="truncate font-semibold leading-tight"
                 data-anonymize-single
               >
                 {cylo.name}
-              </Link>
+              </span>
             </div>
             <p className="mt-0.5 flex items-center gap-1 pl-4 text-[11px] text-muted-foreground">
               <Server className="size-2.5" />
@@ -235,25 +253,20 @@ export function ServiceOverviewCard({
           </div>
         </div>
 
-        {/* Footer: app icons (pinned first) + View Details */}
+        {/* Footer: app icons (pinned first) */}
         <div className="mt-auto flex items-center gap-2 px-4 pb-4">
-          <AppIconStrip
-            pinnedApps={visiblePinnedApps}
-            installedApps={visibleInstalledApps}
-            iconSize="size-6"
-          />
-
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-7 shrink-0 gap-1 text-xs"
-            asChild
+          <div
+            className="min-w-0 flex-1"
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => event.stopPropagation()}
           >
-            <Link href={ROUTES.APPBOX_DETAIL(cylo.id)}>
-              {t("overview.viewCylo")}
-              <ExternalLink className="size-3" />
-            </Link>
-          </Button>
+            <AppIconStrip
+              pinnedApps={visiblePinnedApps}
+              installedApps={visibleInstalledApps}
+              iconSize="size-6"
+              stopPropagation
+            />
+          </div>
         </div>
       </div>
     </Card>
