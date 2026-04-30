@@ -91,6 +91,21 @@ export function FileList({
     return `Sort by ${label}, currently ${sortDir === "asc" ? "ascending" : "descending"}`
   }
 
+  function canOpenItem(item: FileItem) {
+    return item.type === "dir" || item.capabilities.canDownload
+  }
+
+  function handleOpenItem(item: FileItem) {
+    if (item.type === "dir") {
+      onNavigate(item.id)
+      return
+    }
+
+    if (item.capabilities.canDownload) {
+      onDownload(item)
+    }
+  }
+
   return (
     <div className="w-full">
       {/* Mobile sort controls */}
@@ -157,14 +172,27 @@ export function FileList({
             item.capabilities.canDownload ||
             item.capabilities.canRename ||
             item.capabilities.canDelete
+          const canOpen = canOpenItem(item)
 
           return (
             <div
               key={item.id}
-              className="grid grid-cols-[minmax(0,1fr)_2.25rem] items-center gap-x-2 gap-y-1 px-3 py-3 transition-colors hover:bg-muted/50 sm:grid-cols-[minmax(0,1fr)_100px_140px_40px] sm:gap-2 sm:py-2"
-              onDoubleClick={() => {
-                if (item.type === "dir") {
-                  onNavigate(item.id)
+              role={canOpen ? "button" : undefined}
+              tabIndex={canOpen ? 0 : undefined}
+              className={cn(
+                "group grid grid-cols-[minmax(0,1fr)_2.25rem] items-center gap-x-2 gap-y-1 px-3 py-3 transition-colors hover:bg-muted/50 sm:grid-cols-[minmax(0,1fr)_100px_140px_40px] sm:gap-2 sm:py-2",
+                canOpen && "cursor-pointer"
+              )}
+              onClick={() => {
+                if (canOpen) {
+                  handleOpenItem(item)
+                }
+              }}
+              onKeyDown={(event) => {
+                if (!canOpen) return
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault()
+                  handleOpenItem(item)
                 }
               }}
             >
@@ -180,17 +208,15 @@ export function FileList({
                   type={item.type}
                   className="shrink-0"
                 />
-                <button
-                  className="line-clamp-2 min-w-0 text-left text-sm font-medium leading-snug transition-colors wrap-break-word hover:text-primary sm:line-clamp-none sm:truncate sm:font-normal sm:leading-normal"
-                  onClick={() => {
-                    if (item.type === "dir") {
-                      onNavigate(item.id)
-                    }
-                  }}
+                <span
+                  className={cn(
+                    "line-clamp-2 min-w-0 text-left text-sm font-medium leading-snug transition-colors wrap-break-word sm:line-clamp-none sm:truncate sm:font-normal sm:leading-normal",
+                    canOpen && "group-hover:text-primary"
+                  )}
                   title={item.name}
                 >
                   {item.name}
-                </button>
+                </span>
               </div>
 
               <div
@@ -218,7 +244,12 @@ export function FileList({
 
               {/* Actions — visible by default for touch and pointer users */}
               {hasActions && (
-                <div className="col-start-2 row-span-2 row-start-1 flex justify-end self-start sm:col-start-auto sm:row-auto sm:self-center">
+                <div
+                  className="col-start-2 row-span-2 row-start-1 flex self-stretch sm:col-start-auto sm:row-auto"
+                  onClick={(event) => event.stopPropagation()}
+                  onDoubleClick={(event) => event.stopPropagation()}
+                  onKeyDown={(event) => event.stopPropagation()}
+                >
                   <FileContextMenu
                     item={item}
                     onRename={onRename}
@@ -228,7 +259,7 @@ export function FileList({
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="size-8 text-muted-foreground hover:text-foreground sm:size-7"
+                      className="h-full min-h-8 w-full text-muted-foreground hover:text-foreground sm:min-h-7"
                       aria-label={`${item.name} actions`}
                     >
                       <MoreHorizontal className="size-4" />
