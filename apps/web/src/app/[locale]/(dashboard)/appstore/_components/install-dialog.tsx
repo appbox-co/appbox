@@ -1147,10 +1147,12 @@ export function InstallDialog({
   const effectiveUserRole = targetUserRole ?? user?.roles
   const { data: cylosSummary } = useCylosSummary()
   const { data: versions, isLoading: versionsLoading } = useAppVersions(app.id)
-  const nestedVersions = app.versions ?? []
-  const versionSource =
-    nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
-  const versionSourceLoading = nestedVersions.length === 0 && versionsLoading
+  const versionSource = useMemo(() => {
+    const nestedVersions = app.versions ?? []
+    return nestedVersions.length > 0 ? nestedVersions : (versions ?? [])
+  }, [app.versions, versions])
+  const versionSourceLoading =
+    (app.versions?.length ?? 0) === 0 && versionsLoading
 
   // Session cylos are static (set once at layout render). Merge in the live
   // app_slots_used from useCylosSummary so slot calculations stay current
@@ -1241,7 +1243,35 @@ export function InstallDialog({
   const fallbackVersionIdFromSource =
     versionSource.find((v) => v.is_default === 1)?.id ??
     (versionSource.length === 1 ? versionSource[0].id : undefined)
+  const defaultVersionId = app.default_version_id ?? fallbackVersionIdFromSource
   const { data: selectedVersionApp } = useAppDetail(app.id, selectedVersionId)
+
+  useEffect(() => {
+    if (!open) {
+      setSelectedVersion("")
+    }
+  }, [open])
+
+  useEffect(() => {
+    setSelectedVersion("")
+  }, [app.id])
+
+  useEffect(() => {
+    if (!open || versionSourceLoading || !defaultVersionId) return
+
+    const selectedVersionIsValid = versionSource.some(
+      (version) => String(version.id) === selectedVersion
+    )
+    if (!selectedVersion || !selectedVersionIsValid) {
+      setSelectedVersion(String(defaultVersionId))
+    }
+  }, [
+    open,
+    versionSourceLoading,
+    defaultVersionId,
+    versionSource,
+    selectedVersion
+  ])
 
   /* ----- Domain state (RequiresDomain) ----- */
   const [domainState, setDomainState] = useState<DomainSectionState>({
@@ -1658,15 +1688,39 @@ export function InstallDialog({
   ])
 
   /* ----- Handlers ----- */
-  const handleFieldChange = useCallback((fname: string, value: string) => {
-    setFieldValues((prev) => ({ ...prev, [fname]: value }))
-    setFieldErrors((prev) => {
-      if (!prev[fname]) return prev
-      const next = { ...prev }
-      delete next[fname]
-      return next
-    })
-  }, [])
+  const handleFieldChange = useCallback(
+    (fname: string, value: string) => {
+      setFieldValues((prev) => ({ ...prev, [fname]: value }))
+
+      const field = customFields[fname]
+      if (
+        !field ||
+        field.type === "staticText" ||
+        SKIP_INPUT_TYPES.has(field.type)
+      ) {
+        setFieldErrors((prev) => {
+          if (!prev[fname]) return prev
+          const next = { ...prev }
+          delete next[fname]
+          return next
+        })
+        return
+      }
+
+      const error = validateField(value, field, t)
+      setFieldErrors((prev) => {
+        if (!error && !prev[fname]) return prev
+        const next = { ...prev }
+        if (error) {
+          next[fname] = error
+        } else {
+          delete next[fname]
+        }
+        return next
+      })
+    },
+    [customFields, t]
+  )
 
   const handleDomainStateChange = useCallback(
     (next: Partial<DomainSectionState>) => {
@@ -1763,7 +1817,7 @@ export function InstallDialog({
 
     const versionId = selectedVersion
       ? Number(selectedVersion)
-      : (app.default_version_id ?? fallbackVersionIdFromSource ?? 0)
+      : (defaultVersionId ?? 0)
 
     const payload: Record<string, unknown> = {
       app_id: app.id,
@@ -1889,9 +1943,21 @@ export function InstallDialog({
     }
   }, [boostSlots, maxInstallBoostSlots])
 
+  const customFieldsValid = useMemo(() => {
+    return Object.entries(customFields).every(([fname, field]) => {
+      if (field.type === "staticText" || SKIP_INPUT_TYPES.has(field.type)) {
+        return true
+      }
+
+      const value = fieldValues[fname] ?? String(field.defaultValue ?? "")
+      return validateField(value, field, t) === null
+    })
+  }, [customFields, fieldValues, t])
+
   const isInstallDisabled =
     isBlocked ||
     !selectedCylo ||
+    !customFieldsValid ||
     availableCylos.length === 0 ||
     installMutation.isPending ||
     guardsLoading ||
@@ -2009,6 +2075,13 @@ export function InstallDialog({
                     ))}
                   </SelectContent>
                 </Select>
+              )}
+              {!versionSourceLoading && versionSource.length > 0 && (
+                <p className="text-xs text-muted-foreground">
+                  {t("install.dialog.versionsAvailable", {
+                    count: versionSource.length
+                  })}
+                </p>
               )}
             </div>
           )}
