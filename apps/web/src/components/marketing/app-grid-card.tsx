@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardFooter } from "@/components/ui/card"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
@@ -57,13 +58,13 @@ export function AppGridCard({
   return (
     <Link
       href={`/apps/${encodeURIComponent(name)}`}
-      className="block h-full no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
+      className="group block h-full rounded-lg no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <Card
         className={cn(
           "flex h-full cursor-pointer flex-col overflow-hidden transition-all duration-200 hover:shadow-lg",
-          "hover:border-primary/50 border-gray-950/[.1]",
-          "dark:hover:border-primary/50 dark:border-gray-50/[.1]"
+          "hover:border-primary/50 border-gray-950/10",
+          "dark:hover:border-primary/50 dark:border-gray-50/10"
         )}
       >
         <div className="p-4">
@@ -76,8 +77,13 @@ export function AppGridCard({
                 className="object-contain"
               />
             </div>
-            <div>
-              <h3 className="line-clamp-1 text-base font-medium">{name}</h3>
+            <div className="min-w-0 flex-1">
+              <div className="flex min-w-0 items-center gap-2">
+                <h3 className="line-clamp-1 min-w-0 text-base font-medium transition-colors duration-200 group-hover:text-primary">
+                  {name}
+                </h3>
+                <CardLinkHint />
+              </div>
               <p className="text-muted-foreground text-xs">{publisher}</p>
             </div>
           </div>

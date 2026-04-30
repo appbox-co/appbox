@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { cn } from "@/lib/utils"
 
 interface AppCardProps {
@@ -21,10 +22,10 @@ export function AppCard({
   const appUrl = `/apps/${encodeURIComponent(name)}`
 
   return (
-    <Link href={appUrl}>
+    <Link href={appUrl} className="group block h-full">
       <figure
         className={cn(
-          "relative z-10 mx-2 h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
+          "relative z-10 mx-2 h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4 transition-all duration-200 hover:border-primary/50 hover:shadow-lg",
           // solid backgrounds
           "bg-card text-card-foreground dark:bg-[#0b0d10]",
           // consistent borders
@@ -40,10 +41,13 @@ export function AppCard({
               className="object-cover"
             />
           </div>
-          <div className="flex flex-col">
-            <figcaption className="text-sm font-medium dark:text-white">
-              {name}
-            </figcaption>
+          <div className="min-w-0 flex-1">
+            <div className="flex min-w-0 items-center gap-2">
+              <figcaption className="min-w-0 truncate text-sm font-medium transition-colors duration-200 group-hover:text-primary dark:text-white dark:group-hover:text-primary">
+                {name}
+              </figcaption>
+              <CardLinkHint />
+            </div>
             <p className="text-xs font-medium dark:text-white/40">
               {publisher}
             </p>

@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Package } from "lucide-react"
 import type { AppStoreItem } from "@/api/apps/app-store"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { cn } from "@/lib/utils"
 
 const ICON_BASE_URL = "https://api.appbox.co/assets/images/apps/icons/"
@@ -40,9 +41,12 @@ export function AppCardSmall({ app, className }: AppCardSmallProps) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <h4 className="truncate text-sm font-medium text-foreground group-hover:text-primary">
-          {app.display_name}
-        </h4>
+        <div className="flex min-w-0 items-center gap-2">
+          <h4 className="min-w-0 truncate text-sm font-medium text-foreground transition-colors duration-200 group-hover:text-primary">
+            {app.display_name}
+          </h4>
+          <CardLinkHint />
+        </div>
         <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">
           {app.short_description}
         </p>

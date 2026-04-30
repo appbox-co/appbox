@@ -16,6 +16,7 @@ import { usePinnedApps } from "@/api/pinned-apps/hooks/use-pinned-apps"
 import { AppIconStrip } from "@/components/dashboard/app-icon-strip"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import {
   Tooltip,
   TooltipContent,
@@ -107,7 +108,7 @@ export function ServiceOverviewCard({
         }
       }}
       className={cn(
-        "card-glow relative flex cursor-pointer overflow-hidden transition-colors hover:border-primary/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "card-glow group relative flex cursor-pointer overflow-hidden transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className
       )}
     >
@@ -165,11 +166,12 @@ export function ServiceOverviewCard({
                 )}
               />
               <span
-                className="truncate font-semibold leading-tight"
+                className="truncate font-semibold leading-tight transition-colors duration-200 group-hover:text-primary"
                 data-anonymize-single
               >
                 {cylo.name}
               </span>
+              <CardLinkHint />
             </div>
             <p className="mt-0.5 flex items-center gap-1 pl-4 text-[11px] text-muted-foreground">
               <Server className="size-2.5" />

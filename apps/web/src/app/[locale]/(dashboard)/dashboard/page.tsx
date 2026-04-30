@@ -28,6 +28,7 @@ import {
 import { useMarketingScreenshotMode } from "@/components/marketing/use-marketing-screenshot-mode"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
@@ -305,28 +306,15 @@ export default function DashboardPage() {
                         year: "numeric"
                       })}
                     </time>
-                    <h3 className="mt-3 line-clamp-2 text-[17px] font-bold leading-[1.4] text-foreground transition-colors duration-200 group-hover:text-[#4f46e5] dark:group-hover:text-[#6366f1]">
-                      {post.title}
-                    </h3>
+                    <div className="mt-3 flex max-w-full items-start gap-2">
+                      <h3 className="line-clamp-2 min-w-0 text-[17px] font-bold leading-[1.4] text-foreground transition-colors duration-200 group-hover:text-[#4f46e5] dark:group-hover:text-[#6366f1]">
+                        {post.title}
+                      </h3>
+                      <CardLinkHint className="mt-0.5" />
+                    </div>
                     <p className="mt-2.5 line-clamp-3 text-sm leading-[1.65] text-muted-foreground">
                       {post.excerpt}
                     </p>
-                    <span className="mt-[18px] inline-flex items-center gap-[5px] text-[13px] font-semibold text-[#6366f1] transition-colors duration-200 group-hover:text-[#4f46e5] dark:text-[#a5b4fc] dark:group-hover:text-[#6366f1]">
-                      {t("blogPosts.readMore")}
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      >
-                        <path d="M7 17l9.2-9.2M17 17V7.8H7.8" />
-                      </svg>
-                    </span>
                   </div>
                 </Link>
               ))}

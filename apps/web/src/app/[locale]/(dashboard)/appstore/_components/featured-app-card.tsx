@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Package } from "lucide-react"
 import type { AppStoreItem } from "@/api/apps/app-store"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
 
@@ -62,9 +63,12 @@ export function FeaturedAppCard({
 
           {/* Content */}
           <div className="min-w-0 flex-1">
-            <h3 className="text-base font-bold leading-tight group-hover:text-primary transition-colors">
-              {app.display_name}
-            </h3>
+            <div className="flex min-w-0 items-center gap-2">
+              <h3 className="min-w-0 truncate text-base font-bold leading-tight transition-colors duration-200 group-hover:text-primary">
+                {app.display_name}
+              </h3>
+              <CardLinkHint />
+            </div>
             <p className="mt-0.5 text-xs font-medium text-muted-foreground">
               {app.publisher}
             </p>

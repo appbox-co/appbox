@@ -6,6 +6,7 @@ import { Package } from "lucide-react"
 import type { AppStoreItem } from "@/api/apps/app-store"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
 
@@ -46,9 +47,12 @@ export function AppStoreCard({ app, className, href }: AppStoreCardProps) {
 
             {/* App Info */}
             <div className="flex min-w-0 flex-1 flex-col">
-              <h3 className="truncate text-sm font-semibold leading-tight group-hover:text-primary transition-colors">
-                {app.display_name}
-              </h3>
+              <div className="flex min-w-0 items-center gap-2">
+                <h3 className="min-w-0 truncate text-sm font-semibold leading-tight transition-colors duration-200 group-hover:text-primary">
+                  {app.display_name}
+                </h3>
+                <CardLinkHint />
+              </div>
               <p className="mt-0.5 truncate text-xs text-muted-foreground">
                 {app.publisher}
               </p>

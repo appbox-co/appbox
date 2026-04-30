@@ -15,6 +15,7 @@ import { AppIconStrip } from "@/components/dashboard/app-icon-strip"
 import { SingleSparkline, Sparkline } from "@/components/dashboard/sparkline"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { ROUTES } from "@/constants/routes"
 import { cn, formatBytes, formatStorageGB } from "@/lib/utils"
 
@@ -133,8 +134,14 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <CardTitle className="text-base">
-              <span data-anonymize-single>{cylo.name}</span>
+            <CardTitle className="flex min-w-0 items-center gap-2 text-base">
+              <span
+                className="truncate transition-colors duration-200 group-hover:text-primary"
+                data-anonymize-single
+              >
+                {cylo.name}
+              </span>
+              <CardLinkHint />
             </CardTitle>
             <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
               <Server className="size-3" />
