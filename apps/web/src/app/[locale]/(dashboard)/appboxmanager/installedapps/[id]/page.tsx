@@ -101,7 +101,7 @@ function InfoCard({
   className?: string
 }) {
   return (
-    <Card className={cn("overflow-hidden", className)}>
+    <Card className={cn("min-w-0 overflow-hidden", className)}>
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div className="text-muted-foreground/80 mt-0.5 shrink-0">{icon}</div>
@@ -110,13 +110,15 @@ function InfoCard({
             {href ? (
               <Link
                 href={href}
-                className="mt-0.5 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline underline-offset-4"
+                className="mt-0.5 inline-flex max-w-full items-center gap-1 break-all text-sm font-semibold text-primary hover:underline underline-offset-4"
               >
-                {value}
+                <span className="min-w-0 break-all">{value}</span>
                 <ExternalLink className="size-3 shrink-0 opacity-60" />
               </Link>
             ) : (
-              <p className="mt-0.5 text-sm font-semibold">{value}</p>
+              <p className="mt-0.5 wrap-break-word text-sm font-semibold">
+                {value}
+              </p>
             )}
           </div>
         </div>
@@ -170,7 +172,7 @@ function CustomFieldItem({
   }
 
   return (
-    <div className="relative rounded-lg bg-muted/50 px-4 py-3">
+    <div className="relative min-w-0 rounded-lg bg-muted/50 px-4 py-3">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
       <div className="mt-0.5 flex items-center gap-2">
         {isUrl && value ? (
@@ -521,11 +523,12 @@ export default function InstalledAppDetailPage({
   const isVmApp = app.app_type === "vm"
   const isVmFeatureEnabled = isLaunchWeekEnabled("day_3", isAdmin)
   const customDescription =
-    (app.custom_field_postinstall_description ?? app.custom_description)?.trim() ??
-    ""
+    (
+      app.custom_field_postinstall_description ?? app.custom_description
+    )?.trim() ?? ""
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-6 overflow-x-hidden">
       {/* Back button */}
       <HistoryBackButton
         fallbackHref={backHref}
@@ -536,7 +539,7 @@ export default function InstalledAppDetailPage({
       />
 
       {/* App header */}
-      <div className="flex items-start gap-5">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
         {/* Icon */}
         <div className="relative size-20 shrink-0 overflow-hidden rounded-2xl bg-muted shadow-sm ring-1 ring-border/50">
           {app.icon_image ? (
@@ -554,8 +557,10 @@ export default function InstalledAppDetailPage({
 
         {/* Name + status */}
         <div className="min-w-0 flex-1 space-y-2">
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold">{app.display_name}</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="min-w-0 wrap-break-word text-2xl font-bold">
+              {app.display_name}
+            </h1>
             <button
               onClick={togglePin}
               disabled={isPinPending}
@@ -596,13 +601,18 @@ export default function InstalledAppDetailPage({
             <CardTitle className="text-base">{t("actions")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
               <AppActions
                 app={appForActions}
                 startOnlyActionable={isStartRecoverable}
               />
               {upgradeUrl && (
-                <Button asChild variant="outline" size="sm" className="ml-auto">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="w-full sm:ml-auto sm:w-auto"
+                >
                   <a
                     href={upgradeUrl}
                     target="_blank"
@@ -644,8 +654,8 @@ export default function InstalledAppDetailPage({
         />
       )}
 
-      <Tabs defaultValue="overview">
-        <TabsList>
+      <Tabs defaultValue="overview" className="min-w-0">
+        <TabsList className="max-w-full overflow-x-auto">
           <TabsTrigger value="overview">{t("tabOverview")}</TabsTrigger>
           <TabsTrigger value="ports">{t("tabPorts")}</TabsTrigger>
           {isVmApp && isVmFeatureEnabled && (
@@ -657,7 +667,7 @@ export default function InstalledAppDetailPage({
         <TabsContent value="overview" className="mt-6 space-y-6">
           {/* Info grid */}
           <div>
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
               <h2 className="text-lg font-semibold">{t("appInfo")}</h2>
               {app.documentation_url && (
                 <Button variant="outline" size="sm" asChild>
@@ -678,7 +688,7 @@ export default function InstalledAppDetailPage({
                 <p className="text-xs font-semibold uppercase tracking-wide text-blue-700/90 dark:text-blue-300/80">
                   {t("appNote")}
                 </p>
-                <p className="mt-1 text-sm leading-6 text-blue-900 dark:text-blue-200/90">
+                <p className="mt-1 wrap-break-word text-sm leading-6 text-blue-900 dark:text-blue-200/90">
                   {customDescription}
                 </p>
               </div>
@@ -717,14 +727,14 @@ export default function InstalledAppDetailPage({
               const entries = Object.entries(fieldsObj)
               if (entries.length === 0) return null
               return (
-                <Card>
+                <Card className="min-w-0 overflow-hidden">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base">
                       {t("customFields")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="grid min-w-0 gap-3 sm:grid-cols-2">
                       {entries.map(([key, value]) => {
                         let label = key
                         let displayValue = ""
@@ -806,7 +816,7 @@ export default function InstalledAppDetailPage({
         </TabsContent>
 
         {/* Ports tab */}
-        <TabsContent value="ports" className="mt-6">
+        <TabsContent value="ports" className="mt-6 min-w-0">
           <PortAssignmentsTab serverName={app.server_name} instanceId={appId} />
         </TabsContent>
 

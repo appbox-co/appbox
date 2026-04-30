@@ -103,7 +103,10 @@ export function DashboardLineChart({
 }: DashboardLineChartProps) {
   return (
     <div
-      className={cn("w-full [&_.recharts-surface]:overflow-visible", className)}
+      className={cn(
+        "min-w-0 w-full [&_.recharts-surface]:overflow-visible",
+        className
+      )}
     >
       <ResponsiveContainer width="100%" height={height}>
         <RechartsLineChart

@@ -178,10 +178,10 @@ export function FileExplorer({ cyloId, serverName }: FileExplorerProps) {
 
   return (
     <>
-      <Card>
+      <Card className="min-w-0 overflow-hidden">
         <CardContent className="p-0">
           {/* Breadcrumb + Toolbar */}
-          <div className="space-y-3 border-b px-4 py-3">
+          <div className="min-w-0 space-y-3 border-b px-4 py-3">
             <FileBreadcrumb
               ancestors={dirInfo?.ancestors ?? []}
               currentName={dirInfo?.name ?? "/"}
@@ -201,7 +201,7 @@ export function FileExplorer({ cyloId, serverName }: FileExplorerProps) {
             onDrop={handleUpload}
             disabled={!canWrite || uploadFiles.isPending}
           >
-            <div className="min-h-[400px]">
+            <div className="min-h-[400px] min-w-0 overflow-hidden">
               {isLoading ? (
                 <div className="flex items-center justify-center py-20">
                   <Loader2 className="size-6 animate-spin text-muted-foreground" />

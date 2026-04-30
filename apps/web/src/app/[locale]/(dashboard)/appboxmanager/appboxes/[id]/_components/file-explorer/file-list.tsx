@@ -6,7 +6,7 @@ import { formatDistanceToNow } from "date-fns"
 import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal } from "lucide-react"
 import type { FileItem } from "@/api/files/files"
 import { Button } from "@/components/ui/button"
-import { formatBytes } from "@/lib/utils"
+import { cn, formatBytes } from "@/lib/utils"
 import { FileContextMenu } from "./file-context-menu"
 import { FileIcon } from "./file-icon"
 
@@ -86,26 +86,62 @@ export function FileList({
     }
   }
 
+  function getSortAriaLabel(key: SortKey, label: string) {
+    if (sortKey !== key) return `Sort by ${label}`
+    return `Sort by ${label}, currently ${sortDir === "asc" ? "ascending" : "descending"}`
+  }
+
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="grid grid-cols-[1fr_100px_140px_40px] gap-2 px-3 py-2 text-xs font-medium text-muted-foreground border-b">
+      {/* Mobile sort controls */}
+      <div className="flex flex-wrap items-center gap-1.5 border-b px-3 py-2 text-xs font-medium text-muted-foreground sm:hidden">
         <button
-          className="flex items-center text-left hover:text-foreground transition-colors"
+          className="inline-flex items-center rounded-md px-2 py-1 text-left transition-colors hover:bg-muted hover:text-foreground"
+          onClick={() => handleSort("name")}
+          aria-label={getSortAriaLabel("name", t("name"))}
+          aria-pressed={sortKey === "name"}
+        >
+          {t("name")}
+          <SortIcon active={sortKey === "name"} direction={sortDir} />
+        </button>
+        <button
+          className="inline-flex items-center rounded-md px-2 py-1 text-left transition-colors hover:bg-muted hover:text-foreground"
+          onClick={() => handleSort("size")}
+          aria-label={getSortAriaLabel("size", t("size"))}
+          aria-pressed={sortKey === "size"}
+        >
+          {t("size")}
+          <SortIcon active={sortKey === "size"} direction={sortDir} />
+        </button>
+        <button
+          className="inline-flex items-center rounded-md px-2 py-1 text-left transition-colors hover:bg-muted hover:text-foreground"
+          onClick={() => handleSort("modifiedTime")}
+          aria-label={getSortAriaLabel("modifiedTime", t("modified"))}
+          aria-pressed={sortKey === "modifiedTime"}
+        >
+          {t("modified")}
+          <SortIcon active={sortKey === "modifiedTime"} direction={sortDir} />
+        </button>
+      </div>
+
+      {/* Desktop header */}
+      <div className="hidden grid-cols-[minmax(0,1fr)_100px_140px_40px] gap-2 border-b px-3 py-2 text-xs font-medium text-muted-foreground sm:grid">
+        <button
+          className="flex items-center text-left transition-colors hover:text-foreground"
           onClick={() => handleSort("name")}
         >
           {t("name")}
           <SortIcon active={sortKey === "name"} direction={sortDir} />
         </button>
         <button
-          className="flex items-center text-left hover:text-foreground transition-colors"
+          className="flex items-center text-left transition-colors hover:text-foreground"
           onClick={() => handleSort("size")}
         >
           {t("size")}
           <SortIcon active={sortKey === "size"} direction={sortDir} />
         </button>
         <button
-          className="flex items-center text-left hover:text-foreground transition-colors"
+          className="flex items-center text-left transition-colors hover:text-foreground"
           onClick={() => handleSort("modifiedTime")}
         >
           {t("modified")}
@@ -116,66 +152,93 @@ export function FileList({
 
       {/* Rows */}
       <div className="divide-y divide-border/50">
-        {sorted.map((item) => (
-          <div
-            key={item.id}
-            className="grid grid-cols-[1fr_100px_140px_40px] gap-2 px-3 py-2 items-center hover:bg-muted/50 transition-colors group"
-            onDoubleClick={() => {
-              if (item.type === "dir") {
-                onNavigate(item.id)
-              }
-            }}
-          >
-            {/* Name */}
-            <div className="flex items-center gap-2.5 min-w-0">
-              <FileIcon name={item.name} type={item.type} />
-              <button
-                className="truncate text-sm text-left hover:text-primary transition-colors"
-                onClick={() => {
-                  if (item.type === "dir") {
-                    onNavigate(item.id)
-                  }
-                }}
+        {sorted.map((item) => {
+          const hasActions =
+            item.capabilities.canDownload ||
+            item.capabilities.canRename ||
+            item.capabilities.canDelete
+
+          return (
+            <div
+              key={item.id}
+              className="grid grid-cols-[minmax(0,1fr)_2.25rem] items-center gap-x-2 gap-y-1 px-3 py-3 transition-colors hover:bg-muted/50 sm:grid-cols-[minmax(0,1fr)_100px_140px_40px] sm:gap-2 sm:py-2"
+              onDoubleClick={() => {
+                if (item.type === "dir") {
+                  onNavigate(item.id)
+                }
+              }}
+            >
+              {/* Name */}
+              <div
+                className={cn(
+                  "col-start-1 row-start-1 flex min-w-0 items-center gap-2.5",
+                  !hasActions && "col-span-2 sm:col-span-1"
+                )}
               >
-                {item.name}
-              </button>
-            </div>
-
-            {/* Size */}
-            <span className="text-xs text-muted-foreground tabular-nums">
-              {item.type === "file"
-                ? formatBytes(Number(item.size) || 0, 1)
-                : "—"}
-            </span>
-
-            {/* Modified */}
-            <span className="text-xs text-muted-foreground">
-              {item.modifiedTime
-                ? formatDistanceToNow(new Date(item.modifiedTime), {
-                    addSuffix: true
-                  })
-                : "—"}
-            </span>
-
-            {/* Actions — only show if the item has at least one action */}
-            {(item.capabilities.canDownload ||
-              item.capabilities.canRename ||
-              item.capabilities.canDelete) && (
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                <FileContextMenu
-                  item={item}
-                  onRename={onRename}
-                  onDelete={onDelete}
-                  onDownload={onDownload}
+                <FileIcon
+                  name={item.name}
+                  type={item.type}
+                  className="shrink-0"
+                />
+                <button
+                  className="line-clamp-2 min-w-0 text-left text-sm font-medium leading-snug transition-colors wrap-break-word hover:text-primary sm:line-clamp-none sm:truncate sm:font-normal sm:leading-normal"
+                  onClick={() => {
+                    if (item.type === "dir") {
+                      onNavigate(item.id)
+                    }
+                  }}
+                  title={item.name}
                 >
-                  <Button variant="ghost" size="icon" className="size-7">
-                    <MoreHorizontal className="size-4" />
-                  </Button>
-                </FileContextMenu>
+                  {item.name}
+                </button>
               </div>
-            )}
-          </div>
-        ))}
+
+              <div
+                className={cn(
+                  "col-start-1 row-start-2 ml-8 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-muted-foreground sm:contents",
+                  !hasActions && "col-span-2 sm:col-span-1"
+                )}
+              >
+                {/* Size */}
+                <span className="tabular-nums">
+                  {item.type === "file"
+                    ? formatBytes(Number(item.size) || 0, 1)
+                    : "—"}
+                </span>
+
+                {/* Modified */}
+                <span className="min-w-0 wrap-break-word">
+                  {item.modifiedTime
+                    ? formatDistanceToNow(new Date(item.modifiedTime), {
+                        addSuffix: true
+                      })
+                    : "—"}
+                </span>
+              </div>
+
+              {/* Actions — visible by default for touch and pointer users */}
+              {hasActions && (
+                <div className="col-start-2 row-span-2 row-start-1 flex justify-end self-start sm:col-start-auto sm:row-auto sm:self-center">
+                  <FileContextMenu
+                    item={item}
+                    onRename={onRename}
+                    onDelete={onDelete}
+                    onDownload={onDownload}
+                  >
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-8 text-muted-foreground hover:text-foreground sm:size-7"
+                      aria-label={`${item.name} actions`}
+                    >
+                      <MoreHorizontal className="size-4" />
+                    </Button>
+                  </FileContextMenu>
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )

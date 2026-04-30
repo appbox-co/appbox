@@ -29,11 +29,11 @@ export function FileGrid({
   })
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 p-3">
+    <div className="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
       {sorted.map((item) => (
         <div
           key={item.id}
-          className="group relative flex flex-col items-center gap-2 rounded-lg border border-transparent p-3 hover:bg-muted/50 hover:border-border/50 transition-colors cursor-default"
+          className="relative flex min-w-0 cursor-default flex-col items-center gap-2 rounded-lg border border-transparent p-3 transition-colors hover:border-border/50 hover:bg-muted/50"
           onDoubleClick={() => {
             if (item.type === "dir") {
               onNavigate(item.id)
@@ -44,14 +44,19 @@ export function FileGrid({
           {(item.capabilities.canDownload ||
             item.capabilities.canRename ||
             item.capabilities.canDelete) && (
-            <div className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="absolute right-1.5 top-1.5">
               <FileContextMenu
                 item={item}
                 onRename={onRename}
                 onDelete={onDelete}
                 onDownload={onDownload}
               >
-                <Button variant="ghost" size="icon" className="size-6">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-7 bg-card/80 text-muted-foreground shadow-sm backdrop-blur hover:text-foreground"
+                  aria-label={`${item.name} actions`}
+                >
                   <MoreHorizontal className="size-3.5" />
                 </Button>
               </FileContextMenu>
@@ -59,13 +64,13 @@ export function FileGrid({
           )}
 
           {/* Icon */}
-          <div className="flex items-center justify-center size-12">
+          <div className="flex size-12 items-center justify-center">
             <FileIcon name={item.name} type={item.type} className="size-8" />
           </div>
 
           {/* Name */}
           <button
-            className="w-full text-center text-xs leading-tight truncate hover:text-primary transition-colors"
+            className="line-clamp-2 w-full text-center text-xs leading-tight transition-colors wrap-break-word hover:text-primary"
             onClick={() => {
               if (item.type === "dir") {
                 onNavigate(item.id)

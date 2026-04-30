@@ -57,7 +57,9 @@ export function StatCard({
         : String(value)
 
   return (
-    <Card className={cn("card-glow relative overflow-hidden", className)}>
+    <Card
+      className={cn("card-glow relative min-w-0 overflow-hidden", className)}
+    >
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           {/* Icon with tinted background circle */}
@@ -76,10 +78,10 @@ export function StatCard({
 
           {/* Text content */}
           <div className="min-w-0 flex-1 space-y-0.5">
-            <div className="flex items-baseline gap-2">
+            <div className="flex min-w-0 flex-wrap items-baseline gap-2">
               <p
                 className={cn(
-                  "text-xl font-bold tracking-tight",
+                  "min-w-0 wrap-break-word text-xl font-bold tracking-tight",
                   type === "usage" &&
                     typeof progress === "number" &&
                     getUsageColor(progress)
@@ -107,10 +109,12 @@ export function StatCard({
               )}
             </div>
 
-            <p className="text-muted-foreground text-xs font-medium">{label}</p>
+            <p className="text-muted-foreground wrap-break-word text-xs font-medium">
+              {label}
+            </p>
 
             {description && (
-              <p className="text-muted-foreground/70 text-[11px]">
+              <p className="text-muted-foreground/70 wrap-break-word text-[11px]">
                 {description}
               </p>
             )}

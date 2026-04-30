@@ -98,6 +98,7 @@ export function PortAssignmentsTab({
       globalSearch
       searchPlaceholder={t("searchPorts")}
       pageSize={25}
+      className="min-w-0"
     />
   )
 }

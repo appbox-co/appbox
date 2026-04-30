@@ -547,11 +547,13 @@ export function InstalledAppsQuickList({
   }
 
   return (
-    <Card>
+    <Card className="min-w-0 overflow-hidden">
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base">
+        <CardTitle className="flex min-w-0 items-center gap-2 text-base">
           <Package className="size-4 text-muted-foreground" />
-          {t("cyloDetail.installedApps")}
+          <span className="min-w-0 truncate">
+            {t("cyloDetail.installedApps")}
+          </span>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -581,18 +583,19 @@ export function InstalledAppsQuickList({
             emptyMessage={t("installedApps.empty")}
             pageSize={10}
             pageSizeOptions={[10, 25, 50]}
+            className="min-w-0"
             enableRowSelection
             getRowId={(row) => String(row.id)}
             renderBulkActions={({ selectedRows, clearSelection }) =>
               selectedRows.length ? (
-                <div className="flex items-center gap-2">
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
                   <span className="text-xs text-muted-foreground">
                     {tInstalled("bulkSelected", { count: selectedRows.length })}
                   </span>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9"
+                    className="h-auto min-h-9 min-w-0 break-all whitespace-normal"
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
@@ -622,7 +625,7 @@ export function InstalledAppsQuickList({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9"
+                    className="h-auto min-h-9 min-w-0 break-all whitespace-normal"
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
@@ -654,7 +657,7 @@ export function InstalledAppsQuickList({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9"
+                    className="h-auto min-h-9 min-w-0 break-all whitespace-normal"
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
@@ -684,7 +687,7 @@ export function InstalledAppsQuickList({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9"
+                    className="h-auto min-h-9 min-w-0 break-all whitespace-normal"
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
@@ -712,7 +715,7 @@ export function InstalledAppsQuickList({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9"
+                    className="h-auto min-h-9 min-w-0 break-all whitespace-normal"
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => app.status === "frozen")

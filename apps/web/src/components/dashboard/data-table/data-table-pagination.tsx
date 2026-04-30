@@ -43,12 +43,12 @@ export function DataTablePagination<TData>({
   const endRow = Math.min((pageIndex + 1) * pageSize, totalRows)
 
   return (
-    <div className="flex flex-col items-center justify-between gap-4 px-2 py-4 sm:flex-row">
+    <div className="flex min-w-0 flex-col items-center justify-between gap-4 px-2 py-4 sm:flex-row">
       <div className="text-muted-foreground text-sm">
         {showingText} {startRow}-{endRow} {ofText} {totalRows} {resultsText}
       </div>
 
-      <div className="flex items-center gap-6 lg:gap-8">
+      <div className="flex max-w-full flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8">
         <div className="flex items-center gap-2">
           <p className="text-muted-foreground text-sm font-medium">
             {rowsPerPageText}

@@ -362,7 +362,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
   const xAxisFormatter = makeXAxisFormatter(statsRange)
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-6 overflow-x-hidden">
       {/* Back */}
       <HistoryBackButton
         fallbackHref={ROUTES.APPBOXES}
@@ -372,22 +372,22 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
       />
 
       {/* Title + status */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           <h1
             data-anonymize-single
-            className="text-2xl font-bold tracking-tight"
+            className="min-w-0 wrap-break-word text-2xl font-bold tracking-tight"
           >
             {cylo.name}
           </h1>
           <StatusCell status={cylo.status} className="text-xs" />
-          <span className="flex items-center gap-1 text-sm text-muted-foreground">
+          <span className="flex min-w-0 items-center gap-1 text-sm text-muted-foreground">
             <Server className="size-3.5" />
-            {cylo.server_name}
+            <span className="min-w-0 break-all">{cylo.server_name}</span>
           </span>
           {cylo.server_host ? (
-            <span className="text-sm text-muted-foreground">
-              • <span className="font-mono">{cylo.server_host}</span>
+            <span className="min-w-0 text-sm text-muted-foreground">
+              • <span className="break-all font-mono">{cylo.server_host}</span>
             </span>
           ) : null}
         </div>
@@ -401,6 +401,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
             restartMutation.isPending
           }
           onClick={() => setRestartOpen(true)}
+          className="w-full sm:w-auto"
         >
           {restartMutation.isPending ? (
             <Loader2 className="mr-1.5 size-4 animate-spin" />
@@ -446,8 +447,8 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
       </Dialog>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="min-w-0">
+        <TabsList className="max-w-full overflow-x-auto">
           <TabsTrigger value="summary">{t("cyloDetail.summary")}</TabsTrigger>
           <TabsTrigger value="file-explorer">
             {t("cyloDetail.fileExplorer")}
@@ -455,7 +456,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
         </TabsList>
 
         {/* ── Summary tab ──────────────────────────────────────────────── */}
-        <TabsContent value="summary" className="mt-6 space-y-6">
+        <TabsContent value="summary" className="mt-6 min-w-0 space-y-6">
           {/* Alerts — only rendered when alerts are present */}
           <CyloAlerts
             cylo={cylo}
@@ -465,7 +466,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
           <CyloStats cylo={cylo} />
 
           {/* Charts */}
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid min-w-0 gap-6 lg:grid-cols-3">
             {/* Disk Usage */}
             <ChartWrapper
               title={t("cyloDetail.diskUsage")}
@@ -552,7 +553,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
           <InstalledAppsQuickList cyloId={cyloId} />
         </TabsContent>
 
-        <TabsContent value="file-explorer" className="mt-6">
+        <TabsContent value="file-explorer" className="mt-6 min-w-0">
           <FileExplorer cyloId={cyloId} serverName={cylo?.server_name} />
         </TabsContent>
       </Tabs>

@@ -36,7 +36,7 @@ export function CyloStats({ cylo, userId }: CyloStatsProps) {
     installedApps?.reduce((sum, app) => sum + (app.boost_slots ?? 0), 0) ?? 0
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid min-w-0 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard
         label={t("cylos.storage")}
         value={`${formatStorageGB(storageUsed)} / ${formatStorageGB(storageTotal)}`}

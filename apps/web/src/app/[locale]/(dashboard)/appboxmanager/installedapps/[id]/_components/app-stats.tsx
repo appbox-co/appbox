@@ -133,15 +133,15 @@ export function AppStats({ app, transitional = false }: AppStatsProps) {
   const isLoading = !stats
 
   return (
-    <div>
+    <div className="min-w-0">
       {/* Section header */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold">Performance</h2>
         <Tabs
           value={range}
           onValueChange={(v) => setRange(v as ContainerRange)}
         >
-          <TabsList className="h-8">
+          <TabsList className="h-8 max-w-full overflow-x-auto">
             <TabsTrigger value="1h" className="px-2.5 text-xs">
               1h
             </TabsTrigger>
@@ -159,7 +159,7 @@ export function AppStats({ app, transitional = false }: AppStatsProps) {
       </div>
 
       {/* 2×2 chart grid */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid min-w-0 gap-4 md:grid-cols-2">
         {/* ── CPU ── */}
         <ChartWrapper
           title="CPU"

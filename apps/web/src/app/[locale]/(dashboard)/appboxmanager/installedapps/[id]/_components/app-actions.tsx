@@ -84,6 +84,9 @@ type TranslateFn = (
   values?: Record<string, string | number>
 ) => string
 
+const ACTION_BUTTON_CLASSNAME =
+  "h-auto min-h-8 min-w-0 max-w-full flex-1 basis-[calc(50%-0.25rem)] break-all whitespace-normal px-2 text-center leading-tight sm:flex-none sm:basis-auto sm:whitespace-nowrap sm:px-3"
+
 const HIDDEN_BUTTON_FIELD_TYPES = new Set([
   "hidden",
   "spacer",
@@ -291,11 +294,12 @@ export function AppActions({
 
   return (
     <>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex min-w-0 flex-1 flex-wrap gap-2">
         {/* Start */}
         <Button
           variant="outline"
           size="sm"
+          className={ACTION_BUTTON_CLASSNAME}
           disabled={isRunning || isTransitioning || startMutation.isPending}
           onClick={() => startMutation.mutate(app.id)}
         >
@@ -311,6 +315,7 @@ export function AppActions({
         <Button
           variant="outline"
           size="sm"
+          className={ACTION_BUTTON_CLASSNAME}
           disabled={
             startOnlyActionable ||
             isStopped ||
@@ -331,6 +336,7 @@ export function AppActions({
         <Button
           variant="outline"
           size="sm"
+          className={ACTION_BUTTON_CLASSNAME}
           disabled={
             startOnlyActionable ||
             isStopped ||
@@ -352,6 +358,7 @@ export function AppActions({
           <Button
             variant="outline"
             size="sm"
+            className={ACTION_BUTTON_CLASSNAME}
             disabled={startOnlyActionable || updateMutation.isPending}
             onClick={() => setUpdateConfirmOpen(true)}
           >
@@ -378,7 +385,7 @@ export function AppActions({
                 switchVersionMutation.isPending
               }
             >
-              <SelectTrigger className="h-8 w-[220px] text-xs">
+              <SelectTrigger className="h-8 w-full min-w-0 text-xs sm:w-[220px]">
                 <SelectValue placeholder={t("switchVersion")} />
               </SelectTrigger>
               <SelectContent>
@@ -397,6 +404,7 @@ export function AppActions({
           <Button
             variant="outline"
             size="sm"
+            className={ACTION_BUTTON_CLASSNAME}
             disabled={
               (startOnlyActionable && !isStopped) ||
               isTransitioning ||
@@ -416,6 +424,7 @@ export function AppActions({
           <Button
             variant="outline"
             size="sm"
+            className={ACTION_BUTTON_CLASSNAME}
             disabled={unfreezeMutation.isPending}
             onClick={() => setUnfreezeConfirmOpen(true)}
           >
@@ -432,6 +441,7 @@ export function AppActions({
         <Button
           variant="destructive"
           size="sm"
+          className={ACTION_BUTTON_CLASSNAME}
           disabled={startOnlyActionable && !isRecoverableStopped}
           onClick={() => setUninstallOpen(true)}
         >
@@ -777,6 +787,7 @@ function CustomButtonItem({
       <Button
         variant="outline"
         size="sm"
+        className={ACTION_BUTTON_CLASSNAME}
         disabled={isTransitioning || isPending}
         onClick={openDialog}
         style={

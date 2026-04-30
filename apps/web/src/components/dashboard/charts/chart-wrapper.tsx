@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, type ReactNode } from "react"
+import { type ReactNode } from "react"
 import { BarChart2 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -66,16 +66,23 @@ export function ChartWrapper({
   className
 }: ChartWrapperProps) {
   return (
-    <Card className={cn("card-glow flex flex-col", className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base font-semibold">{title}</CardTitle>
+    <Card
+      className={cn(
+        "card-glow flex min-w-0 flex-col overflow-hidden",
+        className
+      )}
+    >
+      <CardHeader className="flex flex-col gap-2 space-y-0 pb-2 sm:flex-row sm:items-center sm:justify-between">
+        <CardTitle className="min-w-0 text-base font-semibold">
+          {title}
+        </CardTitle>
 
         {timeRanges && timeRanges.length > 0 && (
           <Tabs
             value={selectedRange ?? timeRanges[0].value}
             onValueChange={onRangeChange}
           >
-            <TabsList className="h-8">
+            <TabsList className="h-8 max-w-full overflow-x-auto">
               {timeRanges.map((range) => (
                 <TabsTrigger
                   key={range.value}
@@ -90,7 +97,7 @@ export function ChartWrapper({
         )}
       </CardHeader>
 
-      <CardContent className="relative flex flex-1 flex-col pt-2">
+      <CardContent className="relative flex min-w-0 flex-1 flex-col overflow-hidden px-3 pb-4 pt-2 sm:px-6 sm:pb-6">
         {/* Empty-data overlay — takes priority over loading */}
         {isEmpty ? (
           <div className="absolute inset-0 z-10 flex items-center justify-center rounded-b-xl">
@@ -119,19 +126,20 @@ export function ChartWrapper({
           (() => {
             const hasAvg = seriesStats.some((s) => s.avg != null)
             return (
-              <div
-                className="mt-3 grid items-center gap-x-4 gap-y-1.5 border-t border-border/40 pt-3 text-[11px]"
-                style={{
-                  gridTemplateColumns: hasAvg
-                    ? "auto auto auto auto"
-                    : "auto auto auto"
-                }}
-              >
+              <div className="mt-3 space-y-2 border-t border-border/40 pt-3 text-[11px]">
                 {seriesStats.map((s, i) => (
-                  <Fragment key={i}>
+                  <div
+                    key={i}
+                    className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:grid sm:gap-x-4 sm:gap-y-1.5"
+                    style={{
+                      gridTemplateColumns: hasAvg
+                        ? "minmax(0, 1fr) auto auto auto"
+                        : "minmax(0, 1fr) auto auto"
+                    }}
+                  >
                     {/* Col 1 — icon + label */}
                     <div
-                      className="flex items-center gap-1.5 font-medium"
+                      className="flex min-w-0 items-center gap-1.5 font-medium"
                       style={{ color: s.color }}
                     >
                       {s.icon}
@@ -139,7 +147,7 @@ export function ChartWrapper({
                     </div>
 
                     {/* Col 2 — peak */}
-                    <div className="flex items-center gap-1 tabular-nums">
+                    <div className="flex items-center gap-1 whitespace-nowrap tabular-nums">
                       <span className="text-[9px] font-bold uppercase tracking-widest text-amber-500">
                         pk
                       </span>
@@ -149,7 +157,7 @@ export function ChartWrapper({
                     </div>
 
                     {/* Col 3 — current */}
-                    <div className="flex items-center gap-1 tabular-nums text-foreground/70">
+                    <div className="flex items-center gap-1 whitespace-nowrap tabular-nums text-foreground/70">
                       <span className="text-[9px] font-bold uppercase tracking-widest opacity-50">
                         now
                       </span>
@@ -162,7 +170,7 @@ export function ChartWrapper({
                     {hasAvg && (
                       <div
                         className={cn(
-                          "flex items-center gap-1 tabular-nums text-muted-foreground",
+                          "flex items-center gap-1 whitespace-nowrap tabular-nums text-muted-foreground",
                           s.avg == null && "invisible"
                         )}
                       >
@@ -174,7 +182,7 @@ export function ChartWrapper({
                         </span>
                       </div>
                     )}
-                  </Fragment>
+                  </div>
                 ))}
               </div>
             )
