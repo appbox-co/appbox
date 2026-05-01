@@ -71,7 +71,9 @@
     },
     "apps_section": {
       "title": "Umfangreiche App-Sammlung zum Sofortdeployment",
-      "description": "Hoste alles von Datenbanken und Mediaservern bis hin zu Entwicklungstools und Kommunikationsplattformen – deploye Enterprise-Software mit wenigen Klicks"
+      "headline_1": "Apps zum Sofortdeployment.",
+      "headline_2": "Eine riesige Sammlung.",
+      "description": "Hoste alles von Datenbanken und Mediaservern bis hin zu Entwicklungstools und Kommunikationsplattformen. Deploye Enterprise-Software mit wenigen Klicks."
     },
     "dashboard_promo": {
       "headline_1": "Das neue Dashboard.",
@@ -122,6 +124,8 @@
       "headline_1": "Dein KI-Assistent.",
       "headline_2": "Laeuft auf deinem Server.",
       "description": "OpenClaw ist ein Open-Source-KI-Assistent auf deiner Appbox, verfuegbar in allen Tarifen. Er spricht ueber die Chat-Apps, die du bereits nutzt, sieht deine Dateien und Datenbanken und kann sich in deine anderen Apps einloggen.",
+      "card_title": "OpenClaw arbeitet in deiner Appbox.",
+      "card_description": "Es kann gemeinsame App-Daten lesen, Browser und CLI nutzen, Datenbanken abfragen und ueber deine Chat-Apps antworten.",
       "image_alt": "OpenClaw-Chat im Web-Dashboard",
       "cta": "Ankuendigung lesen",
       "capabilities": {
@@ -140,6 +144,111 @@
         "tools": {
           "title": "70+ Skills.",
           "description": "Ueber 70 vorinstallierte Skills fuer WordPress, GitLab, Nextcloud, MariaDB und mehr. Neue Skills von ClawHub installieren."
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "So einfach wie ein Klick.",
+      "headline_2": "Keine Konfiguration.",
+      "description": "Appbox reduziert komplexe Open-Source-App-Installationen auf das Wesentliche: Benutzername und Passwort eingeben, Installieren klicken, und die App wird automatisch eingerichtet.",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "In Sekunden installieren",
+      "description": "Waehle deine Appbox, fuelle ein paar Felder aus, und {appName} ist live.",
+      "dialog_title": "{appName} installieren",
+      "requires_slots": "{count, plural, one {Benoetigt # App Slot} other {Benoetigt # App Slots}}",
+      "preview_badge": "Vorschau",
+      "demo_note": "Diese Demo zeigt, wie der Installer aussieht, nachdem du eine Appbox hast.",
+      "select_appbox": "Appbox auswaehlen",
+      "slots_free": "({count} Slots frei)",
+      "ready_note": "Bereit zur Installation? Du brauchst zuerst eine aktive Appbox.",
+      "cancel": "Abbrechen",
+      "install": "Installieren",
+      "footer_note": "Dies ist eine Vorschau des Installationsformulars. Waehle einen Tarif, um deine Appbox zu erstellen und wirklich zu deployen.",
+      "domain": {
+        "recordType": "Typ",
+        "recordHost": "Host / Name",
+        "recordValue": "Wert (IP)",
+        "needHelp": "Brauchst du Hilfe beim Hinzufuegen dieses Records?"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "Schritt 1",
+          "title": "Waehle deine Appbox",
+          "body": "Der Installer waehlt deine Appbox automatisch aus, wenn du nur eine hast, und zeigt nur Appboxes mit genug freien Slots."
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "Ziehe fuer mehr Leistung",
+          "body": "Jeder zusaetzliche App Slot gibt dieser App 10% mehr CPU und RAM, und die Vorschau aktualisiert sich sofort.",
+          "link": "So funktioniert Per-App-Boost"
+        },
+        "resource_preview": {
+          "eyebrow": "Vorschau",
+          "title": "Ressourcen live pruefen",
+          "body": "Sieh finalen Multiplikator, Slot-Kosten, RAM und CPU vor der Installation. Jeder Boost-Slot erhoeht Ressourcen um 10%."
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "Domains",
+            "title": "Verwaltete oder eigene Domains",
+            "body": "Nutze sofort eine Appbox-verwaltete Domain oder klicke auf Custom Domain, um deine eigene zu verwenden."
+          },
+          "custom": {
+            "eyebrow": "Custom DNS",
+            "title": "Bring deine eigene Domain mit",
+            "body": "Custom Domain zeigt Domain-Auswahl, feste Subdomain und DNS-Checkliste vor der Installation."
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "Anleitung integriert",
+          "body": "Die Vorschau zeigt den genauen A-Record und den Verifizierungsstatus vor der Installation."
+        },
+        "configuration": {
+          "eyebrow": "Keine Ueberraschungen",
+          "title": "Konfiguration direkt am Anfang",
+          "body": "Wir reduzieren die erforderlichen Felder auf das absolute Minimum, um eine voll funktionsfaehige App zu erstellen, damit du dich nicht um weitere Konfiguration kuemmern musst."
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "Souveraene Cloud",
+      "headline_2": "Deine Cloud, deine Regeln.",
+      "description": "Appbox basiert auf Hardware- und Netzwerk-Infrastruktur, die wir kontrollieren. So bekommst du den Komfort von Cloud-Apps, ohne die Plattform an die Cloud eines anderen abzugeben.",
+      "eyebrow": "Eigene Infrastruktur",
+      "card_title": "Echte Server. Echtes Netzwerk. Echte Verantwortung.",
+      "card_description": "Wir bevorzugen direkte Kontrolle ueber die Teile, die zaehlen: Compute, Storage, Routing, Kapazitaet und physischer Standort. So bauen wir Appbox als Produkt, nicht als duenne Schicht ueber einem anderen Anbieter.",
+      "images": {
+        "rack_front": "Appbox-Serverracks mit installierter Hardware",
+        "rack_network": "Appbox-Serverracks mit Netzwerkverkabelung",
+        "network_closeup": "Nahaufnahme von Appbox-eigener Netzwerktechnik"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "Keine gemietete Blackbox",
+          "description": "Wir besitzen und betreiben die Server, auf denen deine Apps laufen. Performance und Wartung verschwinden nicht hinter einer Hyperscale-Cloud-Abstraktion."
+        },
+        "network_control": {
+          "title": "Netzwerk-Kontrolle",
+          "description": "Mit eigener Routing-Infrastruktur koennen wir Pfade, Kapazitaet, Peering und Stoerungsreaktion fuer Appbox-Workloads optimieren."
+        },
+        "custom_ocp_hardware": {
+          "title": "Custom OCP-Hardware",
+          "description": "Unsere eigene Open-Compute-Project-Hardware ist auf effiziente Luftfuehrung, hohe Dichte und schnelle Wartung ausgelegt, damit wir Kapazitaet ohne verschwendete Energie oder Flaeche skalieren koennen."
+        },
+        "clear_data_locality": {
+          "title": "Klare Datenlokalitaet",
+          "description": "Die Infrastruktur steht in dedizierten Racks bei Digital Realty AMS3 in Amsterdam, sodass du genau weisst, wo deine Daten gehostet werden."
+        },
+        "better_cost_discipline": {
+          "title": "Bessere Kostenkontrolle",
+          "description": "Eigene Infrastruktur vermeidet Cloud-Kostenfallen wie ueberraschende Egress-, IOPS- oder Bandbreiten-Multiplikatoren und haelt Tarife einfacher."
+        },
+        "built_for_appbox": {
+          "title": "Fuer Appbox gebaut",
+          "description": "Weil Hardware und Netzwerk uns gehoeren, koennen wir App Slots, Boost, Storage, Backups und One-Click-Installationen von Grund auf zusammen denken."
         }
       }
     },
@@ -191,7 +300,9 @@
     "features": {
       "section": {
         "title": "Leistungsstarke Funktionen für alle",
-        "description": "Erlebe die volle Leistung deiner Appbox mit Funktionen, die sowohl für Einsteiger als auch für Experten entwickelt wurden"
+        "headline_1": "Leistungsstarke Funktionen.",
+        "headline_2": "Für alle.",
+        "description": "Erlebe die volle Leistung deiner Appbox mit Funktionen, die sowohl für Einsteiger als auch für Experten entwickelt wurden."
       },
       "root_access": {
         "title": "Vollständiger Root-Zugriff",
@@ -250,11 +361,15 @@
         },
         "server_location": {
           "title": "Wo befinden sich eure Server?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Unsere Server befinden sich in dedizierten Racks im AMS5-Rechenzentrum in Amsterdam, Niederlande, und gewährleisten erstklassige Leistung und Zuverlässigkeit.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Unsere Server befinden sich in dedizierten Racks bei Digital Realty AMS3 in Amsterdam, Niederlande, und gewährleisten erstklassige Leistung und Zuverlässigkeit.</p>"
         },
         "root_access": {
           "title": "Bietet ihr Root-Zugriff an?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja, das tun wir. Während unser App Store den Installationsprozess vereinfacht, bieten wir auch Ubuntu- und Debian-Apps mit vollständigem Root-Zugriff an, wenn du die vollständige Kontrolle benötigst.</p><p class=\"mb-4 leading-relaxed\">Bitte beachte, dass Docker und Apps, die bestimmte Kernel-Module oder systemd benötigen, aufgrund von Sicherheitsrichtlinien nicht unterstützt werden. Wir entwickeln jedoch Virtual-Machine-Optionen, um diese Einschränkungen zu umgehen.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. VPS-Apps bieten dir vollständigen Root-Zugriff auf Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux und AlmaLinux. Windows 11 Pro VPS-Apps bieten vollständigen Remote-Desktop- und Administratorzugriff.</p><p class=\"mb-4 leading-relaxed\">Da es sich um vollständige KVM-VMs handelt, kannst du eigene Software installieren, Dienste verwalten, Docker, Snaps, Flatpaks und Kernel-Module nutzen und deinen eigenen Stack neben deinen Appbox-Apps betreiben.</p>"
+        },
+        "docker": {
+          "title": "Kann ich Docker verwenden?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Docker ist in VPS-Apps verfügbar, wo du eine vollständige VM mit Root-Zugriff und Kontrolle über das Betriebssystem erhältst.</p><p class=\"mb-4 leading-relaxed\">Docker ist nicht innerhalb verwalteter One-Click-Apps verfügbar, da diese Apps bereits von Appbox containerisiert und isoliert werden. Wenn du Docker brauchst, installiere eine Linux-VPS-App und nutze es dort.</p>"
         },
         "security": {
           "title": "Welche Sicherheitsfunktionen bietet ihr an?",
@@ -266,7 +381,7 @@
         },
         "additional_software": {
           "title": "Kann ich Software installieren, die nicht im App Store verfügbar ist?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Absolut. Unsere OS-Apps ermöglichen die Installation benutzerdefinierter Software, und einige verfügen sogar über eine Remote-Desktop-Oberfläche für ein vollständiges grafisches Erlebnis. So hast du die vollständige Freiheit, die Tools und Anwendungen auszuführen, die du benötigst.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Absolut. Unsere VPS-Apps ermöglichen dir die Installation eigener Software mit Root-Zugriff, und Windows-VPS-Apps enthalten eine vollständige Remote-Desktop-Umgebung. So hast du die Freiheit, die Tools und Anwendungen auszuführen, die du benötigst.</p>"
         },
         "fuse_rclone": {
           "title": "Erlaubt ihr FuSE-Mounts oder Rclone?",
@@ -278,15 +393,23 @@
         },
         "custom_domain": {
           "title": "Kann ich meinen eigenen Domainnamen verwenden?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Du kannst deine eigene Domain zuordnen und Subdomains für jede Anwendung einrichten. Füge einfach einen A-Eintrag in deinem DNS hinzu, der auf deine Appbox zeigt, und wir kümmern uns um den Rest, damit du reibungslos loslegen kannst.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Du kannst deine eigene Domain zuordnen und Subdomains für jede Anwendung einrichten. Füge einfach einen A-Eintrag in deinem DNS hinzu, der auf deine Appbox zeigt, und wir kümmern uns um den Rest, damit du reibungslos loslegen kannst.</p><p class=\"mb-4 leading-relaxed\">VPS-Apps unterstützen außerdem mehrere eigene Domains und Appbox-Subdomains mit automatischem SSL, sodass du mehrere Websites oder Dienste über denselben VPS hosten kannst.</p>"
         },
         "upgrade_after_purchase": {
           "title": "Kann ich nach dem Kauf upgraden?",
           "content": "<p class=\"mb-4 leading-relaxed\">Ja, wir übertragen automatisch alles von deinem alten Plan auf deinen neuen Plan.</p><p class=\"mb-4 leading-relaxed\">Alles bleibt gleich, du wirst es kaum bemerken. Das Einzige, was sich ändern kann, sind bestimmte Portnummern, wenn du direkt über eine Portnummer auf eine App zugreifst, z. B. FTP.</p>"
         },
+        "app_slots": {
+          "title": "Was sind App Slots?",
+          "content": "<p class=\"mb-4 leading-relaxed\">App Slots sind die Kapazitätseinheiten, mit denen deine Appbox Apps installiert. Jede App nutzt je nach Ressourcenbedarf einen oder mehrere App Slots, und größere Versionen können mehr Slots benötigen.</p><p class=\"mb-4 leading-relaxed\">Die <a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">Apps-Seite</a> zeigt, wie viele App Slots jede App nutzt. Auf einer App-Detailseite kannst du im Ressourcenbereich weiter unten sehen, wie viel RAM und CPU jeder Version zugewiesen ist.</p><p class=\"mb-4 leading-relaxed\">Freie App Slots kannst du außerdem für Per-App-Boost einsetzen, um einer installierten App mehr CPU und RAM zu geben, ohne deinen ganzen Plan zu upgraden.</p>"
+        },
         "resource_multipliers": {
           "title": "Wie funktioniert Per-App-Boost?",
           "content": "<p class=\"mb-4 leading-relaxed\">Jede App startet mit Basis-RAM und Basis-CPU, abhängig von der gewählten Version. Per-App-Boost ermöglicht es dir, diese Ressourcen für einzelne Apps zu erhöhen, indem du zusätzliche App-Slots einsetzt.</p><p class=\"mb-4 leading-relaxed\">Jeder Boost-Slot fügt +10% Ressourcen für die jeweilige App hinzu. Du entscheidest, welche Apps mehr Leistung bekommen, und kannst den Boost jederzeit anpassen.</p><p class=\"mb-4 leading-relaxed\">Per-App-Boost ist in allen Plänen enthalten. Du kannst ihn beim Installieren oder auf der Installierte-App-Seite im <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a> konfigurieren.</p>"
+        },
+        "app_freeze": {
+          "title": "Kann ich eine App pausieren, ohne Daten zu verlieren?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. App Freeze stoppt eine installierte App und gibt ihre App Slots wieder frei, während Daten und Konfiguration erhalten bleiben.</p><p class=\"mb-4 leading-relaxed\">Wenn du die App wieder aktivierst, startet sie mit denselben Daten. Du brauchst nur genügend freie App Slots, um die App und eventuell verwendete Boost-Slots wieder abzudecken.</p>"
         },
         "excluded_app_categories": {
           "title": "Was sind ausgeschlossene App-Kategorien?",
@@ -376,6 +499,7 @@
       "app_slots": "App Slots",
       "connection_speed": "Verbindungsgeschwindigkeit",
       "resource_multiplier": "Per-App Boost",
+      "included": "Inklusive",
       "raid": "RAID",
       "disks": "Festplatten",
       "per_month": "/Monat",
@@ -430,17 +554,40 @@
       "downvotes": "Downvotes",
       "no_ratings_yet": "Noch keine Bewertungen",
       "deploy_dialog": {
-        "title": "App deployen",
-        "question": "Hast du eine Appbox?",
-        "yes": "Ja, ich habe eine Appbox",
-        "no": "Nein, ich brauche eine"
+        "title": "Apps auf einer Appbox deployen",
+        "question": "Apps benötigen eine aktive Appbox. Wähle einen passenden Plan, um dein Konto und deine Appbox zu erstellen, oder fahre mit dem Installer fort, wenn du bereits eine hast.",
+        "planLabel": "Passende Pläne für diese App",
+        "planPlaceholder": "Plan auswählen und fortfahren",
+        "planHelp": "Pläne, die diese App-Kategorie ausschließen, werden ausgeblendet. Wenn du einen Plan auswählst, wirst du direkt zum Checkout weitergeleitet.",
+        "noEligiblePlans": "Für diese App wurden keine passenden Pläne gefunden. Du kannst trotzdem alle Pläne ansehen.",
+        "viewAllPlans": "Alle Pläne anzeigen",
+        "yes": "Mit ausgewähltem Plan fortfahren",
+        "no": "Ich habe bereits eine Appbox"
       }
     }
   },
   "home": {
     "connections_section": {
       "title": "Vernetztes App-Ökosystem",
-      "description": "Jede App hat Dateisystemzugriff auf gemeinsame Teile anderer Apps, alle über eine sichere lokale Netzwerkbrücke miteinander verbunden."
+      "headline_1": "Vernetzte Apps.",
+      "headline_2": "Ein Ökosystem.",
+      "description": "Jede App hat Dateisystemzugriff auf gemeinsame Teile anderer Apps, alle über eine sichere lokale Netzwerkbrücke miteinander verbunden.",
+      "visual_title": "Deine Apps können zusammenarbeiten, ohne deine Appbox zu verlassen.",
+      "visual_description": "Apps laufen in ihren eigenen Bereichen, aber Appbox gibt ihnen kontrollierte Wege, Dateien zu teilen und lokal miteinander zu sprechen. So werden Assistenten, Dashboards, Datenbanken, Medien-Tools und Sync-Apps zu einem verbundenen Workspace.",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "Gemeinsames Dateisystem",
+          "description": "Apps können direkt auf gemeinsamen Speicher und freigegebene App-Daten zugreifen."
+        },
+        "private_network": {
+          "title": "Sichere lokale Brücke",
+          "description": "Dienste kommunizieren über private lokale Routen statt über das öffentliche Internet."
+        },
+        "cross_app_workflows": {
+          "title": "App-übergreifende Workflows",
+          "description": "Baue Abläufe, in denen eine App Daten für eine andere lesen, verarbeiten und veröffentlichen kann."
+        }
+      }
     }
   },
   "policies": {
@@ -459,7 +606,11 @@
       "password_error": "Passwort ist erforderlich",
       "forgot_password": "Passwort vergessen?",
       "submit": "Anmelden",
-      "external_signup": "Neu bei Appbox? Starte unter",
+      "external_signup": "Neu bei Appbox? Wähle einen Plan, um dein Konto und deine Appbox zu erstellen.",
+      "external_signup_link": "Pläne anzeigen",
+      "appbox_required_title": "Brauchst du ein Konto?",
+      "appbox_required_description": "Appbox-Konten werden erstellt, wenn du einen Appbox-Plan kaufst. Wenn du eine App deployen wolltest, wähle zuerst einen Plan aus und komme danach zurück, um Apps auf deiner Appbox zu installieren.",
+      "appbox_required_link": "Pläne anzeigen und anmelden",
       "error_invalid": "Ungültige E-Mail oder Passwort",
       "error_generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
       "success": "Erfolgreich angemeldet",

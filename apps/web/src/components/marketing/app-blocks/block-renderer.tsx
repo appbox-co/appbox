@@ -1,4 +1,5 @@
 import type { CustomField } from "@/api/apps/app-store"
+import type { EligiblePlanOption } from "@/components/marketing/deploy-dialog"
 import type { MarketingBlock, MarketingContent } from "@/types/marketing-blocks"
 import { CalloutBlock } from "./callout-block"
 import { ComparisonBlock } from "./comparison-block"
@@ -18,16 +19,24 @@ interface BlockRendererProps {
   installPreview?: Record<string, string>
   customFields?: Record<string, CustomField>
   appSlots?: number
+  requiresDomain?: boolean
+  domainPlaceholders?: {
+    subdomain?: string | null
+    appboxDomain?: string
+    customDomain?: string
+  }
   preinstallDescription?: string | null
   baseMemory?: number
   baseCpus?: number
+  eligiblePlans?: EligiblePlanOption[]
 }
 
 function renderBlock(
   block: MarketingBlock,
   appName: string,
   appId: number,
-  iconUrl?: string
+  iconUrl?: string,
+  eligiblePlans?: EligiblePlanOption[]
 ) {
   switch (block.type) {
     case "hero":
@@ -37,6 +46,7 @@ function renderBlock(
           appName={appName}
           appId={appId}
           iconUrl={iconUrl}
+          eligiblePlans={eligiblePlans}
         />
       )
     case "features":
@@ -44,7 +54,9 @@ function renderBlock(
     case "callout":
       return <CalloutBlock block={block} />
     case "cta":
-      return <CtaBlock block={block} appId={appId} />
+      return (
+        <CtaBlock block={block} appId={appId} eligiblePlans={eligiblePlans} />
+      )
     case "markdown":
       return <MarkdownBlock block={block} />
     case "screenshots":
@@ -68,9 +80,12 @@ export function BlockRenderer({
   installPreview,
   customFields,
   appSlots,
+  requiresDomain,
+  domainPlaceholders,
   preinstallDescription,
   baseMemory,
-  baseCpus
+  baseCpus,
+  eligiblePlans
 }: BlockRendererProps) {
   const lastScreenshotIndex = blocks.reduce(
     (last, block, i) => (block.type === "screenshots" ? i : last),
@@ -79,17 +94,22 @@ export function BlockRenderer({
 
   const showInstallPreview =
     (customFields && Object.keys(customFields).length > 0) ||
-    (installPreview && Object.keys(installPreview).length > 0)
+    (installPreview && Object.keys(installPreview).length > 0) ||
+    requiresDomain
 
   const installPreviewElement = showInstallPreview ? (
     <InstallPreview
       appName={appName}
+      appId={appId}
       placeholders={installPreview}
       customFields={customFields}
       appSlots={appSlots}
+      requiresDomain={requiresDomain}
+      domainPlaceholders={domainPlaceholders}
       preinstallDescription={preinstallDescription}
       baseMemory={baseMemory}
       baseCpus={baseCpus}
+      eligiblePlans={eligiblePlans}
     />
   ) : null
 
@@ -97,7 +117,7 @@ export function BlockRenderer({
     <div className="space-y-2">
       {blocks.map((block, i) => (
         <div key={`${block.type}-${i}`}>
-          {renderBlock(block, appName, appId, iconUrl)}
+          {renderBlock(block, appName, appId, iconUrl, eligiblePlans)}
           {i === lastScreenshotIndex && installPreviewElement}
         </div>
       ))}

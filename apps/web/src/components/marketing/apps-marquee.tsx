@@ -2,7 +2,8 @@ import { getApps } from "@/api/appbox/apps"
 import { ClientAppsMarquee } from "@/components/marketing/client-apps-marquee"
 
 interface AppsMarqueeProps {
-  title: string
+  headline1: string
+  headline2: string
   description: string
 }
 
@@ -15,7 +16,11 @@ interface App {
   installs?: number
 }
 
-export async function AppsMarquee({ title, description }: AppsMarqueeProps) {
+export async function AppsMarquee({
+  headline1,
+  headline2,
+  description
+}: AppsMarqueeProps) {
   // Fetch apps on the server
   let apps: App[] = []
   try {
@@ -40,18 +45,24 @@ export async function AppsMarquee({ title, description }: AppsMarqueeProps) {
   const secondRow = sortedApps.slice(midpoint)
 
   return (
-    <section className="py-12">
-      <div className="container">
-        <div className="mx-auto mb-10 max-w-[58rem] text-center">
-          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-4xl">
-            {title}
+    <section className="py-20 sm:py-28">
+      <div>
+        <div className="mx-auto max-w-[980px] text-center">
+          <h2 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+            {headline1}
+            <br />
+            <span className="bg-linear-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              {headline2}
+            </span>
           </h2>
-          <p className="text-muted-foreground mt-3 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {description}
           </p>
         </div>
 
-        <ClientAppsMarquee firstRow={firstRow} secondRow={secondRow} />
+        <div className="mt-16">
+          <ClientAppsMarquee firstRow={firstRow} secondRow={secondRow} />
+        </div>
       </div>
     </section>
   )

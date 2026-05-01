@@ -2,13 +2,15 @@ import { getTranslations } from "next-intl/server"
 import { ClientFeaturesSection } from "@/components/marketing/client-features-section"
 
 interface FeaturesSectionProps {
-  title: string
+  headline1: string
+  headline2: string
   description: string
   id?: string
 }
 
 export async function FeaturesSection({
-  title,
+  headline1,
+  headline2,
   description,
   id
 }: FeaturesSectionProps) {
@@ -58,18 +60,24 @@ export async function FeaturesSection({
   }
 
   return (
-    <section id={id} className="scroll-mt-16 py-12">
-      <div className="container">
-        <div className="mx-auto mb-10 max-w-[58rem] text-center">
-          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-4xl">
-            {title}
+    <section id={id} className="scroll-mt-16 py-20 sm:py-28">
+      <div>
+        <div className="mx-auto max-w-[980px] text-center">
+          <h2 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+            {headline1}
+            <br />
+            <span className="bg-linear-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              {headline2}
+            </span>
           </h2>
-          <p className="text-muted-foreground mt-3 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {description}
           </p>
         </div>
 
-        <ClientFeaturesSection features={features} />
+        <div className="mt-16">
+          <ClientFeaturesSection features={features} />
+        </div>
       </div>
     </section>
   )

@@ -1,34 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Button, buttonVariants } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog"
+  DeployDialog,
+  type EligiblePlanOption
+} from "@/components/marketing/deploy-dialog"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import type { CtaBlock as CtaBlockType } from "@/types/marketing-blocks"
 
 interface CtaBlockProps {
   block: CtaBlockType
   appId: number
+  eligiblePlans?: EligiblePlanOption[]
 }
 
-export function CtaBlock({ block, appId }: CtaBlockProps) {
+export function CtaBlock({ block, appId, eligiblePlans }: CtaBlockProps) {
   const variant = block.variant || "primary"
   const isDeployLink =
     block.button_url.startsWith("/appstore/app/") ||
     block.button_url.includes("/app/")
   const [deployOpen, setDeployOpen] = useState(false)
-  const router = useRouter()
-  const t = useTranslations("apps")
 
   return (
     <section className="py-16">
@@ -84,35 +77,12 @@ export function CtaBlock({ block, appId }: CtaBlockProps) {
         </div>
       </div>
 
-      <Dialog open={deployOpen} onOpenChange={setDeployOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{t("detail.deploy_dialog.title")}</DialogTitle>
-            <DialogDescription>
-              {t("detail.deploy_dialog.question")}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="flex sm:justify-between">
-            <Button
-              variant="outline"
-              onClick={() => {
-                router.push("/#plans-section")
-                setDeployOpen(false)
-              }}
-            >
-              {t("detail.deploy_dialog.no")}
-            </Button>
-            <Button
-              onClick={() => {
-                window.location.href = `/appstore/app/${appId}`
-                setDeployOpen(false)
-              }}
-            >
-              {t("detail.deploy_dialog.yes")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeployDialog
+        appId={appId}
+        open={deployOpen}
+        onOpenChange={setDeployOpen}
+        eligiblePlans={eligiblePlans}
+      />
 
       <style jsx global>{`
         @keyframes gradient-shift {

@@ -16,6 +16,8 @@ import {
   PageHeaderDescription,
   PageHeaderHeading
 } from "@/components/marketing/page-header"
+import { SimpleInstallPromoSection } from "@/components/marketing/simple-install-promo-section"
+import { SovereignCloudSection } from "@/components/marketing/sovereign-cloud-section"
 import { VpsLaunchPromoSection } from "@/components/marketing/vps-launch-promo-section"
 import { Icons } from "@/components/shared/icons"
 import {
@@ -328,6 +330,8 @@ export default async function IndexPage() {
         </div>
       )}
 
+      <SimpleInstallPromoSection plansData={plansData} />
+
       {launchWeekFlags.day_1 && <DashboardPromoSection />}
 
       {launchWeekFlags.day_3 && <VpsLaunchPromoSection />}
@@ -352,6 +356,7 @@ export default async function IndexPage() {
               app_slots: t("plans.card.app_slots"),
               connection_speed: t("plans.card.connection_speed"),
               resource_multiplier: t("plans.card.resource_multiplier"),
+              included: t("plans.card.included"),
               raid: t("plans.card.raid"),
               disks: t("plans.card.disks"),
               per_month: t("plans.card.per_month"),
@@ -368,19 +373,24 @@ export default async function IndexPage() {
         />
       </section>
 
+      <SovereignCloudSection />
+
       <AppsMarquee
-        title={t("site.apps_section.title")}
+        headline1={t("site.apps_section.headline_1")}
+        headline2={t("site.apps_section.headline_2")}
         description={t("site.apps_section.description")}
       />
 
       <AppConnectionsSection
-        title={t("home.connections_section.title")}
+        headline1={t("home.connections_section.headline_1")}
+        headline2={t("home.connections_section.headline_2")}
         description={t("home.connections_section.description")}
       />
 
       <FeaturesSection
         id="features"
-        title={t("site.features.section.title")}
+        headline1={t("site.features.section.headline_1")}
+        headline2={t("site.features.section.headline_2")}
         description={t("site.features.section.description")}
       />
 

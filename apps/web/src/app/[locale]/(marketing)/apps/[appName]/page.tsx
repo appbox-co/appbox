@@ -5,6 +5,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ChevronLeft, ExternalLink } from "lucide-react"
 import { getAppDetails } from "@/api/appbox/app-details"
+import { getPlans } from "@/api/appbox/plans"
 import { BlockRenderer } from "@/components/marketing/app-blocks/block-renderer"
 import { VersionsTable } from "@/components/marketing/app-blocks/versions-table"
 import ClientStarRating from "@/components/marketing/client-star-rating"
@@ -14,6 +15,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { MarkdownDescription } from "@/components/ui/markdown-description"
 import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
+import { getEligiblePlanOptions } from "@/lib/appbox/eligible-plans"
 import { absoluteUrl } from "@/lib/utils"
 import type { MetaBlock } from "@/types/marketing-blocks"
 
@@ -159,6 +161,12 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
 
   const marketingBlocks = parseMarketingBlocks(appDetails.marketing_content)
   const hasMarketingContent = marketingBlocks !== null
+  const plansData = await getPlans()
+  const eligiblePlans = getEligiblePlanOptions(
+    plansData,
+    appDetails.display_name,
+    appDetails.categories
+  )
 
   if (hasMarketingContent) {
     const meta = extractMeta(marketingBlocks)
@@ -182,9 +190,16 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
           installPreview={meta?.install_preview ?? undefined}
           customFields={appDetails.customFields ?? undefined}
           appSlots={appDetails.app_slots}
+          requiresDomain={appDetails.RequiresDomain === 1}
+          domainPlaceholders={{
+            subdomain: appDetails.subdomain,
+            appboxDomain: "steve.appboxes.co",
+            customDomain: "cloud.example.com"
+          }}
           preinstallDescription={appDetails.custom_field_preinstall_description}
           baseMemory={baseMemory}
           baseCpus={baseCpus}
+          eligiblePlans={eligiblePlans}
         />
 
         {versions.length > 0 && (
@@ -274,6 +289,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
                 dialogQuestion={t("detail.deploy_dialog.question")}
                 yesText={t("detail.deploy_dialog.yes")}
                 noText={t("detail.deploy_dialog.no")}
+                eligiblePlans={eligiblePlans}
               />
               <Link
                 href="/apps"
@@ -311,6 +327,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
               dialogQuestion={t("detail.deploy_dialog.question")}
               yesText={t("detail.deploy_dialog.yes")}
               noText={t("detail.deploy_dialog.no")}
+              eligiblePlans={eligiblePlans}
             />
 
             <div className="bg-card rounded-lg border p-6 shadow-xs">

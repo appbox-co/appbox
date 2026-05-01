@@ -7,6 +7,7 @@ import { Check, ChevronRight, Info } from "lucide-react"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { SparklesText } from "@/components/ui/sparkles-text"
 import { CURRENT_PROMO_THEME } from "@/config/promo-theme"
 
@@ -123,6 +124,7 @@ interface PlansProps {
       app_slots: string
       connection_speed: string
       resource_multiplier: string
+      included: string
       raid: string
       disks: string
       per_month: string
@@ -429,10 +431,40 @@ const Plans = ({
                             startColor,
                             endColor
                           )
+                          const billingUrl =
+                            plan.available === false
+                              ? "https://billing.appbox.co/contact.php"
+                              : `https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}${
+                                  hasActivePromotion &&
+                                  plan.promotion?.auto_apply &&
+                                  plan.promotion?.promo_code
+                                    ? `&promocode=${plan.promotion.promo_code}`
+                                    : ""
+                                }`
+                          const openBillingUrl = () => {
+                            window.open(
+                              billingUrl,
+                              "_blank",
+                              "noopener,noreferrer"
+                            )
+                          }
 
                           const planCard = (
                             <div
-                              className={`bg-card dark:bg-[#0b0d10] text-card-foreground dark:text-white mb-0 min-w-56 w-56 whitespace-nowrap rounded-lg border p-6 relative ${
+                              role="link"
+                              tabIndex={0}
+                              onClick={openBillingUrl}
+                              onKeyDown={(event) => {
+                                if (event.target !== event.currentTarget) return
+                                if (
+                                  event.key === "Enter" ||
+                                  event.key === " "
+                                ) {
+                                  event.preventDefault()
+                                  openBillingUrl()
+                                }
+                              }}
+                              className={`group relative isolate mb-0 w-56 min-w-56 cursor-pointer overflow-hidden whitespace-nowrap rounded-xl border border-slate-200/80 bg-slate-50/90 p-6 text-card-foreground shadow-sm shadow-slate-200/80 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/15 focus-visible:border-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-white/10 dark:bg-[#070912] dark:text-white dark:shadow-black/30 [&>*:not(.plan-card-bg)]:relative [&>*:not(.plan-card-bg)]:z-10 ${
                                 hasActivePromotion
                                   ? isHoliday
                                     ? "border-green-200 dark:border-green-900/40 shadow-sm shadow-green-100/20 dark:shadow-green-900/10"
@@ -468,18 +500,23 @@ const Plans = ({
                                   </Badge>
                                 </div>
                               )}
-                              <h5
-                                className="mb-2 pb-2 text-xl font-semibold"
-                                style={{
-                                  backgroundImage: shortTitleGradient,
-                                  WebkitBackgroundClip: "text",
-                                  WebkitTextFillColor: "transparent",
-                                  backgroundClip: "text",
-                                  color: "transparent"
-                                }}
-                              >
-                                {plan.short_title}
-                              </h5>
+                              <div className="plan-card-bg pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(rgba(15,23,42,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.055)_1px,transparent_1px)] bg-size-[48px_48px] opacity-70 mask-[linear-gradient(180deg,black,rgba(0,0,0,0.84)_52%,transparent_88%)] dark:bg-[linear-gradient(rgba(255,255,255,0.056)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.056)_1px,transparent_1px)] dark:opacity-70" />
+                              <div className="plan-card-bg pointer-events-none absolute inset-x-0 top-0 z-0 h-px bg-linear-to-r from-transparent via-white/80 to-transparent dark:via-white/20" />
+                              <div className="mb-2 flex min-w-0 items-center gap-2 pb-2">
+                                <h5
+                                  className="min-w-0 truncate text-xl font-semibold"
+                                  style={{
+                                    backgroundImage: shortTitleGradient,
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    backgroundClip: "text",
+                                    color: "transparent"
+                                  }}
+                                >
+                                  {plan.short_title}
+                                </h5>
+                                <CardLinkHint />
+                              </div>
                               <div className="mb-4">
                                 <h5 className="text-xl font-bold">
                                   {plan.storage_capacity}
@@ -500,9 +537,22 @@ const Plans = ({
                                 <h5 className="text-xl font-bold">
                                   {plan.app_slots}
                                 </h5>
-                                <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                  {messages.card.app_slots}
-                                </span>
+                                <div className="flex items-center gap-1">
+                                  <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
+                                    {messages.card.app_slots}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={(event) => {
+                                      event.stopPropagation()
+                                      handleFAQClick("app_slots")
+                                    }}
+                                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full opacity-60 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                                    aria-label="Learn more about App Slots"
+                                  >
+                                    <Info className="h-4 w-4" />
+                                  </button>
+                                </div>
                               </div>
                               <div className="mb-4">
                                 <div className="flex items-center gap-1">
@@ -532,41 +582,33 @@ const Plans = ({
                                   {messages.card.connection_speed}
                                 </span>
                               </div>
-                              <div className="mb-4">
-                                {boostEnabled ? (
-                                  <>
-                                    <div className="flex items-center gap-1">
-                                      <h5 className="text-xl font-bold">
-                                        Per-App Boost
-                                      </h5>
-                                      <button
-                                        onClick={() =>
-                                          handleFAQClick("resource_multipliers")
-                                        }
-                                        className="opacity-60 hover:opacity-100 transition-opacity"
-                                      >
-                                        <Info className="h-4 w-4" />
-                                      </button>
-                                    </div>
-                                    <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                                      <Check
-                                        className="h-4 w-4 text-emerald-500"
-                                        strokeWidth={3}
-                                      />
-                                      Included
-                                    </span>
-                                  </>
-                                ) : (
-                                  <>
+                              {boostEnabled && (
+                                <div className="mb-4">
+                                  <div className="flex items-center gap-1">
                                     <h5 className="text-xl font-bold">
-                                      {plan.resources}
+                                      {messages.card.resource_multiplier}
                                     </h5>
-                                    <span className="text-gray-500 dark:text-gray-400 break-words whitespace-normal">
-                                      Resource Multiplier
-                                    </span>
-                                  </>
-                                )}
-                              </div>
+                                    <button
+                                      type="button"
+                                      onClick={(event) => {
+                                        event.stopPropagation()
+                                        handleFAQClick("resource_multipliers")
+                                      }}
+                                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full opacity-60 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                                      aria-label="Learn more about Per-App Boost"
+                                    >
+                                      <Info className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                  <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                                    <Check
+                                      className="h-4 w-4 text-emerald-500"
+                                      strokeWidth={3}
+                                    />
+                                    {messages.card.included}
+                                  </span>
+                                </div>
+                              )}
                               {plan.raid && (
                                 <div className="mb-4">
                                   <h5 className="text-xl font-bold">
@@ -596,12 +638,14 @@ const Plans = ({
                                         {messages.card.excluded_app_categories}
                                       </h5>
                                       <button
-                                        onClick={() =>
+                                        type="button"
+                                        onClick={(event) => {
+                                          event.stopPropagation()
                                           handleFAQClick(
                                             "excluded_app_categories"
                                           )
-                                        }
-                                        className="opacity-60 hover:opacity-100 transition-opacity"
+                                        }}
+                                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full opacity-60 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
                                       >
                                         <Info className="h-4 w-4" />
                                       </button>
@@ -614,10 +658,11 @@ const Plans = ({
                                           key={id}
                                           href={`/apps?category=${encodeURIComponent(category)}`}
                                           onClick={(e) => e.stopPropagation()}
+                                          className="group rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
                                         >
                                           <Badge
                                             variant="secondary"
-                                            className="text-xs"
+                                            className="border border-border/60 bg-secondary/80 text-xs transition-colors hover:border-primary/40 hover:bg-primary/15 hover:text-primary focus-visible:border-primary/40 focus-visible:bg-primary/15 focus-visible:text-primary dark:hover:bg-primary/20 dark:focus-visible:bg-primary/20"
                                           >
                                             {category}
                                           </Badge>
@@ -734,6 +779,7 @@ const Plans = ({
                                 <Button variant="outline" asChild>
                                   <a
                                     href="https://billing.appbox.co/contact.php"
+                                    onClick={(event) => event.stopPropagation()}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
@@ -743,13 +789,8 @@ const Plans = ({
                               ) : (
                                 <Button variant="pulse" asChild>
                                   <a
-                                    href={`https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}${
-                                      hasActivePromotion &&
-                                      plan.promotion?.auto_apply &&
-                                      plan.promotion?.promo_code
-                                        ? `&promocode=${plan.promotion.promo_code}`
-                                        : ""
-                                    }`}
+                                    href={billingUrl}
+                                    onClick={(event) => event.stopPropagation()}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >

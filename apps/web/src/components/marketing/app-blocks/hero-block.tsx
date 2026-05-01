@@ -1,21 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { ExternalLink } from "lucide-react"
+import {
+  DeployDialog,
+  type EligiblePlanOption
+} from "@/components/marketing/deploy-dialog"
 import { Badge } from "@/components/ui/badge"
 import { BorderBeam } from "@/components/ui/border-beam"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog"
 import type { HeroBlock as HeroBlockType } from "@/types/marketing-blocks"
 
 interface HeroBlockProps {
@@ -23,6 +17,7 @@ interface HeroBlockProps {
   appName: string
   appId: number
   iconUrl?: string
+  eligiblePlans?: EligiblePlanOption[]
 }
 
 interface CircuitTrace {
@@ -230,10 +225,13 @@ function GlowingBeams({
   )
 }
 
-export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
+export function HeroBlock({
+  block,
+  appId,
+  iconUrl,
+  eligiblePlans
+}: HeroBlockProps) {
   const [deployOpen, setDeployOpen] = useState(false)
-  const router = useRouter()
-  const t = useTranslations("apps")
   const gradientFrom = block.gradient_from || "#6366f1"
   const gradientTo = block.gradient_to || "#8b5cf6"
 
@@ -337,35 +335,12 @@ export function HeroBlock({ block, appId, iconUrl }: HeroBlockProps) {
         }}
       />
 
-      <Dialog open={deployOpen} onOpenChange={setDeployOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{t("detail.deploy_dialog.title")}</DialogTitle>
-            <DialogDescription>
-              {t("detail.deploy_dialog.question")}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="flex sm:justify-between">
-            <Button
-              variant="outline"
-              onClick={() => {
-                router.push("/#plans-section")
-                setDeployOpen(false)
-              }}
-            >
-              {t("detail.deploy_dialog.no")}
-            </Button>
-            <Button
-              onClick={() => {
-                window.location.href = `/appstore/app/${appId}`
-                setDeployOpen(false)
-              }}
-            >
-              {t("detail.deploy_dialog.yes")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeployDialog
+        appId={appId}
+        open={deployOpen}
+        onOpenChange={setDeployOpen}
+        eligiblePlans={eligiblePlans}
+      />
     </section>
   )
 }

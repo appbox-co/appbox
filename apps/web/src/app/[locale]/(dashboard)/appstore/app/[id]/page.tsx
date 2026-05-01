@@ -1,10 +1,10 @@
 "use client"
 
-import { use, useEffect, useMemo, useState } from "react"
+import { use, useEffect, useMemo, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import type { ColumnDef } from "@tanstack/react-table"
 import {
   ArrowLeft,
@@ -353,11 +353,13 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   const { id } = use(params)
   const appId = Number(id)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const t = useTranslations("appstore")
   const tInstalled = useTranslations("appboxmanager.installedApps")
   const tDetail = useTranslations("appboxmanager.appDetail")
   const { cylos } = useAuth()
   const [installOpen, setInstallOpen] = useState(false)
+  const autoInstallHandledRef = useRef(false)
   const [bulkAction, setBulkAction] = useState<
     "start" | "stop" | "restart" | "freeze" | "unfreeze" | null
   >(null)
@@ -372,6 +374,14 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   const freezeMutation = useFreezeApp()
   const unfreezeMutation = useUnfreezeApp()
   const voteMutation = useVoteApp(appId)
+
+  useEffect(() => {
+    if (autoInstallHandledRef.current || !app) return
+    if (searchParams.get("install") !== "1" || app.enabled === 0) return
+
+    autoInstallHandledRef.current = true
+    setInstallOpen(true)
+  }, [app, searchParams])
 
   const versionColumns = useVersionColumns(Number(app?.app_slots ?? 0))
   const installedInstanceColumns = useInstalledInstanceColumns()

@@ -1,8 +1,21 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, Eye, EyeOff, Package, Sparkles, Zap } from "lucide-react"
+import { useTranslations } from "next-intl"
+import {
+  ChevronDown,
+  Copy,
+  Eye,
+  EyeOff,
+  Package,
+  XCircle
+} from "lucide-react"
 import type { CustomField } from "@/api/apps/app-store"
+import { BoostSlider } from "@/components/dashboard/boost-slider"
+import {
+  DeployDialog,
+  type EligiblePlanOption
+} from "@/components/marketing/deploy-dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,17 +37,43 @@ const PASSWORD_TYPES = new Set([
 
 interface InstallPreviewProps {
   appName: string
+  appId: number | string
   placeholders?: Record<string, string>
   customFields?: Record<string, CustomField>
   appSlots?: number
+  requiresDomain?: boolean
+  domainPlaceholders?: {
+    subdomain?: string | null
+    appboxDomain?: string
+    customDomain?: string
+  }
   preinstallDescription?: string | null
   baseMemory?: number
   baseCpus?: number
+  eligiblePlans?: EligiblePlanOption[]
+  showHeader?: boolean
+  showFooterNote?: boolean
+  showAnnotations?: boolean
+  deployEnabled?: boolean
+  className?: string
 }
 
 function isRequired(field: CustomField): boolean {
   if (!field.validate) return false
   return field.validate.some((r) => r === "required")
+}
+
+function customFieldsUseDomain(customFields?: Record<string, CustomField>) {
+  if (!customFields) return false
+
+  return Object.entries(customFields).some(([name, field]) => {
+    const defaultValue = String(field.defaultValue ?? "")
+    return (
+      field.type === "domain" ||
+      name.toLowerCase().includes("domain") ||
+      defaultValue.includes("%DOMAIN.")
+    )
+  })
 }
 
 function PreviewPasswordField({
@@ -155,7 +194,184 @@ function PreviewSwitchField({
   )
 }
 
-function StaticBoostPreview({
+function getPreviewSubdomain(appName: string, value?: string | null) {
+  const source = value || appName || "myapp"
+  return (
+    source
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/^-+|-+$/g, "") || "myapp"
+  )
+}
+
+type PreviewDomainType = "appbox" | "custom"
+
+function PreviewDomainSection({
+  appName,
+  placeholders,
+  domainType,
+  onDomainTypeChange
+}: {
+  appName: string
+  placeholders?: InstallPreviewProps["domainPlaceholders"]
+  domainType: PreviewDomainType
+  onDomainTypeChange: (type: PreviewDomainType) => void
+}) {
+  const tDomain = useTranslations("appstore.install.domain")
+  const tPreviewDomain = useTranslations("site.install_preview.domain")
+  const appboxSubdomain = getPreviewSubdomain(appName, placeholders?.subdomain)
+  const appboxDomain = placeholders?.appboxDomain ?? "steve.appboxes.co"
+  const customDomain = "toast.com"
+  const customSubdomain = "steveloves"
+  const fullAppboxDomain = `${appboxSubdomain}.${appboxDomain}`
+  const fullCustomDomain = `${customSubdomain}.${customDomain}`
+  const serverIp = "79.140.195.16"
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">
+          {tDomain("domainType")}
+        </Label>
+        <div className="flex w-fit gap-0.5 rounded-md border bg-muted/50 p-0.5">
+          {(["appbox", "custom"] as const).map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => onDomainTypeChange(type)}
+              className={`rounded px-3 py-1 text-sm font-medium transition-all ${
+                domainType === type
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {type === "appbox"
+                ? tDomain("typeAppbox")
+                : tDomain("typeCustom")}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {domainType === "appbox" ? (
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">
+            {tDomain("subdomain")}
+            <span className="ml-1 text-destructive">*</span>
+          </Label>
+          <div className="flex items-center gap-0">
+            <Input
+              readOnly
+              value={appboxSubdomain}
+              className="pointer-events-none z-10 rounded-r-none bg-muted/30"
+            />
+            <div className="flex h-9 items-center whitespace-nowrap rounded-r-md border border-l-0 bg-muted px-3 text-sm text-muted-foreground">
+              .{appboxDomain}
+            </div>
+          </div>
+          <p className="text-xs text-emerald-600 dark:text-emerald-400">
+            ✓ {fullAppboxDomain}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">
+              {tDomain("baseDomain")}
+              <span className="ml-1 text-destructive">*</span>
+            </Label>
+            <div className="flex h-9 items-center justify-between rounded-md border bg-muted/30 px-3 text-sm">
+              <span>{customDomain}</span>
+              <ChevronDown className="size-4 text-muted-foreground" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">
+              {tDomain("subdomain")}
+              <span className="ml-1 text-destructive">*</span>
+            </Label>
+            <div className="flex items-center gap-0">
+              <Input
+                disabled
+                value={customSubdomain}
+                className="z-10 rounded-r-none disabled:cursor-default disabled:opacity-100"
+              />
+              <div className="flex h-9 items-center whitespace-nowrap rounded-r-md border border-l-0 bg-muted px-3 text-sm text-muted-foreground">
+                .{customDomain}
+              </div>
+            </div>
+            <p className="text-xs text-emerald-600 dark:text-emerald-400">
+              ✓ {fullCustomDomain}
+            </p>
+          </div>
+
+          <div className="space-y-3 rounded-md border bg-muted/30 p-3">
+            <p className="text-sm font-medium text-foreground">
+              {tDomain("dnsSetupTitle")}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {tDomain("dnsInstruction")}
+            </p>
+
+            <div className="space-y-1.5">
+              <div className="grid grid-cols-[auto_1fr_auto] gap-1.5 px-1 font-mono text-xs text-muted-foreground">
+                <span>{tPreviewDomain("recordType")}</span>
+                <span>{tPreviewDomain("recordHost")}</span>
+                <span>{tPreviewDomain("recordValue")}</span>
+              </div>
+              <div className="grid grid-cols-[auto_1fr_auto] items-center gap-1.5 rounded-md border bg-background px-3 py-2 font-mono text-sm">
+                <span className="rounded bg-muted px-1.5 py-0.5 text-xs font-semibold">
+                  A
+                </span>
+                <span className="flex items-center gap-1.5 truncate">
+                  <span className="truncate font-medium">
+                    {fullCustomDomain}
+                  </span>
+                  <Copy className="size-3.5 shrink-0 text-muted-foreground" />
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="font-medium">{serverIp}</span>
+                  <Copy className="size-3.5 text-muted-foreground" />
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="flex w-full items-center justify-between rounded-md border border-dashed px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <span>{tPreviewDomain("needHelp")}</span>
+              <ChevronDown className="size-3.5 text-muted-foreground" />
+            </button>
+
+            <div className="flex items-start gap-2 text-sm text-destructive">
+              <XCircle className="mt-0.5 size-4 shrink-0" />
+              <div>
+                <p>{tDomain("dnsNotPointing")}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {tDomain("dnsResolvedTo", { ip: "parking.toast.com." })}
+                </p>
+              </div>
+            </div>
+
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              disabled
+              className="w-full disabled:cursor-default disabled:opacity-100"
+            >
+              {tDomain("retryVerify")}
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PreviewBoostSlider({
   baseMemory,
   baseCpus,
   appSlotsCost
@@ -164,110 +380,335 @@ function StaticBoostPreview({
   baseCpus: number
   appSlotsCost: number
 }) {
-  const boostSlots = 2
-  const multiplier = 1 + boostSlots * 0.1
-  const previewMemory = baseMemory * multiplier
-  const previewCpus = baseCpus > 0 ? baseCpus * multiplier : 0
-  const progress = 0.25
+  const t = useTranslations("appstore.install.boost")
+  const [boostSlots, setBoostSlots] = useState(4)
+  const cyloFreeSlots = 21
+  const maxInstallBoostSlots = Math.max(0, cyloFreeSlots - appSlotsCost)
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <div className="inline-flex items-center gap-1.5 text-sm font-medium">
-          <Sparkles className="size-4 text-primary" />
-          Per-App Boost
-        </div>
-        <div className="text-sm font-semibold tabular-nums">
-          {boostSlots} / 8
-        </div>
-      </div>
+    <BoostSlider
+      value={Math.min(boostSlots, maxInstallBoostSlots)}
+      max={maxInstallBoostSlots}
+      boostIncrement={0.1}
+      maxBoostMultiplier={8}
+      baseMemory={baseMemory}
+      baseCpus={baseCpus}
+      appSlotsCost={appSlotsCost}
+      cyloFreeSlots={cyloFreeSlots}
+      onChange={setBoostSlots}
+      showUpgradeCta={false}
+      labels={{
+        title: t("title"),
+        resourcePreview: t("resourcePreview"),
+        multiplier: t("multiplier"),
+        slotCost: t("slotCost"),
+        ram: t("ram"),
+        cpus: t("cpus")
+      }}
+    />
+  )
+}
 
-      {/* Static slider visual */}
-      <div className="relative py-2">
-        <div className="relative h-2.5 w-full rounded-full bg-muted">
-          <div
-            className="absolute inset-y-0 left-0 rounded-full"
-            style={{
-              width: `${progress * 100}%`,
-              background: "linear-gradient(90deg, #6366f1 0%, #7c3aed 100%)"
+function AnnotationCard({
+  className,
+  eyebrow,
+  title,
+  body,
+  link
+}: {
+  className: string
+  eyebrow: string
+  title: string
+  body: string
+  link?: {
+    href: string
+    label: string
+  }
+}) {
+  return (
+    <div
+      className={`pointer-events-auto absolute overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/90 p-3 text-left shadow-xl shadow-slate-200/60 backdrop-blur-md dark:border-white/10 dark:bg-[#070912] dark:shadow-black/30 ${className}`}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.055)_1px,transparent_1px)] bg-size-[48px_48px] opacity-70 mask-[linear-gradient(180deg,black,rgba(0,0,0,0.84)_52%,transparent_88%)] dark:bg-[linear-gradient(rgba(255,255,255,0.056)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.056)_1px,transparent_1px)] dark:opacity-70" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/80 to-transparent dark:via-white/20" />
+      <div className="relative mb-1 flex items-center gap-2">
+        <span className="size-1.5 rounded-full bg-primary shadow-[0_0_14px_hsl(var(--primary))]" />
+        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
+          {eyebrow}
+        </span>
+      </div>
+      <p className="relative text-sm font-semibold leading-snug text-slate-950 dark:text-white">
+        {title}
+      </p>
+      <p className="relative mt-1 text-xs leading-relaxed text-slate-600 dark:text-white/60">
+        {body}
+      </p>
+      {link && (
+        <a
+          href={link.href}
+          className="relative mt-2 inline-flex text-xs font-medium text-primary underline-offset-4 hover:underline"
+        >
+          {link.label}
+        </a>
+      )}
+    </div>
+  )
+}
+
+type AnnotationConnector = {
+  start: [number, number]
+  end: [number, number]
+  bend?: number
+}
+
+function AnnotationConnectors({
+  domainType,
+  showBoost,
+  showDomainPreview
+}: {
+  domainType: PreviewDomainType
+  showBoost: boolean
+  showDomainPreview: boolean
+}) {
+  const customDomain = domainType === "custom"
+  const connectors: AnnotationConnector[] = [
+    {
+      start: [800, 124],
+      end: [684, 166],
+      bend: 22
+    }
+  ]
+
+  if (showBoost) {
+    connectors.push(
+      {
+        start: [114, 235],
+        end: [374, 245],
+        bend: -22
+      },
+      {
+        start: [800, 348],
+        end: [628, 395],
+        bend: -20
+      }
+    )
+  }
+
+  if (showDomainPreview) {
+    connectors.push(
+      customDomain
+        ? {
+            start: [800, 690],
+            end: [540, 600],
+            bend: 20
+          }
+        : {
+            start: [800, 574],
+            end: [540, 525],
+            bend: 20
+          },
+      customDomain
+        ? {
+            start: [224, 660],
+            end: [430, 750],
+            bend: -30
+          }
+        : {
+            start: [224, 560],
+            end: [414, 700],
+            bend: -42
+          }
+    )
+  }
+
+  return (
+    <svg
+      className="absolute inset-0 size-full overflow-visible"
+      fill="none"
+      role="presentation"
+    >
+      {connectors.map(({ start, end, bend = 0 }, index) => {
+        const midX = (start[0] + end[0]) / 2
+        const controlY = (start[1] + end[1]) / 2 + bend
+        const d = `M ${start[0]} ${start[1]} C ${midX} ${controlY}, ${midX} ${controlY}, ${end[0]} ${end[1]}`
+
+        return (
+          <g key={`${start.join("-")}-${end.join("-")}-${index}`}>
+            <path
+              d={d}
+              stroke="hsl(var(--primary))"
+              strokeOpacity="0.75"
+              strokeWidth="1.25"
+              strokeDasharray="6 8"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+            <circle
+              cx={end[0]}
+              cy={end[1]}
+              r="3"
+              className="fill-background stroke-primary/70"
+              strokeWidth="1.25"
+            />
+            <circle
+              cx={end[0]}
+              cy={end[1]}
+              r="8"
+              className="fill-primary/30"
+            >
+              <animate
+                attributeName="r"
+                values="5;10;5"
+                dur="3s"
+                begin={`${index * 0.18}s`}
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="1;0;1"
+                dur="3s"
+                begin={`${index * 0.18}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        )
+      })}
+    </svg>
+  )
+}
+
+function PreviewAnnotationLayer({
+  domainType,
+  showBoost,
+  showDomainPreview
+}: {
+  domainType: PreviewDomainType
+  showBoost: boolean
+  showDomainPreview: boolean
+}) {
+  const t = useTranslations("site.install_preview.annotations")
+  const customDomain = domainType === "custom"
+
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 z-20 hidden lg:block"
+    >
+      <AnnotationConnectors
+        domainType={domainType}
+        showBoost={showBoost}
+        showDomainPreview={showDomainPreview}
+      />
+
+      <AnnotationCard
+        className="right-0 top-[76px] w-56"
+        eyebrow={t("select_appbox.eyebrow")}
+        title={t("select_appbox.title")}
+        body={t("select_appbox.body")}
+      />
+
+      {showBoost && (
+        <>
+          <AnnotationCard
+            className="left-0 top-[136px] w-56"
+            eyebrow={t("boost.eyebrow")}
+            title={t("boost.title")}
+            body={t("boost.body")}
+            link={{
+              href: "/?faq=resource_multipliers#faq",
+              label: t("boost.link")
             }}
           />
-          {/* Notch dots */}
-          {Array.from({ length: 9 }).map((_, i) => {
-            const ratio = i / 8
-            const filled = i <= boostSlots
-            return (
-              <div
-                key={i}
-                className={`absolute top-1/2 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full border transition-all ${filled ? "border-white/70 bg-white/80" : "border-border bg-muted"}`}
-                style={{ left: `${ratio * 100}%` }}
-              />
-            )
-          })}
-          {/* Thumb */}
-          <div
-            className="absolute top-1/2 z-20 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-background/60 shadow-[0_0_0_4px_rgba(99,102,241,0.18)] backdrop-blur-xs"
-            style={{ left: `${progress * 100}%` }}
-          />
-        </div>
-      </div>
 
-      <div className="rounded-xl border bg-muted/20 p-3">
-        <div className="mb-2 inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
-          <Zap className="size-3.5 text-amber-500" />
-          Resource Preview
-        </div>
-        <div className="grid gap-2 sm:grid-cols-2">
-          <div className="rounded-md bg-background/70 px-3 py-2">
-            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-              Multiplier
-            </p>
-            <p className="text-sm font-semibold tabular-nums">
-              {multiplier.toFixed(1)}x
-            </p>
-          </div>
-          <div className="rounded-md bg-background/70 px-3 py-2">
-            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-              Slot Cost
-            </p>
-            <p className="text-sm font-semibold tabular-nums">
-              {appSlotsCost + boostSlots}
-              <span className="text-muted-foreground"> / 8</span>
-            </p>
-          </div>
-          <div className="rounded-md bg-background/70 px-3 py-2">
-            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-              RAM
-            </p>
-            <p className="text-sm font-semibold tabular-nums">
-              {previewMemory.toFixed(2)} GB
-            </p>
-          </div>
-          <div className="rounded-md bg-background/70 px-3 py-2">
-            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-              CPUs
-            </p>
-            <p className="text-sm font-semibold tabular-nums">
-              {previewCpus > 0 ? previewCpus.toFixed(2) : "Shared"}
-            </p>
-          </div>
-        </div>
-      </div>
+          <AnnotationCard
+            className="right-0 top-[286px] w-56"
+            eyebrow={t("resource_preview.eyebrow")}
+            title={t("resource_preview.title")}
+            body={t("resource_preview.body")}
+          />
+        </>
+      )}
+
+      {showDomainPreview && (
+        <>
+          <AnnotationCard
+            className={
+              customDomain
+                ? "right-0 top-[620px] w-56"
+                : "right-0 top-[520px] w-56"
+            }
+            eyebrow={
+              customDomain
+                ? t("domains.custom.eyebrow")
+                : t("domains.appbox.eyebrow")
+            }
+            title={
+              customDomain
+                ? t("domains.custom.title")
+                : t("domains.appbox.title")
+            }
+            body={
+              customDomain
+                ? t("domains.custom.body")
+                : t("domains.appbox.body")
+            }
+          />
+
+          {customDomain ? (
+            <>
+              <AnnotationCard
+                className="left-0 top-[596px] w-56"
+                eyebrow={t("dns.eyebrow")}
+                title={t("dns.title")}
+                body={t("dns.body")}
+              />
+            </>
+          ) : (
+            <>
+              <AnnotationCard
+                className="left-0 top-[520px] w-56"
+                eyebrow={t("configuration.eyebrow")}
+                title={t("configuration.title")}
+                body={t("configuration.body")}
+              />
+            </>
+          )}
+        </>
+      )}
     </div>
   )
 }
 
 export function InstallPreview({
   appName,
+  appId,
   placeholders,
   customFields,
   appSlots,
+  requiresDomain = false,
+  domainPlaceholders,
   preinstallDescription,
   baseMemory,
-  baseCpus
+  baseCpus,
+  eligiblePlans,
+  showHeader = true,
+  showFooterNote = true,
+  showAnnotations = false,
+  deployEnabled = true,
+  className = "py-16"
 }: InstallPreviewProps) {
-  if (!customFields || Object.keys(customFields).length === 0) {
-    if (!placeholders || Object.keys(placeholders).length === 0) return null
+  const t = useTranslations("site.install_preview")
+  const [deployOpen, setDeployOpen] = useState(false)
+  const [previewDomainType, setPreviewDomainType] =
+    useState<PreviewDomainType>("appbox")
+
+  const hasCustomFieldsConfig =
+    !!customFields && Object.keys(customFields).length > 0
+  const hasPlaceholders = !!placeholders && Object.keys(placeholders).length > 0
+  const showDomainPreview = requiresDomain || customFieldsUseDomain(customFields)
+
+  if (!hasCustomFieldsConfig && !hasPlaceholders && !showDomainPreview) {
+    return null
   }
 
   const visibleFields = customFields
@@ -278,38 +719,70 @@ export function InstallPreview({
 
   const hasRealFields = visibleFields.length > 0
   const slotCount = appSlots ?? 1
-  const showBoost = (baseMemory ?? 0) > 0
+  const showBoost = baseMemory != null && baseCpus != null
 
   return (
-    <section className="py-16">
-      <div className="mx-auto max-w-lg">
-        <h2 className="text-center font-heading text-4xl font-bold tracking-tight sm:text-5xl">
-          <span className="bg-linear-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-            Install in seconds
-          </span>
-        </h2>
-        <p className="mx-auto mb-8 mt-6 max-w-2xl text-center text-lg leading-relaxed text-muted-foreground">
-          Pick your Appbox, fill in a few fields, and {appName} is live.
-        </p>
+    <section className={className}>
+      <div
+        className={
+          showAnnotations
+            ? "relative mx-auto max-w-5xl"
+            : "relative mx-auto max-w-lg"
+        }
+      >
+        {showHeader && (
+          <>
+            <h2 className="text-center font-heading text-4xl font-bold tracking-tight sm:text-5xl">
+              <span className="bg-linear-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
+                {t("headline")}
+              </span>
+            </h2>
+            <p className="mx-auto mb-8 mt-6 max-w-2xl text-center text-lg leading-relaxed text-muted-foreground">
+              {t("description", { appName })}
+            </p>
+          </>
+        )}
 
-        <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+        {showAnnotations && (
+          <PreviewAnnotationLayer
+            domainType={previewDomainType}
+            showBoost={showBoost}
+            showDomainPreview={showDomainPreview}
+          />
+        )}
+
+        <div className="relative z-10 mx-auto max-w-lg overflow-hidden rounded-xl border bg-card shadow-sm">
           <div className="border-b bg-muted/30 px-6 py-4">
-            <h3 className="text-lg font-semibold">Install {appName}</h3>
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <h3 className="text-lg font-semibold">
+                  {t("dialog_title", { appName })}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {t("requires_slots", { count: slotCount })}
+                </p>
+              </div>
+              <span className="rounded-full border bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                {t("preview_badge")}
+              </span>
+            </div>
             <p className="text-sm text-muted-foreground">
-              Requires {slotCount} App Slot{slotCount !== 1 ? "s" : ""}
+              {t("demo_note")}
             </p>
           </div>
 
           <div className="space-y-5 px-6 py-5">
             {/* Appbox selector preview */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Select Appbox</Label>
+              <Label className="text-sm font-medium">
+                {t("select_appbox")}
+              </Label>
               <div className="flex items-center justify-between rounded-md border bg-muted/30 px-3 py-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Package className="size-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">My Appbox</span>
+                  <span className="text-muted-foreground">steve</span>
                   <span className="text-xs text-muted-foreground">
-                    (8 slots free)
+                    {t("slots_free", { count: 21 })}
                   </span>
                 </div>
                 <ChevronDown className="size-4 text-muted-foreground" />
@@ -318,10 +791,19 @@ export function InstallPreview({
 
             {/* Boost slider preview */}
             {showBoost && (
-              <StaticBoostPreview
+              <PreviewBoostSlider
                 baseMemory={baseMemory!}
                 baseCpus={baseCpus!}
                 appSlotsCost={slotCount}
+              />
+            )}
+
+            {showDomainPreview && (
+              <PreviewDomainSection
+                appName={appName}
+                placeholders={domainPlaceholders}
+                domainType={previewDomainType}
+                onDomainTypeChange={setPreviewDomainType}
               />
             )}
 
@@ -423,20 +905,44 @@ export function InstallPreview({
                 })}
           </div>
 
-          <div className="flex items-center justify-end gap-3 border-t bg-muted/10 px-6 py-4">
-            <Button variant="outline" disabled className="pointer-events-none">
-              Cancel
-            </Button>
-            <Button disabled className="pointer-events-none opacity-80">
-              Install
-            </Button>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t bg-muted/10 px-6 py-4">
+            <p className="text-xs text-muted-foreground">
+              {t("ready_note")}
+            </p>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                disabled
+                className="pointer-events-none"
+              >
+                {t("cancel")}
+              </Button>
+              <Button
+                onClick={() => deployEnabled && setDeployOpen(true)}
+                disabled={!deployEnabled}
+                className={deployEnabled ? undefined : "pointer-events-none"}
+              >
+                {t("install")}
+              </Button>
+            </div>
           </div>
         </div>
 
-        <p className="mt-4 text-center text-xs text-muted-foreground">
-          This is a preview of the install form. Sign up to deploy for real.
-        </p>
+        {showFooterNote && (
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            {t("footer_note")}
+          </p>
+        )}
       </div>
+
+      {deployEnabled && (
+        <DeployDialog
+          appId={appId}
+          open={deployOpen}
+          onOpenChange={setDeployOpen}
+          eligiblePlans={eligiblePlans}
+        />
+      )}
     </section>
   )
 }

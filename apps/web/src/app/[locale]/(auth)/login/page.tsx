@@ -5,10 +5,11 @@ import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
-import { ArrowLeft, Loader2 } from "lucide-react"
+import { ArrowLeft, Info, Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -35,6 +36,7 @@ export default function LoginPage() {
     redirect.startsWith("/") && !redirect.startsWith("//")
       ? redirect
       : "/dashboard"
+  const isAppInstallRedirect = safeRedirect.startsWith("/appstore/app/")
 
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [twoFactorToken, setTwoFactorToken] = useState("")
@@ -284,6 +286,22 @@ export default function LoginPage() {
         </p>
       </div>
 
+      {isAppInstallRedirect && (
+        <Alert>
+          <Info className="size-4" />
+          <AlertTitle>{t("appbox_required_title")}</AlertTitle>
+          <AlertDescription className="space-y-2 text-muted-foreground">
+            <p>{t("appbox_required_description")}</p>
+            <Link
+              href="/#plans-section"
+              className="inline-flex font-medium text-foreground underline-offset-4 hover:underline"
+            >
+              {t("appbox_required_link")}
+            </Link>
+          </AlertDescription>
+        </Alert>
+      )}
+
       <form
         onSubmit={loginForm.handleSubmit(onLoginSubmit)}
         className="space-y-4"
@@ -340,10 +358,10 @@ export default function LoginPage() {
       <p className="text-center text-xs text-muted-foreground">
         {t("external_signup")}{" "}
         <Link
-          href="/"
+          href="/#plans-section"
           className="text-foreground underline-offset-4 hover:underline"
         >
-          appbox.co
+          {t("external_signup_link")}
         </Link>
       </p>
     </div>

@@ -32,6 +32,8 @@ export interface AppDetails {
   icon_image: string
   devsite: string
   categories: string[]
+  RequiresDomain?: number
+  subdomain?: string | null
   marketing_content?: MarketingContent | null
   versions?: AppVersion[]
   customFields?: Record<string, CustomField>
@@ -39,19 +41,45 @@ export interface AppDetails {
   custom_field_postinstall_description?: string | null
 }
 
-async function fetchAppDetails(appName: string): Promise<AppDetails> {
-  // Convert display name to API format (lowercase, spaces to underscores)
-  const formattedName = appName.toLowerCase().replace(/\s+/g, "-")
+const PUBLIC_APP_ENDPOINT = "https://api.appbox.co/v1/apps/public/app"
 
-  const response = await fetch(
-    `https://api.appbox.co/v1/apps/public/app/${formattedName}`
-  )
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch app details for ${appName}`)
+function getLookupCandidates(appName: string): string[] {
+  let decodedName = appName
+  try {
+    decodedName = decodeURIComponent(appName)
+  } catch {
+    // Keep the original value if the route segment is not URI encoded.
   }
 
-  return response.json()
+  const trimmedName = decodedName.trim()
+  const candidates = [trimmedName]
+
+  if (trimmedName.includes("-")) {
+    candidates.push(trimmedName.replace(/-/g, " "))
+  }
+
+  return [...new Set(candidates.filter(Boolean))]
+}
+
+async function fetchAppDetails(appName: string): Promise<AppDetails> {
+  const candidates = getLookupCandidates(appName)
+  let lastError: Error | null = null
+
+  for (const candidate of candidates) {
+    const response = await fetch(
+      `${PUBLIC_APP_ENDPOINT}/${encodeURIComponent(candidate)}`
+    )
+
+    if (response.ok) {
+      return response.json()
+    }
+
+    lastError = new Error(
+      `Failed to fetch app details for ${appName}: ${response.status} ${response.statusText}`
+    )
+  }
+
+  throw lastError ?? new Error(`Failed to fetch app details for ${appName}`)
 }
 
 export function useAppDetails(appName: string | null) {

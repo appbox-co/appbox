@@ -48,6 +48,16 @@ function formatFixed(value: number, fraction = 1) {
   return Number.isFinite(value) ? value.toFixed(fraction) : "0.0"
 }
 
+function formatResourcePreview(value: number, baseValue: number, fraction = 2) {
+  if (baseValue === 0) return "∞"
+  return formatFixed(value, fraction)
+}
+
+function formatMemoryPreview(value: number, baseValue: number) {
+  if (baseValue === 0) return "∞"
+  return `${formatFixed(value, 2)} GB`
+}
+
 function gradientForProgress(progress: number) {
   if (progress <= 0.3) {
     return "linear-gradient(90deg, #6366f1 0%, #7c3aed 100%)"
@@ -366,7 +376,7 @@ export function BoostSlider({
               {labels?.ram ?? "RAM"}
             </p>
             <p className="text-sm font-semibold tabular-nums">
-              {formatFixed(previewMemory, 2)} GB
+              {formatMemoryPreview(previewMemory, baseMemory)}
             </p>
           </div>
           <div className="rounded-md bg-background/70 px-3 py-2">
@@ -374,7 +384,7 @@ export function BoostSlider({
               {labels?.cpus ?? "CPUs"}
             </p>
             <p className="text-sm font-semibold tabular-nums">
-              {formatFixed(previewCpus, 2)}
+              {formatResourcePreview(previewCpus, baseCpus)}
             </p>
           </div>
         </div>

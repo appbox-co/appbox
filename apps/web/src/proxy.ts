@@ -44,7 +44,9 @@ function isLoginRoute(pathname: string): boolean {
 function sanitizeRedirectTarget(target: string | null): string {
   if (!target) return "/dashboard"
   if (!target.startsWith("/") || target.startsWith("//")) return "/dashboard"
-  if (target === "/login") return "/dashboard"
+  if (normalizeAuthPath(target.split(/[?#]/, 1)[0]) === "/login") {
+    return "/dashboard"
+  }
   return target
 }
 
@@ -64,10 +66,10 @@ export function proxy(request: NextRequest) {
 
   // If a user is already authenticated, don't let them stay on the login page.
   if (isLoginRoute(pathname) && token) {
-    const url = request.nextUrl.clone()
-    url.pathname = sanitizeRedirectTarget(url.searchParams.get("redirect"))
-    url.search = ""
-    return NextResponse.redirect(url)
+    const redirectTarget = sanitizeRedirectTarget(
+      request.nextUrl.searchParams.get("redirect")
+    )
+    return NextResponse.redirect(new URL(redirectTarget, request.url))
   }
 
   // Check if this is a protected route
@@ -76,8 +78,11 @@ export function proxy(request: NextRequest) {
       const locale = getLocaleFromPath(pathname)
       const loginPath = locale ? `/${locale}/login` : "/login"
       const url = request.nextUrl.clone()
+      const redirectTarget = `${pathname}${request.nextUrl.search}`
+
       url.pathname = loginPath
-      url.searchParams.set("redirect", pathname)
+      url.search = ""
+      url.searchParams.set("redirect", redirectTarget)
       return NextResponse.redirect(url)
     }
   }

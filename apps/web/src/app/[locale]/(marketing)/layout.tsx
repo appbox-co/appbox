@@ -22,7 +22,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
         <SiteFooter />
       </div>
 
-      <div className="fixed left-0 top-0 size-full bg-linear-to-b from-[#a277ff] via-transparent to-transparent opacity-10" />
+      <div className="pointer-events-none fixed left-0 top-0 size-full bg-linear-to-b from-[#a277ff] via-transparent to-transparent opacity-10" />
     </div>
   )
 }

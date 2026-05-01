@@ -1,16 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog"
+  DeployDialog,
+  type EligiblePlanOption
+} from "@/components/marketing/deploy-dialog"
+import { Button } from "@/components/ui/button"
 
 interface DeployButtonProps {
   appId: string | number
@@ -19,29 +14,15 @@ interface DeployButtonProps {
   dialogQuestion: string
   yesText: string
   noText: string
+  eligiblePlans?: EligiblePlanOption[]
 }
 
 export default function DeployButton({
   appId,
   deployText,
-  dialogTitle,
-  dialogQuestion,
-  yesText,
-  noText
+  eligiblePlans
 }: DeployButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
-
-  const handleYes = () => {
-    // Redirect to appbox with app ID
-    window.location.href = `/appstore/app/${appId}`
-    setIsOpen(false)
-  }
-
-  const handleNo = () => {
-    router.push("/#plans-section")
-    setIsOpen(false)
-  }
 
   return (
     <>
@@ -49,20 +30,12 @@ export default function DeployButton({
         {deployText}
       </Button>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{dialogTitle}</DialogTitle>
-            <DialogDescription>{dialogQuestion}</DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="flex sm:justify-between">
-            <Button variant="outline" onClick={handleNo}>
-              {noText}
-            </Button>
-            <Button onClick={handleYes}>{yesText}</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeployDialog
+        appId={appId}
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        eligiblePlans={eligiblePlans}
+      />
     </>
   )
 }

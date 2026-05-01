@@ -36,7 +36,7 @@ export async function SiteHeader() {
           }}
         />
       </noscript>
-      <div className="absolute inset-0 backdrop-blur-sm"></div>
+      <div className="pointer-events-none absolute inset-0 backdrop-blur-sm"></div>
       <div className="container relative flex h-14 max-w-(--breakpoint-2xl) items-center">
         <MainNav />
 
