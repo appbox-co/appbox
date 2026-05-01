@@ -312,11 +312,7 @@ export function CyloCard({ cylo, className, detailHref }: CyloCardProps) {
 
         {/* ── Footer: app icons ──────────────────────────────────────────── */}
         <div className="mt-auto flex items-center gap-2">
-          <div
-            className="min-w-0 flex-1"
-            onClick={(event) => event.stopPropagation()}
-            onKeyDown={(event) => event.stopPropagation()}
-          >
+          <div className="min-w-0 flex-1">
             <AppIconStrip
               pinnedApps={pinnedApps}
               installedApps={installedApps}

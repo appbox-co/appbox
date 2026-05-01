@@ -257,11 +257,7 @@ export function ServiceOverviewCard({
 
         {/* Footer: app icons (pinned first) */}
         <div className="mt-auto flex items-center gap-2 px-4 pb-4">
-          <div
-            className="min-w-0 flex-1"
-            onClick={(event) => event.stopPropagation()}
-            onKeyDown={(event) => event.stopPropagation()}
-          >
+          <div className="min-w-0 flex-1">
             <AppIconStrip
               pinnedApps={visiblePinnedApps}
               installedApps={visibleInstalledApps}
