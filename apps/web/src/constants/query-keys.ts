@@ -45,9 +45,19 @@ export const queryKeys = {
     byCylo: (cyloId: number) => ["pinnedApps", "cylo", cyloId] as const
   },
   comments: {
-    byApp: (appId: number) => ["comments", "app", appId] as const,
-    byType: (type: string, relId: number, token?: string) =>
-      ["comments", "type", type, relId, token ?? null] as const
+    byAppPrefix: (appId: number) => ["comments", "app", appId] as const,
+    byApp: (appId: number, sortOrder = "rating") =>
+      ["comments", "app", appId, sortOrder] as const,
+    byTypeResource: (type: string, relId: number) =>
+      ["comments", "type", type, relId] as const,
+    byTypePrefix: (type: string, relId: number, token?: string) =>
+      ["comments", "type", type, relId, token ?? null] as const,
+    byType: (
+      type: string,
+      relId: number,
+      token?: string,
+      sortOrder = "rating"
+    ) => ["comments", "type", type, relId, token ?? null, sortOrder] as const
   },
   profile: {
     me: ["profile", "me"] as const

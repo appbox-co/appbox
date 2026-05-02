@@ -202,6 +202,33 @@ export function useWsSubscribe(
 
 type CommentsInfinite = InfiniteData<CommentsPage>
 
+function isMatchingOptimisticComment(
+  candidate: Comment,
+  incoming: Comment,
+  parentId: number | null
+): boolean {
+  if (candidate.id >= 0) return false
+  if (candidate.app_id !== incoming.app_id) return false
+  if (candidate.parent_id !== parentId) return false
+  if (candidate.comment.slice(0, 500) !== incoming.comment) return false
+  return (
+    candidate.user_id === 0 ||
+    incoming.user_id === 0 ||
+    candidate.user_id === incoming.user_id
+  )
+}
+
+function mergeOptimisticComment(
+  optimistic: Comment,
+  incoming: Comment
+): Comment {
+  return {
+    ...incoming,
+    children: optimistic.children.length > 0 ? optimistic.children : incoming.children,
+    uservote: optimistic.uservote
+  }
+}
+
 function addChildComment(
   list: Comment[],
   parentId: number,
@@ -209,10 +236,48 @@ function addChildComment(
 ): Comment[] {
   return list.map((c) => {
     if (c.id === parentId) {
-      return { ...c, children: [...c.children, newComment] }
+      let merged = false
+      let alreadyExists = false
+      const children = c.children.map((child) => {
+        if (child.id === newComment.id) {
+          alreadyExists = true
+          return child
+        }
+        if (isMatchingOptimisticComment(child, newComment, parentId)) {
+          merged = true
+          return mergeOptimisticComment(child, newComment)
+        }
+        return child
+      })
+      return {
+        ...c,
+        children: alreadyExists || merged ? children : [...children, newComment]
+      }
     }
     return { ...c, children: addChildComment(c.children, parentId, newComment) }
   })
+}
+
+function addTopLevelComment(
+  list: Comment[],
+  newComment: Comment
+): { items: Comment[]; added: boolean } {
+  let merged = false
+  let alreadyExists = false
+  const items = list.map((c) => {
+    if (c.id === newComment.id) {
+      alreadyExists = true
+      return c
+    }
+    if (isMatchingOptimisticComment(c, newComment, null)) {
+      merged = true
+      return mergeOptimisticComment(c, newComment)
+    }
+    return c
+  })
+  return alreadyExists || merged
+    ? { items, added: false }
+    : { items: [newComment, ...items], added: true }
 }
 
 function patchCommentTree(
@@ -853,7 +918,7 @@ export function useWsQueryInvalidation(wsContext?: {
           const c = data as unknown as CommentCreatedData & { relid?: number }
           if (typeof c.type === "string" && typeof c.relid === "number") {
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comments.byType(c.type, c.relid)
+              queryKey: queryKeys.comments.byTypeResource(c.type, c.relid)
             })
             break
           }
@@ -873,8 +938,8 @@ export function useWsQueryInvalidation(wsContext?: {
             updated_at: c.updated_at
           }
 
-          queryClient.setQueryData<CommentsInfinite>(
-            queryKeys.comments.byApp(c.app_id),
+          queryClient.setQueriesData<CommentsInfinite>(
+            { queryKey: queryKeys.comments.byAppPrefix(c.app_id) },
             (prev) => {
               if (!prev) return prev
               return {
@@ -891,10 +956,16 @@ export function useWsQueryInvalidation(wsContext?: {
                     }
                   }
                   if (pageIndex === 0) {
+                    const { items, added } = addTopLevelComment(
+                      page.items,
+                      newComment
+                    )
                     return {
                       ...page,
-                      items: [newComment, ...page.items],
-                      totalComments: page.totalComments + 1
+                      items,
+                      totalComments: added
+                        ? page.totalComments + 1
+                        : page.totalComments
                     }
                   }
                   return page
@@ -910,14 +981,14 @@ export function useWsQueryInvalidation(wsContext?: {
           const cu = data as unknown as CommentUpdatedData & { relid?: number }
           if (typeof cu.type === "string" && typeof cu.relid === "number") {
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comments.byType(cu.type, cu.relid)
+              queryKey: queryKeys.comments.byTypeResource(cu.type, cu.relid)
             })
             break
           }
           if (typeof cu.app_id !== "number") break
 
-          queryClient.setQueryData<CommentsInfinite>(
-            queryKeys.comments.byApp(cu.app_id),
+          queryClient.setQueriesData<CommentsInfinite>(
+            { queryKey: queryKeys.comments.byAppPrefix(cu.app_id) },
             (prev) => {
               if (!prev) return prev
               return {
@@ -945,14 +1016,14 @@ export function useWsQueryInvalidation(wsContext?: {
           const cd = data as unknown as CommentDeletedData & { relid?: number }
           if (typeof cd.type === "string" && typeof cd.relid === "number") {
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comments.byType(cd.type, cd.relid)
+              queryKey: queryKeys.comments.byTypeResource(cd.type, cd.relid)
             })
             break
           }
           if (typeof cd.app_id !== "number") break
 
-          queryClient.setQueryData<CommentsInfinite>(
-            queryKeys.comments.byApp(cd.app_id),
+          queryClient.setQueriesData<CommentsInfinite>(
+            { queryKey: queryKeys.comments.byAppPrefix(cd.app_id) },
             (prev) => {
               if (!prev) return prev
               return {
@@ -976,13 +1047,13 @@ export function useWsQueryInvalidation(wsContext?: {
           const cv = data as { app_id?: number; type?: string; relid?: number }
           if (typeof cv.type === "string" && typeof cv.relid === "number") {
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comments.byType(cv.type, cv.relid)
+              queryKey: queryKeys.comments.byTypeResource(cv.type, cv.relid)
             })
             break
           }
           if (typeof cv.app_id === "number") {
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comments.byApp(cv.app_id)
+              queryKey: queryKeys.comments.byAppPrefix(cv.app_id)
             })
           }
           break

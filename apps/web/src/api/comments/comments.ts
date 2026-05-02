@@ -22,7 +22,26 @@ export interface CommentsPage {
   hasMore: boolean
 }
 
+export type CommentSortOrder = "rating" | "newest" | "oldest"
+
+export interface CreateCommentInput {
+  app_id: number
+  comment: string
+  parent_id?: number
+  optimisticAuthor?: {
+    user_id: number
+    alias: string
+    is_admin: boolean
+  }
+}
+
 const PAGE_SIZE = 25
+
+const ORDER_BY_PARAM: Record<CommentSortOrder, string> = {
+  rating: "-rating",
+  newest: "-created_at",
+  oldest: "created_at"
+}
 
 /**
  * Backend: GET /v1/comments?type=app&relid={appId}&page={page}&limit={limit}
@@ -30,7 +49,8 @@ const PAGE_SIZE = 25
  */
 export async function getComments(
   appId: number,
-  page = 1
+  page = 1,
+  sortOrder: CommentSortOrder = "rating"
 ): Promise<CommentsPage> {
   const res = await apiGet<{
     items: Comment[]
@@ -41,7 +61,8 @@ export async function getComments(
       type: "app",
       relid: String(appId),
       page: String(page),
-      limit: String(PAGE_SIZE)
+      limit: String(PAGE_SIZE),
+      orderby: ORDER_BY_PARAM[sortOrder]
     }
   })
   const items = Array.isArray(res) ? res : (res.items ?? [])
@@ -63,13 +84,15 @@ export async function getCommentsByType(
   type: string,
   relId: number,
   page = 1,
-  token?: string
+  token?: string,
+  sortOrder: CommentSortOrder = "rating"
 ): Promise<CommentsPage> {
   const params: Record<string, string> = {
     type,
     relid: String(relId),
     page: String(page),
-    limit: String(PAGE_SIZE)
+    limit: String(PAGE_SIZE),
+    orderby: ORDER_BY_PARAM[sortOrder]
   }
   if (token) {
     params.token = token
@@ -96,11 +119,7 @@ export async function getCommentsByType(
  * Backend: PUT /v1/comments (uses PUT to create, not POST)
  * Body: { type: "app", relid: appId, comment: text, parent: parentId }
  */
-export async function createComment(data: {
-  app_id: number
-  comment: string
-  parent_id?: number
-}): Promise<Comment> {
+export async function createComment(data: CreateCommentInput): Promise<Comment> {
   return apiPut<Comment>("comments", {
     type: "app",
     relid: data.app_id,

@@ -17,13 +17,19 @@ import {
   updateComment,
   voteComment,
   type Comment,
+  type CommentSortOrder,
+  type CreateCommentInput,
   type CommentsPage
 } from "../comments"
 
-export function useComments(appId: number) {
+export function useComments(
+  appId: number,
+  sortOrder: CommentSortOrder = "rating"
+) {
   return useInfiniteQuery({
-    queryKey: queryKeys.comments.byApp(appId),
-    queryFn: ({ pageParam = 1 }) => getComments(appId, pageParam as number),
+    queryKey: queryKeys.comments.byApp(appId, sortOrder),
+    queryFn: ({ pageParam = 1 }) =>
+      getComments(appId, pageParam as number, sortOrder),
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.hasMore ? (lastPageParam as number) + 1 : undefined,
@@ -31,11 +37,16 @@ export function useComments(appId: number) {
   })
 }
 
-export function useCommentsByType(type: string, relId: number, token?: string) {
+export function useCommentsByType(
+  type: string,
+  relId: number,
+  token?: string,
+  sortOrder: CommentSortOrder = "rating"
+) {
   return useInfiniteQuery({
-    queryKey: queryKeys.comments.byType(type, relId, token),
+    queryKey: queryKeys.comments.byType(type, relId, token, sortOrder),
     queryFn: ({ pageParam = 1 }) =>
-      getCommentsByType(type, relId, pageParam as number, token),
+      getCommentsByType(type, relId, pageParam as number, token, sortOrder),
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.hasMore ? (lastPageParam as number) + 1 : undefined,
@@ -75,19 +86,22 @@ export function useCreateCommentByType(
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byType(type, relId, token)
+        queryKey: queryKeys.comments.byTypePrefix(type, relId, token)
       })
     }
   })
 }
 
-export function useCreateComment(appId: number) {
+export function useCreateComment(
+  appId: number,
+  sortOrder: CommentSortOrder = "rating"
+) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: createComment,
+    mutationFn: (input: CreateCommentInput) => createComment(input),
     onMutate: async (newComment) => {
-      const queryKey = queryKeys.comments.byApp(appId)
+      const queryKey = queryKeys.comments.byApp(appId, sortOrder)
       await queryClient.cancelQueries({ queryKey })
       const previous =
         queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey)
@@ -96,12 +110,12 @@ export function useCreateComment(appId: number) {
         const optimistic: Comment = {
           id: -Date.now(),
           parent_id: newComment.parent_id ?? null,
-          user_id: 0,
+          user_id: newComment.optimisticAuthor?.user_id ?? 0,
           app_id: newComment.app_id,
           comment: newComment.comment,
           rating: 0,
-          alias: "You",
-          is_admin: false,
+          alias: newComment.optimisticAuthor?.alias ?? "You",
+          is_admin: newComment.optimisticAuthor?.is_admin ?? false,
           children: [],
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -141,14 +155,14 @@ export function useCreateComment(appId: number) {
     onError: (_err, _vars, context) => {
       if (context?.previous) {
         queryClient.setQueryData(
-          queryKeys.comments.byApp(appId),
+          queryKeys.comments.byApp(appId, sortOrder),
           context.previous
         )
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byApp(appId)
+        queryKey: queryKeys.comments.byAppPrefix(appId)
       })
     }
   })
@@ -162,7 +176,7 @@ export function useUpdateComment(appId: number) {
       updateComment(id, { comment }),
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byApp(appId)
+        queryKey: queryKeys.comments.byAppPrefix(appId)
       })
     }
   })
@@ -179,7 +193,7 @@ export function useUpdateCommentByType(
       updateComment(id, { comment }, token),
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byType(type, relId, token)
+        queryKey: queryKeys.comments.byTypePrefix(type, relId, token)
       })
     }
   })
@@ -195,7 +209,7 @@ export function useDeleteCommentByType(
     mutationFn: (id: number) => deleteComment(id, token),
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byType(type, relId, token)
+        queryKey: queryKeys.comments.byTypePrefix(type, relId, token)
       })
     }
   })
@@ -207,39 +221,41 @@ export function useDeleteComment(appId: number) {
   return useMutation({
     mutationFn: (id: number) => deleteComment(id),
     onMutate: async (id) => {
-      const queryKey = queryKeys.comments.byApp(appId)
+      const queryKey = queryKeys.comments.byAppPrefix(appId)
       await queryClient.cancelQueries({ queryKey })
-      const previous =
-        queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey)
+      const previous = queryClient.getQueriesData<InfiniteData<CommentsPage>>({
+        queryKey
+      })
 
-      if (previous) {
-        queryClient.setQueryData<InfiniteData<CommentsPage>>(queryKey, {
-          ...previous,
-          pages: previous.pages.map((page) => ({
-            ...page,
-            items: page.items
-              .filter((c) => c.id !== id)
-              .map((c) => ({
-                ...c,
-                children: c.children.filter((ch) => ch.id !== id)
-              }))
-          }))
-        })
-      }
+      queryClient.setQueriesData<InfiniteData<CommentsPage>>(
+        { queryKey },
+        (current) =>
+          current
+            ? {
+                ...current,
+                pages: current.pages.map((page) => ({
+                  ...page,
+                  items: page.items
+                    .filter((c) => c.id !== id)
+                    .map((c) => ({
+                      ...c,
+                      children: c.children.filter((ch) => ch.id !== id)
+                    }))
+                }))
+              }
+            : current
+      )
 
       return { previous }
     },
     onError: (_err, _vars, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(
-          queryKeys.comments.byApp(appId),
-          context.previous
-        )
-      }
+      context?.previous?.forEach(([key, value]) => {
+        queryClient.setQueryData(key, value)
+      })
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byApp(appId)
+        queryKey: queryKeys.comments.byAppPrefix(appId)
       })
     }
   })
@@ -264,7 +280,7 @@ export function useVoteCommentByType(
         : voteComment(id, direction, token),
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byType(type, relId, token)
+        queryKey: queryKeys.comments.byTypePrefix(type, relId, token)
       })
     }
   })
@@ -283,70 +299,72 @@ export function useVoteComment(appId: number) {
     }) => (direction === null ? deleteVote(id) : voteComment(id, direction)),
 
     onMutate: async ({ id, direction }) => {
-      const queryKey = queryKeys.comments.byApp(appId)
+      const queryKey = queryKeys.comments.byAppPrefix(appId)
       await queryClient.cancelQueries({ queryKey })
-      const previous =
-        queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey)
+      const previous = queryClient.getQueriesData<InfiniteData<CommentsPage>>({
+        queryKey
+      })
 
-      if (previous) {
-        const patch = (list: Comment[]): Comment[] =>
-          list.map((c) => {
-            const children = patch(c.children)
-            if (c.id !== id) return { ...c, children }
+      const patch = (list: Comment[]): Comment[] =>
+        list.map((c) => {
+          const children = patch(c.children)
+          if (c.id !== id) return { ...c, children }
 
-            const cur = c.uservote
-            let rating = c.rating
-            let uservote: 1 | 0 | undefined
+          const cur = c.uservote
+          let rating = c.rating
+          let uservote: 1 | 0 | undefined
 
-            if (direction === null) {
-              if (cur === 1) rating -= 1
-              else if (cur === 0) rating += 1
-              uservote = undefined
-            } else if (direction === "up") {
-              if (cur === 0) {
-                rating += 2
-                uservote = 1
-              } else {
-                rating += 1
-                uservote = 1
-              }
+          if (direction === null) {
+            if (cur === 1) rating -= 1
+            else if (cur === 0) rating += 1
+            uservote = undefined
+          } else if (direction === "up") {
+            if (cur === 0) {
+              rating += 2
+              uservote = 1
             } else {
-              if (cur === 1) {
-                rating -= 2
-                uservote = 0
-              } else {
-                rating -= 1
-                uservote = 0
-              }
+              rating += 1
+              uservote = 1
             }
+          } else {
+            if (cur === 1) {
+              rating -= 2
+              uservote = 0
+            } else {
+              rating -= 1
+              uservote = 0
+            }
+          }
 
-            return { ...c, rating, uservote, children }
-          })
-
-        queryClient.setQueryData<InfiniteData<CommentsPage>>(queryKey, {
-          ...previous,
-          pages: previous.pages.map((page) => ({
-            ...page,
-            items: patch(page.items)
-          }))
+          return { ...c, rating, uservote, children }
         })
-      }
+
+      queryClient.setQueriesData<InfiniteData<CommentsPage>>(
+        { queryKey },
+        (current) =>
+          current
+            ? {
+                ...current,
+                pages: current.pages.map((page) => ({
+                  ...page,
+                  items: patch(page.items)
+                }))
+              }
+            : current
+      )
 
       return { previous }
     },
 
     onError: (_err, _vars, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(
-          queryKeys.comments.byApp(appId),
-          context.previous
-        )
-      }
+      context?.previous?.forEach(([key, value]) => {
+        queryClient.setQueryData(key, value)
+      })
     },
 
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.comments.byApp(appId)
+        queryKey: queryKeys.comments.byAppPrefix(appId)
       })
     }
   })

@@ -21,7 +21,7 @@ import {
   ThumbsUp,
   Trash2
 } from "lucide-react"
-import type { Comment } from "@/api/comments/comments"
+import type { Comment, CommentSortOrder } from "@/api/comments/comments"
 import {
   flattenComments,
   totalCommentCount,
@@ -51,12 +51,19 @@ import { useOptionalWebSocket } from "@/providers/websocket-provider"
 
 /** When set, comments use type+relId (e.g. abuseReportUser + abuseId) instead of appId. */
 type CommentContextValue =
-  | { mode: "app"; appId: number }
-  | { mode: "byType"; type: string; relId: number; token?: string }
+  | { mode: "app"; appId: number; sortOrder: CommentSortOrder }
+  | {
+      mode: "byType"
+      type: string
+      relId: number
+      token?: string
+      sortOrder: CommentSortOrder
+    }
 
 const CommentContext = createContext<CommentContextValue>({
   mode: "app",
-  appId: 0
+  appId: 0,
+  sortOrder: "rating"
 })
 
 interface CommentsProps {
@@ -148,8 +155,12 @@ interface CommentFormProps {
 
 function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
   const ctx = useContext(CommentContext)
+  const auth = useOptionalAuth()
   const [text, setText] = useState("")
-  const createByApp = useCreateComment(ctx.mode === "app" ? ctx.appId : 0)
+  const createByApp = useCreateComment(
+    ctx.mode === "app" ? ctx.appId : 0,
+    ctx.mode === "app" ? ctx.sortOrder : "rating"
+  )
   const createByType = useCreateCommentByType(
     ctx.mode === "byType" ? ctx.type : "",
     ctx.mode === "byType" ? ctx.relId : 0,
@@ -162,7 +173,18 @@ function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
     if (!trimmed) return
     if (ctx.mode === "app") {
       createByApp.mutate(
-        { app_id: ctx.appId, comment: trimmed, parent_id: parentId },
+        {
+          app_id: ctx.appId,
+          comment: trimmed,
+          parent_id: parentId,
+          optimisticAuthor: auth
+            ? {
+                user_id: auth.user.id,
+                alias: auth.user.alias || auth.user.firstname || auth.user.email,
+                is_admin: auth.isAdmin
+              }
+            : undefined
+        },
         { onSuccess: () => setText("") }
       )
     } else {
@@ -171,7 +193,7 @@ function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
         { onSuccess: () => setText("") }
       )
     }
-  }, [text, ctx, parentId, createByApp, createByType])
+  }, [text, ctx, parentId, auth, createByApp, createByType])
 
   return (
     <div className="flex gap-2">
@@ -618,15 +640,16 @@ function CommentItem({
   )
 }
 
-type SortOrder = "rating" | "newest" | "oldest"
-
-const SORT_OPTIONS: { value: SortOrder; label: string }[] = [
+const SORT_OPTIONS: { value: CommentSortOrder; label: string }[] = [
   { value: "rating", label: "Top" },
   { value: "newest", label: "New" },
   { value: "oldest", label: "Old" }
 ]
 
-function sortComments(comments: Comment[], order: SortOrder): Comment[] {
+function sortComments(
+  comments: Comment[],
+  order: CommentSortOrder
+): Comment[] {
   const sorted = [...comments].sort((a, b) => {
     if (order === "rating")
       return (
@@ -656,19 +679,29 @@ export function Comments({
   const userId = auth?.user.id ?? -1
   const isAdmin = auth?.isAdmin ?? false
   const ws = useOptionalWebSocket()
-  const [sortOrder, setSortOrder] = useState<SortOrder>("rating")
+  const [sortOrder, setSortOrder] = useState<CommentSortOrder>("rating")
   const sentinelRef = useRef<HTMLDivElement>(null)
 
   const byType = Boolean(commentType && relId > 0)
   const ctx: CommentContextValue = byType
-    ? { mode: "byType", type: commentType!, relId, token: authToken }
-    : { mode: "app", appId: appId > 0 ? appId : 0 }
+    ? {
+        mode: "byType",
+        type: commentType!,
+        relId,
+        token: authToken,
+        sortOrder
+      }
+    : { mode: "app", appId: appId > 0 ? appId : 0, sortOrder }
 
-  const queryApp = useComments(ctx.mode === "app" ? ctx.appId : 0)
+  const queryApp = useComments(
+    ctx.mode === "app" ? ctx.appId : 0,
+    sortOrder
+  )
   const queryByType = useCommentsByType(
     ctx.mode === "byType" ? ctx.type : "",
     ctx.mode === "byType" ? ctx.relId : 0,
-    ctx.mode === "byType" ? ctx.token : undefined
+    ctx.mode === "byType" ? ctx.token : undefined,
+    sortOrder
   )
   const {
     data,
