@@ -97,7 +97,7 @@ export const config = {
     // 1. API routes
     // 2. Next.js internals
     // 3. Static files with extensions
-    "/((?!api/|_next/|_proxy/|_vercel|authors|blog-images|fonts|_static|[^/]+\\.[^/]+$).*)",
+    "/((?!api/|_next/|_proxy/|_vercel|authors|blog-images|blog-og|fonts|_static|[^/]+\\.[^/]+$).*)",
     // Documentation, blog, and feed routes
     "/([\\w-]+)?/(docs|blog|feed)/(.+)",
     // Locale routes
