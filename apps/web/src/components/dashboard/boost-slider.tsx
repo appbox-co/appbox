@@ -1,6 +1,13 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent
+} from "react"
 import confetti from "canvas-confetti"
 import { motion } from "framer-motion"
 import { ExternalLink, Sparkles, Zap } from "lucide-react"
@@ -98,6 +105,7 @@ export function BoostSlider({
     boostIncrement,
     maxBoostMultiplier
   )
+  const isDisabled = disabled || max <= 0
   const previewMemory = baseMemory * effectiveMultiplier
   const previewCpus = baseCpus * effectiveMultiplier
   const totalSlotCost = appSlotsCost + liveValue
@@ -198,6 +206,47 @@ export function BoostSlider({
     []
   )
 
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (isDisabled) return
+
+      const currentValue = lastSlotRef.current
+      const pageStep = Math.max(1, Math.ceil(max / 10))
+      let nextValue: number | null = null
+
+      switch (event.key) {
+        case "ArrowRight":
+        case "ArrowUp":
+          nextValue = currentValue + 1
+          break
+        case "ArrowLeft":
+        case "ArrowDown":
+          nextValue = currentValue - 1
+          break
+        case "PageUp":
+          nextValue = currentValue + pageStep
+          break
+        case "PageDown":
+          nextValue = currentValue - pageStep
+          break
+        case "Home":
+          nextValue = 0
+          break
+        case "End":
+          nextValue = max
+          break
+        default:
+          break
+      }
+
+      if (nextValue === null) return
+
+      event.preventDefault()
+      applyNext(clampBoost(nextValue, max))
+    },
+    [applyNext, isDisabled, max]
+  )
+
   useEffect(() => {
     setLiveValue(boundedValue)
     lastSlotRef.current = boundedValue
@@ -210,7 +259,6 @@ export function BoostSlider({
   }, [sparklePulse])
 
   const rangeGradient = gradientForProgress(progress)
-  const isDisabled = disabled || max <= 0
 
   return (
     <div className={cn("space-y-3", className)}>
@@ -240,16 +288,19 @@ export function BoostSlider({
               ref={trackRef}
               role="slider"
               tabIndex={isDisabled ? -1 : 0}
+              aria-label={labels?.title ?? "Boost Slots"}
+              aria-orientation="horizontal"
               aria-valuemin={0}
               aria-valuemax={max}
               aria-valuenow={liveValue}
               aria-disabled={isDisabled || undefined}
               className={cn(
-                "relative h-2.5 w-full rounded-full bg-muted",
+                "relative h-2.5 w-full rounded-full bg-muted focus-visible:outline-hidden focus-visible:ring-4 focus-visible:ring-ring/50 focus-visible:ring-offset-2",
                 isDisabled
                   ? "cursor-not-allowed opacity-50"
                   : "cursor-pointer touch-none select-none"
               )}
+              onKeyDown={handleKeyDown}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
