@@ -20,6 +20,12 @@ export interface CyloSummary {
   is_throttled: boolean
   is_low_quota: boolean
   package_name: string
+  domain?: string
+  domain_id?: number
+  server_id?: number
+  server_ip?: string
+  whmcs_serviceid?: string
+  created_at?: string
 }
 
 export interface MigrationProgress {
@@ -131,7 +137,13 @@ export async function getCylosSummary(userId?: number): Promise<CyloSummary[]> {
       is_migrating: !!row.migrating,
       is_throttled: !!row.is_throttled,
       is_low_quota: !!row.low_quota,
-      package_name: String(row.package_name ?? "")
+      package_name: String(row.package_name ?? ""),
+      domain: String(row.domain ?? ""),
+      domain_id: Number(row.domain_id ?? 0),
+      server_id: Number(row.server_id ?? 0),
+      server_ip: String(row.server_ip ?? ""),
+      whmcs_serviceid: String(row.whmcs_serviceid ?? ""),
+      created_at: String(row.created_at ?? "")
     }
   })
 }

@@ -18,6 +18,7 @@ import type {
   CustomField,
   CustomFieldValidation
 } from "@/api/apps/app-store"
+import type { CyloSummary } from "@/api/cylos/cylos"
 import {
   computeInstallGuards,
   fetchSearchFieldOptions,
@@ -112,6 +113,34 @@ interface ParsedInstallError {
   title: string
   details: string[]
   fieldErrors: Record<string, string>
+}
+
+function mergeCyloWithSummary(
+  summary: CyloSummary,
+  existing: Cylo | undefined,
+  userId: number
+): Cylo {
+  return {
+    id: summary.id,
+    user_id: existing?.user_id ?? userId,
+    server_id: existing?.server_id ?? summary.server_id ?? 0,
+    server_name: summary.server_name || existing?.server_name || "",
+    display_name: summary.name || existing?.display_name || "",
+    package_id: existing?.package_id ?? 0,
+    package_name: summary.package_name || existing?.package_name || "",
+    domain: summary.domain || existing?.domain || "",
+    domain_id: existing?.domain_id ?? summary.domain_id ?? 0,
+    server_ip: summary.server_ip || existing?.server_ip || "",
+    status: summary.status || existing?.status || "unknown",
+    disk_quota: existing?.disk_quota ?? summary.storage_total ?? 0,
+    disk_used: summary.storage_used ?? existing?.disk_used ?? 0,
+    app_slots: summary.app_slots_total,
+    app_slots_used: summary.app_slots_used,
+    resource_multiplier:
+      summary.resource_multiplier ?? existing?.resource_multiplier ?? 1,
+    whmcs_serviceid: summary.whmcs_serviceid || existing?.whmcs_serviceid || "",
+    created_at: summary.created_at || existing?.created_at || ""
+  }
 }
 
 function toSentenceCaseFromKey(value: string): string {
@@ -1155,17 +1184,23 @@ export function InstallDialog({
     (app.versions?.length ?? 0) === 0 && versionsLoading
 
   // Session cylos are static (set once at layout render). Merge in the live
-  // app_slots_used from useCylosSummary so slot calculations stay current
-  // after installs/uninstalls without requiring a full page reload.
+  // cylos summary so newly created Appboxes appear immediately and slot/status
+  // calculations stay current without requiring a full page reload.
   const realCylos = useMemo(() => {
     if (targetCylos) return targetCylos
     if (!cylosSummary) return sessionCylos
-    const slotMap = new Map(cylosSummary.map((s) => [s.id, s.app_slots_used]))
-    return sessionCylos.map((c) => {
-      const liveUsed = slotMap.get(c.id)
-      return liveUsed !== undefined ? { ...c, app_slots_used: liveUsed } : c
-    })
-  }, [targetCylos, sessionCylos, cylosSummary])
+    const sessionCyloById = new Map(sessionCylos.map((cylo) => [cylo.id, cylo]))
+    const mergedCylos = cylosSummary.map((summaryCylo) =>
+      mergeCyloWithSummary(
+        summaryCylo,
+        sessionCyloById.get(summaryCylo.id),
+        effectiveUserId
+      )
+    )
+    const summaryIds = new Set(cylosSummary.map((cylo) => cylo.id))
+    const sessionOnlyCylos = sessionCylos.filter((cylo) => !summaryIds.has(cylo.id))
+    return [...mergedCylos, ...sessionOnlyCylos]
+  }, [targetCylos, sessionCylos, cylosSummary, effectiveUserId])
   const migratingCyloIds = useMemo(
     () =>
       new Set(
