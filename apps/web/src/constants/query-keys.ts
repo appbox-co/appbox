@@ -74,6 +74,10 @@ export const queryKeys = {
     recent: (limit: number, locale: string) =>
       ["blogPosts", "recent", locale, limit] as const
   },
+  blogKudos: {
+    detail: (slug: string, token?: string) =>
+      ["blogKudos", slug, token ?? null] as const
+  },
   migration: {
     status: (cyloId: number) => ["migration", cyloId] as const
   },

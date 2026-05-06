@@ -212,7 +212,7 @@ export default async function BlogPage(props: BlogPageProps) {
           <Mdx code={blogPost.body.code} />
         </div>
 
-        <AuthorCard post={blogPost} />
+        <AuthorCard post={blogPost} kudosSlug={blogPost.slugAsParams} />
       </div>
 
       <div className="hidden text-sm lg:block">
