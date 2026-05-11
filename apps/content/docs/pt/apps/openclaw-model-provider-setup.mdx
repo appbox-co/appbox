@@ -4,12 +4,101 @@ description: Configure o OpenClaw com a chave de API de qualquer fornecedor de m
 sort: 1
 ---
 
-O OpenClaw é instalado sem exigir uma chave de API de modelo no Appbox.  
-Após instalar, adicione as credenciais do fornecedor no painel do OpenClaw.
+O OpenClaw é instalado sem exigir uma chave de API de modelo no Appbox.
+
+A forma recomendada de concluir a configuração é ligar-se à sua app OpenClaw por SSH e executar o assistente integrado `openclaw onboard`. O assistente é mais seguro do que editar manualmente a configuração completa, porque preserva as definições de gateway da Appbox enquanto o guia por fornecedores de modelos, chaves de API, canais, verificações de estado e skills.
+
+Se não puder ou não quiser usar SSH, use antes o [método alternativo pelo painel](#método-alternativo-configurar-a-autenticação-do-fornecedor-no-painel).
+
+## Método recomendado: entrar no OpenClaw por SSH e executar o onboarding
+
+Use este método em novas instalações e em instalações existentes que precisem de adicionar ou alterar credenciais de fornecedores de modelos.
+
+### O que precisa primeiro
+
+- A página de detalhes da sua app OpenClaw no Appbox.
+- O **Comando SSH** mostrado na secção Configuração.
+- O seu **Token do gateway / Palavra-passe SSH**. É o mesmo segredo gerado usado para iniciar sessão no painel do OpenClaw.
+- Uma conta ou chave de API de um fornecedor de modelos. Se ainda não tiver uma, veja [Obter chaves de API](#obter-chaves-de-api-com-links-para-os-painéis).
+
+A página de detalhes da app mostra o comando SSH pronto a copiar:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Página de detalhes da app OpenClaw no Appbox com o comando SSH destacado"
+  width="860"
+/>
+
+### Ligar a partir do macOS
+
+1. Abra o **Terminal** ou o **iTerm2**.
+2. Copie o **Comando SSH** da página de detalhes da app OpenClaw.
+3. Cole e execute o comando. Será semelhante a:
+
+```bash
+ssh node@o-seu-dominio-openclaw.example -p 12345
+```
+
+4. Se o macOS perguntar se confia no host, escreva `yes` e prima Enter.
+5. Quando for pedida a palavra-passe, cole o seu **Token do gateway / Palavra-passe SSH** e prima Enter. O Terminal não mostra caracteres enquanto escreve ou cola a palavra-passe.
+
+### Ligar a partir do Windows
+
+O Windows 10 e o Windows 11 incluem o cliente OpenSSH por predefinição.
+
+1. Abra o **Windows Terminal** ou o **PowerShell**.
+2. Copie o **Comando SSH** da página de detalhes da app OpenClaw.
+3. Cole e execute:
+
+```powershell
+ssh node@o-seu-dominio-openclaw.example -p 12345
+```
+
+4. Se o Windows perguntar se confia no host, escreva `yes` e prima Enter.
+5. Quando for pedida a palavra-passe, cole o seu **Token do gateway / Palavra-passe SSH** e prima Enter. O PowerShell não mostra a palavra-passe colada.
+
+Se o Windows disser que `ssh` não é reconhecido, instale **OpenSSH Client** em **Definições > Sistema > Funcionalidades opcionais**, reabra o Windows Terminal e tente novamente.
+
+### Executar o assistente de onboarding do OpenClaw
+
+Depois de a ligação SSH estar estabelecida, execute:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 no macOS ligado ao OpenClaw por SSH e a executar o comando openclaw onboard"
+  width="860"
+/>
+
+O assistente é interativo. Use estas escolhas específicas para Appbox:
+
+1. **Configuração existente:** escolha a opção para rever ou modificar a configuração atual. **Não** escolha uma reposição completa, a menos que queira reconstruir de propósito toda a configuração do OpenClaw.
+2. **Modelo e autenticação:** escolha o seu fornecedor, como OpenRouter, OpenAI, Anthropic, Google, xAI ou um fornecedor personalizado compatível com OpenAI. Cole a chave de API quando o assistente pedir. O OpenRouter é o padrão mais simples para a maioria dos utilizadores, porque uma chave pode encaminhar para muitos modelos.
+3. **Modelo predefinido:** escolha o modelo recomendado pelo assistente para esse fornecedor ou introduza manualmente um valor `provider/model`, como `openrouter/auto`.
+4. **Workspace:** mantenha o workspace predefinido, a menos que tenha um motivo específico para o alterar.
+5. **Definições do gateway:** mantenha as definições de gateway existentes da Appbox. Em particular, mantenha a autenticação por token ativa e preserve as definições atuais de porta/bind do gateway.
+6. **Canais:** configure WhatsApp, Telegram, Discord, Signal, iMessage ou outros canais agora, ou ignore-os e adicione-os mais tarde com `openclaw configure`.
+7. **Pesquisa web:** escolha um fornecedor de pesquisa se tiver um, ou ignore este passo por agora.
+8. **Instalação de daemon/serviço:** a Appbox já supervisiona o OpenClaw dentro do contentor, por isso ignore a instalação de daemon se o assistente a oferecer.
+9. **Verificação de estado:** deixe o assistente executar a verificação de estado.
+10. **Skills:** deixe o assistente verificar as skills incluídas. Escolha `npm` se ele perguntar por um gestor de pacotes Node.
+
+Quando o onboarding terminar, volte ao painel do OpenClaw. Se o painel já estava aberto, atualize-o e teste uma mensagem curta no chat.
+
+Comandos úteis por SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
 
 ## Obter chaves de API (com links para os painéis)
 
-Use estes painéis dos fornecedores para gerar chaves e depois cole-as no OpenClaw em **Config > Secrets > Raw**.
+Use estes painéis dos fornecedores para gerar chaves. Com o método recomendado por SSH, cole a chave quando `openclaw onboard` a pedir. Com o método alternativo pelo painel, funda a chave em **Config > Secrets > Raw**.
 
 ### Recomendado primeiro: OpenRouter (melhor padrão para a maioria)
 
@@ -24,10 +113,15 @@ Como obter uma chave:
 1. Aceda a [OpenRouter](https://openrouter.ai/) e inicie sessão.
 2. Abra as [definições de API Keys](https://openrouter.ai/settings/keys).
 3. Clique em **Create** e copie a chave (mostrada uma vez).
-4. Cole no OpenClaw como `models.providers.openrouter.apiKey`.
+4. Use-a quando o assistente do OpenClaw pedir a sua chave de API do OpenRouter. Para o método alternativo pelo painel, a chave de configuração é `models.providers.openrouter.apiKey`.
 
-<img src="/blog-images/openclaw-openrouter-api-key-tutorial.webp" alt="Captura da página de chaves API do OpenRouter de um tutorial público" width="860" />
-Tutorial de origem: [How to Get an OpenRouter API Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Captura da página de chaves API do OpenRouter de um tutorial público"
+  width="860"
+/>
+Tutorial de origem: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
 
 ### OpenAI
 
@@ -38,8 +132,13 @@ Como obter uma chave:
 3. Clique em **Create new secret key**.
 4. Copie de imediato (a OpenAI só mostra o valor completo uma vez).
 
-<img src="/blog-images/openclaw-openai-api-key-tutorial.jpg" alt="Captura das definições de chave API da OpenAI de um tutorial público" width="860" />
-Tutorial de origem: [How to Get an OpenAI API Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Captura das definições de chave API da OpenAI de um tutorial público"
+  width="860"
+/>
+Tutorial de origem: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
 
 ### Anthropic
 
@@ -50,8 +149,13 @@ Como obter uma chave:
 3. Clique em **Create Key**.
 4. Copie a chave de imediato (mostrada uma vez).
 
-<img src="/blog-images/openclaw-anthropic-api-key-tutorial.png" alt="Captura da criação de chave API Anthropic de um tutorial público" width="860" />
-Tutorial de origem: [How to get your Claude API key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Captura da criação de chave API Anthropic de um tutorial público"
+  width="860"
+/>
+Tutorial de origem: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
 
 ### Google (Gemini via AI Studio)
 
@@ -62,21 +166,28 @@ Como obter uma chave:
 3. Clique em **Create API key** (projeto novo ou existente).
 4. Copie e guarde a chave.
 
-<img src="/blog-images/openclaw-google-api-key-tutorial.png" alt="Captura da criação de chave API no Google AI Studio de um tutorial público" width="860" />
-Tutorial de origem: [Get Google AI API Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Captura da criação de chave API no Google AI Studio de um tutorial público"
+  width="860"
+/>
+Tutorial de origem: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
 
 > Nota: os painéis dos fornecedores mudam com frequência e podem pedir login conforme o estado da sessão.
 
-## Onde configurar a autenticação do fornecedor
+## Método alternativo: configurar a autenticação do fornecedor no painel
+
+Use este método apenas se SSH não estiver disponível ou se preferir configuração manual. O editor Raw do painel funciona, mas edita o objeto completo de configuração do OpenClaw de uma só vez. Tenha cuidado para fundir as definições do fornecedor no ficheiro existente em vez de substituir os predefinidos de gateway e skills da Appbox.
 
 1. Abra o URL do painel OpenClaw na página de detalhes da app instalada.
 2. Vá a **Config > Secrets**.
 3. Escolha **Raw** em vez de Form.
 4. Clique no botão para revelar valores sensíveis (ícone de olho riscado).
-5. **Mescle** as definições do fornecedor dos exemplos abaixo com a sua configuração existente (veja [Como isto se encaixa no ficheiro completo](#como-isto-se-encaixa-no-ficheiro-completo)) — não substitua o ficheiro inteiro a menos que pretenda repor o gateway, skills e outros predefinidos da Appbox.
+5. **Mescle** as definições do fornecedor dos exemplos abaixo com a sua configuração existente (veja [Como a configuração manual do fornecedor se encaixa no ficheiro completo](#como-a-configuração-manual-do-fornecedor-se-encaixa-no-ficheiro-completo)) — não substitua o ficheiro inteiro a menos que pretenda repor o gateway, skills e outros predefinidos da Appbox.
 6. Guarde e aplique as alterações de configuração.
 
-### Como isto se encaixa no ficheiro completo
+### Como a configuração manual do fornecedor se encaixa no ficheiro completo
 
 **Config > Secrets > Raw** edita a configuração **completa** do OpenClaw num único objeto. Na Appbox, esse ficheiro já inclui entradas como `gateway` (bind, autenticação por token, Control UI), `skills.load.extraDirs` (skills incluídas), `commands` e por vezes `meta`. Os excertos na secção [Exemplos dos principais fornecedores](#exemplos-dos-principais-fornecedores) mostram apenas o necessário para modelos: a árvore `models` e `agents.defaults.model.primary`.
 

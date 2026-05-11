@@ -4,12 +4,101 @@ description: Configure OpenClaw with any model provider API key after installati
 sort: 1
 ---
 
-OpenClaw is installed without requiring a model API key in Appbox.  
-After install, add your provider credentials from the OpenClaw dashboard.
+OpenClaw is installed without requiring a model API key in Appbox.
+
+The recommended way to finish setup is to connect to your OpenClaw app over SSH and run the built-in `openclaw onboard` wizard. The wizard is safer than editing the full config by hand because it preserves the Appbox gateway settings while guiding you through model providers, API keys, channels, health checks, and skills.
+
+If you cannot or do not want to use SSH, use the [backup dashboard method](#backup-method-configure-provider-auth-in-the-dashboard) instead.
+
+## Recommended method: SSH into OpenClaw and run onboarding
+
+Use this method for new installs and for existing installs that need model provider credentials added or changed.
+
+### What you need first
+
+- Your OpenClaw app details page in Appbox.
+- The **SSH Command** shown in the Configuration section.
+- Your **Gateway Token / SSH Password**. This is the same generated secret used for the OpenClaw dashboard login.
+- A model provider account or API key. If you do not have one yet, see [Getting API keys](#getting-api-keys-with-dashboard-links).
+
+The app details page shows the ready-to-copy SSH command:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw app details page with the SSH command highlighted"
+  width="860"
+/>
+
+### Connect from macOS
+
+1. Open **Terminal** or **iTerm2**.
+2. Copy the **SSH Command** from the OpenClaw app details page.
+3. Paste and run it. It will look similar to this:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. If macOS asks whether to trust the host, type `yes` and press Enter.
+5. When prompted for a password, paste your **Gateway Token / SSH Password** and press Enter. Terminal will not show any characters while you type or paste the password.
+
+### Connect from Windows
+
+Windows 10 and Windows 11 include the OpenSSH client by default.
+
+1. Open **Windows Terminal** or **PowerShell**.
+2. Copy the **SSH Command** from the OpenClaw app details page.
+3. Paste and run it:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. If Windows asks whether to trust the host, type `yes` and press Enter.
+5. When prompted for a password, paste your **Gateway Token / SSH Password** and press Enter. PowerShell will not show the pasted password.
+
+If Windows says `ssh` is not recognized, install **OpenSSH Client** from **Settings > System > Optional features**, then reopen Windows Terminal and try again.
+
+### Run the OpenClaw onboarding wizard
+
+After SSH connects, run:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 on macOS connected to OpenClaw over SSH and running the openclaw onboard command"
+  width="860"
+/>
+
+The wizard is interactive. Use these Appbox-specific choices:
+
+1. **Existing config:** choose the option to review or modify the current config. Do **not** choose a full reset unless you intentionally want to rebuild your OpenClaw setup from scratch.
+2. **Model and auth:** choose your provider, such as OpenRouter, OpenAI, Anthropic, Google, xAI, or a custom OpenAI-compatible provider. Paste the API key when the wizard asks. OpenRouter is the easiest default for most users because one key can route to many models.
+3. **Default model:** pick the model the wizard recommends for that provider, or enter a `provider/model` value manually, such as `openrouter/auto`.
+4. **Workspace:** keep the default workspace unless you have a specific reason to change it.
+5. **Gateway settings:** keep the existing Appbox gateway settings. In particular, keep token auth enabled and keep the existing gateway port/bind settings.
+6. **Channels:** configure WhatsApp, Telegram, Discord, Signal, iMessage, or other channels now, or skip them and add them later with `openclaw configure`.
+7. **Web search:** choose a search provider if you have one, or skip it for now.
+8. **Daemon/service install:** Appbox already supervises OpenClaw inside the container, so skip daemon installation if the wizard offers it.
+9. **Health check:** let the wizard run the health check.
+10. **Skills:** allow the wizard to check bundled skills. Choose `npm` if it asks for a node package manager.
+
+When onboarding finishes, return to your OpenClaw dashboard. If the dashboard was already open, refresh it and test a short chat prompt.
+
+Useful follow-up commands over SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
 
 ## Getting API keys (with dashboard links)
 
-Use these provider consoles to generate keys, then paste them into OpenClaw `Config > Secrets > Raw`.
+Use these provider consoles to generate keys. With the recommended SSH method, paste the key when `openclaw onboard` asks for it. With the backup dashboard method, merge the key into `Config > Secrets > Raw`.
 
 ### Recommended first: OpenRouter (best default for most users)
 
@@ -24,10 +113,15 @@ How to get a key:
 1. Go to [OpenRouter](https://openrouter.ai/) and sign in.
 2. Open [API Keys settings](https://openrouter.ai/settings/keys).
 3. Click **Create** and copy the key (shown once).
-4. Paste it into OpenClaw as `models.providers.openrouter.apiKey`.
+4. Use it when the OpenClaw wizard asks for your OpenRouter API key. For the backup dashboard method, the config key is `models.providers.openrouter.apiKey`.
 
-<img src="/blog-images/openclaw-openrouter-api-key-tutorial.webp" alt="OpenRouter API keys page screenshot from a public tutorial" width="860" />
-Source tutorial: [How to Get an OpenRouter API Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="OpenRouter API keys page screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
 
 ### OpenAI
 
@@ -38,8 +132,13 @@ How to get a key:
 3. Click **Create new secret key**.
 4. Copy it immediately (OpenAI only shows the full value once).
 
-<img src="/blog-images/openclaw-openai-api-key-tutorial.jpg" alt="OpenAI API key settings screenshot from a public tutorial" width="860" />
-Source tutorial: [How to Get an OpenAI API Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="OpenAI API key settings screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
 
 ### Anthropic
 
@@ -50,8 +149,13 @@ How to get a key:
 3. Click **Create Key**.
 4. Copy the key immediately (shown once).
 
-<img src="/blog-images/openclaw-anthropic-api-key-tutorial.png" alt="Anthropic API key creation screenshot from a public tutorial" width="860" />
-Source tutorial: [How to get your Claude API key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Anthropic API key creation screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
 
 ### Google (Gemini via AI Studio)
 
@@ -62,21 +166,28 @@ How to get a key:
 3. Click **Create API key** (new or existing project).
 4. Copy and save the key.
 
-<img src="/blog-images/openclaw-google-api-key-tutorial.png" alt="Google AI Studio API key creation screenshot from a public tutorial" width="860" />
-Source tutorial: [Get Google AI API Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Google AI Studio API key creation screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
 
 > Note: provider dashboards can change frequently and may show a login prompt depending on your session state.
 
-## Where to configure provider auth
+## Backup method: configure provider auth in the dashboard
+
+Use this method only if SSH is unavailable or you prefer manual configuration. The dashboard Raw editor works, but it edits the entire OpenClaw config object at once. Be careful to merge provider settings into the existing file instead of replacing Appbox's gateway and skills defaults.
 
 1. Open your OpenClaw dashboard URL from the installed app details page.
 2. Go to **Config > Secrets**.
 3. Select **Raw** rather than Form.
-4. Click the Reveal sensitive values button (which looks like an eye with a strike through)
-5. **Merge** the provider settings from the examples below into your existing config (see [How this fits in the full file](#how-this-fits-in-the-full-file)) — do not replace the whole file unless you intend to reset gateway, skills, and other Appbox defaults.
+4. Click the Reveal sensitive values button (which looks like an eye with a strike through).
+5. **Merge** the provider settings from the examples below into your existing config (see [How manual provider config fits in the full file](#how-manual-provider-config-fits-in-the-full-file)) — do not replace the whole file unless you intend to reset gateway, skills, and other Appbox defaults.
 6. Save and apply configuration changes.
 
-### How this fits in the full file
+### How manual provider config fits in the full file
 
 **Config > Secrets > Raw** edits the **entire** OpenClaw config in one object. On Appbox, that file already includes things like `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (bundled skills), `commands`, and sometimes `meta`. The snippets in the [Major provider examples](#major-provider-examples) section only show the pieces you need for models: the `models` tree and `agents.defaults.model.primary`.
 
