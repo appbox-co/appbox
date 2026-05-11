@@ -144,6 +144,12 @@ function mapButtonFieldToConfig(
   return { ...base, type: "text" }
 }
 
+function getVersionTimestamp(version?: { created_at?: string }): number | null {
+  if (!version?.created_at) return null
+  const timestamp = Date.parse(version.created_at)
+  return Number.isNaN(timestamp) ? null : timestamp
+}
+
 function validateButtonField(
   value: string,
   field: ButtonField,
@@ -261,6 +267,7 @@ export function AppActions({
     app.status === "deleting"
   const isRecoverableStopped = !app.enabled && app.state === 0
 
+  const updateText = app.update_text?.trim()
   const defaultVersion = app.default_version?.trim()
   const updateTargetVersion = (app.available_versions ?? []).find(
     (v) => v.version === defaultVersion
@@ -272,11 +279,25 @@ export function AppActions({
     !!defaultVersion &&
     defaultVersion.length > 0 &&
     defaultVersion !== app.version
+  const currentVersion = (app.available_versions ?? []).find(
+    (v) => v.version === app.version
+  )
+  const currentVersionTimestamp = getVersionTimestamp(currentVersion)
   const switchableVersions = (app.available_versions ?? []).filter((v) => {
     if (v.version === app.version) return false
     // Avoid showing the default update target in both places.
     if (hasUpdate && defaultVersion && v.version === defaultVersion)
       return false
+    if (!app.allow_downgrade) {
+      const targetVersionTimestamp = getVersionTimestamp(v)
+      if (
+        currentVersionTimestamp !== null &&
+        targetVersionTimestamp !== null &&
+        targetVersionTimestamp <= currentVersionTimestamp
+      ) {
+        return false
+      }
+    }
     return true
   })
   const showSwitcher = app.can_update && switchableVersions.length >= 1
@@ -474,10 +495,19 @@ export function AppActions({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("update")}</DialogTitle>
-            <DialogDescription>
-              {hasUpdate && defaultVersion
-                ? `Update ${app.display_name} from version ${app.version} to ${defaultVersion}?`
-                : ""}
+            <DialogDescription asChild>
+              <div className="space-y-2">
+                {updateText && (
+                  <p className="whitespace-pre-line text-foreground">
+                    {updateText}
+                  </p>
+                )}
+                <p>
+                  {hasUpdate && defaultVersion
+                    ? `Update ${app.display_name} from version ${app.version} to ${defaultVersion}?`
+                    : ""}
+                </p>
+              </div>
             </DialogDescription>
           </DialogHeader>
           {updateMutation.isError && (
@@ -632,10 +662,19 @@ export function AppActions({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("switchVersion")}</DialogTitle>
-            <DialogDescription>
-              {selectedSwitchVersion
-                ? `Switch from version ${app.version} to ${selectedSwitchVersion.version}?`
-                : "Select a version to switch to."}
+            <DialogDescription asChild>
+              <div className="space-y-2">
+                {updateText && (
+                  <p className="whitespace-pre-line text-foreground">
+                    {updateText}
+                  </p>
+                )}
+                <p>
+                  {selectedSwitchVersion
+                    ? `Switch from version ${app.version} to ${selectedSwitchVersion.version}?`
+                    : "Select a version to switch to."}
+                </p>
+              </div>
             </DialogDescription>
           </DialogHeader>
           {switchVersionMutation.isError && (

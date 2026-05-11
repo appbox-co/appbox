@@ -76,7 +76,7 @@ openclaw onboard
 O assistente é interativo. Use estas escolhas específicas para Appbox:
 
 1. **Configuração existente:** escolha a opção para rever ou modificar a configuração atual. **Não** escolha uma reposição completa, a menos que queira reconstruir de propósito toda a configuração do OpenClaw.
-2. **Modelo e autenticação:** escolha o seu fornecedor, como OpenRouter, OpenAI, Anthropic, Google, xAI ou um fornecedor personalizado compatível com OpenAI. Cole a chave de API quando o assistente pedir. O OpenRouter é o padrão mais simples para a maioria dos utilizadores, porque uma chave pode encaminhar para muitos modelos.
+2. **Modelo e autenticação:** escolha o seu fornecedor, como OpenRouter, OpenAI, Anthropic, Google, xAI ou um fornecedor personalizado compatível com OpenAI. Cole a chave de API quando o assistente pedir. O OpenRouter é o padrão mais simples para a maioria dos utilizadores, porque uma chave pode encaminhar para muitos modelos. Se tiver uma subscrição OpenAI Codex, escolha **OpenAI Codex** na lista de fornecedores, não uma opção chamada apenas `codex`.
 3. **Modelo predefinido:** escolha o modelo recomendado pelo assistente para esse fornecedor ou introduza manualmente um valor `provider/model`, como `openrouter/auto`.
 4. **Workspace:** mantenha o workspace predefinido, a menos que tenha um motivo específico para o alterar.
 5. **Definições do gateway:** mantenha as definições de gateway existentes da Appbox. Em particular, mantenha a autenticação por token ativa e preserve as definições atuais de porta/bind do gateway.
@@ -84,7 +84,7 @@ O assistente é interativo. Use estas escolhas específicas para Appbox:
 7. **Pesquisa web:** escolha um fornecedor de pesquisa se tiver um, ou ignore este passo por agora.
 8. **Instalação de daemon/serviço:** a Appbox já supervisiona o OpenClaw dentro do contentor, por isso ignore a instalação de daemon se o assistente a oferecer.
 9. **Verificação de estado:** deixe o assistente executar a verificação de estado.
-10. **Skills:** deixe o assistente verificar as skills incluídas. Escolha `npm` se ele perguntar por um gestor de pacotes Node.
+10. **Skills:** deixe o assistente verificar as skills incluídas. Quando ele perguntar **Preferred node manager for skill installs**, escolha `npm`.
 
 Quando o onboarding terminar, volte ao painel do OpenClaw. Se o painel já estava aberto, atualize-o e teste uma mensagem curta no chat.
 

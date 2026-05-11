@@ -76,7 +76,7 @@ openclaw onboard
 Der Assistent ist interaktiv. Verwenden Sie diese Appbox-spezifischen Optionen:
 
 1. **Vorhandene Konfiguration:** Wählen Sie die Option zum Prüfen oder Ändern der aktuellen Konfiguration. Wählen Sie **keinen** vollständigen Reset, es sei denn, Sie möchten Ihre OpenClaw-Einrichtung absichtlich neu aufbauen.
-2. **Modell und Authentifizierung:** Wählen Sie Ihren Anbieter, z. B. OpenRouter, OpenAI, Anthropic, Google, xAI oder einen benutzerdefinierten OpenAI-kompatiblen Anbieter. Fügen Sie den API-Schlüssel ein, wenn der Assistent danach fragt. OpenRouter ist für die meisten Nutzer der einfachste Standard, weil ein Schlüssel viele Modelle ansprechen kann.
+2. **Modell und Authentifizierung:** Wählen Sie Ihren Anbieter, z. B. OpenRouter, OpenAI, Anthropic, Google, xAI oder einen benutzerdefinierten OpenAI-kompatiblen Anbieter. Fügen Sie den API-Schlüssel ein, wenn der Assistent danach fragt. OpenRouter ist für die meisten Nutzer der einfachste Standard, weil ein Schlüssel viele Modelle ansprechen kann. Wenn Sie ein OpenAI-Codex-Abonnement haben, wählen Sie in der Anbieter-Liste **OpenAI Codex** und nicht eine Option, die nur `codex` heißt.
 3. **Standardmodell:** Wählen Sie das vom Assistenten empfohlene Modell für diesen Anbieter oder geben Sie manuell einen `provider/model`-Wert ein, z. B. `openrouter/auto`.
 4. **Workspace:** Behalten Sie den Standard-Workspace bei, sofern Sie keinen bestimmten Grund haben, ihn zu ändern.
 5. **Gateway-Einstellungen:** Behalten Sie die bestehenden Appbox-Gateway-Einstellungen bei. Lassen Sie insbesondere Token-Authentifizierung aktiviert und behalten Sie die vorhandenen Gateway-Port-/Bind-Einstellungen bei.
@@ -84,7 +84,7 @@ Der Assistent ist interaktiv. Verwenden Sie diese Appbox-spezifischen Optionen:
 7. **Websuche:** Wählen Sie einen Suchanbieter, falls Sie einen haben, oder überspringen Sie diesen Schritt vorerst.
 8. **Daemon-/Service-Installation:** Appbox überwacht OpenClaw bereits im Container. Überspringen Sie daher die Daemon-Installation, falls der Assistent sie anbietet.
 9. **Health-Check:** Lassen Sie den Assistenten den Health-Check ausführen.
-10. **Skills:** Lassen Sie den Assistenten die mitgelieferten Skills prüfen. Wählen Sie `npm`, falls er nach einem Node-Paketmanager fragt.
+10. **Skills:** Lassen Sie den Assistenten die mitgelieferten Skills prüfen. Wenn er nach **Preferred node manager for skill installs** fragt, wählen Sie `npm`.
 
 Wenn das Onboarding abgeschlossen ist, kehren Sie zum OpenClaw-Dashboard zurück. Falls das Dashboard bereits geöffnet war, aktualisieren Sie es und testen Sie eine kurze Chat-Nachricht.
 

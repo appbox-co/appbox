@@ -76,7 +76,7 @@ openclaw onboard
 The wizard is interactive. Use these Appbox-specific choices:
 
 1. **Existing config:** choose the option to review or modify the current config. Do **not** choose a full reset unless you intentionally want to rebuild your OpenClaw setup from scratch.
-2. **Model and auth:** choose your provider, such as OpenRouter, OpenAI, Anthropic, Google, xAI, or a custom OpenAI-compatible provider. Paste the API key when the wizard asks. OpenRouter is the easiest default for most users because one key can route to many models.
+2. **Model and auth:** choose your provider, such as OpenRouter, OpenAI, Anthropic, Google, xAI, or a custom OpenAI-compatible provider. Paste the API key when the wizard asks. OpenRouter is the easiest default for most users because one key can route to many models. If you have an OpenAI Codex subscription, choose **OpenAI Codex** in the provider list, not an option named only `codex`.
 3. **Default model:** pick the model the wizard recommends for that provider, or enter a `provider/model` value manually, such as `openrouter/auto`.
 4. **Workspace:** keep the default workspace unless you have a specific reason to change it.
 5. **Gateway settings:** keep the existing Appbox gateway settings. In particular, keep token auth enabled and keep the existing gateway port/bind settings.
@@ -84,7 +84,7 @@ The wizard is interactive. Use these Appbox-specific choices:
 7. **Web search:** choose a search provider if you have one, or skip it for now.
 8. **Daemon/service install:** Appbox already supervises OpenClaw inside the container, so skip daemon installation if the wizard offers it.
 9. **Health check:** let the wizard run the health check.
-10. **Skills:** allow the wizard to check bundled skills. Choose `npm` if it asks for a node package manager.
+10. **Skills:** allow the wizard to check bundled skills. When it asks **Preferred node manager for skill installs**, choose `npm`.
 
 When onboarding finishes, return to your OpenClaw dashboard. If the dashboard was already open, refresh it and test a short chat prompt.
 

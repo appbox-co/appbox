@@ -33,13 +33,15 @@ export interface InstalledApp {
   ram: number
   cpus: number
   can_update: boolean
+  allow_downgrade: boolean
+  update_text?: string
   /** App's backend default version string (update target). */
   default_version: string
   custom_description?: string
   custom_field_postinstall_description?: string | null
   documentation_url?: string
   custom_fields?: Record<string, CustomField>
-  available_versions: { id: number; version: string }[]
+  available_versions: { id: number; version: string; created_at?: string }[]
 }
 
 export interface InstalledAppVncInfo {
@@ -102,11 +104,15 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     raw.customDescription
   const availableVersionsRaw =
     raw.available_versions ?? app?.available_versions ?? app?.versions ?? []
+  const updateTextRaw =
+    app?.updateText ?? app?.update_text ?? raw.updateText ?? raw.update_text
   const availableVersions = Array.isArray(availableVersionsRaw)
     ? availableVersionsRaw
         .map((v: Record<string, unknown>) => ({
           id: Number(v?.id ?? 0),
-          version: String(v?.version ?? "")
+          version: String(v?.version ?? ""),
+          created_at:
+            typeof v?.created_at === "string" ? v.created_at : undefined
         }))
         .filter((v) => v.id > 0 && v.version.length > 0)
     : []
@@ -140,6 +146,9 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     ram: Number(raw.ram ?? raw.Memory ?? 0),
     cpus: Number(raw.cpus ?? raw.CPUs ?? 0),
     can_update: Number(app?.canUpdate ?? raw.canUpdate ?? 1) === 1,
+    allow_downgrade:
+      Number(app?.allow_downgrade ?? raw.allow_downgrade ?? 0) === 1,
+    update_text: typeof updateTextRaw === "string" ? updateTextRaw : undefined,
     default_version: String(app?.version ?? raw.latest_ver ?? ""),
     custom_description:
       typeof customDescriptionRaw === "string" ? customDescriptionRaw : "",

@@ -498,7 +498,11 @@ export default function InstalledAppDetailPage({
     app.available_versions && app.available_versions.length > 0
       ? app.available_versions
       : (appVersions ?? [])
-          .map((v) => ({ id: v.id, version: v.version }))
+          .map((v) => ({
+            id: v.id,
+            version: v.version,
+            created_at: v.created_at
+          }))
           .filter((v) => v.id > 0 && v.version.length > 0)
   const effectiveStatus = cylo?.is_migrating ? "migrating" : app.status
   const isAppOperational = app.enabled && app.state === 1
