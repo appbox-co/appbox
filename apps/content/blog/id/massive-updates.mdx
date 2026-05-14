@@ -1,0 +1,108 @@
+---
+title: Pembaruan Besar di Depan Mata untuk Appbox!
+date: 2025-04-08 11:58:00
+excerpt: Website baru, inisiatif open-source, aplikasi terkontainerisasi, infrastruktur jaringan kami sendiri, dan lebih banyak perkembangan menarik yang akan hadir di Appbox!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastruktur, open-source, networking]
+---
+
+# Era Baru Dimulai di Appbox
+
+Setelah berbulan-bulan bekerja di balik layar, begadang, dan minum kopi terlalu banyak, saya senang akhirnya bisa menunjukkan apa yang kami bangun. Ini bukan sekadar pembaruan lain. Ini adalah kami membangun ulang Appbox dari dasar.
+
+## Selamat Datang di Rumah Digital Baru Kami
+
+Anda sedang melihat website baru kami! Kami akhirnya mengucapkan selamat tinggal pada setup WordPress lama. Seluruhnya telah dibangun ulang dengan teknologi modern yang lebih cepat, lebih aman, dan benar-benar bisa diskalakan dengan baik.
+
+Situs baru ini akan menjadi rumah untuk dokumentasi yang layak, posting blog rutin (seperti yang ini), dan pada akhirnya frontend untuk platform baru kami. Desainnya bukan hanya lebih bersih - desain ini benar-benar fungsional dan membuat pencarian informasi jauh lebih mudah.
+
+Kami menggunakan Next.js dengan ContentLayer di balik layar, yang memberi performa sangat cepat dan pengalaman pengembangan yang jauh lebih baik. Situs ini mendukung beberapa bahasa, menangani SEO secara otomatis, memiliki RSS feed dalam XML dan JSON, serta menyertakan mode gelap karena tidak ada yang seharusnya berurusan dengan layar putih terang pada jam 2 pagi.
+
+## Kami Akan Open Source!
+
+Kami juga akan open source! Website yang sedang Anda baca ini? Kodenya publik dan siapa pun dapat berkontribusi.
+
+Ini besar bagi kami. Kami selalu berusaha transparan, tetapi ini adalah kami membuktikan kata-kata kami dan benar-benar membangun bersama komunitas, bukan hanya untuk mereka. Jika Anda seorang developer dan pernah ingin membantu membentuk alat yang Anda gunakan, sekarang Anda bisa. Lihat repo GitHub kami untuk panduan kontribusi dan semua yang Anda butuhkan untuk memulai.
+
+## Memperkenalkan Appbox v2
+
+Website baru ini baru permulaan. Kami sedang mengerjakan Appbox v2, pembaruan terbesar yang pernah kami lakukan.
+
+Deployment container selalu menjadi hal kami, tetapi v2 membawanya lebih jauh dengan hal yang diminta semua orang: dukungan VPS penuh. Aplikasi VPS akan memberi Anda akses root lengkap tanpa batasan. Jika Anda membutuhkan kontrol total atas environment Anda, inilah yang Anda tunggu.
+
+Kami sudah membuatnya berjalan di satu server dan hasilnya sangat baik. Anda akan dapat menginstal aplikasi VPS seperti aplikasi lain dari app store. Ini memungkinkan Anda menginstal aplikasi yang saat ini belum memungkinkan, seperti Docker, Snap, dan Tailscale. Ini memerlukan update OS pada server kami ke Debian 13 karena kami menggunakan beberapa fitur virtualisasi baru untuk membuatnya lebih aman dan meningkatkan performa. Kami perlu meluncurkan update itu sebelum bisa merilis fitur ini, tetapi akan ada lebih banyak pembaruan tentang itu segera.
+
+Ini menggabungkan infrastruktur container kami yang sudah terbukti dengan fleksibilitas VPS sungguhan, memberi Anda yang terbaik dari kedua dunia.
+
+## Membangun Infrastruktur Jaringan Kami Sendiri
+
+Ini berita yang benar-benar besar: kami membangun jaringan kami sendiri.
+
+Bukan sekadar menambah server atau meningkatkan bandwidth. Kami memiliki Autonomous System Number kami sendiri ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) dan blok IP sendiri (79.140.195.0/24) untuk membangun jaringan yang sepenuhnya milik kami. Pada dasarnya, kami menjadi ISP kami sendiri dengan identitas internet resmi dan ruang alamat sendiri, sehingga kami dapat mengontrol bagaimana data Anda bergerak di internet [1].
+
+Apa artinya untuk Anda? Kami dapat mengontrol semuanya, mengoptimalkannya khusus untuk pengguna Appbox, dan menghadirkan keandalan serta performa yang sebelumnya tidak mungkin.
+
+## Peering dengan AMS-IX
+
+Sejalan dengan pengembangan jaringan kami, setelah setup jaringan siap, kami akan mulai peering dengan AMS-IX untuk konektivitas 100G. Ini memberi kami akses langsung ke salah satu internet exchange terbesar di dunia, yang berarti latensi lebih rendah dan kecepatan lebih baik untuk semua orang. Anggap saja seperti memiliki jalan tol langsung ke provider internet besar alih-alih melewati jalan belakang [2].
+
+Jenis konektivitas ini biasanya hanya tersedia untuk perusahaan yang jauh lebih besar, tetapi kami ingin menyediakan performa kelas enterprise, apa pun paket yang Anda gunakan.
+
+Kami sekarang sudah menyelesaikan perjanjian untuk pembelian hardware, jadi kami siap bergerak. Kami akan menerima hardware baru paling lambat Oktober, mungkin seawal September. Ini berarti kami seharusnya bisa berjalan di jaringan baru tak lama setelah itu.
+
+## Penyesuaian Harga
+
+Ini bagian yang benar-benar tidak ingin kami tulis. Membangun infrastruktur seperti ini mahal, dan meskipun kami menanggung sebagian besar biayanya sendiri, kami sayangnya perlu melakukan penyesuaian kecil pada harga untuk pelanggan baru dan lama.
+
+Saya ingin terbuka tentang ini. Harga baru sudah live di situs, dan kami akan segera menghubungi pelanggan lama dengan detail tentang bagaimana ini memengaruhi mereka.
+
+Kami tahu semua orang sedang tertekan saat ini, dan ini sejujurnya salah satu keputusan tersulit yang harus kami ambil. Kami menjaga kenaikannya sekecil mungkin - pada dasarnya kami menanggung semuanya kecuali minimum absolut yang kami perlukan agar ini berjalan.
+
+Namun kami akan membuat kenaikan harga ini lebih dari sepadan. Anda akan benar-benar merasakan perbedaan performa dan keandalan. Selain itu, ini berarti kami dapat terus memperluas jaringan dan menambahkan lebih banyak peering ke depan, jadi semuanya hanya akan terus membaik dari sini.
+
+Kami meluncurkan harga yang diperbarui ini untuk pelanggan baru 3 bulan lalu, dan responsnya bagus, jadi kami merasa telah menemukan keseimbangan yang baik antara menjaga agar tetap terjangkau dan membiayai peningkatan yang pantas Anda dapatkan. Kami tetap sangat kompetitif. Misalnya, paket populer NG-4500 kami hanya naik €2.08 per bulan, yang masih jauh lebih rendah daripada paket sebanding dari kompetitor.
+
+Untuk pelanggan lama, Anda hanya membayar selisih antara harga lama dan baru. Jika Anda memiliki diskon promosi, diskon tersebut tetap berlaku di atas harga dasar baru. Kami menghargai loyalitas Anda, terutama pada masa seperti ini.
+
+Struktur diskon kami tetap sama:
+- Diskon 5% untuk pembayaran triwulanan
+- Diskon 10% untuk pembayaran 6 bulan
+- Diskon 15% untuk pembayaran tahunan
+
+Jika Anda sudah menyiapkan pembayaran otomatis, penyesuaian akan terjadi pada siklus billing berikutnya setelah Anda menerima email. Anda tidak perlu melakukan apa pun.
+
+## Penyimpanan Lebih Banyak!
+
+Namun ini tidak hanya soal membayar lebih. Kami juga menaikkan penyimpanan pada paket terendah dari 3TB menjadi 3.5TB. Itu kenaikan 16%, yang membuat paket entry-level kami menjadi penawaran yang lebih baik meskipun ada perubahan harga.
+
+## Apa Selanjutnya?
+
+Ini baru awal dari apa yang akan datang untuk Appbox. Selama beberapa minggu dan bulan ke depan, Anda akan melihat pembaruan rutin saat kami meluncurkan fitur baru, meningkatkan yang sudah ada, dan terus membangun infrastruktur untuk generasi berikutnya dari hosting aplikasi.
+
+Kami berencana mulai menguji infrastruktur jaringan baru kami pada September/Oktober, dan kami akan terus memberi kabar saat ada progres.
+
+Roadmap kami mencakup:
+- Aplikasi VPS tanpa batasan (seperti Docker, Snap, dan Tailscale)
+- Dokumentasi yang lebih baik dan benar-benar mencakup semuanya
+- Showcase komunitas untuk hal keren yang dibangun orang dengan Appbox
+- Posting blog teknis rutin tentang infrastruktur kami
+- Aplikasi terkontainerisasi baru untuk use case spesifik
+- Alat monitoring dan analitik yang lebih baik
+- Fitur keamanan yang ditingkatkan di semua paket
+
+Terima kasih sudah tetap bersama kami. Tanpa komunitas kami, semua ini tidak akan mungkin.
+
+Pembaruan lainnya segera hadir.
+
+---
+
+*Fitur atau peningkatan apa yang ingin Anda lihat di Appbox baru? Kirim pesan kepada kami di support@appbox.co.*
+
+---
+
+**Referensi:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

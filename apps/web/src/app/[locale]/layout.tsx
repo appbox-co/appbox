@@ -134,6 +134,8 @@ export const viewport: Viewport = {
 export default async function RootLayout(props: AppLayoutProps) {
   const params = await props.params
   const messages = await getMessages()
+  const locale = params.locale.toString() || routing.defaultLocale
+  const dir = locale === "ar" || locale === "ur" ? "rtl" : "ltr"
 
   const { children } = props
 
@@ -141,7 +143,8 @@ export default async function RootLayout(props: AppLayoutProps) {
 
   return (
     <html
-      lang={params.locale.toString() || routing.defaultLocale}
+      lang={locale}
+      dir={dir}
       suppressHydrationWarning
     >
       <head>

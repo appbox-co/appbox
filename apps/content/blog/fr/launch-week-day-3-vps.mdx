@@ -1,0 +1,108 @@
+---
+title: Launch Week Jour 3 - Serveurs privés virtuels
+date: 2026-03-11 10:00:00
+excerpt: Jour 3 de la Launch Week. Des serveurs privés virtuels KVM complets sont maintenant disponibles sur Appbox. Choisissez Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux ou AlmaLinux et obtenez un accès root à une vraie VM.
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Jour 3 : serveurs privés virtuels
+
+Jour 3. Voici la grosse annonce.
+
+Depuis le tout début, Appbox consiste à rendre les apps auto-hébergées simples. Installez une app, obtenez une URL, terminé. Ce modèle fonctionne incroyablement bien pour la plupart des usages. Mais il y a toujours eu une catégorie de cas où vous avez simplement besoin d'une machine complète. Votre propre noyau, votre propre système d'init, vos propres règles.
+
+Aujourd'hui, nous lançons les **serveurs privés virtuels** sur Appbox.
+
+## De vraies VM, pas des conteneurs
+
+Soyons clairs sur ce que c'est. Ce sont des machines virtuelles KVM complètes exécutées sur du matériel dédié, avec leur propre noyau, leur propre systemd et un accès root complet. Ce n'est pas un conteneur Docker qui prétend être un OS. C'est la vraie chose.
+
+Cette distinction compte, car elle débloque tout ce que les conteneurs ne peuvent pas faire :
+
+- **Docker dans votre VPS** - exécutez `docker compose up` comme sur n'importe quel serveur
+- **Snaps et Flatpaks** - installez les logiciels de bureau comme ils sont censés l'être
+- **Services systemd** - gestion complète des services, timers, journal, tout
+- **Noyaux et modules personnalisés** - vous avez root, faites ce que vous voulez
+- **Virtualisation imbriquée** - si vous en avez besoin, elle est là
+
+Si vous avez déjà atteint les limites de nos OS ou webtops basés sur Docker, où quelque chose ne fonctionnait pas à cause des limites des conteneurs, ce mur disparaît.
+
+## Six OS Linux disponibles
+
+Vous pouvez maintenant choisir entre six distributions Linux :
+
+| OS | Description |
+|---|---|
+| **Ubuntu VPS** | Ubuntu 24.04 LTS complet |
+| **Debian VPS** | Debian 12 et 13 complets |
+| **Arch Linux VPS** | Rolling release, toujours à jour |
+| **Fedora VPS** | Fedora 43 avec les derniers paquets |
+| **Rocky Linux VPS** | Compatibilité RHEL de niveau entreprise |
+| **AlmaLinux VPS** | Linux d'entreprise compatible RHEL avec support à long terme |
+
+Choisissez celle que vous connaissez, ou celle que vous voulez apprendre. Elles disposent toutes du même ensemble de fonctionnalités sur Appbox.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Catégorie VPS dans l'App Store Appbox" width="860" className="mt-8 mb-10" />
+</p>
+
+## Console web intégrée
+
+Chaque VPS inclut une console accessible depuis le navigateur, intégrée directement au tableau de bord Appbox. Cliquez sur l'onglet Console de n'importe quel VPS et vous obtenez une session de terminal en direct dans votre navigateur.
+
+Cela signifie que vous ne pouvez jamais vous retrouver bloqué hors de votre serveur. SSH mal configuré ? Configuration réseau cassée ? Peu importe. La console web se connecte directement à l'affichage virtuel de la VM, totalement indépendamment de la pile réseau invitée. Vous avez toujours un moyen d'entrer.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Console VM web dans le tableau de bord Appbox" width="860" className="mt-8 mb-10" />
+</p>
+
+## Bureau Ubuntu avec Selkies
+
+C'est là que cela devient intéressant. Notre Ubuntu VPS dispose d'une variante desktop propulsée par **Selkies**, qui vous donne un bureau Linux graphique complet accessible depuis votre navigateur, avec streaming accéléré matériellement, sortie audio complète et entrée micro.
+
+Nous avons travaillé directement avec l'équipe Selkies pour le faire fonctionner dans des machines virtuelles KVM, et nous avons publié l'intégration en open source sur [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Qu'est-ce que cela signifie concrètement ? Vous pouvez exécuter un environnement de bureau complet dans votre navigateur avec de vraies applications. VS Code, Discord, Spotify, Slack : tous en même temps, tous avec audio, tous accessibles depuis n'importe quel appareil doté d'un navigateur web.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Bureau Ubuntu via Selkies avec VS Code, Spotify et Discord en cours d'exécution" width="860" className="mt-8 mb-10" />
+</p>
+
+Réfléchissez-y une seconde. Vous pouvez avoir un environnement de développement distant persistant, toujours allumé, exécutant VS Code avec des conteneurs Docker pour vos projets, tout en ayant Discord ouvert pour les discussions d'équipe et Spotify qui joue de la musique. Le tout dans un onglet de navigateur. Depuis votre ordinateur portable, votre tablette ou l'ordinateur de quelqu'un d'autre. Tout votre espace de travail est à une URL.
+
+## Vos données vous suivent
+
+Chaque VPS a automatiquement accès à votre stockage Appbox via le répertoire `/APPBOX_DATA/`. Vous y trouverez :
+
+- **`/APPBOX_DATA/apps/`** - données de vos autres apps Appbox installées
+- **`/APPBOX_DATA/storage/`** - votre stockage Appbox général
+
+Cela est partagé avec virtiofs, un passthrough de système de fichiers haute performance qui offre des vitesses d'accès proches du natif. Votre VPS peut lire et écrire des fichiers que vos autres apps utilisent aussi, ce qui vous permet par exemple de traiter des fichiers multimédias provenant de vos apps de streaming ou de sauvegarder des bases de données depuis votre VPS.
+
+## Fonctionne avec App Boost
+
+Les VPS utilisent le même système App Boost que nous avons lancé au jour 2. Vous voulez plus de RAM ou de CPU pour votre VM ? Faites glisser le niveau de boost vers le haut et dédiez davantage de slots de votre formule à celle-ci. Les ressources sont allouées au niveau de l'hyperviseur, donc votre VM reçoit réellement plus de calcul, pas seulement une limite cgroup plus élevée.
+
+À noter : les VPS ont un coût de base en slots légèrement plus élevé que les apps OS basées sur Docker. Cela reflète le fait qu'une machine virtuelle complète consomme plus de ressources réelles qu'un conteneur partageant le noyau de l'hôte. Le compromis est simple : vous obtenez plus de capacités, et le coût en slots le reflète honnêtement.
+
+## Ce qui arrive ensuite pour les VPS
+
+Nous lançons les VPS aujourd'hui avec une fonctionnalité complète, mais d'autres éléments sont prévus. Des graphiques d'utilisation des ressources pour les instances VPS seront ajoutés dans un avenir proche, afin que vous puissiez surveiller l'utilisation CPU, RAM et disque au fil du temps directement depuis le tableau de bord, comme vous pouvez déjà le faire avec d'autres apps.
+
+## Pourquoi c'est important
+
+Les OS et webtops basés sur Docker sur Appbox ont rendu service à beaucoup de monde, et ils ne disparaissent pas. Mais exécuter quelque chose dans un conteneur a de vraies limites. Vous ne pouvez pas lancer Docker. Vous ne pouvez pas utiliser des snaps. Vous ne pouvez pas charger de modules noyau. Vous ne pouvez pas exécuter un système d'init complet. Vous travaillez toujours dans les contraintes du namespace de quelqu'un d'autre.
+
+Les VPS suppriment complètement ces contraintes. Vous obtenez une vraie machine. Si vous pouvez le faire sur un serveur loué chez n'importe quel autre fournisseur, vous pouvez le faire ici, sauf que vos données sont déjà montées, votre console web est déjà là, et vos ressources se redimensionnent avec un curseur.
+
+## Le jour 3 est en ligne maintenant
+
+Les VPS sont disponibles dès maintenant dans l'App Store. Allez dans la catégorie VPS, choisissez votre OS et installez. Le provisionnement d'une VM complète prend un peu plus longtemps qu'une app conteneur, prévoyez donc jusqu'à 15 minutes pour que votre VPS soit prêt.
+
+Demain, c'est le jour 4. Nous ne ralentissons pas.
+
+---
+
+*Un retour ou un problème ? Contactez-nous à support@appbox.co ou ouvrez un ticket sur [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

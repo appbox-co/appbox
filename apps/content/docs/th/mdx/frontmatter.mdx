@@ -1,0 +1,102 @@
+---
+title: "Frontmatter"
+description: "เรียนรู้วิธีใช้ frontmatter ในไฟล์ MDX"
+sort: 3
+---
+
+frontmatter เป็นส่วนสำคัญของไฟล์ MDX
+ใช้สำหรับกำหนดข้อมูลเกี่ยวกับเนื้อหาของไฟล์
+เช่น title, description, author, publication date ฯลฯ
+
+ส่วนหัวเมตาดาต้าถูกกำหนดไว้ที่จุดเริ่มต้นของไฟล์ ระหว่าง `---` (ขีดกลางสามตัว) ตอนต้นและตอนท้าย
+
+## รูปแบบ
+
+ส่วนหัวเมตาดาต้าถูกกำหนดในรูปแบบ key-value โดย key คือชื่อของเมตาดาต้า และ value คือเนื้อหาของเมตาดาต้านั้น
+
+**ตัวอย่าง:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+เมตาดาต้าที่ใช้ได้จะแตกต่างกันไปตามประเภทของเอกสาร (เอกสาร, blog post ฯลฯ)
+
+## เมตาดาต้าสำหรับเอกสาร
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**ตัวอย่าง:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## เมตาดาต้าสำหรับ blog posts
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    นี่คือตัวระบุของผู้เขียนโพสต์
+    ต้องตรงกับ `id` ของผู้เขียนที่กำหนดไว้ในไฟล์ `src/config/blog.ts`
+    ซึ่งเป็นไฟล์ที่มีข้อมูลครบถ้วนของผู้เขียน
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    นี่คือรูปภาพที่จะใช้เป็น featured image ของโพสต์เมื่อแชร์บนโซเชียลมีเดีย หากคุณไม่ต้องการใช้รูปภาพที่สร้างขึ้นโดยอัตโนมัติ
+    รูปภาพต้องถูกเก็บไว้ในโฟลเดอร์ `public/blog-og`
+    ใช้เฉพาะชื่อไฟล์รูปภาพและนามสกุลเท่านั้น
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**ตัวอย่าง:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

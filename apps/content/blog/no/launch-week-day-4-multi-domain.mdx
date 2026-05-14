@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - Flere domener for VPS-apper
+date: 2026-03-12 10:00:00
+excerpt: Dag 4 av Launch Week. VPS-apper støtter nå flere domener - legg til så mange egendefinerte domener og Appbox-subdomener du trenger, alle med automatisk SSL.
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: Flere domener for VPS-apper
+
+Dag 4. I går ga vi deg fullverdige virtuelle maskiner. I dag gir vi dem skikkelig domenestøtte.
+
+Da vi lanserte VPS-er på dag 3, fikk hver VM ett enkelt domene. Det er fint for mange brukstilfeller, men hvis du kjører en webserver inne i VPS-en din - og mange av dere gjør det - holder ikke ett enkelt domene. Du trenger flere domener som peker til samme maskin, hver med sitt eget SSL-sertifikat og sin egen webserverkonfigurasjon.
+
+I dag støtter VPS-apper **flere domener**. Legg til så mange `*.user.appboxes.co`-subdomener du vil, bruk dine egne egendefinerte domener, eller bland begge deler. Hvert domene får SSL og en klar-til-bruk webserverkonfigurasjon.
+
+## Slik fungerer det
+
+Åpne en hvilken som helst kjørende VPS-app, så finner du et **Custom Domains**-kort på detaljsiden. Det er her alle domenene dine ligger - en søkbar og sorterbar tabell som viser hvert domene knyttet til den VPS-en, hvilket som er primært, og når det ble lagt til.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains-tabell på detaljsiden til en VPS-app" width="860" className="mt-8 mb-10" />
+</p>
+
+For å legge til et nytt domene klikker du **Add Domain**. Du velger et overordnet domene og skriver inn et subdomene, så tar systemet seg av resten.
+
+## Appbox-subdomener
+
+Den raskeste måten å legge til et domene på er å bruke ditt eksisterende Appbox-domene. Velg `user.appboxes.co`-domenet ditt som overordnet domene, skriv inn et subdomene, og du er ferdig. DNS er allerede håndtert for deg, og domenet verifiseres umiddelbart.
+
+Dette er flott for å spinne opp raske prosjekt-URL-er, staging-miljøer eller bare gi ulike tjenester på VPS-en sin egen adresse. Trenger du `api.user.appboxes.co` for backend og `app.user.appboxes.co` for frontend? Legg til begge på under ett minutt.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Legger til et Appbox-subdomene på en VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Siden disse ligger under det eksisterende Appbox-wildcard-sertifikatet ditt, er SSL automatisk. Ingen venting, ingen sertifikatgenerering, ingen konfigurasjon.
+
+## Egendefinerte domener
+
+Du kan også peke dine egne domener til VPS-en din. Velg ditt egendefinerte basisdomene (eller legg til et nytt direkte fra dialogen), skriv inn subdomenet, og brukergrensesnittet veileder deg gjennom DNS-oppsettet.
+
+Dialogen viser deg den eksakte A-oppføringen du skal opprette - vertsnavnet, IP-adressen, alt. Den har til og med leverandørspesifikke instruksjoner for Cloudflare og andre populære DNS-leverandører, slik at du slipper å lete etter hvordan du legger til en A-oppføring.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Legger til et egendefinert domene med DNS-verifisering og leverandørspesifikke instruksjoner" width="560" className="mt-8 mb-10" />
+</p>
+
+Når DNS-en din peker til riktig IP, trykker du **Verify Again**, og systemet bekrefter at oppføringen er korrekt før domenet legges til.
+
+## SSL og webserverkonfigurasjon
+
+Hvert domene du legger til får SSL. For Appbox-subdomener bruker dette det eksisterende wildcard-sertifikatet. For egendefinerte domener provisioneres et sertifikat automatisk.
+
+Her er delen som gjør dette virkelig nyttig for VPS-brukere: hvert domene kommer med en **View Config**-knapp som gir deg konfigurasjonsutdrag klare til å limes inn for både Nginx og Apache. Konfigurasjonen inkluderer riktig `server_name`, SSL-sertifikatstier, cipher suites og protokollinnstillinger. Kopier utdraget, legg det inn i webserverkonfigurasjonen inne i VM-en, last inn på nytt, og du serverer trafikk på det domenet.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL-konfigurasjonsutdrag for Nginx og Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Ingen gjetting på filstier. Ingen jakt på sertifikatplasseringer. Ingen utredning av cipher-strenger. Alt er der, klart til å kopieres.
+
+## Hvorfor dette betyr noe for VPS-brukere
+
+En VPS uten støtte for flere domener er bare en server med én adresse. Det er begrensende på måter som raskt blir åpenbare:
+
+- Kjører du en webapp med et separat API? Da trenger du minst to domener.
+- Hoster du flere nettsteder i VM-en din? Hvert av dem trenger sitt eget domene.
+- Vil du ha et staging-miljø ved siden av produksjon? Det er enda et domene.
+- Utvikler du lokalt og vil teste med et ekte domene? Ett til.
+
+## Dag 4 er live nå
+
+Støtte for flere domener er tilgjengelig akkurat nå for alle VPS-apper. Åpne VPS-en din, scroll til Custom Domains og begynn å legge til.
+
+I morgen er det dag 5, og vi har en overraskelse. Du kommer ikke til å se den komme.
+
+---
+
+*Har du tilbakemeldinger eller funnet et problem? Ta kontakt på support@appbox.co eller åpne en sak på [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

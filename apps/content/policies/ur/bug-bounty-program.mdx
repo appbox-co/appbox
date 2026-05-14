@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Program
+description: ہمارا security vulnerability reporting program اور rewards
+---
+
+Appbox میں security ایک بنیادی priority ہے۔ ہم security researchers کو actively encourage کرتے ہیں کہ وہ potential vulnerabilities identify اور report کر کے ہمارے platform کو مضبوط بنانے میں مدد کریں۔ یہ program responsible security research کے بارے میں ہمارا approach، vulnerability reports کو handle کرنے کا طریقہ، اور ان researchers کو دیے جانے والے rewards outline کرتا ہے جو ہماری security posture improve کرنے میں مدد کرتے ہیں۔
+
+## ہماری commitment
+
+جب آپ ہمارے bug bounty program میں participate کرتے ہیں، ہم promise کرتے ہیں کہ:
+
+* آپ کی report کو timely manner میں acknowledge اور evaluate کریں گے
+* confirmed vulnerabilities کو appropriate urgency کے ساتھ address کریں گے
+* ایسی unique، previously unreported vulnerabilities کے لیے آپ کو recognize اور reward کریں گے جو security improvements کا باعث بنیں
+
+## Program coverage
+
+یہ bug bounty program درج ذیل Appbox platforms پر apply ہوتا ہے:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **صرف infrastructure، customer applications نہیں**
+
+**Note:** اگرچہ ہمارا hosting infrastructure (username.appboxes.co) in scope ہے، customers کی deployed third-party applications میں vulnerabilities نہیں۔ نیچے exclusions دیکھیں۔
+
+## Valid vulnerability کے لیے کیا qualify کرتا ہے
+
+ہمارے bug bounty program کے لیے qualify کرنے کے لیے، submission کو درج ذیل تمام criteria meet کرنا ضروری ہے:
+
+### 1. actual exploitation demonstrate کریں
+* working proof of concept include کریں جو demonstrate کرے کہ vulnerability exploit ہو سکتی ہے
+* clear security impact دکھائیں؛ demonstrated harm کے بغیر theoretical vulnerabilities qualify نہیں کرتیں
+* prove کریں کہ attacker user data، accounts، یا system integrity کو actually compromise کر سکتا ہے
+
+### 2. in-scope systems کو affect کرے
+* vulnerability Appbox کے proprietary code یا infrastructure میں exist کرنی چاہیے
+* اوپر "Program Coverage" میں explicitly listed systems کو affect کرنا چاہیے
+* ہمارے production یا staging environments پر reproducible ہونی چاہیے
+
+### 3. previously unreported ہو
+* vulnerability newly discovered ہو اور already ہمیں known نہ ہو
+* duplicate reports یا known issues کی variations qualify نہیں کرتیں
+
+## excluded areas اور issues
+
+درج ذیل ہمارے bug bounty program کے **scope سے باہر** سمجھے جاتے ہیں:
+
+### Third-party systems اور integrations
+* WHMCS Client Area [https://billing.appbox.co] - [WHMCS Security](https://www.whmcs.com/security-bounty-program/) کو report کریں
+* Chatwoot chat widget - [Chatwoot Security](https://www.chatwoot.com/security) کو report کریں
+* **Customer-deployed applications** [app.username.appboxes.co] - ہمارے infrastructure پر hosted third-party applications (WordPress، Nextcloud، etc.) میں vulnerabilities respective application vendors کو report کی جانی چاہئیں
+* کوئی بھی دیگر third-party services، plugins، یا integrations جو ہم use کرتے ہیں
+* IP addresses یا domains جو directly Appbox کے control میں نہیں
+* legacy یا deprecated systems جو active use میں نہیں رہے
+
+**Out-of-Scope for Hosting Infrastructure:**
+* customer-deployed application code (WordPress، Nextcloud، etc.) کے اندر vulnerabilities
+* third-party applications کی default configurations
+* کسی particular application version سے specific security issues
+
+### Security headers اور hardening
+* Missing security headers (X-Frame-Options، COOP، COEP، MTA-STS، etc.) **unless** آپ data compromise کی طرف لے جانے والی actual exploitation demonstrate کریں
+* Missing `rel="noopener"` یا `rel="noreferrer"` attributes
+* Server version disclosure یا HTTP header information leakage
+* non-sensitive cookies (analytics، preferences، etc.) پر cookie attributes
+
+### Low-impact information disclosure
+* verbose error messages جو sensitive data (passwords، tokens، PII) expose نہیں کرتے
+* path traversal یا file access demonstrate کیے بغیر path disclosure
+* technology stack identification (PHP version، framework detection، etc.)
+* generic application responses یا behavior
+
+### Design decisions اور theoretical issues
+* Login CSRF (attacker کو victim accounts تک access نہیں دیتا)
+* timing attacks یا differential responses کے ذریعے user enumeration (unless larger attack chain کا حصہ ہو)
+* sensitive functionality کی demonstrated exploitation کے بغیر clickjacking
+* non-sensitive endpoints پر CORS configurations
+* missing rate limiting **unless** آپ actual abuse demonstrate کریں (DoS پھر بھی excluded ہے)
+
+### Attack prerequisites
+* security issues جو ہماری default application configurations کو affect نہیں کرتے
+* vulnerabilities requiring non-standard configurations
+* ہمارے containers میں vulnerabilities جنہیں custom یا modified setups required ہوں
+* issues requiring network-level compromise (MITM، DNS poisoning، ARP spoofing)
+
+### ممنوع testing methods
+* timing-based information disclosure attacks
+* process enumeration techniques
+* denial of service یا high-volume attacks کی کوئی بھی form
+* social engineering اور phishing techniques
+* automated security scanning جو excessive traffic یا load generate کرے
+* non-functional features یا pages کی testing (e.g., signup pages not yet in production)
+
+### invalid report types
+* manual validation کے بغیر automated scanner output پر solely based reports
+* actual vulnerabilities demonstrate کیے بغیر generic recommendations
+* security impact کے بغیر best practice suggestions
+* exploitability demonstrate کیے بغیر compliance observations (PCI-DSS، GDPR، etc.)
+
+## Reward structure
+
+### Main website اور Control Panel
+
+| **Vulnerability Type**                               | **PayPal Reward** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting infrastructure
+
+| Vulnerability Type                           | PayPal Reward | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Valid vulnerabilities report کرنے والے contributors کو ہماری Security Researchers Hall of Fame میں appreciation کے token کے طور پر recognize کیا جائے گا۔
+
+## required report quality
+
+تمام vulnerability reports میں include ہونا ضروری ہے:
+
+* **Clear vulnerability description** - explain کریں vulnerability کیا ہے اور کیوں matter کرتی ہے
+* **Affected system/URL** - exactly specify کریں vulnerability کہاں exist کرتی ہے
+* **Step-by-step reproduction** - detailed steps جو ہمیں issue reproduce کرنے دیں
+* **Working proof of concept** - exploitation کا functional demonstration (code، screenshots، video)
+* **Actual security impact** - demonstrate کریں attacker کیا accomplish کر سکتا ہے، theoretical possibilities نہیں
+* **Your own testing** - findings manually validate کریں، صرف scanner output forward نہ کریں
+
+جن reports میں یہ elements نہ ہوں یا جو generic security recommendations پر مشتمل ہوں وہ rewards کے لیے qualify نہیں کریں گی۔
+
+## اپنا reward claim کرنا
+
+* آپ two reward options میں سے choose کر سکتے ہیں:  
+   * Direct PayPal payment (valid PayPal account required)
+   * Appbox service credits (کسی بھی Appbox service پر applicable، non-transferable)
+
+## Participation guidelines
+
+* اس policy، ہمارے [Terms of Service](/policies/terms-of-service)، اور تمام applicable laws کی پابندی کریں
+* discovery کے بعد vulnerabilities promptly report کریں
+* اپنی research کے دوران user privacy اور system integrity respect کریں
+* تمام vulnerability reports exclusively ہمارے [contact us form](https://billing.appbox.co/contact.php) کے ذریعے submit کریں
+* discovered vulnerabilities کے بارے میں confidentiality maintain کریں جب تک resolve نہ ہوں
+* اپنی testing کو صرف اس program میں explicitly included systems تک limit کریں
+* اگر آپ کو sensitive data تک unexpected access مل جائے: issue demonstrate کرنے کے لیے minimum amount access کریں، testing immediately stop کریں، اور vulnerability promptly report کریں
+* ہمارے systems کے ساتھ کسی بھی interaction کے لیے صرف اپنے test accounts استعمال کریں
+* اپنی findings کی بنیاد پر Appbox کو extort کرنے کی کبھی کوشش نہ کریں
+* **Verify your findings** - submit کرنے سے پہلے test کریں کہ آپ کا proof of concept actually کام کرتا ہے
+* **Focus on impact** - theoretical issues کے بجائے real harm cause کر سکنے والی vulnerabilities prioritize کریں
+
+## Legal protection
+
+اس policy کو follow کرنے والے security researchers expect کر سکتے ہیں:
+
+* ان guidelines کے اندر good-faith security research کے لیے legal action سے protection
+* legitimate security research کے لیے necessary ہونے پر anti-circumvention legal claims سے exemption
+* بعض policy restrictions کی waiver جو otherwise security testing کو prevent کرتیں
+* یہ recognition کہ compliant security research beneficial ہے اور good faith میں conduct کی گئی ہے
+
+آپ تمام applicable laws کی compliance کے responsible رہتے ہیں۔ اگر آپ اس policy پر adhere کرتے ہوئے third party سے legal action face کرتے ہیں، ہم affirm کریں گے کہ آپ کے actions ہمارے program کی compliance میں conduct کیے گئے تھے۔ اگر آپ uncertain ہیں کہ آپ کی planned research activities اس policy کی compliance کرتی ہیں یا نہیں، please proceed کرنے سے پہلے [contact us form](https://billing.appbox.co/contact.php) کے ذریعے ہم سے contact کریں۔
+
+## Reporting process
+
+Vulnerability report کرنے کے لیے، ہمارے [contact us form](https://billing.appbox.co/contact.php) کے ذریعے detailed ticket create کریں۔
+
+* آپ کی report میں vulnerability reproduce کرنے کے comprehensive steps include ہونے چاہئیں۔ آپ اس template کو guide کے طور پر use کر سکتے ہیں: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* تمام program communications ہمارے official Support Ticket Platform کے ذریعے ہونی چاہئیں
+* Appbox کی explicit written permission کے بغیر کسی vulnerability کی public disclosure اس program کی terms violate کرتی ہے اور آپ کو reward receive کرنے سے disqualify کرے گی
+
+## report کے بعد کیا ہوتا ہے
+
+* **Valid vulnerabilities**: ہم آپ کی report acknowledge کریں گے، fix پر کام کریں گے، اور آپ کا reward process کریں گے
+* **Invalid reports**: ہم explain کریں گے report qualify کیوں نہیں کرتی اور future submissions کے لیے guidance provide کر سکتے ہیں
+* **Out-of-scope reports**: ہم آپ کو appropriate vendor کی طرف redirect کریں گے یا explain کریں گے کہ issue covered کیوں نہیں ہے
+
+ہم quality research اور security میں constructive contributions appreciate کرتے ہیں۔ Appbox کو secure رکھنے میں مدد کرنے کا شکریہ۔

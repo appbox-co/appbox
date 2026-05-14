@@ -1,0 +1,125 @@
+---
+title: OpenClaw - Személyes AI asszisztens, amely beszél az appjaiddal
+date: 2026-03-20 10:00:00
+excerpt: "Az OpenClaw mostantól elérhető az Appboxon. Egy nyílt forráskódú AI asszisztens, amely a saját infrastruktúrádon fut, csatlakozik a chat appjaidhoz, és ténylegesen képes együttműködni a többi telepített appoddal."
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# Az OpenClaw megérkezett az Appboxra
+
+Most adtunk hozzá valamit az app store-hoz, amiért személyesen már egy ideje nagyon lelkes vagyok.
+
+Az [OpenClaw](https://openclaw.ai) egy nyílt forráskódú AI asszisztens, amely teljes egészében a saját infrastruktúrádon fut. Gondolj rá úgy, mint a felhős AI asszisztensek privát, self-hosted alternatívájára, azzal a különbséggel, hogy ez az Appboxodon él, emlékszik a beszélgetéseidre, és ténylegesen képes dolgokat elvégezni helyetted.
+
+Azokon a chat appokon keresztül beszélsz vele, amelyeket már most is használsz. WhatsApp, Telegram, Discord, Slack, Signal, sőt iMessage. Az Anthropic, OpenAI, Google, xAI, Mistral és más szolgáltatók modelljeinek teljes erejével válaszol. Hozod a saját API kulcsodat, kiválasztod a modelledet, és minden a szervereden marad.
+
+Ez önmagában is hasznos lenne. De azért írok róla blogbejegyzést ahelyett, hogy csendben hozzáadnám a store-hoz, mert igazán érdekes akkor lesz, amikor összekapcsolod az Appboxod többi részével.
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="OpenClaw chat munkamenet a webes dashboardon" width="860" className="mt-8 mb-10" />
+</p>
+
+## Látja a többi appodat
+
+Ez teszi mássá az OpenClaw-t Appboxon ahhoz képest, mintha bárhol máshol futtatnád.
+
+Minden Appbox rendelkezik megosztott adatréteggel. A telepített appjaid mind kapnak egy könyvtárat egy közös mount alatt, és van egy megosztott tárhelyterület, amelyből bármelyik app olvashat és amelybe írhat. Az OpenClaw hozzáfér ugyanahhoz a megosztott fájlrendszerhez. Ez azt jelenti, hogy látja a többi telepített appod adatait és az általános tárhelyedet, nem valamilyen törékeny API-integráción keresztül, hanem közvetlen fájlrendszer-hozzáféréssel.
+
+A gyakorlatban az AI asszisztensed nincs elszigetelve egy saját konténerben kontextus nélkül. Közvetlenül a fájljaid, adatbázisaid, médiáid, kódod és konfigurációid mellett ül.
+
+## Be tud jelentkezni a többi appodba
+
+A megosztott fájlrendszeren túl az OpenClaw teljes headless böngészővel (Chromium Puppeteerrel), valamint minden gyakori adatbázis-klienssel és CLI eszközzel érkezik. Ha megadod neki valamelyik másik appod bejelentkezési adatait, ténylegesen be tud jelentkezni, és a nevedben használni tudja.
+
+Frissíteni szeretnéd a csapatdokumentációdat Docmostban? Mondd el az OpenClaw-nak, mit írjon, és add meg az URL-t és a hitelesítő adatokat. Bejelentkezik, elnavigál a megfelelő oldalra, és elvégzi a módosításokat. Új landing page kell az Nginx & PHP stackeden? Írd le, mit szeretnél, és az OpenClaw megírhatja a HTML-t, CSS-t és JavaScriptet, majd közvetlenül a megosztott fájlrendszeren keresztül telepítheti a fájlokat a web rootba. WordPresst futtatsz? Kérd meg, hogy vázoljon és publikáljon egy blogbejegyzést, frissítse egy plugin beállításait, vagy alakítson át egy oldalt. Ugyanúgy képes irányítani az admin dashboardot, ahogy te tennéd.
+
+Ez nem korlátozódik webes UI-kra. Az OpenClaw `mysql`, `psql`, `redis-cli`, `mongosh` és SSH támogatással érkezik, így közvetlenül is csatlakozhat az adatbázisaidhoz és szolgáltatásaidhoz azokkal a hitelesítő adatokkal, amelyeket megadsz. A lényeg: az OpenClaw-nak nincs szüksége külön integrációkra vagy pluginekre minden apphoz. Ha te be tudsz jelentkezni, az asszisztensed is.
+
+## Hogy néz ez ki a gyakorlatban?
+
+Nézzünk meg néhány konkrétabb példát arra, mit tehetsz, ha egy AI asszisztens hozzáfér az Appbox ökoszisztémádhoz.
+
+### Médiaszerver-karbantartás
+
+Ha Plexet, Jellyfint vagy Embyt futtatsz, az OpenClaw beépített `ffmpeg`, `mediainfo` és `exiftool` eszközökkel érkezik. Ezek hasznosak fájlmetadata ellenőrzéséhez vagy enkódolási problémák felismeréséhez anélkül, hogy kézzel kellene könyvtárakat átnézned. Kérd meg, hogy listázza egy mappa tartalmát, ellenőrizze a formátumokat, vagy segítsen rendbe tenni az elnevezési konvenciókat, hogy a médiaszervered megfelelően indexeljen.
+
+### Adatbázis-munka fájdalom nélkül
+
+Az OpenClaw konténere előre telepített `mysql`, `psql`, `sqlite3`, `redis-cli` és `mongosh` eszközökkel érkezik. Ha MariaDB-t futtatsz, megkérheted az OpenClaw-t, hogy lekérdezze az adatbázisaidat, vizsgálja meg a sémákat, debugolja a lassú lekérdezéseket, vagy segítsen migrációkat írni. Mindezt egy chatüzeneten keresztül a telefonodról.
+
+WordPresst vagy más MariaDB-alapú CMS-t futtatsz? Kérd meg az OpenClaw-t, hogy ellenőrizze az adatbázis egészségi állapotát, keressen árva post metadatát, vagy exportáljon konkrét tartalmat. Nem kell SSH-zni sehova, és nem kell emlékezned a megfelelő CLI flagekre. Csak írd le hétköznapi nyelven, mire van szükséged.
+
+### GitLab és kódmunkafolyamatok
+
+Ha GitLab van telepítve, az OpenClaw közvetlenül tud dolgozni a repositoryjaiddal. Beépített `git` van benne, valamint `ripgrep` és `fd` a gyors kódkereséshez. Kérd meg, hogy keressen végig a repóidban egy konkrét mintát, foglalja össze a legutóbbi commitokat, vagy segítsen megérteni ismeretlen kódot.
+
+Belső projektekhez GitLabot használó csapatoknál jelentős fejlesztés a fejlesztői munkafolyamatban, ha van egy AI asszisztens, amely ténylegesen olvasni tudja a codebase-t és válaszolni tud róla anélkül, hogy a kódot harmadik fél felhős szolgáltatásába küldenéd.
+
+### Fájlrendezés és szinkronizáció
+
+Nextcloudot, SFTPGo-t vagy File Browsert futtatsz? Az OpenClaw segíthet kezelni az ezeken a szolgáltatásokon átáramló fájlokat. Kereshet dokumentumokban, újrarendezhet könyvtárstruktúrákat, találhat duplikátumokat, és áthelyezhet dolgokat a megosztott tárhelyed és app-specifikus könyvtáraid között.
+
+`rclone` is elérhető benne, így ha szinkronizációs feladatokat kell beállítanod, vagy adatokat mozgatnál felhőtárhely-szolgáltatók között, leírhatod, mit szeretnél, és az OpenClaw kezeli a konfigurációt.
+
+### Monitoring és diagnosztika
+
+Ha Uptime Kumát telepítettél a szolgáltatásaid figyelésére, az OpenClaw beszélgetős réteget ad a monitoring beállításaid fölé. Azon túl, hogy riasztásokat kapsz, megkérheted az OpenClaw-t hálózati diagnosztika futtatására. Beépített `ping`, `dig`, `nslookup`, `traceroute`, `mtr`, sőt `nmap` és `tcpdump` eszközökkel érkezik a mélyebb vizsgálatokhoz.
+
+Valami leáll? Írj az asszisztensednek, kérd meg, hogy nézze meg, mi történik, és kapj közérthető magyarázatot a dashboardok bámulása helyett.
+
+### Zenei és hangoskönyvtárak
+
+A Navidrome és audiobookshelf felhasználók profitálhatnak az OpenClaw médiaeszközeiből. Kérd meg, hogy vizsgálja át a zenei könyvtáradat hiányzó vagy hibás metadata tagekkel rendelkező fájlok után, azonosítsa azokat a számokat, amelyeket újra kellene kódolni, vagy segítsen rendezni a nem megfelelően szétvágott hangoskönyv-fejezeteket. Az `ffmpeg` és `exiftool` kombináció a legtöbb szükséges feladatot lefedi.
+
+### Jupyter és adatelemzés
+
+Ha Jupyter Notebookot használsz adatelemzéshez, az OpenClaw jól kiegészíti. Python 3-mal, pip és venv támogatással érkezik, így segíthet scripteket írni, a megosztott tárhelyeden lévő adatfájlokat feldolgozni, és akár gyors elemzéseket közvetlenül futtatni. Gondolj rá úgy, mint egy beszélgetős felületre ugyanahhoz az adathoz, amellyel a notebookjaid dolgoznak.
+
+### Infrastructure as Code
+
+A technikailag kalandvágyóbbaknak az OpenClaw `docker`, `kubectl`, `terraform` és `ansible` CLI-kkel érkezik. Ha VPS-t futtatsz az Appboxon és infrastruktúrát kezelsz, az OpenClaw-t beszélgetős ops asszisztensként használhatod. Írd le, mit szeretnél telepíteni, és hagyd, hogy segítsen konfigurációkat generálni és alkalmazni.
+
+## Tartós memória
+
+Az OpenClaw egyik megkülönböztető tulajdonsága egy sima AI modellhez kapcsolt chatablakhoz képest az, hogy emlékszik rád. Idővel kontextust épít: a preferenciáidat, hogyan szereted rendszerezni a dolgokat, milyen projekteken dolgozol, milyen elnevezési konvenciókat használsz. Minél többet használod, annál hasznosabbá válik.
+
+Ez különösen erős Appboxon, mert a kontextus nem csak beszélgetési. A tényleges környezetedben gyökerezik. A fájljaidban, appjaidban, adataidban.
+
+## Előre betöltött skillek
+
+Az OpenClaw skill rendszerrel rendelkezik, több mint 50 közösségi bővítménnyel a [ClawHub](https://clawhub.ai/skills) oldalon. A skillek speciális képességeket adnak az agentnek konkrét appokhoz, eszközökhöz vagy munkafolyamatokhoz.
+
+Appboxon nem csak a puszta agentet adjuk. Az image egy válogatott, előre telepített skill készlettel érkezik, így az OpenClaw alapból érti a környezetedet:
+
+- **Platformismeret**: ismeri az Appbox megosztott adatstruktúráját, az elérhető CLI eszközöket, és tudja, hogyan irányítson supporthoz vagy VPS frissítéshez, amikor szükséges
+- **App-specifikus skillek**: előre betöltve WordPresshez, Nginxhez, GitLabhoz, Nextcloudhoz, Embyhez, MariaDB-hez, Tautullihoz, Mautichoz, WireGuardhoz és Rocket.Chathez, így az agent már tudja, hogyan dolgozzon ezekkel az appokkal, ha telepítve vannak
+- **SSH alapok**: közvetlen csatlakozáshoz a VPS-eidhez vagy távoli szervereidhez az agentből
+- **Böngészőautomatizálás (Playwright MCP)**: ez hajtja azt a képességet, hogy bejelentkezzen és vezérelje a többi appodat a webes UI-jukon keresztül
+- **Webes keresés és dokumentációlekérés**: többmotoros keresés és ClawDDocs referenciaanyagok menet közbeni behúzásához
+- **Önfejlesztés**: skillek új skillek felfedezéséhez a ClawHubon és telepítés előtti ellenőrzésükhöz
+
+Bármikor telepíthetsz további skilleket. Csak keress egyet a [ClawHub](https://clawhub.ai/skills) oldalon, másold ki a linket, és illeszd be az agentednek. Letölti és telepíti magának a skillt.
+
+## Első lépések
+
+Telepítsd az OpenClaw-t az Appbox app store-ból, mint bármely más appot. Két slotot használ.
+
+Telepítés után az app részletező oldalán látsz egy Gateway Tokent. Ez a dashboard bejelentkezésed. Nyisd meg a dashboard URL-t, add meg a tokent, és bent vagy.
+
+Innentől az egyetlen dolog, amit be kell állítanod, az AI modellszolgáltatód. Adj hozzá API kulcsot attól a szolgáltatótól, amelyiket preferálod. Az OpenRouter a legegyszerűbb indulási pont, mert egyetlen kulcs sok modellhez ad hozzáférést. Írtunk egy [teljes beállítási útmutatót](/docs/apps/openclaw-model-provider-setup), amely végigvezet az API kulcsok beszerzésén OpenRoutertől, OpenAI-tól, Anthropictól, Google-től, xAI-tól, Mistraltól és másoktól.
+
+Amint a modelled konfigurálva van, közvetlenül a dashboardról elkezdhetsz beszélgetni az asszisztenseddel. Ha WhatsAppon, Telegramon, Discordon vagy más csatornákon keresztül szeretnél beszélni vele, ezeket is a dashboardon konfigurálhatod.
+
+## Miért fontos ez?
+
+Rengeteg AI chatfelület létezik. A legtöbbjük felhős szolgáltatás, ahol az adataid abban a pillanatban kikerülnek az irányításod alól, hogy elküldesz egy üzenetet. Az OpenClaw más, mert minden az Appboxodon marad. Az asszisztens, a memóriája, a beszélgetéseid és az adatok, amelyekkel dolgozik.
+
+És mivel a többi appod mellett fut megosztott fájlrendszer-hozzáféréssel, ténylegesen képes dolgokat elvégezni a self-hosted stackedben ahelyett, hogy csak kérdésekre válaszolna róla.
+
+Őszintén kíváncsiak vagyunk, mit építenek majd vele az emberek. Ha érdekes munkafolyamatot állítasz be, vagy kreatív módot találsz az OpenClaw és a többi appod összekapcsolására, szívesen hallanánk róla.
+
+---
+
+*Kérdésed van az OpenClaw-val kapcsolatban, vagy segítség kell a beállításához? Írj a support@appbox.co címre, vagy nyiss jegyet itt: [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,196 @@
+---
+title: Komponentit
+description: Komponenttien hallinta MDX-tiedostoissasi
+sort: 2
+---
+
+Komponentit injektoidaan automaattisesti kaikkiin MDX-tiedostoihin ilman manuaalista importia.
+Tämä tarkoittaa, että voit käyttää mitä tahansa saatavilla olevaa komponenttia!
+
+Jos haluat oppia lisää saatavilla olevista komponenteista, lisätä niitä tai muuttaa niitä, katso tiedosto `src/components/docs/mdx.tsx`
+
+## Accordion
+
+**Esimerkki:**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**Koodi:**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Hälytykset
+
+**Esimerkki:**
+
+<Alert className="my-4">
+  <AlertTitle>Oletushälytys</AlertTitle>
+
+  <AlertDescription>
+    Tämä on oletushälytys.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Varoitushälytys</AlertTitle>
+
+  <AlertDescription>
+    Tämä on varoitushälytys.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Virhehälytys</AlertTitle>
+
+  <AlertDescription>
+    Tämä on virhehälytys.
+  </AlertDescription>
+</Alert>
+
+**Koodi:**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Välilehdet
+
+**Esimerkki:**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Välilehti 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Välilehti 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Välilehden 1 sisältö
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Välilehden 2 sisältö
+  </TabsContent>
+</Tabs>
+
+**Koodi:**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Vaiheet
+
+**Esimerkki:**
+
+<Steps>
+  <Step>Vaihe 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Vaihe 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**Koodi:**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

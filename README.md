@@ -97,6 +97,41 @@ This repository contains the open-source code for the [Appbox](https://www.appbo
     └── typescript-config/     # TypeScript configuration
 ```
 
+## Dashboard Design Language
+
+Dashboard pages should share the same high-level rhythm as `apps/web/src/app/[locale]/(dashboard)/dashboard`: use `space-y-6` or `space-y-8` for page sections, keep content surfaces rounded and bordered, and pair clear titles with short descriptions that explain what the page is for.
+
+### Page Headers
+
+Use `DashboardPageHeader` from `apps/web/src/components/dashboard/page-header.tsx` for dashboard and account-style page headers. Each header should include:
+
+- A `text-lg font-semibold leading-tight` title.
+- A short `text-xs text-muted-foreground` description.
+- A `size-10` rounded gradient icon tile with a white `size-[18px]` icon.
+- An optional right-aligned action, such as a primary button, status badge, or compact action group.
+
+Detail pages should keep the same header pattern after the `HistoryBackButton`. Put secondary identifiers, server names, or contextual metadata in the description area instead of building a separate title row.
+
+### Cards And Links
+
+Use `Card` surfaces with `rounded-xl`/`rounded-lg` edges, `border`, and `bg-card`. Card headers should generally use `CardHeader className="pb-3"` and `CardTitle className="flex items-center gap-2 text-base"` with a small muted icon.
+
+Clickable cards should visibly behave like links:
+
+- Add `group`, `cursor-pointer`, `transition-all`, `hover:-translate-y-0.5`, `hover:border-primary/40`, and a focus-visible ring.
+- Include `CardLinkHint` next to the card title when the whole card navigates.
+- Use `role="link"` and keyboard handling when the card is not a native link element.
+
+Use `card-glow` for prominent dashboard/account cards that should match the glowing dashboard surfaces. Avoid applying it to plain data tables.
+
+### Tables
+
+Tables follow the installed-apps page pattern:
+
+- If the table is the only primary content on the page, render the `DataTable` or bordered table directly below the header and toolbar.
+- If the table appears alongside other page content, wrap it in a `Card` so it reads as one section among several.
+- Prefer `DataTable` for searchable/filterable lists and keep its direct `rounded-md border` table shell visible.
+
 ## Contributing
 
 We welcome contributions from everyone, especially for documentation! Here's how you can contribute:

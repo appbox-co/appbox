@@ -1,0 +1,508 @@
+---
+title: Konfiguracja dostawcy modeli OpenClaw
+description: Skonfiguruj OpenClaw z dowolnym kluczem API dostawcy modeli po instalacji.
+sort: 1
+---
+
+OpenClaw jest instalowany w Appbox bez wymagania klucza API modelu.
+
+Zalecanym sposobem dokończenia konfiguracji jest połączenie się z aplikacją OpenClaw przez SSH i uruchomienie wbudowanego kreatora `openclaw onboard`. Kreator jest bezpieczniejszy niż ręczna edycja pełnej konfiguracji, ponieważ zachowuje ustawienia bramy Appbox i prowadzi przez dostawców modeli, klucze API, kanały, kontrole stanu oraz skills.
+
+Jeśli nie możesz albo nie chcesz używać SSH, skorzystaj zamiast tego z [zapasowej metody przez dashboard](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Zalecana metoda: SSH do OpenClaw i uruchomienie onboardingu
+
+Użyj tej metody dla nowych instalacji oraz istniejących instalacji, w których trzeba dodać lub zmienić dane uwierzytelniające dostawcy modeli.
+
+### Czego potrzebujesz najpierw
+
+- Strony szczegółów swojej aplikacji OpenClaw w Appbox.
+- Polecenia **SSH Command** pokazanego w sekcji Configuration.
+- Swojego **Gateway Token / SSH Password**. To ten sam wygenerowany sekret, który służy do logowania do dashboardu OpenClaw.
+- Konta dostawcy modeli albo klucza API. Jeśli jeszcze go nie masz, zobacz [Uzyskiwanie kluczy API](#getting-api-keys-with-dashboard-links).
+
+Strona szczegółów aplikacji pokazuje gotowe do skopiowania polecenie SSH:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Strona szczegółów aplikacji Appbox OpenClaw z podświetlonym poleceniem SSH"
+  width="860"
+/>
+
+### Łączenie z macOS
+
+1. Otwórz **Terminal** albo **iTerm2**.
+2. Skopiuj **SSH Command** ze strony szczegółów aplikacji OpenClaw.
+3. Wklej i uruchom je. Będzie wyglądać podobnie do tego:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Jeśli macOS zapyta, czy zaufać hostowi, wpisz `yes` i naciśnij Enter.
+5. Gdy pojawi się prośba o hasło, wklej swój **Gateway Token / SSH Password** i naciśnij Enter. Terminal nie pokaże żadnych znaków podczas wpisywania lub wklejania hasła.
+
+### Łączenie z Windows
+
+Windows 10 i Windows 11 domyślnie zawierają klienta OpenSSH.
+
+1. Otwórz **Windows Terminal** albo **PowerShell**.
+2. Skopiuj **SSH Command** ze strony szczegółów aplikacji OpenClaw.
+3. Wklej i uruchom je:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Jeśli Windows zapyta, czy zaufać hostowi, wpisz `yes` i naciśnij Enter.
+5. Gdy pojawi się prośba o hasło, wklej swój **Gateway Token / SSH Password** i naciśnij Enter. PowerShell nie pokaże wklejonego hasła.
+
+Jeśli Windows informuje, że `ssh` nie jest rozpoznawane, zainstaluj **OpenSSH Client** z **Settings > System > Optional features**, a następnie ponownie otwórz Windows Terminal i spróbuj jeszcze raz.
+
+### Uruchom kreator onboardingu OpenClaw
+
+Po nawiązaniu połączenia SSH uruchom:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 na macOS połączony z OpenClaw przez SSH i uruchamiający polecenie openclaw onboard"
+  width="860"
+/>
+
+Kreator jest interaktywny. Użyj tych wyborów specyficznych dla Appbox:
+
+1. **Istniejąca konfiguracja:** wybierz opcję przeglądu lub modyfikacji bieżącej konfiguracji. **Nie** wybieraj pełnego resetu, chyba że celowo chcesz odbudować konfigurację OpenClaw od zera.
+2. **Model i uwierzytelnianie:** wybierz swojego dostawcę, np. OpenRouter, OpenAI, Anthropic, Google, xAI albo niestandardowego dostawcę zgodnego z OpenAI. Wklej klucz API, gdy kreator o niego poprosi. OpenRouter jest najłatwiejszą opcją domyślną dla większości użytkowników, ponieważ jeden klucz może kierować zapytania do wielu modeli. Jeśli masz subskrypcję OpenAI Codex, wybierz **OpenAI Codex** na liście dostawców, a nie opcję nazwaną tylko `codex`.
+3. **Model domyślny:** wybierz model rekomendowany przez kreator dla tego dostawcy albo ręcznie wprowadź wartość `provider/model`, np. `openrouter/auto`.
+4. **Workspace:** zachowaj domyślny workspace, chyba że masz konkretny powód, aby go zmienić.
+5. **Ustawienia bramy:** zachowaj istniejące ustawienia bramy Appbox. W szczególności pozostaw włączone uwierzytelnianie tokenem oraz zachowaj istniejące ustawienia portu/bind bramy.
+6. **Kanały:** skonfiguruj teraz WhatsApp, Telegram, Discord, Signal, iMessage albo inne kanały, albo pomiń je i dodaj później za pomocą `openclaw configure`.
+7. **Wyszukiwanie w sieci:** wybierz dostawcę wyszukiwania, jeśli go masz, albo pomiń ten krok na razie.
+8. **Instalacja daemon/service:** Appbox już nadzoruje OpenClaw wewnątrz kontenera, więc pomiń instalację daemona, jeśli kreator ją zaproponuje.
+9. **Kontrola stanu:** pozwól kreatorowi uruchomić kontrolę stanu.
+10. **Skills:** pozwól kreatorowi sprawdzić dołączone skills. Gdy zapyta o **Preferred node manager for skill installs**, wybierz `npm`.
+
+Po zakończeniu onboardingu wróć do dashboardu OpenClaw. Jeśli dashboard był już otwarty, odśwież go i przetestuj krótką wiadomość na czacie.
+
+Przydatne kolejne polecenia przez SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Uzyskiwanie kluczy API (z linkami do dashboardów)
+
+Użyj tych konsol dostawców, aby wygenerować klucze. Przy zalecanej metodzie SSH wklej klucz, gdy `openclaw onboard` o niego poprosi. Przy zapasowej metodzie przez dashboard scal klucz w `Config > Secrets > Raw`.
+
+### Najpierw zalecane: OpenRouter (najlepsza opcja domyślna dla większości użytkowników)
+
+Dlaczego go polecamy:
+
+- Daje jeden klucz dla wielu dostawców modeli.
+- Możesz używać `openrouter/auto`, który może przełączać modele zależnie od trudności zadania.
+- `auto` może obniżyć koszt, kierując prostsze zadania do tańszych modeli.
+
+Jak uzyskać klucz:
+
+1. Przejdź do [OpenRouter](https://openrouter.ai/) i zaloguj się.
+2. Otwórz [ustawienia API Keys](https://openrouter.ai/settings/keys).
+3. Kliknij **Create** i skopiuj klucz (pokazywany raz).
+4. Użyj go, gdy kreator OpenClaw poprosi o klucz API OpenRouter. W zapasowej metodzie przez dashboard kluczem konfiguracji jest `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Zrzut ekranu strony kluczy API OpenRouter z publicznego poradnika"
+  width="860"
+/>
+
+### OpenAI
+
+Jak uzyskać klucz:
+
+1. Zaloguj się do [OpenAI Platform](https://platform.openai.com/).
+2. Otwórz [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Kliknij **Create new secret key**.
+4. Skopiuj go od razu (OpenAI pokazuje pełną wartość tylko raz).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Zrzut ekranu ustawień klucza API OpenAI z publicznego poradnika"
+  width="860"
+/>
+
+### Anthropic
+
+Jak uzyskać klucz:
+
+1. Zaloguj się do [Anthropic Console](https://console.anthropic.com/).
+2. Otwórz [API Keys](https://console.anthropic.com/settings/keys).
+3. Kliknij **Create Key**.
+4. Skopiuj klucz od razu (pokazywany raz).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Zrzut ekranu tworzenia klucza API Anthropic z publicznego poradnika"
+  width="860"
+/>
+
+### Google (Gemini przez AI Studio)
+
+Jak uzyskać klucz:
+
+1. Otwórz [Google AI Studio](https://aistudio.google.com/).
+2. Przejdź do [API Keys](https://aistudio.google.com/app/apikey).
+3. Kliknij **Create API key** (nowy lub istniejący projekt).
+4. Skopiuj i zapisz klucz.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Zrzut ekranu tworzenia klucza API Google AI Studio z publicznego poradnika"
+  width="860"
+/>
+
+> Uwaga: dashboardy dostawców mogą często się zmieniać i mogą pokazywać monit logowania zależnie od stanu Twojej sesji.
+
+## Metoda zapasowa: skonfiguruj uwierzytelnianie dostawcy w dashboardzie
+
+Użyj tej metody tylko wtedy, gdy SSH jest niedostępne albo wolisz konfigurację ręczną. Edytor Raw w dashboardzie działa, ale edytuje cały obiekt konfiguracji OpenClaw naraz. Uważaj, aby scalić ustawienia dostawcy z istniejącym plikiem zamiast zastępować domyślne ustawienia bramy i skills Appbox.
+
+1. Otwórz URL dashboardu OpenClaw ze strony szczegółów zainstalowanej aplikacji.
+2. Przejdź do **Config > Secrets**.
+3. Wybierz **Raw** zamiast Form.
+4. Kliknij przycisk Reveal sensitive values (wygląda jak przekreślone oko).
+5. **Scal** ustawienia dostawcy z poniższych przykładów z istniejącą konfiguracją (zobacz [Jak ręczna konfiguracja dostawcy pasuje do pełnego pliku](#how-manual-provider-config-fits-in-the-full-file)) - nie zastępuj całego pliku, chyba że zamierzasz zresetować bramę, skills i inne domyślne ustawienia Appbox.
+6. Zapisz i zastosuj zmiany konfiguracji.
+
+### Jak ręczna konfiguracja dostawcy pasuje do pełnego pliku
+
+**Config > Secrets > Raw** edytuje **całą** konfigurację OpenClaw w jednym obiekcie. W Appbox ten plik zawiera już takie elementy jak `gateway` (bind, uwierzytelnianie tokenem, Control UI), `skills.load.extraDirs` (dołączone skills), `commands` i czasami `meta`. Fragmenty w sekcji [Przykłady głównych dostawców](#major-provider-examples) pokazują tylko części potrzebne dla modeli: drzewo `models` i `agents.defaults.model.primary`.
+
+**Co zrobić:** zachowaj istniejące klucze najwyższego poziomu (`gateway`, `skills`, `commands` itd.) i **dodaj albo zaktualizuj** te dwie sekcje:
+
+- **`models.providers`** - dodaj swojego dostawcę (np. `openrouter`) oraz jego `apiKey`, `baseUrl` tam, gdzie jest wymagane, i listę `models`.
+- **`agents.defaults.model.primary`** - ustaw domyślny ciąg modelu (np. `openrouter/auto`), aby agent używał tego dostawcy.
+
+Jeśli `models` albo `agents` już istnieją, scal nowe klucze z tymi obiektami zamiast je duplikować.
+
+Poniżej znajduje się przykład kształtu **jednego** pełnego pliku Raw jako **JSON** (w praktyce edytor może też akceptować cudzysłowy w stylu JSON5). Twój rzeczywisty plik może zawierać więcej pól (np. bogatsze metadane modeli, `meta`). **Bloki dostawców** w dalszych przykładach to części, które należy dopasować tutaj do `models` i `agents`.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Token bramy a klucz API dostawcy:** `gateway.auth.token` służy tylko do logowania do OpenClaw Control UI / bramy. `models.providers.*.apiKey` to klucz dostawcy LLM (OpenRouter, OpenAI itd.) - to różne wartości.
+
+## Przykłady głównych dostawców
+
+Najpierw użyj jednego bloku dostawcy, potwierdź, że działa, a dopiero potem dodawaj kolejnych dostawców. Każdy poniższy przykład jest **fragmentem do scalenia**: `...` oznacza pominiętą konfigurację (linie powyżej lub poniżej), a `},` przed `"models"` zamyka dowolny klucz znajdujący się w Twoim pliku nad `models` (na przykład `skills` albo `commands`). Same fragmenty nie są poprawnym JSON - scal sekcje `models` i `agents` z obiektem głównym.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Uwaga dotycząca Bedrock (bez klucza API)
+
+Amazon Bedrock używa danych uwierzytelniających AWS (na przykład `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) zamiast klucza API. Minimalny wpis dostawcy wygląda tak:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Uwagi
+
+- Token uwierzytelniania bramy i klucze API dostawców modeli to różne ustawienia.
+- Jeśli otrzymasz błąd dostawcy (na przykład brak klucza Anthropic), zaktualizuj model domyślny do dostawcy, którego masz skonfigurowanego.
+- Jeśli walidacja dostawcy się nie powiedzie, najpierw upewnij się, że wymagane pola dostawcy są obecne (`baseUrl`, `models` oraz `apiKey` tam, gdzie ma zastosowanie).
+
+## Oficjalna dokumentacja dostawców
+
+- [Katalog dostawców OpenClaw](https://docs.openclaw.ai/providers/index)
+- [Dostawca OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [Dostawca OpenAI](https://docs.openclaw.ai/providers/openai)
+- [Dostawca Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [Dostawca Google](https://docs.openclaw.ai/providers/google)
+- [Dostawca xAI](https://docs.openclaw.ai/providers/xai)
+- [Dostawca Mistral](https://docs.openclaw.ai/providers/mistral)
+- [Dostawca Together AI](https://docs.openclaw.ai/providers/together)
+- [Dostawca Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

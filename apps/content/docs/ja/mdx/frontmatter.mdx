@@ -1,0 +1,100 @@
+---
+title: Frontmatter
+description: MDX ファイルで frontmatter を使う方法を学びます。
+sort: 3
+---
+
+frontmatter は MDX ファイルの重要な部分です。
+タイトル、説明、著者、公開日など、ファイルの内容に関する情報を定義するために使います。
+
+メタデータヘッダーはファイルの先頭に定義し、開始と終了を `---`（3つのハイフン）で囲みます。
+
+## 形式
+
+メタデータヘッダーはキーと値の形式で定義します。キーはメタデータ名、値はメタデータの内容です。
+
+**例:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+ドキュメントの種類（ドキュメント、ブログ記事など）によって、使用できるメタデータは異なります。
+
+## ドキュメント用メタデータ
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**例:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## ブログ記事用メタデータ
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    投稿著者の識別子です。
+    著者の完全なデータを含む `src/config/blog.ts` ファイルで定義された著者 `id` と一致している必要があります。
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    自動生成画像を使いたくない場合に、ソーシャルメディアで共有されたときの投稿のアイキャッチ画像として使われる画像です。
+    画像は `public/blog-og` フォルダーに保存する必要があります。
+    画像ファイル名と拡張子だけを使用してください。
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**例:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

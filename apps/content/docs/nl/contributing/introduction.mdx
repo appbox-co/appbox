@@ -1,0 +1,99 @@
+---
+title: Introductie
+description: Welkom bij de officiele documentatie voor de open-sourced Appbox frontend.
+sort: 1
+---
+
+**Welkom bij de Appbox-documentatie**  
+We zijn blij te kunnen aankondigen dat de frontend voor [Appbox](https://www.appbox.co/) nu open-sourced is op [GitHub](https://github.com/appbox-co/appbox). Ons doel is een samenwerkende community te stimuleren die bijdraagt aan documentatie, nieuwe frontend-features ontwikkelt en helpt de algemene Appbox-ervaring te verbeteren.
+
+Hoewel onze documentatie zich nog in een vroege fase bevindt, werken we aan een uitgebreide kennisbron die vergelijkbaar is met andere platforms in onze sector. Op dit moment richt onze docs zich vooral op richtlijnen voor bijdragen, maar we zijn van plan deze uit te breiden met gedetailleerde informatie voor alle apps die op Appbox beschikbaar zijn.
+
+Totdat onze documentatie robuuster is, kun je voor directe vragen over specifieke apps of services terecht in onze [legacy knowledge base](https://billing.appbox.co/knowledgebase). Als je technische support nodig hebt, kun je [een ticket indienen](https://billing.appbox.co/submitticket.php) voor hulp. Je kunt deze nieuwe docs altijd bereiken via de link in de footer van onze site om onze voortgang te volgen terwijl we uitbreiden.
+
+## Toekomstplannen
+
+- **Uitgebreide appgidsen**  
+  Met installatie, probleemoplossing en tips voor elk van de apps die op ons platform worden ondersteund.
+- **Resources voor gebruikers en ontwikkelaars**  
+  Met alles van beginnersvriendelijke tutorials tot geavanceerde codereferenties om je Appbox-ervaring aan te passen.
+- **Community-gedreven content**  
+  Pull requests, feedback en suggesties zijn allemaal welkom en helpen dit project voor iedereen te laten groeien.
+
+## Aan de slag
+
+Als je onze open-sourced frontendcode wilt bekijken of eraan wilt bijdragen, clone dan de [Appbox](https://github.com/appbox-co/appbox)-repository:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Navigeer daarna naar het project en installeer de dependencies:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Je lokale instance is beschikbaar op `http://localhost:3000`. Verken gerust de code, breng wijzigingen aan en maak pull requests. We waarderen elke bijdrage!
+
+## Developmenttools
+
+### Linting
+
+Het project bevat een uitgebreide linting-setup met ESLint, TypeScript en Prettier-integratie. Dit zorgt voor een consistente codestijl en helpt veelvoorkomende fouten vroeg te vinden. Je kunt de lintingchecks handmatig uitvoeren:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Onze ESLint-configuratie bevat:
+- TypeScript-specifieke regels via `@typescript-eslint`
+- Next.js-specifieke linting met `eslint-config-next`
+- Codeformattering met Prettier-integratie
+
+### Pre-commit Hooks
+
+We gebruiken Husky om Git hooks te beheren. Dit helpt ervoor te zorgen dat alleen kwaliteitscode naar de repository wordt gecommit. De volgende hooks zijn ingesteld:
+
+- **pre-commit**: Voert `lint:fix` uit voor elke commit om codekwaliteit te waarborgen
+- **commit-msg**: Gebruikt commitlint om conventionele commitbericht-formattering af te dwingen
+
+Dit betekent dat je commits automatisch worden gecontroleerd op codekwaliteit en correcte formattering voordat ze worden geaccepteerd, zodat in de hele codebase een hoge standaard behouden blijft.
+
+## Pull Requests maken
+
+Wanneer je klaar bent om je wijzigingen bij te dragen, volg dan deze richtlijnen om de kans te vergroten dat je Pull Request (PR) wordt geaccepteerd:
+
+### Voordat je een PR maakt
+
+1. **Rebase vanaf de nieuwste main branch** om mergeconflicten te voorkomen:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Zorg dat alle linting slaagt**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Zorg dat je code lokaal werkt** door de relevante functionaliteit te testen.
+
+### PR-richtlijnen
+
+1. **Houd PR's gefocust** - Behandel een issue of feature per PR.
+2. **Schrijf duidelijke commitberichten** - Volg het conventionele commitformaat.
+3. **Voeg duidelijke beschrijvingen toe** - Leg uit wat je PR doet en waarom het nodig is.
+4. **Voeg tests toe** - Voeg waar van toepassing tests toe om te controleren dat je wijzigingen correct werken.
+5. **Documenteer je code** - Gebruik comments voor complexe logica en zorg dat functienamen beschrijvend zijn.
+6. **Volg bestaande patronen** - Je code moet aansluiten op de stijl en patronen die in de rest van de codebase worden gebruikt.
+
+Overweeg bij grote wijzigingen eerst een issue te openen om de aanpak te bespreken voordat je tijd investeert in coderen. Dit helpt ervoor te zorgen dat je bijdrage aansluit bij de richting van het project en voorkomt verspilde moeite.

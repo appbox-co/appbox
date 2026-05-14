@@ -1,0 +1,65 @@
+---
+title: Uusien dokumenttien lisääminen
+description: Lisää uusia dokumentteja dokumentaatiosivustollesi ja blogiin.
+sort: 2
+---
+
+# Dokumentaatiota varten
+
+1. Luo uusi `.mdx`-tiedosto `apps/content/docs/[language]`-kansioon dokumenttisi sisällöllä.
+2. Lisää dokumentti sivuston navigointivalikkoon.
+    Tee tämä lisäämällä uusi kohde `src/config/docs.ts`-tiedoston `sidebarNav`-ominaisuuteen halutuilla tiedoilla. Seuraa vain olemassa olevien kohteiden mallia. Näin dokumentti lisätään myös hakukomentopalettiin.
+
+## MDX-dokumentin asetukset
+
+MDX-dokumentit tallennetaan `apps/content/docs/[language]`- ja `apps/content/blog/[language]`-kansioihin. Jokainen dokumentti on MDX-tiedosto, joka sisältää metatietoja sisältävän otsakkeen, kuten otsikon ja kuvauksen. Alla on esimerkki dokumentin otsakkeesta:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Seuraavia metatietokenttiä tuetaan:
+
+- `title` (pakollinen): Dokumentin otsikko.
+- `description` (pakollinen): Lyhyt kuvaus dokumentista.
+- `sort` (valinnainen): Numero, joka määrittää dokumentin järjestyksen navigaatiossa. Pienemmät sort-arvot näkyvät ensin. Jos arvoa ei anneta, dokumentit järjestetään aakkosittain otsikon mukaan.
+- `links` (valinnainen): Linkkejä liittyviin dokumentteihin, API-viitteisiin, lähdekoodiin jne.
+- `toc` (valinnainen): Näytetäänkö sisällysluettelo. Oletus on `true`.
+
+Jos haluat lisätä dokumenttiin uusia metatietoja, voit lisätä otsakkeeseen uusia avaimia. Voit esimerkiksi lisätä `author`-avaimen dokumentin tekijän ilmoittamiseksi:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Kun lisäät mukautettuja metatietoja, sinun täytyy kuitenkin päivittää projektin juuressa sijaitseva `contentlayer.config.ts`-tiedosto sekä `Doc`- tai `Blog`-vakioiden `fields`-ominaisuus.
+Sen jälkeen uusi tieto täytyy näyttää dokumenttipohjassa. Tee tämä päivittämällä `src/app/[locale]/docs/[[...slug]]/page.tsx`-tiedosto, `src/app/[locale]/blog/[[...slug]]/page.tsx`-tiedosto tai jokin niiden alikomponenteista.
+
+## Contentlayerin uudelleenrakennus
+
+Kun teet muutoksia dokumentaatiosisältöön, lisäät uusia dokumentteja tai muokkaat `contentlayer.config.ts`-tiedostoa, sinun täytyy rakentaa contentlayer-välimuisti uudelleen, jotta muutokset tulevat voimaan kehityksen aikana. Suorita:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Tämä komento luo uudelleen sovelluksen tarvitsemat sisältötyypit ja tiedot. Komento täytyy suorittaa aina, kun:
+
+- Lisäät uusia metatietokenttiä `contentlayer.config.ts`-tiedostoon
+- Lisäät tai muokkaat MDX-sisältöä, kun kehityspalvelin ei ole käynnissä
+- Muutat sisällön organisaatiorakennetta
+
+Komento suoritetaan automaattisesti, kun projekti rakennetaan tuotantoon, mutta kehityksen aikana se täytyy suorittaa käsin, jos teet rakenteellisia muutoksia sisältöön.
+
+
+

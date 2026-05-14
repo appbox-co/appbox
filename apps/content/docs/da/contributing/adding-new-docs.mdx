@@ -1,0 +1,65 @@
+---
+title: Tilføjelse af ny dokumentation
+description: Tilføj nye dokumenter til dit dokumentationssite og din blog.
+sort: 2
+---
+
+# Til dokumentation
+
+1. Opret en ny `.mdx`-fil i mappen `apps/content/docs/[language]` med indholdet af dit dokument.
+2. Tilføj dokumentet til sitets navigationsmenu.
+    For at gøre dette skal du tilføje et nyt element i filen `src/config/docs.ts` i egenskaben `sidebarNav` med de ønskede oplysninger. Følg blot mønsteret fra de eksisterende elementer. Når du gør dette, bliver dokumentet også føjet til søgekommandopaletten.
+
+## MDX-dokumentindstillinger
+
+MDX-dokumenter gemmes i mapperne `apps/content/docs/[language]` og `apps/content/blog/[language]`. Hvert dokument er en MDX-fil, der indeholder en header med metadata, såsom titel og beskrivelse. Her er et eksempel på en dokumentheader:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Følgende metadatafelter understøttes:
+
+- `title` (påkrævet): Dokumentets titel.
+- `description` (påkrævet): En kort beskrivelse af dokumentet.
+- `sort` (valgfrit): Et tal, der bestemmer dokumentets rækkefølge i navigationen. Dokumenter med lavere sorteringsværdier vises først. Hvis det ikke angives, sorteres dokumenter alfabetisk efter titel.
+- `links` (valgfrit): Links til relaterede dokumenter, API-referencer, kildekode osv.
+- `toc` (valgfrit): Om indholdsfortegnelsen skal vises. Standardværdien er `true`.
+
+For at tilføje nye metadata til dokumentet kan du tilføje nye nøgler til headeren. Du kan for eksempel tilføje en `author`-nøgle for at angive dokumentets forfatter:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Når du tilføjer brugerdefinerede metadata, skal du dog også opdatere filen `contentlayer.config.ts`, som ligger i projektets rod, og egenskaben `fields` i konstanterne `Doc` eller `Blog`.
+Derefter skal du vise de nye oplysninger i dokumentskabelonen. For at gøre dette skal du opdatere filen `src/app/[locale]/docs/[[...slug]]/page.tsx`, eller `src/app/[locale]/blog/[[...slug]]/page.tsx` eller en af dens underkomponenter.
+
+## Genopbygning af Contentlayer
+
+Når du ændrer dokumentationsindhold, tilføjer ny dokumentation eller ændrer filen `contentlayer.config.ts`, skal du genopbygge Contentlayer-cachen, så dine ændringer træder i kraft under udvikling. Kør:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Denne kommando regenererer de indholdstyper og data, som applikationen har brug for. Du skal køre denne kommando, hver gang du:
+
+- Tilføjer nye metadatafelter til filen `contentlayer.config.ts`
+- Tilføjer eller ændrer MDX-indhold, når dev-serveren ikke kører
+- Ændrer strukturen i din indholdsorganisering
+
+Kommandoen køres automatisk, når projektet bygges til produktion, men du skal køre den manuelt under udvikling, hvis du foretager strukturelle ændringer i indholdet.
+
+
+

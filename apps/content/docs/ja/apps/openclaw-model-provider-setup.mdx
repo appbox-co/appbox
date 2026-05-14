@@ -1,0 +1,520 @@
+---
+title: OpenClaw モデルプロバイダー設定
+description: インストール後に任意のモデルプロバイダー API キーで OpenClaw を設定します。
+sort: 1
+---
+
+Appbox では、モデル API キーがなくても OpenClaw をインストールできます。
+
+設定を完了するおすすめの方法は、SSH で OpenClaw アプリに接続し、組み込みの `openclaw onboard` ウィザードを実行することです。このウィザードは、モデルプロバイダー、API キー、チャネル、ヘルスチェック、スキルを案内しながら Appbox ゲートウェイ設定を保持するため、設定全体を手作業で編集するより安全です。
+
+SSH を使えない、または使いたくない場合は、代わりに [バックアップ方法: ダッシュボードでプロバイダー認証を設定する](#backup-method-configure-provider-auth-in-the-dashboard) を使用してください。
+
+## 推奨方法: SSH で OpenClaw に接続してオンボーディングを実行する
+
+新規インストール時、または既存インストールにモデルプロバイダー認証情報を追加・変更する必要がある場合は、この方法を使用してください。
+
+### 事前に必要なもの
+
+- Appbox の OpenClaw アプリ詳細ページ。
+- Configuration セクションに表示される **SSH Command**。
+- **Gateway Token / SSH Password**。これは OpenClaw ダッシュボードログインに使うものと同じ生成済みシークレットです。
+- モデルプロバイダーのアカウントまたは API キー。まだ持っていない場合は、[API キーの取得](#getting-api-keys-with-dashboard-links) を参照してください。
+
+アプリ詳細ページには、コピーしてすぐ使える SSH コマンドが表示されます。
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="SSH コマンドが強調表示された Appbox の OpenClaw アプリ詳細ページ"
+  width="860"
+/>
+
+### macOS から接続する
+
+1. **Terminal** または **iTerm2** を開きます。
+2. OpenClaw アプリ詳細ページから **SSH Command** をコピーします。
+3. 貼り付けて実行します。次のような形式です。
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. macOS がホストを信頼するか確認してきたら、`yes` と入力して Enter を押します。
+5. パスワードを求められたら、**Gateway Token / SSH Password** を貼り付けて Enter を押します。Terminal では、パスワードの入力中や貼り付け中に文字は表示されません。
+
+### Windows から接続する
+
+Windows 10 と Windows 11 には、既定で OpenSSH クライアントが含まれています。
+
+1. **Windows Terminal** または **PowerShell** を開きます。
+2. OpenClaw アプリ詳細ページから **SSH Command** をコピーします。
+3. 貼り付けて実行します。
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Windows がホストを信頼するか確認してきたら、`yes` と入力して Enter を押します。
+5. パスワードを求められたら、**Gateway Token / SSH Password** を貼り付けて Enter を押します。PowerShell では、貼り付けたパスワードは表示されません。
+
+Windows で `ssh` が認識されない場合は、**Settings > System > Optional features** から **OpenSSH Client** をインストールし、Windows Terminal を開き直してもう一度試してください。
+
+### OpenClaw オンボーディングウィザードを実行する
+
+SSH 接続後、次を実行します。
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="macOS の iTerm2 で SSH 経由で OpenClaw に接続し、openclaw onboard コマンドを実行している画面"
+  width="860"
+/>
+
+ウィザードは対話形式です。Appbox では次の選択を使用してください。
+
+1. **Existing config:** 現在の設定を確認または変更するオプションを選びます。OpenClaw 設定を最初から作り直す意図がない限り、完全リセットは選ばないでください。
+2. **Model and auth:** OpenRouter、OpenAI、Anthropic、Google、xAI、またはカスタム OpenAI 互換プロバイダーなど、使用するプロバイダーを選びます。ウィザードに求められたら API キーを貼り付けます。OpenRouter は、1つのキーで多くのモデルへルーティングできるため、多くのユーザーにとって最も簡単な既定候補です。OpenAI Codex サブスクリプションを持っている場合は、プロバイダー一覧で **OpenAI Codex** を選び、`codex` だけの名前のオプションは選ばないでください。
+3. **Default model:** そのプロバイダーでウィザードが推奨するモデルを選ぶか、`openrouter/auto` のような `provider/model` 値を手動で入力します。
+4. **Workspace:** 変更する明確な理由がない限り、既定のワークスペースを維持します。
+5. **Gateway settings:** 既存の Appbox ゲートウェイ設定を維持します。特に、トークン認証を有効のままにし、既存のゲートウェイポートと bind 設定を保持してください。
+6. **Channels:** WhatsApp、Telegram、Discord、Signal、iMessage などのチャネルをここで設定するか、スキップして後で `openclaw configure` で追加します。
+7. **Web search:** 検索プロバイダーがある場合は選び、なければ今回はスキップします。
+8. **Daemon/service install:** Appbox はコンテナ内で OpenClaw をすでに監視しているため、ウィザードがデーモンのインストールを提示した場合はスキップします。
+9. **Health check:** ウィザードにヘルスチェックを実行させます。
+10. **Skills:** ウィザードが同梱スキルを確認することを許可します。**Preferred node manager for skill installs** と聞かれたら、`npm` を選択します。
+
+オンボーディングが完了したら、OpenClaw ダッシュボードに戻ります。ダッシュボードをすでに開いていた場合は更新し、短いチャットプロンプトでテストしてください。
+
+SSH で使える便利な追加コマンド:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## API キーの取得（ダッシュボードリンク付き）
+
+キーの生成には、以下のプロバイダーコンソールを使用します。推奨の SSH 方法では、`openclaw onboard` が求めたときにキーを貼り付けます。バックアップのダッシュボード方法では、`Config > Secrets > Raw` にキーをマージします。
+
+### 最初のおすすめ: OpenRouter（多くのユーザーに最適な既定候補）
+
+おすすめする理由:
+
+- 多数のモデルベンダーを1つのキーで利用できます。
+- `openrouter/auto` を使うと、タスクの難易度に応じてモデルを切り替えられます。
+- `auto` は、単純なタスクを低コストのモデルへルーティングすることで費用を抑えられる場合があります。
+
+キーの取得方法:
+
+1. [OpenRouter](https://openrouter.ai/) にアクセスしてサインインします。
+2. [API Keys settings](https://openrouter.ai/settings/keys) を開きます。
+3. **Create** をクリックし、キーをコピーします（表示は一度だけです）。
+4. OpenClaw ウィザードが OpenRouter API キーを求めたときに使用します。バックアップのダッシュボード方法では、設定キーは `models.providers.openrouter.apiKey` です。
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="公開チュートリアルに掲載された OpenRouter API キーページのスクリーンショット"
+  width="860"
+/>
+
+Source tutorial: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+キーの取得方法:
+
+1. [OpenAI Platform](https://platform.openai.com/) にサインインします。
+2. [API Keys](https://platform.openai.com/settings/organization/api-keys) を開きます。
+3. **Create new secret key** をクリックします。
+4. すぐにコピーします（OpenAI では完全な値は一度しか表示されません）。
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="公開チュートリアルに掲載された OpenAI API キー設定のスクリーンショット"
+  width="860"
+/>
+
+Source tutorial: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+キーの取得方法:
+
+1. [Anthropic Console](https://console.anthropic.com/) にサインインします。
+2. [API Keys](https://console.anthropic.com/settings/keys) を開きます。
+3. **Create Key** をクリックします。
+4. すぐにキーをコピーします（表示は一度だけです）。
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="公開チュートリアルに掲載された Anthropic API キー作成画面のスクリーンショット"
+  width="860"
+/>
+
+Source tutorial: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google（AI Studio 経由の Gemini）
+
+キーの取得方法:
+
+1. [Google AI Studio](https://aistudio.google.com/) を開きます。
+2. [API Keys](https://aistudio.google.com/app/apikey) に移動します。
+3. **Create API key** をクリックします（新規または既存プロジェクト）。
+4. キーをコピーして保存します。
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="公開チュートリアルに掲載された Google AI Studio API キー作成画面のスクリーンショット"
+  width="860"
+/>
+
+Source tutorial: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Note: プロバイダーダッシュボードは頻繁に変更される場合があり、セッション状態によってはログイン画面が表示されることがあります。
+
+## Backup method: configure provider auth in the dashboard
+
+SSH が利用できない場合、または手動設定を希望する場合のみ、この方法を使用してください。ダッシュボードの Raw エディターは利用できますが、OpenClaw 設定オブジェクト全体を一度に編集します。Appbox のゲートウェイ設定やスキルの既定値を置き換えず、既存ファイルにプロバイダー設定をマージするよう注意してください。
+
+1. インストール済みアプリ詳細ページから OpenClaw ダッシュボード URL を開きます。
+2. **Config > Secrets** に移動します。
+3. Form ではなく **Raw** を選択します。
+4. 取り消し線付きの目のように見える Reveal sensitive values ボタンをクリックします。
+5. 下の例にあるプロバイダー設定を既存設定へ **マージ** します（[手動プロバイダー設定がファイル全体のどこに入るか](#how-manual-provider-config-fits-in-the-full-file) を参照）。ゲートウェイ、スキル、その他の Appbox 既定値をリセットする意図がない限り、ファイル全体を置き換えないでください。
+6. 設定変更を保存して適用します。
+
+### 手動プロバイダー設定がファイル全体のどこに入るか
+
+**Config > Secrets > Raw** は、OpenClaw 設定の **全体** を1つのオブジェクトとして編集します。Appbox では、そのファイルに `gateway`（bind、トークン認証、Control UI）、`skills.load.extraDirs`（同梱スキル）、`commands`、場合によっては `meta` などがすでに含まれています。[主要プロバイダー例](#major-provider-examples) セクションのスニペットは、モデルに必要な部分、つまり `models` ツリーと `agents.defaults.model.primary` だけを示しています。
+
+**行うこと:** 既存のトップレベルキー（`gateway`、`skills`、`commands` など）を保持し、次の2つのセクションを **追加または更新** します。
+
+- **`models.providers`**: プロバイダー（例: `openrouter`）と、その `apiKey`、必要な場合の `baseUrl`、`models` リストを追加します。
+- **`agents.defaults.model.primary`**: エージェントがそのプロバイダーを使うよう、既定モデル文字列（例: `openrouter/auto`）を設定します。
+
+`models` または `agents` がすでに存在する場合は、重複させず、それらのオブジェクトへ新しいキーをマージしてください。
+
+以下は、**JSON** としての Raw ファイル全体の形を示す **1つ** の例です（実際にはエディターが JSON5 形式の引用符も受け入れる場合があります）。実際のファイルには、より詳細なモデルメタデータや `meta` など、さらに多くのフィールドが含まれることがあります。後続の例にある **provider blocks** は、ここでの `models` と `agents` に合わせる部分です。
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **ゲートウェイトークンとプロバイダー API キーの違い:** `gateway.auth.token` は OpenClaw Control UI / gateway へログインするためだけのものです。`models.providers.*.apiKey` は LLM ベンダーキー（OpenRouter、OpenAI など）で、両者は別物です。
+
+## 主要プロバイダー例
+
+まずは1つのプロバイダーブロックだけを使用し、動作確認後に他のプロバイダーを追加してください。以下の各例は **マージ用フラグメント** です。`...` は省略された設定（前後の行）を表し、`"models"` の前にある `},` は、ファイル内で `models` の上にある何らかのキー（例: `skills` または `commands`）の閉じです。スニペット単体では有効な JSON ではありません。`models` と `agents` セクションをルートオブジェクトへマージしてください。
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock note (API キーなし)
+
+Amazon Bedrock は API キーではなく AWS 認証情報（例: `AWS_ACCESS_KEY_ID`、`AWS_SECRET_ACCESS_KEY`、`AWS_REGION`）を使用します。最小限のプロバイダーエントリは次のようになります。
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## メモ
+
+- ゲートウェイ認証トークンとモデルプロバイダー API キーは別の設定です。
+- プロバイダーエラー（例: Anthropic キー不足）が表示される場合は、設定済みのプロバイダーを使うよう既定モデルを更新してください。
+- プロバイダー検証に失敗する場合は、まず必要なプロバイダーフィールド（`baseUrl`、`models`、該当する場合は `apiKey`）が存在することを確認してください。
+
+## 公式プロバイダードキュメント
+
+- [OpenClaw provider directory](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)

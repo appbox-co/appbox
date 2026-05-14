@@ -1,0 +1,196 @@
+---
+title: 组件
+description: 掌握 MDX 文件中的组件用法
+sort: 2
+---
+
+组件会自动注入到所有 MDX 文件中，无需手动导入。
+这意味着你可以使用任何可用组件！
+
+要了解、添加或更改可用组件，请查看文件 `src/components/docs/mdx.tsx`
+
+## Accordion
+
+**示例：**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      这里可以放置 Accordion 的问题标题或触发文本。
+    </AccordionTrigger>
+
+    <AccordionContent>
+      这里是第一个 Accordion 项的内容。你可以在其中放置解释性文本、列表或其他 MDX 内容，用于展示可折叠区域中的详细信息。
+
+      也可以继续添加更多段落，帮助用户理解展开后显示的内容。
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      这里是第二个 Accordion 项的标题。
+    </AccordionTrigger>
+
+    <AccordionContent>
+      这里是第二个 Accordion 项的内容。
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**代码：**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Alerts
+
+**示例：**
+
+<Alert className="my-4">
+  <AlertTitle>默认提示</AlertTitle>
+
+  <AlertDescription>
+    这是一个默认提示。
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>警告提示</AlertTitle>
+
+  <AlertDescription>
+    这是一个警告提示。
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>错误提示</AlertTitle>
+
+  <AlertDescription>
+    这是一个错误提示。
+  </AlertDescription>
+</Alert>
+
+**代码：**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Tabs
+
+**示例：**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">标签页 1</TabsTrigger>
+    <TabsTrigger value="tab-2">标签页 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    标签页 1 内容
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    标签页 2 内容
+  </TabsContent>
+</Tabs>
+
+**代码：**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Steps
+
+**示例：**
+
+<Steps>
+  <Step>步骤 1：</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>步骤 2：</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**代码：**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

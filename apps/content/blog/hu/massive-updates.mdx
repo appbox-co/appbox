@@ -1,0 +1,108 @@
+---
+title: Hatalmas frissítések közelednek az Appboxhoz! 🚀
+date: 2025-04-08 11:58:00
+excerpt: "Új weboldal, nyílt forráskódú kezdeményezés, konténerizált appok, saját hálózati infrastruktúra és még több izgalmas fejlesztés érkezik az Appboxhoz!"
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Új korszak kezdődik az Appboxnál
+
+Hónapoknyi háttérmunka, késő esték és túl sok kávé után izgatottan mutatom meg végre, min dolgoztunk. Ez nem csak egy újabb frissítés. Ez az Appbox alapoktól való újjáépítése.
+
+## Üdv az új digitális otthonunkban
+
+Az új weboldalunkat nézed! Végre búcsút intettünk a régi WordPress-alapú rendszerünknek. Az egészet modern technológiával építettük újra, amely gyorsabb, biztonságosabb, és ténylegesen rendesen skálázódik.
+
+Ez az új oldal ad majd otthont a valódi dokumentációnak, rendszeres blogbejegyzéseknek (mint ez is), és végül az új platformunk frontendjének. A dizájn nem csak tisztább - valóban funkcionális, és sokkal könnyebbé teszi a dolgok megtalálását.
+
+A motorháztető alatt Next.js-t használunk ContentLayerrel, ami nagyon gyors teljesítményt és sokkal jobb fejlesztői élményt ad. Az oldal több nyelvet támogat, automatikusan kezeli a SEO-t, XML és JSON RSS feedeket kínál, és tartalmaz sötét módot is, mert senkinek sem kellene hajnali 2-kor vakító fehér képernyőkkel küzdenie.
+
+## Nyílt forráskódúvá válunk!
+
+Nyílt forráskódúvá is válunk! Az oldal, amelyen ezt olvasod? A kódja nyilvános, és bárki hozzájárulhat.
+
+Ez számunkra óriási lépés. Mindig is igyekeztünk átláthatók lenni, de most ténylegesen megmutatjuk, hogy komolyan gondoljuk: a közösséggel együtt építünk, nem csak a közösségnek. Ha fejlesztő vagy, és valaha szeretted volna alakítani az általad használt eszközöket, most megteheted. Nézd meg a GitHub repónkat a hozzájárulási irányelvekért és mindenért, amire az induláshoz szükséged van.
+
+## Bemutatkozik az Appbox v2
+
+Az új weboldal csak a kezdet. Dolgozunk az Appbox v2-n, amely a valaha volt legnagyobb frissítésünk.
+
+A konténeres telepítés mindig is a mi terepünk volt, de a v2 továbbmegy azzal, amit mindenki kért: teljes VPS-támogatással. A VPS appok teljes root hozzáférést adnak korlátozások nélkül. Ha teljes kontrollra van szükséged a környezeted felett, erre vártál.
+
+Már működik egy szerveren, és nagyon jól teljesít. A VPS appokat ugyanúgy tudod majd telepíteni az app store-ból, mint bármely más appot. Ez lehetővé teszi olyan appok telepítését is, amelyek jelenleg nem lehetségesek, például Docker, Snap és Tailscale. Ehhez OS-frissítésre van szükség a szervereinken Debian 13-ra, mert néhány új virtualizációs funkciót használunk a nagyobb biztonság és jobb teljesítmény érdekében. Ezt a frissítést még be kell vezetnünk, mielőtt elindíthatjuk a funkciót, de erről hamarosan további hírek jönnek.
+
+Ez ötvözi a bevált konténerinfrastruktúránkat a valódi VPS-rugalmassággal, így a két világ legjobbját kapod.
+
+## Saját hálózati infrastruktúrát építünk
+
+Íme az igazán nagy hír: saját hálózatot építünk.
+
+Nem csak több szervert adunk hozzá vagy sávszélességet bővítünk. Saját Autonomous System Numberünk ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) és saját IP-blokkunk (79.140.195.0/24) van, hogy teljesen saját hálózatot építsünk. Lényegében saját ISP-vé válunk saját hivatalos internetes identitással és címtérrel, így mi szabályozhatjuk, hogyan haladnak az adataid az interneten [1].
+
+Mit jelent ez számodra? Mindent kontrollálhatunk, kifejezetten az Appbox-felhasználókra optimalizálhatjuk, és olyan megbízhatóságot és teljesítményt nyújthatunk, amely korábban nem volt lehetséges.
+
+## Peering az AMS-IX-szel
+
+A hálózatfejlesztésünk részeként, amint elkészül a hálózati beállítás, megkezdjük a peeringet az AMS-IX-szel 100G kapcsolaton. Ez közvetlen hozzáférést ad a világ egyik legnagyobb internetes csomópontjához, ami alacsonyabb késleltetést és jobb sebességet jelent mindenkinek. Gondolj rá úgy, mint egy közvetlen autópályára a nagy internetszolgáltatókhoz, a mellékutak helyett [2].
+
+Ez a fajta kapcsolat általában csak sokkal nagyobb cégeknek érhető el, de mi vállalati szintű teljesítményt szeretnénk biztosítani, függetlenül attól, milyen csomagban vagy.
+
+Mostanra megvan a megállapodás a hardverbeszerzésünkre, így készen állunk az indulásra. Az új hardvert legkésőbb októberig megkapjuk, de akár már szeptemberben is. Ez azt jelenti, hogy nem sokkal ezután már működhetünk az új hálózaton.
+
+## Ármódosítások
+
+Ez az a rész, amit nagyon nem akartunk megírni. Ilyen infrastruktúrát építeni drága, és bár a költségek nagy részét mi vállaljuk, sajnos egy kisebb árkorrekcióra van szükségünk új és meglévő ügyfeleinknél is.
+
+Szeretnék ebben teljesen őszinte lenni. Az új árak már élesek az oldalon, és hamarosan megkeressük a meglévő ügyfeleket a részletekkel arról, hogyan érinti ez őket.
+
+Tudjuk, hogy most mindenki erősen meg van terhelve, és őszintén ez volt az egyik legnehezebb döntés, amit meg kellett hoznunk. Az emelést olyan kicsire vettük, amennyire csak lehetett - lényegében mindent mi fedezünk azon az abszolút minimumon kívül, amire szükségünk van, hogy ez működjön.
+
+Viszont gondoskodni fogunk róla, hogy ez az áremelés bőven megérje. A teljesítményben és megbízhatóságban tényleg érezni fogod a különbséget. Ráadásul ez azt is jelenti, hogy tovább bővíthetjük a hálózatunkat, és újabb peeringeket adhatunk hozzá, így innentől csak jobb lesz.
+
+Az új ügyfeleknek 3 hónapja vezettük be ezeket a frissített árakat, és a visszajelzések jók voltak, ezért úgy érezzük, sikerült jó egyensúlyt találni a megfizethetőség és a megérdemelt fejlesztések finanszírozása között; továbbra is nagyon versenyképesek vagyunk. Például a népszerű NG-4500 csomagunk csak havi €2.08-cal drágul, ami még mindig jóval kevesebb, mint a versenytársak hasonló csomagjai.
+
+A meglévő ügyfelek csak a régi és az új ár közötti különbséget fizetik. Ha van bármilyen promóciós kedvezményed, az az új alapárra is rákerül. Nagyra értékeljük a hűségedet, különösen ilyen időkben.
+
+A kedvezménystruktúránk változatlan:
+- 5% kedvezmény negyedéves fizetés esetén
+- 10% kedvezmény 6 hónapos fizetés esetén
+- 15% kedvezmény éves fizetés esetén
+
+Ha automatikus fizetésed van beállítva, a módosítás az e-mail kézhezvétele utáni következő számlázási ciklusban történik. Neked nincs teendőd.
+
+## Több tárhely!
+
+Azért nem csak arról van szó, hogy többet kell fizetni. A legalacsonyabb csomagunk tárhelyét is növeljük 3TB-ról 3.5TB-ra. Ez 16%-os növekedés, ami az árkorrekció ellenére még jobb ajánlattá teszi a belépőszintű csomagunkat.
+
+## Mi következik?
+
+Ez csak a kezdete annak, ami az Appboxhoz érkezik. A következő hetekben és hónapokban rendszeres frissítéseket láthatsz majd, ahogy új funkciókat vezetünk be, javítjuk a meglévőket, és tovább építjük az app hosting következő generációjának infrastruktúráját.
+
+Az új hálózati infrastruktúránk tesztelését szeptember/október körül tervezzük elkezdeni, és folyamatosan tájékoztatunk majd a haladásról.
+
+A roadmapünkben szerepel:
+- VPS appok korlátozások nélkül (például Docker, Snap és Tailscale)
+- Jobb dokumentáció, amely tényleg mindent lefed
+- Közösségi showcase az Appboxszal épített menő dolgoknak
+- Rendszeres technikai blogbejegyzések az infrastruktúránkról
+- Új konténerizált appok konkrét felhasználási esetekhez
+- Jobb monitoring- és analitikai eszközök
+- Fejlettebb biztonsági funkciók minden csomagban
+
+Köszönjük, hogy velünk tartotok. A közösségünk nélkül mindez nem lenne lehetséges.
+
+Hamarosan további frissítések jönnek.
+
+---
+
+*Milyen funkciókat vagy fejlesztéseket látnál szívesen az új Appboxban? Írj nekünk a support@appbox.co címen.*
+
+---
+
+**Hivatkozások:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

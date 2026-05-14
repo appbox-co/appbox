@@ -31,6 +31,7 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { ROUTES } from "@/constants/routes"
 import { useAuth } from "@/providers/auth-provider"
+import { AccountPageHeader } from "../_components/account-page-header"
 import { PasswordChangeForm } from "./_components/password-change-form"
 
 /* -------------------------------------------------------------------------- */
@@ -61,13 +62,13 @@ function ProfileAvatar({
         width={80}
         height={80}
         unoptimized
-        className="size-20 rounded-full border-2 border-border object-cover"
+        className="size-20 rounded-full border-2 border-border object-cover shadow-sm ring-1 ring-border/50"
       />
     )
   }
 
   return (
-    <div className="flex size-20 items-center justify-center rounded-full border-2 border-border bg-muted text-xl font-bold text-muted-foreground">
+    <div className="flex size-20 items-center justify-center rounded-full border-2 border-border bg-muted text-xl font-bold text-muted-foreground shadow-sm ring-1 ring-border/50">
       {initials}
     </div>
   )
@@ -80,10 +81,16 @@ function ProfileAvatar({
 function ProfileSkeleton() {
   return (
     <div className="space-y-6">
-      <div className="h-8 w-32 animate-pulse rounded bg-muted" />
+      <div className="flex items-center gap-3">
+        <div className="size-10 animate-pulse rounded-[10px] bg-muted" />
+        <div className="space-y-2">
+          <div className="h-6 w-36 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-56 animate-pulse rounded bg-muted/70" />
+        </div>
+      </div>
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="h-[400px] animate-pulse rounded-xl border bg-muted" />
-        <div className="h-[400px] animate-pulse rounded-xl border bg-muted" />
+        <div className="card-glow h-[400px] animate-pulse rounded-xl border bg-card" />
+        <div className="card-glow h-[400px] animate-pulse rounded-xl border bg-card" />
       </div>
     </div>
   )
@@ -109,9 +116,16 @@ export default function ProfilePage() {
 
   if (error) {
     return (
-      <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
-        <AlertCircle className="size-4 shrink-0" />
-        {tc("errors.loadProfileFailed")}
+      <div className="space-y-6">
+        <AccountPageHeader
+          title={t("profile.title")}
+          description={t("profile.description")}
+          icon={<User className="size-[18px]" />}
+        />
+        <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+          <AlertCircle className="size-4 shrink-0" />
+          {tc("errors.loadProfileFailed")}
+        </div>
       </div>
     )
   }
@@ -148,16 +162,18 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">
-        {t("profile.title")}
-      </h1>
+      <AccountPageHeader
+        title={t("profile.title")}
+        description={t("profile.description")}
+        icon={<User className="size-[18px]" />}
+      />
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* ---------------------------------------------------------------- */}
         {/*  Profile Info Card                                                */}
         {/* ---------------------------------------------------------------- */}
-        <Card>
-          <CardHeader>
+        <Card className="card-glow overflow-hidden">
+          <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base">
               <User className="size-4 text-muted-foreground" />
               {t("profile.title")}
@@ -309,8 +325,8 @@ export default function ProfilePage() {
         {/* ---------------------------------------------------------------- */}
         {/*  Password Change Card                                             */}
         {/* ---------------------------------------------------------------- */}
-        <Card>
-          <CardHeader>
+        <Card className="card-glow overflow-hidden">
+          <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base">
               <Lock className="size-4 text-muted-foreground" />
               {t("password.title")}

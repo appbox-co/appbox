@@ -1,0 +1,196 @@
+---
+title: Components
+description: अपनी MDX files में components का बेहतर उपयोग करना
+sort: 2
+---
+
+Components सभी MDX files में manual import की ज़रूरत के बिना automatically inject किए जाते हैं।
+इसका मतलब है कि आप उपलब्ध कोई भी component इस्तेमाल कर सकते हैं!
+
+उपलब्ध components के बारे में अधिक जानने, उन्हें जोड़ने या बदलने के लिए `src/components/docs/mdx.tsx` file देखें।
+
+## Accordion
+
+**Example:**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      यह पहला example question है, जो accordion trigger में दिखता है।
+    </AccordionTrigger>
+
+    <AccordionContent>
+      यह accordion content का example है। यहां आप लंबे paragraphs, अतिरिक्त जानकारी और user को दिखने वाली explanatory copy रख सकते हैं। Content खुलने पर दिखाई देता है और MDX के अंदर सामान्य text की तरह render होता है।
+
+      आप इसी block में दूसरा paragraph भी जोड़ सकते हैं, ताकि complex answers या documentation sections को compact तरीके से दिखाया जा सके।
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      यह दूसरा accordion item है।
+    </AccordionTrigger>
+
+    <AccordionContent>
+      यह दूसरे item का छोटा answer है।
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**Code:**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Alerts
+
+**Example:**
+
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    यह default alert है।
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    यह warning alert है।
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    यह error alert है।
+  </AlertDescription>
+</Alert>
+
+**Code:**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Tabs
+
+**Example:**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 की content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 की content
+  </TabsContent>
+</Tabs>
+
+**Code:**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Steps
+
+**Example:**
+
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**Code:**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

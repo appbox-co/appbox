@@ -1,0 +1,99 @@
+---
+title: Introducere
+description: Bun venit la documentația oficială pentru frontend-ul Appbox open-sourced.
+sort: 1
+---
+
+**Bun venit la documentația Appbox**  
+Suntem încântați să anunțăm că frontend-ul pentru [Appbox](https://www.appbox.co/) este acum open-sourced pe [GitHub](https://github.com/appbox-co/appbox). Scopul nostru este să încurajăm o comunitate colaborativă care contribuie la documentație, dezvoltă funcționalități frontend noi și ajută la îmbunătățirea experienței Appbox în ansamblu.
+
+Deși documentația noastră este încă într-o etapă timpurie, lucrăm pentru a construi o resursă cuprinzătoare, similară altor platforme din domeniul nostru. În prezent, documentația se concentrează în principal pe ghidurile de contribuție, dar intenționăm să o extindem cu informații detaliate pentru toate aplicațiile disponibile pe Appbox.
+
+Până când documentația noastră devine mai robustă, te rugăm să vizitezi [baza noastră de cunoștințe veche](https://billing.appbox.co/knowledgebase) pentru întrebări imediate despre aplicații sau servicii specifice. Dacă ai nevoie de suport tehnic, poți [trimite un tichet](https://billing.appbox.co/submitticket.php) pentru asistență. Poți accesa oricând aceste documente noi prin linkul din subsolul site-ului nostru, pentru a ne urmări progresul pe măsură ce le extindem.
+
+## Planuri de viitor
+
+- **Ghiduri detaliate pentru aplicații**  
+  Acoperă instalarea, depanarea și sfaturi pentru fiecare dintre aplicațiile acceptate pe platforma noastră.
+- **Resurse pentru utilizatori și dezvoltatori**  
+  Oferă totul, de la tutoriale prietenoase pentru începători până la referințe avansate de cod pentru personalizarea experienței tale Appbox.
+- **Conținut dezvoltat de comunitate**  
+  Încurajăm pull request-uri, feedback și sugestii - toate sunt binevenite și ajută la dezvoltarea acestui proiect pentru toată lumea.
+
+## Primii pași
+
+Dacă vrei să examinezi sau să contribui la codul frontend open-sourced, clonează repository-ul [Appbox](https://github.com/appbox-co/appbox):
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Apoi navighează în proiect și instalează dependențele:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Instanța ta locală va fi disponibilă la `http://localhost:3000`. Explorează, fă modificări și creează pull request-uri. Apreciem fiecare contribuție!
+
+## Instrumente de dezvoltare
+
+### Linting
+
+Proiectul include o configurare completă de linting folosind ESLint cu integrare TypeScript și Prettier. Aceasta asigură un stil de cod consecvent și ajută la detectarea timpurie a erorilor comune. Poți rula manual verificările de linting:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Configurația noastră ESLint include:
+- Reguli specifice TypeScript prin `@typescript-eslint`
+- Linting specific Next.js cu `eslint-config-next`
+- Formatarea codului cu integrare Prettier
+
+### Hook-uri pre-commit
+
+Folosim Husky pentru a gestiona hook-urile Git, ceea ce ajută la asigurarea faptului că doar codul de calitate este comis în repository. Sunt configurate următoarele hook-uri:
+
+- **pre-commit**: Rulează `lint:fix` înainte de fiecare commit pentru a asigura calitatea codului
+- **commit-msg**: Folosește commitlint pentru a impune formatarea mesajelor de commit conform convențiilor
+
+Aceasta înseamnă că commit-urile tale vor fi verificate automat pentru calitatea codului și formatare corectă înainte de a fi acceptate, menținând un standard ridicat în întreaga bază de cod.
+
+## Crearea pull request-urilor
+
+Când ești gata să contribui cu schimbările tale, urmează aceste recomandări pentru ca Pull Request-ul (PR) tău să aibă șanse mai mari să fie acceptat:
+
+### Înainte de a crea un PR
+
+1. **Fă rebase din cea mai recentă ramură main** pentru a evita conflictele de merge:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Asigură-te că toate verificările de linting trec**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Asigură-te că codul tău funcționează local** testând funcționalitatea relevantă.
+
+### Recomandări pentru PR
+
+1. **Menține PR-urile concentrate** - Abordează o singură problemă sau funcționalitate per PR.
+2. **Scrie mesaje de commit clare** - Respectă formatul conventional commit.
+3. **Include descrieri clare** - Explică ce face PR-ul tău și de ce este necesar.
+4. **Adaugă teste** - Unde este cazul, adaugă teste pentru a verifica dacă schimbările funcționează corect.
+5. **Documentează-ți codul** - Folosește comentarii pentru logica complexă și asigură-te că numele funcțiilor sunt descriptive.
+6. **Respectă modelele existente** - Codul tău trebuie să se potrivească stilului și modelelor folosite în restul bazei de cod.
+
+Pentru schimbări semnificative, ia în considerare deschiderea mai întâi a unui issue pentru a discuta abordarea înainte de a investi timp în codare. Acest lucru ajută la asigurarea faptului că contribuția ta se aliniază cu direcția proiectului și evită efortul irosit.

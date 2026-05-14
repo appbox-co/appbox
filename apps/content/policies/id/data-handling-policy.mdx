@@ -1,0 +1,397 @@
+---
+title: Kebijakan Penanganan Data
+description: Cara kami mengelola dan melindungi data Anda
+---
+
+Di Appbox, kami hanya mengumpulkan dan menyimpan informasi minimum yang diperlukan untuk menjaga catatan kami dan menyediakan layanan kami. Tim Appbox dilatih untuk menangani data Anda dengan mengutamakan privasi dan keamanan, serta mengikuti protokol ketat, termasuk penggunaan kredensial yang kuat dan autentikasi multi-faktor. Semua pemrosesan pembayaran ditangani sepenuhnya oleh pemroses pembayaran kami, dan tidak ada informasi keuangan Anda yang disimpan oleh Appbox, selain catatan pembayaran beserta ID transaksinya masing-masing.
+
+## Email
+
+- **Penggunaan**
+  - Berfungsi sebagai login Anda untuk Appbox Client Area dan Appbox Control Panel
+  - Titik kontak untuk pengumuman layanan Appbox
+  - Titik kontak untuk pertanyaan Appbox Ticket System
+- **Pengumpulan**
+  - Diberikan oleh pengguna saat mendaftar
+- **Penyimpanan**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Tim Appbox
+    - Ini digunakan untuk menghubungi pengguna terkait dukungan atau pengumuman layanan apa pun
+- **Retensi**
+  - Tidak terbatas
+- **Informasi selengkapnya**
+  - Kebijakan Penghapusan Data Sensitif
+
+## Username
+
+- **Penggunaan**
+  - Mengidentifikasi pengguna di Appbox Ticket System
+  - Berfungsi sebagai nama slot Appbox milik pengguna
+  - Didaftarkan sebagai pengguna lokal di server tempat slot pengguna di-deploy, sehingga proses apa pun yang berjalan milik pengguna dapat terlihat
+  - Berfungsi sebagai username pengguna untuk aplikasi yang terinstal
+- **Pengumpulan**
+  - Diberikan oleh pengguna saat mendaftar
+- **Penyimpanan**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Aplikasi Terinstal = Tergantung pada Aplikasi
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Tim Appbox
+    - Diperlukan untuk pertanyaan dukungan
+    - Diperlukan untuk menyelidiki masalah server dengan mencari aplikasi yang menggunakan resource tinggi, sumber ketidakstabilan server, atau aplikasi yang tidak sah
+- **Retensi**
+  - Tidak terbatas
+- **Informasi Selengkapnya**
+  - Kebijakan Penghapusan Data Sensitif
+
+## Negara
+
+- **Penggunaan**
+  - Digunakan untuk menghitung pajak yang berlaku berdasarkan negara yang dipilih pengguna
+- **Pengumpulan**
+  - Diberikan oleh pengguna saat mendaftar
+- **Penyimpanan**
+  - WHMCS = Cleartext
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Tim Appbox
+- **Retensi**
+  - Tidak terbatas
+- **Informasi Selengkapnya**
+  - Kebijakan Penghapusan Data Sensitif
+
+## Password
+
+### Password Appbox Client Area
+
+- **Penggunaan**
+  - Berfungsi sebagai password pengguna untuk Appbox Client Area
+- **Pengumpulan**
+  - Diberikan oleh pengguna saat mendaftar di Appbox Client Area
+- **Penyimpanan**
+  - WHMCS = Encrypted
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Akses terbatas oleh tim Appbox
+    - Tim Appbox tidak dapat melihat password pengguna karena password tersebut di-hash, tetapi mereka dapat mereset password Anda setelah verifikasi
+- **Retensi**
+  - Tidak terbatas
+- **Informasi Selengkapnya**
+  - Kebijakan Penghapusan Data Sensitif
+  - [Kebijakan Password](/policies/password-policy)
+  - Kami sangat menyarankan untuk mengaktifkan autentikasi dua faktor di [halaman keamanan akun](https://billing.appbox.co/user/security) Anda
+
+### Password Appbox Control Panel
+
+- **Penggunaan**
+  - Berfungsi sebagai password pengguna di Appbox Control Panel untuk mengakses slot mereka
+- **Pengumpulan**
+  - Diberikan oleh pengguna setelah deployment slot mereka
+- **Penyimpanan**
+  - Appbox API = Encrypted
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Akses terbatas oleh tim Appbox
+    - Tim Appbox tidak dapat melihat password pengguna karena password tersebut di-hash, tetapi mereka dapat mereset password Anda setelah verifikasi
+- **Retensi**
+  - Tidak terbatas
+- **Informasi Selengkapnya**
+  - Kebijakan Penghapusan Data Sensitif
+  - [Kebijakan Password](/policies/password-policy)
+  - Kami sangat menyarankan untuk mengaktifkan autentikasi dua faktor di [halaman keamanan akun](https://billing.appbox.co/user/security) Anda
+
+### Password Aplikasi
+
+- **Penggunaan**
+  - Berfungsi sebagai password untuk aplikasi terinstal milik pengguna
+- **Pengumpulan**
+  - Diberikan oleh pengguna setelah deployment slot mereka
+- **Penyimpanan**
+  - Appbox API = Cleartext
+  - Aplikasi Terinstal = Tergantung pada Aplikasi
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Tim Appbox
+    - Diperlukan untuk pertanyaan dukungan khusus aplikasi, dengan izin pengguna
+- **Retensi**
+  - Hingga pengguna meng-uninstall aplikasi
+- **Informasi Selengkapnya**
+  - Kebijakan Penghapusan Data Sensitif
+  - [Kebijakan Password](/policies/password-policy)
+  - Kami sangat menyarankan untuk mengaktifkan autentikasi dua faktor di [halaman keamanan akun](https://billing.appbox.co/user/security) Anda
+
+## Pemrosesan Pembayaran
+
+### PayPal
+
+- **Penggunaan**
+  - Berfungsi sebagai salah satu gateway pembayaran Appbox
+- **Pengumpulan**
+  - Pemrosesan pembayaran dilakukan sepenuhnya oleh PayPal. Satu-satunya data yang disimpan di WHMCS pada akun pengguna adalah **PayPal Transaction ID**
+- **Penyimpanan**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Akses dan Alasan Akses**
+  - Appbox Sales Team
+    - Appbox Sales Team dapat memverifikasi informasi pengguna dengan PayPal sebagai bagian dari proses penjualan kami
+- **Retensi**
+  - Tidak terbatas
+
+### Stripe
+
+- **Penggunaan**
+  - Berfungsi sebagai salah satu gateway pembayaran Appbox
+- **Pengumpulan**
+  - Pemrosesan pembayaran dilakukan sepenuhnya oleh Stripe. Satu-satunya data yang disimpan di WHMCS pada akun pengguna adalah **Stripe Payment ID, Hash, empat digit terakhir kartu, dan tanggal kedaluwarsa**
+- **Penyimpanan**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Akses dan Alasan Akses**
+  - Appbox Sales Team
+    - Appbox Sales Team dapat memverifikasi informasi pengguna dengan Stripe sebagai bagian dari proses penjualan kami
+- **Retensi**
+  - Tidak terbatas
+
+### CoinGate
+
+- **Penggunaan**
+  - Berfungsi sebagai salah satu gateway pembayaran Appbox untuk transaksi cryptocurrency
+- **Pengumpulan**
+  - Pemrosesan pembayaran dilakukan sepenuhnya oleh CoinGate. Satu-satunya data yang disimpan di WHMCS adalah **CoinGate Transaction ID**
+- **Penyimpanan**
+  - WHMCS = Cleartext (Transaction ID)
+- **Akses dan Alasan Akses**
+  - Appbox Sales Team
+    - Appbox Sales Team dapat memverifikasi informasi pengguna dengan CoinGate sebagai bagian dari proses penjualan kami
+- **Retensi**
+  - Tidak terbatas
+
+*Catatan: CoinGate sendiri menyimpan ID transaksi blockchain dan alamat blockchain pengirim sebagai bagian dari layanan mereka. Informasi ini tidak disimpan oleh Appbox.*
+
+## Log dan Analitik
+
+### Metrik Server
+
+- **Penggunaan**
+  - Digunakan untuk memantau kesehatan dan penggunaan resource server
+- **Pengumpulan**
+  - Dibuat setelah deployment slot pengguna
+- **Penyimpanan**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Akses dan Alasan Akses**
+  - Pengguna
+    - Metrik server dapat dilihat menggunakan berbagai utilitas Linux yang terinstal di slot Anda. Metrik utama berikut dapat dilihat:
+      - Penggunaan CPU
+      - Penggunaan Swap
+      - Penggunaan RAM
+      - Load Average 1/5/15
+      - Proses Anda yang sedang berjalan
+      - Proses yang dijalankan oleh pengguna lain di server yang sama tidak dapat Anda akses
+      - Metrik Input/Output
+      - Ruang disk
+      - Kuota ruang disk (ruang disk yang dialokasikan untuk Anda)
+      - Ruang disk fisik
+  - Tim Appbox
+    - Selain metrik di atas, tim Appbox menggunakan Posthog untuk mengagregasi semua metrik dari semua server dengan cepat dan memberi peringatan kepada tim jika ada error
+    - Metrik server digunakan untuk pertanyaan dukungan dan untuk menyelidiki penyalahgunaan resource
+- **Retensi**
+  - Tidak terbatas
+
+### Log Autentikasi
+
+#### Percobaan Login Appbox Control Panel
+
+- **Penggunaan**
+  - Setiap percobaan akses yang tidak valid dicatat ke Appbox API, yang membatasi pengguna untuk login ke Control Panel setelah sejumlah percobaan tertentu selama periode yang ditentukan. Ini mencakup:
+    - Username, sebagaimana dimasukkan oleh pengguna
+    - Alamat IP
+    - Jumlah percobaan
+    - Tanggal percobaan terakhir
+- **Pengumpulan**
+  - Dikumpulkan saat pengguna memasukkan kredensial secara salah
+- **Penyimpanan**
+  - Appbox API = Cleartext
+- **Akses dan Alasan Akses**
+  - Tim Appbox
+    - Digunakan untuk mengidentifikasi percobaan brute-force
+    - Pengguna dapat meminta pencabutan timeout dan penghapusan percobaan akses, atas permintaan dan setelah verifikasi melalui sistem Ticket
+- **Retensi**
+  - 24 jam atau berdasarkan permintaan pengguna
+
+#### Log Login SSH
+
+- **Penggunaan**
+  - Mencatat percobaan login dan login yang berhasil ke SSH pada aplikasi yang diinstal pengguna seperti Ubuntu atau Debian
+- **Pengumpulan**
+  - Dibuat otomatis oleh server SSH saat percobaan login terjadi
+- **Penyimpanan**
+  - Container aplikasi = Cleartext (biasanya di `/var/log/auth.log` atau sejenisnya)
+- **Akses dan Alasan Akses**
+  - Pengguna
+    - Karena log ini disimpan di dalam aplikasi tempat pengguna memiliki akses root (sudo), pengguna memiliki kendali penuh atas dan akses ke log ini
+    - Pengguna dapat melihat, mengubah, atau menghapus log ini sesuai kebutuhan
+  - Tim Appbox
+    - Akses hanya tersedia dengan izin pengguna selama troubleshooting dukungan
+- **Retensi**
+  - Dikelola oleh pengguna, karena mereka memiliki akses root ke container
+  - Kebijakan rotasi log default berlaku kecuali diubah oleh pengguna
+
+### Log yang Dibuat Sistem
+
+- **Penggunaan**
+  - Log yang dibuat di seluruh server, digunakan untuk mengidentifikasi masalah pada server
+- **Pengumpulan**
+  - Dibuat oleh sistem operasi server
+- **Penyimpanan**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Akses dan Alasan Akses**
+  - Akses terbatas tim Appbox
+    - Digunakan untuk mengidentifikasi masalah di server tertentu
+    - Log diagregasi oleh Posthog, yang memberi peringatan kepada tim jika ada error
+- **Retensi**
+  - Tidak terbatas
+
+### Log yang Dibuat oleh Aplikasi Terinstal
+
+- **Penggunaan**
+  - Log yang dibuat oleh aplikasi terinstal, digunakan untuk mengidentifikasi masalah di dalam slot pengguna
+- **Pengumpulan**
+  - Dibuat oleh aplikasi terinstal milik pengguna
+- **Penyimpanan**
+  - Appbox API = Cleartext
+  - Aplikasi Terinstal = Cleartext
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Tim Appbox
+    - Diperlukan untuk pertanyaan dukungan khusus aplikasi, dengan izin pengguna
+- **Retensi**
+  - Hingga pengguna meng-uninstall atau menghapus aplikasi
+
+### Riwayat bash Pengguna
+
+- **Penggunaan**
+  - Mencatat semua perintah yang dimasukkan pengguna pada shell slot, yang berada di `$HOME/.bash_history`
+- **Pengumpulan**
+  - Setiap perintah yang dimasukkan di shell dicatat
+- **Penyimpanan**
+  - Appbox Servers = Cleartext
+- **Akses dan Alasan Akses**
+  - Pengguna
+    - Karena file riwayat bash disimpan di direktori home pengguna, pengguna memiliki kendali penuh atas file ini
+    - Pengguna dapat melihat, mengubah, mengosongkan, atau menghapus file ini sesuai kebutuhan (menggunakan perintah seperti `history -c` atau dengan mengedit/menghapus file)
+  - Tim Appbox
+    - Digunakan untuk pertanyaan umum atau khusus aplikasi seperti memverifikasi apakah perintah yang dimasukkan pengguna sudah benar, tetapi hanya dengan izin pengguna
+    - Digunakan untuk memeriksa kemungkinan intrusi atau penyalahgunaan server, tetapi hanya bila diperlukan untuk investigasi keamanan
+- **Retensi**
+  - Dikelola oleh pengguna, yang dapat mengosongkan riwayat kapan saja
+  - Secara default, riwayat bash disimpan tanpa batas hingga pengguna menghapusnya
+
+### Data yang Di-host
+
+#### Aplikasi Terinstal
+
+- **Penggunaan**
+  - File penting agar aplikasi terinstal dapat berjalan dengan benar
+- **Pengumpulan**
+  - Diinstal oleh pengguna di slot mereka
+- **Penyimpanan**
+  - Appbox Servers = Tergantung pada Aplikasi
+- **Akses dan Alasan Akses**
+  - Pengguna
+  - Tim Appbox
+    - Digunakan untuk pertanyaan dukungan khusus aplikasi, dengan izin pengguna
+- **Retensi**
+  - Tidak terbatas hingga pengguna menghapusnya
+
+#### Data Pengguna
+
+- **Penggunaan**
+  - Data yang dibuat oleh pengguna dan/atau aplikasi pengguna dan disimpan di slot pengguna
+- **Pengumpulan**
+  - Dibuat oleh pengguna dan/atau aplikasi pengguna
+- **Penyimpanan**
+  - Appbox Servers = Cleartext
+- **Akses dan Alasan Akses**
+  - Pengguna
+    - File pengguna disimpan di folder home pada server Appbox dan diisolasi dari pengguna lain. Hanya pengguna yang dapat mengaksesnya
+  - Tim Appbox
+    - Dapat diakses untuk pertanyaan dukungan, dengan izin pengguna
+- **Retensi**
+  - Tidak terbatas hingga pengguna menghapusnya
+    - Untuk pemberitahuan takedown DMCA yang sah, kami akan memberi tahu pengguna dan meminta mereka menghapus konten dalam 24 jam
+- **Informasi Selengkapnya**
+  - [Kebijakan Penyalahgunaan Konten](/policies/content-abuse-policy)
+  - [Kebijakan Penghapusan Data Sensitif](/policies/sensitive-data-removal-policy)
+
+## Kepatuhan UK Online Safety Act
+
+Sesuai dengan UK Online Safety Act 2023, Appbox menerapkan praktik penanganan data khusus untuk melindungi pengguna dan mematuhi persyaratan regulasi:
+
+### Pemantauan Keamanan Konten
+
+- **Penggunaan**
+  - Penilaian dan mitigasi risiko untuk konten ilegal dan berbahaya
+  - Moderasi konten yang dilaporkan
+  - Pencegahan distribusi konten ilegal
+- **Pengumpulan**
+  - Dibuat saat konten dilaporkan atau ditandai
+  - Nilai hash konten untuk materi ilegal yang diketahui
+- **Penyimpanan**
+  - Appbox API = Encrypted
+  - Database laporan = Cleartext
+- **Akses dan Alasan Akses**
+  - Appbox Compliance Team
+    - Untuk meninjau konten yang dilaporkan dan mengambil tindakan yang sesuai
+    - Untuk berkoordinasi dengan otoritas UK saat diwajibkan secara hukum
+  - Otoritas regulasi UK (bila diwajibkan oleh hukum)
+    - Untuk memantau kepatuhan terhadap Online Safety Act
+    - Untuk menyelidiki konten ilegal yang serius
+- **Retensi**
+  - Data laporan: 2 tahun setelah penyelesaian
+  - Nilai hash konten: Tidak terbatas (untuk pencegahan redistribusi)
+
+### Data Penilaian Risiko
+
+- **Penggunaan**
+  - Melakukan penilaian risiko yang diwajibkan untuk konten ilegal dan konten yang membahayakan anak
+  - Menerapkan langkah keselamatan yang proporsional
+  - Menunjukkan kepatuhan kepada otoritas regulasi
+- **Pengumpulan**
+  - Dibuat melalui penilaian risiko platform secara berkala
+  - Data penggunaan teragregasi untuk mengidentifikasi pola risiko potensial
+- **Penyimpanan**
+  - Appbox Compliance Systems = Protected
+- **Akses dan Alasan Akses**
+  - Appbox Compliance Team
+    - Untuk melakukan dan memperbarui penilaian risiko
+    - Untuk menerapkan langkah keselamatan
+  - Otoritas regulasi UK (bila diwajibkan oleh hukum)
+    - Untuk memverifikasi kepatuhan terhadap kewajiban penilaian risiko
+- **Retensi**
+  - 3 tahun (untuk menunjukkan kepatuhan berkelanjutan)
+
+### Sistem Pelaporan Konten
+
+- **Penggunaan**
+  - Memungkinkan pengguna melaporkan konten ilegal atau berbahaya
+  - Melacak status laporan dan tindakan yang diambil
+- **Pengumpulan**
+  - Detail laporan yang diberikan oleh pengguna pelapor
+  - Informasi tentang konten yang dilaporkan
+  - Tindakan yang diambil atas laporan
+- **Penyimpanan**
+  - Appbox API = Encrypted
+- **Akses dan Alasan Akses**
+  - Pengguna pelapor (terbatas pada laporan mereka sendiri)
+  - Pengguna yang kontennya dilaporkan (informasi terbatas)
+  - Appbox Compliance Team
+    - Untuk menyelidiki dan menyelesaikan laporan
+  - Otoritas regulasi UK (bila diwajibkan oleh hukum)
+    - Untuk menyelidiki laporan konten ilegal yang serius
+- **Retensi**
+  - 2 tahun setelah penyelesaian

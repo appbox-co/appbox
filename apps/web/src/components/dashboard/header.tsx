@@ -68,7 +68,7 @@ export function DashboardHeader() {
             >
               <Shield className="size-3.5" />
               <span className="hidden sm:inline">
-                {isAdminMode ? "Admin" : "Admin"}
+                {t("admin")}
               </span>
             </button>
           )}
@@ -94,8 +94,14 @@ export function DashboardHeader() {
               <Button variant="ghost" size="icon" disabled aria-hidden="true">
                 <Bell className="size-5" />
               </Button>
-              <Button variant="ghost" size="icon" disabled aria-hidden="true">
+              <Button
+                variant="ghost"
+                className="h-9 gap-2 px-2"
+                disabled
+                aria-hidden="true"
+              >
                 <LanguagesIcon className="size-[1.2rem]" />
+                <span className="hidden h-4 w-5 rounded bg-muted sm:inline" />
               </Button>
               <Button variant="ghost" size="icon" disabled aria-hidden="true">
                 <span className="size-[1.15rem]" />

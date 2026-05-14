@@ -1,0 +1,397 @@
+---
+title: Adatkezelési szabályzat
+description: "Hogyan kezeljük és védjük az adataidat"
+---
+
+Az Appboxnál csak a nyilvántartásaink fenntartásához és szolgáltatásaink nyújtásához szükséges minimális információt gyűjtjük és tároljuk. Az Appbox csapata úgy van betanítva, hogy adataidat a lehető legnagyobb adatvédelmi és biztonsági odafigyeléssel kezelje, és szigorú protokollokat követ, beleértve az erős hitelesítő adatok és a többfaktoros hitelesítés használatát. Minden fizetésfeldolgozást teljes egészében fizetésfeldolgozóink végeznek, és pénzügyi adataidat az Appbox nem tárolja, a fizetési nyilvántartások és azok kapcsolódó tranzakcióazonosítói kivételével.
+
+## E-mail
+
+- **Felhasználások**
+  - Bejelentkezésként szolgál az Appbox Client Area és az Appbox Control Panel használatához
+  - Kapcsolattartási pont az Appbox szolgáltatási bejelentéseihez
+  - Kapcsolattartási pont az Appbox Ticket System megkereséseihez
+- **Gyűjtés**
+  - A felhasználó adja meg regisztrációkor
+- **Tárolás**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Appbox csapat
+    - A felhasználó support vagy szolgáltatási bejelentések miatti megkeresésére szolgál
+- **Megőrzés**
+  - Határozatlan ideig
+- **További információ**
+  - Sensitive Data Removal Policy
+
+## Felhasználónév
+
+- **Felhasználások**
+  - Azonosítja a felhasználót az Appbox Ticket System rendszerben
+  - A felhasználó Appbox slotjának neveként szolgál
+  - Helyi felhasználóként kerül regisztrálásra azon a szerveren, ahol a felhasználó slotja telepítve van, megjelenítve a felhasználó futó folyamatait
+  - A felhasználó felhasználóneveként szolgál a telepített alkalmazásokhoz
+- **Gyűjtés**
+  - A felhasználó adja meg regisztrációkor
+- **Tárolás**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Appbox csapat
+    - Support megkeresésekhez szükséges
+    - Szerverproblémák kivizsgálásához szükséges nagy erőforrás-fogyasztású alkalmazások, szerverinstabilitási források vagy jogosulatlan alkalmazások keresésekor
+- **Megőrzés**
+  - Határozatlan ideig
+- **További információ**
+  - Sensitive Data Removal Policy
+
+## Ország
+
+- **Felhasználások**
+  - Az alkalmazandó adók kiszámítására szolgál a felhasználó által kiválasztott ország alapján
+- **Gyűjtés**
+  - A felhasználó adja meg regisztrációkor
+- **Tárolás**
+  - WHMCS = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Appbox csapat
+- **Megőrzés**
+  - Határozatlan ideig
+- **További információ**
+  - Sensitive Data Removal Policy
+
+## Jelszó
+
+### Appbox Client Area jelszó
+
+- **Felhasználások**
+  - A felhasználó jelszavaként szolgál az Appbox Client Area használatához
+- **Gyűjtés**
+  - A felhasználó adja meg az Appbox Client Area regisztrációjakor
+- **Tárolás**
+  - WHMCS = Encrypted
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Korlátozott hozzáférés az Appbox csapat részéről
+    - Az Appbox csapata nem látja a felhasználó jelszavát, mivel az hash-elve van, de ellenőrzés után visszaállíthatja a jelszavadat
+- **Megőrzés**
+  - Határozatlan ideig
+- **További információ**
+  - Sensitive Data Removal Policy
+  - [Jelszószabályzat](/policies/password-policy)
+  - Erősen javasoljuk a kétfaktoros hitelesítés engedélyezését a [fiókbiztonsági oldaladon](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel jelszó
+
+- **Felhasználások**
+  - A felhasználó Appbox Control Panel jelszavaként szolgál a slot eléréséhez
+- **Gyűjtés**
+  - A felhasználó adja meg a slot telepítése után
+- **Tárolás**
+  - Appbox API = Encrypted
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Korlátozott hozzáférés az Appbox csapat részéről
+    - Az Appbox csapata nem látja a felhasználó jelszavát, mivel az hash-elve van, de ellenőrzés után visszaállíthatja a jelszavadat
+- **Megőrzés**
+  - Határozatlan ideig
+- **További információ**
+  - Sensitive Data Removal Policy
+  - [Jelszószabályzat](/policies/password-policy)
+  - Erősen javasoljuk a kétfaktoros hitelesítés engedélyezését a [fiókbiztonsági oldaladon](https://billing.appbox.co/user/security)
+
+### Alkalmazásjelszavak
+
+- **Felhasználások**
+  - A felhasználó telepített alkalmazásainak jelszavaként szolgál
+- **Gyűjtés**
+  - A felhasználó adja meg a slot telepítése után
+- **Tárolás**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Appbox csapat
+    - Alkalmazásspecifikus support megkeresésekhez szükséges, a felhasználó engedélyével
+- **Megőrzés**
+  - Amíg a felhasználó el nem távolítja az alkalmazást
+- **További információ**
+  - Sensitive Data Removal Policy
+  - [Jelszószabályzat](/policies/password-policy)
+  - Erősen javasoljuk a kétfaktoros hitelesítés engedélyezését a [fiókbiztonsági oldaladon](https://billing.appbox.co/user/security)
+
+## Fizetésfeldolgozás
+
+### PayPal
+
+- **Felhasználások**
+  - Az Appbox egyik fizetési átjárójaként szolgál
+- **Gyűjtés**
+  - A fizetésfeldolgozást teljes egészében a PayPal végzi. A felhasználó WHMCS-fiókjában kizárólag a **PayPal Transaction ID** kerül mentésre
+- **Tárolás**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Hozzáférés és a hozzáférés okai**
+  - Appbox Sales Team
+    - Az Appbox Sales Team értékesítési folyamatunk részeként ellenőrizheti a felhasználó adatait a PayPalnál
+- **Megőrzés**
+  - Határozatlan ideig
+
+### Stripe
+
+- **Felhasználások**
+  - Az Appbox egyik fizetési átjárójaként szolgál
+- **Gyűjtés**
+  - A fizetésfeldolgozást teljes egészében a Stripe végzi. A felhasználó WHMCS-fiókjában kizárólag a **Stripe Payment ID, Hash, Card's last four digits and expiry** kerül mentésre
+- **Tárolás**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Hozzáférés és a hozzáférés okai**
+  - Appbox Sales Team
+    - Az Appbox Sales Team értékesítési folyamatunk részeként ellenőrizheti a felhasználó adatait a Stripe-nál
+- **Megőrzés**
+  - Határozatlan ideig
+
+### CoinGate
+
+- **Felhasználások**
+  - Az Appbox egyik fizetési átjárójaként szolgál kriptovaluta-tranzakciókhoz
+- **Gyűjtés**
+  - A fizetésfeldolgozást teljes egészében a CoinGate végzi. A WHMCS-ben kizárólag a **CoinGate Transaction ID** kerül mentésre
+- **Tárolás**
+  - WHMCS = Cleartext (Transaction ID)
+- **Hozzáférés és a hozzáférés okai**
+  - Appbox Sales Team
+    - Az Appbox Sales Team értékesítési folyamatunk részeként ellenőrizheti a felhasználó adatait a CoinGate-nél
+- **Megőrzés**
+  - Határozatlan ideig
+
+*Megjegyzés: A CoinGate maga tárolja a blockchain tranzakcióazonosítót és a küldő blockchain címét szolgáltatása részeként. Ezt az információt az Appbox nem tárolja.*
+
+## Naplók és analitika
+
+### Szervermetrikák
+
+- **Felhasználások**
+  - A szerverek állapotának és erőforrás-használatának figyelésére szolgál
+- **Gyűjtés**
+  - A felhasználó slotjának telepítése után jön létre
+- **Tárolás**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+    - A szervermetrikák a slotodon telepített különböző Linux segédprogramokkal tekinthetők meg. Az alábbi fő metrikák láthatók:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - A futó folyamataid
+      - Ugyanazon a szerveren más felhasználók által futtatott folyamatok számodra nem hozzáférhetők
+      - Input/Output metrikák
+      - Lemezterület
+      - Kvóta szerinti lemezterület (a kiosztott lemezterületed)
+      - Fizikai lemezterület
+  - Appbox Team
+    - A fenti metrikákon túl az Appbox csapat a Posthogot használja, hogy gyorsan aggregálja az összes szerver összes metrikáját, és hibák esetén riasztást küldjön a csapatnak
+    - A szervermetrikák support megkeresésekhez és erőforrás-visszaélések kivizsgálásához használatosak
+- **Megőrzés**
+  - Határozatlan ideig
+
+### Hitelesítési naplók
+
+#### Appbox Control Panel bejelentkezési kísérletek
+
+- **Felhasználások**
+  - Minden érvénytelen hozzáférési kísérlet naplózásra kerül az Appbox API-ban, amely meghatározott számú kísérlet után adott időre korlátozza a felhasználó Control Panelbe való bejelentkezését. Ez tartalmazza:
+    - Felhasználónév, ahogyan a felhasználó megadta
+    - IP-cím
+    - Kísérletek száma
+    - Utolsó kísérlet dátuma
+- **Gyűjtés**
+  - Akkor gyűjtjük, amikor egy felhasználó hibásan adja meg hitelesítő adatait
+- **Tárolás**
+  - Appbox API = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Appbox Team
+    - Brute-force kísérletek azonosítására szolgál
+    - A felhasználók kérésre és a Ticket rendszeren keresztüli ellenőrzés után kérhetik az időkorlát feloldását és a hozzáférési kísérlet eltávolítását
+- **Megőrzés**
+  - 24 óra vagy felhasználói kérésig
+
+#### SSH bejelentkezési naplók
+
+- **Felhasználások**
+  - Bejelentkezési kísérleteket és sikeres SSH bejelentkezéseket rögzít a felhasználó által telepített alkalmazásokban, például Ubuntu vagy Debian esetén
+- **Gyűjtés**
+  - Az SSH szerver automatikusan generálja, amikor bejelentkezési kísérletek történnek
+- **Tárolás**
+  - Application container = Cleartext (jellemzően `/var/log/auth.log` vagy hasonló)
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+    - Mivel ezek a naplók olyan alkalmazásokban vannak tárolva, ahol a felhasználók root (sudo) hozzáféréssel rendelkeznek, a felhasználók teljes kontrollal és hozzáféréssel rendelkeznek ezekhez a naplókhoz
+    - A felhasználók szükség szerint megtekinthetik, módosíthatják vagy törölhetik ezeket a naplókat
+  - Appbox csapat
+    - A hozzáférés kizárólag felhasználói engedéllyel, support hibaelhárítás során érhető el
+- **Megőrzés**
+  - A felhasználó kezeli, mivel root hozzáféréssel rendelkezik a konténerhez
+  - Alapértelmezett naplórotációs szabályok érvényesek, hacsak a felhasználó nem módosítja őket
+
+### Rendszer által generált naplók
+
+- **Felhasználások**
+  - Szerver-szintű generált naplók, a szervereken jelentkező problémák azonosítására
+- **Gyűjtés**
+  - A szerverek operációs rendszere generálja
+- **Tárolás**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Korlátozott hozzáférésű Appbox csapat
+    - Konkrét szerverek problémáinak azonosítására szolgál
+    - A naplókat a Posthog aggregálja, amely hibák esetén riasztja a csapatot
+- **Megőrzés**
+  - Határozatlan ideig
+
+### Telepített alkalmazások által generált naplók
+
+- **Felhasználások**
+  - Telepített alkalmazások által generált naplók, a felhasználó slotján belüli problémák azonosítására
+- **Gyűjtés**
+  - A felhasználó telepített alkalmazásai generálják
+- **Tárolás**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Appbox csapat
+    - Alkalmazásspecifikus support megkeresésekhez szükséges, a felhasználó engedélyével
+- **Megőrzés**
+  - Amíg a felhasználó el nem távolítja az alkalmazást vagy törli azt
+
+### Felhasználó bash előzményei
+
+- **Felhasználások**
+  - Rögzíti a felhasználó által a slot shelljében megadott összes parancsot, a `$HOME/.bash_history` fájlban
+- **Gyűjtés**
+  - A shellben megadott minden parancs rögzítésre kerül
+- **Tárolás**
+  - Appbox Servers = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+    - Mivel a bash history fájl a felhasználó home könyvtárában van tárolva, a felhasználók teljes kontrollal rendelkeznek a fájl felett
+    - A felhasználók szükség szerint megtekinthetik, módosíthatják, üríthetik vagy törölhetik ezt a fájlt (például `history -c` használatával vagy a fájl szerkesztésével/eltávolításával)
+  - Appbox csapat
+    - Általános vagy alkalmazásspecifikus megkeresésekhez használható, például annak ellenőrzésére, hogy a felhasználó által megadott parancsok helyesek-e, de csak felhasználói engedéllyel
+    - Lehetséges behatolások vagy szerver-visszaélések ellenőrzésére használható, de csak ha biztonsági vizsgálathoz szükséges
+- **Megőrzés**
+  - A felhasználó kezeli, aki bármikor törölheti az előzményeket
+  - Alapértelmezés szerint a bash history határozatlan ideig megmarad, amíg a felhasználó el nem távolítja
+
+### Hosztolt adatok
+
+#### Telepített alkalmazások
+
+- **Felhasználások**
+  - A telepített alkalmazások megfelelő működéséhez szükséges alapvető fájlok
+- **Gyűjtés**
+  - A felhasználó telepíti a slotjára
+- **Tárolás**
+  - Appbox Servers = Depends on the Application
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+  - Appbox csapat
+    - Alkalmazásspecifikus support megkeresésekhez használható, a felhasználó engedélyével
+- **Megőrzés**
+  - Határozatlan ideig, amíg a felhasználó el nem távolítja
+
+#### Felhasználói adatok
+
+- **Felhasználások**
+  - A felhasználó és/vagy a felhasználó alkalmazásai által létrehozott és a felhasználó slotján tárolt adatok
+- **Gyűjtés**
+  - A felhasználó és/vagy a felhasználó alkalmazásai hozzák létre
+- **Tárolás**
+  - Appbox Servers = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Felhasználó
+    - A felhasználó fájljai az Appbox szervereken home mappákban vannak tárolva, és el vannak különítve más felhasználóktól. Csak a felhasználó férhet hozzájuk
+  - Appbox csapat
+    - Support megkeresésekhez hozzáférhető, a felhasználó engedélyével
+- **Megőrzés**
+  - Határozatlan ideig, amíg a felhasználó el nem távolítja
+    - Jogos DMCA takedown értesítések esetén tájékoztatjuk a felhasználót, és megkérjük, hogy 24 órán belül törölje a tartalmat
+- **További információ**
+  - [Tartalommal való visszaélésre vonatkozó szabályzat](/policies/content-abuse-policy)
+  - [Érzékeny adatok eltávolítására vonatkozó szabályzat](/policies/sensitive-data-removal-policy)
+
+## Megfelelés az UK Online Safety Actnek
+
+Az UK Online Safety Act 2023-mal összhangban az Appbox konkrét adatkezelési gyakorlatokat alkalmaz a felhasználók védelme és a szabályozási követelmények betartása érdekében:
+
+### Tartalombiztonsági monitoring
+
+- **Felhasználások**
+  - Kockázatértékelés és kockázatcsökkentés illegális és káros tartalmak esetén
+  - Bejelentett tartalom moderálása
+  - Illegális tartalom terjesztésének megelőzése
+- **Gyűjtés**
+  - Tartalom bejelentésekor vagy megjelölésekor keletkezik
+  - Ismert illegális anyagok tartalom-hash értékei
+- **Tárolás**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Hozzáférés és a hozzáférés okai**
+  - Appbox Compliance Team
+    - Bejelentett tartalom felülvizsgálatához és megfelelő intézkedések megtételéhez
+    - Brit hatóságokkal való koordinációhoz, amikor erre jogszabály kötelez
+  - Brit szabályozó hatóságok (ha jogszabály előírja)
+    - Az Online Safety Actnek való megfelelés ellenőrzéséhez
+    - Súlyos illegális tartalom kivizsgálásához
+- **Megőrzés**
+  - Jelentési adatok: a lezárástól számított 2 év
+  - Tartalom-hash értékek: határozatlan ideig (az újraterjesztés megelőzésére)
+
+### Kockázatértékelési adatok
+
+- **Felhasználások**
+  - Kötelező kockázatértékelések végzése illegális tartalommal és gyermekekre káros tartalommal kapcsolatban
+  - Arányos biztonsági intézkedések bevezetése
+  - Megfelelés igazolása szabályozó hatóságok felé
+- **Gyűjtés**
+  - Rendszeres platformkockázat-értékelések során keletkezik
+  - Aggregált használati adatok potenciális kockázati minták azonosításához
+- **Tárolás**
+  - Appbox Compliance Systems = Protected
+- **Hozzáférés és a hozzáférés okai**
+  - Appbox Compliance Team
+    - Kockázatértékelések végzéséhez és frissítéséhez
+    - Biztonsági intézkedések bevezetéséhez
+  - Brit szabályozó hatóságok (ha jogszabály előírja)
+    - A kockázatértékelési kötelezettségeknek való megfelelés ellenőrzéséhez
+- **Megőrzés**
+  - 3 év (a folyamatos megfelelés igazolására)
+
+### Tartalomjelentési rendszer
+
+- **Felhasználások**
+  - Lehetővé teszi a felhasználók számára illegális vagy káros tartalom bejelentését
+  - Követi a jelentések állapotát és a megtett intézkedéseket
+- **Gyűjtés**
+  - A jelentő felhasználók által megadott jelentési részletek
+  - Információ a bejelentett tartalomról
+  - Jelentésekkel kapcsolatos intézkedések
+- **Tárolás**
+  - Appbox API = Encrypted
+- **Hozzáférés és a hozzáférés okai**
+  - Jelentő felhasználó (saját jelentéseire korlátozva)
+  - Az a felhasználó, akinek a tartalmát bejelentették (korlátozott információ)
+  - Appbox Compliance Team
+    - Jelentések kivizsgálásához és megoldásához
+  - Brit szabályozó hatóságok (ha jogszabály előírja)
+    - Súlyos illegális tartalomról szóló jelentések kivizsgálásához
+- **Megőrzés**
+  - A lezárástól számított 2 év

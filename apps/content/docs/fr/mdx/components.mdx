@@ -1,0 +1,196 @@
+---
+title: Composants
+description: Maîtriser les composants dans vos fichiers MDX
+sort: 2
+---
+
+Les composants sont automatiquement injectés dans tous les fichiers MDX, sans import manuel.
+Cela signifie que vous pouvez utiliser n'importe quel composant disponible !
+
+Pour en savoir plus, ajouter ou modifier les composants disponibles, consultez le fichier `src/components/docs/mdx.tsx`
+
+## Accordéon
+
+**Exemple :**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**Code :**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Alertes
+
+**Exemple :**
+
+<Alert className="my-4">
+  <AlertTitle>Alerte par défaut</AlertTitle>
+
+  <AlertDescription>
+    Ceci est une alerte par défaut.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Alerte d'avertissement</AlertTitle>
+
+  <AlertDescription>
+    Ceci est une alerte d'avertissement.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Alerte d'erreur</AlertTitle>
+
+  <AlertDescription>
+    Ceci est une alerte d'erreur.
+  </AlertDescription>
+</Alert>
+
+**Code :**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Onglets
+
+**Exemple :**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Onglet 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Onglet 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Contenu de l'onglet 1
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Contenu de l'onglet 2
+  </TabsContent>
+</Tabs>
+
+**Code :**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Étapes
+
+**Exemple :**
+
+<Steps>
+  <Step>Étape 1 :</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Étape 2 :</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**Code :**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

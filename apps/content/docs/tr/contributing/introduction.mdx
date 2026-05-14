@@ -1,0 +1,99 @@
+---
+title: Giriş
+description: Açık kaynaklı Appbox frontend için resmi dokümantasyona hoş geldiniz.
+sort: 1
+---
+
+**Appbox Dokümantasyonuna Hoş Geldiniz**  
+[Appbox](https://www.appbox.co/) frontend'inin artık [GitHub](https://github.com/appbox-co/appbox) üzerinde açık kaynaklı olduğunu duyurmaktan heyecan duyuyoruz. Amacımız, dokümantasyona katkıda bulunan, yeni frontend özellikleri geliştiren ve genel Appbox deneyimini iyileştirmeye yardımcı olan iş birliğine dayalı bir topluluk oluşturmaktır.
+
+Dokümantasyonumuz hâlâ erken aşamalarda olsa da, alanımızdaki diğer platformlara benzer kapsamlı bir kaynak oluşturmaya çalışıyoruz. Şu anda dokümanlarımız ağırlıklı olarak katkı yönergelerine odaklanıyor, ancak Appbox üzerinde sunulan tüm uygulamalar için ayrıntılı bilgilerle genişletmeyi planlıyoruz.
+
+Dokümantasyonumuz daha sağlam hâle gelene kadar belirli uygulamalar veya servislerle ilgili acil sorularınız için lütfen [eski bilgi tabanımızı](https://billing.appbox.co/knowledgebase) ziyaret edin. Teknik desteğe ihtiyacınız varsa yardım almak için [ticket gönderebilirsiniz](https://billing.appbox.co/submitticket.php). Genişletme sürecimizde ilerlememizi kontrol etmek için bu yeni dokümanlara sitemizin footer'ındaki bağlantıdan her zaman erişebilirsiniz.
+
+## Gelecek planları
+
+- **Derinlemesine uygulama kılavuzları**  
+  Platformumuzda desteklenen uygulamaların her biri için kurulum, sorun giderme ve ipuçlarını kapsar.
+- **Kullanıcı ve geliştirici kaynakları**  
+  Appbox deneyiminizi özelleştirmek için başlangıç dostu öğreticilerden gelişmiş kod referanslarına kadar her şeyi sağlar.
+- **Topluluk odaklı içerik**  
+  Pull request'leri, geri bildirimleri ve önerileri teşvik eder; hepsi memnuniyetle karşılanır ve bu projenin herkes için büyümesine yardımcı olur.
+
+## Başlarken
+
+Açık kaynaklı frontend kodumuzu incelemek veya katkıda bulunmak istiyorsanız [Appbox](https://github.com/appbox-co/appbox) deposunu klonlayın:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Ardından projeye girip bağımlılıklarını yükleyin:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Yerel örneğiniz `http://localhost:3000` adresinde kullanılabilir olacaktır. Keşfetmekten, değişiklik yapmaktan ve pull request oluşturmaktan çekinmeyin. Her katkı için minnettarız!
+
+## Geliştirme araçları
+
+### Linting
+
+Proje, TypeScript ve Prettier entegrasyonuyla ESLint kullanan kapsamlı bir linting kurulumuyla gelir. Bu, tutarlı kod stilini sağlar ve yaygın hataları erken yakalamaya yardımcı olur. Linting kontrollerini elle çalıştırabilirsiniz:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+ESLint yapılandırmamız şunları içerir:
+- `@typescript-eslint` üzerinden TypeScript'e özel kurallar
+- `eslint-config-next` ile Next.js'e özel linting
+- Prettier entegrasyonuyla kod biçimlendirme
+
+### Pre-commit hook'ları
+
+Git hook'larını yönetmek için Husky kullanıyoruz; bu, depoya yalnızca kaliteli kodun commit edilmesini sağlamaya yardımcı olur. Aşağıdaki hook'lar kuruludur:
+
+- **pre-commit**: Kod kalitesini sağlamak için her commit'ten önce `lint:fix` çalıştırır
+- **commit-msg**: Geleneksel commit mesajı biçimini zorunlu kılmak için commitlint kullanır
+
+Bu, commit'lerinizin kabul edilmeden önce kod kalitesi ve doğru biçimlendirme açısından otomatik olarak kontrol edileceği anlamına gelir; böylece kod tabanı genelinde yüksek standart korunur.
+
+## Pull Request oluşturma
+
+Değişikliklerinizle katkıda bulunmaya hazır olduğunuzda, Pull Request (PR) kabul edilme olasılığını artırmak için şu yönergeleri izleyin:
+
+### PR oluşturmadan önce
+
+1. Merge çakışmalarını önlemek için **en güncel main branch'ten rebase yapın**:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Tüm linting kontrollerinin geçtiğinden emin olun**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. İlgili işlevselliği test ederek **kodunuzun yerelde çalıştığından emin olun**.
+
+### PR yönergeleri
+
+1. **PR'leri odaklı tutun** - Her PR'de tek bir sorunu veya özelliği ele alın.
+2. **Açık commit mesajları yazın** - Geleneksel commit biçimini izleyin.
+3. **Açık açıklamalar ekleyin** - PR'nizin ne yaptığını ve neden gerekli olduğunu açıklayın.
+4. **Test ekleyin** - Uygunsa, değişikliklerinizin doğru çalıştığını doğrulamak için testler ekleyin.
+5. **Kodunuzu belgelendirin** - Karmaşık mantık için yorumlar kullanın ve fonksiyon adlarının açıklayıcı olduğundan emin olun.
+6. **Mevcut kalıpları izleyin** - Kodunuz, kod tabanının geri kalanında kullanılan stil ve kalıplarla eşleşmelidir.
+
+Önemli değişiklikler için kodlamaya zaman yatırmadan önce yaklaşımı tartışmak amacıyla önce bir issue açmayı düşünün. Bu, katkınızın projenin yönüyle uyumlu olmasını sağlamaya ve boşa çaba harcamayı önlemeye yardımcı olur.

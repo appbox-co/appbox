@@ -1,0 +1,183 @@
+---
+title: "โปรแกรม Bug Bounty"
+description: "โปรแกรมการรายงานช่องโหว่ด้านความปลอดภัยและรางวัลของเรา"
+---
+
+ที่ Appbox ความปลอดภัยเป็น priority พื้นฐาน เราส่งเสริมให้ security researchers ช่วยเสริมความแข็งแกร่งให้ platform ของเราโดยการระบุและรายงาน potential vulnerabilities Program นี้ระบุแนวทางของเราต่อ responsible security research วิธีที่เราจัดการ vulnerability reports และ rewards ที่เรามอบให้ researchers ที่ช่วยปรับปรุง security posture ของเรา
+
+## คำมั่นของเรา
+
+เมื่อคุณเข้าร่วม bug bounty program ของเรา เราสัญญาว่าจะ:
+
+* acknowledge และ evaluate report ของคุณอย่างทันท่วงที
+* address confirmed vulnerabilities ด้วย urgency ที่เหมาะสม
+* recognize และ reward คุณสำหรับ vulnerabilities ที่ unique และไม่เคยถูกรายงานมาก่อน ซึ่งนำไปสู่ security improvements
+
+## ขอบเขตของโปรแกรม
+
+bug bounty program นี้ใช้กับ Appbox platforms ต่อไปนี้:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **เฉพาะ Infrastructure เท่านั้น ไม่รวม customer applications**
+
+**หมายเหตุ:** แม้ hosting infrastructure ของเรา (username.appboxes.co) อยู่ใน scope แต่ vulnerabilities ใน third-party applications ที่ customers deploy ไม่อยู่ใน scope โปรดดู exclusions ด้านล่าง
+
+## สิ่งที่เข้าเกณฑ์เป็น Valid Vulnerability
+
+เพื่อเข้าเกณฑ์ bug bounty program ของเรา submission ต้องตรงตาม criteria ต่อไปนี้ทั้งหมด:
+
+### 1. แสดงการโจมตีที่เกิดขึ้นได้จริง
+* รวม proof of concept ที่ทำงานได้ซึ่งแสดงว่า vulnerability สามารถถูก exploited ได้
+* แสดง security impact ที่ชัดเจน theoretical vulnerabilities ที่ไม่มี demonstrated harm ไม่เข้าเกณฑ์
+* พิสูจน์ว่า attacker สามารถ compromise user data, accounts หรือ system integrity ได้จริง
+
+### 2. กระทบระบบที่อยู่ในขอบเขต
+* vulnerability ต้องมีอยู่ใน proprietary code หรือ infrastructure ของ Appbox
+* ต้องกระทบ systems ที่ระบุอย่างชัดเจนใน "Program Coverage" ข้างต้น
+* ต้อง reproducible บน production หรือ staging environments ของเรา
+
+### 3. ยังไม่เคยถูกรายงานมาก่อน
+* vulnerability ต้องถูกค้นพบใหม่และยังไม่เป็นที่ทราบแก่เรา
+* duplicate reports หรือ variations ของ known issues ไม่เข้าเกณฑ์
+
+## พื้นที่และประเด็นที่ไม่อยู่ในขอบเขต
+
+รายการต่อไปนี้ถือว่า **อยู่นอก scope** ของ bug bounty program ของเรา:
+
+### ระบบและการผสานรวมของบุคคลที่สาม
+* WHMCS Client Area [https://billing.appbox.co] - รายงานไปยัง [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - รายงานไปยัง [Chatwoot Security](https://www.chatwoot.com/security)
+* **Customer-deployed applications** [app.username.appboxes.co] - Vulnerabilities ใน third-party applications (WordPress, Nextcloud ฯลฯ) ที่ hosted บน infrastructure ของเรา ควรรายงานต่อ application vendors ที่เกี่ยวข้อง
+* third-party services, plugins หรือ integrations อื่นใดที่เราใช้
+* IP addresses หรือ domains ที่ไม่ได้ควบคุมโดย Appbox โดยตรง
+* Legacy หรือ deprecated systems ที่ไม่ได้ใช้งาน active อีกต่อไป
+
+**สิ่งที่ไม่อยู่ในขอบเขตสำหรับ Hosting Infrastructure:**
+* Vulnerabilities ภายใน customer-deployed application code (WordPress, Nextcloud ฯลฯ)
+* Default configurations ของ third-party applications
+* Security issues ที่เฉพาะเจาะจงต่อ application version ใด version หนึ่ง
+
+### ความปลอดภัย headers และการเสริมความแข็งแกร่ง
+* Missing security headers (X-Frame-Options, COOP, COEP, MTA-STS ฯลฯ) **เว้นแต่** คุณ demonstrate actual exploitation ที่นำไปสู่ data compromise
+* Missing `rel="noopener"` หรือ `rel="noreferrer"` attributes
+* Server version disclosure หรือ HTTP header information leakage
+* Cookie attributes บน non-sensitive cookies (analytics, preferences ฯลฯ)
+
+### การเปิดเผยข้อมูลที่มีผลกระทบต่ำ
+* Verbose error messages ที่ไม่ expose sensitive data (passwords, tokens, PII)
+* Path disclosure โดยไม่มี demonstrated path traversal หรือ file access
+* Technology stack identification (PHP version, framework detection ฯลฯ)
+* Generic application responses หรือ behavior
+
+### การตัดสินใจด้านการออกแบบและประเด็นเชิงทฤษฎี
+* Login CSRF (ไม่ให้ attacker เข้าถึง victim accounts)
+* User enumeration ผ่าน timing attacks หรือ differential responses (เว้นแต่เป็นส่วนหนึ่งของ larger attack chain)
+* Clickjacking โดยไม่มี demonstrated exploitation ของ sensitive functionality
+* CORS configurations บน non-sensitive endpoints
+* Missing rate limiting **เว้นแต่** คุณ demonstrate actual abuse (DoS ยังถูก exclude)
+
+### เงื่อนไขเบื้องต้นของการโจมตี
+* Security issues ที่ไม่กระทบ default application configurations ของเรา
+* Vulnerabilities ที่ต้องใช้ non-standard configurations
+* Vulnerabilities ใน containers ของเราที่ต้องใช้ custom หรือ modified setups
+* Issues ที่ต้องใช้ network-level compromise (MITM, DNS poisoning, ARP spoofing)
+
+### วิธีทดสอบที่ห้ามใช้
+* Timing-based information disclosure attacks
+* Process enumeration techniques
+* denial of service หรือ high-volume attacks ทุกรูปแบบ
+* Social engineering และ phishing techniques
+* Automated security scanning ที่สร้าง traffic หรือ loads มากเกินไป
+* การทดสอบ non-functional features หรือ pages (เช่น signup pages ที่ยังไม่อยู่ใน production)
+
+### ประเภทรายงานที่ไม่ถูกต้อง
+* Reports ที่อิงจาก automated scanner output เพียงอย่างเดียวโดยไม่มี manual validation
+* Generic recommendations โดยไม่ demonstrate actual vulnerabilities
+* Best practice suggestions โดยไม่มี security impact
+* Compliance observations (PCI-DSS, GDPR ฯลฯ) โดยไม่ demonstrate exploitability
+
+## โครงสร้างรางวัล
+
+### Website หลักและ Control Panel
+
+| **ประเภทช่องโหว่**                                   | **รางวัล PayPal** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting Infrastructure
+
+| ประเภทช่องโหว่                              | รางวัล PayPal | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Contributors ที่รายงาน valid vulnerabilities จะได้รับการยอมรับใน Security Researchers Hall of Fame ของเราเป็นสัญลักษณ์แห่งความขอบคุณ
+
+## คุณภาพของรายงานที่จำเป็น
+
+vulnerability reports ทั้งหมดต้องรวม:
+
+* **คำอธิบายช่องโหว่ที่ชัดเจน** - อธิบายว่า vulnerability คืออะไรและสำคัญอย่างไร
+* **ระบบ/URL ที่ได้รับผลกระทบ** - ระบุอย่างชัดเจนว่า vulnerability อยู่ที่ใด
+* **ขั้นตอนการ reproduce แบบละเอียด** - ขั้นตอนโดยละเอียดที่ช่วยให้เราสามารถ reproduce issue
+* **proof of concept ที่ใช้งานได้** - demonstration ที่ใช้งานได้ของ exploitation (code, screenshots, video)
+* **ผลกระทบด้านความปลอดภัยที่เกิดขึ้นได้จริง** - demonstrate ว่า attacker ทำอะไรได้จริง ไม่ใช่ theoretical possibilities
+* **การทดสอบด้วยตนเองของคุณ** - validate findings ด้วยตนเอง อย่าเพียง forward scanner output
+
+Reports ที่ขาด elements เหล่านี้หรือประกอบด้วย generic security recommendations จะไม่เข้าเกณฑ์รับ rewards
+
+## การขอรับรางวัลของคุณ
+
+* คุณอาจเลือก reward options ได้สองแบบ:  
+   * Direct PayPal payment (ต้องมี PayPal account ที่ถูกต้อง)
+   * Appbox service credits (ใช้ได้กับบริการ Appbox ใด ๆ ไม่สามารถโอนให้ผู้อื่นได้)
+
+## แนวทางการเข้าร่วม
+
+* ปฏิบัติตามนโยบายนี้, [Terms of Service](/policies/terms-of-service) ของเรา และกฎหมายที่เกี่ยวข้องทั้งหมด
+* รายงาน vulnerabilities อย่างรวดเร็วหลัง discovery
+* เคารพ user privacy และ system integrity ระหว่าง research ของคุณ
+* ส่ง vulnerability reports ทั้งหมดเฉพาะผ่าน [contact us form](https://billing.appbox.co/contact.php) ของเรา
+* รักษาความลับเกี่ยวกับ discovered vulnerabilities จนกว่าจะ resolved
+* จำกัดการทดสอบของคุณเฉพาะ systems ที่รวมอยู่ใน program นี้อย่างชัดเจน
+* หากคุณได้รับ unexpected access ไปยัง sensitive data: เข้าถึงเฉพาะปริมาณขั้นต่ำที่จำเป็นเพื่อ demonstrate issue, หยุด testing ทันที และรายงาน vulnerability อย่างรวดเร็ว
+* ใช้เฉพาะ test accounts ของคุณเองสำหรับ interaction ใด ๆ กับ systems ของเรา
+* ห้ามพยายาม extort Appbox โดยอิงจาก findings ของคุณ
+* **ตรวจสอบ findings ของคุณ** - ทดสอบว่า proof of concept ของคุณทำงานจริงก่อน submit
+* **เน้นผลกระทบ** - ให้ความสำคัญกับ vulnerabilities ที่อาจก่อให้เกิด harm จริงมากกว่า theoretical issues
+
+## การคุ้มครองทางกฎหมาย
+
+Security researchers ที่ปฏิบัติตามนโยบายนี้สามารถคาดหวัง:
+
+* การปกป้องจาก legal action สำหรับ good-faith security research ที่ดำเนินการภายใน guidelines เหล่านี้
+* exemption จาก anti-circumvention legal claims เมื่อจำเป็นสำหรับ legitimate security research
+* waiver ของ policy restrictions บางประการที่มิฉะนั้นจะขัดขวาง security testing
+* การยอมรับว่า compliant security research เป็นประโยชน์และดำเนินการโดยสุจริต
+
+คุณยังคงรับผิดชอบในการปฏิบัติตามกฎหมายที่เกี่ยวข้องทั้งหมด หากคุณเผชิญ legal action จาก third party ขณะปฏิบัติตามนโยบายนี้ เราจะ affirm ว่าการกระทำของคุณดำเนินการตาม program ของเรา หากคุณไม่แน่ใจว่า planned research activities ของคุณปฏิบัติตามนโยบายนี้หรือไม่ โปรดติดต่อเราผ่าน [contact us form](https://billing.appbox.co/contact.php) ก่อนดำเนินการ
+
+## กระบวนการรายงาน
+
+หากต้องการรายงาน vulnerability ให้สร้าง detailed ticket ผ่าน [contact us form](https://billing.appbox.co/contact.php) ของเรา
+
+* report ของคุณควรรวม comprehensive steps เพื่อ reproduce vulnerability คุณอาจใช้ template นี้เป็น guide: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* program communications ทั้งหมดต้องผ่าน official Support Ticket Platform ของเรา
+* Public disclosure ของ vulnerability ใด ๆ โดยไม่ได้รับ explicit written permission จาก Appbox ละเมิด terms ของ program นี้และจะทำให้คุณถูก disqualify จากการรับ reward
+
+## สิ่งที่จะเกิดขึ้นหลังคุณรายงาน
+
+* **ช่องโหว่ที่ถูกต้อง**: เราจะ acknowledge report ของคุณ ทำงานกับ fix และ process reward ของคุณ
+* **รายงานที่ไม่ถูกต้อง**: เราจะอธิบายว่าทำไม report ไม่เข้าเกณฑ์ และอาจให้ guidance สำหรับ future submissions
+* **รายงานที่อยู่นอกขอบเขต**: เราจะ redirect คุณไปยัง vendor ที่เหมาะสม หรืออธิบายว่าทำไม issue ไม่อยู่ใน coverage
+
+เราขอบคุณ research ที่มีคุณภาพและ contributions ที่สร้างสรรค์ต่อ security ของเรา ขอบคุณที่ช่วยรักษาความปลอดภัยให้ Appbox

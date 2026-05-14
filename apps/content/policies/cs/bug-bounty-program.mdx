@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Program
+description: Náš program hlášení bezpečnostních zranitelností a odměn
+---
+
+V Appboxu je bezpečnost základní prioritou. Aktivně podporujeme bezpečnostní výzkumníky, aby pomáhali posilovat naši platformu identifikací a hlášením potenciálních zranitelností. Tento program popisuje náš přístup k odpovědnému bezpečnostnímu výzkumu, způsob zpracování hlášení zranitelností a odměny, které nabízíme výzkumníkům pomáhajícím zlepšovat naši bezpečnostní úroveň.
+
+## Náš závazek
+
+Když se účastníte našeho bug bounty programu, zavazujeme se:
+
+* Včas potvrdit přijetí a vyhodnotit vaše hlášení
+* Řešit potvrzené zranitelnosti s odpovídající naléhavostí
+* Uznat a odměnit vás za jedinečné, dříve neohlášené zranitelnosti, které vedou ke zlepšení bezpečnosti
+
+## Rozsah programu
+
+Tento bug bounty program se vztahuje na následující platformy Appbox:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **pouze infrastruktura, ne zákaznické aplikace**
+
+**Poznámka:** Ačkoli je naše hostingová infrastruktura (username.appboxes.co) v rozsahu, zranitelnosti v third-party aplikacích nasazených zákazníky nejsou. Viz vyloučení níže.
+
+## Co se považuje za platnou zranitelnost
+
+Aby bylo hlášení způsobilé pro náš bug bounty program, musí splnit VŠECHNA následující kritéria:
+
+### 1. Prokázat skutečné zneužití
+* Zahrnout funkční proof of concept, který prokazuje, že zranitelnost lze zneužít
+* Ukázat jasný bezpečnostní dopad; teoretické zranitelnosti bez prokázané újmy nejsou způsobilé
+* Prokázat, že útočník by mohl skutečně kompromitovat uživatelská data, účty nebo integritu systému
+
+### 2. Ovlivňovat systémy v rozsahu
+* Zranitelnost musí existovat ve vlastním kódu nebo infrastruktuře Appboxu
+* Musí ovlivňovat systémy výslovně uvedené výše v části "Rozsah programu"
+* Musí být reprodukovatelná v našich produkčních nebo staging prostředích
+
+### 3. Být dříve neohlášená
+* Zranitelnost musí být nově objevená a nesmí nám být již známa
+* Duplicitní hlášení nebo varianty známých problémů nejsou způsobilé
+
+## Vyloučené oblasti a problémy
+
+Následující oblasti jsou považovány za **mimo rozsah** našeho bug bounty programu:
+
+### Systémy a integrace třetích stran
+* WHMCS Client Area [https://billing.appbox.co] - Hlašte na [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - Hlašte na [Chatwoot Security](https://www.chatwoot.com/security)
+* **Aplikace nasazené zákazníky** [app.username.appboxes.co] - Zranitelnosti v third-party aplikacích (WordPress, Nextcloud atd.) hostovaných na naší infrastruktuře by měly být hlášeny příslušným dodavatelům aplikací
+* Jakékoli jiné third-party služby, pluginy nebo integrace, které používáme
+* IP adresy nebo domény, které Appbox přímo nekontroluje
+* Legacy nebo deprecated systémy, které již nejsou aktivně používány
+
+**Mimo rozsah pro hostingovou infrastrukturu:**
+* Zranitelnosti v kódu aplikací nasazených zákazníky (WordPress, Nextcloud atd.)
+* Výchozí konfigurace third-party aplikací
+* Bezpečnostní problémy specifické pro konkrétní verzi aplikace
+
+### Bezpečnostní hlavičky a hardening
+* Chybějící bezpečnostní hlavičky (X-Frame-Options, COOP, COEP, MTA-STS atd.) **pokud** neprokážete skutečné zneužití vedoucí ke kompromitaci dat
+* Chybějící atributy `rel="noopener"` nebo `rel="noreferrer"`
+* Zveřejnění verze serveru nebo únik informací v HTTP hlavičkách
+* Atributy cookies u necitlivých cookies (analytics, preferences atd.)
+
+### Zveřejnění informací s nízkým dopadem
+* Podrobné chybové zprávy, které neodhalují citlivá data (hesla, tokeny, PII)
+* Zveřejnění cesty bez prokázaného path traversal nebo přístupu k souborům
+* Identifikace technologického stacku (PHP verze, detekce frameworku atd.)
+* Obecné odpovědi nebo chování aplikace
+
+### Designová rozhodnutí a teoretické problémy
+* Login CSRF (neposkytuje útočníkovi přístup k účtům obětí)
+* User enumeration přes timing attacks nebo rozdílné odpovědi (pokud není součástí většího attack chainu)
+* Clickjacking bez prokázaného zneužití citlivé funkcionality
+* CORS konfigurace na necitlivých endpointech
+* Chybějící rate limiting **pokud** neprokážete skutečné zneužití (DoS je stále vyloučen)
+
+### Předpoklady útoku
+* Bezpečnostní problémy, které neovlivňují naše výchozí konfigurace aplikací
+* Zranitelnosti vyžadující nestandardní konfigurace
+* Zranitelnosti v našich kontejnerech, které vyžadují vlastní nebo upravené nastavení
+* Problémy vyžadující kompromitaci na úrovni sítě (MITM, DNS poisoning, ARP spoofing)
+
+### Zakázané testovací metody
+* Timing-based information disclosure útoky
+* Techniky výčtu procesů
+* Jakákoli forma denial of service nebo high-volume útoků
+* Sociální inženýrství a phishingové techniky
+* Automatizované bezpečnostní skenování generující nadměrný provoz nebo zátěž
+* Testování nefunkčních funkcí nebo stránek (např. signup stránky dosud nenasazené do produkce)
+
+### Neplatné typy hlášení
+* Hlášení založená výhradně na výstupu automatizovaného skeneru bez ruční validace
+* Obecná doporučení bez prokázání skutečných zranitelností
+* Návrhy best practice bez bezpečnostního dopadu
+* Compliance pozorování (PCI-DSS, GDPR atd.) bez prokázání zneužitelnosti
+
+## Struktura odměn
+
+### Hlavní web a Control Panel
+
+| **Typ zranitelnosti**                               | **PayPal odměna** | **Kredit služby** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hostingová infrastruktura
+
+| Typ zranitelnosti                           | PayPal odměna | Kredit služby |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Přispěvatelé, kteří nahlásí platné zranitelnosti, budou jako projev našeho ocenění uvedeni v našem Security Researchers Hall of Fame.
+
+## Požadovaná kvalita hlášení
+
+Všechna hlášení zranitelností musí obsahovat:
+
+* **Jasný popis zranitelnosti** - Vysvětlete, o jakou zranitelnost jde a proč je důležitá
+* **Ovlivněný systém/URL** - Uveďte přesně, kde zranitelnost existuje
+* **Kroky reprodukce** - Podrobné kroky, které nám umožní problém reprodukovat
+* **Funkční proof of concept** - Funkční demonstraci zneužití (kód, screenshoty, video)
+* **Skutečný bezpečnostní dopad** - Prokažte, čeho by útočník mohl dosáhnout, ne teoretické možnosti
+* **Vlastní testování** - Validujte nálezy ručně, nepřeposílejte pouze výstup skeneru
+
+Hlášení, která tyto prvky postrádají nebo se skládají z obecných bezpečnostních doporučení, nebudou způsobilá k odměně.
+
+## Uplatnění odměny
+
+* Můžete si vybrat ze dvou možností odměny:  
+   * Přímá platba přes PayPal (vyžaduje platný PayPal účet)
+   * Kredity služeb Appbox (použitelné na jakoukoli službu Appbox, nepřevoditelné)
+
+## Pokyny pro účast
+
+* Dodržujte tuto politiku, naše [Terms of Service](/policies/terms-of-service) a všechny příslušné zákony
+* Hlašte zranitelnosti bez prodlení po jejich objevení
+* Během výzkumu respektujte soukromí uživatelů a integritu systémů
+* Všechna hlášení zranitelností odesílejte výhradně přes náš [contact us form](https://billing.appbox.co/contact.php)
+* Zachovávejte důvěrnost objevených zranitelností až do jejich vyřešení
+* Omezte testování pouze na systémy výslovně zahrnuté v tomto programu
+* Pokud získáte neočekávaný přístup k citlivým datům: přistupte pouze k minimálnímu množství potřebnému k prokázání problému, okamžitě ukončete testování a zranitelnost neprodleně nahlaste
+* Pro jakoukoli interakci s našimi systémy používejte pouze vlastní testovací účty
+* Nikdy se nepokoušejte Appbox vydírat na základě svých nálezů
+* **Ověřte své nálezy** - Před odesláním otestujte, že váš proof of concept skutečně funguje
+* **Zaměřte se na dopad** - Upřednostňujte zranitelnosti, které by mohly způsobit skutečnou újmu, před teoretickými problémy
+
+## Právní ochrana
+
+Bezpečnostní výzkumníci dodržující tuto politiku mohou očekávat:
+
+* Ochranu před právními kroky za bezpečnostní výzkum v dobré víře prováděný v rámci těchto pokynů
+* Výjimku z právních nároků proti obcházení, pokud je to nezbytné pro legitimní bezpečnostní výzkum
+* Vzdání se určitých omezení politiky, která by jinak bránila bezpečnostnímu testování
+* Uznání, že vyhovující bezpečnostní výzkum je prospěšný a prováděný v dobré víře
+
+Zůstáváte odpovědní za dodržování všech příslušných zákonů. Pokud budete čelit právním krokům od třetí strany při dodržování této politiky, potvrdíme, že vaše jednání bylo provedeno v souladu s naším programem. Pokud si nejste jisti, zda vaše plánované výzkumné aktivity odpovídají této politice, kontaktujte nás před pokračováním prostřednictvím [contact us form](https://billing.appbox.co/contact.php).
+
+## Proces hlášení
+
+Pro nahlášení zranitelnosti vytvořte podrobný ticket prostřednictvím našeho [contact us form](https://billing.appbox.co/contact.php).
+
+* Vaše hlášení by mělo obsahovat komplexní kroky k reprodukci zranitelnosti. Jako vodítko můžete použít tuto šablonu: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Veškerá komunikace v programu musí probíhat přes naši oficiální Support Ticket Platform
+* Veřejné zveřejnění jakékoli zranitelnosti bez výslovného písemného souhlasu Appboxu porušuje podmínky tohoto programu a diskvalifikuje vás z nároku na odměnu
+
+## Co se stane po nahlášení
+
+* **Platné zranitelnosti**: Potvrdíme přijetí hlášení, budeme pracovat na opravě a zpracujeme vaši odměnu
+* **Neplatná hlášení**: Vysvětlíme, proč hlášení nesplňuje podmínky, a můžeme poskytnout doporučení pro budoucí podání
+* **Hlášení mimo rozsah**: Přesměrujeme vás na příslušného dodavatele nebo vysvětlíme, proč problém není pokryt
+
+Vážíme si kvalitního výzkumu a konstruktivních příspěvků k naší bezpečnosti. Děkujeme, že pomáháte udržovat Appbox bezpečný.

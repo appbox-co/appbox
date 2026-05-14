@@ -1,0 +1,54 @@
+---
+title: नियोजित Network Maintenance - April 15 आणि 20
+date: 2026-04-14 16:00:00
+excerpt: अतिरिक्त transit आणि peering providers साठी आमचे network तयार करत असताना April 15 आणि April 20 रोजी दोन छोटी maintenance windows येत आहेत.
+author_id: rid
+og_image: network-maintenance-april-2026-og.jpg
+tags: [appbox, infrastructure, networking, maintenance]
+---
+
+# नियोजित Network Maintenance
+
+आमच्या network वर येणाऱ्या दोन maintenance windows बद्दल तुम्हाला आधीच कळवायचे आहे. दोन्ही relatively short आहेत आणि downtime अपेक्षित नाही, पण काय होत आहे आणि का होत आहे याबद्दल पारदर्शक राहायचे आहे.
+
+## काय होत आहे
+
+आमचा transit provider आमच्या दोन upstream carriers वर maintenance करत आहे — Colt आणि Fiberring — वेगवेगळ्या तारखांना. Updates apply होत असताना प्रत्येक carrier थोड्या वेळासाठी offline घेतला जाईल, आणि त्या window दरम्यान traffic आमच्या इतर carriers मधून reroute केला जाईल.
+
+### Maintenance Window 1 — April 15
+
+- **Date:** Tuesday, April 15, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Colt
+- **Expected downtime:** काहीही नाही
+
+या window दरम्यान Colt route unavailable असेल आणि सर्व traffic आमच्या इतर carriers मधून reroute केला जाईल.
+
+### Maintenance Window 2 — April 20
+
+- **Date:** Monday, April 20, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Fiberring
+- **Expected downtime:** काहीही नाही
+
+हे maintenance live केले जाईल आणि interruption होऊ नये. कोणतीही issue आली तर traffic तात्पुरता आमच्या इतर carriers मधून reroute केला जाईल.
+
+## माझ्यावर परिणाम होईल का?
+
+बहुतेक users साठी, काहीही जाणवू नये. प्रत्येक upstream offline असताना traffic automatically आमच्या इतर carriers मधून reroute होईल.
+
+तरीही, प्रत्येक window दरम्यान routes तात्पुरते बदलतील म्हणून काही traffic network वर थोडा वेगळा path घेऊ शकतो. काही connections साठी किरकोळ latency changes दिसू शकतात, पण मोठे काही नाही. प्रत्येक window पूर्ण झाल्यावर सर्व काही normal होईल.
+
+## आम्ही हे का करत आहोत
+
+हे maintenance मोठ्या plan चा भाग आहे. आम्ही आमचे network additional transit आणि peering providers आणण्यासाठी तयार करत आहोत, ज्यामुळे सर्वांसाठी चांगली redundancy, कमी latency, आणि अधिक capacity मिळेल.
+
+May मध्ये याबद्दल आणखी सांगू, त्यामुळे stay tuned.
+
+## प्रश्न?
+
+Maintenance windows पैकी कोणत्याही वेळी काही चिंता असेल किंवा काही unusual दिसले, तर संपर्क करण्यास अजिबात संकोच करू नका.
+
+---
+
+*प्रश्न आहेत? support@appbox.co वर संपर्क करा.*

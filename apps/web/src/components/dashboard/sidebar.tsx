@@ -16,6 +16,7 @@ import {
   Grid3x3,
   HardDrive,
   HelpCircle,
+  KeyRound,
   LayoutDashboard,
   Mail,
   MessageSquare,
@@ -224,7 +225,8 @@ export function DashboardSidebar({
           href: ROUTES.ABUSE_REPORTS,
           icon: AlertTriangle
         },
-        { title: t("two_factor"), href: ROUTES.TWO_FACTOR_SETUP, icon: Shield }
+        { title: t("two_factor"), href: ROUTES.TWO_FACTOR_SETUP, icon: Shield },
+        { title: t("api_keys"), href: ROUTES.API_KEYS, icon: KeyRound }
       ]
     },
     {

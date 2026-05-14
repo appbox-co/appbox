@@ -1,0 +1,183 @@
+---
+title: "Program Bug Bounty"
+description: "Nasz program zgłaszania podatności bezpieczeństwa i nagrody"
+---
+
+W Appbox bezpieczeństwo jest podstawowym priorytetem. Aktywnie zachęcamy badaczy bezpieczeństwa do pomocy we wzmacnianiu naszej platformy poprzez identyfikowanie i zgłaszanie potencjalnych podatności. Program ten określa nasze podejście do odpowiedzialnych badań bezpieczeństwa, sposób obsługi zgłoszeń podatności oraz nagrody, które oferujemy badaczom pomagającym poprawić naszą postawę bezpieczeństwa.
+
+## Nasze zobowiązanie
+
+Gdy uczestniczysz w naszym programie bug bounty, zobowiązujemy się:
+
+* Potwierdzić i ocenić zgłoszenie w terminowy sposób
+* Zająć się potwierdzonymi podatnościami z odpowiednią pilnością
+* Uznawać i nagradzać unikalne, wcześniej niezgłoszone podatności, które prowadzą do ulepszeń bezpieczeństwa
+
+## Zakres programu
+
+Niniejszy program bug bounty dotyczy następujących platform Appbox:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Wyłącznie infrastruktura, nie aplikacje klientów**
+
+**Uwaga:** Chociaż nasza infrastruktura hostingowa (username.appboxes.co) jest w zakresie, podatności w aplikacjach stron trzecich wdrożonych przez klientów nie są. Zobacz wyłączenia poniżej.
+
+## Co kwalifikuje się jako ważna podatność
+
+Aby kwalifikować się do programu bug bounty, zgłoszenie musi spełniać WSZYSTKIE poniższe kryteria:
+
+### 1. Wykazać rzeczywiste wykorzystanie
+* Zawierać działający proof of concept pokazujący, że podatność można wykorzystać
+* Pokazywać jasny wpływ na bezpieczeństwo; teoretyczne podatności bez wykazanej szkody nie kwalifikują się
+* Udowadniać, że atakujący mógłby faktycznie skompromitować dane użytkowników, konta lub integralność systemu
+
+### 2. Dotyczyć systemów w zakresie
+* Podatność musi istnieć w autorskim kodzie lub infrastrukturze Appbox
+* Musi dotyczyć systemów wyraźnie wymienionych w sekcji "Program Coverage" powyżej
+* Musi być odtwarzalna w naszych środowiskach produkcyjnych lub stagingowych
+
+### 3. Być wcześniej niezgłoszona
+* Podatność musi być nowo odkryta i nieznana nam wcześniej
+* Zduplikowane zgłoszenia lub warianty znanych problemów nie kwalifikują się
+
+## Wyłączone obszary i problemy
+
+Następujące obszary są uznawane za **poza zakresem** naszego programu bug bounty:
+
+### Systemy i integracje stron trzecich
+* WHMCS Client Area [https://billing.appbox.co] - Zgłaszaj do [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Widget czatu Chatwoot - Zgłaszaj do [Chatwoot Security](https://www.chatwoot.com/security)
+* **Aplikacje wdrożone przez klientów** [app.username.appboxes.co] - Podatności w aplikacjach stron trzecich (WordPress, Nextcloud itd.) hostowanych w naszej infrastrukturze powinny być zgłaszane odpowiednim dostawcom aplikacji
+* Wszelkie inne usługi, wtyczki lub integracje stron trzecich, których używamy
+* Adresy IP lub domeny niekontrolowane bezpośrednio przez Appbox
+* Systemy legacy lub wycofane, które nie są już aktywnie używane
+
+**Poza zakresem dla infrastruktury hostingowej:**
+* Podatności w kodzie aplikacji wdrożonych przez klientów (WordPress, Nextcloud itd.)
+* Domyślne konfiguracje aplikacji stron trzecich
+* Problemy bezpieczeństwa specyficzne dla konkretnej wersji aplikacji
+
+### Nagłówki bezpieczeństwa i hardening
+* Brakujące nagłówki bezpieczeństwa (X-Frame-Options, COOP, COEP, MTA-STS itd.) **chyba że** wykażesz rzeczywiste wykorzystanie prowadzące do kompromitacji danych
+* Brakujące atrybuty `rel="noopener"` lub `rel="noreferrer"`
+* Ujawnienie wersji serwera lub wyciek informacji w nagłówkach HTTP
+* Atrybuty cookie na niewrażliwych plikach cookie (analityka, preferencje itd.)
+
+### Ujawnienie informacji o niskim wpływie
+* Szczegółowe komunikaty błędów, które nie ujawniają danych wrażliwych (haseł, tokenów, PII)
+* Ujawnienie ścieżki bez wykazanego path traversal lub dostępu do plików
+* Identyfikacja stosu technologicznego (wersja PHP, wykrywanie frameworka itd.)
+* Ogólne odpowiedzi lub zachowanie aplikacji
+
+### Decyzje projektowe i problemy teoretyczne
+* Login CSRF (nie zapewnia atakującemu dostępu do kont ofiar)
+* Enumeracja użytkowników przez ataki timingowe lub różnicowe odpowiedzi (chyba że jest częścią większego łańcucha ataku)
+* Clickjacking bez wykazanego wykorzystania wrażliwej funkcjonalności
+* Konfiguracje CORS na niewrażliwych endpointach
+* Brak rate limiting **chyba że** wykażesz rzeczywiste nadużycie (DoS nadal jest wyłączony)
+
+### Warunki wstępne ataku
+* Problemy bezpieczeństwa, które nie dotyczą naszych domyślnych konfiguracji aplikacji
+* Podatności wymagające niestandardowych konfiguracji
+* Podatności w naszych kontenerach wymagające niestandardowych lub zmodyfikowanych konfiguracji
+* Problemy wymagające kompromitacji na poziomie sieci (MITM, DNS poisoning, ARP spoofing)
+
+### Zakazane metody testowania
+* Ataki ujawniania informacji oparte na czasie
+* Techniki enumeracji procesów
+* Jakakolwiek forma odmowy usługi lub ataków o dużym wolumenie
+* Techniki socjotechniczne i phishingowe
+* Automatyczne skanowanie bezpieczeństwa generujące nadmierny ruch lub obciążenie
+* Testowanie niedziałających funkcji lub stron (np. stron rejestracji jeszcze nieobecnych w produkcji)
+
+### Nieprawidłowe typy zgłoszeń
+* Zgłoszenia oparte wyłącznie na wynikach automatycznego skanera bez ręcznej walidacji
+* Ogólne rekomendacje bez wykazania rzeczywistych podatności
+* Sugestie najlepszych praktyk bez wpływu na bezpieczeństwo
+* Obserwacje zgodności (PCI-DSS, GDPR itd.) bez wykazania możliwości wykorzystania
+
+## Struktura nagród
+
+### Główna strona i Control Panel
+
+| **Typ podatności** | **Nagroda PayPal** | **Kredyt usługi** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS | EUR 100 | EUR 200 |
+| XSS (CSP Bypass) | EUR 200 | EUR 300 |
+| CSRF | EUR 300 | EUR 450 |
+| Authentication Bypass | EUR 500 | EUR 750 |
+| SQL Injection | EUR 1000 | EUR 1500 |
+| Arbitralne wykonanie kodu | EUR 1000 | EUR 1500 |
+| Arbitralne wykonanie kodu (z eskalacją uprawnień) | EUR 2000 | EUR 3000 |
+| Trwała zmiana kodu | EUR 1000 | EUR 1500 |
+
+### Infrastruktura hostingowa
+
+| Typ podatności | Nagroda PayPal | Kredyt usługi |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN itd.) | EUR 500 | EUR 750 |
+| Authentication Bypass dla wspieranych aplikacji | EUR 100 | EUR 200 |
+| Lokalna eskalacja uprawnień | EUR 500 | EUR 750 |
+
+Osoby zgłaszające ważne podatności zostaną wyróżnione w naszej Security Researchers Hall of Fame jako wyraz uznania.
+
+## Wymagana jakość zgłoszenia
+
+Wszystkie zgłoszenia podatności muszą zawierać:
+
+* **Jasny opis podatności** - Wyjaśnij, czym jest podatność i dlaczego ma znaczenie
+* **Dotknięty system/URL** - Wskaż dokładnie, gdzie występuje podatność
+* **Odtworzenie krok po kroku** - Szczegółowe kroki pozwalające nam odtworzyć problem
+* **Działający proof of concept** - Funkcjonalna demonstracja wykorzystania (kod, zrzuty ekranu, wideo)
+* **Rzeczywisty wpływ na bezpieczeństwo** - Wykaż, co atakujący mógłby osiągnąć, a nie teoretyczne możliwości
+* **Własne testy** - Zweryfikuj ustalenia ręcznie, nie przekazuj tylko wyników skanera
+
+Zgłoszenia, którym brakuje tych elementów lub które składają się z ogólnych rekomendacji bezpieczeństwa, nie będą kwalifikować się do nagród.
+
+## Odbiór nagrody
+
+* Możesz wybrać jedną z dwóch opcji nagrody:  
+   * Bezpośrednia płatność PayPal (wymaga ważnego konta PayPal)
+   * Kredyty usług Appbox (mają zastosowanie do dowolnej usługi Appbox, niezbywalne)
+
+## Wytyczne uczestnictwa
+
+* Przestrzegaj tej polityki, naszych [Terms of Service](/policies/terms-of-service) oraz wszystkich obowiązujących przepisów prawa
+* Zgłaszaj podatności niezwłocznie po odkryciu
+* Szanuj prywatność użytkowników i integralność systemu podczas badań
+* Składaj wszystkie zgłoszenia podatności wyłącznie przez nasz [formularz kontaktowy](https://billing.appbox.co/contact.php)
+* Zachowuj poufność odkrytych podatności do czasu ich rozwiązania
+* Ogranicz testy do systemów wyraźnie objętych programem
+* Jeśli uzyskasz nieoczekiwany dostęp do danych wrażliwych: uzyskaj dostęp wyłącznie do minimalnej ilości potrzebnej do wykazania problemu, natychmiast przerwij testy i niezwłocznie zgłoś podatność
+* Używaj wyłącznie własnych kont testowych do wszelkich interakcji z naszymi systemami
+* Nigdy nie próbuj wymuszać czegokolwiek od Appbox na podstawie swoich ustaleń
+* **Zweryfikuj ustalenia** - Przetestuj, czy proof of concept faktycznie działa przed zgłoszeniem
+* **Skup się na wpływie** - Priorytetowo traktuj podatności mogące wyrządzić realną szkodę, a nie kwestie teoretyczne
+
+## Ochrona prawna
+
+Badacze bezpieczeństwa przestrzegający tej polityki mogą oczekiwać:
+
+* Ochrony przed działaniami prawnymi za badania bezpieczeństwa prowadzone w dobrej wierze w ramach tych wytycznych
+* Zwolnienia z roszczeń prawnych dotyczących obchodzenia zabezpieczeń, gdy jest to konieczne do zgodnych z prawem badań bezpieczeństwa
+* Zwolnienia z niektórych ograniczeń polityki, które w innym przypadku uniemożliwiałyby testy bezpieczeństwa
+* Uznania, że zgodne z polityką badania bezpieczeństwa są korzystne i prowadzone w dobrej wierze
+
+Pozostajesz odpowiedzialny za przestrzeganie wszystkich obowiązujących przepisów prawa. Jeśli napotkasz działania prawne ze strony osoby trzeciej podczas przestrzegania tej polityki, potwierdzimy, że Twoje działania były prowadzone zgodnie z naszym programem. Jeśli nie masz pewności, czy planowane działania badawcze są zgodne z tą polityką, skontaktuj się z nami przez [formularz kontaktowy](https://billing.appbox.co/contact.php) przed rozpoczęciem.
+
+## Proces zgłaszania
+
+Aby zgłosić podatność, utwórz szczegółowe zgłoszenie przez nasz [formularz kontaktowy](https://billing.appbox.co/contact.php).
+
+* Twoje zgłoszenie powinno zawierać kompleksowe kroki odtworzenia podatności. Możesz użyć tego szablonu jako wskazówki: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Cała komunikacja w programie musi przechodzić przez naszą oficjalną Support Ticket Platform
+* Publiczne ujawnienie jakiejkolwiek podatności bez wyraźnej pisemnej zgody Appbox narusza warunki programu i pozbawi Cię prawa do nagrody
+
+## Co dzieje się po zgłoszeniu
+
+* **Ważne podatności**: Potwierdzimy zgłoszenie, rozpoczniemy pracę nad poprawką i przetworzymy nagrodę
+* **Nieprawidłowe zgłoszenia**: Wyjaśnimy, dlaczego zgłoszenie się nie kwalifikuje, i możemy udzielić wskazówek na przyszłość
+* **Zgłoszenia poza zakresem**: Przekierujemy Cię do odpowiedniego dostawcy lub wyjaśnimy, dlaczego problem nie jest objęty programem
+
+Doceniamy wysokiej jakości badania i konstruktywny wkład w nasze bezpieczeństwo. Dziękujemy za pomoc w utrzymaniu bezpieczeństwa Appbox.

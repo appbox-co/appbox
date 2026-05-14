@@ -1,0 +1,99 @@
+---
+title: Johdanto
+description: Tervetuloa avoimeksi lähdekoodiksi julkaistun Appbox frontendin viralliseen dokumentaatioon.
+sort: 1
+---
+
+**Tervetuloa Appbox-dokumentaatioon**  
+Olemme innoissamme voidessamme ilmoittaa, että [Appboxin](https://www.appbox.co/) frontend on nyt julkaistu avoimena lähdekoodina [GitHubissa](https://github.com/appbox-co/appbox). Tavoitteenamme on edistää yhteistyöhön perustuvaa yhteisöä, joka osallistuu dokumentaatioon, kehittää uusia frontend-ominaisuuksia ja auttaa parantamaan Appbox-kokemusta kokonaisuutena.
+
+Dokumentaatiomme on vielä alkuvaiheessa, mutta rakennamme kattavaa resurssia, joka muistuttaa muita saman alan alustoja. Tällä hetkellä dokumenttimme keskittyvät pääasiassa osallistumisohjeisiin, mutta aiomme laajentaa niitä yksityiskohtaisilla tiedoilla kaikista Appboxissa saatavilla olevista sovelluksista.
+
+Kunnes dokumentaatiomme on kattavampi, käy [vanhassa tietopankissamme](https://billing.appbox.co/knowledgebase), jos sinulla on välittömiä kysymyksiä tietyistä sovelluksista tai palveluista. Jos tarvitset teknistä tukea, voit [lähettää tukipyynnön](https://billing.appbox.co/submitticket.php). Pääset aina näihin uusiin dokumentteihin sivustomme alatunnisteessa olevan linkin kautta ja voit seurata edistymistämme laajennuksen aikana.
+
+## Tulevat suunnitelmat
+
+- **Syvälliset sovellusoppaat**  
+  Kattavat asennuksen, vianmäärityksen ja vinkit jokaiselle alustallamme tuetulle sovellukselle.
+- **Käyttäjä- ja kehittäjäresurssit**  
+  Tarjoavat kaikkea aloittelijaystävällisistä tutoriaaleista edistyneisiin koodiviitteisiin Appbox-kokemuksen mukauttamiseksi.
+- **Yhteisölähtöinen sisältö**  
+  Kannustamme pull requesteihin, palautteeseen ja ehdotuksiin. Kaikki ovat tervetulleita ja auttavat kasvattamaan tätä projektia kaikkien hyödyksi.
+
+## Aloittaminen
+
+Jos haluat tutustua avoimen lähdekoodin frontend-koodiimme tai osallistua siihen, kloonaa [Appbox](https://github.com/appbox-co/appbox)-repositorio:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Siirry sitten projektiin ja asenna sen riippuvuudet:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Paikallinen instanssisi on saatavilla osoitteessa `http://localhost:3000`. Tutustu vapaasti, tee muutoksia ja luo pull requesteja. Arvostamme jokaista panosta!
+
+## Kehitystyökalut
+
+### Linttaus
+
+Projektissa on kattava linttausmääritys, joka käyttää ESLintia TypeScriptin ja Prettier-integraation kanssa. Tämä varmistaa yhtenäisen koodityylin ja auttaa havaitsemaan yleisiä virheitä varhain. Voit suorittaa linttaustarkistukset käsin:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+ESLint-määrityksemme sisältää:
+- TypeScript-kohtaiset säännöt `@typescript-eslint`-paketin kautta
+- Next.js-kohtaisen linttauksen `eslint-config-next`-paketilla
+- Koodin muotoilun Prettier-integraatiolla
+
+### Pre-commit Hookit
+
+Käytämme Huskya Git-hookien hallintaan, mikä auttaa varmistamaan, että repositorioon commitoidaan vain laadukasta koodia. Seuraavat hookit on määritetty:
+
+- **pre-commit**: Suorittaa `lint:fix` ennen jokaista committia koodin laadun varmistamiseksi
+- **commit-msg**: Käyttää commitlintiä conventional commit -viestimuotoilun pakottamiseen
+
+Tämä tarkoittaa, että commitit tarkistetaan automaattisesti koodin laadun ja oikean muotoilun osalta ennen hyväksyntää, mikä ylläpitää korkeaa tasoa koko koodikannassa.
+
+## Pull Requestien tekeminen
+
+Kun olet valmis osallistumaan muutoksillasi, noudata näitä ohjeita, jotta Pull Requestisi (PR) hyväksytään todennäköisemmin:
+
+### Ennen PR:n luomista
+
+1. **Rebase uusimmasta main-haarasta** merge-konfliktien välttämiseksi:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Varmista, että kaikki linttaus menee läpi**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Varmista, että koodisi toimii paikallisesti** testaamalla asianmukainen toiminnallisuus.
+
+### PR-ohjeet
+
+1. **Pidä PR:t kohdennettuina** - Käsittele yksi ongelma tai ominaisuus per PR.
+2. **Kirjoita selkeät commit-viestit** - Noudata conventional commit -muotoa.
+3. **Sisällytä selkeät kuvaukset** - Selitä, mitä PR tekee ja miksi sitä tarvitaan.
+4. **Lisää testit** - Lisää tarvittaessa testejä varmistaaksesi, että muutoksesi toimivat oikein.
+5. **Dokumentoi koodisi** - Käytä kommentteja monimutkaiseen logiikkaan ja varmista, että funktioiden nimet ovat kuvaavia.
+6. **Noudata olemassa olevia malleja** - Koodisi tulee vastata muun koodikannan tyyliä ja malleja.
+
+Merkittävissä muutoksissa harkitse ensin issuen avaamista lähestymistavan keskustelemiseksi ennen kuin käytät aikaa koodaamiseen. Tämä auttaa varmistamaan, että panoksesi on linjassa projektin suunnan kanssa ja välttää turhaa työtä.

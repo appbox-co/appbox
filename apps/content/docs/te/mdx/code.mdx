@@ -1,0 +1,262 @@
+---
+title: Code ఉపయోగించడం
+description: మీ MDX ఫైల్‌లలో code ను నైపుణ్యంగా ఉపయోగించడం
+links:
+  source: https://raw.githubusercontent.com/rehype-pretty/rehype-pretty-code/master/examples/next/src/app/index.mdx
+sort: 1
+---
+
+MDX ఫైల్‌లలో code ను నిర్వహించడానికి `opendocs` [`rehype-pretty-code`](https://github.com/atomiks/rehype-pretty-code) library ను ఉపయోగిస్తుంది.
+దీంతో code ఎలా కనిపించాలో మీరు చాలా వరకు customize చేయగలరు!
+
+మరింత సమాచారం కోసం, అధికారిక documentation మరియు examples చూడండి!
+
+## Titles జోడించడం
+
+**ఉదాహరణ:**
+
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+
+**Code:**
+
+````mdx
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+````
+
+## Code highlighting
+
+**ఉదాహరణ:**
+
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Code:**
+
+````mdx
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Inline code highlighting
+
+**ఉదాహరణ:**
+
+`[1, 2, 3].join('-'){:js}` ఫలితం `'1-2-3'{:js}`.
+
+**Code:**
+
+```mdx
+The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
+```
+
+## Context-aware inline code highlighting
+
+ఉదాహరణకు, మీ వద్ద క్రింది code block ఉంటే:
+
+```js
+function getStringLength(str) {
+  return str.length;
+}
+```
+
+`getStringLength{:.entity.name.function}` ను function గా సూచించినప్పుడు,
+దానిని ఆ విధంగా color చేయవచ్చు. `function{:.keyword}` విషయంలోనూ అలాగే,
+లేదా `str{:.variable.parameter}` vs. `str{:.variable.other.object}` మొదలైనవి. ఇది inline code ను అది సూచించే సమీప code block తో semantically link చేయడానికి అనుమతిస్తుంది.
+
+**Code:**
+````mdx
+When we refer to `getStringLength{:.entity.name.function}` as a function,
+we can color it as such. Same with `function{:.keyword}`, or
+`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
+semantically link inline code to the nearest block of code it refers to.
+````
+
+## Word highlighting
+
+**ఉదాహరణ:**
+
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+
+**Code:**
+````mdx
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+````
+
+## Line highlighting
+
+**ఉదాహరణ:**
+
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Code:**
+
+````mdx
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Line numbering
+
+**ఉదాహరణ:**
+
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Code:**
+````mdx
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Diff చూపించడం
+
+**ఉదాహరణ:**
+
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+
+**Code:**
+
+````mdx
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+````
+
+## ANSI Highlight
+
+**ఉదాహరణ:**
+
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+
+**Code:**
+
+````mdx
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+````
+
+## ID ద్వారా word group highlighting
+
+పదాల తర్వాత `#` తర్వాత id పెట్టండి.
+ఇది ఇచ్చిన id ఆధారంగా characters ను వేర్వేరు రంగులతో చూపడానికి అనుమతిస్తుంది.
+
+**ఉదాహరణ:**
+
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+
+**Code:**
+````md
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+````
+
+కొత్త styles మార్చడానికి లేదా జోడించడానికి:
+
+```css title="apps/web/src/styles/mdx.css"
+[data-chars-id='v'] {
+  @apply !text-pink-300 bg-rose-800/50 font-bold;
+}
+```

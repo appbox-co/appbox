@@ -1,0 +1,397 @@
+---
+title: 数据处理政策
+description: 我们如何管理和保护你的数据
+---
+
+在 Appbox，我们只收集和存储维护记录及提供服务所必需的最低限度信息。Appbox 团队接受培训，在处理你的数据时始终以最高隐私和安全标准为前提，并遵循严格协议，包括使用强凭据和多因素认证。所有付款处理均完全由我们的支付处理商完成，除付款记录及其对应交易 ID 外，Appbox 不存储你的任何财务信息。
+
+## Email
+
+- **用途**
+  - 作为你登录 Appbox Client Area 和 Appbox Control Panel 的凭据
+  - 作为 Appbox 服务公告的联系点
+  - 作为 Appbox Ticket System 查询的联系点
+- **收集**
+  - 用户注册时提供
+- **存储**
+  - WHMCS = 明文
+  - Appbox API = 明文
+- **访问及访问原因**
+  - 用户
+  - Appbox team
+    - 用于就支持或任何服务公告联系用户
+- **保留**
+  - 无限期
+- **更多信息**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **用途**
+  - 在 Appbox Ticket System 中识别用户
+  - 作为用户 Appbox slot 的名称
+  - 在部署用户 slot 的服务器上注册为本地用户，显示该用户拥有的任何运行中进程
+  - 作为用户已安装应用的 username
+- **收集**
+  - 用户注册时提供
+- **存储**
+  - WHMCS = 明文
+  - Appbox API = 明文
+  - Installed Applications = 取决于应用
+- **访问及访问原因**
+  - 用户
+  - Appbox team
+    - 支持查询所必需
+    - 通过搜索高资源消耗应用、服务器不稳定来源或任何未授权应用来调查服务器问题所必需
+- **保留**
+  - 无限期
+- **更多信息**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **用途**
+  - 根据用户选择的国家/地区计算适用税费
+- **收集**
+  - 用户注册时提供
+- **存储**
+  - WHMCS = 明文
+- **访问及访问原因**
+  - 用户
+  - Appbox team
+- **保留**
+  - 无限期
+- **更多信息**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **用途**
+  - 作为用户 Appbox Client Area 的密码
+- **收集**
+  - 用户在 Appbox Client Area 注册时提供
+- **存储**
+  - WHMCS = 加密
+- **访问及访问原因**
+  - 用户
+  - Appbox team 的有限访问
+    - Appbox team 无法看到用户密码，因为密码已哈希，但在验证后可以重置你的密码
+- **保留**
+  - 无限期
+- **更多信息**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - 我们强烈建议在你的 [account security page](https://billing.appbox.co/user/security) 启用双因素认证
+
+### Appbox Control Panel Password
+
+- **用途**
+  - 作为用户在 Appbox Control Panel 上访问其 slot 的密码
+- **收集**
+  - 用户的 slot 部署后由用户提供
+- **存储**
+  - Appbox API = 加密
+- **访问及访问原因**
+  - 用户
+  - Appbox team 的有限访问
+    - Appbox team 无法看到用户密码，因为密码已哈希，但在验证后可以重置你的密码
+- **保留**
+  - 无限期
+- **更多信息**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - 我们强烈建议在你的 [account security page](https://billing.appbox.co/user/security) 启用双因素认证
+
+### Application Passwords
+
+- **用途**
+  - 作为用户已安装应用的密码
+- **收集**
+  - 用户的 slot 部署后由用户提供
+- **存储**
+  - Appbox API = 明文
+  - Installed Applications = 取决于应用
+- **访问及访问原因**
+  - 用户
+  - Appbox team
+    - 在获得用户许可后，用于应用特定的支持查询
+- **保留**
+  - 直到用户卸载应用
+- **更多信息**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - 我们强烈建议在你的 [account security page](https://billing.appbox.co/user/security) 启用双因素认证
+
+## Payment Processing
+
+### PayPal
+
+- **用途**
+  - 作为 Appbox 的付款网关之一
+- **收集**
+  - 付款处理完全由 PayPal 完成。WHMCS 中用户账号下保存的唯一数据是 **PayPal Transaction ID**
+- **存储**
+  - WHMCS = 明文（PayPal Transaction ID）
+- **访问及访问原因**
+  - Appbox Sales Team
+    - Appbox Sales Team 可能会在销售流程中向 PayPal 核验用户信息
+- **保留**
+  - 无限期
+
+### Stripe
+
+- **用途**
+  - 作为 Appbox 的付款网关之一
+- **收集**
+  - 付款处理完全由 Stripe 完成。WHMCS 中用户账号下保存的唯一数据是 **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **存储**
+  - WHMCS = 明文（Stripe Payment ID）
+- **访问及访问原因**
+  - Appbox Sales Team
+    - Appbox Sales Team 可能会在销售流程中向 Stripe 核验用户信息
+- **保留**
+  - 无限期
+
+### CoinGate
+
+- **用途**
+  - 作为 Appbox 加密货币交易的付款网关之一
+- **收集**
+  - 付款处理完全由 CoinGate 完成。WHMCS 中保存的唯一数据是 **CoinGate Transaction ID**
+- **存储**
+  - WHMCS = 明文（Transaction ID）
+- **访问及访问原因**
+  - Appbox Sales Team
+    - Appbox Sales Team 可能会在销售流程中向 CoinGate 核验用户信息
+- **保留**
+  - 无限期
+
+*Note: CoinGate itself stores the blockchain transaction ID and the sender's blockchain address as part of their service. This information is not stored by Appbox.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **用途**
+  - 用于监控服务器健康状况和资源使用情况
+- **收集**
+  - 用户的 slot 部署后生成
+- **存储**
+  - Appbox Servers = 明文
+  - Appbox API = 明文
+  - Posthog = 明文
+- **访问及访问原因**
+  - 用户
+    - 可使用安装在你的 slot 上的各种 Linux utilities 查看服务器指标。可看到以下主要指标：
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - 你的运行中进程
+      - 你无法访问同一服务器上其他用户运行的进程
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space（分配给你的磁盘空间）
+      - Physical disk space
+  - Appbox Team
+    - 除上述指标外，Appbox team 使用 Posthog 快速聚合所有服务器的所有指标，并在出现任何错误时提醒团队
+    - 服务器指标用于支持查询，以及调查任何资源滥用
+- **保留**
+  - 无限期
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **用途**
+  - 任何无效访问尝试都会记录到 Appbox API 中，并在一定次数尝试后限制用户在指定时段内登录 Control Panel。这包括：
+    - 用户输入的 username
+    - IP address
+    - 尝试次数
+    - 最后一次尝试日期
+- **收集**
+  - 用户错误输入凭据时收集
+- **存储**
+  - Appbox API = 明文
+- **访问及访问原因**
+  - Appbox Team
+    - 用于识别任何 brute-force 尝试
+    - 用户可以在请求并通过 Ticket system 验证后，请求解除 timeout 并移除访问尝试记录
+- **保留**
+  - 24 小时或按用户请求
+
+#### SSH Login Logs
+
+- **用途**
+  - 记录用户安装的 Ubuntu 或 Debian 等应用上的 SSH 登录尝试和成功登录
+- **收集**
+  - 发生登录尝试时由 SSH server 自动生成
+- **存储**
+  - Application container = 明文（通常位于 `/var/log/auth.log` 或类似位置）
+- **访问及访问原因**
+  - 用户
+    - 由于这些 logs 存储在用户拥有 root (sudo) 访问权限的应用中，用户完全控制并可访问这些 logs
+    - 用户可按需查看、修改或删除这些 logs
+  - Appbox team
+    - 仅在支持故障排查期间，经用户许可后访问
+- **保留**
+  - 由用户管理，因为他们拥有 container 的 root 访问权限
+  - 除非用户修改，否则适用默认 log rotation policies
+
+### System Generated Logs
+
+- **用途**
+  - 服务器范围生成的 logs，用于识别服务器上的问题
+- **收集**
+  - 由服务器操作系统生成
+- **存储**
+  - Appbox Servers = 明文
+  - Posthog = 明文
+- **访问及访问原因**
+  - Appbox team 的有限访问
+    - 用于识别特定服务器中的问题
+    - Logs 由 Posthog 聚合，并在出现任何错误时提醒团队
+- **保留**
+  - 无限期
+
+### Logs Generated by Installed Applications
+
+- **用途**
+  - 已安装应用生成的 logs，用于识别用户 slot 内的问题
+- **收集**
+  - 由用户已安装应用生成
+- **存储**
+  - Appbox API = 明文
+  - Installed Applications = 明文
+- **访问及访问原因**
+  - 用户
+  - Appbox team
+    - 在获得用户许可后，用于应用特定的支持查询
+- **保留**
+  - 直到用户卸载或移除应用
+
+### User's bash History
+
+- **用途**
+  - 记录用户在 slot shell 中输入的所有命令，位于 `$HOME/.bash_history`
+- **收集**
+  - shell 中输入的每条命令都会被记录
+- **存储**
+  - Appbox Servers = 明文
+- **访问及访问原因**
+  - 用户
+    - bash history 文件存储在用户 home 目录中，因此用户完全控制此文件
+    - 用户可按需查看、修改、清空或删除此文件（例如使用 `history -c` 命令，或编辑/移除文件）
+  - Appbox team
+    - 用于一般或应用特定查询，例如验证用户输入的命令是否正确，但仅在获得用户许可后
+    - 用于检查可能的入侵或服务器滥用，但仅在安全调查需要时
+- **保留**
+  - 由用户管理，用户可随时清空 history
+  - 默认情况下，bash history 会无限期保留，直到用户移除
+
+### Hosted Data
+
+#### Installed Applications
+
+- **用途**
+  - 已安装应用正常运行所必需的文件
+- **收集**
+  - 由用户安装到其 slot 上
+- **存储**
+  - Appbox Servers = 取决于应用
+- **访问及访问原因**
+  - 用户
+  - Appbox team
+    - 在获得用户许可后，用于应用特定的支持查询
+- **保留**
+  - 无限期，直到用户移除
+
+#### User Data
+
+- **用途**
+  - 由用户和/或用户应用创建并存储在用户 slot 上的数据
+- **收集**
+  - 由用户和/或用户应用创建
+- **存储**
+  - Appbox Servers = 明文
+- **访问及访问原因**
+  - 用户
+    - 用户文件存储在 Appbox servers 的 home folders 中，并与其他用户隔离。只有用户可以访问
+  - Appbox team
+    - 在获得用户许可后，可用于支持查询
+- **保留**
+  - 无限期，直到用户移除
+    - 对于合法 DMCA takedown notices，我们会通知用户，并要求其在 24 小时内删除内容
+- **更多信息**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Compliance
+
+根据 UK Online Safety Act 2023，Appbox 实施特定数据处理实践，以保护用户并遵守监管要求：
+
+### Content Safety Monitoring
+
+- **用途**
+  - 对非法和有害内容进行风险评估与缓解
+  - 对被举报内容进行审核
+  - 防止非法内容传播
+- **收集**
+  - 内容被举报或标记时生成
+  - 已知非法材料的 content hash values
+- **存储**
+  - Appbox API = 加密
+  - Reports database = 明文
+- **访问及访问原因**
+  - Appbox Compliance Team
+    - 用于审核被举报内容并采取适当行动
+    - 在法律要求时与英国当局协调
+  - UK regulatory authorities（法律要求时）
+    - 用于监控 Online Safety Act 合规情况
+    - 用于调查严重非法内容
+- **保留**
+  - 报告数据：解决后 2 年
+  - Content hash values：无限期（用于防止再次传播）
+
+### Risk Assessment Data
+
+- **用途**
+  - 对非法内容和对儿童有害内容进行所需风险评估
+  - 实施相称的安全措施
+  - 向监管机构证明合规
+- **收集**
+  - 通过定期平台风险评估生成
+  - 聚合使用数据，用于识别潜在风险模式
+- **存储**
+  - Appbox Compliance Systems = 受保护
+- **访问及访问原因**
+  - Appbox Compliance Team
+    - 用于进行和更新风险评估
+    - 用于实施安全措施
+  - UK regulatory authorities（法律要求时）
+    - 用于验证风险评估义务的合规情况
+- **保留**
+  - 3 年（用于证明持续合规）
+
+### Content Reporting System
+
+- **用途**
+  - 允许用户举报非法或有害内容
+  - 跟踪报告状态和已采取行动
+- **收集**
+  - 举报用户提供的报告详情
+  - 关于被举报内容的信息
+  - 对报告采取的行动
+- **存储**
+  - Appbox API = 加密
+- **访问及访问原因**
+  - 举报用户（仅限其自己的报告）
+  - 内容被举报的用户（有限信息）
+  - Appbox Compliance Team
+    - 用于调查和解决报告
+  - UK regulatory authorities（法律要求时）
+    - 用于调查严重非法内容报告
+- **保留**
+  - 解决后 2 年

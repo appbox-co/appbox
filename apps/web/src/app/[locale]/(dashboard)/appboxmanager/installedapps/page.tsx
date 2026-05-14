@@ -5,7 +5,15 @@ import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query"
 import type { ColumnDef } from "@tanstack/react-table"
-import { Loader2, Play, RotateCcw, Snowflake, Square, Star } from "lucide-react"
+import {
+  Boxes,
+  Loader2,
+  Play,
+  RotateCcw,
+  Snowflake,
+  Square,
+  Star
+} from "lucide-react"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import {
   useFreezeApp,
@@ -27,6 +35,7 @@ import {
   StatusCell
 } from "@/components/dashboard/data-table/data-table-cells"
 import type { FacetedFilterOption } from "@/components/dashboard/data-table/data-table-faceted-filter"
+import { DashboardPageHeader } from "@/components/dashboard/page-header"
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -581,7 +590,12 @@ export default function InstalledAppsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
+      <DashboardPageHeader
+        title={t("title")}
+        description={t("description")}
+        icon={<Boxes className="size-[18px]" />}
+        gradient="from-[#3b82f6] to-[#2563eb]"
+      />
 
       <DataTable
         columns={columns}

@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: Ismerd meg a frontmatter használatát az MDX fájlokban.
+sort: 3
+---
+
+A frontmatter az MDX fájl fontos része.
+Arra szolgál, hogy információkat határozzon meg a fájl tartalmáról,
+például címet, leírást, szerzőt, publikálási dátumot stb.
+
+A metaadatfejléc a fájl elején van meghatározva, a kezdő és záró `---` (három kötőjel) között.
+
+## Formátum
+
+A metaadatfejléc kulcs-érték formátumban van megadva, ahol a kulcs a metaadat neve, az érték pedig a metaadat tartalma.
+
+**Példa:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+A dokumentum típusától függően (dokumentáció, blogbejegyzés stb.) különböző metaadatok használhatók.
+
+## Dokumentációs metaadatok
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Példa:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Blogbejegyzések metaadatai
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Ez a bejegyzés szerzőjének azonosítója.
+    Egyeznie kell a `src/config/blog.ts` fájlban meghatározott szerzői `id` értékkel,
+    amely a szerzők teljes adatait tartalmazó fájl.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Ez az a kép, amelyet a bejegyzés kiemelt képeként használunk közösségi médiában való megosztáskor, ha nem szeretnéd az automatikusan generált képet használni.
+    A képeket a `public/blog-og` mappában kell tárolni.
+    Csak a képfájl nevét és kiterjesztését használd.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Példa:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

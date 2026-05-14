@@ -46,12 +46,22 @@ export function PaginatedBlogPosts({
     ? posts.filter((post) => post.tags?.includes(decodeURI(currentTag)))
     : posts
 
-  const sortedPosts = filteredByTag
-    .filter((post) => {
-      const [localeFromSlug] = post.slugAsParams.split("/")
-      return localeFromSlug === locale
-    })
-    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
+  const localePosts = filteredByTag.filter((post) => {
+    const [localeFromSlug] = post.slugAsParams.split("/")
+    return localeFromSlug === locale
+  })
+
+  const postsToDisplay =
+    localePosts.length > 0
+      ? localePosts
+      : filteredByTag.filter((post) => {
+          const [localeFromSlug] = post.slugAsParams.split("/")
+          return localeFromSlug === "en"
+        })
+
+  const sortedPosts = postsToDisplay.sort((a, b) =>
+    compareDesc(new Date(a.date), new Date(b.date))
+  )
 
   const totalOfPages = Math.ceil(sortedPosts.length / perPage)
   const paginatedPosts = sortedPosts.slice(

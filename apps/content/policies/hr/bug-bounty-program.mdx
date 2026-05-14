@@ -1,0 +1,183 @@
+---
+title: Bug Bounty program
+description: "Naš program za prijavu sigurnosnih ranjivosti i nagrade"
+---
+
+U Appboxu je sigurnost temeljni prioritet. Aktivno potičemo sigurnosne istraživače da pomognu ojačati našu platformu identificiranjem i prijavljivanjem potencijalnih ranjivosti. Ovaj program opisuje naš pristup odgovornom sigurnosnom istraživanju, način na koji obrađujemo prijave ranjivosti i nagrade koje nudimo istraživačima koji pomažu poboljšati naš sigurnosni položaj.
+
+## Naša obveza
+
+Kada sudjelujete u našem bug bounty programu, obvezujemo se:
+
+* Pravodobno potvrditi primitak i procijeniti vašu prijavu
+* Rješavati potvrđene ranjivosti odgovarajućom hitnošću
+* Priznati i nagraditi vas za jedinstvene, prethodno neprijavljene ranjivosti koje dovode do sigurnosnih poboljšanja
+
+## Obuhvat programa
+
+Ovaj bug bounty program odnosi se na sljedeće Appbox platforme:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **samo infrastruktura, ne korisničke aplikacije**
+
+**Napomena:** Iako je naša hosting infrastruktura (username.appboxes.co) u opsegu, ranjivosti u aplikacijama trećih strana koje korisnici deployaju nisu. Pogledajte isključenja u nastavku.
+
+## Što se smatra valjanom ranjivošću
+
+Kako bi se prijava kvalificirala za naš bug bounty program, mora ispunjavati SVE sljedeće kriterije:
+
+### 1. Dokazati stvarnu eksploataciju
+* Uključiti funkcionalan proof of concept koji pokazuje da se ranjivost može iskoristiti
+* Pokazati jasan sigurnosni učinak; teorijske ranjivosti bez dokazane štete ne kvalificiraju se
+* Dokazati da bi napadač zaista mogao kompromitirati korisničke podatke, račune ili integritet sustava
+
+### 2. Utjecati na sustave u opsegu
+* Ranjivost mora postojati u Appbox proprietary codeu ili infrastrukturi
+* Mora utjecati na sustave izričito navedene u odjeljku "Obuhvat programa" iznad
+* Mora biti reproducibilna u našim produkcijskim ili staging okruženjima
+
+### 3. Biti prethodno neprijavljena
+* Ranjivost mora biti novootkrivena i nama već nepoznata
+* Duplicirane prijave ili varijacije poznatih problema ne kvalificiraju se
+
+## Isključena područja i problemi
+
+Sljedeće se smatra **izvan opsega** našeg bug bounty programa:
+
+### Sustavi i integracije trećih strana
+* WHMCS Client Area [https://billing.appbox.co] - prijavite [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - prijavite [Chatwoot Security](https://www.chatwoot.com/security)
+* **Korisnički deployane aplikacije** [app.username.appboxes.co] - ranjivosti u aplikacijama trećih strana (WordPress, Nextcloud itd.) hostanima na našoj infrastrukturi treba prijaviti odgovarajućim dobavljačima aplikacija
+* Sve druge usluge, pluginovi ili integracije trećih strana koje koristimo
+* IP adrese ili domene koje Appbox ne kontrolira izravno
+* Legacy ili zastarjeli sustavi koji više nisu u aktivnoj uporabi
+
+**Izvan opsega za hosting infrastrukturu:**
+* Ranjivosti unutar korisnički deployanog aplikacijskog koda (WordPress, Nextcloud itd.)
+* Zadane konfiguracije aplikacija trećih strana
+* Sigurnosni problemi specifični za određenu verziju aplikacije
+
+### Security headers i hardening
+* Nedostajući security headers (X-Frame-Options, COOP, COEP, MTA-STS itd.) **osim ako** dokažete stvarnu eksploataciju koja dovodi do kompromitacije podataka
+* Nedostajući `rel="noopener"` ili `rel="noreferrer"` atributi
+* Otkrivanje verzije servera ili curenje informacija kroz HTTP headers
+* Cookie atributi na neosjetljivim cookiejima (analytics, preferences itd.)
+
+### Otkrivanje informacija niskog učinka
+* Opširne poruke o pogreškama koje ne otkrivaju osjetljive podatke (lozinke, tokene, PII)
+* Otkrivanje putanje bez dokazanog path traversal ili pristupa datotekama
+* Identifikacija tehnološkog stacka (PHP verzija, detekcija frameworka itd.)
+* Generički odgovori ili ponašanje aplikacije
+
+### Dizajnerske odluke i teorijski problemi
+* Login CSRF (ne omogućuje napadaču pristup računima žrtava)
+* Enumeracija korisnika putem timing attackova ili diferencijalnih odgovora (osim ako je dio većeg attack chaina)
+* Clickjacking bez dokazane eksploatacije osjetljive funkcionalnosti
+* CORS konfiguracije na neosjetljivim endpointima
+* Nedostajući rate limiting **osim ako** dokažete stvarnu zlouporabu (DoS je i dalje isključen)
+
+### Preduvjeti napada
+* Sigurnosni problemi koji ne utječu na naše zadane konfiguracije aplikacija
+* Ranjivosti koje zahtijevaju nestandardne konfiguracije
+* Ranjivosti u našim kontejnerima koje zahtijevaju prilagođene ili izmijenjene postave
+* Problemi koji zahtijevaju kompromitaciju na mrežnoj razini (MITM, DNS poisoning, ARP spoofing)
+
+### Zabranjene metode testiranja
+* Timing-based napadi otkrivanja informacija
+* Tehnike enumeracije procesa
+* Bilo koji oblik denial of service ili high-volume napada
+* Social engineering i phishing tehnike
+* Automatizirano sigurnosno skeniranje koje generira pretjeran promet ili opterećenje
+* Testiranje nefunkcionalnih značajki ili stranica (npr. signup stranica koje još nisu u produkciji)
+
+### Nevaljane vrste prijava
+* Prijave temeljene isključivo na izlazu automatiziranog skenera bez ručne validacije
+* Generičke preporuke bez dokazivanja stvarnih ranjivosti
+* Prijedlozi najboljih praksi bez sigurnosnog učinka
+* Zapažanja o usklađenosti (PCI-DSS, GDPR itd.) bez dokazane iskoristivosti
+
+## Struktura nagrada
+
+### Glavna web stranica i Control Panel
+
+| **Vrsta ranjivosti**                                | **PayPal nagrada** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting infrastruktura
+
+| Vrsta ranjivosti                            | PayPal nagrada | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Suradnici koji prijave valjane ranjivosti bit će priznati u našem Security Researchers Hall of Fame kao znak naše zahvalnosti.
+
+## Potrebna kvaliteta prijave
+
+Sve prijave ranjivosti moraju uključivati:
+
+* **Jasan opis ranjivosti** - Objasnite što je ranjivost i zašto je važna
+* **Pogođeni sustav/URL** - Točno navedite gdje ranjivost postoji
+* **Reprodukcija korak po korak** - Detaljni koraci koji nam omogućuju reproduciranje problema
+* **Funkcionalan proof of concept** - Funkcionalna demonstracija eksploatacije (kod, snimke zaslona, video)
+* **Stvarni sigurnosni učinak** - Pokažite što bi napadač mogao postići, a ne teorijske mogućnosti
+* **Vlastito testiranje** - Ručno validirajte nalaze; nemojte samo prosljeđivati izlaz skenera
+
+Prijave kojima nedostaju ti elementi ili se sastoje od generičkih sigurnosnih preporuka neće se kvalificirati za nagrade.
+
+## Preuzimanje nagrade
+
+* Možete odabrati jednu od dvije opcije nagrade:  
+   * Izravna PayPal isplata (zahtijeva valjan PayPal račun)
+   * Appbox service credits (primjenjivo na bilo koju Appbox uslugu, neprenosivo)
+
+## Smjernice za sudjelovanje
+
+* Pridržavajte se ove politike, naših [Terms of Service](/policies/terms-of-service) i svih primjenjivih zakona
+* Prijavite ranjivosti odmah nakon otkrivanja
+* Poštujte privatnost korisnika i integritet sustava tijekom istraživanja
+* Sve prijave ranjivosti podnosite isključivo putem našeg [contact us form](https://billing.appbox.co/contact.php)
+* Održavajte povjerljivost otkrivenih ranjivosti dok se ne riješe
+* Ograničite testiranje na sustave izričito uključene u ovaj program
+* Ako steknete neočekivani pristup osjetljivim podacima: pristupite samo minimalnoj količini potrebnoj za dokazivanje problema, odmah zaustavite testiranje i promptno prijavite ranjivost
+* Koristite samo vlastite testne račune za bilo kakvu interakciju s našim sustavima
+* Nikada ne pokušavajte iznuđivati Appbox na temelju svojih nalaza
+* **Provjerite svoje nalaze** - Testirajte da vaš proof of concept zaista radi prije slanja
+* **Usredotočite se na učinak** - Dajte prioritet ranjivostima koje mogu prouzročiti stvarnu štetu u odnosu na teorijske probleme
+
+## Pravna zaštita
+
+Sigurnosni istraživači koji slijede ovu politiku mogu očekivati:
+
+* Zaštitu od pravnih postupaka za sigurnosno istraživanje u dobroj vjeri provedeno unutar ovih smjernica
+* Izuzeće od pravnih zahtjeva za zaobilaženje zaštita kada je to nužno za legitimno sigurnosno istraživanje
+* Odricanje od određenih ograničenja politike koja bi inače spriječila sigurnosno testiranje
+* Priznanje da je usklađeno sigurnosno istraživanje korisno i provedeno u dobroj vjeri
+
+I dalje ste odgovorni za poštovanje svih primjenjivih zakona. Ako se suočite s pravnim postupkom treće strane dok se pridržavate ove politike, potvrdit ćemo da su vaše radnje provedene u skladu s našim programom. Ako niste sigurni jesu li vaše planirane istraživačke aktivnosti u skladu s ovom politikom, kontaktirajte nas putem [contact us form](https://billing.appbox.co/contact.php) prije nastavka.
+
+## Postupak prijave
+
+Za prijavu ranjivosti izradite detaljan ticket putem našeg [contact us form](https://billing.appbox.co/contact.php).
+
+* Vaša prijava treba uključivati sveobuhvatne korake za reprodukciju ranjivosti. Kao vodič možete koristiti ovaj predložak: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Sva komunikacija programa mora ići kroz našu službenu Support Ticket Platform
+* Javno otkrivanje bilo koje ranjivosti bez izričitog pisanog dopuštenja Appboxa krši uvjete ovog programa i diskvalificirat će vas od primanja nagrade
+
+## Što se događa nakon prijave
+
+* **Valjane ranjivosti**: Potvrdit ćemo primitak prijave, raditi na ispravku i obraditi vašu nagradu
+* **Nevaljane prijave**: Objasnit ćemo zašto se prijava ne kvalificira i možemo pružiti smjernice za buduća slanja
+* **Prijave izvan opsega**: Uputit ćemo vas odgovarajućem dobavljaču ili objasniti zašto problem nije pokriven
+
+Cijenimo kvalitetno istraživanje i konstruktivne doprinose našoj sigurnosti. Hvala što pomažete očuvati Appbox sigurnim.

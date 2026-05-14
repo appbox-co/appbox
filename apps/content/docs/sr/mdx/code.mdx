@@ -1,0 +1,263 @@
+---
+title: Код
+description: Савладавање кода у вашим MDX датотекама
+links:
+  source: https://raw.githubusercontent.com/rehype-pretty/rehype-pretty-code/master/examples/next/src/app/index.mdx
+sort: 1
+---
+
+`opendocs` користи библиотеку [`rehype-pretty-code`](https://github.com/atomiks/rehype-pretty-code)
+за обраду кода у MDX датотекама. То вам омогућава да значајно прилагодите начин на који се код приказује!
+
+За више информација погледајте званичну документацију и примере!
+
+## Наслови
+
+**Пример:**
+
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+
+**Код:**
+
+````mdx
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+````
+
+## Истицање кода
+
+**Пример:**
+
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Код:**
+
+````mdx
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Истицање inline кода
+
+**Пример:**
+
+Резултат израза `[1, 2, 3].join('-'){:js}` је `'1-2-3'{:js}`.
+
+**Код:**
+
+```mdx
+The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
+```
+
+## Истицање inline кода са свешћу о контексту
+
+На пример, ако имате следећи блок кода:
+
+```js
+function getStringLength(str) {
+  return str.length;
+}
+```
+
+Када се позивамо на `getStringLength{:.entity.name.function}` као функцију,
+можемо га тако и обојити. Исто важи за `function{:.keyword}`, или
+`str{:.variable.parameter}` у односу на `str{:.variable.other.object}` итд. То омогућава
+семантичко повезивање inline кода са најближим блоком кода на који се односи.
+
+**Код:**
+````mdx
+When we refer to `getStringLength{:.entity.name.function}` as a function,
+we can color it as such. Same with `function{:.keyword}`, or
+`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
+semantically link inline code to the nearest block of code it refers to.
+````
+
+## Истицање речи
+
+**Пример:**
+
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+
+**Код:**
+````mdx
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+````
+
+## Истицање линија
+
+**Пример:**
+
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Код:**
+
+````mdx
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Нумерисање линија
+
+**Пример:**
+
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Код:**
+````mdx
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Diff
+
+**Пример:**
+
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+
+**Код:**
+
+````mdx
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+````
+
+## ANSI истицање
+
+**Пример:**
+
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+
+**Код:**
+
+````mdx
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+````
+
+## Истицање група речи по id-ју
+
+Ставите id после `#` након речи.
+То вам омогућава да бојите знакове другачије на основу датог id-ја.
+
+**Пример:**
+
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+
+**Код:**
+````md
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+````
+
+Да бисте изменили или додали нове стилове:
+
+```css title="apps/web/src/styles/mdx.css"
+[data-chars-id='v'] {
+  @apply !text-pink-300 bg-rose-800/50 font-bold;
+}
+```

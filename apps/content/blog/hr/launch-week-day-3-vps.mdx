@@ -1,0 +1,108 @@
+---
+title: Launch Week Day 3 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: "Day 3 Launch Weeka. Potpuni KVM virtual private servers sada su dostupni na Appboxu. Odaberite Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux ili AlmaLinux i dobijte root pristup stvarnoj VM."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Day 3: Virtual Private Servers
+
+Day 3. Ovo je veliko.
+
+Od samog početka Appbox se bavi time da self-hosted aplikacije učini jednostavnima. Instalirajte aplikaciju, dobijte URL, gotovo. Taj model izvrsno funkcionira za većinu stvari. Ali uvijek postoji klasa slučajeva upotrebe u kojima vam jednostavno treba cijeli stroj. Vlastiti kernel, vlastiti init sustav, vlastita pravila.
+
+Danas pokrećemo **Virtual Private Servers** na Appboxu.
+
+## Prave VM, ne kontejneri
+
+Budimo jasni što je ovo. To su potpune KVM virtualne mašine koje rade na namjenskom hardveru, s vlastitim kernelom, vlastitim systemd-om i punim root pristupom. Ovo nije Docker kontejner koji se pretvara da je OS. Ovo je prava stvar.
+
+Ta je razlika važna jer otključava sve ono što kontejneri ne mogu:
+
+- **Docker unutar vašeg VPS-a** - pokrenite `docker compose up` kao na bilo kojem serveru
+- **Snaps i Flatpaks** - instalirajte desktop softver onako kako je predviđeno
+- **Systemd services** - potpuno upravljanje servisima, timeri, journal, sve
+- **Custom kernels and modules** - imate root, radite što želite
+- **Nested virtualization** - ako vam treba, dostupna je
+
+Ako ste ikada naletjeli na zid s našim Docker-based OS-ovima ili webtopovima gdje nešto jednostavno nije radilo zbog ograničenja kontejnera, taj zid je nestao.
+
+## Dostupno je šest Linux OS-ova
+
+Sada možete birati između šest Linux distribucija:
+
+| OS | Opis |
+|---|---|
+| **Ubuntu VPS** | Potpuni Ubuntu 24.04 LTS |
+| **Debian VPS** | Potpuni Debian 12 i 13 |
+| **Arch Linux VPS** | Rolling release, uvijek ažuran |
+| **Fedora VPS** | Fedora 43 s najnovijim paketima |
+| **Rocky Linux VPS** | Enterprise-grade RHEL kompatibilnost |
+| **AlmaLinux VPS** | RHEL-kompatibilan enterprise Linux s dugoročnom podrškom |
+
+Odaberite onaj koji poznajete ili onaj koji želite naučiti. Svi imaju isti skup značajki na Appboxu.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="VPS kategorija u Appbox App Storeu" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ugrađena web konzola
+
+Svaki VPS dolazi s konzolom u pregledniku, ugrađenom izravno u Appbox nadzornu ploču. Kliknite karticu Console na bilo kojem VPS-u i dobit ćete živu terminalsku sesiju izravno u pregledniku.
+
+To znači da se nikada ne možete zaključati iz vlastitog servera. Pogrešno konfiguriran SSH? Pokvarena mrežna konfiguracija? Nije važno. Web konzola povezuje se izravno s virtualnim zaslonom VM-a, potpuno neovisno o mrežnom stacku gosta. Uvijek imate ulaz.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Web konzola za VM u Appbox nadzornoj ploči" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop sa Selkies
+
+Ovdje postaje zanimljivo. Naš Ubuntu VPS ima desktop varijantu koju pokreće **Selkies**, što vam daje potpuno grafičko Linux desktop okruženje dostupno iz preglednika, s hardverski ubrzanim streamingom, potpunim audio izlazom i ulazom za mikrofon.
+
+Radili smo izravno sa Selkies timom kako bismo ovo pokrenuli unutar KVM virtualnih mašina, a integraciju smo otvorili kao open-source na [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Što to zapravo znači u praksi? Možete pokretati potpuno desktop okruženje u pregledniku sa stvarnim aplikacijama. VS Code, Discord, Spotify, Slack - sve istovremeno pokrenuto, sve s audiom, sve dostupno s bilo kojeg uređaja s web preglednikom.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu desktop putem Selkies sa VS Code, Spotify i Discord aplikacijama" width="860" className="mt-8 mb-10" />
+</p>
+
+Razmislite o tome na trenutak. Možete imati trajno udaljeno razvojno okruženje koje je uvijek uključeno, s VS Codeom i Docker kontejnerima za vaše projekte, dok vam je istovremeno otvoren Discord za timski chat i Spotify pušta glazbu. Sve u kartici preglednika. S vašeg laptopa, tableta ili tuđeg računala. Cijeli vaš radni prostor udaljen je samo jedan URL.
+
+## Vaši podaci idu s vama
+
+Svaki VPS ima automatski pristup vašoj Appbox pohrani kroz direktorij `/APPBOX_DATA/`. Unutra ćete pronaći:
+
+- **`/APPBOX_DATA/apps/`** - podaci iz vaših drugih instaliranih Appbox aplikacija
+- **`/APPBOX_DATA/storage/`** - vaša opća Appbox pohrana
+
+To se dijeli pomoću virtiofs, visokoperformantnog filesystem passthrougha koji daje brzine pristupa datotekama gotovo kao na izvornom sustavu. Vaš VPS može čitati i pisati datoteke koje koriste i vaše druge aplikacije, pa možete, primjerice, obrađivati medijske datoteke iz streaming aplikacija ili sigurnosno kopirati baze podataka iz svojeg VPS-a.
+
+## Radi s App Boostom
+
+VPS-ovi koriste isti App Boost sustav koji smo pokrenuli na Day 2. Želite više RAM-a ili CPU-a za svoju VM? Pomaknite boost razinu gore i posvetite joj više slotova svojeg plana. Resursi se dodjeljuju na razini hypervisora, pa vaša VM doista dobiva više računalne snage, a ne samo viši cgroup limit.
+
+Vrijedi napomenuti: VPS-ovi imaju nešto viši osnovni trošak slotova od Docker-based OS aplikacija. To odražava činjenicu da puna virtualna mašina troši više stvarnih resursa nego kontejner koji dijeli kernel hosta. Kompromis je jednostavan: dobivate više mogućnosti, a trošak slotova to iskreno odražava.
+
+## Što slijedi za VPS
+
+Danas pokrećemo VPS-ove s potpunom funkcionalnošću, ali na roadmapu ima još toga. Grafovi korištenja resursa za VPS instance bit će dodani u bliskoj budućnosti, pa ćete moći pratiti CPU, RAM i disk usage kroz vrijeme izravno iz nadzorne ploče, baš kao i kod drugih aplikacija.
+
+## Zašto je ovo važno
+
+Docker-based OS-ovi i webtopovi na Appboxu dobro su služili mnogim ljudima i ne idu nikamo. Ali postoje stvarna ograničenja rada unutar kontejnera. Ne možete pokrenuti Docker. Ne možete koristiti snaps. Ne možete učitati kernel module. Ne možete pokrenuti puni init sustav. Uvijek radite unutar ograničenja tuđeg namespacea.
+
+VPS-ovi ta ograničenja potpuno uklanjaju. Dobivate stvarni stroj. Ako nešto možete napraviti na serveru unajmljenom kod bilo kojeg drugog pružatelja, možete i ovdje - osim što su vaši podaci već montirani, web konzola je već dostupna, a resursi se skaliraju klizačem.
+
+## Day 3 je sada dostupan
+
+VPS-ovi su trenutno dostupni u App Storeu. Idite u VPS kategoriju, odaberite OS i instalirajte. Provisioning pune VM traje malo dulje od kontejnerske aplikacije, pa očekujte do 15 minuta da vaš VPS bude spreman.
+
+Sutra je Day 4. Ne usporavamo.
+
+---
+
+*Imate povratne informacije ili ste pronašli problem? Javite se na support@appbox.co ili otvorite ticket na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

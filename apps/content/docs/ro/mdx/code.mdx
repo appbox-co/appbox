@@ -1,0 +1,263 @@
+---
+title: Cod
+description: Stăpânirea codurilor în fișierele tale MDX
+links:
+  source: https://raw.githubusercontent.com/rehype-pretty/rehype-pretty-code/master/examples/next/src/app/index.mdx
+sort: 1
+---
+
+`opendocs` folosește biblioteca [`rehype-pretty-code`](https://github.com/atomiks/rehype-pretty-code)
+pentru a gestiona codurile din fișierele MDX. Acest lucru îți permite să personalizezi foarte mult modul în care sunt afișate codurile!
+
+Pentru mai multe informații, consultă documentația oficială și exemplele!
+
+## Titluri
+
+**Exemplu:**
+
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+
+**Cod:**
+
+````mdx
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+````
+
+## Evidențierea codului
+
+**Exemplu:**
+
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Cod:**
+
+````mdx
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Evidențierea codului inline
+
+**Exemplu:**
+
+Rezultatul lui `[1, 2, 3].join('-'){:js}` este `'1-2-3'{:js}`.
+
+**Cod:**
+
+```mdx
+The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
+```
+
+## Evidențiere inline conștientă de context
+
+De exemplu, dacă ai avea următorul bloc de cod:
+
+```js
+function getStringLength(str) {
+  return str.length;
+}
+```
+
+Când ne referim la `getStringLength{:.entity.name.function}` ca la o funcție,
+îl putem colora ca atare. La fel pentru `function{:.keyword}` sau
+`str{:.variable.parameter}` față de `str{:.variable.other.object}` etc. Acest lucru permite
+legarea semantică a codului inline la cel mai apropiat bloc de cod la care se referă.
+
+**Cod:**
+````mdx
+When we refer to `getStringLength{:.entity.name.function}` as a function,
+we can color it as such. Same with `function{:.keyword}`, or
+`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
+semantically link inline code to the nearest block of code it refers to.
+````
+
+## Evidențierea cuvintelor
+
+**Exemplu:**
+
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+
+**Cod:**
+````mdx
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+````
+
+## Evidențierea liniilor
+
+**Exemplu:**
+
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Cod:**
+
+````mdx
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Numerotarea liniilor
+
+**Exemplu:**
+
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Cod:**
+````mdx
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Diff
+
+**Exemplu:**
+
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+
+**Cod:**
+
+````mdx
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+````
+
+## Evidențiere ANSI
+
+**Exemplu:**
+
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+ANSI inline: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+
+**Cod:**
+
+````mdx
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+````
+
+## Evidențierea grupurilor de cuvinte după id
+
+Pune un id după `#`, după cuvinte.
+Acest lucru îți permite să colorezi caracterele diferit în funcție de id-ul dat.
+
+**Exemplu:**
+
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+
+**Cod:**
+````md
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+````
+
+Pentru a schimba sau adăuga stiluri noi:
+
+```css title="apps/web/src/styles/mdx.css"
+[data-chars-id='v'] {
+  @apply !text-pink-300 bg-rose-800/50 font-bold;
+}
+```

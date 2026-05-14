@@ -1,0 +1,125 @@
+---
+title: OpenClaw - Uygulamalarınızla Konuşan Kişisel Bir AI Asistanı
+date: 2026-03-20 10:00:00
+excerpt: "OpenClaw artık Appbox'ta mevcut. Kendi altyapınızda çalışan, sohbet uygulamalarınıza bağlanan ve kurulu diğer uygulamalarınızla gerçekten etkileşim kurabilen open-source bir AI asistanıdır."
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# OpenClaw Artık Appbox'ta
+
+Bir süredir kişisel olarak heyecan duyduğum bir şeyi app store'a yeni ekledik.
+
+[OpenClaw](https://openclaw.ai), tamamen kendi altyapınızda çalışan open-source bir AI asistanıdır. Bunu cloud AI asistanlarına özel, self-hosted bir alternatif gibi düşünün; ancak bu asistan Appbox'ınızda yaşar, konuşmalarınızı hatırlar ve sizin için gerçekten işler yapabilir.
+
+Onunla zaten kullandığınız sohbet uygulamaları üzerinden konuşursunuz. WhatsApp, Telegram, Discord, Slack, Signal, hatta iMessage. Anthropic, OpenAI, Google, xAI, Mistral ve diğerlerinden modellerin tüm gücüyle yanıt verir. Kendi API anahtarınızı getirir, modelinizi seçersiniz ve her şey sunucunuzda kalır.
+
+Bu tek başına faydalı olurdu. Ama bunu mağazaya sessizce eklemek yerine hakkında bir blog yazısı yazmamın nedeni, onu Appbox'ınızın geri kalanıyla birleştirdiğinizde olanlar.
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="Web dashboard içinde OpenClaw sohbet oturumu" width="860" className="mt-8 mb-10" />
+</p>
+
+## Diğer Uygulamalarınızı Görebilir
+
+OpenClaw'ı Appbox üzerinde başka herhangi bir yerde çalıştırmaktan farklı yapan şey şu.
+
+Her Appbox'ın paylaşılan bir veri katmanı vardır. Kurulu uygulamalarınızın her biri ortak bir mount altında bir dizin alır ve herhangi bir uygulamanın okuyup yazabileceği paylaşılan bir depolama alanı vardır. OpenClaw bu aynı paylaşılan filesystem'e erişebilir. Bu, diğer kurulu uygulamalarınızdan ve genel depolamanızdan gelen verileri kırılgan bir API entegrasyonu üzerinden değil, doğrudan filesystem erişimiyle görebileceği anlamına gelir.
+
+Pratikte AI asistanınız, bağlamı olmayan kendi container'ında izole değildir. Dosyalarınızın, veritabanlarınızın, medyanızın, kodunuzun ve yapılandırmalarınızın hemen yanında durur.
+
+## Diğer Uygulamalarınıza Giriş Yapabilir
+
+Paylaşılan filesystem'in ötesinde OpenClaw'da tam bir headless browser (Puppeteer ile Chromium) ve tüm yaygın veritabanı client'ları ile CLI araçları yerleşik olarak bulunur. Diğer uygulamalarınızdan biri için giriş bilgilerini verirseniz, gerçekten oturum açıp sizin adınıza kullanabilir.
+
+Docmost'ta ekip dokümantasyonunuzu güncellemek mi istiyorsunuz? OpenClaw'a ne yazacağını söyleyin ve URL ile kimlik bilgilerini verin. Giriş yapar, doğru sayfaya gider ve düzenlemeleri yapar. Nginx & PHP stack'inizde yeni bir landing page mi gerekiyor? Ne istediğinizi tarif edin; OpenClaw HTML, CSS ve JavaScript yazabilir, ardından dosyaları paylaşılan filesystem üzerinden doğrudan web root'unuza deploy edebilir. WordPress mi çalıştırıyorsunuz? Bir blog yazısı taslağı hazırlayıp yayınlamasını, bir plugin ayarını güncellemesini veya bir sayfayı yeniden stillendirmesini isteyin. Admin dashboard'u sizin gibi kullanabilir.
+
+Bu yalnızca web UI'larla sınırlı değil. OpenClaw `mysql`, `psql`, `redis-cli`, `mongosh` ve SSH desteğiyle gelir; böylece sağladığınız kimlik bilgilerini kullanarak veritabanlarınıza ve servislerinize doğrudan bağlanabilir. Temel nokta şu: OpenClaw'ın her uygulama için özel entegrasyonlara veya plugin'lere ihtiyacı yoktur. Siz giriş yapabiliyorsanız asistanınız da yapabilir.
+
+## Bu Gerçekte Nasıl Görünüyor?
+
+Bir AI asistanının Appbox ekosisteminize erişimi olduğunda neler yapabileceğinize dair daha spesifik örneklerden geçeyim.
+
+### Medya Sunucusu Düzeni
+
+Plex, Jellyfin veya Emby çalıştırıyorsanız OpenClaw içinde `ffmpeg`, `mediainfo` ve `exiftool` yerleşik gelir. Bunlar dizinleri elle kurcalamak zorunda kalmadan dosya metadata'sını kontrol etmek veya encoding sorunlarını fark etmek için kullanışlıdır. Bir klasörde ne olduğunu listelemesini, formatları kontrol etmesini veya medya sunucunuzun her şeyi düzgün indekslemesi için adlandırma kurallarını düzenlemenize yardım etmesini isteyin.
+
+### Acısız Veritabanı İşleri
+
+OpenClaw container'ı `mysql`, `psql`, `sqlite3`, `redis-cli` ve `mongosh` önceden kurulu olarak gelir. MariaDB çalıştırıyorsanız OpenClaw'dan veritabanlarınızı sorgulamasını, şemaları incelemesini, yavaş sorguları debug etmesini veya migration yazmanıza yardım etmesini isteyebilirsiniz. Hepsi telefonunuzdaki bir sohbet mesajı üzerinden.
+
+WordPress veya MariaDB destekli başka bir CMS mi çalıştırıyorsunuz? OpenClaw'dan veritabanınızın sağlığını kontrol etmesini, sahipsiz post metadata'sını bulmasını veya belirli içeriği dışa aktarmasını isteyin. Hiçbir şeye SSH ile girmeniz veya doğru CLI flag'lerini hatırlamanız gerekmez. İhtiyacınızı sade bir dille tarif edin.
+
+### GitLab ve Kod İş Akışları
+
+GitLab kuruluysa OpenClaw depolarınızla doğrudan çalışabilir. Hızlı kod araması için `ripgrep` ve `fd` ile birlikte `git` yerleşik olarak bulunur. Depolarınız genelinde belirli bir pattern aramasını, son commit'leri özetlemesini veya yabancı olduğunuz kodu anlamanıza yardımcı olmasını isteyin.
+
+İç projeler için GitLab kullanan ekiplerde, kod tabanınızı gerçekten okuyup hakkında soruları yanıtlayabilen ve bunu kodunuzu üçüncü taraf bir cloud servisine göndermeden yapan bir AI asistanına sahip olmak, geliştirme iş akışı için anlamlı bir iyileştirmedir.
+
+### Dosya Organizasyonu ve Sync
+
+Nextcloud, SFTPGo veya File Browser mı çalıştırıyorsunuz? OpenClaw bu servislerden geçen dosyaları yönetmeye yardımcı olabilir. Belgeler içinde arama yapabilir, dizin yapılarını yeniden düzenleyebilir, kopyaları bulabilir ve paylaşılan depolamanızla uygulamaya özel dizinler arasında öğeleri taşıyabilir.
+
+Ayrıca `rclone` da mevcuttur; bu yüzden sync işleri kurmanız veya cloud depolama sağlayıcıları arasında veri taşımanız gerekiyorsa ne istediğinizi tarif edebilir ve yapılandırmayı OpenClaw'a bırakabilirsiniz.
+
+### İzleme ve Tanılama
+
+Servislerinizi izlemek için Uptime Kuma kurduysanız OpenClaw, izleme kurulumunuzun üzerine konuşmaya dayalı bir katman ekler. Yalnızca uyarılar almakla kalmaz, OpenClaw'dan ağ tanılamaları çalıştırmasını isteyebilirsiniz. Daha derin incelemeler için `ping`, `dig`, `nslookup`, `traceroute`, `mtr` ve hatta `nmap` ile `tcpdump` yerleşik gelir.
+
+Bir şey mi çöktü? Asistanınıza mesaj atın, ne olduğunu kontrol etmesini isteyin ve dashboard'lara bakıp kalmak yerine sade dille bir açıklama alın.
+
+### Müzik ve Sesli Kitap Kütüphaneleri
+
+Navidrome ve audiobookshelf kullanıcıları OpenClaw'ın medya araçlarından yararlanabilir. Müzik kütüphanenizi eksik veya hatalı metadata tag'leri olan dosyalar için taramasını, yeniden encode edilmesi gerekebilecek parçaları belirlemesini veya doğru bölünmemiş sesli kitap bölümlerini düzenlemenize yardım etmesini isteyin. `ffmpeg` ve `exiftool` kombinasyonu ihtiyacınız olan çoğu şeyi halleder.
+
+### Jupyter ve Veri İşleri
+
+Veri analizi için Jupyter Notebook kullanıyorsanız OpenClaw onu güzel şekilde tamamlar. pip ve venv desteğiyle Python 3'e sahiptir; böylece script yazmanıza, paylaşılan depolamanızdaki veri dosyalarını işlemenize ve hatta hızlı analizleri doğrudan çalıştırmanıza yardımcı olabilir. Bunu notebook'larınızın çalıştığı aynı verilere konuşmaya dayalı bir arayüz gibi düşünün.
+
+### Infrastructure as Code
+
+Daha teknik ve maceracı olanlar için OpenClaw `docker`, `kubectl`, `terraform` ve `ansible` CLI'larıyla gelir. Appbox üzerinde bir VPS çalıştırıyor ve altyapı yönetiyorsanız OpenClaw'ı konuşmaya dayalı bir ops asistanı olarak kullanabilirsiniz. Ne deploy etmek istediğinizi tarif edin ve yapılandırmaları üretip uygulamasına yardım etmesine izin verin.
+
+## Kalıcı Hafıza
+
+OpenClaw'ı yalnızca bir AI modeline açılan sohbet penceresinden ayıran şeylerden biri sizi hatırlamasıdır. Zaman içinde bağlam oluşturur: tercihlerinizi, işleri nasıl organize etmeyi sevdiğinizi, üzerinde çalıştığınız projeleri, kullandığınız adlandırma kurallarını. Onunla ne kadar çok etkileşim kurarsanız o kadar faydalı hale gelir.
+
+Bu Appbox üzerinde özellikle güçlüdür, çünkü bağlam yalnızca konuşmaya dayalı değildir. Gerçek ortamınıza dayanır. Dosyalarınız, uygulamalarınız, verileriniz.
+
+## Önceden Yüklü Skills
+
+OpenClaw, [ClawHub](https://clawhub.ai/skills) üzerinde mevcut 50+ community-built extension içeren bir skill sistemine sahiptir. Skills, ajana belirli uygulamalar, araçlar veya iş akışları için uzmanlaşmış yetenekler verir.
+
+Appbox'ta size yalnızca çıplak ajanı vermiyoruz. Image, OpenClaw'ın ortamınızı ilk andan anlaması için zaten kurulu seçilmiş bir skill setiyle gelir:
+
+- **Platform farkındalığı**: Appbox paylaşılan veri düzenini, mevcut CLI araçlarını ve gerektiğinde sizi destek veya VPS yükseltmelerine nasıl yönlendireceğini bilir
+- **Uygulamaya özel skills**: WordPress, Nginx, GitLab, Nextcloud, Emby, MariaDB, Tautulli, Mautic, WireGuard ve Rocket.Chat için önceden yüklenmiştir; böylece ajan bu uygulamalar kurulu olduğunda onlarla nasıl çalışacağını zaten bilir
+- **SSH essentials**: VPS'lerinize veya uzak sunucularınıza doğrudan ajandan bağlanmak için
+- **Browser automation (Playwright MCP)**: diğer uygulamalarınıza web UI'ları üzerinden giriş yapma ve onları kullanma yeteneğini sağlar
+- **Web search ve documentation lookup**: anında referans materyali çekmek için multi-engine search ve ClawDDocs
+- **Self-improvement**: ClawHub üzerinde yeni skills keşfetmek ve kurulumdan önce değerlendirmek için skills
+
+İstediğiniz zaman ek skills kurabilirsiniz. [ClawHub](https://clawhub.ai/skills) üzerinde bir tane bulun, bağlantıyı kopyalayın ve ajana yapıştırın. Skill'i kendisi indirip kurar.
+
+## Başlarken
+
+OpenClaw'ı Appbox app store'dan herhangi bir uygulama gibi kurun. İki slot kullanır.
+
+Kurulumdan sonra uygulama detay sayfasında bir Gateway Token göreceksiniz. Bu dashboard girişinizdir. Dashboard URL'sini açın, token'ı girin ve içeridesiniz.
+
+Buradan yapılandırmanız gereken tek şey AI model sağlayıcınızdır. Tercih ettiğiniz sağlayıcıdan bir API anahtarı ekleyin. OpenRouter en kolay başlangıç noktasıdır, çünkü tek anahtar birçok modele erişim sağlar. OpenRouter, OpenAI, Anthropic, Google, xAI, Mistral ve diğerlerinden API anahtarları almayı adım adım anlatan [tam kurulum rehberi](/docs/apps/openclaw-model-provider-setup) yazdık.
+
+Modeliniz yapılandırıldığında asistanınızla doğrudan dashboard'dan sohbet etmeye başlayabilirsiniz. Onunla WhatsApp, Telegram, Discord veya diğer kanallar üzerinden konuşmak isterseniz bunlar da dashboard üzerinden yapılandırılır.
+
+## Bu Neden Önemli?
+
+Piyasada pek çok AI sohbet arayüzü var. Çoğu, mesaj gönderdiğiniz anda verilerinizin kontrolünüzden çıktığı cloud servisleridir. OpenClaw farklıdır çünkü her şey Appbox'ınızda kalır. Asistan, hafızası, konuşmalarınız ve üzerinde çalıştığı veriler.
+
+Ve paylaşılan filesystem erişimiyle diğer uygulamalarınızın yanında durduğu için, self-hosted stack'iniz hakkında yalnızca soruları yanıtlamak yerine gerçekten stack genelinde işler yapabilir.
+
+İnsanların bununla ne inşa edeceğini gerçekten merak ediyoruz. İlginç bir iş akışı kurarsanız veya OpenClaw'ı diğer uygulamalarınıza bağlamanın yaratıcı bir yolunu bulursanız bunu duymak isteriz.
+
+---
+
+*OpenClaw hakkında sorularınız mı var veya kurulumda yardıma mı ihtiyacınız var? support@appbox.co adresinden bize ulaşın ya da [billing.appbox.co](https://billing.appbox.co/submitticket.php) üzerinden bir ticket açın.*

@@ -1,0 +1,81 @@
+---
+title: "Launch Week Day 4 - Domenii multiple pentru aplicațiile VPS"
+date: 2026-03-12 10:00:00
+excerpt: "Ziua 4 din Launch Week. Aplicațiile VPS acceptă acum domenii multiple - adaugă câte domenii personalizate și subdomenii Appbox ai nevoie, toate cu SSL automat."
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: Domenii multiple pentru aplicațiile VPS
+
+Ziua 4. Ieri v-am oferit mașini virtuale complete. Astăzi le oferim suport de domenii așa cum trebuie.
+
+Când am lansat VPS-urile în Ziua 3, fiecare VM primea un singur domeniu. Asta este suficient pentru multe cazuri de utilizare, dar dacă rulezi un server web în interiorul VPS-ului tău - și mulți dintre voi o faceți - un singur domeniu nu este de ajuns. Ai nevoie de mai multe domenii care indică spre aceeași mașină, fiecare cu propriul certificat SSL și propria configurație de server web.
+
+Astăzi, aplicațiile VPS acceptă **domenii multiple**. Adaugă câte subdomenii `*.user.appboxes.co` vrei, adu propriile domenii personalizate sau combină-le pe ambele. Fiecare primește SSL și o configurație de server web gata de folosit.
+
+## Cum funcționează
+
+Deschide orice aplicație VPS care rulează și vei găsi un card **Custom Domains** pe pagina de detalii. Acolo locuiesc toate domeniile tale - un tabel căutabil și sortabil care arată fiecare domeniu atașat acelui VPS, care este principal și când a fost adăugat.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Tabel Custom Domains pe pagina de detalii a unei aplicații VPS" width="860" className="mt-8 mb-10" />
+</p>
+
+Pentru a adăuga un domeniu nou, apasă **Add Domain**. Vei alege un domeniu părinte și vei introduce un subdomeniu, iar sistemul se ocupă de restul.
+
+## Subdomenii Appbox
+
+Cea mai rapidă modalitate de a adăuga un domeniu este să folosești domeniul tău Appbox existent. Alege domeniul tău `user.appboxes.co` ca părinte, tastează un subdomeniu și ai terminat. DNS-ul este deja gestionat pentru tine, iar domeniul este verificat instantaneu.
+
+Este excelent pentru a crea rapid URL-uri de proiecte, medii de staging sau pur și simplu pentru a oferi servicii diferite de pe VPS-ul tău propria adresă. Ai nevoie de `api.user.appboxes.co` pentru backend și `app.user.appboxes.co` pentru frontend? Le adaugi pe amândouă în mai puțin de un minut.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Adăugarea unui subdomeniu Appbox la un VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Deoarece acestea se află sub certificatul wildcard Appbox existent, SSL-ul este automat. Fără așteptare, fără generare de certificate, fără configurare.
+
+## Domenii personalizate
+
+Poți, de asemenea, să îți direcționezi propriile domenii către VPS. Selectează domeniul de bază personalizat (sau adaugă unul nou chiar din dialog), introdu subdomeniul, iar UI-ul te ghidează prin configurarea DNS.
+
+Dialogul îți arată exact înregistrarea A pe care trebuie să o creezi - hostname-ul, adresa IP, totul. Include chiar și instrucțiuni specifice furnizorilor pentru Cloudflare și alți furnizori DNS populari, ca să nu trebuiască să cauți cum se adaugă o înregistrare A.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Adăugarea unui domeniu personalizat cu verificare DNS și instrucțiuni specifice furnizorului" width="560" className="mt-8 mb-10" />
+</p>
+
+După ce DNS-ul tău indică spre IP-ul corect, apasă **Verify Again**, iar sistemul confirmă că înregistrarea este corectă înainte de a adăuga domeniul.
+
+## SSL și configurație de server web
+
+Fiecare domeniu pe care îl adaugi primește SSL. Pentru subdomeniile Appbox, se folosește certificatul wildcard existent. Pentru domeniile personalizate, un certificat este provisionat automat.
+
+Iată partea care face această funcție cu adevărat utilă pentru utilizatorii VPS: fiecare domeniu vine cu un buton **View Config** care îți oferă fragmente de configurație gata de lipit pentru Nginx și Apache. Configurația include `server_name` corect, căile certificatelor SSL, suitele de cifrare și setările de protocol. Copiezi fragmentul, îl pui în configurația serverului web din VM, reîncarci și servești trafic pe acel domeniu.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="Fragmente de configurație SSL pentru Nginx și Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Fără ghicit căi de fișiere. Fără căutat locațiile certificatelor. Fără descifrat șiruri de cifrare. Totul este acolo, gata de copiat.
+
+## De ce contează pentru utilizatorii VPS
+
+Un VPS fără suport multi-domeniu este doar un server cu o singură adresă. Este o limitare care devine evidentă rapid:
+
+- Rulezi o aplicație web cu un API separat? Ai nevoie de cel puțin două domenii.
+- Găzduiești mai multe site-uri în VM-ul tău? Fiecare are nevoie de propriul domeniu.
+- Vrei un mediu de staging lângă producție? Încă un domeniu.
+- Dezvolți local și vrei să testezi cu un domeniu real? Încă unul.
+
+## Ziua 4 este live acum
+
+Suportul pentru domenii multiple este disponibil chiar acum pentru toate aplicațiile VPS. Deschide VPS-ul, derulează la Custom Domains și începe să adaugi.
+
+Mâine este Ziua 5 și avem o surpriză. Nu o să o vezi venind.
+
+---
+
+*Ai feedback sau ai găsit o problemă? Scrie-ne la support@appbox.co sau deschide un tichet la [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

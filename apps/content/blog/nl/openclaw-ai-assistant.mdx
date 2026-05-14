@@ -1,0 +1,125 @@
+---
+title: OpenClaw - een persoonlijke AI-assistent die met je apps praat
+date: 2026-03-20 10:00:00
+excerpt: OpenClaw is nu beschikbaar op Appbox. Het is een open-source AI-assistent die op je eigen infrastructuur draait, verbinding maakt met je chatapps en echt met je andere geïnstalleerde apps kan interacteren.
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# OpenClaw staat nu op Appbox
+
+We hebben net iets aan de app store toegevoegd waar ik persoonlijk al een tijd enthousiast over ben.
+
+[OpenClaw](https://openclaw.ai) is een open-source AI-assistent die volledig op je eigen infrastructuur draait. Zie het als een prive, self-hosted alternatief voor cloud-AI-assistenten, behalve dat deze op je Appbox leeft, je gesprekken onthoudt en daadwerkelijk dingen voor je kan doen.
+
+Je praat ermee via de chatapps die je al gebruikt. WhatsApp, Telegram, Discord, Slack, Signal, zelfs iMessage. Hij antwoordt met de volledige kracht van modellen van Anthropic, OpenAI, Google, xAI, Mistral en anderen. Je brengt je eigen API key mee, kiest je model, en alles blijft op je server.
+
+Dat alleen zou al nuttig zijn. Maar de reden dat ik er een blogpost over schrijf in plaats van het stilletjes aan de store toe te voegen, is wat er gebeurt wanneer je het combineert met de rest van je Appbox.
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="OpenClaw-chatsessie in het webdashboard" width="860" className="mt-8 mb-10" />
+</p>
+
+## Het kan je andere apps zien
+
+Dit is wat OpenClaw op Appbox anders maakt dan het ergens anders draaien.
+
+Elke Appbox heeft een gedeelde datalaag. Je geïnstalleerde apps krijgen elk een directory onder een gemeenschappelijke mount, en er is een gedeeld opslaggebied waar elke app uit kan lezen en naar kan schrijven. OpenClaw heeft toegang tot hetzelfde gedeelde bestandssysteem. Dat betekent dat het de data van je andere geïnstalleerde apps en je algemene opslag kan zien, niet via een fragiele API-integratie, maar via directe bestandssysteemtoegang.
+
+In de praktijk is je AI-assistent niet geïsoleerd in zijn eigen container zonder context. Hij zit direct naast je bestanden, databases, media, code en configuraties.
+
+## Het kan inloggen op je andere apps
+
+Naast het gedeelde bestandssysteem heeft OpenClaw een volledige headless browser (Chromium met Puppeteer) en elke gangbare databaseclient en CLI-tool ingebouwd. Als je de inloggegevens voor een van je andere apps geeft, kan het echt namens jou inloggen en die app gebruiken.
+
+Wil je je teamdocumentatie in Docmost bijwerken? Vertel OpenClaw wat het moet schrijven en geef de URL en credentials. Het logt in, navigeert naar de juiste pagina en voert de bewerkingen uit. Een nieuwe landing page nodig op je Nginx & PHP-stack? Beschrijf wat je wilt en OpenClaw kan de HTML, CSS en JavaScript schrijven en de bestanden daarna direct via het gedeelde bestandssysteem naar je webroot deployen. Draai je WordPress? Vraag het om een blogpost op te stellen en te publiceren, plugininstellingen bij te werken of een pagina opnieuw te stylen. Het kan het admindashboard bedienen zoals jij dat zou doen.
+
+Dit is ook niet beperkt tot web-UI's. OpenClaw wordt geleverd met `mysql`, `psql`, `redis-cli`, `mongosh` en SSH-ondersteuning, zodat het direct verbinding kan maken met je databases en services met de credentials die je opgeeft. Het belangrijkste punt is dat OpenClaw geen speciale integraties of plugins nodig heeft voor elke app. Als jij erop kunt inloggen, kan je assistent dat ook.
+
+## Hoe dit er echt uitziet
+
+Laat me een paar specifiekere voorbeelden doorlopen van wat je kunt doen wanneer een AI-assistent toegang heeft tot je Appbox-ecosysteem.
+
+### Onderhoud van mediaservers
+
+Als je Plex, Jellyfin of Emby draait, wordt OpenClaw geleverd met `ffmpeg`, `mediainfo` en `exiftool` ingebouwd. Die zijn handig om metadata van bestanden te controleren of encodingproblemen te vinden zonder handmatig door directories te hoeven graven. Vraag het om te tonen wat er in een map staat, formaten te controleren of je te helpen naamgevingsconventies op te schonen zodat je mediaserver alles correct indexeert.
+
+### Databasewerk zonder pijn
+
+De container van OpenClaw wordt geleverd met `mysql`, `psql`, `sqlite3`, `redis-cli` en `mongosh` vooraf geïnstalleerd. Als je MariaDB draait, kun je OpenClaw vragen je databases te queryen, schemas te inspecteren, trage queries te debuggen of je te helpen migraties te schrijven. Allemaal via een chatbericht op je telefoon.
+
+Draai je WordPress of een ander CMS met MariaDB erachter? Vraag OpenClaw om de gezondheid van je database te controleren, verweesde postmetadata te vinden of specifieke content te exporteren. Je hoeft nergens via SSH in te loggen of de juiste CLI-flags te onthouden. Beschrijf gewoon in gewone taal wat je nodig hebt.
+
+### GitLab en codeworkflows
+
+Als je GitLab hebt geïnstalleerd, kan OpenClaw direct met je repositories werken. Het heeft `git` ingebouwd, samen met `ripgrep` en `fd` voor snelle codezoekopdrachten. Vraag het om in je repos naar een specifiek patroon te zoeken, recente commits samen te vatten of je te helpen onbekende code te begrijpen.
+
+Voor teams die GitLab voor interne projecten gebruiken, is een AI-assistent die je codebase echt kan lezen en vragen erover kan beantwoorden zonder je code naar een externe cloudservice te sturen een betekenisvolle verbetering van de ontwikkelworkflow.
+
+### Bestandsorganisatie en sync
+
+Draai je Nextcloud, SFTPGo of File Browser? OpenClaw kan helpen bij het beheren van de bestanden die door die services lopen. Het kan documenten doorzoeken, directorystructuren reorganiseren, duplicaten vinden en dingen verplaatsen tussen je gedeelde opslag en app-specifieke directories.
+
+Het heeft ook `rclone` beschikbaar, dus als je syncjobs moet opzetten of data tussen cloudopslagproviders moet verplaatsen, kun je beschrijven wat je wilt en OpenClaw de configuratie laten afhandelen.
+
+### Monitoring en diagnostiek
+
+Als je Uptime Kuma hebt geïnstalleerd om je services te monitoren, geeft OpenClaw je een conversationele laag bovenop je monitoringsetup. Naast het ontvangen van alerts kun je OpenClaw vragen netwerkdiagnostiek uit te voeren. Het wordt geleverd met `ping`, `dig`, `nslookup`, `traceroute`, `mtr` en zelfs `nmap` en `tcpdump` voor dieper onderzoek.
+
+Gaat er iets offline? Stuur je assistent een bericht, vraag hem te controleren wat er gebeurt, en krijg een uitleg in gewone taal in plaats van naar dashboards te staren.
+
+### Muziek- en audioboekbibliotheken
+
+Navidrome- en audiobookshelf-gebruikers kunnen profiteren van OpenClaw's mediatooling. Vraag het om je muziekbibliotheek te scannen op bestanden met ontbrekende of onjuiste metadatatags, tracks te identificeren die mogelijk opnieuw moeten worden geëncodeerd, of te helpen audioboekhoofdstukken te organiseren die niet goed zijn gesplitst. De combinatie van `ffmpeg` en `exiftool` dekt het meeste wat je nodig hebt.
+
+### Jupyter en datawerk
+
+Als je Jupyter Notebook gebruikt voor data-analyse, vult OpenClaw dat mooi aan. Het heeft Python 3 met pip- en venv-ondersteuning, zodat het je kan helpen scripts te schrijven, databestanden in je gedeelde opslag te verwerken en zelfs snelle analyses direct uit te voeren. Zie het als een conversationele interface naar dezelfde data waarmee je notebooks werken.
+
+### Infrastructure as Code
+
+Voor wie technisch avontuurlijker is, wordt OpenClaw geleverd met `docker`, `kubectl`, `terraform` en `ansible` CLIs. Als je een VPS op Appbox draait en infrastructuur beheert, kun je OpenClaw gebruiken als een conversationele ops-assistent. Beschrijf wat je wilt deployen en laat het helpen configuraties te genereren en toe te passen.
+
+## Persistent geheugen
+
+Een van de dingen die OpenClaw onderscheidt van alleen een chatvenster naar een AI-model, is dat het jou onthoudt. Het bouwt na verloop van tijd context op: je voorkeuren, de manier waarop je dingen graag organiseert, de projecten waaraan je werkt, de naamgevingsconventies die je gebruikt. Hoe meer je ermee werkt, hoe nuttiger het wordt.
+
+Dit is vooral krachtig op Appbox omdat de context niet alleen conversationeel is. Die is gegrond in je echte omgeving. Je bestanden, je apps, je data.
+
+## Vooraf geladen skills
+
+OpenClaw heeft een skillsysteem met 50+ community-built extensies beschikbaar op [ClawHub](https://clawhub.ai/skills). Skills geven de agent gespecialiseerde mogelijkheden voor specifieke apps, tools of workflows.
+
+Op Appbox geven we je niet alleen de kale agent. De image wordt geleverd met een samengestelde set skills die al is geïnstalleerd, zodat OpenClaw je omgeving out of the box begrijpt:
+
+- **Platform awareness**: kent de gedeelde Appbox-data-indeling, beschikbare CLI-tools en hoe je naar support of VPS-upgrades wordt geleid wanneer nodig
+- **App-specifieke skills**: vooraf geladen voor WordPress, Nginx, GitLab, Nextcloud, Emby, MariaDB, Tautulli, Mautic, WireGuard en Rocket.Chat, zodat de agent al weet hoe hij met deze apps moet werken wanneer je ze hebt geïnstalleerd
+- **SSH essentials**: om direct vanuit de agent verbinding te maken met je VPSes of remote servers
+- **Browser automation (Playwright MCP)**: maakt het mogelijk om in te loggen op je andere apps en hun web-UI's te bedienen
+- **Web search en documentation lookup**: multi-engine search en ClawDDocs om direct referentiemateriaal op te halen
+- **Self-improvement**: skills voor het ontdekken van nieuwe skills op ClawHub en het beoordelen ervan voor installatie
+
+Je kunt op elk moment extra skills installeren. Zoek er een op [ClawHub](https://clawhub.ai/skills), kopieer de link en plak die naar je agent. Hij downloadt en installeert de skill zelf.
+
+## Aan de slag
+
+Installeer OpenClaw uit de Appbox app store zoals elke andere app. Het gebruikt twee slots.
+
+Na installatie zie je een Gateway Token op de appdetailpagina. Dat is je dashboardlogin. Open de dashboard-URL, voer de token in en je bent binnen.
+
+Vanaf daar hoef je nog een ding te configureren: je AI-modelprovider. Voeg een API key toe van de provider die je voorkeur heeft. OpenRouter is het makkelijkste startpunt, omdat een key toegang geeft tot veel modellen. We hebben een [volledige setupgids](/docs/apps/openclaw-model-provider-setup) geschreven die uitlegt hoe je API keys krijgt van OpenRouter, OpenAI, Anthropic, Google, xAI, Mistral en anderen.
+
+Zodra je model is geconfigureerd, kun je direct vanuit het dashboard met je assistent chatten. Als je via WhatsApp, Telegram, Discord of andere kanalen met hem wilt praten, configureer je die ook via het dashboard.
+
+## Waarom dit belangrijk is
+
+Er zijn genoeg AI-chatinterfaces. De meeste zijn cloudservices waarbij je data je controle verlaat zodra je een bericht stuurt. OpenClaw is anders omdat alles op je Appbox blijft. De assistent, zijn geheugen, je gesprekken en de data waarmee hij werkt.
+
+En omdat hij naast je andere apps staat met gedeelde bestandssysteemtoegang, kan hij daadwerkelijk dingen doen in je self-hosted stack in plaats van er alleen vragen over te beantwoorden.
+
+We zijn oprecht benieuwd wat mensen hiermee bouwen. Als je een interessante workflow opzet of een creatieve manier vindt om OpenClaw met je andere apps te verbinden, horen we daar graag over.
+
+---
+
+*Vragen over OpenClaw of hulp nodig bij de setup? Neem contact op via support@appbox.co of open een ticket op [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

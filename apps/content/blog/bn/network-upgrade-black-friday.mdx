@@ -1,0 +1,92 @@
+---
+title: আমাদের Network বিশাল Upgrade পেয়েছে 🎉
+date: 2025-11-29 10:00:00
+excerpt: আমরা আমাদের সবচেয়ে বড় infrastructure upgrade সম্পন্ন করেছি - Nokia enterprise routers, আমাদের নিজস্ব IP space, এবং 100G AMS-IX connectivity। Plus, আমাদের Black Friday deal এসেছে!
+author_id: rid
+og_image: network-upgrade-og.jpg
+tags: [appbox, infrastructure, networking, black-friday, performance]
+---
+
+# আমরা করে ফেলেছি - আমাদের Network Live!
+
+মনে আছে April-এ আমরা ঘোষণা করেছিলাম যে আমরা আমাদের নিজস্ব network infrastructure তৈরি করছি? আনন্দের সাথে জানাচ্ছি, গতকাল থেকে সেটি অবশেষে live।
+
+এটি তৈরি হতে মাসের পর মাস লেগেছে, এবং সত্যি বলতে, সবকিছু একসাথে কাজ করতে দেখা Appbox শুরু করার পর সবচেয়ে satisfying moments-এর একটি। কী বদলেছে তা বলি।
+
+## Enterprise-Grade Hardware
+
+আমরা আমাদের infrastructure জুড়ে Nokia 7750 SR-1 routers deploy করেছি। Nokia-এর routing gear সম্পর্কে পরিচিত না হলে বলি, এগুলো একই routers যা বিশ্বের কিছু বৃহত্তম ISPs এবং data centers চালায়। এগুলো scale-এ reliability এবং performance-এর জন্য built, এবং এখন আপনার সব traffic এগুলো handle করছে।
+
+এটি consumer বা prosumer equipment নয়। এটি proper enterprise networking hardware, যা আপনাকে প্রাপ্য performance দিতে আমাদের দরকারি control এবং capabilities দেয়।
+
+## আমাদের নিজস্ব IP Space
+
+আমরা এখন আমাদের Autonomous System ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870))-এর অধীনে নিজস্ব IP addresses দিয়ে traffic route করছি। এর মানে internet জুড়ে আপনার data কীভাবে travel করে তার ওপর আমাদের complete control আছে।
+
+এটি কেন গুরুত্বপূর্ণ? কারণ আমরা Appbox users-এর জন্য specifically routing optimize করতে পারি, ভালো DDoS protection implement করতে পারি, এবং ভবিষ্যতে dedicated IP addresses-এর মতো features দিতে পারি যাদের দরকার।
+
+## 100G AMS-IX Connectivity
+
+বড়টি। আমরা এখন 100 gigabits per second-এ AMS-IX-এর সাথে peering করছি। AMS-IX বিশ্বের বৃহত্তম internet exchanges-এর একটি, এবং direct access থাকার মানে আপনার traffic major networks এবং content providers-এর কাছে সবচেয়ে দ্রুত route নেয়।
+
+বাস্তবে এর মানে:
+- **Lower latency** - আপনার connections দ্রুত এবং বেশি responsive
+- **Better speeds** - বেশি bandwidth মানে কম congestion
+- **Improved reliability** - direct peering মানে fewer points of failure
+
+গত কয়েক সপ্তাহে আমরা traffic-এর একটি subset দিয়ে এটি test করছিলাম, এবং results ঠিক আমরা যেমন আশা করেছিলাম তেমনই। এখন সবাই benefit পাবে।
+
+## Black Friday - 3 Months-এর জন্য 30% Off
+
+এই milestone celebrate করতে (এবং Black Friday weekend বলে), আমরা আমাদের সবচেয়ে বড় promotion চালাচ্ছি।
+
+### New Customers
+
+যেকোনো plan-এ **আপনার প্রথম 3 months-এ 30% off** পান। Checkout-এ শুধু code **APPBOX30** ব্যবহার করুন। এটি শুধু monthly subscriptions-এর ক্ষেত্রে প্রযোজ্য, তাই deal নিতে চাইলে monthly billing select করা নিশ্চিত করুন।
+
+### Existing Customers - Upgrades
+
+বড় plan-এ upgrade করতে চান? আপনার জন্যও আছে। Code **UPGRADE30** দিয়ে **আপনার upgrade-এ 30% off** পান। Upgrade fee আপনার current billing cycle অনুযায়ী prorated হবে, তারপর 30% কমানো হবে। Upgrade-এর পর আপনার next 2 months-তেও full price-এর ওপর 30% off থাকবে।
+
+#### কীভাবে Upgrade করবেন
+
+1. আপনার [billing account](https://billing.appbox.co/clientarea.php)-এ log in করুন
+2. **My Products & Services**-এ যান এবং আপনার Appbox select করুন
+3. Actions section-এ **Upgrade/Downgrade** button click করুন
+4. আপনার new plan বেছে নিন এবং checkout-এ code **UPGRADE30** লিখুন
+
+![How to upgrade your Appbox - click the Upgrade/Downgrade button](/blog-images/upgrade-guide.png)
+
+এটি সত্যিই আমাদের দেওয়া best deal, এবং Appbox community-র অংশ হওয়ার জন্য ধন্যবাদ জানানোর আমাদের উপায়।
+
+## VPS Apps - Christmas-এর আগে আসছে
+
+আমি জানি আপনাদের অনেকেই এটার জন্য অপেক্ষা করছিলেন। VPS apps এখনও track-এ আছে এবং আমরা Christmas-এর আগে ready করার লক্ষ্য রাখছি।
+
+যারা আগের announcement miss করেছেন, VPS apps কোনো restrictions ছাড়া full root access দেয়। আপনি Docker, Snap, Tailscale, এবং proper system-level access দরকার এমন যেকোনো কিছু চালাতে পারবেন। এটি VPS-এর flexibility এবং আমাদের one-click app deployment-এর সমন্বয়।
+
+আমাদের কাছে আরও কিছু কাজ চলছে যা এখনো announce করার জন্য ready নয়। শুধু বলি, VPS release-এর সাথে একটি surprise feature আসছে যা আমরা মনে করি আপনারা পছন্দ করবেন। শিগগিরই আরও জানাব।
+
+## এরপর কী
+
+এই network upgrade শুধু foundation। এখন আমাদের infrastructure-এর ওপর proper control আছে, আমরা এমন features build করতে শুরু করতে পারি যা আগে সম্ভব ছিল না:
+
+- **Dedicated IP addresses** - যাদের নিজস্ব IP দরকার তাদের জন্য
+- **Advanced routing options** - আপনার traffic কীভাবে flow করে তার ওপর বেশি control
+- **Enhanced DDoS protection** - ভালো security-এর জন্য আমাদের নতুন infrastructure leverage করে
+- **Geographic optimization** - peering relationships expand করার সাথে
+
+এই features develop হলে আমরা আপনাদের updated রাখব।
+
+## ধন্যবাদ
+
+সত্যি, ধন্যবাদ। এমন infrastructure তৈরি করতে সময়, টাকা, এবং users-এর অনেক trust লাগে। আমরা যখন এটি নিয়ে কাজ করছিলাম, আপনারা আমাদের সাথে থেকেছেন - এর মূল্য আমাদের কাছে সবকিছু।
+
+নতুন network নিয়ে কোনো issue notice করলে বা feedback থাকলে যোগাযোগ করুন। আমরা সবকিছু closely monitor করছি, কিন্তু actual users-এর real-world feedback অমূল্য।
+
+আরও দ্রুত, আরও reliable hosting-এর জন্য। 🚀
+
+---
+
+*Upgrade বা Black Friday deal নিয়ে প্রশ্ন আছে? support@appbox.co-তে জানান।*
+

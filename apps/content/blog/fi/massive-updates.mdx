@@ -1,0 +1,108 @@
+---
+title: Massiivisia päivityksiä Appboxin horisontissa! 🚀
+date: 2025-04-08 11:58:00
+excerpt: Uusi verkkosivusto, avoimen lähdekoodin aloite, kontitetut sovellukset, oma verkkoinfrastruktuurimme ja lisää jännittävää kehitystä tulossa Appboxiin!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Uusi aikakausi alkaa Appboxissa
+
+Kuukausien kulissien takaisen työn, myöhäisten iltojen ja aivan liian suuren kahvimäärän jälkeen olen innoissani voidessani vihdoin näyttää, mitä olemme rakentaneet. Tämä ei ole vain yksi päivitys lisää. Tämä on Appboxin rakentamista uudelleen alusta asti.
+
+## Tervetuloa uuteen digitaaliseen kotiimme
+
+Katsot juuri upouutta verkkosivustoamme! Olemme vihdoin hyvästelleet vanhan WordPress-toteutuksemme. Koko sivusto on rakennettu uudelleen modernilla teknologialla, joka on nopeampi, turvallisempi ja oikeasti skaalautuu kunnolla.
+
+Tästä uudesta sivustosta tulee kunnollisen dokumentaation, säännöllisten blogikirjoitusten (kuten tämän) ja lopulta uuden alustamme frontendin koti. Ulkoasu ei ole vain siistimpi - se on oikeasti toimiva ja tekee asioiden löytämisestä paljon helpompaa.
+
+Käytämme taustalla Next.js:ää ja ContentLayeria, mikä antaa meille todella nopean suorituskyvyn ja paljon paremman kehityskokemuksen. Sivusto tukee useita kieliä, hoitaa SEO:n automaattisesti, sisältää RSS-syötteet sekä XML- että JSON-muodossa ja tarjoaa tumman tilan, koska kenenkään ei pitäisi joutua kestämään kirkkaanvalkoisia näyttöjä kahdelta aamuyöllä.
+
+## Siirrymme avoimeen lähdekoodiin!
+
+Siirrymme myös avoimeen lähdekoodiin! Tämä verkkosivusto, jota juuri luet? Sen koodi on julkinen, ja kuka tahansa voi osallistua siihen.
+
+Tämä on meille valtava asia. Olemme aina pyrkineet olemaan läpinäkyviä, mutta nyt laitamme tekomme sanojemme tueksi ja rakennamme oikeasti yhteisön kanssa, emme vain yhteisöä varten. Jos olet kehittäjä ja olet joskus halunnut auttaa muovaamaan käyttämiäsi työkaluja, nyt voit. Katso GitHub-repostamme osallistumisohjeet ja kaikki, mitä tarvitset alkuun pääsemiseksi.
+
+## Esittelyssä Appbox v2
+
+Uusi verkkosivusto on vasta alku. Työstämme Appbox v2:ta, joka on suurin päivitys, jonka olemme koskaan tehneet.
+
+Konttien käyttöönotto on aina ollut meidän juttumme, mutta v2 vie sen pidemmälle sillä, mitä kaikki ovat pyytäneet: täysi VPS-tuki. VPS-sovellukset antavat sinulle täydet root-oikeudet ilman rajoituksia. Jos tarvitset täydellisen hallinnan ympäristöstäsi, tätä olet odottanut.
+
+Meillä on se jo toiminnassa yhdellä palvelimella, ja se toimii todella hyvin. Voit asentaa VPS-sovelluksia aivan kuten mitä tahansa muuta sovellusta app storesta. Tämä antaa sinun asentaa sovelluksia, jotka eivät ole tällä hetkellä mahdollisia, kuten Dockerin, Snapin ja Tailscalen. Se vaatii palvelimillemme OS-päivityksen Debian 13:een, koska käytämme uusia virtualisointiominaisuuksia turvallisuuden parantamiseen ja suorituskyvyn nostamiseen. Meidän täytyy ottaa tuo päivitys käyttöön ennen kuin voimme julkaista ominaisuuden, mutta tästä tulee pian lisää päivityksiä.
+
+Tämä yhdistää hyväksi todetun kontti-infrastruktuurimme todelliseen VPS-joustavuuteen ja antaa sinulle molempien maailmojen parhaat puolet.
+
+## Rakennamme oman verkkoinfrastruktuurin
+
+Tässä on todella iso uutinen: rakennamme oman verkkomme.
+
+Emme vain lisää palvelimia tai päivitä kaistanleveyttä. Meillä on oma Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) ja oma IP-lohko (79.140.195.0/24), joiden avulla rakennamme verkon, joka on kokonaan meidän. Käytännössä meistä tulee oma ISP omalla virallisella internet-identiteetillä ja osoiteavaruudella, jotta voimme hallita sitä, miten datasi kulkee internetissä [1].
+
+Mitä tämä tarkoittaa sinulle? Voimme hallita kaikkea, optimoida sen erityisesti Appbox-käyttäjiä varten ja tarjota luotettavuutta ja suorituskykyä, joka ei ollut aiemmin mahdollista.
+
+## Peering AMS-IX:n kanssa
+
+Verkkokehityksemme tueksi aloitamme peeringin AMS-IX:n kanssa 100G-yhteydellä, kun verkko on valmis. Tämä antaa meille suoran pääsyn yhteen maailman suurimmista internet exchange -pisteistä, mikä tarkoittaa pienempää viivettä ja parempia nopeuksia kaikille. Ajattele sitä suorana moottoritienä suurille internet-palveluntarjoajille sivuteiden sijaan [2].
+
+Tällainen yhteys on yleensä saatavilla vain paljon suuremmille yrityksille, mutta haluamme tarjota yritystason suorituskyvyn riippumatta siitä, mikä paketti sinulla on.
+
+Olemme nyt saaneet laitteistohankinnan sopimuksen kuntoon, joten olemme valmiita etenemään. Saamme uuden laitteiston viimeistään lokakuuhun mennessä, mahdollisesti jo syyskuussa. Tämä tarkoittaa, että meidän pitäisi olla uudessa verkossa toiminnassa pian sen jälkeen.
+
+## Hintamuutokset
+
+Tämä on se osa, jota emme todellakaan halunneet joutua kirjoittamaan. Tällaisen infrastruktuurin rakentaminen on kallista, ja vaikka kannamme suurimman osan kustannuksista itse, meidän täytyy valitettavasti tehdä pieni muutos hinnoitteluomme sekä uusille että nykyisille asiakkaille.
+
+Haluan olla tästä avoin. Uusi hinnoittelu on jo sivustolla käytössä, ja otamme pian yhteyttä nykyisiin asiakkaisiin kertoaksemme, miten tämä vaikuttaa heihin.
+
+Tiedämme, että kaikilla on nyt tiukkaa, ja tämä oli rehellisesti yksi vaikeimmista päätöksistä, joita olemme joutuneet tekemään. Olemme pitäneet korotukset niin pieninä kuin mahdollista - katamme käytännössä kaiken paitsi aivan minimin, jonka tarvitsemme tämän toteuttamiseen.
+
+Aiomme kuitenkin tehdä tästä hinnankorotuksesta enemmän kuin sen arvoisen. Huomaat eron suorituskyvyssä ja luotettavuudessa. Lisäksi tämä tarkoittaa, että voimme jatkaa verkkomme laajentamista ja lisätä peeringiä jatkossa, joten asiat vain paranevat tästä.
+
+Julkaisimme nämä päivitetyt hinnat uusille asiakkaille 3 kuukautta sitten, ja palaute on ollut hyvää, joten koemme löytäneemme hyvän tasapainon edullisuuden säilyttämisen ja ansaitsemienne parannusten rahoittamisen välillä. Olemme edelleen erittäin kilpailukykyisiä. Esimerkiksi suosittu NG-4500-pakettimme nousee vain €2.08 kuukaudessa, mikä on edelleen paljon vähemmän kuin vertailukelpoisilla kilpailijoiden paketeilla.
+
+Nykyisille asiakkaille veloitetaan vain vanhan ja uuden hinnan erotus. Jos sinulla on kampanja-alennuksia, ne pysyvät uuden perushinnan päällä. Arvostamme uskollisuuttasi, erityisesti tällaisina aikoina.
+
+Alennusrakenteemme pysyy samana:
+- 5% alennus neljännesvuosimaksuista
+- 10% alennus 6 kuukauden maksuista
+- 15% alennus vuosimaksuista
+
+Jos sinulla on automaattiset maksut käytössä, muutos tapahtuu seuraavassa laskutusjaksossasi sen jälkeen, kun olet saanut sähköpostin. Sinun ei tarvitse tehdä mitään.
+
+## Lisää tallennustilaa!
+
+Kyse ei kuitenkaan ole pelkästään suuremmasta maksusta. Nostamme myös pienimmän pakettimme tallennustilan 3TB:stä 3.5TB:hen. Se on 16% lisäys, mikä tekee aloituspaketistamme entistä paremman diilin hinnanmuutoksesta huolimatta.
+
+## Mitä seuraavaksi?
+
+Tämä on vasta alku sille, mitä Appboxille on tulossa. Seuraavien viikkojen ja kuukausien aikana näet säännöllisiä päivityksiä, kun julkaisemme uusia ominaisuuksia, parannamme olemassa olevia ja jatkamme seuraavan sukupolven sovellushostauksen infrastruktuurin rakentamista.
+
+Suunnittelemme uuden verkkoinfrastruktuurimme testaamisen aloittamista syys-/lokakuussa, ja pidämme sinut ajan tasalla edistymisestä.
+
+Tiekarttamme sisältää:
+- VPS-sovellukset, joissa ei ole rajoituksia (kuten Docker, Snap ja Tailscale)
+- Parempaa dokumentaatiota, joka oikeasti kattaa kaiken
+- Yhteisön showcase hienoille asioille, joita ihmiset rakentavat Appboxilla
+- Säännöllisiä teknisiä blogikirjoituksia infrastruktuuristamme
+- Uusia kontitettuja sovelluksia tiettyihin käyttötapauksiin
+- Paremmat seuranta- ja analytiikkatyökalut
+- Parannettuja tietoturvaominaisuuksia kaikkiin paketteihin
+
+Kiitos, että olet pysynyt mukana. Ilman yhteisöämme mikään tästä ei olisi mahdollista.
+
+Lisää päivityksiä tulossa pian.
+
+---
+
+*Mitä ominaisuuksia tai parannuksia haluaisit nähdä uudessa Appboxissa? Lähetä meille viesti osoitteeseen support@appbox.co.*
+
+---
+
+**Lähteet:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

@@ -1,0 +1,516 @@
+---
+title: Oppsett av OpenClaw-modellleverandør
+description: Konfigurer OpenClaw med en valgfri API-nøkkel for modellleverandør etter installasjon.
+sort: 1
+---
+
+OpenClaw installeres i Appbox uten å kreve en modell-API-nøkkel.
+
+Den anbefalte måten å fullføre oppsettet på er å koble til OpenClaw-appen din over SSH og kjøre den innebygde veiviseren `openclaw onboard`. Veiviseren er tryggere enn å redigere hele konfigurasjonen manuelt, fordi den bevarer Appbox-gatewayinnstillingene mens den veileder deg gjennom modellleverandører, API-nøkler, kanaler, helsesjekker og skills.
+
+Hvis du ikke kan eller ikke vil bruke SSH, bruker du [reservemetoden i dashboardet](#backup-method-configure-provider-auth-in-the-dashboard) i stedet.
+
+## Anbefalt metode: SSH inn i OpenClaw og kjør onboarding
+
+Bruk denne metoden for nye installasjoner og for eksisterende installasjoner som trenger å legge til eller endre legitimasjon for modellleverandører.
+
+### Dette trenger du først
+
+- Detaljsiden for OpenClaw-appen din i Appbox.
+- **SSH Command** som vises i Configuration-delen.
+- **Gateway Token / SSH Password**. Dette er den samme genererte hemmeligheten som brukes til innlogging i OpenClaw-dashboardet.
+- En konto eller API-nøkkel hos en modellleverandør. Hvis du ikke har en ennå, se [Hente API-nøkler](#getting-api-keys-with-dashboard-links).
+
+Appdetaljsiden viser SSH-kommandoen som er klar til å kopieres:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw-appdetaljside med SSH-kommandoen uthevet"
+  width="860"
+/>
+
+### Koble til fra macOS
+
+1. Åpne **Terminal** eller **iTerm2**.
+2. Kopier **SSH Command** fra detaljsiden for OpenClaw-appen.
+3. Lim den inn og kjør den. Den vil ligne på dette:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Hvis macOS spør om du stoler på verten, skriv `yes` og trykk Enter.
+5. Når du blir bedt om passord, lim inn **Gateway Token / SSH Password** og trykk Enter. Terminal viser ingen tegn mens du skriver eller limer inn passordet.
+
+### Koble til fra Windows
+
+Windows 10 og Windows 11 inkluderer OpenSSH-klienten som standard.
+
+1. Åpne **Windows Terminal** eller **PowerShell**.
+2. Kopier **SSH Command** fra detaljsiden for OpenClaw-appen.
+3. Lim den inn og kjør den:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Hvis Windows spør om du stoler på verten, skriv `yes` og trykk Enter.
+5. Når du blir bedt om passord, lim inn **Gateway Token / SSH Password** og trykk Enter. PowerShell viser ikke det innlimte passordet.
+
+Hvis Windows sier at `ssh` ikke gjenkjennes, installer **OpenSSH Client** fra **Settings > System > Optional features**, åpne Windows Terminal på nytt og prøv igjen.
+
+### Kjør OpenClaw-onboardingveiviseren
+
+Etter at SSH er koblet til, kjør:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 på macOS koblet til OpenClaw over SSH og kjører kommandoen openclaw onboard"
+  width="860"
+/>
+
+Veiviseren er interaktiv. Bruk disse Appbox-spesifikke valgene:
+
+1. **Existing config:** velg alternativet for å gjennomgå eller endre gjeldende konfigurasjon. Ikke velg full tilbakestilling med mindre du bevisst vil bygge OpenClaw-oppsettet ditt på nytt fra bunnen av.
+2. **Model and auth:** velg leverandøren din, for eksempel OpenRouter, OpenAI, Anthropic, Google, xAI eller en egendefinert OpenAI-kompatibel leverandør. Lim inn API-nøkkelen når veiviseren spør. OpenRouter er det enkleste standardvalget for de fleste brukere, fordi én nøkkel kan rute til mange modeller. Hvis du har et OpenAI Codex-abonnement, velg **OpenAI Codex** i leverandørlisten, ikke et alternativ som bare heter `codex`.
+3. **Default model:** velg modellen veiviseren anbefaler for den leverandøren, eller skriv inn en `provider/model`-verdi manuelt, for eksempel `openrouter/auto`.
+4. **Workspace:** behold standardarbeidsområdet med mindre du har en konkret grunn til å endre det.
+5. **Gateway settings:** behold de eksisterende Appbox-gatewayinnstillingene. Spesielt bør du beholde token-autentisering aktivert og beholde eksisterende gatewayport-/bind-innstillinger.
+6. **Channels:** konfigurer WhatsApp, Telegram, Discord, Signal, iMessage eller andre kanaler nå, eller hopp over dem og legg dem til senere med `openclaw configure`.
+7. **Web search:** velg en søkeleverandør hvis du har en, eller hopp over det foreløpig.
+8. **Daemon/service install:** Appbox overvåker allerede OpenClaw inne i containeren, så hopp over daemon-installasjon hvis veiviseren tilbyr det.
+9. **Health check:** la veiviseren kjøre helsesjekken.
+10. **Skills:** la veiviseren sjekke medfølgende skills. Når den spør **Preferred node manager for skill installs**, velg `npm`.
+
+Når onboardingen er ferdig, går du tilbake til OpenClaw-dashboardet. Hvis dashboardet allerede var åpent, oppdater det og test med en kort chatprompt.
+
+Nyttige oppfølgingskommandoer over SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Hente API-nøkler (med dashboardlenker)
+
+Bruk disse leverandørkonsollene til å generere nøkler. Med den anbefalte SSH-metoden limer du inn nøkkelen når `openclaw onboard` spør etter den. Med reservemetoden i dashboardet fletter du nøkkelen inn i `Config > Secrets > Raw`.
+
+### Anbefalt først: OpenRouter (beste standardvalg for de fleste brukere)
+
+Hvorfor vi anbefaler det:
+
+- Det gir én nøkkel for mange modellleverandører.
+- Du kan bruke `openrouter/auto`, som kan bytte modell basert på oppgavens vanskelighetsgrad.
+- `auto` kan redusere kostnader ved å rute enklere oppgaver til billigere modeller.
+
+Slik henter du en nøkkel:
+
+1. Gå til [OpenRouter](https://openrouter.ai/) og logg inn.
+2. Åpne [API Keys-innstillinger](https://openrouter.ai/settings/keys).
+3. Klikk **Create** og kopier nøkkelen (vises én gang).
+4. Bruk den når OpenClaw-veiviseren spør etter OpenRouter API-nøkkelen din. For reservemetoden i dashboardet er konfigurasjonsnøkkelen `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Skjermbilde av OpenRouter API-nøkkelside fra en offentlig veiledning"
+  width="860"
+/>
+Kildeveiledning: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Slik henter du en nøkkel:
+
+1. Logg inn på [OpenAI Platform](https://platform.openai.com/).
+2. Åpne [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Klikk **Create new secret key**.
+4. Kopier den umiddelbart (OpenAI viser bare hele verdien én gang).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Skjermbilde av OpenAI API-nøkkelinnstillinger fra en offentlig veiledning"
+  width="860"
+/>
+Kildeveiledning: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Slik henter du en nøkkel:
+
+1. Logg inn på [Anthropic Console](https://console.anthropic.com/).
+2. Åpne [API Keys](https://console.anthropic.com/settings/keys).
+3. Klikk **Create Key**.
+4. Kopier nøkkelen umiddelbart (vises én gang).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Skjermbilde av opprettelse av Anthropic API-nøkkel fra en offentlig veiledning"
+  width="860"
+/>
+Kildeveiledning: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini via AI Studio)
+
+Slik henter du en nøkkel:
+
+1. Åpne [Google AI Studio](https://aistudio.google.com/).
+2. Gå til [API Keys](https://aistudio.google.com/app/apikey).
+3. Klikk **Create API key** (nytt eller eksisterende prosjekt).
+4. Kopier og lagre nøkkelen.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Skjermbilde av opprettelse av Google AI Studio API-nøkkel fra en offentlig veiledning"
+  width="860"
+/>
+Kildeveiledning: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Merk: Leverandørdashboards kan endres ofte og kan vise en innloggingsforespørsel avhengig av øktstatusen din.
+
+## Reservemetode: konfigurer leverandørautentisering i dashboardet
+
+Bruk denne metoden bare hvis SSH ikke er tilgjengelig, eller hvis du foretrekker manuell konfigurasjon. Raw-editoren i dashboardet fungerer, men den redigerer hele OpenClaw-konfigurasjonsobjektet samtidig. Pass på å flette leverandørinnstillinger inn i den eksisterende filen i stedet for å erstatte Appbox sine standardverdier for gateway og skills.
+
+1. Åpne OpenClaw-dashboard-URL-en fra detaljsiden til den installerte appen.
+2. Gå til **Config > Secrets**.
+3. Velg **Raw** i stedet for Form.
+4. Klikk knappen Reveal sensitive values (som ser ut som et øye med en strek gjennom).
+5. **Flett** leverandørinnstillingene fra eksemplene nedenfor inn i den eksisterende konfigurasjonen din (se [Hvordan manuell leverandørkonfigurasjon passer inn i hele filen](#how-manual-provider-config-fits-in-the-full-file)) — ikke erstatt hele filen med mindre du har tenkt å tilbakestille gateway, skills og andre Appbox-standardverdier.
+6. Lagre og bruk konfigurasjonsendringene.
+
+### Hvordan manuell leverandørkonfigurasjon passer inn i hele filen
+
+**Config > Secrets > Raw** redigerer **hele** OpenClaw-konfigurasjonen i ett objekt. På Appbox inkluderer den filen allerede ting som `gateway` (bind, token-autentisering, Control UI), `skills.load.extraDirs` (medfølgende skills), `commands` og noen ganger `meta`. Utdragene i delen [Eksempler på store leverandører](#major-provider-examples) viser bare delene du trenger for modeller: `models`-treet og `agents.defaults.model.primary`.
+
+**Dette gjør du:** behold de eksisterende toppnivånøklene (`gateway`, `skills`, `commands` osv.) og **legg til eller oppdater** disse to delene:
+
+- **`models.providers`** — legg til leverandøren din (f.eks. `openrouter`) og dens `apiKey`, `baseUrl` der det kreves, og `models`-liste.
+- **`agents.defaults.model.primary`** — angi standardmodellstrengen (f.eks. `openrouter/auto`) slik at agenten bruker den leverandøren.
+
+Hvis `models` eller `agents` allerede finnes, flett nye nøkler inn i disse objektene i stedet for å duplisere dem.
+
+Nedenfor er et eksempel på formen til **én** full Raw-fil som **JSON** (editoren kan i praksis også godta anførselstegn i JSON5-stil). Den virkelige filen din kan inneholde flere felt (f.eks. rikere modellmetadata, `meta`). **Leverandørblokkene** i eksemplene lenger ned er delene du samkjører med `models` og `agents` her.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway-token kontra provider API key:** `gateway.auth.token` er bare for innlogging i OpenClaw Control UI / gateway. `models.providers.*.apiKey` er leverandørnøkkelen din for LLM (OpenRouter, OpenAI osv.) — de er forskjellige.
+
+## Eksempler på store leverandører
+
+Bruk én leverandørblokk om gangen først, bekreft at den fungerer, og legg deretter til flere leverandører. Hvert eksempel nedenfor er et **flettefragment**: `...` er utelatt konfigurasjon (linjer over eller under), og `},` før `"models"` lukker den nøkkelen som ligger over `models` i filen din (for eksempel `skills` eller `commands`). Utdragene er ikke gyldig JSON alene — flett delene `models` og `agents` inn i rotobjektet ditt.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock-merknad (ingen API-nøkkel)
+
+Amazon Bedrock bruker AWS-legitimasjon (for eksempel `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) i stedet for en API-nøkkel. En minimal leverandøroppføring ser slik ut:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Merknader
+
+- Gateway-autentiseringstoken og API-nøkler for modellleverandører er ulike innstillinger.
+- Hvis du får en leverandørfeil (for eksempel manglende Anthropic-nøkkel), oppdater standardmodellen til en leverandør du har konfigurert.
+- Hvis en leverandør feiler validering, må du først kontrollere at nødvendige leverandørfelt finnes (`baseUrl`, `models` og `apiKey` der det er aktuelt).
+
+## Offisiell leverandørdokumentasjon
+
+- [OpenClaw-leverandøroversikt](https://docs.openclaw.ai/providers/index)
+- [OpenRouter-leverandør](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI-leverandør](https://docs.openclaw.ai/providers/openai)
+- [Anthropic-leverandør](https://docs.openclaw.ai/providers/anthropic)
+- [Google-leverandør](https://docs.openclaw.ai/providers/google)
+- [xAI-leverandør](https://docs.openclaw.ai/providers/xai)
+- [Mistral-leverandør](https://docs.openclaw.ai/providers/mistral)
+- [Together AI-leverandør](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock-leverandør](https://docs.openclaw.ai/providers/bedrock)

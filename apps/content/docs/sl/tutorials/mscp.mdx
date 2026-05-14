@@ -1,0 +1,258 @@
+---
+title: Uporaba mscp za hitre prenose datotek
+description: Naučite se uporabljati mscp (večnitni scp) za hitre prenose datotek na strežnik Appbox z uporabo več povezav SSH.
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** je večnitna različica `scp`, ki hkrati kopira datoteke prek več povezav SSH (SFTP). To omogoča bistveno hitrejše prenose velikih datotek in map z uporabo vzporednih povezav.
+
+## Predpogoji
+
+Pred uporabo mscp morate na strežnik Appbox namestiti SFTPgo, da dobite svoje poverilnice SFTP.
+
+### Korak 1: Namestite SFTPgo
+
+1. Obiščite [stran aplikacije SFTPgo](https://www.appbox.co/appstore/app/232) v Appbox App Store
+2. Kliknite **Install**, da SFTPgo dodate na svoj strežnik
+3. Ko je nameščen, boste prejeli podatke za povezavo:
+   - **Username**: vaše uporabniško ime SFTP
+   - **Password**: vaše geslo SFTP
+   - **Hostname**: npr. `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: npr. `25557`
+   - **FTP/FTPS Port**: npr. `25555`
+   - **WebDav URL**: za dostop WebDAV
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">Opomba</AlertTitle>
+  <AlertDescription className="pl-2">
+    Svoje poverilnice SFTPgo hranite varno. Za povezave mscp boste potrebovali ime gostitelja, uporabniško ime, geslo in vrata SFTP.
+  </AlertDescription>
+</Alert>
+
+## Namestitev mscp
+
+Izberite način namestitve za svoj operacijski sistem:
+
+### macOS
+
+#### Uporaba Homebrew (priporočeno)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### Uporaba MacPorts
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp nima izvornih binarnih datotek za Windows, vendar ga lahko uporabljate prek WSL (Windows Subsystem for Linux):
+
+#### Korak 1: Namestite WSL
+
+Odprite PowerShell kot skrbnik in zaženite:
+
+```powershell
+wsl --install
+```
+
+Ko se prikaže poziv, znova zaženite računalnik.
+
+#### Korak 2: Namestite mscp v WSL
+
+Ko je WSL nastavljen (Ubuntu je privzet), odprite terminal WSL in zaženite:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Poti datotek Windows v WSL</AlertTitle>
+  <AlertDescription className="pl-2">
+    V WSL so vaši pogoni Windows dostopni pod `/mnt/`. Na primer, `C:\Users\YourName\Downloads` postane `/mnt/c/Users/YourName/Downloads`.
+  </AlertDescription>
+</Alert>
+
+### Gradnja iz izvorne kode
+
+Če paketi za vaš sistem niso na voljo, lahko mscp zgradite iz izvorne kode:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## Osnovna uporaba
+
+Sintaksa mscp je podobna `scp`. Tukaj so pogosti vzorci uporabe.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Pomembno: uporabite svoja vrata SFTP</AlertTitle>
+  <AlertDescription className="pl-2">
+    V spodnjih primerih `25557` predstavlja **SFTP Port** iz vaših nastavitev SFTPgo. Zamenjajte ga z dejanskimi vrati SFTP, prikazanimi v plošči SFTPgo Options.
+  </AlertDescription>
+</Alert>
+
+### Naložite datoteko na strežnik
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### Naložite mapo
+
+Za razliko od `scp` mscp za mape ne zahteva zastavice `-r`:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### Prenesite datoteko s strežnika
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### Prenesite mapo
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## Napredne možnosti
+
+### Uporaba več povezav
+
+mscp privzeto uporablja več povezav. Število povezav lahko določite z `-n`:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Nadaljevanje neuspelih prenosov (kontrolne točke)
+
+mscp podpira kontrolne točke za nadaljevanje prekinjenih prenosov:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### Določite preverjanje pristnosti s ključem SSH
+
+Če ste s SFTPgo nastavili preverjanje pristnosti s ključem SSH:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Omejitev pasovne širine
+
+Za omejitev pasovne širine prenosa (uporabno pri deljenih povezavah):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## Primer: celoten potek dela
+
+Tukaj je celoten primer z uporabo poverilnic SFTPgo iz Appbox:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## Nasveti za zmogljivost
+
+1. **Uporabite več povezav za velike datoteke**: povečajte vrednost `-n` za prenose velikih datotek (npr. `-n 8` ali `-n 16`)
+2. **Uporabite manj povezav za veliko majhnih datotek**: pri mapah z veliko majhnimi datotekami je lahko manj povezav učinkovitejših
+3. **Omogočite stiskanje za besedilne datoteke**: mscp podeduje stiskanje SSH; uporabite `-C` za prenose z veliko besedila
+4. **Uporabite kontrolne točke za zelo velike prenose**: pri prenosih z več gigabajti vedno omogočite kontrolne točke, da lahko nadaljujete, če je prenos prekinjen
+
+## Odpravljanje težav
+
+### Povezava zavrnjena
+
+Prepričajte se, da uporabljate pravilna vrata SFTP iz nastavitev SFTPgo (ne vrat FTP):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Dovoljenje zavrnjeno
+
+Preverite, ali sta uporabniško ime in geslo pravilna. Najprej lahko preizkusite s standardnim odjemalcem SFTP:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### Počasni prenosi
+
+Poskusite prilagoditi število vzporednih povezav:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## Dodatni viri
+
+- [Repozitorij mscp GitHub](https://github.com/upa/mscp)
+- [Dokumentacija mscp](https://github.com/upa/mscp#documentation)
+- [SFTPgo na Appbox](https://www.appbox.co/appstore/app/232)

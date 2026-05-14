@@ -1,0 +1,397 @@
+---
+title: "Politica de gestionare a datelor"
+description: "Cum gestionăm și protejăm datele tale"
+---
+
+La Appbox, colectăm și stocăm doar informațiile minime necesare pentru a ne menține evidențele și a furniza serviciile noastre. Echipa Appbox este instruită să gestioneze datele tale având în vedere cel mai înalt nivel de confidențialitate și securitate și urmează protocoale stricte, inclusiv folosirea de credențiale puternice și autentificare multi-factor. Toată procesarea plăților este gestionată integral de procesatorii noștri de plăți, iar Appbox nu stochează niciuna dintre informațiile tale financiare, cu excepția evidențelor de plată și a ID-urilor de tranzacție aferente.
+
+## Email
+
+- **Utilizări**
+  - Servește drept login pentru Appbox Client Area și Appbox Control Panel
+  - Punct de contact pentru anunțurile privind serviciile Appbox
+  - Punct de contact pentru solicitările din Appbox Ticket System
+- **Colectare**
+  - Furnizat de utilizator la înscriere
+- **Stocare**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Echipa Appbox
+    - Acest lucru este pentru contactarea utilizatorului în scop de suport sau pentru orice anunțuri privind serviciile
+- **Retenție**
+  - Nedeterminată
+- **Mai multe informații**
+  - Politica de eliminare a datelor sensibile
+
+## Nume de utilizator
+
+- **Utilizări**
+  - Identifică utilizatorul în Appbox Ticket System
+  - Servește drept numele slotului Appbox al utilizatorului
+  - Este înregistrat ca utilizator local pe serverul unde este implementat slotul utilizatorului, afișând orice procese rulate de utilizator
+  - Servește drept numele de utilizator al utilizatorului pentru aplicațiile instalate
+- **Colectare**
+  - Furnizat de utilizator la înscriere
+- **Stocare**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depinde de aplicație
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Echipa Appbox
+    - Necesar pentru solicitările de suport
+    - Necesar pentru investigarea problemelor serverului prin căutarea aplicațiilor cu consum ridicat de resurse, a surselor de instabilitate a serverului sau a oricăror aplicații neautorizate
+- **Retenție**
+  - Nedeterminată
+- **Mai multe informații**
+  - Politica de eliminare a datelor sensibile
+
+## Țară
+
+- **Utilizări**
+  - Folosită pentru calcularea taxelor aplicabile pe baza țării selectate de utilizator
+- **Colectare**
+  - Furnizată de utilizator la înscriere
+- **Stocare**
+  - WHMCS = Cleartext
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Echipa Appbox
+- **Retenție**
+  - Nedeterminată
+- **Mai multe informații**
+  - Politica de eliminare a datelor sensibile
+
+## Parolă
+
+### Parola Appbox Client Area
+
+- **Utilizări**
+  - Servește drept parola utilizatorului pentru Appbox Client Area
+- **Colectare**
+  - Furnizată de utilizator la înscrierea în Appbox Client Area
+- **Stocare**
+  - WHMCS = Encrypted
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Acces limitat de către echipa Appbox
+    - Echipa Appbox nu poate vedea parola utilizatorului deoarece este hashuită, dar îți poate reseta parola după verificare
+- **Retenție**
+  - Nedeterminată
+- **Mai multe informații**
+  - Politica de eliminare a datelor sensibile
+  - [Politica privind parolele](/policies/password-policy)
+  - Recomandăm cu tărie activarea autentificării cu doi factori pe [pagina de securitate a contului](https://billing.appbox.co/user/security)
+
+### Parola Appbox Control Panel
+
+- **Utilizări**
+  - Servește drept parola utilizatorului în Appbox Control Panel pentru accesarea slotului său
+- **Colectare**
+  - Furnizată de utilizator după implementarea slotului său
+- **Stocare**
+  - Appbox API = Encrypted
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Acces limitat de către echipa Appbox
+    - Echipa Appbox nu poate vedea parola utilizatorului deoarece este hashuită, dar îți poate reseta parola după verificare
+- **Retenție**
+  - Nedeterminată
+- **Mai multe informații**
+  - Politica de eliminare a datelor sensibile
+  - [Politica privind parolele](/policies/password-policy)
+  - Recomandăm cu tărie activarea autentificării cu doi factori pe [pagina de securitate a contului](https://billing.appbox.co/user/security)
+
+### Parolele aplicațiilor
+
+- **Utilizări**
+  - Servesc drept parole pentru aplicațiile instalate ale utilizatorului
+- **Colectare**
+  - Furnizate de utilizator după implementarea slotului său
+- **Stocare**
+  - Appbox API = Cleartext
+  - Installed Applications = Depinde de aplicație
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Echipa Appbox
+    - Necesar pentru solicitări de suport specifice aplicației, cu permisiunea utilizatorului
+- **Retenție**
+  - Până când utilizatorul dezinstalează aplicația
+- **Mai multe informații**
+  - Politica de eliminare a datelor sensibile
+  - [Politica privind parolele](/policies/password-policy)
+  - Recomandăm cu tărie activarea autentificării cu doi factori pe [pagina de securitate a contului](https://billing.appbox.co/user/security)
+
+## Procesarea plăților
+
+### PayPal
+
+- **Utilizări**
+  - Servește drept unul dintre gateway-urile de plată Appbox
+- **Colectare**
+  - Procesarea plăților este efectuată integral de PayPal. Singurele date salvate în WHMCS în contul utilizatorului sunt **PayPal Transaction ID**
+- **Stocare**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Acces și motive pentru acces**
+  - Appbox Sales Team
+    - Appbox Sales Team poate verifica informațiile utilizatorului cu PayPal ca parte a procesului nostru de vânzări
+- **Retenție**
+  - Nedeterminată
+
+### Stripe
+
+- **Utilizări**
+  - Servește drept unul dintre gateway-urile de plată Appbox
+- **Colectare**
+  - Procesarea plăților este efectuată integral de Stripe. Singurele date salvate în WHMCS în contul utilizatorului sunt **Stripe Payment ID, Hash, ultimele patru cifre ale cardului și expirarea**
+- **Stocare**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Acces și motive pentru acces**
+  - Appbox Sales Team
+    - Appbox Sales Team poate verifica informațiile utilizatorului cu Stripe ca parte a procesului nostru de vânzări
+- **Retenție**
+  - Nedeterminată
+
+### CoinGate
+
+- **Utilizări**
+  - Servește drept unul dintre gateway-urile de plată Appbox pentru tranzacții cu criptomonede
+- **Colectare**
+  - Procesarea plăților este efectuată integral de CoinGate. Singurele date salvate în WHMCS sunt **CoinGate Transaction ID**
+- **Stocare**
+  - WHMCS = Cleartext (Transaction ID)
+- **Acces și motive pentru acces**
+  - Appbox Sales Team
+    - Appbox Sales Team poate verifica informațiile utilizatorului cu CoinGate ca parte a procesului nostru de vânzări
+- **Retenție**
+  - Nedeterminată
+
+*Notă: CoinGate stochează el însuși ID-ul tranzacției blockchain și adresa blockchain a expeditorului ca parte a serviciului său. Aceste informații nu sunt stocate de Appbox.*
+
+## Loguri și analytics
+
+### Metrici de server
+
+- **Utilizări**
+  - Folosite pentru monitorizarea sănătății și utilizării resurselor serverelor
+- **Colectare**
+  - Generate după implementarea slotului utilizatorului
+- **Stocare**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Acces și motive pentru acces**
+  - Utilizator
+    - Metricile serverului pot fi vizualizate folosind diverse utilitare Linux instalate pe slotul tău. Următoarele metrici majore pot fi văzute:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Procesele tale în execuție
+      - Procesele rulate de alți utilizatori pe același server nu sunt accesibile de tine
+      - Metrici Input/Output
+      - Spațiu pe disc
+      - Spațiu pe disc din cotă (spațiul tău alocat)
+      - Spațiu fizic pe disc
+  - Echipa Appbox
+    - Pe lângă metricile de mai sus, echipa Appbox folosește Posthog pentru a agrega rapid toate metricile de pe toate serverele și a alerta echipa cu privire la orice erori
+    - Metricile serverului sunt folosite pentru solicitări de suport și pentru investigarea oricărui abuz de resurse
+- **Retenție**
+  - Nedeterminată
+
+### Loguri de autentificare
+
+#### Încercări de login în Appbox Control Panel
+
+- **Utilizări**
+  - Orice încercări de acces invalide sunt înregistrate în Appbox API, care restricționează utilizatorul de la autentificarea în Control Panel după un anumit număr de încercări pentru o perioadă specificată. Aceasta include:
+    - Username, așa cum a fost introdus de utilizator
+    - Adresă IP
+    - Număr de încercări
+    - Ultima dată a încercării
+- **Colectare**
+  - Colectate când un utilizator introduce credențiale incorect
+- **Stocare**
+  - Appbox API = Cleartext
+- **Acces și motive pentru acces**
+  - Echipa Appbox
+    - Folosit pentru identificarea oricăror încercări brute-force
+    - Utilizatorii pot solicita ridicarea timeoutului și eliminarea încercării de acces, la cerere și după verificare prin sistemul Ticket
+- **Retenție**
+  - 24 de ore sau la cererea utilizatorului
+
+#### Loguri de login SSH
+
+- **Utilizări**
+  - Înregistrează încercările de login și loginurile reușite la SSH pe aplicațiile instalate de utilizator, precum Ubuntu sau Debian
+- **Colectare**
+  - Generate automat de serverul SSH atunci când au loc încercări de login
+- **Stocare**
+  - Containerul aplicației = Cleartext (de obicei în `/var/log/auth.log` sau similar)
+- **Acces și motive pentru acces**
+  - Utilizator
+    - Deoarece aceste loguri sunt stocate în aplicații unde utilizatorii au acces root (sudo), utilizatorii au control și acces complet asupra acestor loguri
+    - Utilizatorii pot vizualiza, modifica sau șterge aceste loguri după nevoie
+  - Echipa Appbox
+    - Accesul este disponibil numai cu permisiunea utilizatorului în timpul depanării de suport
+- **Retenție**
+  - Gestionată de utilizator, deoarece are acces root la container
+  - Politicile implicite de rotație a logurilor se aplică dacă nu sunt modificate de utilizator
+
+### Loguri generate de sistem
+
+- **Utilizări**
+  - Loguri generate la nivel de server, folosite pentru identificarea problemelor pe servere
+- **Colectare**
+  - Generate de sistemul de operare al serverelor
+- **Stocare**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Acces și motive pentru acces**
+  - Acces limitat pentru echipa Appbox
+    - Folosite pentru identificarea problemelor pe anumite servere
+    - Logurile sunt agregate de Posthog, care alertează echipa cu privire la orice erori
+- **Retenție**
+  - Nedeterminată
+
+### Loguri generate de aplicațiile instalate
+
+- **Utilizări**
+  - Loguri generate de aplicațiile instalate, folosite pentru identificarea problemelor în slotul utilizatorului
+- **Colectare**
+  - Generate de aplicațiile instalate ale utilizatorului
+- **Stocare**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Echipa Appbox
+    - Necesar pentru solicitări de suport specifice aplicației, cu permisiunea utilizatorului
+- **Retenție**
+  - Până când utilizatorul dezinstalează aplicația sau o elimină
+
+### Istoricul bash al utilizatorului
+
+- **Utilizări**
+  - Înregistrează toate comenzile introduse de utilizator în shellul slotului, localizate în `$HOME/.bash_history`
+- **Colectare**
+  - Fiecare comandă introdusă în shell este înregistrată
+- **Stocare**
+  - Appbox Servers = Cleartext
+- **Acces și motive pentru acces**
+  - Utilizator
+    - Deoarece fișierul de istoric bash este stocat în directorul home al utilizatorului, utilizatorii au control complet asupra acestui fișier
+    - Utilizatorii pot vizualiza, modifica, goli sau șterge acest fișier după nevoie (folosind comenzi precum `history -c` sau editând/eliminând fișierul)
+  - Echipa Appbox
+    - Folosit pentru solicitări generale sau specifice aplicației, cum ar fi verificarea corectitudinii comenzilor introduse de utilizator, dar numai cu permisiunea utilizatorului
+    - Folosit pentru verificarea unor posibile intruziuni sau abuzuri de server, dar numai atunci când este necesar pentru investigații de securitate
+- **Retenție**
+  - Gestionată de utilizator, care poate goli istoricul în orice moment
+  - Implicit, istoricul bash este păstrat nedeterminat până când utilizatorul îl elimină
+
+### Date găzduite
+
+#### Aplicații instalate
+
+- **Utilizări**
+  - Fișiere esențiale pentru funcționarea corespunzătoare a aplicațiilor instalate
+- **Colectare**
+  - Instalate de utilizator pe slotul său
+- **Stocare**
+  - Appbox Servers = Depinde de aplicație
+- **Acces și motive pentru acces**
+  - Utilizator
+  - Echipa Appbox
+    - Folosit pentru solicitări de suport specifice aplicației, cu permisiunea utilizatorului
+- **Retenție**
+  - Nedeterminată până când utilizatorul o elimină
+
+#### Datele utilizatorului
+
+- **Utilizări**
+  - Date create de utilizator și/sau de aplicațiile utilizatorului și stocate pe slotul utilizatorului
+- **Colectare**
+  - Create de utilizator și/sau de aplicațiile utilizatorului
+- **Stocare**
+  - Appbox Servers = Cleartext
+- **Acces și motive pentru acces**
+  - Utilizator
+    - Fișierele utilizatorului sunt stocate în foldere home pe serverele Appbox și sunt izolate de alți utilizatori. Numai utilizatorul le poate accesa
+  - Echipa Appbox
+    - Pot fi accesate pentru solicitări de suport, cu permisiunea utilizatorului
+- **Retenție**
+  - Nedeterminată până când utilizatorul o elimină
+    - Pentru notificări legitime DMCA de eliminare, vom informa utilizatorul și îi vom cere să șteargă conținutul în termen de 24 de ore
+- **Mai multe informații**
+  - [Politica privind abuzul de conținut](/policies/content-abuse-policy)
+  - [Politica de eliminare a datelor sensibile](/policies/sensitive-data-removal-policy)
+
+## Conformitate cu UK Online Safety Act
+
+În conformitate cu UK Online Safety Act 2023, Appbox implementează practici specifice de gestionare a datelor pentru a proteja utilizatorii și a respecta cerințele de reglementare:
+
+### Monitorizarea siguranței conținutului
+
+- **Utilizări**
+  - Evaluarea și atenuarea riscurilor privind conținutul ilegal și dăunător
+  - Moderarea conținutului raportat
+  - Prevenirea distribuirii conținutului ilegal
+- **Colectare**
+  - Generate atunci când conținutul este raportat sau marcat
+  - Valori hash ale conținutului pentru materiale ilegale cunoscute
+- **Stocare**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Acces și motive pentru acces**
+  - Appbox Compliance Team
+    - Pentru analizarea conținutului raportat și luarea de măsuri corespunzătoare
+    - Pentru coordonarea cu autoritățile din Regatul Unit atunci când legea o impune
+  - Autorități de reglementare din Regatul Unit (atunci când legea o impune)
+    - Pentru monitorizarea conformității cu Online Safety Act
+    - Pentru investigarea conținutului ilegal grav
+- **Retenție**
+  - Date de raportare: 2 ani după soluționare
+  - Valori hash ale conținutului: Nedeterminată (pentru prevenirea redistribuirii)
+
+### Date de evaluare a riscurilor
+
+- **Utilizări**
+  - Efectuarea evaluărilor de risc necesare pentru conținut ilegal și conținut dăunător copiilor
+  - Implementarea de măsuri proporționale de siguranță
+  - Demonstrarea conformității către autoritățile de reglementare
+- **Colectare**
+  - Generate prin evaluări regulate ale riscurilor platformei
+  - Date agregate de utilizare pentru identificarea potențialelor tipare de risc
+- **Stocare**
+  - Appbox Compliance Systems = Protected
+- **Acces și motive pentru acces**
+  - Appbox Compliance Team
+    - Pentru efectuarea și actualizarea evaluărilor de risc
+    - Pentru implementarea măsurilor de siguranță
+  - Autorități de reglementare din Regatul Unit (atunci când legea o impune)
+    - Pentru verificarea conformității cu obligațiile de evaluare a riscurilor
+- **Retenție**
+  - 3 ani (pentru a demonstra conformitate continuă)
+
+### Sistem de raportare a conținutului
+
+- **Utilizări**
+  - Permite utilizatorilor să raporteze conținut ilegal sau dăunător
+  - Urmărește starea rapoartelor și acțiunile luate
+- **Colectare**
+  - Detalii de raport furnizate de utilizatorii care raportează
+  - Informații despre conținutul raportat
+  - Acțiuni luate asupra rapoartelor
+- **Stocare**
+  - Appbox API = Encrypted
+- **Acces și motive pentru acces**
+  - Utilizatorul raportor (limitat la propriile rapoarte)
+  - Utilizatorul al cărui conținut a fost raportat (informații limitate)
+  - Appbox Compliance Team
+    - Pentru investigarea și soluționarea rapoartelor
+  - Autorități de reglementare din Regatul Unit (atunci când legea o impune)
+    - Pentru investigarea rapoartelor de conținut ilegal grav
+- **Retenție**
+  - 2 ani după soluționare

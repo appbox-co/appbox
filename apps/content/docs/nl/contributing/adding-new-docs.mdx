@@ -1,0 +1,65 @@
+---
+title: Nieuwe docs toevoegen
+description: Voeg nieuwe documenten toe aan je documentatiesite en blog.
+sort: 2
+---
+
+# Voor documentatie
+
+1. Maak een nieuw `.mdx`-bestand aan in de map `apps/content/docs/[language]` met de inhoud van je document.
+2. Voeg het document toe aan het navigatiemenu van de site.
+    Voeg hiervoor een nieuw item toe aan het bestand `src/config/docs.ts` in de property `sidebarNav` met de gewenste informatie. Volg daarbij gewoon het patroon van de bestaande items. Hierdoor wordt het document ook toegevoegd aan het zoekcommando-palet.
+
+## MDX-documentinstellingen
+
+MDX-documenten worden opgeslagen in de mappen `apps/content/docs/[language]` en `apps/content/blog/[language]`. Elk document is een MDX-bestand met een header met metadata, zoals titel en beschrijving. Hieronder staat een voorbeeld van een documentheader:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+De volgende metadatavelden worden ondersteund:
+
+- `title` (verplicht): De titel van het document.
+- `description` (verplicht): Een korte beschrijving van het document.
+- `sort` (optioneel): Een getal dat de volgorde van het document in de navigatie bepaalt. Documenten met lagere sort-waarden verschijnen eerst. Als dit niet is opgegeven, worden documenten alfabetisch gesorteerd op titel.
+- `links` (optioneel): Links naar gerelateerde documenten, API-referenties, broncode, enz.
+- `toc` (optioneel): Of de inhoudsopgave moet worden getoond. Standaard is dit `true`.
+
+Om nieuwe metadata aan het document toe te voegen, kun je nieuwe keys aan de header toevoegen. Je kunt bijvoorbeeld een `author`-key toevoegen om de auteur van het document aan te geven:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Wanneer je aangepaste metadata toevoegt, moet je ook het bestand `contentlayer.config.ts` bijwerken. Dit bestand staat in de root van het project, binnen de property `fields` in de constanten `Doc` of `Blog`.
+Daarna moet je de nieuwe informatie tonen in de documentsjabloon. Hiervoor moet je het bestand `src/app/[locale]/docs/[[...slug]]/page.tsx` bijwerken, of `src/app/[locale]/blog/[[...slug]]/page.tsx`, of een van de child components daarvan.
+
+## Contentlayer opnieuw bouwen
+
+Wanneer je wijzigingen aanbrengt in documentatiecontent, nieuwe docs toevoegt of het bestand `contentlayer.config.ts` wijzigt, moet je de contentlayer-cache opnieuw bouwen zodat je wijzigingen tijdens development effect hebben. Voer uit:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Deze opdracht genereert opnieuw de contenttypes en data die de applicatie nodig heeft. Je moet deze opdracht uitvoeren wanneer je:
+
+- Nieuwe metadatavelden toevoegt aan het bestand `contentlayer.config.ts`
+- MDX-content toevoegt of wijzigt terwijl de dev server niet draait
+- De structuur van je contentorganisatie verandert
+
+De opdracht wordt automatisch uitgevoerd wanneer het project voor productie wordt gebouwd, maar tijdens development moet je hem handmatig uitvoeren als je structurele wijzigingen aan content aanbrengt.
+
+
+

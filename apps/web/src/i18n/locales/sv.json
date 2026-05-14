@@ -1,0 +1,1493 @@
+{
+  "_locale": "sv",
+  "site": {
+    "heading": "Driftsätt appar på <span>sekunder</span>",
+    "subheading": "Hosta {flipwords} med ett klick",
+    "description": "Hoppa över krånglig serverkonfiguration. Välj bland över 60 appar som är redo att driftsättas, klicka på installera och var igång på några sekunder. Kraftfull hosting utan huvudvärk.",
+    "meta_title": "Appbox - Driftsätt appar på sekunder | Apphosting med ett klick",
+    "flipwords": [
+      "webbplatser",
+      "databaser",
+      "servrar",
+      "överföringar",
+      "verktyg",
+      "chatt",
+      "lagring",
+      "analys",
+      "övervakning",
+      "pipelines",
+      "nätverk",
+      "säkerhetskopior",
+      "projekt",
+      "dokumentation",
+      "testning"
+    ],
+    "announcement": "Läs alla inlägg från Launch Week",
+    "announcement_tag": "Launch Week",
+    "changelog": "Ändringslogg",
+    "buttons": {
+      "get_started": "Kom igång",
+      "browse_apps": "Bläddra bland appar",
+      "toggle_menu": "Växla meny",
+      "toggle_language": "Växla språk"
+    },
+    "words": {
+      "menu": "Meny",
+      "docs": "Dokumentation",
+      "blog": "Blogg",
+      "home": "Hem",
+      "legal": "Juridiskt",
+      "terms_of_service": "Användarvillkor",
+      "service_level_agreement": "Servicenivåavtal",
+      "privacy_data_handling": "Integritet och datahantering",
+      "global_privacy_practices": "Globala integritetsrutiner",
+      "incident_response_security": "Incidenthantering och säkerhet",
+      "view_all_policies": "Visa alla policyer",
+      "documentation_new": "Dokumentation (ny)",
+      "documentation_old": "Dokumentation (gammal)",
+      "social": "Socialt"
+    },
+    "featured_cards": {
+      "nextjs": {
+        "description": "Byggt med Next.js och app router."
+      },
+      "shadcn": {
+        "description": "Byggt ovanpå Shadcn (site/components)."
+      },
+      "tailwind": {
+        "description": "Stilat med Tailwind CSS."
+      },
+      "i18n": {
+        "description": "Stöd för internationalisering med next-intl."
+      },
+      "more": {
+        "title": "och mer!",
+        "description": "Många fler funktioner att använda, som dokument och blogginlägg med MDX, mörkt och ljust läge, kommandopalett för sökning, internationaliserad sitemap och mer..."
+      }
+    },
+    "footer": {
+      "copyright": "Copyright © {year} Appbox. Alla rättigheter förbehållna."
+    },
+    "search": {
+      "search": "Sök",
+      "no_results_found": "Inga resultat hittades",
+      "search_documentation": "Sök i dokumentationen",
+      "type_command_or_search": "Skriv ett kommando eller sök"
+    },
+    "themes": {
+      "theme": "Tema",
+      "dark": "Mörkt",
+      "light": "Ljust",
+      "system": "System"
+    },
+    "apps_section": {
+      "title": "Stort utbud av appar redo att driftsättas",
+      "headline_1": "Appar redo att driftsättas.",
+      "headline_2": "Ett enormt utbud.",
+      "description": "Hosta allt från databaser och medieservrar till utvecklingsverktyg och kommunikationsplattformar. Driftsätt mjukvara i företagsklass med bara några klick."
+    },
+    "dashboard_promo": {
+      "headline_1": "Den nya dashboarden.",
+      "headline_2": "Byggd för dig.",
+      "description": "En helt omdesignad kontrollpanel med en samlad dashboard, integrerad appbutik och inbyggd tvåfaktorsautentisering. Snabbare att navigera, enklare att förstå och redo för det som kommer härnäst.",
+      "cta": "Läs alla nyheter",
+      "features": {
+        "dashboard": {
+          "title": "Kontrollcenter.",
+          "description": "Blogguppdateringar, tjänstekort, notiser och de senaste apparna, allt i en samlad driftvy."
+        },
+        "appstore": {
+          "title": "App Store.",
+          "description": "Renare bläddring, bättre detaljsidor och en kortare väg från upptäckt till installation."
+        },
+        "boost": {
+          "title": "App-boost.",
+          "description": "Ge enskilda appar mer CPU och RAM med dina tillgängliga platser. Ingen planguppgradering krävs."
+        }
+      }
+    },
+    "vps_launch_promo": {
+      "headline_1": "Virtual Private Servers.",
+      "headline_2": "Linux och Windows.",
+      "description": "Fullständiga KVM-virtuella maskiner med root-åtkomst, inbyggd webbkonsol och val mellan Linux eller Windows 11 Pro. Kör Docker, snaps, flatpaks eller vilken Windows-mjukvara du än behöver.",
+      "cta": "Läs inläggen från Launch Week",
+      "features": {
+        "console": {
+          "title": "Webbkonsol.",
+          "description": "En webbläsarbaserad terminal inbyggd i dashboarden. Du kan aldrig bli utelåst."
+        },
+        "webtop": {
+          "title": "Selkies Desktop.",
+          "description": "Ett komplett Ubuntu-skrivbord i webbläsaren med ljud, mikrofon och riktiga appar som VS Code och Discord."
+        },
+        "distros": {
+          "title": "Sex Linux-distributioner.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux och AlmaLinux. Välj den du kan."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "En fullständig Windows-VM med RDP, dina Appbox-data på Z:-enheten och administratörsåtkomst."
+        }
+      }
+    },
+    "openclaw_promo": {
+      "eyebrow": "Nu tillgänglig på Appbox",
+      "headline_1": "Din AI-assistent.",
+      "headline_2": "Bor på din server.",
+      "description": "OpenClaw är en AI-assistent med öppen källkod som körs på din Appbox och är tillgänglig på alla planer. Den pratar via chattapparna du redan använder, ser dina filer och databaser och kan logga in i dina andra appar för att få saker gjorda.",
+      "card_title": "OpenClaw fungerar över hela din Appbox.",
+      "card_description": "Den kan läsa delad appdata, använda en webbläsare och CLI, fråga databaser och svara via chattapparna du redan använder.",
+      "image_alt": "OpenClaw-chattsession i webbdashboarden",
+      "cta": "Läs nyheten",
+      "capabilities": {
+        "chat": {
+          "title": "Vilken chattapp som helst.",
+          "description": "WhatsApp, Telegram, Discord, Slack, Signal, iMessage. Prata med den där du redan är."
+        },
+        "filesystem": {
+          "title": "Delat filsystem.",
+          "description": "Direkt åtkomst till data från dina andra appar och din allmänna Appbox-lagring. Inga API:er behövs."
+        },
+        "browser": {
+          "title": "Webbläsare och CLI.",
+          "description": "En headless-webbläsare och alla vanliga databasklienter är inbyggda. Den kan logga in i dina appar åt dig."
+        },
+        "tools": {
+          "title": "70+ färdigheter.",
+          "description": "Förladdad med över 70 färdigheter för WordPress, GitLab, Nextcloud, MariaDB och mer. Installera nya från ClawHub."
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "Enkelt som ett klick.",
+      "headline_2": "Noll konfiguration.",
+      "description": "Appbox destillerar komplexa installationer av appar med öppen källkod till det viktigaste: ange användarnamn och lösenord, klicka på installera, och din app konfigureras åt dig.",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "Installera på sekunder",
+      "description": "Välj din Appbox, fyll i några fält och {appName} är live.",
+      "dialog_title": "Installera {appName}",
+      "requires_slots": "{count, plural, one {Kräver # appplats} other {Kräver # appplatser}}",
+      "preview_badge": "Förhandsvisning",
+      "demo_note": "Den här demon visar hur installationsprogrammet ser ut när du har en Appbox.",
+      "select_appbox": "Välj Appbox",
+      "slots_free": "({count} platser lediga)",
+      "ready_note": "Redo att installera? Du behöver först en aktiv Appbox.",
+      "cancel": "Avbryt",
+      "install": "Installera",
+      "footer_note": "Det här är en förhandsvisning av installationsformuläret. Välj en plan för att skapa din Appbox och driftsätta på riktigt.",
+      "domain": {
+        "recordType": "Typ",
+        "recordHost": "Värd / namn",
+        "recordValue": "Värde (IP)",
+        "needHelp": "Behöver du hjälp att lägga till den här posten?"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "Steg 1",
+          "title": "Välj din Appbox",
+          "body": "Installationsprogrammet väljer automatiskt din Appbox om du bara har en, och visar bara Appboxar med tillräckligt många lediga platser."
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "Dra för mer kraft",
+          "body": "Varje extra appplats lägger till 10 % mer CPU och RAM till den här appen, och förhandsvisningen uppdateras direkt.",
+          "link": "Så fungerar boost per app"
+        },
+        "resource_preview": {
+          "eyebrow": "Förhandsvisning",
+          "title": "Kontrollera resurser live",
+          "body": "Se slutlig multiplikator, platskostnad, RAM och CPU innan du installerar. Varje tillagd boostplats ökar resurserna med 10 %."
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "Domäner",
+            "title": "Hanterade eller egna domäner",
+            "body": "Använd en Appbox-hanterad domän direkt, eller klicka på Egen domän för att ta med din egen."
+          },
+          "custom": {
+            "eyebrow": "Egen DNS",
+            "title": "Ta med din egen domän",
+            "body": "Egen domän visar väljaren för basdomän, fast subdomän och DNS-checklistan före installation."
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "Vägledning inbyggd",
+          "body": "Förhandsvisningen visar exakt A-post och verifieringsstatus före installation."
+        },
+        "configuration": {
+          "eyebrow": "Inga överraskningar",
+          "title": "Konfigurationen visas i förväg",
+          "body": "Vi kokar ner de obligatoriska fälten till ett absolut minimum för att skapa en fullt fungerande app, så att du inte behöver oroa dig för ytterligare konfiguration."
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "Suverän molnplattform",
+      "headline_2": "Ditt moln, dina villkor.",
+      "description": "Appbox är byggt på hårdvara och nätverksinfrastruktur som vi kontrollerar, vilket ger dig bekvämligheten med molnappar utan att överlämna plattformen till någon annans moln.",
+      "eyebrow": "Ägd infrastruktur",
+      "card_title": "Riktiga servrar. Riktigt nätverk. Riktigt ansvar.",
+      "card_description": "Vi föredrar direkt kontroll över delarna som spelar roll: beräkning, lagring, routing, kapacitet och fysisk plats. Det låter oss bygga Appbox som en produkt, inte som ett tunt lager ovanpå en annan leverantör.",
+      "images": {
+        "rack_front": "Appbox-serverrack med installerad hårdvara",
+        "rack_network": "Appbox-serverrack med nätverkskablar",
+        "network_closeup": "Närbild av nätverksutrustning som ägs av Appbox"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "Ingen hyrd svart låda",
+          "description": "Vi äger och driver servrarna som dina appar körs på, så prestanda och underhåll döljs inte bakom en hyperscale-molnabstraktion."
+        },
+        "network_control": {
+          "title": "Nätverkskontroll",
+          "description": "Genom att äga routing-stacken kan vi finjustera vägar, kapacitet, peering och felhantering kring Appbox-arbetslaster i stället för generiska molnstandarder."
+        },
+        "custom_ocp_hardware": {
+          "title": "Anpassad OCP-hårdvara",
+          "description": "Vår anpassade Open Compute Project-hårdvara är utformad för effektivt luftflöde, hög densitet och snabb service, så att vi kan skala kapaciteten utan att slösa ström eller utrymme."
+        },
+        "clear_data_locality": {
+          "title": "Tydlig dataplats",
+          "description": "Infrastrukturen finns i dedikerade rack hos Digital Realty AMS3 i Amsterdam, vilket ger dig ett tydligt svar på var dina data hostas."
+        },
+        "better_cost_discipline": {
+          "title": "Bättre kostnadsdisciplin",
+          "description": "Genom att äga plattformen undviker vi molnfakturering per begäran, som överraskande egress, IOPS eller bandbreddsmultiplikatorer, vilket hjälper oss att hålla planerna enkla."
+        },
+        "built_for_appbox": {
+          "title": "Byggt för Appbox",
+          "description": "Eftersom hårdvaran och nätverket är våra kan vi designa kring appplatser, boost, lagring, säkerhetskopior och appinstallationer med ett klick från grunden."
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "Ny",
+      "headline_1": "VPS-hosting.",
+      "headline_2": "Ett klick.",
+      "description": "Driftsätt fullständiga Linux VPS:er bredvid dina appar. Root-åtkomst, dedikerade resurser och möjlighet att boosta, allt utan att lämna Appbox.",
+      "description_combined": "Driftsätt virtuella privata servrar med Linux och Windows bredvid dina appar. Root-åtkomst, fjärrskrivbord och dedikerade resurser, allt utan att lämna Appbox.",
+      "group_label": "Linux VPS",
+      "cta": "Bläddra bland VPS",
+      "features": {
+        "f1": {
+          "title": "Full root-åtkomst",
+          "description": "Full kontroll via SSH"
+        },
+        "f2": {
+          "title": "Skalbara resurser",
+          "description": "Boosta RAM och CPU per app"
+        },
+        "f3": {
+          "title": "Driftsättning med ett klick",
+          "description": "Ubuntu, Debian och mer"
+        }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "Ny",
+      "headline_1": "Windows VPS.",
+      "headline_2": "Var som helst.",
+      "group_label": "Windows VPS",
+      "description": "Kör Windows Server på din Appbox med full åtkomst via Remote Desktop. Perfekt för Windows-exklusiv mjukvara, spelservrar och fjärrarbetsstationer.",
+      "cta": "Bläddra bland Windows-appar",
+      "features": {
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "Fullständigt GUI från valfri webbläsare"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Kör valfri Windows-applikation"
+        },
+        "f3": {
+          "title": "Resursboost",
+          "description": "Tilldela mer kraft efter behov"
+        }
+      }
+    },
+    "features": {
+      "section": {
+        "title": "Kraftfulla funktioner för alla",
+        "headline_1": "Kraftfulla funktioner.",
+        "headline_2": "För alla.",
+        "description": "Upplev hela kraften i din Appbox med funktioner utformade för både nybörjare och experter."
+      },
+      "root_access": {
+        "title": "Full root-åtkomst",
+        "description": "Driftsätt fullständiga OS-appar som Debian och Ubuntu med SSH-åtkomst, vilket ger dig full kontroll över din miljö."
+      },
+      "remote_desktop": {
+        "title": "Fjärrskrivbord",
+        "description": "Kör UI-applikationer på våra servrar med full fjärrskrivbordsåtkomst till OS-appar, och ta skrivbordsupplevelser till molnet."
+      },
+      "one_click": {
+        "title": "Riktiga installationer med ett klick",
+        "description": "Konfigurera allt under installationen med våra strömlinjeformade installationsformulär - ingen ytterligare konfiguration behövs efter driftsättning."
+      },
+      "community": {
+        "title": "Starkt community",
+        "description": "Gå med i vårt växande ekosystem med appbidrag från communityt, dokumentationsbidrag och en webbklient med öppen källkod."
+      },
+      "security": {
+        "title": "Säkerhet och integritet",
+        "description": "Vi tar säkerhet och integritet på allvar på Appbox. Alla appar körs i separata namespaces utan root-åtkomst, vilket ger fullständig isolering mellan applikationer. Vår infrastruktur är utformad med säkerhet först - från härdade kärnor till regelbundna säkerhetsgranskningar. För förbättrad integritet låter vår VPN-app dig dirigera all din trafik genom din Appbox, så att dina onlineaktiviteter förblir privata och säkra. Med Appbox får du säkerhetsfunktioner i företagsklass i ett lättanvänt paket."
+      },
+      "deploy_fast": {
+        "title": "Driftsätt på sekunder",
+        "description": "Med vår blixtsnabba, toppmoderna hårdvara behöver du inte vänta på att dina appar ska installeras."
+      },
+      "custom_hardware": {
+        "title": "Anpassad hårdvara",
+        "description": "Vi har arbetat med branschexperter för att skapa vår egen hårdvaruinfrastruktur, vilket säkerställer integritet, säkerhet och optimal prestanda."
+      },
+      "custom_network": {
+        "title": "Anpassat nätverk",
+        "description": "Vi äger all vår nätverksutrustning, vilket ger oss flexibilitet att peera med nätverk vi själva väljer och gör din anslutning mycket snabbare."
+      },
+      "support": {
+        "title": "Expertsupport",
+        "description": "Vi erbjuder support via ärenden som endast besvaras av ledande branschexperter."
+      },
+      "documentation": {
+        "title": "Snygg dokumentation",
+        "description": "Vårt dokumentationssystem med öppen källkod låter användare bidra, vilket skapar en omfattande och värdefull resurs som ständigt växer."
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "Vanliga frågor",
+        "description": "Hitta svar på våra vanligaste frågor och upptäck hur Appbox kan hjälpa dig."
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "Vilka betalningsmetoder accepterar ni?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Vi erbjuder flera betalningsalternativ för att göra ditt köp så smidigt som möjligt:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Betal-/kreditkort<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (inklusive Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Kryptovalutor<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">Vi erbjuder även flexibla faktureringscykler - månadsvis, kvartalsvis, halvårsvis eller årsvis. Om du vill se fler alternativ är det bara att säga till.</p>"
+        },
+        "deployment_time": {
+          "title": "Hur snabbt får jag min Appbox?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Så snart din betalning har bekräftats driftsätter vårt automatiska system din Appbox direkt. Appar du väljer i kassan sätts också upp omedelbart, så att du kan börja använda dem utan dröjsmål.</p>"
+        },
+        "server_location": {
+          "title": "Var finns era servrar?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Våra servrar finns i dedikerade rack hos Digital Realty AMS3 i Amsterdam, Nederländerna, vilket säkerställer prestanda och tillförlitlighet i toppklass.</p>"
+        },
+        "root_access": {
+          "title": "Erbjuder ni root-åtkomst?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. VPS-appar ger dig full root-åtkomst på Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux och AlmaLinux. Windows 11 Pro VPS-appar ger full Remote Desktop- och administratörsåtkomst.</p><p class=\"mb-4 leading-relaxed\">Eftersom detta är fullständiga virtuella KVM-maskiner kan du installera egen mjukvara, hantera tjänster, använda Docker, snaps, Flatpaks, kernel modules och köra din egen stack bredvid dina Appbox-appar.</p>"
+        },
+        "docker": {
+          "title": "Kan jag använda Docker?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Docker är tillgängligt i VPS-appar, där du får en fullständig virtuell maskin med root-åtkomst och kontroll över operativsystemet.</p><p class=\"mb-4 leading-relaxed\">Docker är inte tillgängligt inuti hanterade appar med ett klick, eftersom de apparna redan är containeriserade och isolerade av Appbox. Om du behöver Docker, installera en Linux VPS-app och kör det där.</p>"
+        },
+        "security": {
+          "title": "Vilka säkerhetsfunktioner erbjuder ni?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Vi tar säkerhet på allvar och använder flera skyddslager för att skydda dina data:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Varje Appbox körs i sin egen sandbox för att isolera dina data</li><li>Alla anslutningar använder HTTPS, vilket krypterar data under överföring</li><li>Obegränsade VPN-konton (för kvalificerade paket) låter dig dirigera din trafik genom Appbox</li><li>Daglig loggborttagning (FTP, SSH, HTTP, VPN osv.) för extra integritet</li></ul>"
+        },
+        "data_access": {
+          "title": "Hur kan jag komma åt mina Appbox-data från min dator?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Vi erbjuder flera smidiga sätt att hantera dina Appbox-filer och medier:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Använd synkroniseringsappar som Resilio eller Syncthing för att hålla filer uppdaterade automatiskt.</li><li>Strömma medier var du än är med Plex, Navidrome eller liknande appar.</li><li>Ladda ner filer säkert med FTP över TLS, HTTPS eller andra protokoll.</li></ul><p class=\"mb-4 leading-relaxed\">App Store innehåller olika appar som hjälper dig att hålla kontakten med dina data på det sätt som passar dig bäst.</p>"
+        },
+        "additional_software": {
+          "title": "Kan jag installera mjukvara som inte finns i App Store?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Absolut. Våra VPS-appar låter dig installera egen mjukvara med root-åtkomst, och Windows VPS-appar inkluderar en fullständig Remote Desktop-upplevelse. Det ger dig friheten att köra de verktyg och applikationer du behöver.</p>"
+        },
+        "fuse_rclone": {
+          "title": "Tillåter ni FuSE-mounts eller Rclone?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, det gör vi. Våra OS-appar har fullt stöd för FuSE, och vi erbjuder en dedikerad Rclone-app i App Store för snabb och enkel integration med molnlagring.</p>"
+        },
+        "refund_policy": {
+          "title": "Vad är er återbetalningspolicy?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Vi erbjuder ett 7-dagars proportionellt återbetalningsfönster för nya kunder. Befintliga kunder har andra behörighetskriterier för återbetalningar. Betalningar gjorda med kryptovalutor, köp av dedikerade IP-adresser och vissa andra transaktioner återbetalas inte. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Visa vår fullständiga återbetalningspolicy</a> för alla detaljer.</p>"
+        },
+        "custom_domain": {
+          "title": "Kan jag använda mitt eget domännamn?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Du kan koppla din egen domän och konfigurera subdomäner för varje applikation. Lägg bara till en A-post i din DNS som pekar mot din Appbox, så tar vi hand om resten för att få dig igång smidigt.</p><p class=\"mb-4 leading-relaxed\">VPS-appar stöder också flera egna domäner och Appbox-subdomäner med automatisk SSL, så att du kan hosta flera webbplatser eller tjänster från samma VPS.</p>"
+        },
+        "upgrade_after_purchase": {
+          "title": "Kan jag uppgradera efter köp?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, vi flyttar automatiskt allt från din gamla plan till din nya plan.</p><p class=\"mb-4 leading-relaxed\">Allt kommer att vara likadant, du märker det knappt. Det enda som kan ändras är specifika portnummer, om du kommer åt en app direkt via portnummer, till exempel FTP.</p>"
+        },
+        "app_slots": {
+          "title": "Vad är appplatser?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Appplatser är kapacitetsenheterna som din Appbox använder för att installera appar. Varje app använder en eller flera appplatser beroende på sina resurskrav, och tyngre versioner kan behöva fler platser.</p><p class=\"mb-4 leading-relaxed\">Sidan <a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">Appar</a> visar hur många appplatser varje app använder. På en apps detaljsida kan du skrolla till resursavsnittet nära botten för att se RAM och CPU som tilldelas varje version.</p><p class=\"mb-4 leading-relaxed\">Du kan också använda lediga appplatser för boost per app och ge en installerad app mer CPU och RAM utan att uppgradera hela planen.</p>"
+        },
+        "resource_multipliers": {
+          "title": "Hur fungerar boost per app?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Varje app börjar med grundläggande RAM- och CPU-resurser som bestäms av dess version. Boost per app låter dig öka de resurserna för enskilda appar genom att använda extra appplatser.</p><p class=\"mb-4 leading-relaxed\">Varje boostplats lägger till +10 % resurser till appen. Du bestämmer vilka appar som får mer kraft och kan justera boosten när som helst.</p><p class=\"mb-4 leading-relaxed\">Boost per app ingår i alla planer. Du kan konfigurera det när du installerar en app eller från sidan för installerade appar i <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a>.</p>"
+        },
+        "app_freeze": {
+          "title": "Kan jag pausa en app utan att förlora data?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Appfrysning låter dig stoppa en installerad app och frigöra dess appplatser samtidigt som data och konfiguration behålls.</p><p class=\"mb-4 leading-relaxed\">När du låser upp appen startar den igen med samma data. Du behöver bara ha tillräckligt många lediga appplatser för att täcka appen och eventuella boostplatser den använde.</p>"
+        },
+        "excluded_app_categories": {
+          "title": "Vad är exkluderade appkategorier?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Vissa planer har begränsningar för särskilda appkategorier som inte kan installeras på dem. Dessa kallas \"exkluderade appkategorier\".</p><p class=\"mb-4 leading-relaxed\">När du tittar på våra prisplaner ser du exkluderade kategorier listade som klickbara märken under planer som har begränsningar. Det hjälper dig att förstå vilka typer av appar som inte är tillgängliga på just den planen.</p><p class=\"mb-4 leading-relaxed\">Du kan klicka på valfritt märke för en exkluderad kategori för att visa alla appar i den kategorin, så att du vet exakt vilka applikationer som inte skulle kunna installeras på den planen.</p><p class=\"mb-4 leading-relaxed\">Om du behöver åtkomst till appar i en exkluderad kategori bör du överväga att välja en plan på högre nivå som inte har de begränsningarna.</p>"
+        },
+        "vps": {
+          "title": "Hur skaffar jag en VPS?",
+          "content": "<p class=\"mb-4 leading-relaxed\">VPS-appar finns i <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">App Store</a> precis som alla andra appar. Välj en Linux- eller Windows-distribution, installera den på din Appbox och kör den bredvid dina andra appar.</p><p class=\"mb-4 leading-relaxed\">Du kan tilldela extra resurser till din VPS med boost per app, vilket ger mer RAM och CPU genom att använda ytterligare appplatser. Det låter dig dimensionera din VPS rätt utan att uppgradera hela planen.</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "Produkt",
+      "resources": "Resurser",
+      "pricing": "Priser",
+      "features": "Funktioner",
+      "apps": "Appar",
+      "documentation": "Dokumentation",
+      "blog": "Blogg",
+      "faq": "FAQ",
+      "service_status": "Driftstatus",
+      "overview": "Översikt över funktioner",
+      "view_pricing": "Visa våra prisplaner",
+      "explore_apps": "Utforska våra appar",
+      "read_docs": "Läs dokumentationen",
+      "latest_articles": "Senaste artiklar och nyheter",
+      "faq_description": "Vanliga frågor",
+      "check_status": "Kontrollera vår driftstatus",
+      "vps": "VPS",
+      "explore_vps": "Bläddra bland VPS-appar"
+    },
+    "external_links": {
+      "billing": "Fakturering",
+      "control_panel": "Kontrollpanel"
+    }
+  },
+  "docs": {
+    "on_this_page": "På den här sidan",
+    "edit_page_on_github": "Redigera den här sidan på GitHub",
+    "start_discussion_on_github": "Starta en diskussion på GitHub",
+    "api_reference": "API-referens",
+    "docs": "Dokumentation",
+    "source": "Källa",
+    "not_found": {
+      "description": "Dokumentet du letar efter finns inte.",
+      "title": "Dokumentet hittades inte"
+    },
+    "index_description": "Hitta dokumentation om hur du använder Appbox, bidrar till projektet och mycket mer.",
+    "index": {
+      "title": "Dokumentation",
+      "section": "Avsnitt",
+      "description": "Beskrivning",
+      "documents": "Dokument",
+      "view": "Visa"
+    },
+    "meta_description": "Lär dig använda Appbox med vår omfattande dokumentation. Hitta guider, handledningar och API-referenser för att få ut mesta möjliga av din hosting."
+  },
+  "blog": {
+    "words": {
+      "posts": "Inlägg",
+      "by": "av"
+    },
+    "cards": {
+      "min_read": "min läsning"
+    },
+    "buttons": {
+      "next": "Nästa",
+      "previous": "Föregående",
+      "rss_feed": "RSS-flöde",
+      "read_more": "läs mer",
+      "go_to_next_page": "Gå till nästa sida",
+      "go_to_previous_page": "Gå till föregående sida"
+    },
+    "meta_description": "Läs de senaste nyheterna, uppdateringarna och guiderna från Appbox-teamet. Håll dig informerad om nya funktioner, appsläpp och hostingtips."
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "Månadsvis",
+      "quarterly": "Kvartalsvis",
+      "semiannually": "Halvårsvis",
+      "annually": "Årsvis",
+      "billed_every": "Faktureras [cycle]"
+    },
+    "card": {
+      "storage": "Lagring",
+      "traffic": "Trafik",
+      "app_slots": "Appplatser",
+      "connection_speed": "Anslutningshastighet",
+      "resource_multiplier": "Boost per app",
+      "included": "Ingår",
+      "raid": "RAID",
+      "disks": "Diskar",
+      "per_month": "/mån",
+      "order_now": "Beställ nu",
+      "billed_as": "Faktureras",
+      "excluded_app_categories": "Exkluderade appkategorier",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "Stöds",
+      "windows_vps_dedicated_only": "Endast dedikerade planer (NG-18000+)"
+    }
+  },
+  "apps": {
+    "title": "Appbibliotek",
+    "description": "Utforska vårt stora utbud av appar redo att driftsättas",
+    "meta_description": "Bläddra bland över 60 appar redo att driftsättas, inklusive databaser, medieservrar, utvecklingsverktyg och mer. Installation med ett klick med Appbox-hosting.",
+    "loading": "Laddar appar...",
+    "error": "Det gick inte att läsa in appar",
+    "no_results": "Inga appar matchar dina sökkriterier",
+    "back_to_apps": "Tillbaka till appar",
+    "app_not_found": "Den begärda appen kunde inte hittas",
+    "search": {
+      "title": "Sök",
+      "description": "Hitta den perfekta appen för dina behov",
+      "name_search": "Sök efter namn",
+      "name_placeholder": "Appnamn eller nyckelord",
+      "category": "Kategori",
+      "all_categories": "Alla kategorier",
+      "app_slots": "Appplatser",
+      "app_slots_placeholder": "Valfritt antal appplatser",
+      "sort_by": "Sortera efter",
+      "sort_popularity": "Popularitet",
+      "sort_name": "Namn (A-Z)",
+      "sort_date": "Nyligen tillagda",
+      "reset_filters": "Återställ filter"
+    },
+    "card": {
+      "app_slots": "Appplatser",
+      "view_details": "Visa detaljer"
+    },
+    "detail": {
+      "by": "av",
+      "description": "Beskrivning",
+      "app_info": "Appinformation",
+      "version": "Version",
+      "app_slots": "Appplatser",
+      "released": "Släppt",
+      "developer_site": "Utvecklarens webbplats",
+      "visit_site": "Besök webbplats",
+      "deploy_app": "Driftsätt den här appen",
+      "community_ratings": "Communitybetyg",
+      "upvotes": "Uppröster",
+      "downvotes": "Nedröster",
+      "no_ratings_yet": "Inga betyg än",
+      "deploy_dialog": {
+        "title": "Driftsätt appar på en Appbox",
+        "question": "Appar behöver en aktiv Appbox för att köras. Välj en berättigad plan för att skapa ditt konto och din Appbox, eller fortsätt till installationsprogrammet om du redan har en.",
+        "planLabel": "Berättigade planer för den här appen",
+        "planPlaceholder": "Välj en plan för att fortsätta",
+        "planHelp": "Planer som exkluderar den här appkategorin är dolda. När du väljer en plan skickas du direkt till kassan.",
+        "noEligiblePlans": "Inga berättigade planer hittades för den här appen. Du kan fortfarande visa alla planer.",
+        "viewAllPlans": "Visa alla planer",
+        "yes": "Fortsätt med vald plan",
+        "no": "Jag har redan en Appbox"
+      }
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "Sammankopplat appekosystem",
+      "headline_1": "Sammankopplade appar.",
+      "headline_2": "Ett ekosystem.",
+      "description": "Varje app har filsystemsåtkomst till delade delar av andra appar, alla sammankopplade via en säker lokal nätverksbrygga.",
+      "visual_title": "Dina appar kan arbeta tillsammans utan att lämna din Appbox.",
+      "visual_description": "Appar körs i sina egna utrymmen, men Appbox ger dem kontrollerade sätt att dela filer och prata lokalt. Det betyder att assistenter, dashboards, databaser, medieverktyg och synkroniseringsappar kan bli en sammankopplad arbetsyta.",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "Delat filsystem",
+          "description": "Appar kan komma åt delad lagring och godkänd appdata direkt."
+        },
+        "private_network": {
+          "title": "Säker lokal brygga",
+          "description": "Tjänster kommunicerar över privata lokala vägar i stället för det publika internet."
+        },
+        "cross_app_workflows": {
+          "title": "Arbetsflöden mellan appar",
+          "description": "Bygg arbetsflöden där en app kan läsa, bearbeta och publicera data åt en annan."
+        }
+      }
+    }
+  },
+  "policies": {
+    "title": "Policyer",
+    "meta_description": "Granska Appbox-policyer inklusive användarvillkor, integritetspolicy, återbetalningspolicy och mer. Förstå dina rättigheter och våra åtaganden.",
+    "index_description": "Dessa policyer styr din användning av Appbox-tjänster och beskriver våra åtaganden gentemot dig. De innehåller viktig information om integritet, säkerhet och ditt ansvar som användare.",
+    "policy": "Policy",
+    "description": "Beskrivning",
+    "view": "Visa"
+  },
+  "auth": {
+    "login": {
+      "title": "Välkommen tillbaka",
+      "description": "Logga in på ditt Appbox-konto",
+      "email_label": "E-post",
+      "email_placeholder": "you@example.com",
+      "email_error": "Ange en giltig e-postadress",
+      "password_label": "Lösenord",
+      "password_placeholder": "Ange ditt lösenord",
+      "password_error": "Lösenord krävs",
+      "forgot_password": "Glömt lösenord?",
+      "submit": "Logga in",
+      "external_signup": "Ny på Appbox? Välj en plan för att skapa ditt konto och din Appbox.",
+      "external_signup_link": "Visa planer",
+      "appbox_required_title": "Behöver du ett konto?",
+      "appbox_required_description": "Appbox-konton skapas när du köper en Appbox-plan. Om du försökte driftsätta en app, välj först en plan och kom sedan tillbaka för att installera appar på din Appbox.",
+      "appbox_required_link": "Visa planer och registrera dig",
+      "error_invalid": "Ogiltig e-postadress eller lösenord",
+      "error_generic": "Något gick fel. Försök igen.",
+      "success": "Inloggningen lyckades",
+      "2fa_title": "Tvåfaktorsautentisering",
+      "2fa_description": "Ange den 6-siffriga koden från din autentiseringsapp",
+      "2fa_code_label": "Verifieringskod",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "Koden måste vara 6 siffror",
+      "2fa_submit": "Verifiera",
+      "2fa_back": "Tillbaka till inloggning",
+      "error_2fa_invalid": "Ogiltig verifieringskod"
+    },
+    "branding": {
+      "tagline": "Ditt moln, dina regler",
+      "subtitle": "Driftsätt och hantera kraftfulla applikationer på suverän infrastruktur som vi äger och driver.",
+      "apps_count": "60+ appar redo att driftsättas",
+      "one_click": "Installation med ett klick",
+      "network_speed": "25Gbps-nätverk",
+      "always_secure": "Alltid säkert",
+      "categories_label": "Appkategorier",
+      "category_cloud": "Moln",
+      "category_cms": "CMS",
+      "category_databases": "Databaser",
+      "category_music": "Musik",
+      "category_storage": "Lagring",
+      "category_gaming": "Spel",
+      "category_development": "Utveckling",
+      "category_virtual_servers": "Virtuella servrar"
+    },
+    "forgot": {
+      "title": "Glömt lösenord",
+      "description": "Ange din e-postadress så skickar vi en återställningslänk",
+      "email_label": "E-post",
+      "email_placeholder": "you@example.com",
+      "email_error": "Ange en giltig e-postadress",
+      "submit": "Skicka återställningslänk",
+      "back_to_login": "Tillbaka till inloggning",
+      "error_generic": "Något gick fel. Försök igen.",
+      "success": "Återställningslänk skickad! Kontrollera din e-post."
+    },
+    "reset": {
+      "title": "Återställ lösenord",
+      "description": "Ange ditt nya lösenord",
+      "password_label": "Nytt lösenord",
+      "password_placeholder": "Ange nytt lösenord",
+      "password_error": "Lösenordet måste vara minst 8 tecken",
+      "confirm_password_label": "Bekräfta lösenord",
+      "confirm_password_placeholder": "Bekräfta nytt lösenord",
+      "confirm_password_error": "Lösenorden matchar inte",
+      "submit": "Återställ lösenord",
+      "error_generic": "Något gick fel. Försök igen.",
+      "success": "Lösenordet har återställts!"
+    },
+    "email_sent": {
+      "title": "Kontrollera din e-post",
+      "description": "Vi har skickat ett e-postmeddelande med vidare instruktioner",
+      "check_inbox": "Om du inte ser e-postmeddelandet, kontrollera din skräppostmapp. Länken upphör att gälla om 24 timmar.",
+      "back_to_login": "Tillbaka till inloggning"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "appstore": "App Store",
+      "appboxes": "Appboxar",
+      "installed_apps": "Installerade appar",
+      "domains": "Egna domäner",
+      "account": "Konto",
+      "profile": "Profil",
+      "abuse_reports": "Missbruksrapporter",
+      "two_factor": "Tvåfaktorsautentisering",
+      "api_keys": "API-nycklar",
+      "service_status": "Driftstatus",
+      "support_billing": "Support och fakturering",
+      "add_appbox": "Lägg till Appbox",
+      "admin": "Admin",
+      "knowledgebase": "Kunskapsbas"
+    },
+    "header": {
+      "toggle_language": "Växla språk",
+      "theme_dark": "Mörkt",
+      "theme_light": "Ljust",
+      "theme_system": "System",
+      "profile": "Profil",
+      "security": "Säkerhet",
+      "sign_out": "Logga ut",
+      "switch_to_admin": "Växla till admin",
+      "switch_to_user": "Växla till användare"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "services": "Dina tjänster",
+      "servicesDescription": "Dina aktiva tjänster och resurser",
+      "storage": "Lagring",
+      "appSlots": "Appplatser",
+      "network": "Nätverk",
+      "upload": "Uppladdning",
+      "download": "Nedladdning",
+      "multiplier": "Använda boostplatser",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30 d",
+      "downloadShort": "↓ 30 d",
+      "pinnedApps": "Fästa appar",
+      "viewCylo": "Visa detaljer"
+    },
+    "twoFactor": {
+      "title": "Säkra ditt konto",
+      "description": "Aktivera tvåfaktorsautentisering för att lägga till ett extra säkerhetslager på ditt konto.",
+      "enable": "Aktivera 2FA",
+      "dismiss": "Stäng"
+    },
+    "notifications": {
+      "title": "Senaste notiser",
+      "viewAll": "Visa alla",
+      "empty": "Inga nya notiser",
+      "dropdown_title": "Notiser",
+      "mark_all_read": "Markera alla som lästa",
+      "no_notifications": "Inga nya notiser",
+      "all_caught_up": "Allt är uppdaterat",
+      "ui_update_title": "Det finns en ny version av Appbox",
+      "ui_update_description": "Vi har precis uppdaterat Appbox UI. Uppdatera den här sidan för att få den senaste versionen.",
+      "refresh_later": "Uppdatera senare",
+      "refresh_now": "Uppdatera nu",
+      "subtext": {
+        "instance_add": "Din app är installerad, kolla in den nedan!",
+        "instance_removed": "Appen har avinstallerats.",
+        "instance_removing": "Appen avinstalleras just nu.",
+        "instance_restart": "Appen har startats om.",
+        "instance_updating": "Appen uppdateras och kommer tillfälligt att vara offline.",
+        "instance_updated": "Appen har uppdaterats och är nu redo att användas.",
+        "instance_stop": "Appen har nu stoppats, du behöver starta den igen för att komma åt den.",
+        "instance_start": "Appen har nu startats och bör snart vara tillgänglig.",
+        "user_updated": "Dina användarprofildata har uppdaterats.",
+        "cylo_add": "Din Appbox har slutfört konfigurationen, klicka nedan för att visa den.",
+        "cylo_remove": "Din Appbox har avinstallerats.",
+        "cylo_migrating": "Din Appbox migreras till en annan disk/server, vi meddelar dig och skickar ett e-postmeddelande när det är klart.",
+        "cylo_migrated": "Din Appbox har migrerats, alla appar bör fungera igen nu.",
+        "cylo_userdecreasingquota": "Din Appbox håller på att få slut på diskutrymme. Du behöver snart ta bort data via fliken File Explorer på Appbox-dashboarden för att den ska hålla sig online.",
+        "cylo_userlowquota": "Din Appbox har inget diskutrymme kvar, så vi har stängt av den tillfälligt. Du behöver ta bort data via fliken File Explorer på Appbox-dashboarden för att få den online igen.",
+        "cylo_adminlowquota": "En Appbox har ont om tillgängligt utrymme.",
+        "cylo_brokenmount": "Din Appbox hade ett monteringsfel. Kontrollera din e-post för mer information.",
+        "cylo_usernormalquota": "Din Appbox har nu tillräckligt med ledigt utrymme för att fungera normalt.",
+        "cylo_adminnormalquota": "Appboxen har inte längre ont om utrymme och kan fungera normalt.",
+        "cylo_restarting": "Din Appbox startas om nu, dina appar kommer tillfälligt att vara offline.",
+        "cylo_restarted": "Din Appbox har startats om, dina appar bör snart vara online.",
+        "blog": "Vi har precis publicerat ett nytt blogginlägg, klicka nedan för att läsa det!",
+        "hwfailure_newfailure": "En server har ett problem, titta på detta snarast!",
+        "criticalalert_newalert": "Ny kritisk varning, titta på detta snarast!",
+        "abuse_unresolvable": "En ny olösbar missbruksrapport har skickats in.",
+        "abuse_reply": "Det finns ett nytt meddelande i missbruksrapporten.",
+        "abuse_user_new": "Vi har fått en missbruksrapport som gäller din Appbox.",
+        "abuse_user_closed": "Vi har stängt en missbruksrapport som gäller din Appbox.",
+        "throttledcylo_throttled": "En Appbox stryps.",
+        "throttledcylo_unthrottled": "En Appbox stryps inte längre.",
+        "throttled_throttled": "Din Appbox stryps.",
+        "throttled_warning": "Din Appbox använder mer resurser än normalt.",
+        "throttled_unthrottled": "Din Appbox stryps inte längre."
+      }
+    },
+    "newestApps": {
+      "title": "Nyaste appar",
+      "viewAll": "Bläddra i App Store"
+    },
+    "recentlyUpdated": {
+      "title": "Nyligen uppdaterade"
+    },
+    "yourUpdates": {
+      "title": "Dina uppdateringar",
+      "description": "Senaste aktivitet och nya appar"
+    },
+    "blogPosts": {
+      "title": "Senaste från bloggen",
+      "description": "Nyheter och uppdateringar från Appbox",
+      "readMore": "Läs mer"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Startar om",
+      "migrating": "Migrerar",
+      "installing": "Installerar",
+      "suspended": "Avstängd",
+      "frozen": "Fryst",
+      "throttled": "Strypt",
+      "lowQuota": "Låg kvot"
+    }
+  },
+  "appstore": {
+    "title": "App Store",
+    "subtitle": "Alla serverappar du behöver, på ett ställe.",
+    "search": {
+      "placeholder": "Sök appar...",
+      "results": "Sökresultat",
+      "noResults": "Inga appar hittades som matchar din sökning.",
+      "noResultsDescription": "Prova att justera din sökning eller ditt filter för att hitta det du letar efter.",
+      "showing": "Visar {count} resultat"
+    },
+    "featured": {
+      "title": "Utvalda appar",
+      "description": "Handplockade appar vi rekommenderar"
+    },
+    "top": {
+      "title": "Toppappar",
+      "description": "Mest populära bland våra användare"
+    },
+    "new": {
+      "title": "Nya appar",
+      "description": "Nyligen tillagda i butiken"
+    },
+    "categories": {
+      "title": "Kategorier",
+      "all": "Alla kategorier"
+    },
+    "app": {
+      "getApp": "Hämta",
+      "installed": "Installerad",
+      "restricted": "Begränsad",
+      "disabled": "Inaktiverad",
+      "install": "Installera",
+      "installing": "Installerar...",
+      "versions": "Versioner",
+      "version": "Version",
+      "appSlots": "Appplatser",
+      "baseMemory": "Basminne (GB)",
+      "baseCpus": "Bas-CPU:er",
+      "added": "Tillagd",
+      "changes": "Ändringar",
+      "changelog": "Ändringslogg",
+      "releasedOn": "Släppt den",
+      "description": "Beskrivning",
+      "comments": "Kommentarer",
+      "selectCylo": "Välj Appbox",
+      "selectVersion": "Välj version",
+      "noSlots": "Inga lediga appplatser tillgängliga",
+      "rating": "{count} röster",
+      "screenshots": "Skärmbilder",
+      "by": "av",
+      "requiresSlots": "Kräver {count} appplats(er)",
+      "visitDeveloper": "Besök utvecklarens webbplats",
+      "helpSupport": "Hjälp och support",
+      "resourceNote": "Appar startar med basminne och CPU. Du kan boosta enskilda appar genom att använda extra appplatser (+10 % per boostplats). Värdet 0 betyder obegränsat.",
+      "upvote": "Rösta upp",
+      "downvote": "Rösta ner",
+      "installTitle": "Installera {name}",
+      "installSuccess": "Appinstallationen har startat",
+      "minimumPlanShort": "Tillgänglig från {plan}",
+      "minimumPlanLabel": "Minsta plan"
+    },
+    "sort": {
+      "newest": "Nyast",
+      "popular": "Mest populära",
+      "updated": "Nyligen uppdaterade",
+      "rating": "Högst betyg",
+      "slots_asc": "Platser: lågt till högt",
+      "slots_desc": "Platser: högt till lågt"
+    },
+    "slots": {
+      "label": "Platser",
+      "all": "Alla platser",
+      "slot": "{count} plats",
+      "slots": "{count} platser"
+    },
+    "showAll": "Visa alla",
+    "install": {
+      "validation": {
+        "required": "Det här fältet krävs",
+        "alphanumeric": "Endast bokstäver och siffror är tillåtna",
+        "notOnlyAlpha": "Måste innehålla minst en siffra eller ett specialtecken",
+        "lowercase": "Måste innehålla en gemen bokstav",
+        "uppercase": "Måste innehålla en versal bokstav",
+        "number": "Måste innehålla en siffra",
+        "specialChar": "Måste innehålla ett specialtecken",
+        "invalidEmail": "Ogiltig e-postadress",
+        "invalidDate": "Ogiltigt datum",
+        "invalidFormat": "Ogiltigt format",
+        "minLength": "Minst {count} tecken",
+        "maxLength": "Högst {count} tecken",
+        "invalidSubdomain": "Endast gemena bokstäver, siffror och bindestreck är tillåtna.",
+        "subdomainInUse": "Den här subdomänen används redan, prova en annan.",
+        "domainIpMismatch": "Domänens IP matchar inte servern.",
+        "selectDomain": "Välj en domän",
+        "validating": "Validerar..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "Välj först en Appbox",
+        "selectPlaceholder": "Välj {label}...",
+        "searchPlaceholder": "Sök {label}...",
+        "noResults": "Inga resultat hittades."
+      },
+      "domain": {
+        "domainType": "Domäntyp",
+        "typeAppbox": "Appbox-domän",
+        "typeCustom": "Egen domän",
+        "subdomain": "Subdomän",
+        "domain": "Domän",
+        "baseDomain": "Basdomän",
+        "selectAppboxFirst": "Välj först en Appbox",
+        "selectDomain": "Välj en domän...",
+        "selectOrAddDomain": "Välj eller lägg till en domän...",
+        "searchDomains": "Sök domäner...",
+        "noDomainsMatch": "Inga domäner matchar din sökning.",
+        "noDomainsAvailable": "Inga domäner tillgängliga.",
+        "noCustomDomains": "Inga egna domäner än.",
+        "yourDomains": "Dina domäner",
+        "addNewDomain": "Lägg till ny domän",
+        "add": "Lägg till",
+        "domainSuffix": "välj en domän",
+        "appboxDomain": "Appbox-domän",
+        "customDomains": "Egna domäner",
+        "loadingDomains": "Laddar domäner...",
+        "blockedDomain": "Den här domänen är reserverad och kan inte användas.",
+        "invalidDomain": "Ange en giltig domän (t.ex. mydomain.com).",
+        "addDomainFailed": "Det gick inte att lägga till domänen. Försök igen.",
+        "dnsSetupTitle": "DNS-konfiguration",
+        "dnsInstruction": "Skapa en A-post som pekar mot din Appbox-server:",
+        "copyIp": "Kopiera IP-adress",
+        "copied": "Kopierat!",
+        "dnsNotPointing": "DNS pekar inte mot rätt IP ännu.",
+        "dnsResolvedTo": "Löses för närvarande till: {ip}",
+        "verifyDns": "Kontrollera DNS",
+        "verifying": "Verifierar...",
+        "retryVerify": "Verifiera igen",
+        "dnsVerified": "✓ DNS verifierad för {domain}"
+      },
+      "field": {
+        "enabled": "Aktiverad",
+        "disabled": "Inaktiverad",
+        "selectPlaceholder": "Välj {label}"
+      },
+      "guard": {
+        "appDisabled": "Den här appen är tillfälligt inaktiverad för underhåll.",
+        "noCylos": "Du behöver en Appbox innan du kan installera appar. Beställ en för att komma igång.",
+        "getAppbox": "Skaffa en Appbox",
+        "restricted": "Den här appen är inte tillgänglig med ditt nuvarande paket. Klicka nedan för att uppgradera din plan och låsa upp åtkomst.",
+        "restrictedMinPlan": "Den här appen är inte tillgänglig med ditt nuvarande paket. Minsta plan som krävs: {plan}. Uppgradera din plan för att låsa upp åtkomst.",
+        "upgradePackage": "Uppgradera ditt paket",
+        "getAnotherAppbox": "Skaffa en till Appbox",
+        "noSlots": "Den här appen kräver {count} appplats(er), men ingen av dina Appboxar har tillräckligt många lediga platser. Uppgradera din plan för att få fler.",
+        "getMoreSlots": "Skaffa fler appplatser",
+        "noMulti": "Den här appen tillåter bara en installation per Appbox, och den är redan installerad på alla dina berättigade Appboxar. För att installera en till instans kan du beställa en extra Appbox.",
+        "checkingAvailability": "Kontrollerar tillgänglighet..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "Begränsad på nuvarande paket",
+        "noFreeSlots": "Inga lediga platser ({used}/{total})",
+        "alreadyInstalled": "Redan installerad",
+        "notEligible": "Inte berättigad",
+        "selectToSeeOptions": "Välj en Appbox för att se alternativ",
+        "upgradeThisAppbox": "Uppgradera den här Appboxen",
+        "alreadyInstalledDetail": "Den här appen tillåter bara en installation per Appbox och är redan installerad här. Beställ en extra Appbox för att installera en till instans.",
+        "noneEligible": "Ingen av dina Appboxar är för närvarande berättigad. Välj en ovan för att se varför och hur du löser det.",
+        "restrictedSingle": "{name} är inte berättigad - den här appen är begränsad på sitt nuvarande paket.",
+        "restrictedMultiple": "{count} Appboxar är inte berättigade - den här appen är begränsad på deras nuvarande paket.",
+        "upgradeName": "Uppgradera {name}",
+        "noSlotsSingle": "{name} har inte tillräckligt många lediga appplatser.",
+        "noSlotsMultiple": "{count} Appboxar har inte tillräckligt många lediga appplatser.",
+        "installedSingle": "{name} har redan den här appen installerad.",
+        "installedMultiple": "{count} Appboxar har redan den här appen installerad.",
+        "onePerAppbox": "Den här appen tillåter bara en installation per Appbox.",
+        "slotsFree": "{count} platser lediga",
+        "migrating": "Appbox migreras för närvarande",
+        "restrictedOnPackageMinPlan": "Begränsad på nuvarande paket (minsta plan: {plan})",
+        "migratingSingle": "{name} migreras för närvarande och är tillfälligt otillgänglig för installationer.",
+        "migratingMultiple": "{count} Appboxar migreras för närvarande och är tillfälligt otillgängliga för installationer."
+      },
+      "dialog": {
+        "loadingVersions": "Laddar versioner...",
+        "defaultVersion": "(standard)",
+        "versionsAvailable": "{count, plural, one {# version tillgänglig} other {# versioner tillgängliga}}",
+        "cancel": "Avbryt",
+        "installFailed": "Installationen misslyckades. Försök igen."
+      },
+      "boost": {
+        "loading": "Laddar boostalternativ...",
+        "title": "Boostplatser",
+        "resourcePreview": "Resursförhandsvisning",
+        "multiplier": "Multiplikator",
+        "slotCost": "Platskostnad",
+        "ram": "RAM",
+        "cpus": "CPU:er",
+        "cta": "Vill du ha mer boost? Uppgradera din plan"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "Dina Appboxar",
+      "description": "Övervaka lagring, nätverk, boostanvändning och installerade appar över alla Appboxar du hanterar.",
+      "empty": "Du har inga appboxar än.",
+      "getCylo": "Skaffa en Appbox",
+      "viewDetails": "Visa detaljer",
+      "storage": "Lagring",
+      "appSlots": "Appplatser",
+      "network": "Nätverk",
+      "upload": "Uppladdning",
+      "download": "Nedladdning",
+      "multiplier": "Använda boostplatser",
+      "pinnedApps": "Fästa appar",
+      "sortBy": "Sortera efter",
+      "filterByStatus": "Filtrera efter status",
+      "allStatuses": "Alla statusar",
+      "name": "Namn",
+      "server": "Server",
+      "status": "Status"
+    },
+    "cyloDetail": {
+      "summary": "Sammanfattning",
+      "fileExplorer": "File Explorer",
+      "diskUsage": "Diskanvändning",
+      "diskUtilization": "Diskutnyttjande (IO)",
+      "networkTraffic": "Nätverkstrafik",
+      "installedApps": "Installerade appar",
+      "alerts": "Varningar",
+      "migrationProgress": "Migrering pågår",
+      "migrationLive": "De flesta appar fortsätter att fungera normalt under livemigreringen. Appar som inte kan livemigreras kommer att vara otillgängliga tills allt är klart.",
+      "migrationOffline": "Dina appar kommer att vara otillgängliga tills migreringen är klar.",
+      "migrationTransferred": "Överfört: {sent} GiB av {total} GiB",
+      "migrationPhase1": "Initierar migrering",
+      "migrationPhase2": "Överför krypteringsnycklar",
+      "migrationPhase3": "Överför SSL-certifikat",
+      "migrationPhase4": "Konfigurerar appbox på ny server",
+      "migrationPhase5": "Överför data",
+      "migrationPhase6": "Installerar appar på ny server",
+      "migrationPhase7": "Slutför migrering",
+      "migrationPhase8": "Färdigställer migrering",
+      "lowQuota": "Lågt diskutrymme",
+      "lowQuotaMessage": "Din appbox förblir offline tills du frigör utrymme. Du har för närvarande {available} GiB kvar och behöver mer än 5 GiB för att fungera.",
+      "lowQuotaMigratingMessage": "Din appbox kommer inte att migreras förrän du frigör utrymme. Du har för närvarande {available} GiB kvar och behöver mer än 5 GiB för att migrera.",
+      "lowQuotaHint": "Använd File Explorer för att ta bort data, eller uppgradera till en större plan.",
+      "lowQuotaDeleteData": "Ta bort data",
+      "throttled": "Diskgenomströmning strypt",
+      "throttledMessage": "Din appbox har använt över {percent}% av diskhastigheten under en längre period. Rättvis användnings-strypning har tillämpats.",
+      "throttledHint": "Gränsen upphör automatiskt. För att förhindra framtida strypning, minska samtidiga överföringar, aktivera köhantering eller schemalägg intensiva jobb utanför högtrafik.",
+      "throttleLevel": "Strypningsnivå",
+      "throttleRate": "Hastighet (MB/s)",
+      "throttleIops": "IOPS",
+      "throttleExpires": "Upphör",
+      "throttleTopApp": "App med högst användning",
+      "throttleTopProcess": "Process med högst användning",
+      "suspended": "Appbox avstängd",
+      "suspendedMessage": "Din appbox är för närvarande avstängd. Kontakta support om du tror att detta är ett misstag.",
+      "offline": "Appbox offline",
+      "offlineMessage": "Din appbox är för närvarande offline.",
+      "upgradePlan": "Uppgradera plan",
+      "viewApp": "Visa",
+      "noAlerts": "Inga aktiva varningar",
+      "noApps": "Inga appar installerade på denna appbox.",
+      "backToAppboxes": "Appboxar",
+      "notFound": "Appbox hittades inte",
+      "notFoundDescription": "Den begärda appboxen kunde inte hittas.",
+      "bandwidth": "Bandbredd",
+      "uploadUsed": "Använd uppladdning",
+      "downloadUsed": "Använd nedladdning",
+      "restart": "Starta om",
+      "restartTitle": "Starta om Appbox",
+      "restartDescription": "Detta startar om din Appbox. Alla installerade appar kommer att vara offline tills omstarten är klar.",
+      "cancel": "Avbryt"
+    },
+    "fileExplorer": {
+      "title": "File Explorer",
+      "upload": "Ladda upp",
+      "newFolder": "Ny mapp",
+      "rename": "Byt namn",
+      "delete": "Ta bort",
+      "download": "Ladda ner",
+      "name": "Namn",
+      "size": "Storlek",
+      "modified": "Ändrad",
+      "type": "Typ",
+      "emptyDirectory": "Den här mappen är tom",
+      "emptyDirectoryDescription": "Ladda upp filer eller skapa en ny mapp för att komma igång.",
+      "newFolderTitle": "Ny mapp",
+      "newFolderPlaceholder": "Mappnamn",
+      "newFolderDescription": "Ange ett namn för den nya mappen.",
+      "renameTitle": "Byt namn",
+      "renamePlaceholder": "Nytt namn",
+      "renameDescription": "Ange ett nytt namn.",
+      "deleteTitle": "Ta bort",
+      "deleteDescription": "Är du säker på att du vill ta bort \"{name}\"? Den här åtgärden kan inte ångras.",
+      "create": "Skapa",
+      "cancel": "Avbryt",
+      "save": "Spara",
+      "confirm": "Bekräfta",
+      "uploading": "Laddar upp...",
+      "uploadSuccess": "Filerna laddades upp",
+      "uploadError": "Det gick inte att ladda upp filer",
+      "createFolderSuccess": "Mappen skapades",
+      "createFolderError": "Det gick inte att skapa mapp",
+      "renameSuccess": "Namnet ändrades",
+      "renameError": "Det gick inte att byta namn",
+      "deleteSuccess": "Borttaget",
+      "deleteError": "Det gick inte att ta bort",
+      "dropFilesHere": "Släpp filer här för att ladda upp",
+      "root": "Hem",
+      "listView": "Listvy",
+      "gridView": "Rutnätsvy"
+    },
+    "installedApps": {
+      "title": "Installerade appar",
+      "description": "Hantera appar installerade över dina Appboxar.",
+      "searchPlaceholder": "Sök efter namn, domän, appbox...",
+      "name": "Namn",
+      "domain": "Domän",
+      "version": "Version",
+      "slots": "Platser",
+      "slot": "plats",
+      "status": "Status",
+      "cylo": "Appbox",
+      "installedDate": "Installerad",
+      "empty": "Inga installerade appar hittades.",
+      "filterByStatus": "Status",
+      "filterByCylo": "Appbox",
+      "allCylos": "Alla Appboxar",
+      "bulkSelected": "{count} valda",
+      "bulkUnavailable": "{count, plural, one {# app otillgänglig} other {# appar otillgängliga}}"
+    },
+    "appDetail": {
+      "port": "Port",
+      "installDate": "Installationsdatum",
+      "server": "Server",
+      "customFields": "Konfiguration",
+      "actions": "Åtgärder",
+      "start": "Starta",
+      "stop": "Stoppa",
+      "restart": "Starta om",
+      "update": "Uppdatera",
+      "uninstall": "Avinstallera",
+      "switchVersion": "Byt version",
+      "boost": {
+        "title": "App-boost",
+        "description": "Boosta din app för att öka dess resurser. Du kan förhandsvisa justeringar nedan.",
+        "current": "Nuvarande boostplatser:",
+        "multiplier": "Multiplikator",
+        "preview": "Förhandsvisning",
+        "resourcePreview": "Resursförhandsvisning",
+        "slotCost": "Platskostnad",
+        "ram": "RAM",
+        "cpus": "CPU:er",
+        "apply": "Tillämpa boost",
+        "applying": "Tillämpar...",
+        "dockerLive": "Docker-appresurser tillämpas live utan omstart.",
+        "vmRestart": "VM-boostar kräver omstart för att tillämpa uppdaterade resurser.",
+        "getMore": "Vill du ha mer boost? Uppgradera din plan"
+      },
+      "freeze": "Frys",
+      "unfreeze": "Lås upp",
+      "confirmFreeze": "Om du fryser den här appen stoppas den och dess appplatser frigörs. Du kan låsa upp den senare för att återställa den.",
+      "confirmUnfreeze": "Om du låser upp den här appen kommer den att använda appplatser igen. Fortsätta?",
+      "confirmUninstall": "Är du säker på att du vill avinstallera den här appen? Den här åtgärden kan inte ångras.",
+      "pinApp": "Fäst app",
+      "unpinApp": "Lossa app",
+      "backToInstalledApps": "Installerade appar",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appboxar",
+      "backToDashboard": "Dashboard",
+      "notFound": "Installerad app hittades inte",
+      "notFoundDescription": "Den begärda installerade appen kunde inte hittas.",
+      "version": "Version",
+      "cylo": "Appbox",
+      "appNote": "Appanteckning",
+      "appInfo": "Appinformation",
+      "running": "Körs",
+      "stopped": "Stoppad",
+      "configuringApp": "Konfigurerar {appName}...",
+      "sendingInstallPayload": "Skickar installationspayload till din appbox...",
+      "sendingUpdatePayload": "Skickar uppdateringspayload till din appbox...",
+      "tabOverview": "Översikt",
+      "tabPorts": "Portar",
+      "tabConsole": "Konsol",
+      "consoleTitle": "VM-konsol",
+      "consoleUnavailable": "Konsolen är endast tillgänglig när denna VM körs och är aktiverad.",
+      "consoleLoading": "Laddar anslutningsuppgifter för konsol...",
+      "consoleLoadError": "Det gick inte att läsa in anslutningsuppgifter för konsol.",
+      "consolePortsMissing": "Console WebSocket endpoint är inte tillgänglig för denna VM.",
+      "consoleConnecting": "Ansluter...",
+      "consoleConnected": "Ansluten",
+      "consoleDisconnected": "Frånkopplad",
+      "consoleConnectionError": "Anslutningen misslyckades",
+      "consoleReconnect": "Anslut igen",
+      "consoleWebsocketEndpoint": "WebSocket endpoint",
+      "portAssignments": "Porttilldelningar",
+      "internalIp": "Intern IP",
+      "hostIp": "Värd-IP",
+      "internalPort": "Intern port",
+      "hostPort": "Värdport",
+      "protocol": "Protokoll",
+      "noPortAssignments": "Inga porttilldelningar hittades.",
+      "searchPorts": "Sök portar...",
+      "customDomainsTitle": "Egna domäner",
+      "customDomainsDescription": "Egna domäner konfigurerade för den här appen.",
+      "customDomainsAdd": "Lägg till domän",
+      "customDomainsAddTitle": "Lägg till egen domän",
+      "customDomainsAddDescription": "Koppla en egen domän till den här installerade appen.",
+      "customDomainsDomain": "Domän",
+      "customDomainsPrimary": "Primär",
+      "customDomainsPrimaryYes": "Ja",
+      "customDomainsPrimaryNo": "Nej",
+      "customDomainsAdded": "Tillagd",
+      "customDomainsConfig": "Konfig",
+      "customDomainsViewConfig": "Visa konfig",
+      "customDomainsActions": "Åtgärder",
+      "customDomainsSearch": "Sök domäner...",
+      "customDomainsEmpty": "Inga egna domäner hittades.",
+      "customDomainsParentDomain": "Föräldradomän",
+      "customDomainsLoadingDomains": "Laddar domäner...",
+      "customDomainsSelectDomain": "Välj en domän",
+      "customDomainsSubdomain": "Subdomän",
+      "customDomainsDomainSuffix": ".example.com",
+      "customDomainsCancel": "Avbryt",
+      "customDomainsSave": "Lägg till domän",
+      "customDomainsDelete": "Ta bort domän",
+      "customDomainsDeleteTitle": "Ta bort domän",
+      "customDomainsDeleteDescription": "Är du säker på att du vill ta bort den här domänen?",
+      "customDomainsVmRestartWarning": "Om du använder en föräldradomän annan än din user.appboxes.co-domän startas din VM om.",
+      "customDomainsClose": "Stäng",
+      "customDomainsConfigTitle": "SSL-konfiguration för {domain}",
+      "customDomainsConfigDescription": "Kopiera rätt snippet till din webbserverkonfiguration.",
+      "customDomainsSslQueued": "HTTPS för egna domäner utfärdas i bakgrunden och kan ta några minuter att bli aktivt efter att domänen har lagts till.",
+      "customDomainsWildcardSsl": "Den här domänen använder ett befintligt wildcard SSL-certifikat.",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "Fil",
+      "customDomainsConfigSnippet": "Konfiguration",
+      "customDomainsReloadCommand": "Omladdningskommando",
+      "customDomainsNotes": "Anteckningar",
+      "customDomainsCopy": "Kopiera",
+      "customDomainsCopied": "Kopierat!",
+      "customDomainsSubdomainRequired": "Subdomän krävs.",
+      "customDomainsParentDomainRequired": "Välj en föräldradomän.",
+      "customDomainsSubdomainInvalid": "Endast bokstäver, siffror och bindestreck är tillåtna (får inte börja eller sluta med bindestreck).",
+      "customDomainsSubdomainLength": "Subdomänen måste vara mellan 2 och 30 tecken.",
+      "customDomainsSubdomainInUse": "Den här subdomänen används redan. Prova en annan.",
+      "customDomainsSubdomainValidateFailed": "Det går inte att validera subdomänen just nu.",
+      "customDomainsDnsNotVerified": "DNS pekar inte mot rätt server ännu.",
+      "customDomainsDnsNotVerifiedExpected": "DNS pekar inte mot rätt server. Förväntad IP: {ip}",
+      "customDomainsDnsCheckFailed": "Det går inte att verifiera DNS just nu.",
+      "customDomainsAddFailed": "Det gick inte att lägga till egen domän.",
+      "customDomainsDeleteFailed": "Det gick inte att ta bort domänen.",
+      "customDomainsConfigNotAvailable": "Konfigurationssnippets är inte tillgängliga för den här domänen.",
+      "customDomainsConfigFetchFailed": "Det gick inte att läsa in konfigurationssnippets.",
+      "customTablesTitle": "Apptabeller",
+      "customTablesLoading": "Laddar anpassade tabeller...",
+      "customTablesRowsUsage": "Använder {current} av {max} rader",
+      "customTablesAdd": "Lägg till rad",
+      "customTablesAddTitle": "Lägg till rad i {label}",
+      "customTablesAddDescription": "Skapa en ny radpost.",
+      "customTablesEditTitle": "Redigera rad i {label}",
+      "customTablesEditDescription": "Uppdatera de valda radvärdena.",
+      "customTablesDeleteTitle": "Ta bort rad",
+      "customTablesDeleteDescription": "Är du säker på att du vill ta bort den här raden?",
+      "customTablesDelete": "Ta bort",
+      "customTablesSave": "Spara",
+      "customTablesUpdate": "Uppdatera",
+      "customTablesCancel": "Avbryt",
+      "customTablesActions": "Åtgärder",
+      "customTablesSearch": "Sök {label}...",
+      "customTablesEmpty": "Inga rader hittades.",
+      "customTablesEnabled": "Aktiverad",
+      "customTablesDisabled": "Inaktiverad",
+      "customTablesValidationRequired": "Det här fältet krävs.",
+      "customTablesValidationAlphanumeric": "Endast bokstäver och siffror är tillåtna.",
+      "customTablesValidationComplexPassword": "Måste innehålla gemen, versal, siffra och specialtecken.",
+      "customButtonValidation": {
+        "required": "Det här fältet krävs.",
+        "alphanumeric": "Endast bokstäver och siffror är tillåtna.",
+        "notOnlyAlpha": "Inkludera minst en siffra eller symbol.",
+        "lowercase": "Inkludera minst en gemen bokstav.",
+        "uppercase": "Inkludera minst en versal bokstav.",
+        "number": "Inkludera minst en siffra.",
+        "specialChar": "Inkludera minst ett specialtecken.",
+        "invalidEmail": "Ange en giltig e-postadress.",
+        "invalidDate": "Ange ett giltigt datum.",
+        "minLength": "Måste vara minst {count} tecken.",
+        "maxLength": "Måste vara högst {count} tecken.",
+        "invalidFormat": "Ogiltigt format."
+      },
+      "customTablesAddSuccess": "Raden har lagts till.",
+      "customTablesEditSuccess": "Raden har uppdaterats.",
+      "customTablesDeleteSuccess": "Raden har tagits bort.",
+      "customTablesAddFailed": "Det gick inte att lägga till rad.",
+      "customTablesEditFailed": "Det gick inte att uppdatera rad.",
+      "customTablesDeleteFailed": "Det gick inte att ta bort rad."
+    },
+    "domains": {
+      "title": "Egna domäner",
+      "pageDescription": "Egna domäner som du har lagt till i dina installerade appar.",
+      "domain": "Domän",
+      "type": "Typ",
+      "typeManaged": "Hanterad",
+      "typeCustom": "Egen",
+      "typeBase": "Bas",
+      "app": "App",
+      "server": "Server",
+      "createdAt": "Skapad",
+      "cylo": "Appbox",
+      "confirmDelete": "Är du säker på att du vill ta bort den här domänen?",
+      "deleteDomain": "Ta bort domän",
+      "deleteBlockedHasChildren": "Kan inte ta bort - den här domänen har subdomäner som använder den. Ta bort dem först.",
+      "reverifyDns": "Verifiera DNS igen",
+      "emptyTitle": "Inga egna domäner än",
+      "emptyDescription": "Egna domäner kan läggas till när du installerar en app. Endast de visas här, plattformsdomäner hanteras automatiskt.",
+      "goToAppStore": "Gå till App Store",
+      "dnsVerified": "DNS pekar korrekt.",
+      "dnsNotVerified": "DNS pekar inte mot rätt IP.",
+      "expectedIp": "Förväntad: {ip}",
+      "cancel": "Avbryt",
+      "searchPlaceholder": "Sök domäner..."
+    }
+  },
+  "account": {
+    "title": "Konto",
+    "profile": {
+      "title": "Profil",
+      "description": "Hantera ditt visningsnamn, e-post, avatar, lösenord och kontosäkerhetsinställningar.",
+      "email": "E-post",
+      "alias": "Visningsnamn",
+      "aliasPlaceholder": "Ange visningsnamn",
+      "save": "Spara ändringar",
+      "memberSince": "Medlem sedan",
+      "twoFactorStatus": "Tvåfaktorsautentisering",
+      "twoFactorEnabled": "Aktiverad",
+      "twoFactorDisabled": "Inte aktiverad",
+      "enable2FA": "Aktivera 2FA",
+      "manage2FA": "Hantera 2FA"
+    },
+    "password": {
+      "title": "Ändra lösenord",
+      "current": "Nuvarande lösenord",
+      "new": "Nytt lösenord",
+      "confirm": "Bekräfta nytt lösenord",
+      "change": "Ändra lösenord",
+      "success": "Lösenordet har ändrats",
+      "successSigningOut": "Lösenordet har ändrats. Loggar ut dig från alla sessioner...",
+      "sessionWarning": "När du ändrar lösenord loggas du omedelbart ut från alla aktiva sessioner på alla enheter.",
+      "mismatch": "Lösenorden matchar inte",
+      "minLength": "Lösenordet måste vara minst 8 tecken"
+    },
+    "abuse": {
+      "title": "Missbruksrapporter",
+      "headerDescription": "Granska missbruksrapporter kopplade till ditt konto och följ deras aktuella status.",
+      "id": "ID",
+      "subject": "Ämne",
+      "searchPlaceholder": "Sök rapporter...",
+      "status": "Status",
+      "date": "Datum",
+      "description": "Beskrivning",
+      "complainant": "Anmälare",
+      "adminResponse": "Adminsvar",
+      "noReports": "Inga missbruksrapporter hittades.",
+      "statusOpen": "Öppen",
+      "statusResolved": "Löst",
+      "statusClosed": "Stängd",
+      "backToList": "Tillbaka till missbruksrapporter",
+      "detailDescription": "Följ rapportens tidslinje, anmälaruppgifter och eventuella svar från Appbox-teamet.",
+      "reportDetails": "Rapportdetaljer",
+      "conversation": "Konversation"
+    },
+    "twoFactor": {
+      "title": "Tvåfaktorsautentisering",
+      "description": "Skydda ditt konto med verifiering via autentiseringsapp och reservkoder för återställning.",
+      "setup": "Konfigurera 2FA",
+      "scanQR": "Skanna den här QR-koden med din autentiseringsapp",
+      "secretKey": "Eller ange den här hemliga nyckeln manuellt:",
+      "enterCode": "Ange den 6-siffriga koden från din autentiseringsapp",
+      "codePlaceholder": "000000",
+      "verify": "Verifiera",
+      "backupCodes": "Reservkoder",
+      "backupCodesDescription": "Spara dessa reservkoder på en säker plats. Varje kod kan bara användas en gång.",
+      "newRecoveryCodes": "Nya återställningskoder",
+      "newRecoveryCodesDescription": "Spara dessa ersättningskoder nu. Dina tidigare återställningskoder fungerar inte längre.",
+      "copyAll": "Kopiera alla",
+      "copied": "Kopierat!",
+      "done": "Klart",
+      "disable": "Inaktivera 2FA",
+      "disableWarning": "Om du inaktiverar 2FA blir ditt konto mindre säkert.",
+      "disableConfirm": "Ange ditt lösenord för att inaktivera 2FA",
+      "disabled": "2FA har inaktiverats",
+      "generating": "Genererar...",
+      "verifying": "Verifierar...",
+      "next": "Nästa",
+      "back": "Tillbaka"
+    },
+    "apiKeys": {
+      "title": "API-nycklar",
+      "description": "Skapa och hantera API-nycklar på kontonivå. API-nycklar autentiseras som din användare och har samma åtkomst som ditt konto.",
+      "create": "Skapa API-nyckel",
+      "createTitle": "Skapa API-nyckel",
+      "createDescription": "Ge den här nyckeln ett igenkännbart namn. Hemligheten visas bara en gång.",
+      "name": "Namn",
+      "namePlaceholder": "Automatiseringsskript",
+      "expiresAt": "Upphör",
+      "optional": "Valfritt",
+      "never": "Aldrig",
+      "created": "Skapad",
+      "lastUsed": "Senast använd",
+      "status": "Status",
+      "active": "Aktiv",
+      "revoked": "Återkallad",
+      "expired": "Utgången",
+      "prefix": "Prefix",
+      "actions": "Åtgärder",
+      "rename": "Byt namn",
+      "revoke": "Återkalla",
+      "revokeTitle": "Återkalla API-nyckel",
+      "revokeDescription": "Detta inaktiverar API-nyckeln omedelbart. Begäranden som använder den slutar fungera.",
+      "secretTitle": "Spara din API-nyckel",
+      "secretDescription": "Kopiera den här nyckeln nu. Du kommer inte att kunna visa den igen.",
+      "copy": "Kopiera",
+      "copied": "Kopierat!",
+      "close": "Stäng",
+      "cancel": "Avbryt",
+      "save": "Spara",
+      "confirmRevoke": "Återkalla nyckel",
+      "noKeys": "Inga API-nycklar än.",
+      "loadFailed": "Det gick inte att läsa in API-nycklar.",
+      "createSuccess": "API-nyckel skapad.",
+      "createFailed": "Det gick inte att skapa API-nyckel.",
+      "updateSuccess": "API-nyckel uppdaterad.",
+      "updateFailed": "Det gick inte att uppdatera API-nyckel.",
+      "revokeSuccess": "API-nyckel återkallad.",
+      "revokeFailed": "Det gick inte att återkalla API-nyckel."
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "nyss",
+      "minutesAgo": "{count} min sedan",
+      "hoursAgo": "{count} tim sedan",
+      "daysAgo": "{count} d sedan"
+    },
+    "errors": {
+      "loadFailed": "Det gick inte att läsa in data. Försök igen.",
+      "loadServicesFailed": "Det gick inte att läsa in tjänster. Försök igen.",
+      "loadAppsFailed": "Det gick inte att läsa in appar.",
+      "loadNotificationsFailed": "Det gick inte att läsa in notiser.",
+      "loadBlogFailed": "Det gick inte att läsa in blogginlägg.",
+      "loadAppboxesFailed": "Det gick inte att läsa in appboxar. Försök igen.",
+      "loadProfileFailed": "Det gick inte att läsa in profilen. Försök igen."
+    },
+    "empty": {
+      "noServices": "Inga tjänster hittades. Besök faktureringsportalen för att komma igång.",
+      "noApps": "Inga nya appar tillgängliga.",
+      "noRecentlyUpdated": "Inga nyligen uppdaterade appar.",
+      "noBlogPosts": "Inga blogginlägg tillgängliga.",
+      "noAppboxes": "Besök faktureringsportalen för att komma igång.",
+      "noMatchingAppboxes": "Inga appboxar matchar dina filter."
+    },
+    "toast": {
+      "displayNameUpdated": "Visningsnamn uppdaterat",
+      "displayNameFailed": "Det gick inte att uppdatera visningsnamn"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Startar om",
+      "migrating": "Migrerar",
+      "installing": "Installerar",
+      "suspended": "Avstängd",
+      "frozen": "Fryst",
+      "throttled": "Strypt",
+      "lowQuota": "Låg kvot"
+    }
+  }
+}

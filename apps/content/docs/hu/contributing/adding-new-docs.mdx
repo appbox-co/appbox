@@ -1,0 +1,65 @@
+---
+title: Új dokumentumok hozzáadása
+description: Új dokumentumok hozzáadása a dokumentációs webhelyhez és a bloghoz.
+sort: 2
+---
+
+# Dokumentációhoz
+
+1. Hozz létre egy új `.mdx` fájlt az `apps/content/docs/[language]` mappában a dokumentumod tartalmával.
+2. Add hozzá a dokumentumot a webhely navigációs menüjéhez.
+    Ehhez adj hozzá egy új elemet a `src/config/docs.ts` fájl `sidebarNav` tulajdonságához a kívánt adatokkal, az előző elemek mintáját követve. Ezzel a dokumentum a keresési parancspalettába is bekerül.
+
+## MDX dokumentumbeállítások
+
+Az MDX dokumentumok az `apps/content/docs/[language]` és az `apps/content/blog/[language]` mappában találhatók. Minden dokumentum egy MDX fájl, amely metaadatokat tartalmazó fejlécet tartalmaz, például címet és leírást. Alább egy példa látható a dokumentum fejlécére:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+A következő metaadatmezők támogatottak:
+
+- `title` (kötelező): A dokumentum címe.
+- `description` (kötelező): A dokumentum rövid leírása.
+- `sort` (opcionális): Egy szám, amely meghatározza a dokumentum sorrendjét a navigációban. Az alacsonyabb `sort` értékű dokumentumok jelennek meg előbb. Ha nincs megadva, a dokumentumok cím szerint, ábécésorrendben rendeződnek.
+- `links` (opcionális): Kapcsolódó dokumentumokra, API referenciákra, forráskódra stb. mutató hivatkozások.
+- `toc` (opcionális): Megjelenjen-e a tartalomjegyzék. Alapértelmezés szerint `true`.
+
+Ha új metaadatot szeretnél hozzáadni a dokumentumhoz, új kulcsokat adhatsz a fejléchez. Például hozzáadhatsz egy `author` kulcsot a dokumentum szerzőjének jelzésére:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Egyéni metaadat hozzáadásakor azonban frissítened kell a projekt gyökerében található `contentlayer.config.ts` fájlt is, a `Doc` vagy `Blog` konstansok `fields` tulajdonságán belül.
+Ezután meg kell jelenítened az új információt a dokumentumsablonban. Ehhez frissítened kell a `src/app/[locale]/docs/[[...slug]]/page.tsx` fájlt, vagy a `src/app/[locale]/blog/[[...slug]]/page.tsx` fájlt, illetve annak valamelyik gyermekkomponensét.
+
+## Contentlayer újraépítése
+
+Amikor módosítod a dokumentációs tartalmat, új dokumentumokat adsz hozzá, vagy módosítod a `contentlayer.config.ts` fájlt, újra kell építened a contentlayer gyorsítótárat, hogy a változtatások fejlesztés közben érvénybe lépjenek. Futtasd:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Ez a parancs újragenerálja az alkalmazás számára szükséges tartalomtípusokat és adatokat. Ezt a parancsot minden alkalommal futtatnod kell, amikor:
+
+- Új metaadatmezőket adsz a `contentlayer.config.ts` fájlhoz
+- MDX tartalmat adsz hozzá vagy módosítasz, miközben a fejlesztői szerver nem fut
+- Megváltoztatod a tartalomszervezés szerkezetét
+
+A parancs automatikusan lefut a projekt éles buildelésekor, de fejlesztés közben manuálisan kell futtatnod, ha strukturális módosításokat végzel a tartalomban.
+
+
+

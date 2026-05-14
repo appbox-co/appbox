@@ -125,9 +125,15 @@ export default async function DocPage(props: DocPageProps) {
     const docsInLocale = allDocs.filter((doc) =>
       doc.slugAsParams.startsWith(params.locale || "en")
     )
+    const docsToDisplay =
+      docsInLocale.length > 0
+        ? docsInLocale
+        : allDocs.filter((doc) =>
+            doc.slugAsParams.startsWith(routing.defaultLocale)
+          )
 
     // First pass to identify sections and their first documents
-    docsInLocale.forEach((doc) => {
+    docsToDisplay.forEach((doc) => {
       const [, section, ...rest] = doc.slugAsParams.split("/")
 
       if (section) {

@@ -1,0 +1,77 @@
+---
+title: "Launch Week Day 2 - App Boost"
+date: 2026-03-10 10:00:00
+excerpt: "Day 2 ของ Launch Week ขอแนะนำ App Boost วิธีใหม่ในการเพิ่ม resources ให้ app ของคุณโดยไม่ต้องอัปเกรด plan"
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, performance, resources]
+---
+
+# Launch Week Day 2: ขอแนะนำ App Boost
+
+Day 2 มาคุยเรื่อง resources กัน
+
+หนึ่งในคำถามที่เราได้ยินบ่อยที่สุดคือคำถามประมาณว่า "จะเพิ่ม RAM ให้ app นี้ได้อย่างไร?" หรือ "ทำให้ app เดียวนี้เร็วขึ้นโดยไม่ต้องอัปเกรดทั้ง plan ได้ไหม?" จนถึงวันนี้ คำตอบมักเป็น: อัปเกรด plan หรือใช้เท่าที่มี
+
+ตอนนี้สิ่งนั้นเปลี่ยนแล้ว วันนี้เราเปิดตัว **App Boost**
+
+## App Boost คืออะไร?
+
+App Boost ช่วยให้คุณจัดสรร resources เพิ่มให้ app แต่ละตัวโดยใช้ app slots ที่มีอยู่ แทนที่ทุก app จะได้รับส่วนแบ่ง resources แบบคงที่จาก Appbox ของคุณ ตอนนี้คุณสามารถเลื่อน boost level บน app ใดก็ได้เพื่อเพิ่มการจัดสรร CPU และ RAM
+
+แนวคิดเรียบง่าย: คุณน่าจะมี app บางตัวที่ต้องการพลังมากขึ้น และ app บางตัวที่ใช้ขั้นต่ำก็เพียงพอ Boost ให้คุณนำ capacity ที่ไม่ได้ใช้จาก plan ของคุณไปวางไว้ตรงที่สำคัญจริง ๆ
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="controls ของ App Boost บนหน้า app detail" width="860" className="mt-8 mb-10" />
+</p>
+
+## วิธีการทำงาน
+
+Appbox plan ทุก plan มาพร้อมจำนวน app slots แต่ละ app ที่คุณ install จะใช้บางส่วนของ slots เหล่านั้น ด้วย App Boost คุณสามารถกำหนด slots เพิ่มให้ app เพื่อเพิ่ม resource multiplier ได้
+
+สิ่งที่คุณกำลังควบคุมจริง ๆ คือ:
+
+- **Boost Slots**: จำนวน slot เพิ่มเติมที่คุณจัดสรรให้ app นี้ แต่ละ slot เพิ่ม resource multiplier ตาม increment คงที่ (โดยทั่วไป 0.1x ต่อ slot)
+- **Multiplier**: factor การ scale resource ที่ได้ เมื่อมี 0 boost slots คุณอยู่ที่ 1.0x (baseline) เลื่อนขึ้นแล้วคุณสามารถดัน app ไปที่ 1.3x, 2x หรือสูงกว่านั้นได้ตาม plan ของคุณ
+- **RAM and CPUs**: ค่าเหล่านี้อัปเดตแบบ real time ขณะที่คุณลาก slider คุณจึงเห็นได้ชัดเจนว่า app จะได้ memory และ CPU เท่าไรก่อนยืนยัน
+- **Slot Cost**: แสดงจำนวน slots รวมที่ app จะใช้ (base cost บวก boost slots) เพื่อให้คุณรู้ trade-off เสมอ
+
+slider จะแสดง marker ตาม milestone ที่ค่า multiplier เต็ม (2x, 3x ฯลฯ) และยังยิง confetti เล็ก ๆ เมื่อคุณแตะ milestone เหล่านั้น เราอดใจไม่ไหวจริง ๆ
+
+## Boost ตั้งแต่ตอน Install
+
+คุณไม่จำเป็นต้องรอจน app ถูกติดตั้งแล้วค่อย boost slider ของ boost ถูก built right into install dialog เพื่อให้คุณเลือกระดับ resource ได้ก่อนที่ app จะเริ่มทำงานด้วยซ้ำ
+
+สิ่งนี้มีประโยชน์เป็นพิเศษสำหรับ app ที่หนักกว่า เช่น OSes หรือ media servers ซึ่งคุณรู้ล่วงหน้าว่าจะได้ประโยชน์จาก resources เพิ่มเติม
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="boost slider ใน app install dialog" width="560" className="mt-8 mb-10" />
+</p>
+
+## Boost หลัง Install
+
+มี app ที่รันอยู่แล้ว? เปิดหน้า detail ของ app ใดก็ได้ แล้วคุณจะพบการ์ด App Boost อยู่ตรงนั้น ลาก slider, preview resources แล้วกด Apply Boost
+
+การเปลี่ยน resources จะถูกใช้แบบ live โดยไม่ต้อง restart
+
+## แล้ว app เดิมล่ะ?
+
+หากคุณมี app ที่ติดตั้งไว้ก่อนวันนี้ app เหล่านั้นจะยังคงใช้ระบบ resource multiplier เดิมเหมือนที่ผ่านมา App Boost จะเปิดใช้สำหรับ app ที่ติดตั้งใหม่ตั้งแต่นี้เป็นต้นไป เราต้องการ rollout สิ่งนี้อย่างสะอาดโดยไม่รบกวนสิ่งที่กำลังทำงานอยู่แล้ว
+
+## ต้องการ Boost มากขึ้น?
+
+boost สูงสุดที่คุณใช้ได้ขึ้นอยู่กับ slots ที่ว่างใน plan ของคุณ หากพื้นที่ไม่พอและต้องการดันต่อ การอัปเกรด plan จะให้ slots มากขึ้นสำหรับใช้งาน มี link อัปเกรดอยู่ใน boost UI ที่พาคุณตรงไปยังพื้นที่ billing
+
+## ตัวอย่าง Resource
+
+หนึ่งในรายละเอียดที่ผมพอใจที่สุดคือ panel Resource Preview ที่อยู่ใต้ slider มันแสดง multiplier, slot cost, RAM และ CPUs โดยอัปเดตทั้งหมดแบบ real time ขณะที่คุณลาก ไม่มีการเดา ไม่มี surprise คุณรู้ชัดเจนว่า app ของคุณจะได้อะไรบ้างก่อนใช้การเปลี่ยนแปลงใด ๆ
+
+## Day 2 พร้อมใช้งานแล้ว
+
+App Boost พร้อมใช้งานแล้วตอนนี้สำหรับ app ที่ติดตั้งใหม่ทั้งหมด Log in, install app แล้วลอง slider ได้เลย
+
+พรุ่งนี้คือ Day 3 และเรามีของใหญ่ไว้ให้เจอ แล้วพบกัน
+
+---
+
+*มี feedback หรือพบปัญหาไหม? ติดต่อ support@appbox.co หรือเปิด ticket ที่ [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

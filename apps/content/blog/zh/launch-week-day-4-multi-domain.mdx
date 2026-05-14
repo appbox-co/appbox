@@ -1,0 +1,81 @@
+---
+title: Launch Week 第 4 天 - VPS 应用支持多个域名
+date: 2026-03-12 10:00:00
+excerpt: Launch Week 第 4 天。VPS 应用现在支持多个域名，可以按需添加任意数量的自定义域名和 Appbox 子域名，并全部自动配置 SSL。
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week 第 4 天：VPS 应用支持多个域名
+
+第 4 天。昨天我们给了你完整虚拟机。今天我们给它们补上真正的域名支持。
+
+第 3 天发布 VPS 时，每台 VM 都获得一个域名。这对很多使用场景已经够用，但如果你在 VPS 内运行 Web server，而你们很多人确实会这样做，单个域名就不够了。你需要多个域名指向同一台机器，每个域名都有自己的 SSL certificate 和 Web server 配置。
+
+今天，VPS 应用支持**多个域名**。你可以添加任意数量的 `*.user.appboxes.co` 子域名，接入自己的自定义域名，或者两者混用。每个域名都会获得 SSL 和可直接使用的 Web server 配置。
+
+## 工作方式
+
+打开任意正在运行的 VPS 应用，你会在详情页看到 **Custom Domains** 卡片。所有域名都会显示在这里：一个可搜索、可排序的表格，展示附加到该 VPS 的每个域名、哪个是主域名，以及添加时间。
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="VPS 应用详情页上的 Custom Domains 表格" width="860" className="mt-8 mb-10" />
+</p>
+
+要添加新域名，点击 **Add Domain**。你会选择一个 parent domain 并输入 subdomain，系统会处理剩下的部分。
+
+## Appbox 子域名
+
+添加域名最快的方式，是使用你现有的 Appbox 域名。选择你的 `user.appboxes.co` 域名作为 parent，输入一个 subdomain，就完成了。DNS 已经替你处理好，域名会立即验证通过。
+
+这非常适合快速创建项目 URL、staging environments，或者给 VPS 上的不同服务分配各自地址。后端需要 `api.user.appboxes.co`，前端需要 `app.user.appboxes.co`？不到一分钟就能添加两个。
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="向 VPS 添加 Appbox 子域名" width="560" className="mt-8 mb-10" />
+</p>
+
+由于这些域名位于你现有的 Appbox wildcard certificate 之下，SSL 会自动可用。无需等待，无需生成证书，无需配置。
+
+## 自定义域名
+
+你也可以把自己的域名指向 VPS。选择你的 custom base domain（或直接从对话框添加新域名），输入 subdomain，UI 会引导你完成 DNS 设置。
+
+对话框会显示需要创建的精确 A record：hostname、IP address，全部都有。它甚至为 Cloudflare 和其他常见 DNS providers 提供 provider-specific instructions，所以你不必自己查如何添加 A record。
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="添加带 DNS 验证和 provider-specific instructions 的自定义域名" width="560" className="mt-8 mb-10" />
+</p>
+
+当你的 DNS 指向正确 IP 后，点击 **Verify Again**，系统会在添加域名前确认记录正确。
+
+## SSL 和 Web Server 配置
+
+你添加的每个域名都会获得 SSL。对 Appbox 子域名，它会使用现有 wildcard certificate。对自定义域名，证书会自动签发。
+
+真正让它对 VPS 用户有用的部分是：每个域名都带有 **View Config** 按钮，可提供 Nginx 和 Apache 的可直接粘贴配置片段。配置包含正确的 `server_name`、SSL certificate paths、cipher suites 和 protocol settings。复制片段，放入 VM 内的 Web server 配置，reload，然后你就能通过该域名提供流量。
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="Nginx 和 Apache 的 SSL 配置片段" width="560" className="mt-8 mb-10" />
+</p>
+
+无需猜文件路径。无需寻找证书位置。无需琢磨 cipher strings。全都在那里，可以直接复制。
+
+## 为什么这对 VPS 用户很重要
+
+没有多域名支持的 VPS，只是一台带一个地址的服务器。这种限制很快就会变得明显：
+
+- 你在运行一个带独立 API 的 Web app？至少需要两个域名。
+- 你在 VM 中托管多个站点？每个站点都需要自己的域名。
+- 你想在 production 旁边运行 staging environment？那又是一个域名。
+- 你在本地开发并想用真实域名测试？还要一个。
+
+## 第 4 天现已上线
+
+多域名支持现在已对所有 VPS 应用开放。打开你的 VPS，滚动到 Custom Domains，然后开始添加。
+
+明天是第 5 天，我们准备了一个惊喜。你绝对想不到。
+
+---
+
+*有反馈或发现问题？请通过 support@appbox.co 联系我们，或在 [billing.appbox.co](https://billing.appbox.co/submitticket.php) 提交工单。*

@@ -1,0 +1,183 @@
+---
+title: Programme Bug Bounty
+description: Notre programme de signalement des vulnérabilités de sécurité et ses récompenses
+---
+
+Chez Appbox, la sécurité est une priorité fondamentale. Nous encourageons activement les chercheurs en sécurité à renforcer notre plateforme en identifiant et signalant les vulnérabilités potentielles. Ce programme décrit notre approche de la recherche de sécurité responsable, la manière dont nous traitons les signalements de vulnérabilités et les récompenses que nous offrons aux chercheurs qui contribuent à améliorer notre posture de sécurité.
+
+## Notre engagement
+
+Lorsque vous participez à notre programme Bug Bounty, nous nous engageons à :
+
+* Accuser réception et évaluer votre rapport dans un délai raisonnable
+* Traiter les vulnérabilités confirmées avec l'urgence appropriée
+* Vous reconnaître et vous récompenser pour les vulnérabilités uniques, non signalées auparavant, qui entraînent des améliorations de sécurité
+
+## Périmètre du programme
+
+Ce programme Bug Bounty s'applique aux plateformes Appbox suivantes :
+
+* Site principal Appbox [https://www.appbox.co]
+* Panneau de contrôle Appbox [https://www.appbox.co/login]
+* Infrastructure d'hébergement Appbox [username.appboxes.co] - **Infrastructure uniquement, pas les applications clients**
+
+**Remarque :** bien que notre infrastructure d'hébergement (username.appboxes.co) soit incluse dans le périmètre, les vulnérabilités des applications tierces déployées par les clients ne le sont pas. Voir les exclusions ci-dessous.
+
+## Ce qui constitue une vulnérabilité valide
+
+Pour être éligible à notre programme Bug Bounty, une soumission doit respecter TOUS les critères suivants :
+
+### 1. Démontrer une exploitation réelle
+* Inclure une preuve de concept fonctionnelle démontrant que la vulnérabilité peut être exploitée
+* Montrer un impact de sécurité clair ; les vulnérabilités théoriques sans préjudice démontré ne sont pas éligibles
+* Prouver qu'un attaquant pourrait réellement compromettre des données utilisateur, des comptes ou l'intégrité du système
+
+### 2. Affecter des systèmes dans le périmètre
+* La vulnérabilité doit exister dans le code propriétaire ou l'infrastructure d'Appbox
+* Elle doit affecter des systèmes explicitement listés dans la section "Périmètre du programme" ci-dessus
+* Elle doit être reproductible sur nos environnements de production ou de staging
+
+### 3. Être non signalée auparavant
+* La vulnérabilité doit être nouvellement découverte et ne pas être déjà connue de nous
+* Les rapports dupliqués ou variantes de problèmes connus ne sont pas éligibles
+
+## Zones et problèmes exclus
+
+Les éléments suivants sont considérés comme **hors périmètre** de notre programme Bug Bounty :
+
+### Systèmes et intégrations tiers
+* WHMCS Client Area [https://billing.appbox.co] - À signaler à [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Widget de chat Chatwoot - À signaler à [Chatwoot Security](https://www.chatwoot.com/security)
+* **Applications déployées par les clients** [app.username.appboxes.co] - Les vulnérabilités dans les applications tierces (WordPress, Nextcloud, etc.) hébergées sur notre infrastructure doivent être signalées aux fournisseurs d'applications concernés
+* Tout autre service, plugin ou intégration tiers que nous utilisons
+* Adresses IP ou domaines non contrôlés directement par Appbox
+* Systèmes hérités ou dépréciés qui ne sont plus utilisés activement
+
+**Hors périmètre pour l'infrastructure d'hébergement :**
+* Vulnérabilités dans le code d'applications déployées par les clients (WordPress, Nextcloud, etc.)
+* Configurations par défaut d'applications tierces
+* Problèmes de sécurité propres à une version d'application particulière
+
+### En-têtes de sécurité et durcissement
+* En-têtes de sécurité manquants (X-Frame-Options, COOP, COEP, MTA-STS, etc.) **sauf** si vous démontrez une exploitation réelle entraînant une compromission de données
+* Attributs `rel="noopener"` ou `rel="noreferrer"` manquants
+* Divulgation de version serveur ou fuite d'informations dans les en-têtes HTTP
+* Attributs de cookies sur des cookies non sensibles (analytics, préférences, etc.)
+
+### Divulgation d'informations à faible impact
+* Messages d'erreur verbeux qui n'exposent pas de données sensibles (mots de passe, tokens, PII)
+* Divulgation de chemin sans traversée de chemin ou accès fichier démontré
+* Identification de stack technologique (version PHP, détection de framework, etc.)
+* Réponses ou comportements génériques d'application
+
+### Décisions de conception et problèmes théoriques
+* Login CSRF (ne donne pas à l'attaquant accès aux comptes des victimes)
+* Énumération d'utilisateurs via attaques temporelles ou réponses différentielles (sauf dans le cadre d'une chaîne d'attaque plus large)
+* Clickjacking sans exploitation démontrée d'une fonctionnalité sensible
+* Configurations CORS sur des endpoints non sensibles
+* Absence de limitation de débit **sauf** si vous démontrez un abus réel (le DoS reste exclu)
+
+### Prérequis d'attaque
+* Problèmes de sécurité qui n'affectent pas nos configurations d'application par défaut
+* Vulnérabilités nécessitant des configurations non standard
+* Vulnérabilités dans nos conteneurs nécessitant des configurations personnalisées ou modifiées
+* Problèmes nécessitant une compromission réseau (MITM, empoisonnement DNS, ARP spoofing)
+
+### Méthodes de test interdites
+* Attaques de divulgation d'informations basées sur le timing
+* Techniques d'énumération de processus
+* Toute forme de déni de service ou d'attaques à fort volume
+* Techniques d'ingénierie sociale et de phishing
+* Scans de sécurité automatisés générant un trafic ou une charge excessive
+* Tests de fonctionnalités ou pages non fonctionnelles (par exemple pages d'inscription pas encore en production)
+
+### Types de rapports invalides
+* Rapports basés uniquement sur la sortie d'un scanner automatisé sans validation manuelle
+* Recommandations génériques sans démonstration de vulnérabilités réelles
+* Suggestions de bonnes pratiques sans impact de sécurité
+* Observations de conformité (PCI-DSS, GDPR, etc.) sans démonstration d'exploitabilité
+
+## Structure des récompenses
+
+### Site principal et panneau de contrôle
+
+| **Type de vulnérabilité**                         | **Récompense PayPal** | **Crédit de service** |
+| ------------------------------------------------- | --------------------- | --------------------- |
+| XSS                                               | EUR 100               | EUR 200               |
+| XSS (contournement CSP)                           | EUR 200               | EUR 300               |
+| CSRF                                              | EUR 300               | EUR 450               |
+| Contournement d'authentification                  | EUR 500               | EUR 750               |
+| Injection SQL                                     | EUR 1000              | EUR 1500              |
+| Exécution de code arbitraire                      | EUR 1000              | EUR 1500              |
+| Exécution de code arbitraire (avec élévation de privilèges) | EUR 2000 | EUR 3000 |
+| Modification persistante du code                  | EUR 1000              | EUR 1500              |
+
+### Infrastructure d'hébergement
+
+| Type de vulnérabilité                             | Récompense PayPal | Crédit de service |
+| ------------------------------------------------- | ----------------- | ----------------- |
+| Contournement d'authentification (SSH, FTP, VPN, etc.) | EUR 500      | EUR 750           |
+| Contournement d'authentification pour apps prises en charge | EUR 100 | EUR 200      |
+| Élévation locale de privilèges                    | EUR 500           | EUR 750           |
+
+Les contributeurs qui signalent des vulnérabilités valides seront reconnus dans notre Security Researchers Hall of Fame en signe de gratitude.
+
+## Qualité requise des rapports
+
+Tous les rapports de vulnérabilité doivent inclure :
+
+* **Description claire de la vulnérabilité** - Expliquez ce qu'est la vulnérabilité et pourquoi elle compte
+* **Système/URL affecté** - Précisez exactement où la vulnérabilité existe
+* **Reproduction étape par étape** - Étapes détaillées nous permettant de reproduire le problème
+* **Preuve de concept fonctionnelle** - Démonstration fonctionnelle de l'exploitation (code, captures d'écran, vidéo)
+* **Impact de sécurité réel** - Démontrez ce qu'un attaquant pourrait accomplir, pas des possibilités théoriques
+* **Vos propres tests** - Validez les résultats manuellement, ne transmettez pas simplement la sortie d'un scanner
+
+Les rapports qui ne contiennent pas ces éléments ou qui se limitent à des recommandations de sécurité génériques ne seront pas éligibles à une récompense.
+
+## Réclamer votre récompense
+
+* Vous pouvez choisir entre deux options de récompense :  
+   * Paiement PayPal direct (nécessite un compte PayPal valide)
+   * Crédits de service Appbox (applicables à tout service Appbox, non transférables)
+
+## Consignes de participation
+
+* Respectez cette politique, nos [Conditions d'utilisation](/policies/terms-of-service) et toutes les lois applicables
+* Signalez les vulnérabilités rapidement après leur découverte
+* Respectez la confidentialité des utilisateurs et l'intégrité des systèmes pendant vos recherches
+* Soumettez tous les rapports de vulnérabilité exclusivement via notre [formulaire de contact](https://billing.appbox.co/contact.php)
+* Gardez les vulnérabilités découvertes confidentielles jusqu'à leur résolution
+* Limitez vos tests aux systèmes explicitement inclus dans ce programme
+* Si vous obtenez un accès inattendu à des données sensibles : n'accédez qu'au minimum nécessaire pour démontrer le problème, arrêtez immédiatement les tests et signalez rapidement la vulnérabilité
+* Utilisez uniquement vos propres comptes de test pour toute interaction avec nos systèmes
+* Ne tentez jamais d'extorquer Appbox sur la base de vos découvertes
+* **Vérifiez vos résultats** - Testez que votre preuve de concept fonctionne réellement avant de la soumettre
+* **Concentrez-vous sur l'impact** - Priorisez les vulnérabilités pouvant causer un préjudice réel plutôt que les problèmes théoriques
+
+## Protection juridique
+
+Les chercheurs en sécurité qui suivent cette politique peuvent s'attendre à :
+
+* Une protection contre les actions en justice pour les recherches de sécurité menées de bonne foi dans le cadre de ces consignes
+* Une exemption des réclamations juridiques anti-contournement lorsque cela est nécessaire pour une recherche de sécurité légitime
+* Une levée de certaines restrictions de politique qui empêcheraient autrement les tests de sécurité
+* La reconnaissance que la recherche de sécurité conforme est bénéfique et menée de bonne foi
+
+Vous restez responsable du respect de toutes les lois applicables. Si vous faites face à une action en justice d'un tiers alors que vous respectiez cette politique, nous confirmerons que vos actions ont été menées conformément à notre programme. Si vous n'êtes pas certain que vos activités de recherche prévues respectent cette politique, contactez-nous via le [formulaire de contact](https://billing.appbox.co/contact.php) avant de continuer.
+
+## Processus de signalement
+
+Pour signaler une vulnérabilité, créez un ticket détaillé via notre [formulaire de contact](https://billing.appbox.co/contact.php).
+
+* Votre rapport doit inclure des étapes complètes pour reproduire la vulnérabilité. Vous pouvez utiliser ce modèle comme guide : [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Toutes les communications du programme doivent passer par notre plateforme officielle de tickets de support
+* La divulgation publique de toute vulnérabilité sans autorisation écrite explicite d'Appbox viole les conditions de ce programme et vous disqualifiera de toute récompense
+
+## Ce qui se passe après votre signalement
+
+* **Vulnérabilités valides** : nous accuserons réception de votre rapport, travaillerons sur un correctif et traiterons votre récompense
+* **Rapports invalides** : nous expliquerons pourquoi le rapport n'est pas éligible et pourrons fournir des conseils pour les futures soumissions
+* **Rapports hors périmètre** : nous vous redirigerons vers le fournisseur approprié ou expliquerons pourquoi le problème n'est pas couvert
+
+Nous apprécions les recherches de qualité et les contributions constructives à notre sécurité. Merci de contribuer à la sécurité d'Appbox.

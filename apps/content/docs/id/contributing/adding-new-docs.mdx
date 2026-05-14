@@ -1,0 +1,65 @@
+---
+title: Menambahkan dokumentasi baru
+description: Tambahkan dokumen baru ke situs dokumentasi dan blog Anda.
+sort: 2
+---
+
+# Untuk dokumentasi
+
+1. Buat file `.mdx` baru di folder `apps/content/docs/[language]` dengan isi dokumen Anda.
+2. Tambahkan dokumen ke menu navigasi situs.
+    Untuk melakukannya, tambahkan item baru ke file `src/config/docs.ts` pada properti `sidebarNav` dengan informasi yang diinginkan, cukup ikuti pola item yang sudah ada. Dengan melakukan ini, dokumen juga akan ditambahkan ke command palette pencarian.
+
+## Pengaturan Dokumen MDX
+
+Dokumen MDX disimpan di folder `apps/content/docs/[language]` dan `apps/content/blog/[language]`. Setiap dokumen adalah file MDX yang berisi header dengan metadata, seperti judul dan deskripsi. Berikut contoh header dokumen:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Field metadata berikut didukung:
+
+- `title` (wajib): Judul dokumen.
+- `description` (wajib): Deskripsi singkat dokumen.
+- `sort` (opsional): Angka yang menentukan urutan dokumen dalam navigasi. Dokumen dengan nilai sort lebih rendah muncul lebih dulu. Jika tidak disediakan, dokumen diurutkan secara alfabetis berdasarkan judul.
+- `links` (opsional): Link ke dokumen terkait, referensi API, source code, dan sebagainya.
+- `toc` (opsional): Apakah daftar isi ditampilkan. Default-nya `true`.
+
+Untuk menambahkan metadata baru ke dokumen, Anda dapat menambahkan key baru ke header. Misalnya, Anda dapat menambahkan key `author` untuk menunjukkan penulis dokumen:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Namun saat menambahkan metadata custom, Anda juga perlu memperbarui file `contentlayer.config.ts` yang berada di root project dan di dalam properti `fields` pada konstanta `Doc` atau `Blog`.
+Setelah itu, Anda perlu menampilkan informasi baru tersebut di template dokumen. Untuk melakukannya, Anda perlu memperbarui file `src/app/[locale]/docs/[[...slug]]/page.tsx`, atau `src/app/[locale]/blog/[[...slug]]/page.tsx` atau salah satu child component-nya.
+
+## Membangun Ulang Contentlayer
+
+Saat Anda mengubah konten dokumentasi, menambahkan dokumen baru, atau memodifikasi file `contentlayer.config.ts`, Anda perlu membangun ulang cache contentlayer agar perubahan berlaku selama pengembangan. Jalankan:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Perintah ini membuat ulang tipe konten dan data yang dibutuhkan aplikasi. Anda perlu menjalankan perintah ini setiap kali Anda:
+
+- Menambahkan field metadata baru ke file `contentlayer.config.ts`
+- Menambahkan atau memodifikasi konten MDX saat dev server tidak berjalan
+- Mengubah struktur organisasi konten Anda
+
+Perintah ini dijalankan otomatis saat membangun project untuk production, tetapi Anda perlu menjalankannya secara manual selama pengembangan jika membuat perubahan struktural pada konten.
+
+
+

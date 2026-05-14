@@ -1,0 +1,65 @@
+---
+title: Přidávání nové dokumentace
+description: Přidejte nové dokumenty do svého dokumentačního webu a blogu.
+sort: 2
+---
+
+# Pro dokumentaci
+
+1. Vytvořte nový soubor `.mdx` ve složce `apps/content/docs/[language]` s obsahem svého dokumentu.
+2. Přidejte dokument do navigačního menu webu.
+    Uděláte to tak, že přidáte novou položku do souboru `src/config/docs.ts` ve vlastnosti `sidebarNav` s požadovanými informacemi; stačí následovat vzor existujících položek. Tím se dokument zároveň přidá i do vyhledávací palety příkazů.
+
+## Nastavení MDX dokumentu
+
+MDX dokumenty jsou uložené ve složkách `apps/content/docs/[language]` a `apps/content/blog/[language]`. Každý dokument je soubor MDX, který obsahuje hlavičku s metadaty, jako je název a popis. Níže je příklad hlavičky dokumentu:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Podporována jsou následující pole metadat:
+
+- `title` (povinné): Název dokumentu.
+- `description` (povinné): Stručný popis dokumentu.
+- `sort` (volitelné): Číslo určující pořadí dokumentu v navigaci. Dokumenty s nižší hodnotou `sort` se zobrazí dříve. Pokud není uvedeno, dokumenty se řadí abecedně podle názvu.
+- `links` (volitelné): Odkazy na související dokumenty, API reference, zdrojový kód atd.
+- `toc` (volitelné): Určuje, zda zobrazit obsah. Výchozí hodnota je `true`.
+
+Chcete-li do dokumentu přidat nová metadata, můžete do hlavičky přidat nové klíče. Můžete například přidat klíč `author`, který označí autora dokumentu:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Při přidání vlastních metadat ale musíte také aktualizovat soubor `contentlayer.config.ts`, který se nachází v kořeni projektu, a to ve vlastnosti `fields` v konstantách `Doc` nebo `Blog`.
+Poté budete muset nové informace zobrazit v šabloně dokumentu. K tomu je potřeba aktualizovat soubor `src/app/[locale]/docs/[[...slug]]/page.tsx`, případně `src/app/[locale]/blog/[[...slug]]/page.tsx` nebo některou z jeho podřízených komponent.
+
+## Znovuvytvoření Contentlayer
+
+Když měníte obsah dokumentace, přidáváte nové dokumenty nebo upravujete soubor `contentlayer.config.ts`, musíte znovu vytvořit cache Contentlayer, aby se změny během vývoje projevily. Spusťte:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Tento příkaz znovu vygeneruje typy obsahu a data potřebná aplikací. Příkaz je potřeba spustit pokaždé, když:
+
+- Přidáte nová pole metadat do souboru `contentlayer.config.ts`
+- Přidáte nebo upravíte obsah MDX, když neběží vývojový server
+- Změníte strukturu organizace obsahu
+
+Příkaz se spouští automaticky při sestavení projektu pro produkci, ale během vývoje ho musíte spustit ručně, pokud v obsahu provedete strukturální změny.
+
+
+

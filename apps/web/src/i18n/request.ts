@@ -17,7 +17,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const userMessages = (await import(`@/i18n/locales/${locale}.json`)).default
   const defaultMessages = (await import(`@/i18n/locales/en.json`)).default
 
-  const messages = deepmerge(defaultMessages, userMessages)
+  const messages = deepmerge(defaultMessages, userMessages, {
+    // Locale arrays like hero flipwords should replace the English defaults.
+    arrayMerge: (_destinationArray, sourceArray) => sourceArray
+  })
 
   return {
     locale,

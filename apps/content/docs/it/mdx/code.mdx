@@ -1,0 +1,263 @@
+---
+title: Codice
+description: Padroneggiare il codice nei tuoi file MDX
+links:
+  source: https://raw.githubusercontent.com/rehype-pretty/rehype-pretty-code/master/examples/next/src/app/index.mdx
+sort: 1
+---
+
+`opendocs` usa la libreria [`rehype-pretty-code`](https://github.com/atomiks/rehype-pretty-code)
+per gestire il codice nei file MDX. Questo ti permette di personalizzare notevolmente il modo in cui il codice viene visualizzato.
+
+Per maggiori informazioni, consulta la documentazione ufficiale e gli esempi.
+
+## Titoli
+
+**Esempio:**
+
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+
+**Codice:**
+
+````mdx
+```js title="apps/web/src/index.tsx"
+import { App } from './App';
+```
+````
+
+## Evidenziazione del codice
+
+**Esempio:**
+
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Codice:**
+
+````mdx
+```js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Evidenziazione del codice inline
+
+**Esempio:**
+
+Il risultato di `[1, 2, 3].join('-'){:js}` è `'1-2-3'{:js}`.
+
+**Codice:**
+
+```mdx
+The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
+```
+
+## Evidenziazione del codice inline sensibile al contesto
+
+Ad esempio, se avessi il seguente blocco di codice:
+
+```js
+function getStringLength(str) {
+  return str.length;
+}
+```
+
+Quando ci riferiamo a `getStringLength{:.entity.name.function}` come funzione,
+possiamo colorarla come tale. Lo stesso vale per `function{:.keyword}`, oppure
+`str{:.variable.parameter}` rispetto a `str{:.variable.other.object}`, ecc. Questo consente
+di collegare semanticamente il codice inline al blocco di codice più vicino a cui si riferisce.
+
+**Codice:**
+````mdx
+When we refer to `getStringLength{:.entity.name.function}` as a function,
+we can color it as such. Same with `function{:.keyword}`, or
+`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
+semantically link inline code to the nearest block of code it refers to.
+````
+
+## Evidenziazione delle parole
+
+**Esempio:**
+
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+
+**Codice:**
+````mdx
+```css /pl-12/ /border/
+relative w-full pl-12 rounded-lg border
+```
+````
+
+## Evidenziazione delle righe
+
+**Esempio:**
+
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Codice:**
+
+````mdx
+```js {2-4,6}
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Numerazione delle righe
+
+**Esempio:**
+
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+
+**Codice:**
+````mdx
+```js showLineNumbers
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+    },
+  },
+}
+```
+````
+
+## Diff
+
+**Esempio:**
+
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+
+**Codice:**
+
+````mdx
+```diff
+const alertVariants = cva(
+- "relative w-full rounded-lg border",
++ "relative w-full pl-12 rounded-lg border"
+)
+```
+````
+
+## Evidenziazione ANSI
+
+**Esempio:**
+
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+ANSI inline: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+
+**Codice:**
+
+````mdx
+```ansi
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
+
+  [0;36mready in 125ms.[0m
+
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+```
+
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+````
+
+## Evidenziazione di gruppi di parole per id
+
+Inserisci un id dopo `#` dopo le parole.
+Questo ti permette di colorare i caratteri in modo diverso in base all'id fornito.
+
+**Esempio:**
+
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+
+**Codice:**
+````md
+```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /"Taylor"/#i
+const [age, setAge] = useState(50);
+const [name, setName] = useState("Taylor");
+```
+````
+
+Per modificare o aggiungere nuovi stili:
+
+```css title="apps/web/src/styles/mdx.css"
+[data-chars-id='v'] {
+  @apply !text-pink-300 bg-rose-800/50 font-bold;
+}
+```

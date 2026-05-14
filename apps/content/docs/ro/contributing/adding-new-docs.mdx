@@ -1,0 +1,62 @@
+---
+title: Adăugarea de documente noi
+description: Adaugă documente noi în site-ul de documentație și în blog.
+sort: 2
+---
+
+# Pentru documentație
+
+1. Creează un fișier `.mdx` nou în folderul `apps/content/docs/[language]` cu conținutul documentului tău.
+2. Adaugă documentul în meniul de navigare al site-ului.
+    Pentru a face acest lucru, adaugă un element nou în fișierul `src/config/docs.ts`, în proprietatea `sidebarNav`, cu informațiile dorite; urmează modelul elementelor existente. Astfel, documentul va fi adăugat și în paleta de comenzi pentru căutare.
+
+## Setări pentru documente MDX
+
+Documentele MDX sunt stocate în folderele `apps/content/docs/[language]` și `apps/content/blog/[language]`. Fiecare document este un fișier MDX care conține un antet cu metadate, cum ar fi titlul și descrierea. Mai jos este un exemplu de antet de document:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Sunt acceptate următoarele câmpuri de metadate:
+
+- `title` (obligatoriu): Titlul documentului.
+- `description` (obligatoriu): O scurtă descriere a documentului.
+- `sort` (opțional): Un număr care determină ordinea documentului în navigare. Documentele cu valori `sort` mai mici apar primele. Dacă nu este furnizat, documentele sunt sortate alfabetic după titlu.
+- `links` (opțional): Linkuri către documente conexe, referințe API, cod sursă etc.
+- `toc` (opțional): Dacă se afișează cuprinsul. Valoarea implicită este `true`.
+
+Pentru a adăuga metadate noi în document, poți adăuga chei noi în antet. De exemplu, poți adăuga cheia `author` pentru a indica autorul documentului:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Dar, atunci când adaugi metadate personalizate, trebuie să actualizezi și fișierul `contentlayer.config.ts` aflat la rădăcina proiectului și proprietatea `fields` din constantele `Doc` sau `Blog`.
+După aceea, va trebui să afișezi noile informații în șablonul documentului. Pentru a face acest lucru, va trebui să actualizezi fișierul `src/app/[locale]/docs/[[...slug]]/page.tsx`, sau `src/app/[locale]/blog/[[...slug]]/page.tsx`, ori una dintre componentele sale copil.
+
+## Reconstruirea Contentlayer
+
+Când modifici conținutul documentației, adaugi documente noi sau modifici fișierul `contentlayer.config.ts`, trebuie să reconstruiești cache-ul contentlayer pentru ca schimbările să aibă efect în timpul dezvoltării. Rulează:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Această comandă regenerează tipurile de conținut și datele necesare aplicației. Va trebui să rulezi această comandă ori de câte ori:
+
+- Adaugi câmpuri de metadate noi în fișierul `contentlayer.config.ts`
+- Adaugi sau modifici conținut MDX când serverul de dezvoltare nu rulează
+- Schimbi structura organizării conținutului
+
+Comanda este rulată automat la construirea proiectului pentru producție, dar va trebui să o rulezi manual în timpul dezvoltării dacă faci schimbări structurale ale conținutului.

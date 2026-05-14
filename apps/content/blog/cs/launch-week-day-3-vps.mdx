@@ -1,0 +1,108 @@
+---
+title: Launch Week Den 3 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: Den 3 Launch Week. Plnohodnotné KVM virtual private servers jsou nyní dostupné na Appboxu. Vyberte si Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux nebo AlmaLinux a získejte root přístup ke skutečné VM.
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Den 3: Virtual Private Servers
+
+Den 3. Tohle je ta velká věc.
+
+Od samého začátku byl Appbox o tom, aby self-hosted aplikace byly jednoduché. Nainstalovat aplikaci, získat URL, hotovo. Ten model funguje neuvěřitelně dobře pro většinu věcí. Vždy ale existovala třída případů použití, kde prostě potřebujete celý stroj. Vlastní kernel, vlastní init systém, vlastní pravidla.
+
+Dnes na Appboxu spouštíme **Virtual Private Servers**.
+
+## Skutečné VM, ne kontejnery
+
+Řekněme jasně, co to je. Jsou to plnohodnotné KVM virtuální stroje běžící na dedikovaném hardwaru s vlastním kernelem, vlastním systemd a plným root přístupem. Není to Docker kontejner, který předstírá OS. Je to skutečná věc.
+
+Tento rozdíl je důležitý, protože odemyká vše, co kontejnery neumí:
+
+- **Docker uvnitř vašeho VPS** - spusťte `docker compose up` stejně jako na jakémkoli serveru
+- **Snaps a Flatpaks** - instalujte desktopový software tak, jak má být instalován
+- **Systemd services** - plná správa služeb, timery, journal, všechno
+- **Vlastní kernely a moduly** - máte root, dělejte, co chcete
+- **Nested virtualization** - pokud ji potřebujete, je k dispozici
+
+Pokud jste někdy narazili na zeď u našich Docker-based OSes nebo webtopů, kde něco prostě nefungovalo kvůli omezením kontejnerů, ta zeď je pryč.
+
+## Dostupných šest Linux OSes
+
+Nyní si můžete vybrat ze šesti Linux distribucí:
+
+| OS | Popis |
+|---|---|
+| **Ubuntu VPS** | Plné Ubuntu 24.04 LTS |
+| **Debian VPS** | Plný Debian 12 a 13 |
+| **Arch Linux VPS** | Rolling release, vždy aktuální |
+| **Fedora VPS** | Fedora 43 s nejnovějšími balíčky |
+| **Rocky Linux VPS** | Enterprise-grade kompatibilita s RHEL |
+| **AlmaLinux VPS** | Enterprise Linux kompatibilní s RHEL s dlouhodobou podporou |
+
+Vyberte si ten, který znáte, nebo ten, který se chcete naučit. Všechny mají na Appboxu stejnou sadu funkcí.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Kategorie VPS v Appbox App Store" width="860" className="mt-8 mb-10" />
+</p>
+
+## Vestavěná webová konzole
+
+Každý VPS obsahuje browser-based konzoli vestavěnou přímo do Appbox dashboardu. Klikněte na záložku Console u libovolného VPS a získáte živou terminálovou relaci přímo v prohlížeči.
+
+To znamená, že se ze svého serveru nikdy nemůžete zamknout. Špatně nastavené SSH? Rozbitá síťová konfigurace? Nevadí. Webová konzole se připojuje přímo k virtuálnímu displeji VM, zcela nezávisle na síťovém stacku guest systému. Vždy máte cestu dovnitř.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Webová VM konzole v Appbox dashboardu" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop se Selkies
+
+Tady to začíná být zajímavé. Náš Ubuntu VPS má desktopovou variantu poháněnou **Selkies**, která vám poskytne plné grafické Linux desktopové prostředí dostupné z prohlížeče s hardware-accelerated streamingem, plným audio výstupem a mikrofonním vstupem.
+
+Pracovali jsme přímo s týmem Selkies, abychom to rozběhli uvnitř KVM virtuálních strojů, a integraci jsme open-sourcovali na [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Co to v praxi opravdu znamená? V prohlížeči můžete provozovat plnohodnotné desktopové prostředí se skutečnými aplikacemi. VS Code, Discord, Spotify, Slack - všechno běží současně, všechno s audiem, všechno dostupné z libovolného zařízení s webovým prohlížečem.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu desktop přes Selkies se spuštěným VS Code, Spotify a Discordem" width="860" className="mt-8 mb-10" />
+</p>
+
+Na chvíli se nad tím zamyslete. Můžete mít persistentní vzdálené vývojové prostředí, které je pořád zapnuté, běží v něm VS Code s Docker kontejnery pro vaše projekty a zároveň máte otevřený Discord pro týmový chat a Spotify s hudbou. Všechno v jedné záložce prohlížeče. Z vašeho laptopu, tabletu nebo cizího počítače. Celý váš pracovní prostor je jen jednu URL daleko.
+
+## Vaše data vás následují
+
+Každý VPS má automatický přístup k vašemu Appbox úložišti přes adresář `/APPBOX_DATA/`. Uvnitř najdete:
+
+- **`/APPBOX_DATA/apps/`** - data z vašich ostatních nainstalovaných Appbox aplikací
+- **`/APPBOX_DATA/storage/`** - vaše obecné Appbox úložiště
+
+Sdílí se to pomocí virtiofs, vysoce výkonného filesystem passthrough, který poskytuje téměř nativní rychlosti přístupu k souborům. Váš VPS může číst a zapisovat soubory, které používají i vaše ostatní aplikace, takže můžete například zpracovávat mediální soubory ze streamingových aplikací nebo zálohovat databáze přímo ze svého VPS.
+
+## Funguje s App Boost
+
+VPSes používají stejný systém App Boost, který jsme spustili v Den 2. Chcete pro svou VM více RAM nebo CPU? Posuňte úroveň boostu nahoru a vyhraďte jí více slotů svého tarifu. Zdroje se přidělují na úrovni hypervisoru, takže vaše VM skutečně dostane více výpočetního výkonu, ne jen vyšší cgroup limit.
+
+Stojí za zmínku: VPSes mají o něco vyšší základní cenu ve slotech než Docker-based OS aplikace. Odráží to skutečnost, že plný virtuální stroj spotřebovává více reálných zdrojů než kontejner sdílející host kernel. Kompromis je přímočarý: získáte více možností a cena ve slotech to poctivě odráží.
+
+## Co bude pro VPS dál
+
+VPSes dnes spouštíme s plnou funkcionalitou, ale na roadmapě je toho víc. Grafy využití zdrojů pro VPS instance přidáme v blízké budoucnosti, takže budete moci přímo z dashboardu sledovat CPU, RAM a využití disku v čase, stejně jako u ostatních aplikací.
+
+## Proč na tom záleží
+
+Docker-based OSes a webtopy na Appboxu dobře sloužily spoustě lidí a nikam nemizí. Ale běh uvnitř kontejneru má skutečná omezení. Nemůžete spustit Docker. Nemůžete používat snaps. Nemůžete načítat kernel moduly. Nemůžete provozovat plný init systém. Vždy pracujete v omezeních namespace někoho jiného.
+
+VPSes tato omezení úplně odstraňují. Získáte skutečný stroj. Pokud to můžete udělat na serveru pronajatém od libovolného jiného poskytovatele, můžete to udělat i tady - jen s tím rozdílem, že vaše data už jsou připojená, webová konzole už je k dispozici a zdroje škálujete sliderem.
+
+## Den 3 je teď živě
+
+VPSes jsou právě teď dostupné v App Store. Přejděte do kategorie VPS, vyberte OS a nainstalujte. Provisioning plné VM trvá o něco déle než u kontejnerové aplikace, takže počítejte až s 15 minutami, než bude váš VPS připraven.
+
+Zítra je Den 4. Nezpomalujeme.
+
+---
+
+*Máte zpětnou vazbu nebo jste našli problém? Ozvěte se na support@appbox.co nebo otevřete ticket na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

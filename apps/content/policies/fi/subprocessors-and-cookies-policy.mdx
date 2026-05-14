@@ -1,0 +1,90 @@
+---
+title: Alikäsittelijöitä ja evästeitä koskeva käytäntö
+description: Tietoa alikäsittelijöistämme ja evästeiden käytöstä
+---
+
+Appbox on sitoutunut läpinäkyvyyteen siinä, miten keräämme, säilytämme, käsittelemme ja jaamme dataasi. Tämä sivu kuvaa alikäsittelijämme, evästeiden käytön ja seurantamenetelmät, joita käytämme palveluidemme parantamiseen.
+
+Kun jaamme tietojasi kolmannen osapuolen alikäsittelijöiden kanssa, säilytämme vastuun niistä. Valitsemme toimittajamme huolellisesti ja edellytämme, että he solmivat tietosuojasopimukset, jotka rajoittavat heidän Users' Personal Information -tietojen käsittelyään (kuten määritelty [Data Handling Policy](/policies/data-handling-policy) -käytännössämme).
+
+| Yritys                | Kuvaus                                            |
+| --------------------- | ------------------------------------------------- |
+| Google Workspace      | Asiakastikettien sähköpostipalveluntarjoaja       |
+| Posthog               | Sovellusten valvontapalveluntarjoaja              |
+| Gitlab                | Tiimiyhteistyön ja projektinhallinnan alusta      |
+| PayPal                | Maksuntarjoaja                                    |
+| CoinGate              | Kryptovaluuttamaksujen tarjoaja                   |
+| Stripe                | Maksuntarjoaja                                    |
+| Google Analytics      | Analytiikkatarjoaja                               |
+| Elastic Email         | Sähköpostipalveluntarjoaja                        |
+| Mautic                | Sähköpostikampanjoiden hallinta                   |
+
+Kun otamme käyttöön uuden alikäsittelijän, joka käsittelee käyttäjiemme Users' Personal Information -tietoja, poistamme alikäsittelijän tai muutamme tapaa, jolla käytämme alikäsittelijää, päivitämme tämän sivun.
+
+## Evästekäytäntö
+
+Tässä osiossa selitetään evästeet, joita käytämme palveluissamme johdonmukaisen ja tehokkaan käyttäjäkokemuksen sekä turvallisen ympäristön varmistamiseksi.
+
+### Yhdistyneen kuningaskunnan tietosuojasääntelyn noudattaminen
+
+Evästekäytäntömme noudattaa UK Privacy and Electronic Communications Regulations (PECR) -sääntelyä ja UK GDPR:ää. Näiden säädösten mukaisesti:
+
+1. Hankimme suostumuksesi ennen ei-välttämättömien evästeiden asettamista laitteellesi
+2. Tarjoamme selkeät ja kattavat tiedot jokaisesta käyttämästämme evästeestä
+3. Teemme suostumuksen peruuttamisesta tai muuttamisesta helppoa milloin tahansa
+4. Emme tee verkkosivustomme käyttöä riippuvaiseksi ei-välttämättömiin evästeisiin suostumisesta
+
+Käytämme sekä istunto- että pysyviä evästeitä:
+
+* **Istuntoevästeet** pysyvät selaimessasi vain selainistunnon ajan, eli kunnes poistut verkkosivustolta.
+* **Pysyvät evästeet** säilyvät nykyisen istunnon yli ja niitä käytetään moniin tarkoituksiin, kuten tunnistamaan sinut olemassa olevaksi käyttäjäksi. Ne pysyvät voimassa asetettuun vanhentumispäiväänsä asti, ellei käyttäjä poista niitä ennen vanhentumispäivää.
+
+Nämä evästeet luokitellaan edelleen seuraaviin kategorioihin:
+
+* **Välttämättömät ja turvallisuus**  
+   * Nämä evästeet ovat välttämättömiä alustojemme verkkosivustojen perustoimintojen suorittamiseksi, eikä niitä tulisi poistaa käytöstä. Käytämme niitä myös tekemään vuorovaikutuksestasi palveluidemme kanssa nopeampaa ja luotettavampaa sekä estämään hyökkäyksiä, kuten cross-site scripting.
+* **Suorituskyky ja analytiikka**  
+   * Nämä evästeet antavat meille mahdollisuuden laskea kävijöitä ja liikenteen lähteitä sivustomme suorituskyvyn arvioimiseksi ja parantamiseksi. Ne auttavat meitä ymmärtämään, mitkä sivut ovat suosituimpia ja vähiten suosittuja, sekä näkemään, miten kävijät liikkuvat verkkosivustolla. Kaikki näiden evästeiden avulla saadut tiedot ovat koottuja ja siten anonyymejä.
+* **Kohdentaminen**
+   * Näitä evästeitä käytetään sinulle ja kiinnostuksenkohteillesi merkityksellisempien mainosten toimittamiseen.
+* **Toiminnallisuus**
+   * Nämä evästeet auttavat verkkosivustoa tarjoamaan parannettua toiminnallisuutta ja personointia.
+
+### Välttämättömät ja turvallisuusevästeet
+
+* `PHPSESSID`  
+   * PHP-kieleen perustuvien sovellusten luoma eväste. Tämä on yleiskäyttöinen tunniste, jota käytetään käyttäjän istuntomuuttujien ylläpitämiseen. Se on normaalisti satunnaisesti luotu numero; käyttötapa voi olla sivustokohtainen, mutta hyvä esimerkki on käyttäjän kirjautuneen tilan ylläpitäminen sivujen välillä.
+* `psp_session`  
+   * Tätä evästettä käytetään anonymisoidun käyttäjäistunnon ylläpitämiseen palvelimella status-sivullamme.
+* `_GRECAPTCHA`  
+   * Google reCAPTCHA asettaa tarvittavan evästeen (_GRECAPTCHA), kun se suoritetaan riskianalyysinsä tarjoamista varten.
+* `authorization_token`
+   * Kun olet kirjautunut dashboardiin, tallennamme JWT:n (JSON Web Token) tunnistautumistarkoituksiin. Tämä token on välttämätön turvallisen, todennetun istunnon ylläpitämiseksi.
+
+### Suorituskyky- ja analytiikkaevästeet
+
+* `_ga`, `_ga_LXBTWJ4Y7B`  
+   * Nämä evästeet liittyvät Google Analyticsiin. Ne auttavat erottamaan yksilölliset käyttäjät määrittämällä satunnaisesti luodun numeron asiakastunnisteeksi. Ne sisällytetään jokaiseen sivupyyntöön sivustolla ja niitä käytetään kävijä-, istunto- ja kampanjadatan laskemiseen sivuston analytiikkaraportteja varten.
+* `mtc_id`  
+   * Tätä evästettä käytetään käyttäjän käyttäytymisen ja vuorovaikutusten seuraamiseen verkkosivuston suorituskyvyn ja käyttäjäkokemuksen parantamiseksi.
+
+### Kohdentamisevästeet
+
+* `mautic_focus_1`  
+   * Tätä evästettä käyttää Mautic Marketing Automation -ohjelmisto kävijöiden sitoutumisen ja vuorovaikutuksen seuraamiseen verkkosivuston ponnahdussisällön ja lomakkeiden kanssa käyttäjäkokemuksen ja verkkosivuston tehokkuuden parantamiseksi.
+
+### Toiminnallisuusevästeet
+
+* `mautic_device_id`  
+   * Tätä evästettä käytetään kävijän laitteen ja käyttäytymisen tunnistamiseen. Se seuraa käyttäjän vuorovaikutuksia ja asetuksia sivustolla käyttäjäkokemuksen parantamiseksi ja seurantatarkoituksiin.
+
+### Lisäevästeet
+
+* `ph_phc_*_posthog` 
+   * Posthogin käyttämä analytiikkaan ja käyttäjäseurantaan.
+* Satunnainen merkkijono
+   * Käytetään status-sivullamme.
+* `__cookie_consent`
+   * Status-järjestelmämme käyttämä evästesuostumusten hallintaan.
+* `WHMCS*`
+   * Laskutusjärjestelmämme käyttämä istunnonhallintaan.

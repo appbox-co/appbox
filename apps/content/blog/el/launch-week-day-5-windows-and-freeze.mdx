@@ -1,0 +1,91 @@
+---
+title: "Launch Week Day 5 - Windows 11 Pro VPS και App Freeze"
+date: 2026-03-13 10:00:00
+excerpt: "Day 5 του Launch Week. Το Windows 11 Pro είναι πλέον διαθέσιμο ως VPS στο Appbox. Επιπλέον, μια νέα λειτουργία freeze σας επιτρέπει να παύετε εφαρμογές και να ανακτάτε τα slots τους χωρίς απώλεια δεδομένων."
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Day 5: Windows 11 Pro VPS και App Freeze
+
+Day 5. Η τελευταία μέρα. Χθες είπαμε ότι δεν θα το βλέπατε να έρχεται, και το εννοούσαμε.
+
+**Το Windows 11 Pro είναι πλέον διαθέσιμο ως VPS στο Appbox.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows στο Appbox
+
+Όταν λανσάραμε τα VPSes στη Day 3 με πέντε διανομές Linux, το φυσικό ερώτημα ήταν "τι γίνεται με τα Windows;" Το να κάνουμε τα Windows να τρέχουν σωστά ως managed VPS στο Appbox ήταν σημαντική τεχνική πρόκληση. Οι Linux VMs χρησιμοποιούν virtiofs για σχεδόν native file sharing μεταξύ host και guest. Τα Windows δεν υποστηρίζουν virtiofs. Έτσι χτίσαμε μια Samba-based ενσωμάτωση που δημιουργεί authenticated SMB shares για κάθε VM, δίνοντας στα Windows την ίδια απρόσκοπτη πρόσβαση στα Appbox δεδομένα σας που έχουν τα Linux VPSes - απλώς μέσω ενός πρωτοκόλλου που τα Windows κατανοούν εγγενώς.
+
+Το αποτέλεσμα είναι μια πλήρης Windows 11 Pro virtual machine που τρέχει σε KVM με τα Appbox δεδομένα σας mounted ως drive `Z:` (`APPBOX_DATA`). Ανοίξτε το File Explorer, μεταβείτε στο `Z:\` και θα δείτε τους φακέλους `apps/` και `storage/` εκεί.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Windows 11 File Explorer που εμφανίζει το APPBOX_DATA ως drive Z: με φακέλους apps και storage" width="860" className="mt-8 mb-10" />
+</p>
+
+## Τι ανοίγει αυτό
+
+Η ύπαρξη Windows VPS στο Appbox ανοίγει μια εντελώς νέα κατηγορία περιπτώσεων χρήσης:
+
+- **Windows-only software** - εκτελέστε εφαρμογές που απλώς δεν έχουν Linux εκδόσεις
+- **.NET development** - χτίστε και δοκιμάστε .NET εφαρμογές σε πραγματικό Windows environment
+- **Office and productivity** - τρέξτε Microsoft Office, Adobe tools ή οποιοδήποτε desktop software
+- **Game servers** - φιλοξενήστε Windows-only game servers
+- **Remote desktop** - αποκτήστε πρόσβαση σε πλήρες Windows desktop από οποιονδήποτε browser μέσω της ενσωματωμένης web console ή συνδεθείτε με Microsoft Remote Desktop για native RDP εμπειρία
+- **Testing and CI** - δοκιμάστε το software σας σε Windows χωρίς να συντηρείτε δικό σας hardware
+
+Πρόκειται για πλήρη εγκατάσταση Windows 11 Pro με administrator access. Αν τρέχει σε Windows, τρέχει εδώ.
+
+## Διαθεσιμότητα πλάνων
+
+Το Windows 11 Pro έχει αρκετά υψηλές απαιτήσεις πόρων και είναι βαρύ σε disk I/O. Για να διασφαλίσουμε καλή εμπειρία για όλους, το Windows VPS είναι προς το παρόν διαθέσιμο μόνο σε dedicated Appbox plans (NG-18000 και άνω). Ενδέχεται να επεκτείνουμε τη διαθεσιμότητα σε άλλα πλάνα στο μέλλον καθώς συνεχίζουμε να βελτιστοποιούμε.
+
+## Licensing
+
+Το Windows 11 Pro VPS δεν περιλαμβάνει product key. Τα Windows θα λειτουργούν μη ενεργοποιημένα με μόνιμο watermark στο desktop, περιορισμένες ρυθμίσεις εξατομίκευσης και περιοδικές υπενθυμίσεις ενεργοποίησης - αλλά κατά τα άλλα είναι πλήρως λειτουργικά. Για να αφαιρέσετε αυτούς τους περιορισμούς, ενεργοποιήστε τα με έγκυρο Windows 11 Pro key. Συνιστούμε να αγοράσετε ένα από το [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Λειτουργεί με App Boost
+
+Το Windows 11 Pro VPS υποστηρίζει πλήρως το **App Boost** από τη Day 2. Αν χρειάζεστε περισσότερη απόδοση για βαρύτερα workloads, ανεβάστε το επίπεδο boost για να κατανείμετε περισσότερη RAM και CPU στη VM σας.
+
+## App Freeze
+
+Υπάρχει μια δεύτερη λειτουργία που κυκλοφορεί σήμερα και αφορά όλες τις εφαρμογές, όχι μόνο τα Windows.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Σελίδα λεπτομερειών Windows 11 Pro VPS που εμφανίζει App Boost και το νέο κουμπί Freeze" width="560" className="mt-8 mb-10" />
+</p>
+
+Το **App Freeze** σας επιτρέπει να παύετε οποιαδήποτε εγκατεστημένη εφαρμογή και να ανακτάτε τα app slots της χωρίς να χάσετε δεδομένα. Η εφαρμογή σταματά, τα δεδομένα της μένουν ακριβώς εκεί που είναι και τα slots που χρησιμοποιούσε γίνονται διαθέσιμα για άλλες εφαρμογές.
+
+Αυτό λύνει ένα πρόβλημα που εμφανιζόταν συνεχώς: θέλετε να δοκιμάσετε μια νέα εφαρμογή, αλλά έχετε χρησιμοποιήσει όλα τα slots σας. Πριν από σήμερα, θα έπρεπε να απεγκαταστήσετε κάτι - και να χάσετε τα δεδομένα του - απλώς για να ελευθερώσετε αρκετά slots για πειραματισμό. Τώρα μπορείτε να κάνετε freeze μια εφαρμογή, να χρησιμοποιήσετε αυτά τα slots για να εγκαταστήσετε και να δοκιμάσετε κάτι νέο και μετά να κάνετε unfreeze την αρχική εφαρμογή όταν τελειώσετε. Όλα συνεχίζουν ακριβώς από εκεί που τα αφήσατε.
+
+Το κουμπί Freeze βρίσκεται απευθείας στην ενότητα Actions της σελίδας λεπτομερειών οποιασδήποτε εφαρμογής, δίπλα στα Start, Stop και Restart. Το freezing σταματά την εφαρμογή, τη σηματοδοτεί ως frozen και επιστρέφει τα slots της (συμπεριλαμβανομένων τυχόν boost slots) στο διαθέσιμο pool σας. Το unfreezing επαναφέρει την εφαρμογή και καταναλώνει ξανά τα slots.
+
+Μερικά πράγματα που αξίζει να σημειωθούν:
+
+- Δεν μπορείτε να κάνετε freeze μια εφαρμογή ενώ εγκαθίσταται, ενημερώνεται ή διαγράφεται
+- Δεν μπορείτε να κάνετε unfreeze αν το Appbox σας δεν έχει αρκετά ελεύθερα slots για να καλύψει το κόστος
+- Οι frozen εφαρμογές διατηρούν όλα τα δεδομένα και τη διαμόρφωσή τους ανέπαφα
+
+## Αυτό ήταν
+
+Πέντε μέρες. Πέντε λανσαρίσματα.
+
+- **Day 1** - το νέο dashboard
+- **Day 2** - App Boost
+- **Day 3** - Linux VPSes
+- **Day 4** - πολλαπλά domains για VPS apps
+- **Day 5** - Windows 11 Pro VPS και App Freeze
+
+Όλα όσα κυκλοφόρησαν αυτή την εβδομάδα είναι live αυτή τη στιγμή. Συνδεθείτε και δοκιμάστε τα.
+
+Το Launch Week τελείωσε, αλλά δεν σταματάμε. Έρχονται πολλά ακόμη τους επόμενους μήνες.
+
+---
+
+*Έχετε σχόλια ή βρήκατε κάποιο πρόβλημα; Επικοινωνήστε στο support@appbox.co ή ανοίξτε ticket στο [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

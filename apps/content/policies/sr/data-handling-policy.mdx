@@ -1,0 +1,397 @@
+---
+title: "Политика руковања подацима"
+description: "Како управљамо вашим подацима и штитимо их"
+---
+
+У Appbox-у прикупљамо и чувамо само минимум информација неопходан за одржавање наших евиденција и пружање наших услуга. Appbox тим је обучен да рукује вашим подацима уз највиши ниво приватности и безбедности и следи строге протоколе, укључујући коришћење јаких credentials и multi-factor authentication. Сва обрада плаћања у потпуности се обавља преко наших payment processors, а Appbox не чува ниједну вашу финансијску информацију, осим payment records и одговарајућих transaction IDs.
+
+## Email
+
+- **Употребе**
+  - Служи као ваш login за Appbox Client Area и Appbox Control Panel
+  - Тачка контакта за Appbox service announcements
+  - Тачка контакта за Appbox Ticket System упите
+- **Прикупљање**
+  - Корисник доставља током signup-а
+- **Складиштење**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Appbox тим
+    - Ово је ради контактирања корисника за support или било која service announcements
+- **Задржавање**
+  - Неодређено
+- **Више информација**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Употребе**
+  - Идентификује корисника у Appbox Ticket System-у
+  - Служи као име корисниковог Appbox slot-а
+  - Региструје се као local user на серверу где је корисников slot deploy-ован, приказујући све running processes које корисник има
+  - Служи као username корисника за инсталиране апликације
+- **Прикупљање**
+  - Корисник доставља током signup-а
+- **Складиштење**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Appbox тим
+    - Потребно за support inquiries
+    - Потребно за истраживање server issues претрагом апликација са великом потрошњом ресурса, извора нестабилности сервера или неовлашћених апликација
+- **Задржавање**
+  - Неодређено
+- **Више информација**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Употребе**
+  - Користи се за израчунавање применљивих пореза на основу земље коју корисник изабере
+- **Прикупљање**
+  - Корисник доставља током signup-а
+- **Складиштење**
+  - WHMCS = Cleartext
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Appbox тим
+- **Задржавање**
+  - Неодређено
+- **Више информација**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Употребе**
+  - Служи као корисников password за Appbox Client Area
+- **Прикупљање**
+  - Корисник доставља током signup-а у Appbox Client Area
+- **Складиштење**
+  - WHMCS = Encrypted
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Ограничен приступ Appbox тима
+    - Appbox тим не може да види корисников password јер је hashed, али може да reset-ује ваш password након verification
+- **Задржавање**
+  - Неодређено
+- **Више информација**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Снажно препоручујемо да омогућите two-factor authentication на вашој [account security page](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel Password
+
+- **Употребе**
+  - Служи као корисников password на Appbox Control Panel-у за приступ његовом slot-у
+- **Прикупљање**
+  - Корисник доставља након deployment-а свог slot-а
+- **Складиштење**
+  - Appbox API = Encrypted
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Ограничен приступ Appbox тима
+    - Appbox тим не може да види корисников password јер је hashed, али може да reset-ује ваш password након verification
+- **Задржавање**
+  - Неодређено
+- **Више информација**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Снажно препоручујемо да омогућите two-factor authentication на вашој [account security page](https://billing.appbox.co/user/security)
+
+### Application Passwords
+
+- **Употребе**
+  - Служи као password за корисникове инсталиране апликације
+- **Прикупљање**
+  - Корисник доставља након deployment-а свог slot-а
+- **Складиштење**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Appbox тим
+    - Потребно за application-specific support inquiries, уз дозволу корисника
+- **Задржавање**
+  - Док корисник не деинсталира апликацију
+- **Више информација**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Снажно препоручујемо да омогућите two-factor authentication на вашој [account security page](https://billing.appbox.co/user/security)
+
+## Payment Processing
+
+### PayPal
+
+- **Употребе**
+  - Служи као један од Appbox payment gateways
+- **Прикупљање**
+  - Обрада плаћања се у потпуности обавља преко PayPal-а. Једини податак сачуван у WHMCS под корисниковим налогом је **PayPal Transaction ID**
+- **Складиштење**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Приступ и разлози за приступ**
+  - Appbox Sales Team
+    - Appbox Sales Team може проверити корисникове информације са PayPal-ом као део нашег sales process-а
+- **Задржавање**
+  - Неодређено
+
+### Stripe
+
+- **Употребе**
+  - Служи као један од Appbox payment gateways
+- **Прикупљање**
+  - Обрада плаћања се у потпуности обавља преко Stripe-а. Једини подаци сачувани у WHMCS под корисниковим налогом су **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Складиштење**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Приступ и разлози за приступ**
+  - Appbox Sales Team
+    - Appbox Sales Team може проверити корисникове информације са Stripe-ом као део нашег sales process-а
+- **Задржавање**
+  - Неодређено
+
+### CoinGate
+
+- **Употребе**
+  - Служи као један од Appbox payment gateways за cryptocurrency transactions
+- **Прикупљање**
+  - Обрада плаћања се у потпуности обавља преко CoinGate-а. Једини податак сачуван у WHMCS је **CoinGate Transaction ID**
+- **Складиштење**
+  - WHMCS = Cleartext (Transaction ID)
+- **Приступ и разлози за приступ**
+  - Appbox Sales Team
+    - Appbox Sales Team може проверити корисникове информације са CoinGate-ом као део нашег sales process-а
+- **Задржавање**
+  - Неодређено
+
+*Напомена: CoinGate сам чува blockchain transaction ID и sender's blockchain address као део своје услуге. Appbox не чува ове информације.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Употребе**
+  - Користи се за надгледање здравља и resource usage сервера
+- **Прикупљање**
+  - Генерише се након deployment-а корисниковог slot-а
+- **Складиштење**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Приступ и разлози за приступ**
+  - Корисник
+    - Server metrics се могу видети помоћу различитих Linux utilities инсталираних на вашем slot-у. Следеће главне metrics могу се видети:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Your running processes
+      - Processes run by other users on the same server are not accessible by you
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (your allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - Поред наведених metrics, Appbox team користи Posthog да брзо aggregate-ује све metrics са свих сервера и alert-ује тим о било којим errors
+    - Server metrics се користе за support inquiries и за истраживање resource abuse
+- **Задржавање**
+  - Неодређено
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Употребе**
+  - Сви invalid access attempts се log-ују у Appbox API, који ограничава корисника да се пријави у Control Panel након одређеног броја покушаја за назначени период. Ово укључује:
+    - Username, како га је унео корисник
+    - IP address
+    - Number of attempts
+    - Last date of attempt
+- **Прикупљање**
+  - Прикупља се када корисник погрешно унесе credentials
+- **Складиштење**
+  - Appbox API = Cleartext
+- **Приступ и разлози за приступ**
+  - Appbox Team
+    - Користи се за идентификовање brute-force attempts
+    - Корисници могу затражити уклањање timeout-а и access attempt-а, на захтев и након verification преко Ticket system-а
+- **Задржавање**
+  - 24 сата или на захтев корисника
+
+#### SSH Login Logs
+
+- **Употребе**
+  - Бележи login attempts и успешне logins на SSH у user-installed applications као што су Ubuntu или Debian
+- **Прикупљање**
+  - Аутоматски генерише SSH server када се login attempts догоде
+- **Складиштење**
+  - Application container = Cleartext (обично у `/var/log/auth.log` или слично)
+- **Приступ и разлози за приступ**
+  - Корисник
+    - Пошто се ови logs чувају унутар апликација где корисници имају root (sudo) access, корисници имају потпуну контролу над овим logs и приступ њима
+    - Корисници могу да прегледају, измене или избришу ове logs по потреби
+  - Appbox тим
+    - Приступ је доступан само уз дозволу корисника током support troubleshooting-а
+- **Задржавање**
+  - Управља корисник, пошто има root access у контејнеру
+  - Подразумеване log rotation policies важе осим ако их корисник измени
+
+### System Generated Logs
+
+- **Употребе**
+  - Server-wide generated logs, користе се за идентификовање проблема на серверима
+- **Прикупљање**
+  - Генерише их operating system сервера
+- **Складиштење**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Приступ и разлози за приступ**
+  - Limited Access Appbox team
+    - Користи се за идентификовање проблема на конкретним серверима
+    - Logs се aggregate-ују преко Posthog-а, који alert-ује тим о errors
+- **Задржавање**
+  - Неодређено
+
+### Logs Generated by Installed Applications
+
+- **Употребе**
+  - Logs које генеришу installed applications, користе се за идентификовање проблема унутар корисниковог slot-а
+- **Прикупљање**
+  - Генеришу их корисникове installed applications
+- **Складиштење**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Appbox тим
+    - Потребно за application-specific support inquiries, уз дозволу корисника
+- **Задржавање**
+  - Док корисник не деинсталира апликацију или је уклони
+
+### User's bash History
+
+- **Употребе**
+  - Бележи све команде које корисник унесе у slot shell, налази се у `$HOME/.bash_history`
+- **Прикупљање**
+  - Свака команда унета у shell се бележи
+- **Складиштење**
+  - Appbox Servers = Cleartext
+- **Приступ и разлози за приступ**
+  - Корисник
+    - Пошто се bash history file чува у корисниковом home directory-ју, корисници имају потпуну контролу над овом датотеком
+    - Корисници могу да прегледају, измене, очисте или избришу ову датотеку по потреби (коришћењем команди као што је `history -c` или уређивањем/уклањањем датотеке)
+  - Appbox тим
+    - Користи се за general или application-specific inquiries, као што је провера да ли су команде које је корисник унео исправне, али само уз дозволу корисника
+    - Користи се за проверу могућих intrusions или server abuse, али само када је неопходно за security investigations
+- **Задржавање**
+  - Управља корисник, који може очистити history у било ком тренутку
+  - Подразумевано, bash history се задржава неодређено док га корисник не уклони
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Употребе**
+  - Основне датотеке потребне да installed applications правилно раде
+- **Прикупљање**
+  - Корисник инсталира на свој slot
+- **Складиштење**
+  - Appbox Servers = Depends on the Application
+- **Приступ и разлози за приступ**
+  - Корисник
+  - Appbox тим
+    - Користи се за application-specific support inquiries, уз дозволу корисника
+- **Задржавање**
+  - Неодређено док га корисник не уклони
+
+#### User Data
+
+- **Употребе**
+  - Подаци које креира корисник и/или корисникове апликације и чувају се на корисниковом slot-у
+- **Прикупљање**
+  - Креира корисник и/или корисникове апликације
+- **Складиштење**
+  - Appbox Servers = Cleartext
+- **Приступ и разлози за приступ**
+  - Корисник
+    - Корисникове датотеке чувају се у home folders на Appbox серверима и изоловане су од других корисника. Само корисник може да им приступи
+  - Appbox тим
+    - Могуће је приступити за support inquiries, уз дозволу корисника
+- **Задржавање**
+  - Неодређено док га корисник не уклони
+    - За легитимне DMCA takedown notices, обавестићемо корисника и затражити да избрише садржај у року од 24 сата
+- **Више информација**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## Усклађеност са UK Online Safety Act
+
+У складу са UK Online Safety Act 2023, Appbox примењује специфичне праксе руковања подацима ради заштите корисника и усклађености са регулаторним захтевима:
+
+### Content Safety Monitoring
+
+- **Употребе**
+  - Risk assessment и mitigation за illegal и harmful content
+  - Moderation пријављеног садржаја
+  - Prevention of distribution of illegal content
+- **Прикупљање**
+  - Генерише се када се садржај пријави или flag-ује
+  - Content hash values за познат illegal material
+- **Складиштење**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Приступ и разлози за приступ**
+  - Appbox Compliance Team
+    - За преглед пријављеног садржаја и предузимање одговарајуће радње
+    - За координацију са UK authorities када је законски потребно
+  - UK regulatory authorities (када закон то захтева)
+    - За monitoring compliance са Online Safety Act
+    - За истраживање serious illegal content
+- **Задржавање**
+  - Report data: 2 године након решавања
+  - Content hash values: Неодређено (ради спречавања redistribution)
+
+### Risk Assessment Data
+
+- **Употребе**
+  - Спровођење обавезних risk assessments за illegal content и content harmful to children
+  - Имплементација proportionate safety measures
+  - Демонстрирање compliance регулаторним властима
+- **Прикупљање**
+  - Генерише се кроз редовне platform risk assessments
+  - Aggregated usage data за идентификовање потенцијалних risk patterns
+- **Складиштење**
+  - Appbox Compliance Systems = Protected
+- **Приступ и разлози за приступ**
+  - Appbox Compliance Team
+    - За спровођење и ажурирање risk assessments
+    - За имплементацију safety measures
+  - UK regulatory authorities (када закон то захтева)
+    - За верификацију compliance са risk assessment duties
+- **Задржавање**
+  - 3 године (ради демонстрирања ongoing compliance)
+
+### Content Reporting System
+
+- **Употребе**
+  - Омогућава корисницима да пријаве illegal или harmful content
+  - Прати status пријава и предузетих actions
+- **Прикупљање**
+  - Report details које достављају reporting users
+  - Информације о reported content
+  - Actions taken on reports
+- **Складиштење**
+  - Appbox API = Encrypted
+- **Приступ и разлози за приступ**
+  - Reporting user (ограничено на сопствене reports)
+  - User whose content was reported (limited information)
+  - Appbox Compliance Team
+    - За истраживање и решавање reports
+  - UK regulatory authorities (када закон то захтева)
+    - За истраживање serious illegal content reports
+- **Задржавање**
+  - 2 године након решавања

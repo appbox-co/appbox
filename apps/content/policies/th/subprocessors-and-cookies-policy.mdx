@@ -1,0 +1,90 @@
+---
+title: "นโยบาย Subprocessors และ Cookies"
+description: "ข้อมูลเกี่ยวกับ subprocessors ของเราและการใช้ cookies"
+---
+
+Appbox มุ่งมั่นต่อความโปร่งใสเกี่ยวกับวิธีที่เรา collect, store, process และ share data ของคุณ หน้านี้ให้รายละเอียด subprocessors, การใช้ cookies และ tracking methods ที่เราใช้เพื่อปรับปรุงบริการของเรา
+
+เมื่อเรา share information ของคุณกับ third-party subprocessors เรายังคงรับผิดชอบต่อ information นั้น เราเลือก vendors ของเราอย่างรอบคอบและกำหนดให้พวกเขาเข้าทำ data protection agreements ที่จำกัดการ processing of Users' Personal Information (ตามที่กำหนดใน [Data Handling Policy](/policies/data-handling-policy) ของเรา)
+
+| บริษัท               | คำอธิบาย                                       |
+| --------------------- | ------------------------------------------------- |
+| Google Workspace      | provider บริการ customer ticketing mail          |
+| Posthog               | provider ด้าน application monitoring              |
+| Gitlab                | platform สำหรับ team collaboration และ project management |
+| PayPal                | ผู้ให้บริการชำระเงิน                                  |
+| CoinGate              | provider สำหรับ Cryptocurrency Payment            |
+| Stripe                | ผู้ให้บริการชำระเงิน                                  |
+| Google Analytics      | ผู้ให้บริการ Analytics                                |
+| Elastic Email         | ผู้ให้บริการ Email                            |
+| Mautic                | การจัดการ email campaign                          |
+
+เมื่อเราเพิ่ม subprocessor ใหม่ที่จัดการ Users' Personal Information ของเรา นำ subprocessor ออก หรือเปลี่ยนวิธีที่เราใช้ subprocessor เราจะ update หน้านี้
+
+## นโยบาย Cookies
+
+ส่วนนี้อธิบาย cookies ที่เราใช้บนบริการของเราเพื่อให้มั่นใจถึง user experience ที่สม่ำเสมอและมีประสิทธิภาพ รวมถึง environment ที่ปลอดภัย
+
+### การปฏิบัติตาม UK Privacy Regulations
+
+cookies policy ของเราปฏิบัติตาม UK Privacy and Electronic Communications Regulations (PECR) และ UK GDPR ตาม regulations เหล่านี้:
+
+1. เราขอ consent จากคุณก่อนวาง non-essential cookies บนอุปกรณ์ของคุณ
+2. เราให้ข้อมูลที่ชัดเจนและครอบคลุมเกี่ยวกับ cookie แต่ละรายการที่เราใช้
+3. เราทำให้คุณ withdraw หรือ change consent ได้ง่ายทุกเมื่อ
+4. เราไม่ทำให้การเข้าถึง website ของเราขึ้นอยู่กับการยินยอมต่อ non-essential cookies
+
+เราใช้ทั้ง session และ persistent cookies:
+
+* **Session cookies** จะคงอยู่ใน browser ของคุณเฉพาะระหว่าง browser session ของคุณ กล่าวคือจนกว่าคุณจะออกจาก website
+* **Persistent cookies** คงอยู่นอกเหนือ session ปัจจุบันและถูกใช้เพื่อหลายวัตถุประสงค์ เช่น การจดจำคุณในฐานะ existing user และจะยัง valid จนถึง expiry date ที่กำหนด เว้นแต่ผู้ใช้จะลบก่อน expiry date
+
+cookies เหล่านี้ถูกจัดประเภทเพิ่มเติมเป็น categories ต่อไปนี้:
+
+* **Strictly Necessary & Security**  
+   * cookies เหล่านี้จำเป็นสำหรับ websites บน platforms ของเราเพื่อทำหน้าที่พื้นฐาน และไม่ควรถูก disabled เรายังใช้เพื่อทำให้ interactions ของคุณกับ Services ของเราเร็วขึ้น น่าเชื่อถือขึ้น และเพื่อป้องกัน attacks เช่น cross-site scripting
+* **Performance & Analytics**  
+   * cookies เหล่านี้ช่วยให้เรานับ visitors และ traffic sources เพื่อประเมินและปรับปรุง performance ของ site ของเรา ช่วยให้เราเข้าใจว่า pages ใดได้รับความนิยมมากที่สุดและน้อยที่สุด และเห็นว่า visitors เคลื่อนที่ไปรอบ website อย่างไร ข้อมูลทั้งหมดที่ cookies เหล่านี้ได้รับถูก aggregated ดังนั้นจึง anonymous
+* **Targeting**
+   * cookies เหล่านี้ใช้เพื่อ deliver advertisements ที่เกี่ยวข้องกับคุณและ interests ของคุณมากขึ้น
+* **Functionality**
+   * cookies เหล่านี้ช่วยให้ website มอบ functionality และ personalization ที่ยกระดับขึ้น
+
+### Cookies ที่จำเป็นอย่างยิ่งและเพื่อความปลอดภัย
+
+* `PHPSESSID`  
+   * Cookie ที่สร้างโดย applications ที่ใช้ภาษา PHP นี่คือ identifier วัตถุประสงค์ทั่วไปที่ใช้รักษา user session variables โดยปกติเป็น random generated number วิธีใช้สามารถเฉพาะเจาะจงตาม site แต่ตัวอย่างที่ดีคือการคง logged-in status ของผู้ใช้ระหว่าง pages
+* `psp_session`  
+   * cookie นี้ใช้เพื่อรักษา anonymized user session โดย server บน status page ของเรา
+* `_GRECAPTCHA`  
+   * Google reCAPTCHA ตั้ง necessary cookie (_GRECAPTCHA) เมื่อ execute เพื่อวัตถุประสงค์ในการให้ risk analysis
+* `authorization_token`
+   * เมื่อ logged into dashboard เรา store JWT (JSON Web Token) เพื่อ authentication purposes token นี้จำเป็นต่อการรักษา secure, authenticated session
+
+### Cookies ด้านประสิทธิภาพและการวิเคราะห์
+
+* `_ga`, `_ga_LXBTWJ4Y7B`  
+   * cookies เหล่านี้เกี่ยวข้องกับ Google Analytics ช่วยแยก unique users โดย assign randomly generated number เป็น client identifier รวมอยู่ใน page request แต่ละรายการใน site และใช้คำนวณ visitor, session และ campaign data สำหรับ analytics reports ของ site
+* `mtc_id`  
+   * cookie นี้ใช้ track user behavior และ interactions เพื่อยกระดับ performance และ user experience ของ website
+
+### Cookies สำหรับการกำหนดเป้าหมาย
+
+* `mautic_focus_1`  
+   * cookie นี้ถูกใช้โดย Mautic Marketing Automation software เพื่อ track visitor engagement และ interaction กับ website pop-up content และ forms เพื่อปรับปรุง user experience และ website effectiveness
+
+### Cookies ด้านฟังก์ชันการทำงาน
+
+* `mautic_device_id`  
+   * cookie นี้ใช้ identify device และ behavior ของ visitor ติดตาม user interactions และ preferences บน site เพื่อยกระดับ user experience และเพื่อ tracking purposes
+
+### Cookies เพิ่มเติม
+
+* `ph_phc_*_posthog` 
+   * ใช้โดย Posthog สำหรับ analytics และ user tracking
+* random string of characters
+   * ใช้บน status page ของเรา
+* `__cookie_consent`
+   * ใช้โดย status system ของเราสำหรับ cookie consent management
+* `WHMCS*`
+   * ใช้โดย billing system ของเราสำหรับ session management

@@ -1,0 +1,92 @@
+---
+title: Ağımız Az Önce Büyük Bir Yükseltme Aldı 🎉
+date: 2025-11-29 10:00:00
+excerpt: "Şimdiye kadarki en büyük altyapı yükseltmemizi tamamladık: Nokia enterprise router'lar, kendi IP alanımız ve 100G AMS-IX bağlantısı. Ayrıca Black Friday fırsatımız burada!"
+author_id: rid
+og_image: network-upgrade-og.jpg
+tags: [appbox, infrastructure, networking, black-friday, performance]
+---
+
+# Başardık - Ağımız Yayında!
+
+Nisan ayında kendi ağ altyapımızı kurduğumuzu duyurduğumuz zamanı hatırlıyor musunuz? Dün itibarıyla bunun sonunda yayında olduğunu söylemekten büyük mutluluk duyuyorum.
+
+Bu aylar süren bir çalışmaydı ve dürüst olmak gerekirse her şeyin bir araya geldiğini görmek, Appbox'ı başlattığımızdan beri en tatmin edici anlardan biri oldu. Nelerin değiştiğini anlatayım.
+
+## Enterprise-Grade Donanım
+
+Altyapımız genelinde Nokia 7750 SR-1 router'larını devreye aldık. Nokia'nın routing ekipmanlarına aşina değilseniz, bunlar dünyanın en büyük ISP'lerinden ve veri merkezlerinden bazılarını çalıştıran router'larla aynı sınıftadır. Ölçekte güvenilirlik ve performans için üretilmişlerdir ve artık tüm trafiğinizi onlar yönetiyor.
+
+Bu tüketici veya prosumer ekipmanı değil. Bu, hak ettiğiniz performansı sunmak için ihtiyaç duyduğumuz kontrolü ve yetenekleri bize veren gerçek enterprise ağ donanımıdır.
+
+## Kendi IP Alanımız
+
+Artık trafiği kendi Autonomous System'imiz ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) altında kendi IP adreslerimiz üzerinden yönlendiriyoruz. Bu, verilerinizin internet üzerinde nasıl yol aldığı üzerinde tam kontrole sahip olduğumuz anlamına gelir.
+
+Bu neden önemli? Çünkü routing'i özellikle Appbox kullanıcıları için optimize edebilir, daha iyi DDoS koruması uygulayabilir ve gelecekte ihtiyacı olanlara dedicated IP adresleri gibi özellikler sunabiliriz.
+
+## 100G AMS-IX Bağlantısı
+
+Büyük olan bu. Artık AMS-IX ile saniyede 100 gigabit hızında peering yapıyoruz. AMS-IX dünyanın en büyük internet değişim noktalarından biridir ve doğrudan erişime sahip olmak trafiğinizin büyük ağlara ve içerik sağlayıcılarına mümkün olan en hızlı rotadan gitmesi anlamına gelir.
+
+Gerçek anlamda bu şu demek:
+- **Daha düşük gecikme** - bağlantılarınız daha hızlı ve daha duyarlı
+- **Daha iyi hızlar** - daha fazla bant genişliği daha az tıkanıklık demek
+- **Geliştirilmiş güvenilirlik** - doğrudan peering daha az arıza noktası demek
+
+Bunu son birkaç haftadır trafiğin bir alt kümesiyle test ediyorduk ve sonuçlar tam olarak umduğumuz gibi oldu. Artık herkes bundan yararlanacak.
+
+## Black Friday - 3 Ay Boyunca %30 İndirim
+
+Bu kilometre taşını kutlamak için (ve Black Friday hafta sonu olduğu için) şimdiye kadarki en büyük kampanyamızı düzenliyoruz.
+
+### Yeni Müşteriler
+
+Herhangi bir planda **ilk 3 ayınızda %30 indirim alın**. Ödeme sırasında **APPBOX30** kodunu kullanmanız yeterli. Bu yalnızca aylık abonelikler için geçerlidir; bu fırsattan yararlanmak istiyorsanız aylık faturalandırmayı seçtiğinizden emin olun.
+
+### Mevcut Müşteriler - Yükseltmeler
+
+Daha büyük bir plana geçmek mi istiyorsunuz? Sizi de düşündük. **UPGRADE30** koduyla **yükseltmenizde %30 indirim alın**. Yükseltme ücreti mevcut faturalandırma döngünüze göre orantılı hesaplanacak, ardından %30 düşürülecek. Yükseltmeden sonraki 2 ayınızda da tam fiyat üzerinden %30 indirim olacak.
+
+#### Nasıl Yükseltilir?
+
+1. [Faturalandırma hesabınıza](https://billing.appbox.co/clientarea.php) giriş yapın
+2. **My Products & Services** bölümüne gidin ve Appbox'ınızı seçin
+3. Actions bölümündeki **Upgrade/Downgrade** düğmesine tıklayın
+4. Yeni planınızı seçin ve ödeme sırasında **UPGRADE30** kodunu girin
+
+![Appbox'ınızı nasıl yükseltirsiniz - Upgrade/Downgrade düğmesine tıklayın](/blog-images/upgrade-guide.png)
+
+Bu gerçekten şimdiye kadar sunduğumuz en iyi fırsat ve Appbox topluluğunun parçası olduğunuz için teşekkür etme biçimimiz.
+
+## VPS Uygulamaları - Noel'den Önce Geliyor
+
+Birçoğunuzun bunu beklediğini biliyorum. VPS uygulamaları hâlâ planlandığı gibi ilerliyor ve Noel'den önce hazır etmeyi hedefliyoruz.
+
+Önceki duyuruyu kaçıranlar için: VPS uygulamaları size hiçbir kısıtlama olmadan tam root erişimi verir. Docker, Snap, Tailscale ve düzgün sistem düzeyi erişim gerektiren diğer her şeyi çalıştırabileceksiniz. Bu, VPS esnekliğinin tek tıkla uygulama deployment'ımızla birleşimi.
+
+Ayrıca üzerinde çalıştığımız ama henüz duyurmaya hazır olmadığımız başka bir şey daha var. Şimdilik VPS sürümüyle birlikte geleceğini düşündüğümüz, seveceğinize inandığımız sürpriz bir özellik var diyelim. Yakında daha fazlası.
+
+## Sırada Ne Var?
+
+Bu ağ yükseltmesi yalnızca temel. Artık altyapımız üzerinde gerçek kontrole sahip olduğumuza göre, daha önce mümkün olmayan özellikleri inşa etmeye başlayabiliriz:
+
+- **Dedicated IP adresleri** - kendi IP'sine ihtiyaç duyan kullanıcılar için
+- **Gelişmiş routing seçenekleri** - trafiğinizin nasıl aktığı üzerinde daha fazla kontrol
+- **Geliştirilmiş DDoS koruması** - daha iyi güvenlik için yeni altyapımızdan yararlanma
+- **Coğrafi optimizasyon** - peering ilişkilerimizi genişlettikçe
+
+Bu özellikler geliştikçe sizi bilgilendirmeye devam edeceğiz.
+
+## Teşekkürler
+
+Gerçekten, teşekkürler. Böyle bir altyapı kurmak zaman, para ve kullanıcılarımızdan büyük miktarda güven gerektirir. Biz bunun üzerinde çalışırken bizimle kalmış olmanız bizim için her şey demek.
+
+Yeni ağla ilgili herhangi bir sorun fark ederseniz veya geri bildiriminiz varsa lütfen bize ulaşın. Her şeyi yakından izliyoruz, ancak gerçek kullanıcılardan gelen gerçek dünya geri bildirimi paha biçilemez.
+
+Daha hızlı, daha güvenilir hosting'e. 🚀
+
+---
+
+*Yükseltme veya Black Friday fırsatı hakkında sorularınız mı var? support@appbox.co adresinden bize yazın.*
+

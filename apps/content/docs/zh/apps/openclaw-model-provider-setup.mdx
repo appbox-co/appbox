@@ -1,0 +1,516 @@
+---
+title: OpenClaw model provider setup
+description: 安装后使用任意模型提供商 API key 配置 OpenClaw。
+sort: 1
+---
+
+在 Appbox 中安装 OpenClaw 时不需要模型 API key。
+
+完成设置的推荐方式，是通过 SSH 连接到你的 OpenClaw 应用并运行内置的 `openclaw onboard` 向导。相比手动编辑完整配置，向导更安全，因为它会保留 Appbox gateway 设置，同时引导你完成模型提供商、API keys、频道、健康检查和技能配置。
+
+如果你不能或不想使用 SSH，请改用[备用 dashboard 方法](#backup-method-configure-provider-auth-in-the-dashboard)。
+
+## 推荐方法：SSH 到 OpenClaw 并运行 onboarding
+
+对于新安装，以及需要添加或更改模型提供商凭据的现有安装，请使用此方法。
+
+### 你需要先准备什么
+
+- 你的 Appbox 中的 OpenClaw 应用详情页。
+- Configuration 部分显示的 **SSH Command**。
+- 你的 **Gateway Token / SSH Password**。这是用于 OpenClaw dashboard 登录的同一个生成密钥。
+- 模型提供商账号或 API key。如果你还没有，请参阅[获取 API keys](#getting-api-keys-with-dashboard-links)。
+
+应用详情页会显示可直接复制的 SSH command：
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw app details page with the SSH command highlighted"
+  width="860"
+/>
+
+### 从 macOS 连接
+
+1. 打开 **Terminal** 或 **iTerm2**。
+2. 从 OpenClaw 应用详情页复制 **SSH Command**。
+3. 粘贴并运行它。它看起来类似这样：
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. 如果 macOS 询问是否信任主机，输入 `yes` 并按 Enter。
+5. 提示输入密码时，粘贴你的 **Gateway Token / SSH Password** 并按 Enter。Terminal 在你输入或粘贴密码时不会显示任何字符。
+
+### 从 Windows 连接
+
+Windows 10 和 Windows 11 默认包含 OpenSSH client。
+
+1. 打开 **Windows Terminal** 或 **PowerShell**。
+2. 从 OpenClaw 应用详情页复制 **SSH Command**。
+3. 粘贴并运行它：
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. 如果 Windows 询问是否信任主机，输入 `yes` 并按 Enter。
+5. 提示输入密码时，粘贴你的 **Gateway Token / SSH Password** 并按 Enter。PowerShell 不会显示粘贴的密码。
+
+如果 Windows 提示无法识别 `ssh`，请从 **Settings > System > Optional features** 安装 **OpenSSH Client**，然后重新打开 Windows Terminal 再试一次。
+
+### 运行 OpenClaw onboarding 向导
+
+SSH 连接后运行：
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 on macOS connected to OpenClaw over SSH and running the openclaw onboard command"
+  width="860"
+/>
+
+该向导是交互式的。请使用以下 Appbox 专用选择：
+
+1. **Existing config:** 选择查看或修改当前配置的选项。除非你有意从头重建 OpenClaw 设置，否则**不要**选择完整重置。
+2. **Model and auth:** 选择你的提供商，例如 OpenRouter、OpenAI、Anthropic、Google、xAI，或自定义 OpenAI-compatible provider。向导询问时粘贴 API key。对大多数用户来说，OpenRouter 是最容易的默认选择，因为一个 key 可以路由到许多模型。如果你有 OpenAI Codex 订阅，请在提供商列表中选择 **OpenAI Codex**，而不是只名为 `codex` 的选项。
+3. **Default model:** 选择向导为该提供商推荐的模型，或手动输入 `provider/model` 值，例如 `openrouter/auto`。
+4. **Workspace:** 除非你有特定原因需要更改，否则保留默认 workspace。
+5. **Gateway settings:** 保留现有 Appbox gateway 设置。尤其要保持 token auth 启用，并保留现有 gateway port/bind 设置。
+6. **Channels:** 现在配置 WhatsApp、Telegram、Discord、Signal、iMessage 或其他频道，或者跳过，稍后使用 `openclaw configure` 添加。
+7. **Web search:** 如果你有搜索提供商，请选择它；否则暂时跳过。
+8. **Daemon/service install:** Appbox 已经在 container 内监督 OpenClaw，因此如果向导提供 daemon 安装，请跳过。
+9. **Health check:** 让向导运行健康检查。
+10. **Skills:** 允许向导检查 bundled skills。当它询问 **Preferred node manager for skill installs** 时，选择 `npm`。
+
+onboarding 完成后，返回你的 OpenClaw dashboard。如果 dashboard 已经打开，请刷新并测试一个简短的聊天 prompt。
+
+通过 SSH 可用的后续命令：
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## 获取 API keys（带 dashboard 链接）
+
+使用以下提供商控制台生成 keys。使用推荐的 SSH 方法时，在 `openclaw onboard` 询问时粘贴 key。使用备用 dashboard 方法时，将 key 合并到 `Config > Secrets > Raw`。
+
+### 首选推荐：OpenRouter（最适合大多数用户的默认选择）
+
+我们推荐它的原因：
+
+- 一个 key 可用于许多模型厂商。
+- 你可以使用 `openrouter/auto`，它能根据任务难度切换模型。
+- `auto` 可以将较简单的任务路由到更便宜的模型，从而降低成本。
+
+获取 key 的方法：
+
+1. 前往 [OpenRouter](https://openrouter.ai/) 并登录。
+2. 打开 [API Keys settings](https://openrouter.ai/settings/keys)。
+3. 点击 **Create** 并复制 key（只显示一次）。
+4. 当 OpenClaw 向导询问 OpenRouter API key 时使用它。对于备用 dashboard 方法，配置 key 是 `models.providers.openrouter.apiKey`。
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="OpenRouter API keys page screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+获取 key 的方法：
+
+1. 登录 [OpenAI Platform](https://platform.openai.com/)。
+2. 打开 [API Keys](https://platform.openai.com/settings/organization/api-keys)。
+3. 点击 **Create new secret key**。
+4. 立即复制它（OpenAI 只会完整显示一次）。
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="OpenAI API key settings screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+获取 key 的方法：
+
+1. 登录 [Anthropic Console](https://console.anthropic.com/)。
+2. 打开 [API Keys](https://console.anthropic.com/settings/keys)。
+3. 点击 **Create Key**。
+4. 立即复制 key（只显示一次）。
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Anthropic API key creation screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini via AI Studio)
+
+获取 key 的方法：
+
+1. 打开 [Google AI Studio](https://aistudio.google.com/)。
+2. 前往 [API Keys](https://aistudio.google.com/app/apikey)。
+3. 点击 **Create API key**（新建或现有项目均可）。
+4. 复制并保存 key。
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Google AI Studio API key creation screenshot from a public tutorial"
+  width="860"
+/>
+Source tutorial: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Note: provider dashboards can change frequently and may show a login prompt depending on your session state.
+
+## 备用方法：在 dashboard 中配置 provider auth
+
+仅当 SSH 不可用，或你更喜欢手动配置时使用此方法。Dashboard Raw editor 可以工作，但它会一次性编辑整个 OpenClaw config object。请小心将提供商设置合并到现有文件中，而不是替换 Appbox 的 gateway 和 skills 默认设置。
+
+1. 从已安装应用详情页打开你的 OpenClaw dashboard URL。
+2. 前往 **Config > Secrets**。
+3. 选择 **Raw** 而不是 Form。
+4. 点击 Reveal sensitive values 按钮（看起来像带斜杠的眼睛）。
+5. 将下面示例中的提供商设置**合并**到你的现有配置中（参见[手动 provider config 如何放入完整文件](#how-manual-provider-config-fits-in-the-full-file)）——除非你有意重置 gateway、skills 和其他 Appbox 默认值，否则不要替换整个文件。
+6. 保存并应用配置更改。
+
+### 手动 provider config 如何放入完整文件
+
+**Config > Secrets > Raw** 会在一个 object 中编辑**整个** OpenClaw config。在 Appbox 上，该文件已经包含 `gateway`（bind、token auth、Control UI）、`skills.load.extraDirs`（bundled skills）、`commands`，有时还有 `meta` 等内容。[主要 provider 示例](#major-provider-examples)部分中的 snippets 只展示模型所需的部分：`models` tree 和 `agents.defaults.model.primary`。
+
+**你需要做的事：** 保留现有顶层 keys（`gateway`、`skills`、`commands` 等），并**添加或更新**以下两个部分：
+
+- **`models.providers`** — 添加你的 provider（例如 `openrouter`）及其 `apiKey`、必要时的 `baseUrl`，以及 `models` list。
+- **`agents.defaults.model.primary`** — 设置默认模型字符串（例如 `openrouter/auto`），让 agent 使用该 provider。
+
+如果 `models` 或 `agents` 已存在，请将新 keys 合并到这些 objects 中，而不是重复创建。
+
+下面是**一个**完整 Raw 文件形状的 **JSON** 示例（编辑器实际也可能接受 JSON5-style quotes）。你的真实文件可能包含更多字段（例如更丰富的模型 metadata、`meta`）。下方示例中的 **provider blocks** 是你与这里的 `models` 和 `agents` 对齐的部分。
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token vs provider API key:** `gateway.auth.token` 只用于登录 OpenClaw Control UI / gateway。`models.providers.*.apiKey` 是你的 LLM vendor key（OpenRouter、OpenAI 等）——它们是不同的设置。
+
+## 主要 provider 示例
+
+先一次使用一个 provider block，确认它能工作后，再添加更多 providers。下面每个示例都是一个**合并片段**：`...` 表示省略的配置（上方或下方的行），`},` 后面的 `"models"` 是你文件中位于 `models` 上方的某个 key 的结束位置（例如 `skills` 或 `commands`）。这些 snippets 本身不是有效 JSON——请将 `models` 和 `agents` sections 合并到你的 root object 中。
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock 说明（无 API key）
+
+Amazon Bedrock 使用 AWS credentials（例如 `AWS_ACCESS_KEY_ID`、`AWS_SECRET_ACCESS_KEY`、`AWS_REGION`），而不是 API key。一个最小 provider entry 如下：
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## 说明
+
+- Gateway auth token 和模型 provider API keys 是不同设置。
+- 如果遇到 provider error（例如缺少 Anthropic key），请将默认模型更新为你已经配置的 provider。
+- 如果 provider validation 失败，请先确认必要的 provider fields 已存在（`baseUrl`、`models`，以及适用时的 `apiKey`）。
+
+## 官方 provider 文档
+
+- [OpenClaw provider directory](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)

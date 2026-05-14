@@ -1,0 +1,99 @@
+---
+title: Úvod
+description: Vítejte v oficiální dokumentaci open-source frontendu Appbox.
+sort: 1
+---
+
+**Vítejte v dokumentaci Appbox**  
+S radostí oznamujeme, že frontend pro [Appbox](https://www.appbox.co/) je nyní open-source na [GitHub](https://github.com/appbox-co/appbox). Naším cílem je podporovat spolupracující komunitu, která přispívá do dokumentace, vyvíjí nové funkce frontendu a pomáhá zlepšovat celkový zážitek z Appbox.
+
+Naše dokumentace je zatím v rané fázi, ale pracujeme na vytvoření komplexního zdroje podobného jiným platformám v našem oboru. V současnosti se dokumentace zaměřuje hlavně na pokyny pro přispívání, ale plánujeme ji rozšířit o podrobné informace ke všem aplikacím dostupným v Appbox.
+
+Dokud naše dokumentace nebude robustnější, navštivte prosím naši [starší znalostní bázi](https://billing.appbox.co/knowledgebase), kde najdete okamžité odpovědi na otázky ke konkrétním aplikacím nebo službám. Pokud potřebujete technickou podporu, můžete [odeslat ticket](https://billing.appbox.co/submitticket.php) a požádat o pomoc. K těmto novým dokumentům se vždy dostanete přes odkaz v patičce našeho webu, kde můžete sledovat náš postup při rozšiřování.
+
+## Budoucí plány
+
+- **Podrobné průvodce aplikacemi**  
+  Pokryjí instalaci, řešení problémů a tipy pro každou aplikaci podporovanou na naší platformě.
+- **Zdroje pro uživatele a vývojáře**  
+  Poskytnou vše od začátečnických návodů až po pokročilé reference kódu pro přizpůsobení vašeho prostředí Appbox.
+- **Obsah řízený komunitou**  
+  Podporujeme pull requesty, zpětnou vazbu a návrhy - vše je vítáno a pomáhá růstu tohoto projektu pro všechny.
+
+## Začínáme
+
+Pokud si chcete prohlédnout open-source kód frontendu nebo do něj přispět, naklonujte repozitář [Appbox](https://github.com/appbox-co/appbox):
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Poté přejděte do projektu a nainstalujte jeho závislosti:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Vaše lokální instance bude dostupná na `http://localhost:3000`. Neváhejte ji prozkoumat, provádět změny a vytvářet pull requesty. Vážíme si každého příspěvku!
+
+## Vývojové nástroje
+
+### Linting
+
+Projekt obsahuje komplexní nastavení lintingu pomocí ESLint s integrací TypeScript a Prettier. To zajišťuje konzistentní styl kódu a pomáhá včas zachytit běžné chyby. Kontroly lintingu můžete spustit ručně:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Naše konfigurace ESLint zahrnuje:
+- Pravidla specifická pro TypeScript přes `@typescript-eslint`
+- Linting specifický pro Next.js pomocí `eslint-config-next`
+- Formátování kódu s integrací Prettier
+
+### Pre-commit hooky
+
+Používáme Husky ke správě Git hooků, což pomáhá zajistit, že do repozitáře bude commitován jen kvalitní kód. Nastaveny jsou následující hooky:
+
+- **pre-commit**: Spouští `lint:fix` před každým commitem, aby byla zajištěna kvalita kódu
+- **commit-msg**: Používá commitlint k vynucení formátu konvenčních commit zpráv
+
+To znamená, že vaše commity budou před přijetím automaticky zkontrolovány z hlediska kvality kódu a správného formátování, čímž se v celé codebase udržuje vysoký standard.
+
+## Vytváření pull requestů
+
+Až budete připraveni přispět svými změnami, postupujte podle těchto pokynů, aby měl váš Pull Request (PR) vyšší šanci na přijetí:
+
+### Před vytvořením PR
+
+1. **Proveďte rebase z nejnovější větve main**, abyste předešli konfliktům při merge:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Ujistěte se, že linting projde**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Ověřte, že váš kód funguje lokálně** otestováním relevantní funkcionality.
+
+### Pokyny pro PR
+
+1. **Udržujte PR zaměřené** - Řešte jeden problém nebo jednu funkci na PR.
+2. **Pište jasné commit zprávy** - Dodržujte formát konvenčních commitů.
+3. **Přiložte jasné popisy** - Vysvětlete, co váš PR dělá a proč je potřeba.
+4. **Přidejte testy** - Kde je to vhodné, přidejte testy, které ověří, že vaše změny fungují správně.
+5. **Dokumentujte svůj kód** - U složité logiky používejte komentáře a zajistěte, aby názvy funkcí byly popisné.
+6. **Dodržujte existující vzory** - Váš kód by měl odpovídat stylu a vzorům používaným ve zbytku codebase.
+
+U významných změn zvažte nejprve otevření issue a prodiskutování přístupu, než investujete čas do kódování. Pomůže to zajistit, že váš příspěvek bude v souladu se směrem projektu, a zabrání zbytečně vynaloženému úsilí.

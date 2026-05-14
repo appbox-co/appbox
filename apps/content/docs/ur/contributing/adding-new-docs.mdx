@@ -1,0 +1,62 @@
+---
+title: نئی دستاویزات شامل کرنا
+description: اپنی documentation site اور blog میں نئی دستاویزات شامل کریں۔
+sort: 2
+---
+
+# Documentation کے لیے
+
+1. اپنی دستاویز کے content کے ساتھ `apps/content/docs/[language]` folder میں نئی `.mdx` file بنائیں۔
+2. دستاویز کو site کے navigation menu میں شامل کریں۔
+    اس کے لیے `src/config/docs.ts` file کی `sidebarNav` property میں مطلوبہ information کے ساتھ نیا item شامل کریں، اور موجودہ items کے pattern کی پیروی کریں۔ اس سے دستاویز search command palette میں بھی شامل ہو جائے گی۔
+
+## MDX document settings
+
+MDX documents `apps/content/docs/[language]` اور `apps/content/blog/[language]` folders میں stored ہوتے ہیں۔ ہر document ایک MDX file ہے جس میں metadata والا header ہوتا ہے، جیسے title اور description۔ document header کی مثال نیچے ہے:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+درج ذیل metadata fields supported ہیں:
+
+- `title` (required): document کا title۔
+- `description` (required): document کی مختصر description۔
+- `sort` (optional): ایک number جو navigation میں document کی ترتیب طے کرتا ہے۔ کم sort values والے documents پہلے آتے ہیں۔ اگر یہ نہ دیا جائے تو documents title کے حساب سے alphabetically sorted ہوتے ہیں۔
+- `links` (optional): related documents، API references، source code وغیرہ کے links۔
+- `toc` (optional): table of contents دکھانا ہے یا نہیں۔ default value `true` ہے۔
+
+Document میں نیا metadata شامل کرنے کے لیے header میں نئی keys add کی جا سکتی ہیں۔ مثال کے طور پر document author بتانے کے لیے `author` key add کر سکتے ہیں:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+لیکن custom metadata add کرتے وقت آپ کو project root میں موجود `contentlayer.config.ts` file میں `Doc` یا `Blog` constants کی `fields` property بھی update کرنی ہوگی۔
+اس کے بعد نئی information کو document template میں display کرنا ہوگا۔ اس کے لیے `src/app/[locale]/docs/[[...slug]]/page.tsx` file، یا `src/app/[locale]/blog/[[...slug]]/page.tsx`، یا اس کے child components میں سے کسی ایک کو update کرنا ہوگا۔
+
+## Contentlayer دوبارہ build کرنا
+
+جب آپ documentation content میں changes کرتے ہیں، نئی docs add کرتے ہیں، یا `contentlayer.config.ts` file modify کرتے ہیں، تو development کے دوران changes اثر انداز کرنے کے لیے contentlayer cache دوبارہ build کرنا ہوگا۔ چلائیں:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+یہ command application کے لیے required content types اور data دوبارہ generate کرتی ہے۔ آپ کو یہ command تب چلانی ہوگی جب آپ:
+
+- `contentlayer.config.ts` file میں نئے metadata fields add کریں
+- dev server نہ چل رہا ہو اور آپ MDX content add یا modify کریں
+- اپنی content organization کی structure change کریں
+
+Production کے لیے project build کرتے وقت یہ command automatically چلتی ہے، لیکن development کے دوران structural content changes کرنے پر اسے manually چلانا ہوگا۔

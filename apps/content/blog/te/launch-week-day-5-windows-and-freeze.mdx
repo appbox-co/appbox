@@ -1,0 +1,91 @@
+---
+title: Launch Week రోజు 5 - Windows 11 Pro VPS మరియు App Freeze
+date: 2026-03-13 10:00:00
+excerpt: Launch Week Day 5. Windows 11 Pro ఇప్పుడు Appbox లో VPS గా అందుబాటులో ఉంది. అదనంగా, కొత్త freeze feature apps ను pause చేసి data కోల్పోకుండా వాటి slots తిరిగి పొందడానికి సహాయపడుతుంది.
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week రోజు 5: Windows 11 Pro VPS మరియు App Freeze
+
+Day 5. చివరి రోజు. ఇది వస్తుందని మీరు ఊహించరని నిన్న చెప్పాము, నిజంగానే అలా అనుకున్నాము.
+
+**Windows 11 Pro ఇప్పుడు Appbox లో VPS గా అందుబాటులో ఉంది.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Appbox లో Windows
+
+Day 3 న ఐదు Linux distributions తో VPSes launch చేసినప్పుడు, సహజమైన ప్రశ్న "Windows సంగతి?" అనేది. Appbox లో managed VPS గా Windows ను సరిగ్గా నడపడం పెద్ద technical challenge. Linux VMs host మరియు guest మధ్య near-native file sharing కోసం virtiofs ఉపయోగిస్తాయి. Windows virtiofs కు support ఇవ్వదు. అందుకే ప్రతి VM కోసం authenticated SMB shares సృష్టించే Samba-based integration మేము నిర్మించాము; Linux VPSes పొందే seamless Appbox data access Windows కు కూడా లభిస్తుంది - Windows సహజంగా అర్థం చేసుకునే protocol ద్వారా.
+
+ఫలితంగా, KVM పై నడిచే పూర్తి Windows 11 Pro virtual machine, మీ Appbox data `Z:` drive (`APPBOX_DATA`) గా mounted అవుతుంది. File Explorer తెరిచి `Z:\` కు వెళ్తే, మీ `apps/` మరియు `storage/` folders అక్కడే కనిపిస్తాయి.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Windows 11 File Explorer showing APPBOX_DATA as the Z: drive with apps and storage folders" width="860" className="mt-8 mb-10" />
+</p>
+
+## ఇది తెరచే అవకాశాలు
+
+Appbox లో Windows VPS ఉండటం పూర్తిగా కొత్త use cases category ను తెరుస్తుంది:
+
+- **Windows-only software** - Linux versions లేని applications నడపండి
+- **.NET development** - నిజమైన Windows environment లో .NET applications build మరియు test చేయండి
+- **Office and productivity** - Microsoft Office, Adobe tools, లేదా ఏ desktop software అయినా నడపండి
+- **Game servers** - Windows-only game servers host చేయండి
+- **Remote desktop** - built-in web console ద్వారా ఏ browser నుంచైనా పూర్తి Windows desktop access చేయండి, లేదా native RDP అనుభవం కోసం Microsoft Remote Desktop తో connect అవ్వండి
+- **Testing and CI** - మీ స్వంత hardware నిర్వహించకుండా Windows పై software test చేయండి
+
+ఇది administrator access తో పూర్తి Windows 11 Pro installation. Windows పై నడిస్తే, ఇక్కడ కూడా నడుస్తుంది.
+
+## Plan Availability
+
+Windows 11 Pro కు resource requirements చాలా ఎక్కువ, disk I/O పై heavy గా ఉంటుంది. అందరికీ మంచి experience ఇవ్వడానికి, Windows VPS ప్రస్తుతం dedicated Appbox plans లో మాత్రమే అందుబాటులో ఉంది (NG-18000 మరియు పైవి). మేము optimize చేస్తూ ఉండగా భవిష్యత్తులో ఇతర plans కు availability విస్తరించవచ్చు.
+
+## Licensing
+
+Windows 11 Pro VPS లో product key ఉండదు. Windows desktop పై persistent watermark, limited personalisation settings, periodic activation reminders తో unactivated గా నడుస్తుంది - కానీ మిగతా విధంగా పూర్తిగా functional. ఈ restrictions తొలగించడానికి, valid Windows 11 Pro key తో activate చేయండి. [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/) నుండి కొనుగోలు చేయాలని మేము సిఫార్సు చేస్తాము.
+
+## App Boost తో పనిచేస్తుంది
+
+Windows 11 Pro VPS Day 2 లో వచ్చిన **App Boost** ను పూర్తిగా support చేస్తుంది. heavier workloads కోసం మరింత performance అవసరమైతే, మీ VM కు మరింత RAM మరియు CPU allocate చేయడానికి boost level ను పైకి slide చేయండి.
+
+## App Freeze
+
+ఈ రోజు విడుదలవుతున్న రెండో feature Windows మాత్రమే కాదు, అన్ని apps కు వర్తిస్తుంది.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Windows 11 Pro VPS detail page showing App Boost and the new Freeze button" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** ఏ installed app అయినా pause చేసి data కోల్పోకుండా దాని app slots తిరిగి పొందడానికి అనుమతిస్తుంది. app stop అవుతుంది, data ఉన్న చోటే అలాగే ఉంటుంది, మరియు అది ఉపయోగించిన slots ఇతర apps కోసం available అవుతాయి.
+
+ఇది తరచుగా వచ్చిన సమస్యను పరిష్కరిస్తుంది: మీరు కొత్త app ప్రయత్నించాలనుకుంటారు, కానీ అన్ని slots ఉపయోగించేశారు. ఈ రోజు ముందు, experiment చేయడానికి అవసరమైన slots ఖాళీ చేయాలంటే ఏదో uninstall చేయాలి - దాని data కోల్పోవాలి. ఇప్పుడు మీరు ఒక app freeze చేయవచ్చు, ఆ slots తో కొత్తదాన్ని install చేసి test చేయవచ్చు, తర్వాత అవసరం పూర్తయినప్పుడు original app unfreeze చేయవచ్చు. మీరు ఎక్కడ ఆపారో అక్కడి నుంచే అన్నీ కొనసాగుతాయి.
+
+Freeze button ఏ app detail page లోనైనా Actions section లో Start, Stop, Restart పక్కనే ఉంటుంది. Freezing app ను stop చేస్తుంది, frozen గా mark చేస్తుంది, దాని slots (boost slots సహా) మీ available pool కు తిరిగి ఇస్తుంది. Unfreezing app ను restore చేసి slots మళ్లీ consume చేస్తుంది.
+
+గమనించాల్సిన కొన్ని విషయాలు:
+
+- app installing, updating, లేదా deleting లో ఉన్నప్పుడు freeze చేయలేరు
+- మీ Appbox లో cost cover చేయడానికి సరిపడా free slots లేకపోతే unfreeze చేయలేరు
+- Frozen apps తమ data మరియు configuration అన్నీ intact గా ఉంచుకుంటాయి
+
+## ఇదే ముగింపు
+
+ఐదు రోజులు. ఐదు launches.
+
+- **Day 1** - కొత్త dashboard
+- **Day 2** - App Boost
+- **Day 3** - Linux VPSes
+- **Day 4** - VPS apps కోసం multiple domains
+- **Day 5** - Windows 11 Pro VPS మరియు App Freeze
+
+ఈ వారం ship చేసిన ప్రతిదీ ఇప్పుడే live. Log in చేసి ప్రయత్నించండి.
+
+Launch Week ముగిసింది, కానీ మేము ఆగడం లేదు. రాబోయే నెలల్లో ఇంకా చాలా ఉంది.
+
+---
+
+*Feedback ఉందా లేదా issue కనుగొన్నారా? support@appbox.co వద్ద సంప్రదించండి లేదా [billing.appbox.co](https://billing.appbox.co/submitticket.php) వద్ద ticket తెరవండి.*

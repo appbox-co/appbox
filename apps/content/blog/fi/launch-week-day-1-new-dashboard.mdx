@@ -1,0 +1,150 @@
+---
+title: Launch Week Day 1 - Uusi dashboard
+date: 2026-03-09 10:00:00
+excerpt: Launch Weekin ensimmäinen päivä on täällä. Uusi Appbox-dashboard on nyt julkaistu.
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, dashboard, security, app-store, i18n, file-explorer]
+---
+
+# Launch Week Day 1: Uusi dashboard on julkaistu
+
+Sanoimme, että Launch Week alkaa maanantaina. Ja ensimmäinen päivä on nyt julkaistu.
+
+Tänään julkaisemme uuden Appbox-dashboard-kokemuksen. Tämä on suuri käyttöliittymä- ja työnkulku-uudistus koko hallintapaneelissa, ja sillä on yksi yksinkertainen tavoite: tehdä appboxiesi ajamisesta nopeampaa, selkeämpää ja vähemmän ärsyttävää arjessa.
+
+Tätä päivitystä on valmisteltu pitkään, ja olen erittäin iloinen, että voimme vihdoin antaa sen käyttöösi.
+
+## Uusi hallintakeskus
+
+Ennen tätä päivää nämä tiedot olivat erillisillä sivuilla ja eri työnkuluissa. Tänään esittelemme erillisen dashboardin, joka kokoaa ne yhteen operatiiviseen näkymään:
+
+- uusimmat blogi- ja alustapäivitykset
+- palveluidesi yleiskortit
+- ilmoituksesi
+- uusimmat ja hiljattain päivitetyt sovellukset
+
+Sen sijaan, että hyppisit välilehdeltä toiselle, voit avata yhden sivun ja nähdä heti olennaisen.
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Appbox-dashboardin yleiskatsaus" width="860" className="mt-8 mb-10" />
+</p>
+
+## Uudistettu Appbox-hallinta
+
+Appboxien alue on rakennettu uudelleen siistimmällä korttiasettelulla ja paremmalla silmäiltävyydellä. Näet nopeasti tilan, tallennustilan, liikenteen, slot-käytön ja pääset suoraan yksityiskohtiin.
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="Appboxisi uudessa asettelussa" width="860" className="mt-8 mb-10" />
+</p>
+
+Jokaisen appboxin sisällä yhteenvetonäkymä on nyt operatiivisempi: resurssikortit, kaaviot ja ydintoiminnot ovat helpommin saavutettavissa ja ymmärrettävissä yhdellä silmäyksellä.
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="Appbox-yhteenveto reaaliaikaisilla tilastoilla" width="860" className="mt-8 mb-10" />
+</p>
+
+Tämä on sellainen sivu, jonka pidät auki käyttäessäsi ympäristöäsi oikeasti, ei vain staattinen tietonäyttö.
+
+## App Store on integroitu paremmin
+
+Paransimme myös sovellusten löytämistä ja sovellusten yksityiskohtanäkymiä, jotta ne tuntuvat osalta yhtä järjestelmää erillisten työkalujen sijaan.
+
+Kauppanäkymä on selkeämpi, kategorioita on helpompi selata ja polku löytämisestä asennukseen on lyhyempi.
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="Integroitu app store -kokemus" width="860" className="mt-8 mb-10" />
+</p>
+
+Sovellusten yksityiskohtasivut näyttävät nyt versio- ja resurssitiedot selkeämmin, joten voit päättää nopeammin ja vähemmillä yllätyksillä ennen asennusta tai päivitystä.
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="Parannettu sovelluksen yksityiskohta- ja versionäkymä" width="860" className="mt-8 mb-10" />
+</p>
+
+Tästä päivästä alkaen sovellukset voivat myös näyttää ja tukea **useita asennettavia versioita** suoraan työnkulussa, joten voit valita haluamasi version ja vaihtaa toiseen versioon milloin tahansa.
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="Versionvalitsin sovelluksille, joilla on useita julkaisuja" width="304" className="mt-8 mb-10" />
+</p>
+
+## Mukautetut verkkotunnukset ovat nyt ensiluokkainen osa kokemusta
+
+Mukautetut verkkotunnukset ovat nyt asennuskokemuksen ydinosia, eivät kömpelö lisävaihe.
+
+Kun sovellus vaatii verkkotunnuksen, määritys tapahtuu nyt suoraan asennusikkunassa selkeän ohjatun työnkulun avulla:
+
+1. Valitse Appboxisi.
+2. Valitse **Domain Type**:
+   - **Appbox Domain**, jos haluat käyttää Appboxin oletusverkkotunnusta.
+   - **Custom Domain**, jos haluat käyttää jotakin omaa verkkotunnustasi.
+3. Valitse **Base Domain**.
+4. Syötä **Subdomain**, jota haluat käyttää.
+5. Jos valitsit mukautetun verkkotunnuksen, Appbox näyttää tarkan lisättävän DNS-tietueen (host/nimi ja kohde-IP) ja antaa sinun vahvistaa sen heti.
+
+Sen sijaan, että arvailet tietueita käsin, kopioit dokumentaatiota ja yrität asennuksia uudelleen, saat sisäänrakennetun DNS-määritys- ja vahvistusvaiheen samassa paikassa, jossa asennat sovelluksen.
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="Mukautetun verkkotunnuksen määritys sovelluksen asennuksen aikana DNS-vahvistuksella" width="560" className="mt-8 mb-10" />
+</p>
+
+## Uusi tiedostoselain (rakennettu alusta asti)
+
+Tiedostoselain on suunniteltu kokonaan uudelleen. Aiemmassa kokemuksessa tiedostonhallinta rajoittui tiedostojen poistamiseen. Nyt se on oikea tiedostonhallinta, jossa on:
+
+- lataukset palvelimelle
+- uuden kansion luonti
+- uudelleennimeäminen
+- poistaminen
+- lataus omalle laitteelle
+- lista-/ruudukkonäkymän vaihto
+- murupolkunavigointi ja kontekstitoiminnot
+
+Voit siis oikeasti hallita appbox-tiedostojasi natiivisti ilman erillisen sovelluksen asentamista.
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="Uusi tiedostoselain laajennetuilla tiedostotoiminnoilla" width="560" className="mt-8 mb-10" />
+</p>
+
+## Kaksivaiheinen tunnistautuminen
+
+Tietoturvan ei pitäisi olla valinnaista vuonna 2026. Tästä päivästä alkaen Appbox-tilit tukevat sisäänrakennettua kaksivaiheista tunnistautumista.
+
+Voit ottaa 2FA:n käyttöön ja hallita sitä suoraan tilialueeltasi, mukaan lukien palautuskoodien hallinta tilin palautusta varten.
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="Kaksivaiheisen tunnistautumisen hallinta" width="860" className="mt-8 mb-10" />
+</p>
+
+Tämä on alustalle merkittävä tietoturvan virstanpylväs ja yksi käyttäjien johdonmukaisimmin pyytämistä ominaisuuksista.
+
+## Uusi visuaalinen kieli koko dashboardissa
+
+Visuaalinen järjestelmä on päivitetty navigaation, välien, korttien, typografian ja vuorovaikutustilojen osalta. Tavoitteena oli johdonmukaisuus ja keskittyminen: vähemmän visuaalista hälyä, vahvempi hierarkia, parempi luettavuus ja modernimpi tuotetuntuma sekä tummassa että vaaleassa teemassa.
+
+Et enää joudu tuijottamaan häikäisevän valkoista näyttöä asentaessasi sovelluksia keskiyöllä!
+
+## Parempi arjen käyttökokemus: teema, kieli ja nopeammat pikavalinnat
+
+Tämä julkaisu sisältää myös arkea helpottavia ominaisuuksia, jotka tekevät dashboardista miellyttävämmän käyttää joka päivä:
+
+- **Natiivi kielenvaihto** suoraan käyttöliittymässä (lisää kieliä lisätään ajan myötä).
+- **Kiinnitetyt sovelluspikavalinnat** näkyvät pieninä nopean käytön kuvakkeina palvelukorteissasi, jotta pääset eniten käyttämiisi sovelluksiin nopeammin.
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="Natiivi kielenvaihto uudessa dashboardissa" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="Kiinnitetyt sovelluspikavalinnat palvelukorteissa" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  Kielenvaihto ja kiinnitetyt pikavalinnat tuovat päivittäiset hallintatoiminnot juuri sinne, missä niitä tarvitset.
+</p>
+
+## Päivä 1 on nyt julkaistu
+
+Jos olet jo Appbox-käyttäjä, voit kirjautua sisään ja alkaa käyttää uutta dashboardia heti.
+
+Kuten aina, palaute on tervetullutta. Nopein tapa parantaa Appboxia on julkaista, kuunnella ja iteroida oikean käytön perusteella.
+
+---
+
+*Onko sinulla palautetta tai löysitkö ongelman? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

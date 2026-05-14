@@ -1,0 +1,65 @@
+---
+title: Hizmet Seviyesi Anlaşması
+description: Hizmet tutarlılığına ve güvenilirliğine bağlılığımız
+---
+
+Bu Service Level Agreement ("SLA"), Appbox tarafından sağlanan Services'ın şartlarını ve kullanımını düzenleyen bir belgedir. Services'ımızı kullanarak aşağıda belirtilen şartları kabul ve tasdik etmiş olursunuz.
+
+Paylaşımlı bir ortamda faaliyet gösterdiğimiz ve belirli nitelikte hizmetler sunduğumuz için zaman zaman bir miktar downtime kaçınılmaz olabilir. Bu anlaşma, abonelik döneminiz boyunca downtime olaylarını nasıl yönettiğimizi açıklar ve uyuşmazlıkları çözme ile tazminat sunma taahhütlerimizi tarif eder.
+
+## Sunucu Downtime'ları, Sunucu Bakımı ve Tazminat
+
+Appbox, sunucularımızı tüm kullanıcılar için faturalandırma dönemleri boyunca çalışır ve erişilebilir tutmak için her türlü çabayı gösterir.
+
+Sunucu bakımı önceden planlandığında kullanıcılar e-posta güncellemeleri, Appbox Status Page ve Client Area Announcements gibi birden fazla kanal üzerinden bilgilendirilir. Planlı bakımdan etkilenen hiçbir kullanıcı tazminata uygun değildir.
+
+Plansız veya acil bakım prosedürleri mümkün olduğunca hızlı şekilde iletilecek ve bu tür olaylardan etkilenen kullanıcılar aşağıda belirtilen şekilde kredi almaya hak kazanabilir:
+
+| Downtime Süresi      | Tazminat                                                                                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 6 saate kadar         | Ekibin takdirine göre belirlenir                                                                                                            |
+| 12 saate kadar        | 1 günlük hizmet kredisine eşdeğer                                                                                                           |
+| 24 saate kadar        | 2 günlük hizmet kredisine eşdeğer                                                                                                           |
+| 48 saati aşan         | Downtime süresinin iki katı kadar kredi verilir (örneğin 3 günlük kesinti 6 günlük hizmet kredisi sağlar)                                  |
+
+Bu politika **kurmuş olduğunuz uygulamalarla ilişkili downtime'ları hariç tutar.**
+
+## Sürücü Arızası ve Veri Kaybı
+
+Appbox'ın platformu, adil kaynak dağıtımı ve kapsamlı disk kullanımı sunmak üzere tasarlanmış paylaşımlı bir altyapıya dayanır. En iyi çabalarımıza rağmen sürücü arızaları gibi donanım arızaları zaman zaman ortaya çıkabilir.
+
+Bir sürücü arızası verilerinize erişiminizi kaybetmenize neden olur ve veriler kurtarılamazsa, **bir tam ay ücretsiz hizmet** almaya hak kazanırsınız.
+
+Hizmetinizde sakladığınız tüm önemli verilerin yedeklerini tutmanızı önemle tavsiye ederiz.
+
+Veri kaybı kullanıcı tarafından başlatılan eylemlerden (ör. yanlışlıkla silme) kaynaklanırsa ve sistemle ilgili bir hata tespit edilmezse herhangi bir tazminat sağlanmayacağını lütfen unutmayın.
+
+## Sunucu Kaynaklarının Adil Kullanımı
+
+Services'ımız paylaşılan kaynaklar üzerinde sunulur; bu nedenle her müşterinin faaliyetlerinin diğer kullanıcıların performansını bozmamasını ve kabul edilebilir kaynak sınırları içinde kalmasını sağlaması çok önemlidir.
+
+Appbox, diğer müşterilerin deneyimlerini olumsuz etkileyen uygulamaları veya süreçleri önceden bildirimde bulunmaksızın durdurabilir. Ciddi kaynak kötüye kullanımı durumlarında müşterinin hizmeti askıya alınabilir veya tamamen sonlandırılabilir.
+
+### Disk I/O Adil Kullanım Politikası
+
+Bu politika yalnızca NG-8000 ve daha küçük planlar için geçerlidir (dedicated disk olmayan planlar).
+
+Tüm kullanıcılar için optimum performans sağlamak amacıyla Appbox, aşağıdakileri yapan otomatik bir Disk I/O izleme sistemi kullanır:
+
+1. Tüm paylaşımlı kaynaklar genelinde disk kullanımını sürekli izler
+2. Uzun süre boyunca aşırı disk I/O kaynağı tüketen uygulamaları tanımlar
+3. Gerekli olduğunda throttling önlemlerini otomatik olarak uygular
+
+Uygulamanız aşırı disk I/O tüketiyor olarak tespit edilirse:
+- Bir uyarı bildirimi alabilirsiniz
+- Kalıcı yüksek kullanım, disk I/O hızınızın otomatik olarak throttling'e tabi tutulmasına neden olur
+- Tekrarlanan ihlaller giderek daha sıkı throttling limitlerine yol açar
+- Throttling geçicidir ve kullanım normal seviyelere döndüğünde otomatik olarak kaldırılır
+
+Kaynak yoğun uygulamaların, diğer kullanıcılar dikkate alınmadan çalıştırıldığında bu önlemleri tetikleyebileceğini lütfen unutmayın.
+
+Tüm kullanıcıların platformumuzda tatmin edici bir deneyime sahip olmasını garanti etmek için bu politikayı uygularız.
+
+## Destek Yanıt Süreleri
+
+Minimum destek yanıt veya çözüm süremiz yoktur; ancak tüm destek sorgularını 24 saat içinde yanıtlamayı hedefleriz.

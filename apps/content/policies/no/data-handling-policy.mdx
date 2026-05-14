@@ -1,0 +1,397 @@
+---
+title: Policy for datahåndtering
+description: Hvordan vi administrerer og beskytter dataene dine
+---
+
+Hos Appbox samler vi inn og lagrer kun minimumsinformasjonen som er nødvendig for å opprettholde registrene våre og levere tjenestene våre. Appbox-teamet er opplært til å håndtere dataene dine med størst mulig hensyn til personvern og sikkerhet og følger strenge protokoller, inkludert bruk av sterke legitimasjoner og flerfaktorautentisering. All betalingsbehandling håndteres fullstendig av betalingsbehandlerne våre, og ingen av dine finansielle opplysninger lagres av Appbox, bortsett fra betalingsregistre og tilhørende transaksjons-ID-er.
+
+## E-post
+
+- **Bruk**
+  - Fungerer som innloggingen din for Appbox Client Area og Appbox Control Panel
+  - Kontaktpunkt for Appbox-tjenestekunngjøringer
+  - Kontaktpunkt for henvendelser i Appbox Ticket System
+- **Innsamling**
+  - Oppgis av brukeren ved registrering
+- **Lagring**
+  - WHMCS = Klartekst
+  - Appbox API = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Appbox-team
+    - Dette er for å kontakte brukeren for support eller tjenestekunngjøringer
+- **Oppbevaring**
+  - Ubestemt
+- **Mer informasjon**
+  - Policy for fjerning av sensitive data
+
+## Brukernavn
+
+- **Bruk**
+  - Identifiserer brukeren i Appbox Ticket System
+  - Fungerer som navnet på brukerens Appbox-slot
+  - Registreres som lokal bruker på serveren der brukerens slot er deployet, og viser eventuelle kjørende prosesser brukeren har
+  - Fungerer som brukerens brukernavn for installerte applikasjoner
+- **Innsamling**
+  - Oppgis av brukeren ved registrering
+- **Lagring**
+  - WHMCS = Klartekst
+  - Appbox API = Klartekst
+  - Installerte applikasjoner = Avhenger av applikasjonen
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Appbox-team
+    - Påkrevd for supporthenvendelser
+    - Påkrevd for å undersøke serverproblemer ved å søke etter applikasjoner med høyt ressursforbruk, kilder til serverustabilitet eller uautoriserte applikasjoner
+- **Oppbevaring**
+  - Ubestemt
+- **Mer informasjon**
+  - Policy for fjerning av sensitive data
+
+## Land
+
+- **Bruk**
+  - Brukes til å beregne gjeldende skatter basert på brukerens valgte land
+- **Innsamling**
+  - Oppgis av brukeren ved registrering
+- **Lagring**
+  - WHMCS = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Appbox-team
+- **Oppbevaring**
+  - Ubestemt
+- **Mer informasjon**
+  - Policy for fjerning av sensitive data
+
+## Passord
+
+### Appbox Client Area-passord
+
+- **Bruk**
+  - Fungerer som brukerens passord for Appbox Client Area
+- **Innsamling**
+  - Oppgis av brukeren ved registrering i Appbox Client Area
+- **Lagring**
+  - WHMCS = Kryptert
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Begrenset tilgang for Appbox-teamet
+    - Appbox-teamet kan ikke se brukerens passord ettersom det er hashet, men de kan tilbakestille passordet ditt etter verifisering
+- **Oppbevaring**
+  - Ubestemt
+- **Mer informasjon**
+  - Policy for fjerning av sensitive data
+  - [Passordpolicy](/policies/password-policy)
+  - Vi anbefaler sterkt å aktivere tofaktorautentisering på [kontosikkerhetssiden din](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel-passord
+
+- **Bruk**
+  - Fungerer som brukerens passord på Appbox Control Panel for å få tilgang til slotten
+- **Innsamling**
+  - Oppgis av brukeren etter deploy av slotten
+- **Lagring**
+  - Appbox API = Kryptert
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Begrenset tilgang for Appbox-teamet
+    - Appbox-teamet kan ikke se brukerens passord ettersom det er hashet, men de kan tilbakestille passordet ditt etter verifisering
+- **Oppbevaring**
+  - Ubestemt
+- **Mer informasjon**
+  - Policy for fjerning av sensitive data
+  - [Passordpolicy](/policies/password-policy)
+  - Vi anbefaler sterkt å aktivere tofaktorautentisering på [kontosikkerhetssiden din](https://billing.appbox.co/user/security)
+
+### Applikasjonspassord
+
+- **Bruk**
+  - Fungerer som passordet for brukerens installerte applikasjoner
+- **Innsamling**
+  - Oppgis av brukeren etter deploy av slotten
+- **Lagring**
+  - Appbox API = Klartekst
+  - Installerte applikasjoner = Avhenger av applikasjonen
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Appbox-team
+    - Påkrevd for applikasjonsspesifikke supporthenvendelser, med brukerens tillatelse
+- **Oppbevaring**
+  - Til brukeren avinstallerer applikasjonen
+- **Mer informasjon**
+  - Policy for fjerning av sensitive data
+  - [Passordpolicy](/policies/password-policy)
+  - Vi anbefaler sterkt å aktivere tofaktorautentisering på [kontosikkerhetssiden din](https://billing.appbox.co/user/security)
+
+## Betalingsbehandling
+
+### PayPal
+
+- **Bruk**
+  - Fungerer som en av Appbox sine betalingsgatewayer
+- **Innsamling**
+  - Betalingsbehandling utføres fullstendig av PayPal. De eneste dataene som lagres i WHMCS under brukerens konto, er **PayPal Transaction ID**
+- **Lagring**
+  - WHMCS = Klartekst (PayPal Transaction ID)
+- **Tilgang og årsaker til tilgang**
+  - Appbox Sales Team
+    - Appbox Sales Team kan verifisere brukerens informasjon med PayPal som del av salgsprosessen vår
+- **Oppbevaring**
+  - Ubestemt
+
+### Stripe
+
+- **Bruk**
+  - Fungerer som en av Appbox sine betalingsgatewayer
+- **Innsamling**
+  - Betalingsbehandling utføres fullstendig av Stripe. De eneste dataene som lagres i WHMCS under brukerens konto, er **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Lagring**
+  - WHMCS = Klartekst (Stripe Payment ID)
+- **Tilgang og årsaker til tilgang**
+  - Appbox Sales Team
+    - Appbox Sales Team kan verifisere brukerens informasjon med Stripe som del av salgsprosessen vår
+- **Oppbevaring**
+  - Ubestemt
+
+### CoinGate
+
+- **Bruk**
+  - Fungerer som en av Appbox sine betalingsgatewayer for kryptovalutatransaksjoner
+- **Innsamling**
+  - Betalingsbehandling utføres fullstendig av CoinGate. De eneste dataene som lagres i WHMCS, er **CoinGate Transaction ID**
+- **Lagring**
+  - WHMCS = Klartekst (Transaction ID)
+- **Tilgang og årsaker til tilgang**
+  - Appbox Sales Team
+    - Appbox Sales Team kan verifisere brukerens informasjon med CoinGate som del av salgsprosessen vår
+- **Oppbevaring**
+  - Ubestemt
+
+*Merk: CoinGate selv lagrer blockchain-transaksjons-ID-en og avsenderens blockchain-adresse som del av tjenesten deres. Denne informasjonen lagres ikke av Appbox.*
+
+## Logger og analyse
+
+### Servermålinger
+
+- **Bruk**
+  - Brukes til å overvåke helsen og ressursbruken til serverne
+- **Innsamling**
+  - Genereres etter deploy av brukerens slot
+- **Lagring**
+  - Appbox Servers = Klartekst
+  - Appbox API = Klartekst
+  - Posthog = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+    - Servermålinger kan vises ved hjelp av ulike Linux-verktøy installert på slotten din. Følgende hovedmålinger kan sees:
+      - CPU-bruk
+      - Swap-bruk
+      - RAM-bruk
+      - 1/5/15 Load Average
+      - Dine kjørende prosesser
+      - Prosesser kjørt av andre brukere på samme server er ikke tilgjengelige for deg
+      - Input/Output-målinger
+      - Diskplass
+      - Kvotediskplass (din tildelte diskplass)
+      - Fysisk diskplass
+  - Appbox Team
+    - I tillegg til målingene ovenfor bruker Appbox-teamet Posthog til raskt å aggregere alle målinger fra alle servere og varsle teamet om feil
+    - Servermålinger brukes til supporthenvendelser og til å undersøke ressursmisbruk
+- **Oppbevaring**
+  - Ubestemt
+
+### Autentiseringslogger
+
+#### Appbox Control Panel-innloggingsforsøk
+
+- **Bruk**
+  - Alle ugyldige tilgangsforsøk logges i Appbox API, som hindrer brukeren i å logge inn på Control Panel etter et visst antall forsøk i en angitt periode. Dette inkluderer:
+    - Brukernavn, slik det ble skrevet inn av brukeren
+    - IP-adresse
+    - Antall forsøk
+    - Siste dato for forsøk
+- **Innsamling**
+  - Samles inn når en bruker oppgir legitimasjon feil
+- **Lagring**
+  - Appbox API = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Appbox Team
+    - Brukes til å identifisere brute-force-forsøk
+    - Brukere kan be om å oppheve timeout og fjerne tilgangsforsøket, på forespørsel og etter verifisering via Ticket-systemet
+- **Oppbevaring**
+  - 24 timer eller på brukerforespørsel
+
+#### SSH-innloggingslogger
+
+- **Bruk**
+  - Registrerer innloggingsforsøk og vellykkede innlogginger til SSH på brukerinstallerte applikasjoner som Ubuntu eller Debian
+- **Innsamling**
+  - Genereres automatisk av SSH-serveren når innloggingsforsøk skjer
+- **Lagring**
+  - Applikasjonscontainer = Klartekst (typisk i `/var/log/auth.log` eller lignende)
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+    - Ettersom disse loggene lagres i applikasjoner der brukere har root-tilgang (sudo), har brukere full kontroll over og tilgang til disse loggene
+    - Brukere kan se, endre eller slette disse loggene etter behov
+  - Appbox-team
+    - Tilgang er kun tilgjengelig med brukerens tillatelse under supportfeilsøking
+- **Oppbevaring**
+  - Administreres av brukeren, ettersom de har root-tilgang til containeren
+  - Standard policyer for loggrotasjon gjelder med mindre brukeren endrer dem
+
+### Systemgenererte logger
+
+- **Bruk**
+  - Serveromfattende genererte logger, brukt til å identifisere problemer på serverne
+- **Innsamling**
+  - Genereres av operativsystemet på serverne
+- **Lagring**
+  - Appbox Servers = Klartekst
+  - Posthog = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Begrenset tilgang for Appbox-teamet
+    - Brukes til å identifisere problemer på spesifikke servere
+    - Logger aggregeres av Posthog, som varsler teamet om feil
+- **Oppbevaring**
+  - Ubestemt
+
+### Logger generert av installerte applikasjoner
+
+- **Bruk**
+  - Logger generert av installerte applikasjoner, brukt til å identifisere problemer i brukerens slot
+- **Innsamling**
+  - Genereres av brukerens installerte applikasjoner
+- **Lagring**
+  - Appbox API = Klartekst
+  - Installerte applikasjoner = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Appbox-team
+    - Påkrevd for applikasjonsspesifikke supporthenvendelser, med brukerens tillatelse
+- **Oppbevaring**
+  - Til brukeren avinstallerer applikasjonen eller fjerner den
+
+### Brukerens bash History
+
+- **Bruk**
+  - Registrerer alle kommandoer brukeren skriver inn i slottens shell, plassert i `$HOME/.bash_history`
+- **Innsamling**
+  - Hver kommando som skrives inn i shell registreres
+- **Lagring**
+  - Appbox Servers = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+    - Ettersom bash history-filen lagres i brukerens hjemmekatalog, har brukere full kontroll over denne filen
+    - Brukere kan se, endre, tømme eller slette denne filen etter behov (ved å bruke kommandoer som `history -c` eller ved å redigere/fjerne filen)
+  - Appbox-team
+    - Brukes for generelle eller applikasjonsspesifikke henvendelser som å verifisere om kommandoene brukeren skrev inn er korrekte, men kun med brukerens tillatelse
+    - Brukes til å sjekke for mulige inntrengninger eller servermisbruk, men kun når det er nødvendig for sikkerhetsundersøkelser
+- **Oppbevaring**
+  - Administreres av brukeren, som kan tømme historikken når som helst
+  - Som standard beholdes bash history på ubestemt tid til brukeren fjerner den
+
+### Hostede data
+
+#### Installerte applikasjoner
+
+- **Bruk**
+  - Essensielle filer for at installerte applikasjoner skal kjøre riktig
+- **Innsamling**
+  - Installeres av brukeren på slotten
+- **Lagring**
+  - Appbox Servers = Avhenger av applikasjonen
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+  - Appbox-team
+    - Brukes for applikasjonsspesifikke supporthenvendelser, med brukerens tillatelse
+- **Oppbevaring**
+  - Ubestemt til brukeren fjerner den
+
+#### Brukerdata
+
+- **Bruk**
+  - Data opprettet av brukeren og/eller brukerens applikasjoner og lagret på brukerens slot
+- **Innsamling**
+  - Opprettet av brukeren og/eller brukerens applikasjoner
+- **Lagring**
+  - Appbox Servers = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Bruker
+    - Brukerens filer lagres i hjemmemapper på Appbox-servere og er isolert fra andre brukere. Kun brukeren kan få tilgang til dem
+  - Appbox-team
+    - Kan nås for supporthenvendelser, med brukerens tillatelse
+- **Oppbevaring**
+  - Ubestemt til brukeren fjerner dem
+    - Ved legitime DMCA-takedown-varsler informerer vi brukeren og ber dem slette innholdet innen 24 timer
+- **Mer informasjon**
+  - [Policy for innholdsmisbruk](/policies/content-abuse-policy)
+  - [Policy for fjerning av sensitive data](/policies/sensitive-data-removal-policy)
+
+## Etterlevelse av UK Online Safety Act
+
+I samsvar med UK Online Safety Act 2023 implementerer Appbox spesifikke datahåndteringspraksiser for å beskytte brukere og overholde regulatoriske krav:
+
+### Overvåking av innholdssikkerhet
+
+- **Bruk**
+  - Risikovurdering og risikoredusering for ulovlig og skadelig innhold
+  - Moderering av rapportert innhold
+  - Forebygging av distribusjon av ulovlig innhold
+- **Innsamling**
+  - Genereres når innhold rapporteres eller flagges
+  - Innholdshashverdier for kjent ulovlig materiale
+- **Lagring**
+  - Appbox API = Kryptert
+  - Rapporteringsdatabase = Klartekst
+- **Tilgang og årsaker til tilgang**
+  - Appbox Compliance Team
+    - For gjennomgang av rapportert innhold og iverksetting av passende tiltak
+    - For koordinering med britiske myndigheter når loven krever det
+  - Britiske tilsynsmyndigheter (når loven krever det)
+    - For overvåking av etterlevelse av Online Safety Act
+    - For undersøkelse av alvorlig ulovlig innhold
+- **Oppbevaring**
+  - Rapportdata: 2 år etter løsning
+  - Innholdshashverdier: Ubestemt (for å forhindre redistribusjon)
+
+### Risikovurderingsdata
+
+- **Bruk**
+  - Gjennomføring av påkrevde risikovurderinger for ulovlig innhold og innhold skadelig for barn
+  - Implementering av forholdsmessige sikkerhetstiltak
+  - Dokumentasjon av etterlevelse overfor tilsynsmyndigheter
+- **Innsamling**
+  - Genereres gjennom regelmessige plattformrisikovurderinger
+  - Aggregerte bruksdata for å identifisere potensielle risikomønstre
+- **Lagring**
+  - Appbox Compliance Systems = Beskyttet
+- **Tilgang og årsaker til tilgang**
+  - Appbox Compliance Team
+    - For å gjennomføre og oppdatere risikovurderinger
+    - For å implementere sikkerhetstiltak
+  - Britiske tilsynsmyndigheter (når loven krever det)
+    - For å verifisere etterlevelse av plikter knyttet til risikovurdering
+- **Oppbevaring**
+  - 3 år (for å dokumentere løpende etterlevelse)
+
+### System for innholdsrapportering
+
+- **Bruk**
+  - Lar brukere rapportere ulovlig eller skadelig innhold
+  - Sporer status for rapporter og tiltak som er iverksatt
+- **Innsamling**
+  - Rapportdetaljer oppgitt av rapporterende brukere
+  - Informasjon om rapportert innhold
+  - Tiltak iverksatt på rapporter
+- **Lagring**
+  - Appbox API = Kryptert
+- **Tilgang og årsaker til tilgang**
+  - Rapporterende bruker (begrenset til egne rapporter)
+  - Bruker hvis innhold ble rapportert (begrenset informasjon)
+  - Appbox Compliance Team
+    - For å undersøke og løse rapporter
+  - Britiske tilsynsmyndigheter (når loven krever det)
+    - For å undersøke rapporter om alvorlig ulovlig innhold
+- **Oppbevaring**
+  - 2 år etter løsning

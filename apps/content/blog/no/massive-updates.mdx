@@ -1,0 +1,108 @@
+---
+title: Store oppdateringer i horisonten for Appbox! 🚀
+date: 2025-04-08 11:58:00
+excerpt: Nytt nettsted, open-source-initiativ, containeriserte apper, vår egen nettverksinfrastruktur og flere spennende utviklinger på vei til Appbox!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# En ny æra begynner hos Appbox
+
+Etter måneder med arbeid bak kulissene, sene kvelder og altfor mye kaffe, gleder jeg meg til endelig å vise dere hva vi har bygget. Dette er ikke bare enda en oppdatering. Det er oss som bygger Appbox opp igjen fra grunnen av.
+
+## Velkommen til vårt nye digitale hjem
+
+Du ser på det splitter nye nettstedet vårt! Vi har endelig sagt farvel til det gamle WordPress-oppsettet vårt. Hele greia er bygget om med moderne teknologi som er raskere, sikrere og faktisk skalerer skikkelig.
+
+Dette nye nettstedet skal bli hjemmet til skikkelig dokumentasjon, jevnlige blogginnlegg (som dette) og etter hvert frontend for den nye plattformen vår. Designet er ikke bare renere - det er faktisk funksjonelt og gjør det mye enklere å finne ting.
+
+Vi bruker Next.js med ContentLayer under panseret, noe som gir oss veldig rask ytelse og en mye bedre utvikleropplevelse. Nettstedet støtter flere språk, håndterer SEO automatisk, har RSS-feeder i både XML og JSON, og inkluderer mørk modus fordi ingen skal måtte takle blendende hvite skjermer klokken 2 om natten.
+
+## Vi går open source!
+
+Vi går også open source! Nettstedet du leser dette på? Koden er offentlig, og alle kan bidra til den.
+
+Dette er stort for oss. Vi har alltid prøvd å være transparente, men dette er oss som viser at vi mener alvor og faktisk bygger med fellesskapet i stedet for bare for det. Hvis du er utvikler og noen gang har ønsket å være med på å forme verktøyene du bruker, kan du det nå. Ta en titt på GitHub-repoet vårt for bidragsretningslinjer og alt du trenger for å komme i gang.
+
+## Vi introduserer Appbox v2
+
+Det nye nettstedet er bare begynnelsen. Vi jobber med Appbox v2, som er den største oppdateringen vi noen gang har gjort.
+
+Container-deployments har alltid vært vår greie, men v2 tar det videre med det alle har bedt om: full VPS-støtte. VPS-appene vil gi deg komplett root-tilgang uten restriksjoner. Hvis du trenger total kontroll over miljøet ditt, er dette det du har ventet på.
+
+Vi har allerede fått det til å fungere på én server, og det fungerer veldig bra. Du vil kunne installere VPS-apper akkurat som alle andre apper fra appbutikken. Dette lar deg installere apper som ikke er mulige i dag, som Docker, Snap og Tailscale. Det krever en OS-oppdatering på serverne våre til Debian 13 siden vi bruker noen nye virtualiseringsfunksjoner for å gjøre det sikrere og øke ytelsen. Vi må rulle ut den oppdateringen før vi kan lansere funksjonen, men det kommer flere oppdateringer om det snart.
+
+Dette kombinerer vår velprøvde containerinfrastruktur med ekte VPS-fleksibilitet, og gir deg det beste fra begge verdener.
+
+## Vi bygger vår egen nettverksinfrastruktur
+
+Her er den virkelig store nyheten: vi bygger vårt eget nettverk.
+
+Ikke bare flere servere eller mer båndbredde. Vi har fått vårt eget Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) og vår egen IP-blokk (79.140.195.0/24) for å bygge et nettverk som er helt vårt. I praksis blir vi vår egen ISP med vår egen offisielle internettidentitet og eget adresserom, slik at vi kan kontrollere hvordan dataene dine reiser over internett [1].
+
+Hva betyr dette for deg? Vi kan kontrollere alt, optimalisere det spesifikt for Appbox-brukere og levere pålitelighet og ytelse som ikke var mulig før.
+
+## Peering med AMS-IX
+
+Som del av nettverksutviklingen vår, når nettverket er satt opp, begynner vi peering med AMS-IX for 100G tilkobling. Dette gir oss direkte tilgang til en av verdens største internettbørser, som betyr lavere latenstid og bedre hastigheter for alle. Tenk på det som å ha en direkte motorvei til store internettleverandører i stedet for å ta bakveiene [2].
+
+Denne typen tilkobling er vanligvis bare tilgjengelig for mye større selskaper, men vi vil gi enterprise-grade ytelse uansett hvilken plan du har.
+
+Vi har nå fått avtalen på plass for maskinvarekjøpet vårt, så vi er klare til å gå videre. Vi mottar den nye maskinvaren senest i oktober, muligens allerede i september. Det betyr at vi bør være oppe og kjøre på det nye nettverket kort tid etter.
+
+## Prisjusteringer
+
+Dette er delen vi virkelig ikke ønsket å måtte skrive. Å bygge infrastruktur som dette er dyrt, og selv om vi tar mesteparten av kostnaden selv, må vi dessverre gjøre en liten justering av prisene våre for både nye og eksisterende kunder.
+
+Jeg vil være tydelig om dette. De nye prisene er allerede live på nettstedet, og vi vil kontakte eksisterende kunder snart med detaljer om hvordan dette påvirker dem.
+
+Vi vet hvor presset alle er akkurat nå, og dette var ærlig talt en av de vanskeligste beslutningene vi har måttet ta. Vi har holdt økningene så små som vi overhodet kan - vi dekker i praksis alt bortsett fra det absolutte minimumet vi trenger for å få dette til å fungere.
+
+Vi skal gjøre denne prisøkningen mer enn verdt det. Du vil virkelig merke forskjellen i ytelse og pålitelighet. I tillegg betyr dette at vi kan fortsette å utvide nettverket vårt og legge til mer peering fremover, så ting kommer bare til å bli bedre herfra.
+
+Vi lanserte disse oppdaterte prisene for nye kunder for 3 måneder siden, og tilbakemeldingene har vært gode, så vi føler at vi har funnet en god balanse mellom å holde ting rimelig og finansiere forbedringene dere fortjener. Vi er fortsatt veldig konkurransedyktige. For eksempel går vår populære NG-4500-plan bare opp med €2.08 per måned, noe som fortsatt er langt mindre enn sammenlignbare planer fra konkurrenter.
+
+For eksisterende kunder betaler du bare forskjellen mellom gammel og ny pris. Hvis du har kampanjerabatter, blir de liggende på toppen av den nye grunnprisen. Vi setter pris på lojaliteten din, spesielt i tider som disse.
+
+Rabattstrukturen vår forblir den samme:
+- 5% rabatt for kvartalsvise betalinger
+- 10% rabatt for 6-månedersbetalinger
+- 15% rabatt for årlige betalinger
+
+Hvis du har automatiske betalinger satt opp, skjer justeringen ved neste faktureringssyklus etter at du mottar e-posten. Du trenger ikke å gjøre noe.
+
+## Mer lagring!
+
+Det handler ikke bare om å betale mer. Vi øker også lagringen på den laveste planen vår fra 3TB til 3.5TB. Det er en økning på 16%, noe som gjør inngangsplanen vår til en enda bedre deal til tross for prisendringen.
+
+## Hva skjer videre?
+
+Dette er bare starten på det som kommer for Appbox. I løpet av de neste ukene og månedene vil du se jevnlige oppdateringer mens vi ruller ut nye funksjoner, forbedrer eksisterende og fortsetter å bygge infrastrukturen for neste generasjon apphosting.
+
+Vi planlegger å begynne å teste den nye nettverksinfrastrukturen vår i september/oktober, og vi holder dere oppdatert etter hvert som vi gjør fremskritt.
+
+Veikartet vårt inkluderer:
+- VPS-apper som ikke vil ha restriksjoner (som Docker, Snap og Tailscale)
+- Bedre dokumentasjon som faktisk dekker alt
+- Et fellesskapsutstillingsvindu for kule ting folk bygger med Appbox
+- Jevnlige tekniske blogginnlegg om infrastrukturen vår
+- Nye containeriserte apper for spesifikke brukstilfeller
+- Bedre overvåkings- og analyseverktøy
+- Forbedrede sikkerhetsfunksjoner på tvers av alle planer
+
+Takk for at dere holder følge med oss. Uten fellesskapet vårt ville ingenting av dette vært mulig.
+
+Flere oppdateringer kommer snart.
+
+---
+
+*Hvilke funksjoner eller forbedringer vil du se i den nye Appbox? Send oss en melding på support@appbox.co.*
+
+---
+
+**Referanser:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

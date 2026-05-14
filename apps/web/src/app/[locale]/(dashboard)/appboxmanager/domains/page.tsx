@@ -22,6 +22,7 @@ import {
 } from "@/api/domains/hooks/use-domains"
 import { DataTable } from "@/components/dashboard/data-table/data-table"
 import { DateCell } from "@/components/dashboard/data-table/data-table-cells"
+import { DashboardPageHeader } from "@/components/dashboard/page-header"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -407,14 +408,12 @@ export default function DomainsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            {t("pageDescription")}
-          </p>
-        </div>
-      </div>
+      <DashboardPageHeader
+        title={t("title")}
+        description={t("pageDescription")}
+        icon={<Globe className="size-[18px]" />}
+        gradient="from-[#06b6d4] to-[#0891b2]"
+      />
 
       {reverifyResult && (
         <ReverifyBanner

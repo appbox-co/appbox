@@ -1,0 +1,54 @@
+---
+title: Scheduled Network Maintenance - April 15 & 20
+date: 2026-04-14 16:00:00
+excerpt: April 15 এবং April 20-এ আমাদের দুটি ছোট maintenance windows আছে, কারণ আমরা additional transit এবং peering providers-এর জন্য network প্রস্তুত করছি।
+author_id: rid
+og_image: network-maintenance-april-2026-og.jpg
+tags: [appbox, infrastructure, networking, maintenance]
+---
+
+# Scheduled Network Maintenance
+
+আমাদের network-এ আসন্ন দুটি maintenance window আছে, যা সম্পর্কে আপনাকে আগে থেকে জানাতে চাই। দুটিই তুলনামূলকভাবে ছোট এবং আমরা কোনো downtime আশা করছি না, তবে কী হচ্ছে এবং কেন হচ্ছে সে বিষয়ে transparent থাকতে চাই।
+
+## কী হচ্ছে
+
+আমাদের transit provider আলাদা আলাদা তারিখে আমাদের দুই upstream carriers - Colt এবং Fiberring - এ maintenance করছে। Updates apply করার সময় প্রতিটি carrier অল্প সময়ের জন্য offline নেওয়া হবে, এবং প্রতিটি window চলাকালীন traffic আমাদের অন্যান্য carriers দিয়ে reroute করা হবে।
+
+### Maintenance Window 1 — April 15
+
+- **Date:** Tuesday, April 15, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Colt
+- **Expected downtime:** None
+
+এই window চলাকালীন Colt route unavailable থাকবে এবং সব traffic আমাদের অন্যান্য carriers দিয়ে reroute করা হবে।
+
+### Maintenance Window 2 — April 20
+
+- **Date:** Monday, April 20, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Fiberring
+- **Expected downtime:** None
+
+এই maintenance live করা হবে এবং কোনো interruption হওয়ার কথা নয়। কোনো issue হলে traffic সাময়িকভাবে আমাদের অন্যান্য carriers দিয়ে reroute করা হবে।
+
+## আমি কি প্রভাবিত হব?
+
+বেশিরভাগ users-এর জন্য, আপনার কিছুই notice করার কথা নয়। প্রতিটি upstream offline থাকা অবস্থায় traffic automatically আমাদের অন্যান্য carriers দিয়ে reroute হবে।
+
+তবে প্রতিটি window চলাকালীন routes সাময়িকভাবে বদলাবে বলে, কিছু traffic network জুড়ে একটু ভিন্ন path নিতে পারে। এতে নির্দিষ্ট connections-এর জন্য minor latency changes হতে পারে, তবে বড় কিছু নয়। প্রতিটি window শেষ হলে সবকিছু normal-এ ফিরে যাবে।
+
+## কেন আমরা এটি করছি
+
+এই maintenance একটি বড় plan-এর অংশ। আমরা additional transit এবং peering providers আনতে আমাদের network প্রস্তুত করছি, যার মানে সবার জন্য better redundancy, lower latency, এবং more capacity।
+
+May-এ এ বিষয়ে আরও share করার মতো থাকবে, তাই সঙ্গে থাকুন।
+
+## Questions?
+
+Maintenance window-গুলোর কোনো একটির সময় কোনো concern থাকলে বা unusual কিছু notice করলে যোগাযোগ করতে দ্বিধা করবেন না।
+
+---
+
+*প্রশ্ন আছে? support@appbox.co-তে আমাদের সাথে যোগাযোগ করুন।*

@@ -1,0 +1,65 @@
+---
+title: Ajouter de nouveaux documents
+description: Ajoutez de nouveaux documents à votre site de documentation et à votre blog.
+sort: 2
+---
+
+# Pour la documentation
+
+1. Créez un nouveau fichier `.mdx` dans le dossier `apps/content/docs/[language]` avec le contenu de votre document.
+2. Ajoutez le document au menu de navigation du site.
+    Pour cela, ajoutez un nouvel élément au fichier `src/config/docs.ts`, dans la propriété `sidebarNav`, avec les informations souhaitées. Il suffit de suivre le modèle des éléments existants. Le document sera ainsi également ajouté à la palette de recherche de commandes.
+
+## Paramètres des documents MDX
+
+Les documents MDX sont stockés dans les dossiers `apps/content/docs/[language]` et `apps/content/blog/[language]`. Chaque document est un fichier MDX contenant un en-tête avec des métadonnées, comme le titre et la description. Voici un exemple d'en-tête de document :
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Les champs de métadonnées suivants sont pris en charge :
+
+- `title` (obligatoire) : le titre du document.
+- `description` (obligatoire) : une brève description du document.
+- `sort` (facultatif) : un nombre qui détermine l'ordre du document dans la navigation. Les documents avec une valeur de tri plus faible apparaissent en premier. Si ce champ n'est pas fourni, les documents sont triés par ordre alphabétique de titre.
+- `links` (facultatif) : liens vers des documents associés, références API, code source, etc.
+- `toc` (facultatif) : indique s'il faut afficher la table des matières. La valeur par défaut est `true`.
+
+Pour ajouter de nouvelles métadonnées au document, vous pouvez ajouter de nouvelles clés à l'en-tête. Par exemple, vous pouvez ajouter une clé `author` pour indiquer l'auteur du document :
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Lorsque vous ajoutez des métadonnées personnalisées, vous devez aussi mettre à jour le fichier `contentlayer.config.ts` situé à la racine du projet, dans la propriété `fields` des constantes `Doc` ou `Blog`.
+Ensuite, vous devrez afficher la nouvelle information dans le modèle du document. Pour cela, mettez à jour le fichier `src/app/[locale]/docs/[[...slug]]/page.tsx`, ou `src/app/[locale]/blog/[[...slug]]/page.tsx`, ou l'un de ses composants enfants.
+
+## Reconstruire Contentlayer
+
+Lorsque vous modifiez le contenu de la documentation, ajoutez de nouveaux documents ou modifiez le fichier `contentlayer.config.ts`, vous devez reconstruire le cache Contentlayer pour que vos changements prennent effet pendant le développement. Exécutez :
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Cette commande régénère les types de contenu et les données nécessaires à l'application. Vous devrez l'exécuter chaque fois que vous :
+
+- Ajoutez de nouveaux champs de métadonnées au fichier `contentlayer.config.ts`
+- Ajoutez ou modifiez du contenu MDX lorsque le serveur de développement n'est pas lancé
+- Changez la structure de votre organisation de contenu
+
+La commande est exécutée automatiquement lors de la compilation du projet pour la production, mais vous devrez la lancer manuellement pendant le développement si vous effectuez des changements structurels dans le contenu.
+
+
+

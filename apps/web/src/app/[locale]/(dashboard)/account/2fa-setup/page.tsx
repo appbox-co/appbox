@@ -33,6 +33,7 @@ import {
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
+import { AccountPageHeader } from "../_components/account-page-header"
 import { BackupCodes } from "./_components/backup-codes"
 import { QRStep } from "./_components/qr-step"
 import { VerifyStep } from "./_components/verify-step"
@@ -411,14 +412,14 @@ export default function TwoFactorSetupPage() {
 
   if (showNewCodes) {
     return (
-      <div className="mx-auto max-w-lg space-y-6">
-        <div className="flex items-center gap-3">
-          <Shield className="size-6 text-muted-foreground" />
-          <h1 className="text-2xl font-bold tracking-tight">
-            New Recovery Codes
-          </h1>
-        </div>
-        <Card>
+      <div className="space-y-6">
+        <AccountPageHeader
+          title={t("twoFactor.newRecoveryCodes")}
+          description={t("twoFactor.newRecoveryCodesDescription")}
+          icon={<Shield className="size-[18px]" />}
+          gradient="from-[#10b981] to-[#059669]"
+        />
+        <Card className="card-glow max-w-2xl overflow-hidden">
           <CardContent className="pt-6">
             <BackupCodes
               codes={newCodes}
@@ -431,20 +432,20 @@ export default function TwoFactorSetupPage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-6">
-      <div className="flex items-center gap-3">
-        <Shield className="size-6 text-muted-foreground" />
-        <h1 className="text-2xl font-bold tracking-tight">
-          {t("twoFactor.title")}
-        </h1>
-      </div>
+    <div className="space-y-6">
+      <AccountPageHeader
+        title={t("twoFactor.title")}
+        description={t("twoFactor.description")}
+        icon={<Shield className="size-[18px]" />}
+        gradient="from-[#10b981] to-[#059669]"
+      />
 
       {/* ------------------------------------------------------------------ */}
       {/*  2FA Already Enabled — show status + disable option                 */}
       {/* ------------------------------------------------------------------ */}
       {is2FAEnabled && step === "idle" && (
-        <Card>
-          <CardHeader>
+        <Card className="card-glow max-w-2xl overflow-hidden">
+          <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base">
               <ShieldCheck className="size-4 text-emerald-600 dark:text-emerald-400" />
               {t("twoFactor.title")}
@@ -516,10 +517,10 @@ export default function TwoFactorSetupPage() {
       {/*  Setup Wizard                                                       */}
       {/* ------------------------------------------------------------------ */}
       {!is2FAEnabled && step === "idle" && (
-        <Card>
+        <Card className="card-glow max-w-2xl overflow-hidden">
           <CardContent className="flex flex-col items-center gap-6 py-10">
-            <div className="rounded-full border-2 border-dashed border-muted-foreground/30 p-6">
-              <Shield className="size-12 text-muted-foreground/50" />
+            <div className="rounded-full border border-primary/20 bg-primary/10 p-6">
+              <Shield className="size-12 text-primary/70" />
             </div>
             <div className="space-y-2 text-center">
               <h2 className="text-lg font-semibold">{t("twoFactor.setup")}</h2>
@@ -539,10 +540,10 @@ export default function TwoFactorSetupPage() {
       )}
 
       {step !== "idle" && (
-        <>
+        <div className="max-w-2xl space-y-6">
           <StepIndicator current={step} />
 
-          <Card>
+          <Card className="card-glow overflow-hidden">
             <CardContent className="pt-6">
               {step === "generating" && (
                 <QRStep
@@ -565,7 +566,7 @@ export default function TwoFactorSetupPage() {
               )}
             </CardContent>
           </Card>
-        </>
+        </div>
       )}
     </div>
   )

@@ -1,0 +1,150 @@
+---
+title: Launch Week Day 1 - নতুন Dashboard
+date: 2026-03-09 10:00:00
+excerpt: Launch Week-এর Day 1 এসে গেছে। নতুন Appbox dashboard এখন live।
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, dashboard, নিরাপত্তা, app-store, i18n, file-explorer]
+---
+
+# Launch Week Day 1: নতুন Dashboard Live
+
+আমরা বলেছিলাম Launch Week সোমবার শুরু হবে। আর Day 1 এখন live।
+
+আজ আমরা নতুন Appbox dashboard experience ship করছি। Control panel জুড়ে এটি একটি বড় UI এবং workflow upgrade, এবং এর একটি সহজ লক্ষ্য আছে: প্রতিদিন আপনার appboxes চালানোকে আরও দ্রুত, পরিষ্কার এবং কম বিরক্তিকর করা।
+
+এই update অনেক দিন ধরে চলছিল, এবং অবশেষে এটি আপনাদের হাতে দিতে পেরে আমি খুব খুশি।
+
+## একটি নতুন Control Center
+
+আজকের আগে, এই তথ্য আলাদা আলাদা pages এবং flows-এ ছড়িয়ে ছিল। আজ আমরা একটি dedicated dashboard আনছি, যা সবকিছু এক operational view-তে নিয়ে আসে:
+
+- latest blog এবং platform updates
+- আপনার service overview cards
+- আপনার notifications
+- নতুন এবং সম্প্রতি updated apps
+
+তাই tabs-এর মধ্যে লাফালাফি না করে, আপনি একটি page খুলেই সঙ্গে সঙ্গে গুরুত্বপূর্ণ জিনিস দেখতে পারবেন।
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Appbox dashboard overview" width="860" className="mt-8 mb-10" />
+</p>
+
+## নতুনভাবে সাজানো Appbox Management
+
+Appboxes area একটি পরিষ্কার card layout এবং দ্রুত scanability সহ rebuild করা হয়েছে। আপনি status, storage, traffic, slot usage দ্রুত দেখতে পারবেন এবং সরাসরি details-এ যেতে পারবেন।
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="Your appboxes in the new layout" width="860" className="mt-8 mb-10" />
+</p>
+
+প্রতিটি appbox-এর ভিতরে summary view এখন আরও operational: resource cards, charts, এবং core actions এক নজরে পৌঁছানো ও বোঝা সহজ।
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="Appbox summary with live stats" width="860" className="mt-8 mb-10" />
+</p>
+
+এটি এমন ধরনের page যা আপনি environment ব্যবহার করার সময় খোলা রাখবেন, শুধু static info screen নয়।
+
+## App Store আরও ভালোভাবে Integrated
+
+আমরা app discovery এবং app detail flows-ও উন্নত করেছি, যাতে এগুলো আলাদা tools না মনে হয়ে একই system-এর অংশ মনে হয়।
+
+Store view আরও পরিষ্কার, categories browse করা সহজ, এবং discovery থেকে install পর্যন্ত পথ ছোট।
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="Integrated app store experience" width="860" className="mt-8 mb-10" />
+</p>
+
+App detail pages এখন version/resource details আরও পরিষ্কার করে, তাই install বা upgrade করার আগে আপনি দ্রুত এবং কম surprise নিয়ে সিদ্ধান্ত নিতে পারবেন।
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="Improved app detail and versions view" width="860" className="mt-8 mb-10" />
+</p>
+
+আর আজ থেকে apps সরাসরি flow-এর ভেতরেই **multiple installable versions** expose এবং support করতে পারে, তাই আপনি যে version চান সেটি বেছে নিতে পারবেন এবং যেকোনো সময় অন্য version-এ switch করতে পারবেন।
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="Version selector for apps with multiple releases" width="304" className="mt-8 mb-10" />
+</p>
+
+## Custom Domains এখন First Class
+
+Custom domains এখন install experience-এর core অংশ, কোনো awkward extra step নয়।
+
+কোনো app-এর domain দরকার হলে setup এখন সরাসরি install dialog-এ clear guided flow সহ হয়:
+
+1. আপনার Appbox select করুন।
+2. **Domain Type** বেছে নিন:
+   - আপনার Appbox default domain ব্যবহার করতে **Appbox Domain**।
+   - আপনার নিজস্ব domains-এর একটি ব্যবহার করতে **Custom Domain**।
+3. **Base Domain** বেছে নিন।
+4. আপনি যে **Subdomain** ব্যবহার করতে চান সেটি লিখুন।
+5. আপনি custom domain select করলে, Appbox add করার exact DNS record দেখায় (host/name এবং target IP), তারপর সঙ্গে সঙ্গে verify করতে দেয়।
+
+Records manually guess করা, docs copy করা, আর installs retry করার বদলে আপনি app install করার একই জায়গায় built-in DNS setup এবং verification step পাবেন।
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="Custom domain setup during app install with DNS verification" width="560" className="mt-8 mb-10" />
+</p>
+
+## নতুন File Explorer (শূন্য থেকে তৈরি)
+
+File explorer একেবারে শূন্য থেকে নতুনভাবে ভাবা হয়েছে। আগের experience-এ file management শুধু file delete করার মধ্যে সীমাবদ্ধ ছিল। এখন এটি একটি proper file manager, যেখানে আছে:
+
+- uploads
+- new folder creation
+- rename
+- delete
+- download
+- list/grid view switching
+- breadcrumb navigation এবং contextual actions
+
+তাই অতিরিক্ত app install না করেই আপনি native-ভাবে আপনার appbox files manage করতে পারবেন।
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="New file explorer with expanded file actions" width="560" className="mt-8 mb-10" />
+</p>
+
+## Two-Factor Authentication
+
+2026 সালে security optional হওয়া উচিত নয়। আজ থেকে Appbox accounts built-in two-factor authentication support করে।
+
+Account area থেকেই আপনি 2FA enable এবং manage করতে পারবেন, account recovery-এর জন্য recovery code management সহ।
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="Two-factor authentication management" width="860" className="mt-8 mb-10" />
+</p>
+
+এটি platform-এর জন্য একটি বড় security milestone, এবং users যে features সবচেয়ে ধারাবাহিকভাবে চেয়েছেন তার একটি।
+
+## Dashboard জুড়ে নতুন Design Language
+
+Navigation, spacing, cards, typography এবং interaction states জুড়ে visual system refresh করা হয়েছে। লক্ষ্য ছিল consistency এবং focus: কম visual noise, শক্তিশালী hierarchy, ভালো readability, এবং dark ও light theme দুটিতেই আরও modern product feel।
+
+এখন আর মাঝরাতে apps install করার সময় আপনাকে চোখ-ধাঁধানো সাদা screen দেখতে হবে না!
+
+## আরও ভালো Daily UX: Theme, Language, এবং দ্রুত Shortcuts
+
+এই release-এ এমন quality-of-life features-ও আছে যা প্রতিদিন dashboard ব্যবহারকে আরও আরামদায়ক করে:
+
+- **Native language switching** সরাসরি UI-তে (সময়ের সাথে আরও languages যোগ হবে)।
+- **Pinned app shortcuts** আপনার service cards-এ ছোট quick-access icons হিসেবে দেখানো হয়, যাতে আপনি আপনার সবচেয়ে বেশি ব্যবহৃত apps-এ দ্রুত যেতে পারেন।
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="Native language switcher in the new dashboard" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="Pinned app shortcuts on service cards" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  Language switching এবং pinned shortcuts প্রতিদিনের controls ঠিক যেখানে দরকার সেখানে রাখে।
+</p>
+
+## Day 1 এখন Live
+
+আপনি যদি ইতিমধ্যেই Appbox user হন, login করে এখনই নতুন dashboard ব্যবহার শুরু করতে পারেন।
+
+সবসময়ের মতো feedback স্বাগত। Appbox উন্নত করার সবচেয়ে দ্রুত পথ হলো ship করা, শোনা, এবং real usage দিয়ে iterate করা।
+
+---
+
+*Feedback আছে বা কোনো issue পেয়েছেন? support@appbox.co-তে জানান অথবা [billing.appbox.co](https://billing.appbox.co/submitticket.php)-তে ticket খুলুন।*

@@ -1,0 +1,92 @@
+---
+title: "Network ของเราเพิ่งได้รับการอัปเกรดครั้งใหญ่ 🎉"
+date: 2025-11-29 10:00:00
+excerpt: "เราเสร็จสิ้นการอัปเกรด infrastructure ครั้งใหญ่ที่สุดของเราแล้ว - Nokia enterprise routers, IP space ของเราเอง และ 100G AMS-IX connectivity พร้อมดีล Black Friday ของเราก็มาถึงแล้ว!"
+author_id: rid
+og_image: network-upgrade-og.jpg
+tags: [appbox, infrastructure, networking, black-friday, performance]
+---
+
+# เราทำสำเร็จแล้ว - Network ของเรา Live แล้ว!
+
+จำได้ไหมเมื่อเดือน April ที่เราประกาศว่าเรากำลังสร้าง network infrastructure ของเราเอง? ตอนนี้ผมตื่นเต้นที่จะบอกคุณว่า ณ เมื่อวานนี้ มัน live แล้วในที่สุด
+
+นี่เป็นงานที่ใช้เวลาหลายเดือน และพูดตรง ๆ การได้เห็นทุกอย่างประกอบเข้าด้วยกันเป็นหนึ่งในช่วงเวลาที่น่าพอใจที่สุดตั้งแต่เราเริ่ม Appbox มา ให้ผมเล่าให้ฟังว่ามีอะไรเปลี่ยนไปบ้าง
+
+## Hardware ระดับองค์กร
+
+เรา deploy Nokia 7750 SR-1 routers ทั่ว infrastructure ของเรา หากคุณไม่คุ้นเคยกับ routing gear ของ Nokia นี่คือ routers แบบเดียวกับที่ใช้ขับเคลื่อน ISP และ data centers ที่ใหญ่ที่สุดบางแห่งในโลก มันถูกสร้างมาเพื่อ reliability และ performance ในระดับ scale และตอนนี้กำลังจัดการ traffic ทั้งหมดของคุณ
+
+นี่ไม่ใช่อุปกรณ์ consumer หรือ prosumer นี่คือ enterprise networking hardware ที่เหมาะสม ซึ่งให้ control และ capabilities ที่เราต้องการเพื่อส่งมอบ performance ที่คุณสมควรได้รับ
+
+## IP Space ของเราเอง
+
+ตอนนี้เรากำลัง route traffic ผ่าน IP addresses ของเราเองภายใต้ Autonomous System ของเรา ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) นี่หมายความว่าเราควบคุมได้ทั้งหมดว่าข้อมูลของคุณเดินทางผ่าน internet อย่างไร
+
+ทำไมสิ่งนี้สำคัญ? เพราะเราสามารถ optimize routing เฉพาะสำหรับผู้ใช้ Appbox, implement DDoS protection ที่ดีขึ้น และในอนาคตเสนอ features อย่าง dedicated IP addresses สำหรับผู้ที่ต้องการ
+
+## 100G AMS-IX Connectivity
+
+นี่คือเรื่องใหญ่ ตอนนี้เรา peering กับ AMS-IX ที่ 100 gigabits per second AMS-IX เป็นหนึ่งใน internet exchanges ที่ใหญ่ที่สุดในโลก และการมี direct access หมายความว่า traffic ของคุณใช้เส้นทางที่เร็วที่สุดเท่าที่เป็นไปได้ไปยัง major networks และ content providers
+
+ในแง่จริง สิ่งนี้หมายความว่า:
+- **Latency ต่ำลง** - connections ของคุณเร็วขึ้นและตอบสนองดีขึ้น
+- **Speed ดีขึ้น** - bandwidth มากขึ้นหมายถึง congestion น้อยลง
+- **Reliability ดีขึ้น** - direct peering หมายถึงจุดล้มเหลวน้อยลง
+
+เราได้ทดสอบสิ่งนี้ในช่วงหลายสัปดาห์ที่ผ่านมากับ traffic บางส่วน และผลลัพธ์ตรงตามที่เราหวังไว้ ตอนนี้ทุกคนจะได้ประโยชน์
+
+## Black Friday - ลด 30% เป็นเวลา 3 เดือน
+
+เพื่อฉลอง milestone นี้ (และเพราะเป็น Black Friday weekend) เรากำลังจัด promotion ที่ใหญ่ที่สุดของเรา
+
+### ลูกค้าใหม่
+
+**รับส่วนลด 30% สำหรับ 3 เดือนแรก** ในทุก plan เพียงใช้ code **APPBOX30** ตอน checkout ใช้ได้กับ monthly subscriptions เท่านั้น ดังนั้นหากคุณต้องการใช้ดีลนี้ อย่าลืมเลือก monthly billing
+
+### ลูกค้าเดิม - Upgrades
+
+อยากอัปเกรดไป plan ที่ใหญ่ขึ้น? เราก็มีให้เช่นกัน **รับส่วนลด 30% สำหรับ upgrade ของคุณ** ด้วย code **UPGRADE30** ค่า upgrade จะถูก prorated ตาม billing cycle ปัจจุบันของคุณ จากนั้นลดลง 30% อีก 2 เดือนถัดไปหลังการ upgrade จะได้ส่วนลด 30% จากราคาเต็มด้วย
+
+#### วิธี Upgrade
+
+1. Log in ไปที่ [billing account](https://billing.appbox.co/clientarea.php) ของคุณ
+2. ไปที่ **My Products & Services** แล้วเลือก Appbox ของคุณ
+3. คลิกปุ่ม **Upgrade/Downgrade** ในส่วน Actions
+4. เลือก plan ใหม่ของคุณและใส่ code **UPGRADE30** ตอน checkout
+
+![วิธี upgrade Appbox ของคุณ - คลิกปุ่ม Upgrade/Downgrade](/blog-images/upgrade-guide.png)
+
+นี่เป็นดีลที่ดีที่สุดที่เราเคยเสนอจริง ๆ และเป็นวิธีของเราในการขอบคุณที่เป็นส่วนหนึ่งของ community Appbox
+
+## VPS Apps - มาก่อน Christmas
+
+ผมรู้ว่าหลายคนรอสิ่งนี้อยู่ VPS apps ยังคงเป็นไปตามแผน และเราตั้งเป้าว่าจะพร้อมก่อน Christmas
+
+สำหรับผู้ที่พลาด announcement ก่อนหน้านี้ VPS apps ให้ root access เต็มรูปแบบโดยไม่มีข้อจำกัด คุณจะสามารถรัน Docker, Snap, Tailscale และอะไรก็ตามที่ต้องการ system-level access ที่แท้จริง มันคือความยืดหยุ่นของ VPS รวมกับ one-click app deployment ของเรา
+
+เรายังมีอีกอย่างที่กำลังพัฒนาอยู่ ซึ่งเรายังไม่พร้อมประกาศตอนนี้ เอาเป็นว่าจะมี surprise feature มากับ VPS release ที่เราคิดว่าคุณจะชอบมาก รายละเอียดเพิ่มเติมเร็ว ๆ นี้
+
+## ต่อไปคืออะไร
+
+network upgrade นี้เป็นเพียง foundation ตอนนี้เมื่อเราควบคุม infrastructure ของเราได้อย่างเหมาะสม เราสามารถเริ่มสร้าง features ที่ก่อนหน้านี้เป็นไปไม่ได้:
+
+- **Dedicated IP addresses** - สำหรับผู้ใช้ที่ต้องการ IP ของตัวเอง
+- **Advanced routing options** - ควบคุมวิธีที่ traffic ของคุณไหลมากขึ้น
+- **Enhanced DDoS protection** - ใช้ infrastructure ใหม่ของเราเพื่อความปลอดภัยที่ดีขึ้น
+- **Geographic optimization** - เมื่อเราขยาย peering relationships
+
+เราจะอัปเดตให้คุณทราบเมื่อ features เหล่านี้พัฒนาต่อไป
+
+## ขอบคุณ
+
+ขอบคุณจริง ๆ การสร้าง infrastructure แบบนี้ต้องใช้เวลา เงิน และความไว้วางใจจำนวนมากจากผู้ใช้ของเรา การที่คุณอยู่กับเราระหว่างที่เราทำสิ่งนี้มีความหมายทุกอย่าง
+
+หากคุณสังเกตเห็นปัญหาใด ๆ หรือมี feedback เกี่ยวกับ network ใหม่ โปรดติดต่อเรา เรากำลัง monitor ทุกอย่างอย่างใกล้ชิด แต่ feedback จากผู้ใช้จริงในโลกจริงมีค่ามาก
+
+แด่ hosting ที่เร็วขึ้นและน่าเชื่อถือขึ้น 🚀
+
+---
+
+*มีคำถามเกี่ยวกับ upgrade หรือดีล Black Friday ไหม? ติดต่อเราได้ที่ support@appbox.co.*
+

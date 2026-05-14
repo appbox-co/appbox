@@ -1,0 +1,54 @@
+---
+title: Scheduled Network Maintenance - April 15 اور 20
+date: 2026-04-14 16:00:00
+excerpt: April 15 اور April 20 کو دو مختصر maintenance windows آنے والی ہیں کیونکہ ہم اپنے network کو additional transit اور peering providers کے لیے prepare کر رہے ہیں۔
+author_id: rid
+og_image: network-maintenance-april-2026-og.jpg
+tags: [appbox, infrastructure, networking, maintenance]
+---
+
+# Scheduled Network Maintenance
+
+ہمارے network پر دو upcoming maintenance windows ہیں جن کے بارے میں ہم آپ کو پہلے سے بتانا چاہتے ہیں۔ دونوں relatively short ہیں اور ہمیں downtime کی توقع نہیں، لیکن ہم transparent رہنا چاہتے ہیں کہ کیا ہو رہا ہے اور کیوں۔
+
+## کیا ہو رہا ہے
+
+ہمارا transit provider ہمارے دو upstream carriers، Colt اور Fiberring، پر separate dates میں maintenance کر رہا ہے۔ ہر carrier کو updates apply ہونے کے دوران مختصر وقت کے لیے offline کیا جائے گا، اور ہر window کے دوران traffic ہمارے other carriers کے ذریعے reroute ہوگی۔
+
+### Maintenance Window 1 - April 15
+
+- **Date:** Tuesday, April 15, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Colt
+- **Expected downtime:** None
+
+اس window کے دوران Colt route unavailable ہوگا اور تمام traffic ہمارے other carriers کے ذریعے reroute ہوگی۔
+
+### Maintenance Window 2 - April 20
+
+- **Date:** Monday, April 20, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Fiberring
+- **Expected downtime:** None
+
+یہ maintenance live perform کی جائے گی اور کوئی interruption نہیں ہونی چاہیے۔ کسی issue کی صورت میں traffic عارضی طور پر ہمارے other carriers کے ذریعے reroute ہوگی۔
+
+## کیا میں affected ہوں گا؟
+
+زیادہ تر users کے لیے آپ کو کچھ بھی notice نہیں ہونا چاہیے۔ ہر upstream offline ہونے کے دوران traffic automatically ہمارے other carriers کے ذریعے reroute ہو جائے گی۔
+
+یہ کہا جا سکتا ہے کہ چونکہ ہر window کے دوران routes temporarily change ہوں گے، کچھ traffic network پر slightly different path لے سکتی ہے۔ اس سے certain connections کے لیے minor latency changes ہو سکتے ہیں، مگر کچھ major نہیں۔ ہر window complete ہونے کے بعد سب کچھ normal پر واپس آ جائے گا۔
+
+## ہم یہ کیوں کر رہے ہیں
+
+یہ maintenance ایک بڑے plan کا حصہ ہے۔ ہم اپنے network کو additional transit اور peering providers onboard کرنے کے لیے prepare کر رہے ہیں، جس کا مطلب بہتر redundancy، lower latency، اور سب کے لیے زیادہ capacity ہوگا۔
+
+May میں اس بارے میں مزید share کریں گے، so stay tuned۔
+
+## سوالات؟
+
+اگر آپ کو کوئی concern ہو یا کسی maintenance window کے دوران کچھ unusual notice کریں، تو بلا جھجھک reach out کریں۔
+
+---
+
+*سوالات ہیں؟ support@appbox.co پر ہم سے رابطہ کریں۔*

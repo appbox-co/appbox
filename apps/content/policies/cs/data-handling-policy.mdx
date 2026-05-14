@@ -1,0 +1,397 @@
+---
+title: Data Handling Policy
+description: Jak spravujeme a chráníme vaše data
+---
+
+V Appboxu shromažďujeme a ukládáme pouze minimální informace nezbytné k vedení našich záznamů a poskytování našich služeb. Tým Appboxu je školen zacházet s vašimi daty s důrazem na nejvyšší soukromí a bezpečnost a dodržuje přísné protokoly, včetně používání silných credentials a multi-factor authentication. Veškeré zpracování plateb zajišťují výhradně naši zpracovatelé plateb a Appbox neukládá žádné vaše finanční informace, kromě záznamů o platbách a příslušných ID transakcí.
+
+## E-mail
+
+- **Použití**
+  - Slouží jako vaše přihlášení do Appbox Client Area a Appbox Control Panel
+  - Kontaktní místo pro oznámení služeb Appbox
+  - Kontaktní místo pro dotazy v Appbox Ticket System
+- **Shromažďování**
+  - Poskytnuto uživatelem při registraci
+- **Uložení**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Tým Appbox
+    - Slouží ke kontaktování uživatele kvůli podpoře nebo oznámením služeb
+- **Uchovávání**
+  - Neomezeně
+- **Další informace**
+  - Sensitive Data Removal Policy
+
+## Uživatelské jméno
+
+- **Použití**
+  - Identifikuje uživatele v Appbox Ticket System
+  - Slouží jako název Appbox slotu uživatele
+  - Je registrováno jako lokální uživatel na serveru, kde je slot uživatele nasazen, a zobrazuje všechny běžící procesy uživatele
+  - Slouží jako uživatelské jméno uživatele pro nainstalované aplikace
+- **Shromažďování**
+  - Poskytnuto uživatelem při registraci
+- **Uložení**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Tým Appbox
+    - Vyžadováno pro dotazy podpory
+    - Vyžadováno k vyšetřování problémů serveru vyhledáváním aplikací s vysokou spotřebou zdrojů, zdrojů nestability serveru nebo jakýchkoli neautorizovaných aplikací
+- **Uchovávání**
+  - Neomezeně
+- **Další informace**
+  - Sensitive Data Removal Policy
+
+## Země
+
+- **Použití**
+  - Používá se k výpočtu příslušných daní podle země zvolené uživatelem
+- **Shromažďování**
+  - Poskytnuto uživatelem při registraci
+- **Uložení**
+  - WHMCS = Cleartext
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Tým Appbox
+- **Uchovávání**
+  - Neomezeně
+- **Další informace**
+  - Sensitive Data Removal Policy
+
+## Heslo
+
+### Heslo Appbox Client Area
+
+- **Použití**
+  - Slouží jako heslo uživatele pro Appbox Client Area
+- **Shromažďování**
+  - Poskytnuto uživatelem při registraci v Appbox Client Area
+- **Uložení**
+  - WHMCS = Encrypted
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Omezený přístup týmu Appbox
+    - Tým Appbox nemůže vidět heslo uživatele, protože je hashované, ale po ověření může vaše heslo resetovat
+- **Uchovávání**
+  - Neomezeně
+- **Další informace**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Důrazně doporučujeme zapnout dvoufaktorové ověřování na vaší [stránce zabezpečení účtu](https://billing.appbox.co/user/security)
+
+### Heslo Appbox Control Panel
+
+- **Použití**
+  - Slouží jako heslo uživatele v Appbox Control Panel pro přístup k jeho slotu
+- **Shromažďování**
+  - Poskytnuto uživatelem po nasazení jeho slotu
+- **Uložení**
+  - Appbox API = Encrypted
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Omezený přístup týmu Appbox
+    - Tým Appbox nemůže vidět heslo uživatele, protože je hashované, ale po ověření může vaše heslo resetovat
+- **Uchovávání**
+  - Neomezeně
+- **Další informace**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Důrazně doporučujeme zapnout dvoufaktorové ověřování na vaší [stránce zabezpečení účtu](https://billing.appbox.co/user/security)
+
+### Hesla aplikací
+
+- **Použití**
+  - Slouží jako heslo pro nainstalované aplikace uživatele
+- **Shromažďování**
+  - Poskytnuto uživatelem po nasazení jeho slotu
+- **Uložení**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Tým Appbox
+    - Vyžadováno pro dotazy podpory ke konkrétní aplikaci, se souhlasem uživatele
+- **Uchovávání**
+  - Do odinstalace aplikace uživatelem
+- **Další informace**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Důrazně doporučujeme zapnout dvoufaktorové ověřování na vaší [stránce zabezpečení účtu](https://billing.appbox.co/user/security)
+
+## Zpracování plateb
+
+### PayPal
+
+- **Použití**
+  - Slouží jako jedna z platebních bran Appboxu
+- **Shromažďování**
+  - Zpracování plateb provádí výhradně PayPal. Jediná data uložená ve WHMCS pod účtem uživatele jsou **PayPal Transaction ID**
+- **Uložení**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Přístup a důvody přístupu**
+  - Appbox Sales Team
+    - Appbox Sales Team může v rámci našeho prodejního procesu ověřovat informace uživatele u PayPal
+- **Uchovávání**
+  - Neomezeně
+
+### Stripe
+
+- **Použití**
+  - Slouží jako jedna z platebních bran Appboxu
+- **Shromažďování**
+  - Zpracování plateb provádí výhradně Stripe. Jediná data uložená ve WHMCS pod účtem uživatele jsou **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Uložení**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Přístup a důvody přístupu**
+  - Appbox Sales Team
+    - Appbox Sales Team může v rámci našeho prodejního procesu ověřovat informace uživatele u Stripe
+- **Uchovávání**
+  - Neomezeně
+
+### CoinGate
+
+- **Použití**
+  - Slouží jako jedna z platebních bran Appboxu pro kryptoměnové transakce
+- **Shromažďování**
+  - Zpracování plateb provádí výhradně CoinGate. Jediná data uložená ve WHMCS jsou **CoinGate Transaction ID**
+- **Uložení**
+  - WHMCS = Cleartext (Transaction ID)
+- **Přístup a důvody přístupu**
+  - Appbox Sales Team
+    - Appbox Sales Team může v rámci našeho prodejního procesu ověřovat informace uživatele u CoinGate
+- **Uchovávání**
+  - Neomezeně
+
+*Poznámka: CoinGate sám ukládá ID blockchain transakce a blockchain adresu odesílatele jako součást své služby. Tyto informace Appbox neukládá.*
+
+## Logy a analytika
+
+### Serverové metriky
+
+- **Použití**
+  - Používají se ke sledování zdraví a využití zdrojů serverů
+- **Shromažďování**
+  - Generováno po nasazení slotu uživatele
+- **Uložení**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Přístup a důvody přístupu**
+  - Uživatel
+    - Serverové metriky lze zobrazit pomocí různých Linux utilit nainstalovaných ve vašem slotu. Zobrazitelné jsou následující hlavní metriky:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Vaše běžící procesy
+      - Procesy spuštěné jinými uživateli na stejném serveru vám nejsou přístupné
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (váš přidělený diskový prostor)
+      - Physical disk space
+  - Appbox Team
+    - Kromě výše uvedených metrik tým Appbox používá Posthog k rychlé agregaci všech metrik ze všech serverů a upozornění týmu na případné chyby
+    - Serverové metriky se používají pro dotazy podpory a k vyšetřování jakéhokoli zneužití zdrojů
+- **Uchovávání**
+  - Neomezeně
+
+### Autentizační logy
+
+#### Pokusy o přihlášení do Appbox Control Panel
+
+- **Použití**
+  - Jakékoli neplatné pokusy o přístup se logují do Appbox API, které po určitém počtu pokusů na stanovenou dobu omezí přihlášení uživatele do Control Panel. To zahrnuje:
+    - Uživatelské jméno, jak jej zadal uživatel
+    - IP adresu
+    - Počet pokusů
+    - Poslední datum pokusu
+- **Shromažďování**
+  - Shromažďuje se, když uživatel zadá credentials nesprávně
+- **Uložení**
+  - Appbox API = Cleartext
+- **Přístup a důvody přístupu**
+  - Appbox Team
+    - Používá se k identifikaci brute-force pokusů
+    - Uživatelé mohou po ověření prostřednictvím Ticket systému požádat o zrušení timeoutu a odstranění pokusu o přístup
+- **Uchovávání**
+  - 24 hodin nebo na žádost uživatele
+
+#### SSH login logy
+
+- **Použití**
+  - Zaznamenávají pokusy o přihlášení a úspěšná přihlášení přes SSH do aplikací nainstalovaných uživatelem, jako je Ubuntu nebo Debian
+- **Shromažďování**
+  - Generováno automaticky SSH serverem, když dochází k pokusům o přihlášení
+- **Uložení**
+  - Application container = Cleartext (typicky v `/var/log/auth.log` nebo podobném umístění)
+- **Přístup a důvody přístupu**
+  - Uživatel
+    - Protože jsou tyto logy uloženy v aplikacích, kde mají uživatelé root (sudo) přístup, uživatelé mají nad těmito logy plnou kontrolu a přístup
+    - Uživatelé mohou tyto logy podle potřeby zobrazovat, upravovat nebo mazat
+  - Tým Appbox
+    - Přístup je dostupný pouze se souhlasem uživatele při řešení podpory
+- **Uchovávání**
+  - Spravováno uživatelem, protože má root přístup ke kontejneru
+  - Platí výchozí zásady rotace logů, pokud je uživatel neupraví
+
+### Systémem generované logy
+
+- **Použití**
+  - Logy generované napříč serverem, používané k identifikaci problémů na serverech
+- **Shromažďování**
+  - Generováno operačním systémem serverů
+- **Uložení**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Přístup a důvody přístupu**
+  - Omezený přístup týmu Appbox
+    - Používá se k identifikaci problémů na konkrétních serverech
+    - Logy jsou agregovány službou Posthog, která upozorňuje tým na případné chyby
+- **Uchovávání**
+  - Neomezeně
+
+### Logy generované nainstalovanými aplikacemi
+
+- **Použití**
+  - Logy generované nainstalovanými aplikacemi, používané k identifikaci problémů v uživatelském slotu
+- **Shromažďování**
+  - Generováno aplikacemi nainstalovanými uživatelem
+- **Uložení**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Tým Appbox
+    - Vyžadováno pro dotazy podpory ke konkrétní aplikaci, se souhlasem uživatele
+- **Uchovávání**
+  - Do odinstalace nebo odstranění aplikace uživatelem
+
+### Bash historie uživatele
+
+- **Použití**
+  - Zaznamenává všechny příkazy zadané uživatelem v shellu slotu, umístěné v `$HOME/.bash_history`
+- **Shromažďování**
+  - Každý příkaz zadaný v shellu je zaznamenán
+- **Uložení**
+  - Appbox Servers = Cleartext
+- **Přístup a důvody přístupu**
+  - Uživatel
+    - Protože je soubor bash historie uložen v domovském adresáři uživatele, uživatelé mají nad tímto souborem plnou kontrolu
+    - Uživatelé mohou tento soubor podle potřeby zobrazit, upravit, vyčistit nebo smazat (pomocí příkazů jako `history -c` nebo úpravou/odstraněním souboru)
+  - Tým Appbox
+    - Používá se pro obecné nebo aplikačně specifické dotazy, například k ověření, zda jsou příkazy zadané uživatelem správné, ale pouze se souhlasem uživatele
+    - Používá se ke kontrole možných průniků nebo zneužití serveru, ale pouze pokud je to nezbytné pro bezpečnostní vyšetřování
+- **Uchovávání**
+  - Spravováno uživatelem, který může historii kdykoli vyčistit
+  - Ve výchozím nastavení je bash historie uchovávána neomezeně, dokud ji uživatel neodstraní
+
+### Hostovaná data
+
+#### Nainstalované aplikace
+
+- **Použití**
+  - Základní soubory pro správný běh nainstalovaných aplikací
+- **Shromažďování**
+  - Nainstalováno uživatelem v jeho slotu
+- **Uložení**
+  - Appbox Servers = Depends on the Application
+- **Přístup a důvody přístupu**
+  - Uživatel
+  - Tým Appbox
+    - Používá se pro dotazy podpory ke konkrétní aplikaci, se souhlasem uživatele
+- **Uchovávání**
+  - Neomezeně, dokud je uživatel neodstraní
+
+#### Uživatelská data
+
+- **Použití**
+  - Data vytvořená uživatelem a/nebo aplikacemi uživatele a uložená ve slotu uživatele
+- **Shromažďování**
+  - Vytvořeno uživatelem a/nebo aplikacemi uživatele
+- **Uložení**
+  - Appbox Servers = Cleartext
+- **Přístup a důvody přístupu**
+  - Uživatel
+    - Soubory uživatele jsou uloženy v domovských složkách na serverech Appbox a jsou izolovány od ostatních uživatelů. Přístup k nim má pouze uživatel
+  - Tým Appbox
+    - Přístup je možný pro dotazy podpory, se souhlasem uživatele
+- **Uchovávání**
+  - Neomezeně, dokud je uživatel neodstraní
+    - U legitimních DMCA takedown oznámení uživatele informujeme a požádáme ho o smazání obsahu do 24 hodin
+- **Další informace**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## Soulad s UK Online Safety Act
+
+V souladu s UK Online Safety Act 2023 Appbox zavádí specifické postupy nakládání s daty k ochraně uživatelů a splnění regulačních požadavků:
+
+### Monitoring bezpečnosti obsahu
+
+- **Použití**
+  - Hodnocení a zmírňování rizik nezákonného a škodlivého obsahu
+  - Moderace nahlášeného obsahu
+  - Prevence šíření nezákonného obsahu
+- **Shromažďování**
+  - Generováno při nahlášení nebo označení obsahu
+  - Hodnoty hash obsahu pro známý nezákonný materiál
+- **Uložení**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Přístup a důvody přístupu**
+  - Appbox Compliance Team
+    - Pro kontrolu nahlášeného obsahu a přijetí odpovídajících opatření
+    - Pro koordinaci s orgány Spojeného království, pokud to zákon vyžaduje
+  - Regulační orgány Spojeného království (pokud to vyžaduje zákon)
+    - Pro monitoring souladu s Online Safety Act
+    - Pro vyšetřování závažného nezákonného obsahu
+- **Uchovávání**
+  - Data hlášení: 2 roky po vyřešení
+  - Hodnoty hash obsahu: Neomezeně (pro prevenci opětovného šíření)
+
+### Data hodnocení rizik
+
+- **Použití**
+  - Provádění požadovaných hodnocení rizik pro nezákonný obsah a obsah škodlivý dětem
+  - Zavádění přiměřených bezpečnostních opatření
+  - Prokazování souladu regulačním orgánům
+- **Shromažďování**
+  - Generováno pravidelnými hodnoceními rizik platformy
+  - Agregovaná data o používání k identifikaci potenciálních rizikových vzorců
+- **Uložení**
+  - Appbox Compliance Systems = Protected
+- **Přístup a důvody přístupu**
+  - Appbox Compliance Team
+    - Pro provádění a aktualizaci hodnocení rizik
+    - Pro zavádění bezpečnostních opatření
+  - Regulační orgány Spojeného království (pokud to vyžaduje zákon)
+    - Pro ověření souladu s povinnostmi hodnocení rizik
+- **Uchovávání**
+  - 3 roky (k prokázání průběžného souladu)
+
+### Systém hlášení obsahu
+
+- **Použití**
+  - Umožňuje uživatelům hlásit nezákonný nebo škodlivý obsah
+  - Sleduje stav hlášení a přijatých opatření
+- **Shromažďování**
+  - Detaily hlášení poskytnuté hlásícími uživateli
+  - Informace o nahlášeném obsahu
+  - Opatření přijatá u hlášení
+- **Uložení**
+  - Appbox API = Encrypted
+- **Přístup a důvody přístupu**
+  - Hlásící uživatel (omezeno na jeho vlastní hlášení)
+  - Uživatel, jehož obsah byl nahlášen (omezené informace)
+  - Appbox Compliance Team
+    - Pro vyšetření a vyřešení hlášení
+  - Regulační orgány Spojeného království (pokud to vyžaduje zákon)
+    - Pro vyšetřování hlášení závažného nezákonného obsahu
+- **Uchovávání**
+  - 2 roky po vyřešení

@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
+import { AccountPageHeader } from "../_components/account-page-header"
 
 /* -------------------------------------------------------------------------- */
 /*  Status badge styles (by backend statusCode)                                */
@@ -147,9 +148,12 @@ export default function AbuseReportsPage() {
   if (error) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold tracking-tight">
-          {t("abuse.title")}
-        </h1>
+        <AccountPageHeader
+          title={t("abuse.title")}
+          description={t("abuse.headerDescription")}
+          icon={<FileWarning className="size-[18px]" />}
+          gradient="from-[#f59e0b] to-[#d97706]"
+        />
         <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
           <AlertCircle className="size-4 shrink-0" />
           Failed to load abuse reports. Please try again.
@@ -160,19 +164,19 @@ export default function AbuseReportsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <FileWarning className="size-6 text-muted-foreground" />
-        <h1 className="text-2xl font-bold tracking-tight">
-          {t("abuse.title")}
-        </h1>
-      </div>
+      <AccountPageHeader
+        title={t("abuse.title")}
+        description={t("abuse.headerDescription")}
+        icon={<FileWarning className="size-[18px]" />}
+        gradient="from-[#f59e0b] to-[#d97706]"
+      />
 
       <DataTable
         columns={columns}
         data={data ?? []}
         isLoading={isLoading}
         searchKey="subject"
-        searchPlaceholder="Search reports..."
+        searchPlaceholder={t("abuse.searchPlaceholder")}
         emptyMessage={t("abuse.noReports")}
         onRowClick={(row) => router.push(ROUTES.ABUSE_REPORT_DETAIL(row.id))}
       />

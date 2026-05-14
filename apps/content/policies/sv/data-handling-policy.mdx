@@ -1,0 +1,397 @@
+---
+title: "Policy för datahantering"
+description: "Hur vi hanterar och skyddar dina data"
+---
+
+På Appbox samlar vi in och lagrar endast den minsta information som krävs för att upprätthålla våra register och leverera våra tjänster. Appbox-teamet är utbildat i att hantera dina data med största möjliga integritet och säkerhet i åtanke och följer strikta protokoll, inklusive användning av starka inloggningsuppgifter och multifaktorautentisering. All betalningshantering sköts helt av våra betalningsbehandlare, och ingen av din finansiella information lagras av Appbox, bortsett från betalningsposter och deras respektive transaktions-ID:n.
+
+## Email
+
+- **Användning**
+  - Fungerar som din inloggning till Appbox Client Area och Appbox Control Panel
+  - Kontaktpunkt för Appbox servicemeddelanden
+  - Kontaktpunkt för förfrågningar i Appbox Ticket System
+- **Insamling**
+  - Tillhandahålls av användaren vid registrering
+- **Lagring**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Appbox-teamet
+    - Detta är för att kontakta användaren vid support eller servicemeddelanden
+- **Lagringstid**
+  - Obestämd
+- **Mer information**
+  - Sensitive Data Removal Policy
+
+## Användarnamn
+
+- **Användning**
+  - Identifierar användaren i Appbox Ticket System
+  - Fungerar som namnet på användarens Appbox slot
+  - Registreras som en lokal användare på servern där användarens slot är driftsatt, vilket visar eventuella körande processer användaren har
+  - Fungerar som användarens användarnamn för installerade applikationer
+- **Insamling**
+  - Tillhandahålls av användaren vid registrering
+- **Lagring**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Appbox-teamet
+    - Krävs för supportförfrågningar
+    - Krävs för att undersöka serverproblem genom att söka efter applikationer med hög resursförbrukning, källor till serverinstabilitet eller otillåtna applikationer
+- **Lagringstid**
+  - Obestämd
+- **Mer information**
+  - Sensitive Data Removal Policy
+
+## Land
+
+- **Användning**
+  - Används för att beräkna tillämpliga skatter baserat på användarens valda land
+- **Insamling**
+  - Tillhandahålls av användaren vid registrering
+- **Lagring**
+  - WHMCS = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Appbox-teamet
+- **Lagringstid**
+  - Obestämd
+- **Mer information**
+  - Sensitive Data Removal Policy
+
+## Lösenord
+
+### Appbox Client Area-lösenord
+
+- **Användning**
+  - Fungerar som användarens lösenord för Appbox Client Area
+- **Insamling**
+  - Tillhandahålls av användaren vid registrering i Appbox Client Area
+- **Lagring**
+  - WHMCS = Encrypted
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Begränsad åtkomst av Appbox-teamet
+    - Appbox-teamet kan inte se användarens lösenord eftersom det är hashat, men de kan återställa ditt lösenord efter verifiering
+- **Lagringstid**
+  - Obestämd
+- **Mer information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Vi rekommenderar starkt att aktivera tvåfaktorsautentisering på din [account security page](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel-lösenord
+
+- **Användning**
+  - Fungerar som användarens lösenord i Appbox Control Panel för att komma åt deras slot
+- **Insamling**
+  - Tillhandahålls av användaren efter driftsättning av deras slot
+- **Lagring**
+  - Appbox API = Encrypted
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Begränsad åtkomst av Appbox-teamet
+    - Appbox-teamet kan inte se användarens lösenord eftersom det är hashat, men de kan återställa ditt lösenord efter verifiering
+- **Lagringstid**
+  - Obestämd
+- **Mer information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Vi rekommenderar starkt att aktivera tvåfaktorsautentisering på din [account security page](https://billing.appbox.co/user/security)
+
+### Applikationslösenord
+
+- **Användning**
+  - Fungerar som lösenord för användarens installerade applikationer
+- **Insamling**
+  - Tillhandahålls av användaren efter driftsättning av deras slot
+- **Lagring**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Appbox-teamet
+    - Krävs för applikationsspecifika supportförfrågningar, med användarens tillstånd
+- **Lagringstid**
+  - Tills användaren avinstallerar applikationen
+- **Mer information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Vi rekommenderar starkt att aktivera tvåfaktorsautentisering på din [account security page](https://billing.appbox.co/user/security)
+
+## Betalningshantering
+
+### PayPal
+
+- **Användning**
+  - Fungerar som en av Appbox betalningsgateways
+- **Insamling**
+  - Betalningshantering utförs helt av PayPal. Den enda data som sparas i WHMCS under användarens konto är **PayPal Transaction ID**
+- **Lagring**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Åtkomst och skäl för åtkomst**
+  - Appbox Sales Team
+    - Appbox Sales Team kan verifiera användarens information med PayPal som del av vår försäljningsprocess
+- **Lagringstid**
+  - Obestämd
+
+### Stripe
+
+- **Användning**
+  - Fungerar som en av Appbox betalningsgateways
+- **Insamling**
+  - Betalningshantering utförs helt av Stripe. Den enda data som sparas i WHMCS under användarens konto är **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Lagring**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Åtkomst och skäl för åtkomst**
+  - Appbox Sales Team
+    - Appbox Sales Team kan verifiera användarens information med Stripe som del av vår försäljningsprocess
+- **Lagringstid**
+  - Obestämd
+
+### CoinGate
+
+- **Användning**
+  - Fungerar som en av Appbox betalningsgateways för kryptovalutatransaktioner
+- **Insamling**
+  - Betalningshantering utförs helt av CoinGate. Den enda data som sparas i WHMCS är **CoinGate Transaction ID**
+- **Lagring**
+  - WHMCS = Cleartext (Transaction ID)
+- **Åtkomst och skäl för åtkomst**
+  - Appbox Sales Team
+    - Appbox Sales Team kan verifiera användarens information med CoinGate som del av vår försäljningsprocess
+- **Lagringstid**
+  - Obestämd
+
+*Observera: CoinGate lagrar själv blockchain transaction ID och avsändarens blockchain address som del av sin tjänst. Denna information lagras inte av Appbox.*
+
+## Loggar och analys
+
+### Server Metrics
+
+- **Användning**
+  - Används för att övervaka servernas hälsa och resursanvändning
+- **Insamling**
+  - Genereras efter driftsättning av användarens slot
+- **Lagring**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+    - Server metrics kan visas med olika Linux-verktyg installerade på din slot. Följande större mätvärden kan ses:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Dina körande processer
+      - Processer som körs av andra användare på samma server är inte åtkomliga för dig
+      - Input/Output metrics
+      - Diskutrymme
+      - Quota disk space (ditt tilldelade diskutrymme)
+      - Physical disk space
+  - Appbox Team
+    - Utöver mätvärdena ovan använder Appbox-teamet Posthog för att snabbt aggregera alla mätvärden från alla servrar och varna teamet om eventuella fel
+    - Server metrics används för supportförfrågningar och för att undersöka eventuellt resursmissbruk
+- **Lagringstid**
+  - Obestämd
+
+### Autentiseringsloggar
+
+#### Inloggningsförsök i Appbox Control Panel
+
+- **Användning**
+  - Ogiltiga åtkomstförsök loggas i Appbox API, som hindrar användaren från att logga in i Control Panel efter ett visst antal försök under en angiven period. Detta inkluderar:
+    - Användarnamn, som det matats in av användaren
+    - IP-adress
+    - Antal försök
+    - Senaste försöksdatum
+- **Insamling**
+  - Samlas in när en användare anger inloggningsuppgifter felaktigt
+- **Lagring**
+  - Appbox API = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Appbox Team
+    - Används för att identifiera brute-force-försök
+    - Användare kan begära att deras timeout hävs och åtkomstförsöket tas bort, på begäran och efter verifiering via Ticket-systemet
+- **Lagringstid**
+  - 24 timmar eller på användarens begäran
+
+#### SSH-inloggningsloggar
+
+- **Användning**
+  - Registrerar inloggningsförsök och lyckade inloggningar till SSH i användarinstallerade applikationer som Ubuntu eller Debian
+- **Insamling**
+  - Genereras automatiskt av SSH-servern när inloggningsförsök sker
+- **Lagring**
+  - Application container = Cleartext (vanligtvis i `/var/log/auth.log` eller liknande)
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+    - Eftersom dessa loggar lagras inom applikationer där användare har root (sudo)-åtkomst har användare full kontroll över och åtkomst till dessa loggar
+    - Användare kan visa, ändra eller ta bort dessa loggar efter behov
+  - Appbox-teamet
+    - Åtkomst är endast tillgänglig med användarens tillstånd vid supportfelsökning
+- **Lagringstid**
+  - Hanteras av användaren, eftersom de har root-åtkomst till containern
+  - Standardpolicyer för log rotation gäller om de inte ändras av användaren
+
+### Systemgenererade loggar
+
+- **Användning**
+  - Serveromfattande genererade loggar, används för att identifiera problem på servrarna
+- **Insamling**
+  - Genereras av servernas operativsystem
+- **Lagring**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Appbox-team med begränsad åtkomst
+    - Används för att identifiera problem på specifika servrar
+    - Loggar aggregeras av Posthog, som varnar teamet om eventuella fel
+- **Lagringstid**
+  - Obestämd
+
+### Loggar genererade av installerade applikationer
+
+- **Användning**
+  - Loggar genererade av installerade applikationer, används för att identifiera problem inom användarens slot
+- **Insamling**
+  - Genereras av användarens installerade applikationer
+- **Lagring**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Appbox-teamet
+    - Krävs för applikationsspecifika supportförfrågningar, med användarens tillstånd
+- **Lagringstid**
+  - Tills användaren avinstallerar applikationen eller tar bort den
+
+### Användarens bash History
+
+- **Användning**
+  - Registrerar alla kommandon som användaren anger i slotens shell, placerad i `$HOME/.bash_history`
+- **Insamling**
+  - Varje kommando som anges i shell registreras
+- **Lagring**
+  - Appbox Servers = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+    - Eftersom bash history-filen lagras i användarens hemkatalog har användare full kontroll över denna fil
+    - Användare kan visa, ändra, rensa eller ta bort denna fil efter behov (med kommandon som `history -c` eller genom att redigera/ta bort filen)
+  - Appbox-teamet
+    - Används för allmänna eller applikationsspecifika förfrågningar, såsom att verifiera om kommandon som användaren angett är korrekta, men endast med användarens tillstånd
+    - Används för att kontrollera möjliga intrång eller servermissbruk, men endast när det är nödvändigt för säkerhetsutredningar
+- **Lagringstid**
+  - Hanteras av användaren, som kan rensa historiken när som helst
+  - Som standard bevaras bash history på obestämd tid tills användaren tar bort den
+
+### Hostade data
+
+#### Installerade applikationer
+
+- **Användning**
+  - Nödvändiga filer för att installerade applikationer ska köras korrekt
+- **Insamling**
+  - Installeras av användaren på deras slot
+- **Lagring**
+  - Appbox Servers = Depends on the Application
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+  - Appbox-teamet
+    - Används för applikationsspecifika supportförfrågningar, med användarens tillstånd
+- **Lagringstid**
+  - Obestämd tills användaren tar bort den
+
+#### Användardata
+
+- **Användning**
+  - Data som skapas av användaren och/eller användarens applikationer och lagras på användarens slot
+- **Insamling**
+  - Skapas av användaren och/eller användarens applikationer
+- **Lagring**
+  - Appbox Servers = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Användare
+    - Användarens filer lagras i hemmappar på Appbox-servrar och är isolerade från andra användare. Endast användaren kan komma åt dem
+  - Appbox-teamet
+    - Kan åtkommas för supportförfrågningar, med användarens tillstånd
+- **Lagringstid**
+  - Obestämd tills användaren tar bort den
+    - Vid legitima DMCA-takedown notices informerar vi användaren och ber dem radera innehållet inom 24 timmar
+- **Mer information**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## Efterlevnad av UK Online Safety Act
+
+I enlighet med UK Online Safety Act 2023 implementerar Appbox specifika datahanteringsrutiner för att skydda användare och följa regulatoriska krav:
+
+### Övervakning av innehållssäkerhet
+
+- **Användning**
+  - Riskbedömning och riskreducering för olagligt och skadligt innehåll
+  - Moderering av rapporterat innehåll
+  - Förebyggande av spridning av olagligt innehåll
+- **Insamling**
+  - Genereras när innehåll rapporteras eller flaggas
+  - Content hash values för känt olagligt material
+- **Lagring**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Åtkomst och skäl för åtkomst**
+  - Appbox Compliance Team
+    - För granskning av rapporterat innehåll och vidtagande av lämplig åtgärd
+    - För samordning med brittiska myndigheter när det krävs enligt lag
+  - Brittiska tillsynsmyndigheter (när det krävs enligt lag)
+    - För övervakning av efterlevnad av Online Safety Act
+    - För utredning av allvarligt olagligt innehåll
+- **Lagringstid**
+  - Rapportdata: 2 år efter lösning
+  - Content hash values: Obestämd (för att förhindra återdistribution)
+
+### Riskbedömningsdata
+
+- **Användning**
+  - Genomförande av obligatoriska riskbedömningar för olagligt innehåll och innehåll som är skadligt för barn
+  - Implementering av proportionerliga säkerhetsåtgärder
+  - Demonstration av efterlevnad för tillsynsmyndigheter
+- **Insamling**
+  - Genereras genom regelbundna plattformsriskbedömningar
+  - Aggregerade användningsdata för att identifiera potentiella riskmönster
+- **Lagring**
+  - Appbox Compliance Systems = Protected
+- **Åtkomst och skäl för åtkomst**
+  - Appbox Compliance Team
+    - För att genomföra och uppdatera riskbedömningar
+    - För att implementera säkerhetsåtgärder
+  - Brittiska tillsynsmyndigheter (när det krävs enligt lag)
+    - För att verifiera efterlevnad av riskbedömningsskyldigheter
+- **Lagringstid**
+  - 3 år (för att visa löpande efterlevnad)
+
+### System för innehållsrapportering
+
+- **Användning**
+  - Gör det möjligt för användare att rapportera olagligt eller skadligt innehåll
+  - Spårar status för rapporter och vidtagna åtgärder
+- **Insamling**
+  - Rapportdetaljer som lämnas av rapporterande användare
+  - Information om rapporterat innehåll
+  - Åtgärder som vidtagits på rapporter
+- **Lagring**
+  - Appbox API = Encrypted
+- **Åtkomst och skäl för åtkomst**
+  - Rapporterande användare (begränsat till deras egna rapporter)
+  - Användare vars innehåll rapporterades (begränsad information)
+  - Appbox Compliance Team
+    - För att undersöka och lösa rapporter
+  - Brittiska tillsynsmyndigheter (när det krävs enligt lag)
+    - För att utreda rapporter om allvarligt olagligt innehåll
+- **Lagringstid**
+  - 2 år efter lösning

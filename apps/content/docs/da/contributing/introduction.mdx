@@ -1,0 +1,99 @@
+---
+title: Introduktion
+description: Velkommen til den officielle dokumentation for Appbox-frontenden med åben kildekode.
+sort: 1
+---
+
+**Velkommen til Appbox-dokumentationen**  
+Vi er glade for at kunne annoncere, at frontenden til [Appbox](https://www.appbox.co/) nu er open-sourced på [GitHub](https://github.com/appbox-co/appbox). Vores mål er at fremme et samarbejdende fællesskab, der bidrager til dokumentationen, udvikler nye frontend-funktioner og hjælper med at forbedre den samlede Appbox-oplevelse.
+
+Selvom vores dokumentation stadig er i en tidlig fase, arbejder vi på at opbygge en omfattende ressource, der ligner andre platforme i vores område. I øjeblikket fokuserer vores dokumentation primært på retningslinjer for bidrag, men vi planlægger at udvide med detaljerede oplysninger om alle apps, der er tilgængelige på Appbox.
+
+Indtil vores dokumentation bliver mere robust, kan du besøge vores [ældre vidensbase](https://billing.appbox.co/knowledgebase) for hurtige svar på spørgsmål om specifikke apps eller tjenester. Hvis du har brug for teknisk support, kan du [indsende en ticket](https://billing.appbox.co/submitticket.php) for at få hjælp. Du kan altid åbne disse nye dokumenter via linket i sitets footer for at følge vores fremskridt, mens vi udvider.
+
+## Fremtidige planer
+
+- **Detaljerede app-vejledninger**  
+  Dækker installation, fejlfinding og tips til hver af de apps, der understøttes på vores platform.
+- **Ressourcer til brugere og udviklere**  
+  Tilbyder alt fra begyndervenlige tutorials til avancerede kodereferencer til tilpasning af din Appbox-oplevelse.
+- **Fællesskabsdrevet indhold**  
+  Opfordrer til pull requests, feedback og forslag. Alle er velkomne og hjælper med at udvikle dette projekt til gavn for alle.
+
+## Kom i gang
+
+Hvis du vil se eller bidrage til vores open-sourcede frontend-kode, skal du klone [Appbox](https://github.com/appbox-co/appbox)-repositoryet:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Gå derefter ind i projektet, og installer dets afhængigheder:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Din lokale instans vil være tilgængelig på `http://localhost:3000`. Du er velkommen til at udforske, foretage ændringer og oprette pull requests. Vi sætter pris på hvert bidrag!
+
+## Udviklingsværktøjer
+
+### Linting
+
+Projektet leveres med en omfattende linting-opsætning, der bruger ESLint med TypeScript og Prettier-integration. Det sikrer en ensartet kodestil og hjælper med at fange almindelige fejl tidligt. Du kan køre linting-tjek manuelt:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Vores ESLint-konfiguration inkluderer:
+- TypeScript-specifikke regler via `@typescript-eslint`
+- Next.js-specifik linting med `eslint-config-next`
+- Kodeformatering med Prettier-integration
+
+### Pre-commit Hooks
+
+Vi bruger Husky til at administrere Git hooks, hvilket hjælper med at sikre, at kun kvalitetskode committes til repositoryet. Følgende hooks er sat op:
+
+- **pre-commit**: Kører `lint:fix` før hvert commit for at sikre kodekvalitet
+- **commit-msg**: Bruger commitlint til at håndhæve konventionel formatering af commit-beskeder
+
+Det betyder, at dine commits automatisk bliver kontrolleret for kodekvalitet og korrekt formatering, før de accepteres, så der opretholdes en høj standard i hele kodebasen.
+
+## Oprettelse af Pull Requests
+
+Når du er klar til at bidrage med dine ændringer, skal du følge disse retningslinjer for at øge sandsynligheden for, at din Pull Request (PR) bliver accepteret:
+
+### Før du opretter en PR
+
+1. **Rebase fra den nyeste main branch** for at undgå merge-konflikter:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Sørg for, at al linting består**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Sørg for, at din kode fungerer lokalt** ved at teste den relevante funktionalitet.
+
+### PR-retningslinjer
+
+1. **Hold PR'er fokuserede** - Håndter ét problem eller én funktion pr. PR.
+2. **Skriv klare commit-beskeder** - Følg det konventionelle commit-format.
+3. **Medtag tydelige beskrivelser** - Forklar, hvad din PR gør, og hvorfor den er nødvendig.
+4. **Tilføj tests** - Tilføj tests, hvor det er relevant, for at verificere, at dine ændringer fungerer korrekt.
+5. **Dokumentér din kode** - Brug kommentarer til kompleks logik, og sørg for, at funktionsnavne er beskrivende.
+6. **Følg eksisterende mønstre** - Din kode skal matche den stil og de mønstre, der bruges i resten af kodebasen.
+
+Ved større ændringer bør du overveje først at åbne et issue for at diskutere tilgangen, før du investerer tid i kodning. Det hjælper med at sikre, at dit bidrag stemmer overens med projektets retning og undgår spildt arbejde.

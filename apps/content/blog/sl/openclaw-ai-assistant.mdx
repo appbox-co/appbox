@@ -1,0 +1,125 @@
+---
+title: OpenClaw - osebni AI pomočnik, ki govori z vašimi aplikacijami
+date: 2026-03-20 10:00:00
+excerpt: "OpenClaw je zdaj na voljo v Appbox. Je odprtokodni AI pomočnik, ki teče na vaši infrastrukturi, se poveže z vašimi klepetalnimi aplikacijami in lahko dejansko komunicira z drugimi nameščenimi aplikacijami."
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# OpenClaw je zdaj v Appbox
+
+V trgovino z aplikacijami smo pravkar dodali nekaj, nad čimer sem osebno navdušen že nekaj časa.
+
+[OpenClaw](https://openclaw.ai) je odprtokodni AI pomočnik, ki v celoti teče na vaši lastni infrastrukturi. Predstavljajte si ga kot zasebno, samostojno gostovano alternativo oblačnim AI pomočnikom, le da ta živi na vašem Appboxu, si zapomni vaše pogovore in lahko dejansko opravlja stvari za vas.
+
+Z njim se pogovarjate prek klepetalnih aplikacij, ki jih že uporabljate. WhatsApp, Telegram, Discord, Slack, Signal, celo iMessage. Odgovarja s polno močjo modelov Anthropic, OpenAI, Google, xAI, Mistral in drugih. Prinesete svoj API ključ, izberete model in vse ostane na vašem strežniku.
+
+Že samo to bi bilo uporabno. Toda razlog, da o tem pišem blog objavo, namesto da bi ga samo tiho dodali v trgovino, je to, kaj se zgodi, ko ga združite s preostankom svojega Appbox.
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="Klepetalna seja OpenClaw v spletni nadzorni plošči" width="860" className="mt-8 mb-10" />
+</p>
+
+## Vidi lahko vaše druge aplikacije
+
+Tukaj je tisto, zaradi česar je OpenClaw na Appbox drugačen od zagona kjer koli drugje.
+
+Vsak Appbox ima skupno podatkovno plast. Vaše nameščene aplikacije dobijo vsaka svoj imenik pod skupno priklopno točko, obstaja pa tudi skupno območje shrambe, iz katerega lahko katera koli aplikacija bere in vanj piše. OpenClaw ima dostop do istega skupnega datotečnega sistema. To pomeni, da lahko vidi podatke iz vaših drugih nameščenih aplikacij in splošne shrambe, ne prek krhke API integracije, ampak prek neposrednega dostopa do datotečnega sistema.
+
+V praksi vaš AI pomočnik ni izoliran v svojem kontejnerju brez konteksta. Sedi tik ob vaših datotekah, bazah podatkov, medijih, kodi in konfiguracijah.
+
+## Lahko se prijavi v vaše druge aplikacije
+
+Poleg skupnega datotečnega sistema ima OpenClaw vgrajen poln headless brskalnik (Chromium s Puppeteer) ter vse pogoste odjemalce baz podatkov in CLI orodja. Če mu daste prijavne podatke za eno od drugih aplikacij, se lahko dejansko prijavi in jo uporablja v vašem imenu.
+
+Želite posodobiti dokumentacijo ekipe v Docmost? Povejte OpenClaw, kaj naj napiše, in mu dajte URL ter poverilnice. Prijavil se bo, se pomaknil na pravo stran in naredil spremembe. Potrebujete novo pristajalno stran na svojem skladu Nginx & PHP? Opišite, kaj želite, in OpenClaw lahko napiše HTML, CSS in JavaScript, nato pa datoteke neposredno namesti v vaš spletni koren prek skupnega datotečnega sistema. Poganjate WordPress? Prosite ga, naj pripravi in objavi blog objavo, posodobi nastavitve vtičnika ali preoblikuje stran. Skrbniško nadzorno ploščo lahko upravlja tako kot vi.
+
+To ni omejeno niti na spletne uporabniške vmesnike. OpenClaw vključuje `mysql`, `psql`, `redis-cli`, `mongosh` in podporo za SSH, zato se lahko neposredno poveže z vašimi bazami podatkov in storitvami z uporabo poverilnic, ki jih zagotovite. Ključno je, da OpenClaw ne potrebuje posebnih integracij ali vtičnikov za vsako aplikacijo. Če se vanjo lahko prijavite vi, se lahko tudi vaš pomočnik.
+
+## Kako je to dejansko videti
+
+Poglejmo nekaj bolj konkretnih primerov, kaj lahko naredite, ko ima AI pomočnik dostop do vašega ekosistema Appbox.
+
+### Vzdrževanje medijskega strežnika
+
+Če poganjate Plex, Jellyfin ali Emby, OpenClaw vključuje `ffmpeg`, `mediainfo` in `exiftool`. Ta orodja so priročna za preverjanje metapodatkov datotek ali odkrivanje težav s kodiranjem, ne da bi morali ročno brskati po imenikih. Prosite ga, naj izpiše, kaj je v mapi, preveri formate ali pomaga urediti konvencije poimenovanja, da bo vaš medijski strežnik pravilno indeksiral stvari.
+
+### Delo z bazami podatkov brez bolečin
+
+Kontejner OpenClaw ima prednameščene `mysql`, `psql`, `sqlite3`, `redis-cli` in `mongosh`. Če poganjate MariaDB, lahko OpenClaw prosite, naj poizveduje po bazah podatkov, pregleda sheme, razhrošča počasne poizvedbe ali vam pomaga pisati migracije. Vse prek klepetalnega sporočila na telefonu.
+
+Poganjate WordPress ali drug CMS, ki uporablja MariaDB? Prosite OpenClaw, naj preveri zdravje baze podatkov, najde osirotele metapodatke objav ali izvozi določeno vsebino. Ni vam treba SSH-jati nikamor ali si zapomniti pravih CLI zastavic. Samo opišite, kaj potrebujete, v navadnem jeziku.
+
+### GitLab in delovni tokovi kode
+
+Če imate nameščen GitLab, lahko OpenClaw neposredno dela z vašimi repozitoriji. Vgrajen ima `git` ter `ripgrep` in `fd` za hitro iskanje kode. Prosite ga, naj po vaših repozitorijih poišče določen vzorec, povzame nedavne commite ali vam pomaga razumeti neznano kodo.
+
+Za ekipe, ki GitLab uporabljajo za interne projekte, je AI pomočnik, ki lahko dejansko prebere vašo kodo in odgovarja na vprašanja o njej, ne da bi kodo pošiljal oblačni storitvi tretje strani, pomembna izboljšava razvojnega poteka dela.
+
+### Organizacija in sinhronizacija datotek
+
+Poganjate Nextcloud, SFTPGo ali File Browser? OpenClaw lahko pomaga upravljati datoteke, ki tečejo skozi te storitve. Lahko išče po dokumentih, reorganizira strukture imenikov, najde dvojnike in premika stvari med skupno shrambo in imeniki posameznih aplikacij.
+
+Na voljo ima tudi `rclone`, zato lahko, če morate nastaviti sinhronizacijska opravila ali premikati podatke med ponudniki oblačne shrambe, opišete, kaj želite, in OpenClaw prepustite konfiguracijo.
+
+### Spremljanje in diagnostika
+
+Če ste namestili Uptime Kuma za spremljanje storitev, vam OpenClaw doda pogovorno plast nad nastavitev spremljanja. Poleg prejemanja opozoril lahko OpenClaw prosite, naj zažene omrežno diagnostiko. Vključuje `ping`, `dig`, `nslookup`, `traceroute`, `mtr` ter celo `nmap` in `tcpdump` za globljo preiskavo.
+
+Nekaj pade? Pošljite sporočilo svojemu pomočniku, prosite ga, naj preveri, kaj se dogaja, in dobite razlago v navadnem jeziku namesto strmenja v nadzorne plošče.
+
+### Glasbene in zvočnoknjižne knjižnice
+
+Uporabniki Navidrome in audiobookshelf lahko izkoristijo medijska orodja OpenClaw. Prosite ga, naj pregleda glasbeno knjižnico za datoteke z manjkajočimi ali napačnimi metapodatkovnimi oznakami, prepozna skladbe, ki bi jih bilo treba morda ponovno kodirati, ali pomaga urediti poglavja zvočnih knjig, ki niso bila pravilno razdeljena. Kombinacija `ffmpeg` in `exiftool` pokrije večino tega, kar bi potrebovali.
+
+### Jupyter in delo s podatki
+
+Če za analizo podatkov uporabljate Jupyter Notebook, ga OpenClaw lepo dopolnjuje. Ima Python 3 s podporo za pip in venv, zato vam lahko pomaga pisati skripte, obdelovati podatkovne datoteke v skupni shrambi in celo neposredno izvajati hitre analize. Predstavljajte si ga kot pogovorni vmesnik do istih podatkov, s katerimi delajo vaši notebooki.
+
+### Infrastructure as Code
+
+Za bolj tehnično drzne OpenClaw vključuje CLI-je `docker`, `kubectl`, `terraform` in `ansible`. Če v Appbox poganjate VPS in upravljate infrastrukturo, lahko OpenClaw uporabite kot pogovornega ops pomočnika. Opišite, kaj želite namestiti, in naj vam pomaga ustvariti ter uporabiti konfiguracije.
+
+## Trajni spomin
+
+Ena od stvari, ki OpenClaw loči od navadnega klepetalnega okna z AI modelom, je, da si vas zapomni. Sčasoma gradi kontekst: vaše preference, način, kako radi organizirate stvari, projekte, na katerih delate, konvencije poimenovanja, ki jih uporabljate. Več kot z njim komunicirate, bolj uporaben postane.
+
+To je posebej močno v Appbox, ker kontekst ni samo pogovoren. Utemeljen je v vašem dejanskem okolju. Vaše datoteke, vaše aplikacije, vaši podatki.
+
+## Vnaprej naložene veščine
+
+OpenClaw ima sistem veščin z 50+ skupnostno zgrajenimi razširitvami, ki so na voljo na [ClawHub](https://clawhub.ai/skills). Veščine agentu dajejo specializirane zmožnosti za določene aplikacije, orodja ali delovne tokove.
+
+V Appbox vam ne damo samo osnovnega agenta. Slika je opremljena z izbranim naborom že nameščenih veščin, zato OpenClaw vaše okolje razume takoj:
+
+- **Zavedanje platforme**: pozna postavitev skupnih podatkov Appbox, razpoložljiva CLI orodja in kako vas po potrebi usmeriti do podpore ali nadgradenj VPS
+- **Veščine za posamezne aplikacije**: vnaprej naložene za WordPress, Nginx, GitLab, Nextcloud, Emby, MariaDB, Tautulli, Mautic, WireGuard in Rocket.Chat, zato agent že ve, kako delati s temi aplikacijami, ko jih imate nameščene
+- **Osnove SSH**: za povezovanje z vašimi VPS-i ali oddaljenimi strežniki neposredno iz agenta
+- **Avtomatizacija brskalnika (Playwright MCP)**: poganja zmožnost prijave in upravljanja vaših drugih aplikacij prek njihovih spletnih uporabniških vmesnikov
+- **Spletno iskanje in pregled dokumentacije**: večmotorno iskanje in ClawDDocs za sprotno pridobivanje referenčnega gradiva
+- **Samoizboljševanje**: veščine za odkrivanje novih veščin na ClawHub in njihovo preverjanje pred namestitvijo
+
+Dodatne veščine lahko namestite kadar koli. Samo poiščite eno na [ClawHub](https://clawhub.ai/skills), kopirajte povezavo in jo prilepite agentu. Veščino bo sam prenesel in namestil.
+
+## Začetek
+
+Namestite OpenClaw iz trgovine z aplikacijami Appbox kot katero koli drugo aplikacijo. Porabi dva slota.
+
+Po namestitvi boste na strani s podrobnostmi aplikacije videli Gateway Token. To je vaša prijava v nadzorno ploščo. Odprite URL nadzorne plošče, vnesite token in ste notri.
+
+Od tam morate konfigurirati samo eno stvar: svojega ponudnika AI modela. Dodajte API ključ ponudnika, ki vam ustreza. OpenRouter je najlažje izhodišče, saj vam en ključ omogoči dostop do številnih modelov. Pripravili smo [full setup guide](/docs/apps/openclaw-model-provider-setup), ki vas vodi skozi pridobivanje API ključev pri OpenRouter, OpenAI, Anthropic, Google, xAI, Mistral in drugih.
+
+Ko je model konfiguriran, lahko začnete klepetati s pomočnikom neposredno iz nadzorne plošče. Če želite z njim govoriti prek WhatsApp, Telegram, Discord ali drugih kanalov, se tudi ti nastavijo prek nadzorne plošče.
+
+## Zakaj je to pomembno
+
+Obstaja veliko AI klepetalnih vmesnikov. Večina jih je oblačnih storitev, pri katerih vaši podatki zapustijo vaš nadzor v trenutku, ko pošljete sporočilo. OpenClaw je drugačen, ker vse ostane na vašem Appboxu. Pomočnik, njegov spomin, vaši pogovori in podatki, s katerimi dela.
+
+In ker sedi ob vaših drugih aplikacijah s skupnim dostopom do datotečnega sistema, lahko dejansko počne stvari po vašem samostojno gostovanem skladu, namesto da o njem samo odgovarja na vprašanja.
+
+Res nas zanima, kaj bodo ljudje zgradili s tem. Če nastavite zanimiv delovni tok ali najdete ustvarjalen način za povezavo OpenClaw z drugimi aplikacijami, bi radi slišali o tem.
+
+---
+
+*Imate vprašanja o OpenClaw ali potrebujete pomoč pri nastavitvi? Pišite na support@appbox.co ali odprite zahtevek na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

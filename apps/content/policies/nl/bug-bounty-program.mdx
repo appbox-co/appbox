@@ -1,0 +1,183 @@
+---
+title: Bug Bounty-programma
+description: Ons programma voor het melden van beveiligingskwetsbaarheden en beloningen
+---
+
+Bij Appbox is beveiliging een fundamentele prioriteit. We moedigen security researchers actief aan om ons platform te helpen versterken door mogelijke kwetsbaarheden te identificeren en te melden. Dit programma beschrijft onze aanpak voor verantwoord beveiligingsonderzoek, hoe we kwetsbaarheidsmeldingen behandelen en welke beloningen we bieden aan onderzoekers die helpen onze beveiligingspositie te verbeteren.
+
+## Onze toezegging
+
+Wanneer je deelneemt aan ons bug bounty-programma, beloven wij:
+
+* Je melding tijdig te bevestigen en te beoordelen
+* Bevestigde kwetsbaarheden met passende urgentie aan te pakken
+* Je te erkennen en te belonen voor unieke, niet eerder gemelde kwetsbaarheden die leiden tot beveiligingsverbeteringen
+
+## Programmadekking
+
+Dit bug bounty-programma geldt voor de volgende Appbox-platforms:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Alleen infrastructuur, geen klantapplicaties**
+
+**Opmerking:** Hoewel onze hostinginfrastructuur (username.appboxes.co) binnen scope valt, vallen kwetsbaarheden in applicaties van derden die door klanten zijn gedeployed daar niet onder. Zie de uitsluitingen hieronder.
+
+## Wat kwalificeert als een geldige kwetsbaarheid
+
+Om in aanmerking te komen voor ons bug bounty-programma moet een inzending aan ALLE volgende criteria voldoen:
+
+### 1. Daadwerkelijke exploitatie aantonen
+* Een werkende proof of concept bevatten die aantoont dat de kwetsbaarheid kan worden uitgebuit
+* Duidelijke beveiligingsimpact tonen; theoretische kwetsbaarheden zonder aangetoonde schade kwalificeren niet
+* Bewijzen dat een aanvaller daadwerkelijk gebruikersdata, accounts of systeemintegriteit kan compromitteren
+
+### 2. Systemen binnen scope treffen
+* De kwetsbaarheid moet bestaan in Appbox's eigen code of infrastructuur
+* Moet systemen treffen die expliciet zijn vermeld onder "Programmadekking" hierboven
+* Moet reproduceerbaar zijn op onze productie- of stagingomgevingen
+
+### 3. Niet eerder gemeld zijn
+* De kwetsbaarheid moet nieuw ontdekt zijn en nog niet bij ons bekend zijn
+* Dubbele meldingen of variaties van bekende issues kwalificeren niet
+
+## Uitgesloten gebieden en issues
+
+Het volgende wordt beschouwd als **buiten scope** van ons bug bounty-programma:
+
+### Systemen en integraties van derden
+* WHMCS Client Area [https://billing.appbox.co] - Meld dit bij [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - Meld dit bij [Chatwoot Security](https://www.chatwoot.com/security)
+* **Door klanten gedeployde applicaties** [app.username.appboxes.co] - Kwetsbaarheden in applicaties van derden (WordPress, Nextcloud, enz.) die op onze infrastructuur worden gehost, moeten bij de respectieve applicatieleveranciers worden gemeld
+* Alle andere diensten, plugins of integraties van derden die wij gebruiken
+* IP-adressen of domeinen die niet direct door Appbox worden beheerd
+* Legacy- of deprecated systemen die niet langer actief in gebruik zijn
+
+**Buiten scope voor hostinginfrastructuur:**
+* Kwetsbaarheden binnen door klanten gedeployde applicatiecode (WordPress, Nextcloud, enz.)
+* Standaardconfiguraties van applicaties van derden
+* Beveiligingsissues die specifiek zijn voor een bepaalde applicatieversie
+
+### Security headers en hardening
+* Ontbrekende security headers (X-Frame-Options, COOP, COEP, MTA-STS, enz.) **tenzij** je daadwerkelijke exploitatie aantoont die leidt tot datacompromittering
+* Ontbrekende `rel="noopener"`- of `rel="noreferrer"`-attributen
+* Serverversie-onthulling of informatielekken via HTTP-headers
+* Cookieattributen op niet-gevoelige cookies (analytics, voorkeuren, enz.)
+
+### Informatielekken met lage impact
+* Uitgebreide foutmeldingen die geen gevoelige data blootleggen (wachtwoorden, tokens, PII)
+* Padonthulling zonder aangetoonde path traversal of bestandstoegang
+* Identificatie van technologiestack (PHP-versie, frameworkdetectie, enz.)
+* Generieke applicatiereacties of -gedrag
+
+### Ontwerpkeuzes en theoretische issues
+* Login CSRF (geeft een aanvaller geen toegang tot slachtofferaccounts)
+* Gebruikersenumeratie via timingaanvallen of verschillende responses (tenzij onderdeel van een grotere aanvalsketen)
+* Clickjacking zonder aangetoonde exploitatie van gevoelige functionaliteit
+* CORS-configuraties op niet-gevoelige endpoints
+* Ontbrekende rate limiting **tenzij** je daadwerkelijk misbruik aantoont (DoS blijft uitgesloten)
+
+### Aanvalsvereisten
+* Beveiligingsissues die onze standaard applicatieconfiguraties niet treffen
+* Kwetsbaarheden die niet-standaard configuraties vereisen
+* Kwetsbaarheden in onze containers die aangepaste of gewijzigde setups vereisen
+* Issues die netwerkcompromittering vereisen (MITM, DNS poisoning, ARP spoofing)
+
+### Verboden testmethoden
+* Timinggebaseerde informatielek-aanvallen
+* Process enumeration-technieken
+* Elke vorm van denial of service of high-volume aanvallen
+* Social engineering- en phishingtechnieken
+* Geautomatiseerde securityscans die buitensporig verkeer of belasting genereren
+* Testen van niet-functionele features of pagina's (bijv. signup pages die nog niet in productie zijn)
+
+### Ongeldige meldingstypen
+* Meldingen uitsluitend gebaseerd op output van geautomatiseerde scanners zonder handmatige validatie
+* Generieke aanbevelingen zonder daadwerkelijke kwetsbaarheden aan te tonen
+* Best-practice suggesties zonder beveiligingsimpact
+* Compliance-observaties (PCI-DSS, GDPR, enz.) zonder exploitability aan te tonen
+
+## Beloningsstructuur
+
+### Hoofdwebsite en Control Panel
+
+| **Kwetsbaarheidstype**                            | **PayPal-beloning** | **Servicecredit** |
+| ------------------------------------------------- | ------------------- | ----------------- |
+| XSS                                               | EUR 100             | EUR 200           |
+| XSS (CSP Bypass)                                  | EUR 200             | EUR 300           |
+| CSRF                                              | EUR 300             | EUR 450           |
+| Authentication Bypass                             | EUR 500             | EUR 750           |
+| SQL Injection                                     | EUR 1000            | EUR 1500          |
+| Willekeurige code-uitvoering                      | EUR 1000            | EUR 1500          |
+| Willekeurige code-uitvoering (met privilege escalation) | EUR 2000     | EUR 3000          |
+| Persistente codewijziging                         | EUR 1000            | EUR 1500          |
+
+### Hostinginfrastructuur
+
+| Kwetsbaarheidstype                         | PayPal-beloning | Servicecredit |
+| ------------------------------------------ | --------------- | ------------- |
+| Authentication Bypass (SSH, FTP, VPN, enz.)| EUR 500         | EUR 750       |
+| Authentication Bypass voor ondersteunde apps | EUR 100       | EUR 200       |
+| Lokale privilege escalation                | EUR 500         | EUR 750       |
+
+Bijdragers die geldige kwetsbaarheden melden, worden erkend in onze Security Researchers Hall of Fame als teken van onze waardering.
+
+## Vereiste meldingskwaliteit
+
+Alle kwetsbaarheidsmeldingen moeten bevatten:
+
+* **Duidelijke kwetsbaarheidsbeschrijving** - Leg uit wat de kwetsbaarheid is en waarom die ertoe doet
+* **Getroffen systeem/URL** - Specificeer exact waar de kwetsbaarheid bestaat
+* **Stapsgewijze reproductie** - Gedetailleerde stappen waarmee wij het issue kunnen reproduceren
+* **Werkende proof of concept** - Functionele demonstratie van exploitatie (code, screenshots, video)
+* **Daadwerkelijke beveiligingsimpact** - Toon aan wat een aanvaller kan bereiken, niet alleen theoretische mogelijkheden
+* **Je eigen testen** - Valideer bevindingen handmatig; stuur niet alleen scanneroutput door
+
+Meldingen die deze elementen missen of bestaan uit generieke beveiligingsaanbevelingen komen niet in aanmerking voor beloningen.
+
+## Je beloning claimen
+
+* Je kunt kiezen tussen twee beloningsopties:  
+   * Directe PayPal-betaling (vereist een geldig PayPal-account)
+   * Appbox-servicecredits (toepasbaar op elke Appbox-dienst, niet overdraagbaar)
+
+## Deelname richtlijnen
+
+* Houd je aan dit beleid, onze [Terms of Service](/policies/terms-of-service) en alle toepasselijke wetten
+* Meld kwetsbaarheden onmiddellijk na ontdekking
+* Respecteer gebruikersprivacy en systeemintegriteit tijdens je onderzoek
+* Dien alle kwetsbaarheidsmeldingen uitsluitend in via ons [contact us form](https://billing.appbox.co/contact.php)
+* Houd ontdekte kwetsbaarheden vertrouwelijk totdat ze zijn opgelost
+* Beperk je testen tot systemen die expliciet in dit programma zijn opgenomen
+* Als je onverwacht toegang krijgt tot gevoelige data: raadpleeg alleen de minimale hoeveelheid die nodig is om het issue aan te tonen, stop onmiddellijk met testen en meld de kwetsbaarheid direct
+* Gebruik alleen je eigen testaccounts voor interactie met onze systemen
+* Probeer Appbox nooit te chanteren op basis van je bevindingen
+* **Verifieer je bevindingen** - Test dat je proof of concept echt werkt voordat je deze indient
+* **Focus op impact** - Geef prioriteit aan kwetsbaarheden die echte schade kunnen veroorzaken boven theoretische issues
+
+## Juridische bescherming
+
+Security researchers die dit beleid volgen kunnen verwachten:
+
+* Bescherming tegen juridische stappen voor te goeder trouw uitgevoerd beveiligingsonderzoek binnen deze richtlijnen
+* Vrijstelling van anti-circumvention juridische claims wanneer dit nodig is voor legitiem beveiligingsonderzoek
+* Afstand van bepaalde beleidsbeperkingen die security testing anders zouden verhinderen
+* Erkenning dat compliant beveiligingsonderzoek nuttig is en te goeder trouw wordt uitgevoerd
+
+Je blijft verantwoordelijk voor naleving van alle toepasselijke wetten. Als je juridische stappen van een derde partij ondervindt terwijl je dit beleid naleeft, zullen wij bevestigen dat je handelingen in overeenstemming met ons programma zijn uitgevoerd. Als je onzeker bent of je geplande onderzoeksactiviteiten aan dit beleid voldoen, neem dan voordat je verdergaat contact met ons op via het [contact us form](https://billing.appbox.co/contact.php).
+
+## Meldingsproces
+
+Om een kwetsbaarheid te melden, maak je een gedetailleerd ticket aan via ons [contact us form](https://billing.appbox.co/contact.php).
+
+* Je melding moet uitgebreide stappen bevatten om de kwetsbaarheid te reproduceren. Je kunt deze template als gids gebruiken: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Alle programmacommunicatie moet via ons officiële Support Ticket Platform verlopen
+* Openbaarmaking van een kwetsbaarheid zonder expliciete schriftelijke toestemming van Appbox schendt de voorwaarden van dit programma en diskwalificeert je voor een beloning
+
+## Wat er gebeurt nadat je meldt
+
+* **Geldige kwetsbaarheden**: We bevestigen je melding, werken aan een oplossing en verwerken je beloning
+* **Ongeldige meldingen**: We leggen uit waarom de melding niet kwalificeert en kunnen guidance geven voor toekomstige inzendingen
+* **Buiten-scope meldingen**: We verwijzen je door naar de juiste leverancier of leggen uit waarom het issue niet wordt gedekt
+
+We waarderen kwalitatief onderzoek en constructieve bijdragen aan onze beveiliging. Bedankt dat je helpt Appbox veilig te houden.

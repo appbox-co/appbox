@@ -1,0 +1,196 @@
+---
+title: Komponensek
+description: Komponensek használatának elsajátítása az MDX fájlokban
+sort: 2
+---
+
+A komponensek automatikusan bekerülnek minden MDX fájlba, kézi importálás nélkül.
+Ez azt jelenti, hogy bármely elérhető komponenst használhatod!
+
+Az elérhető komponensekről, illetve azok hozzáadásáról vagy módosításáról a `src/components/docs/mdx.tsx` fájlban tudhatsz meg többet.
+
+## Harmonika
+
+**Példa:**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Ez az első gyakran ismételt kérdés címsora.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Ez az első válasz tartalma. Használhatod hosszabb magyarázatokhoz, részletes leírásokhoz vagy olyan információkhoz, amelyeket csak akkor szeretnél megjeleníteni, amikor a felhasználó megnyitja az elemet.
+
+      Több bekezdést is tartalmazhat, így jól használható összetettebb válaszokhoz és részletesebb útmutatókhoz.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Ez a második gyakran ismételt kérdés címsora.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Ez a második válasz rövidebb tartalma.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**Kód:**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Figyelmeztetések
+
+**Példa:**
+
+<Alert className="my-4">
+  <AlertTitle>Alapértelmezett figyelmeztetés</AlertTitle>
+
+  <AlertDescription>
+    Ez egy alapértelmezett figyelmeztetés.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Figyelmeztető üzenet</AlertTitle>
+
+  <AlertDescription>
+    Ez egy figyelmeztető üzenet.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Hibaüzenet</AlertTitle>
+
+  <AlertDescription>
+    Ez egy hibaüzenet.
+  </AlertDescription>
+</Alert>
+
+**Kód:**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Fülek
+
+**Példa:**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">1. fül</TabsTrigger>
+    <TabsTrigger value="tab-2">2. fül</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Az 1. fül tartalma
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    A 2. fül tartalma
+  </TabsContent>
+</Tabs>
+
+**Kód:**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Lépések
+
+**Példa:**
+
+<Steps>
+  <Step>1. lépés:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>2. lépés:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**Kód:**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Program
+description: మా security vulnerability reporting program మరియు rewards
+---
+
+Appbox లో, security ఒక fundamental priority. Potential vulnerabilities identify చేసి report చేయడం ద్వారా మా platform బలపడడంలో security researchers సహాయం చేయాలని మేము active గా encourage చేస్తాము. Responsible security research పట్ల మా approach, vulnerability reports ను మేము ఎలా handle చేస్తాము, మా security posture మెరుగుపరచడంలో సహాయపడే researchers కు మేము offer చేసే rewards గురించి ఈ program వివరిస్తుంది.
+
+## మా commitment
+
+మీరు మా bug bounty program లో పాల్గొన్నప్పుడు, మేము ఇవి promise చేస్తాము:
+
+* మీ report ను timely manner లో acknowledge చేసి evaluate చేస్తాము
+* Confirmed vulnerabilities ను appropriate urgency తో address చేస్తాము
+* Security improvements కు దారి తీసే unique, previously unreported vulnerabilities కోసం మిమ్మల్ని recognize చేసి reward చేస్తాము
+
+## Program coverage
+
+ఈ bug bounty program క్రింది Appbox platforms కు వర్తిస్తుంది:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Infrastructure మాత్రమే, customer applications కాదు**
+
+**Note:** మా hosting infrastructure (username.appboxes.co) scope లో ఉన్నప్పటికీ, customers deploy చేసిన third-party applications లోని vulnerabilities scope లో లేవు. క్రింది exclusions చూడండి.
+
+## Valid vulnerability గా qualify అయ్యేది
+
+మా bug bounty program కు qualify కావాలంటే, submission క్రింది criteria అన్నింటినీ meet చేయాలి:
+
+### 1. Actual exploitation demonstrate చేయాలి
+* Vulnerability exploit చేయగలమని demonstrate చేసే working proof of concept include చేయాలి
+* Clear security impact చూపాలి; demonstrated harm లేని theoretical vulnerabilities qualify కావు
+* Attacker user data, accounts, లేదా system integrity ను నిజంగా compromise చేయగలడని prove చేయాలి
+
+### 2. In-scope systems ను affect చేయాలి
+* Vulnerability Appbox proprietary code లేదా infrastructure లో ఉండాలి
+* పైగా "Program Coverage" లో explicitly listed systems ను affect చేయాలి
+* మా production లేదా staging environments పై reproducible అయి ఉండాలి
+
+### 3. Previously unreported అయి ఉండాలి
+* Vulnerability newly discovered అయి ఉండాలి మరియు మాకు already known కాకూడదు
+* Duplicate reports లేదా known issues variations qualify కావు
+
+## Excluded areas మరియు issues
+
+క్రింది వాటిని మా bug bounty program **scope బయట**గా పరిగణిస్తాము:
+
+### Third-party systems మరియు integrations
+* WHMCS Client Area [https://billing.appbox.co] - [WHMCS Security](https://www.whmcs.com/security-bounty-program/) కు report చేయండి
+* Chatwoot chat widget - [Chatwoot Security](https://www.chatwoot.com/security) కు report చేయండి
+* **Customer-deployed applications** [app.username.appboxes.co] - మా infrastructure పై hosted third-party applications (WordPress, Nextcloud, etc.) లోని vulnerabilities respective application vendors కు report చేయాలి
+* మేము ఉపయోగించే ఏ ఇతర third-party services, plugins, లేదా integrations
+* Appbox directly control చేయని IP addresses లేదా domains
+* Active use లో ఇక లేని legacy లేదా deprecated systems
+
+**Out-of-Scope for Hosting Infrastructure:**
+* Customer-deployed application code (WordPress, Nextcloud, etc.) లోని vulnerabilities
+* Third-party applications default configurations
+* Particular application version కు specific security issues
+
+### Security headers మరియు hardening
+* Missing security headers (X-Frame-Options, COOP, COEP, MTA-STS, etc.) **unless** data compromise కు దారి తీసే actual exploitation మీరు demonstrate చేస్తే
+* Missing `rel="noopener"` లేదా `rel="noreferrer"` attributes
+* Server version disclosure లేదా HTTP header information leakage
+* Non-sensitive cookies పై cookie attributes (analytics, preferences, etc.)
+
+### Low-impact information disclosure
+* Sensitive data (passwords, tokens, PII) expose చేయని verbose error messages
+* Demonstrated path traversal లేదా file access లేకుండా path disclosure
+* Technology stack identification (PHP version, framework detection, etc.)
+* Generic application responses లేదా behavior
+
+### Design decisions మరియు theoretical issues
+* Login CSRF (victim accounts కు attacker access ఇవ్వదు)
+* Timing attacks లేదా differential responses ద్వారా user enumeration (larger attack chain భాగం అయితే తప్ప)
+* Sensitive functionality exploitation demonstrate చేయకుండా clickjacking
+* Non-sensitive endpoints పై CORS configurations
+* Missing rate limiting **unless** actual abuse demonstrate చేస్తే (DoS ఇంకా excluded)
+
+### Attack prerequisites
+* మా default application configurations ను affect చేయని security issues
+* Non-standard configurations require చేసే vulnerabilities
+* Custom లేదా modified setups require చేసే మా containers లోని vulnerabilities
+* Network-level compromise require చేసే issues (MITM, DNS poisoning, ARP spoofing)
+
+### నిషేధిత testing methods
+* Timing-based information disclosure attacks
+* Process enumeration techniques
+* ఏ form of denial of service లేదా high-volume attacks
+* Social engineering మరియు phishing techniques
+* Excessive traffic లేదా loads generate చేసే automated security scanning
+* Non-functional features లేదా pages testing (e.g., signup pages not yet in production)
+
+### Invalid report types
+* Manual validation లేకుండా automated scanner output ఆధారంగా మాత్రమే ఉన్న reports
+* Actual vulnerabilities demonstrate చేయకుండా generic recommendations
+* Security impact లేకుండా best practice suggestions
+* Exploitability demonstrate చేయకుండా compliance observations (PCI-DSS, GDPR, etc.)
+
+## Reward structure
+
+### Main website మరియు Control Panel
+
+| **Vulnerability Type**                               | **PayPal Reward** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting infrastructure
+
+| Vulnerability Type                           | PayPal Reward | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Valid vulnerabilities report చేసే contributors ను మా Security Researchers Hall of Fame లో appreciation token గా recognize చేస్తాము.
+
+## అవసరమైన report quality
+
+అన్ని vulnerability reports తప్పనిసరిగా ఇవి include చేయాలి:
+
+* **Clear vulnerability description** - Vulnerability ఏమిటి మరియు ఎందుకు ముఖ్యమో explain చేయండి
+* **Affected system/URL** - Vulnerability ఎక్కడ ఉందో exact గా specify చేయండి
+* **Step-by-step reproduction** - Issue reproduce చేయడానికి మాకు వీలు కలిగించే detailed steps
+* **Working proof of concept** - Exploitation యొక్క functional demonstration (code, screenshots, video)
+* **Actual security impact** - Attacker ఏమి accomplish చేయగలడో demonstrate చేయండి, theoretical possibilities కాదు
+* **Your own testing** - Findings manually validate చేయండి, scanner output ను forward చేయడమే చేయకండి
+
+ఈ elements లేని లేదా generic security recommendations మాత్రమే ఉన్న reports rewards కు qualify కావు.
+
+## మీ reward claim చేయడం
+
+* మీరు రెండు reward options మధ్య choose చేయవచ్చు:  
+   * Direct PayPal payment (valid PayPal account అవసరం)
+   * Appbox service credits (ఏ Appbox service కైనా applicable, non-transferable)
+
+## Participation guidelines
+
+* ఈ policy, మా [Terms of Service](/policies/terms-of-service), మరియు వర్తించే అన్ని laws కు adhere చేయండి
+* Discovery తర్వాత vulnerabilities ను promptly report చేయండి
+* మీ research సమయంలో user privacy మరియు system integrity గౌరవించండి
+* అన్ని vulnerability reports ను exclusively మా [contact us form](https://billing.appbox.co/contact.php) ద్వారా submit చేయండి
+* Discovered vulnerabilities resolve అయ్యే వరకు confidentiality maintain చేయండి
+* మీ testing ను ఈ program లో explicitly included systems కు మాత్రమే limit చేయండి
+* Unexpected గా sensitive data access లభిస్తే: issue demonstrate చేయడానికి అవసరమైన minimum amount మాత్రమే access చేయండి, testing వెంటనే stop చేయండి, vulnerability promptly report చేయండి
+* మా systems తో ఏ interaction అయినా మీ స్వంత test accounts మాత్రమే ఉపయోగించండి
+* మీ findings ఆధారంగా Appbox ను extort చేయడానికి ఎప్పుడూ ప్రయత్నించకండి
+* **Verify your findings** - Submit చేసే ముందు మీ proof of concept నిజంగా పనిచేస్తుందో test చేయండి
+* **Focus on impact** - Theoretical issues కంటే real harm కలిగించే vulnerabilities కు prioritize చేయండి
+
+## Legal protection
+
+ఈ policy అనుసరించే security researchers ఇవి expect చేయవచ్చు:
+
+* ఈ guidelines లో good-faith security research conducted అయినందుకు legal action నుండి protection
+* Legitimate security research కోసం necessary అయినప్పుడు anti-circumvention legal claims నుండి exemption
+* Security testing ను otherwise prevent చేసే కొన్ని policy restrictions waiver
+* Compliant security research beneficial మరియు good faith లో conducted అని recognition
+
+వర్తించే అన్ని laws పాటించడం మీ బాధ్యతగానే ఉంటుంది. ఈ policy adhere చేస్తూ third party నుండి legal action ఎదురైతే, మీ actions మా program కు compliance లో conducted అయ్యాయని మేము affirm చేస్తాము. మీ planned research activities ఈ policy కు comply అవుతాయా అనే అనిశ్చితి ఉంటే, proceed చేసే ముందు [contact us form](https://billing.appbox.co/contact.php) ద్వారా మమ్మల్ని contact చేయండి.
+
+## Reporting process
+
+Vulnerability report చేయడానికి, మా [contact us form](https://billing.appbox.co/contact.php) ద్వారా detailed ticket create చేయండి.
+
+* మీ report vulnerability reproduce చేయడానికి comprehensive steps include చేయాలి. Guide గా ఈ template ఉపయోగించవచ్చు: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* అన్ని program communications మా official Support Ticket Platform ద్వారా జరగాలి
+* Appbox నుండి explicit written permission లేకుండా ఏ vulnerability అయినా public disclosure చేయడం ఈ program terms ను violate చేస్తుంది మరియు reward receive చేయకుండా disqualify చేస్తుంది
+
+## మీరు report చేసిన తర్వాత ఏమి జరుగుతుంది
+
+* **Valid vulnerabilities**: మేము మీ report acknowledge చేసి, fix పై పని చేసి, మీ reward process చేస్తాము
+* **Invalid reports**: Report ఎందుకు qualify కావడం లేదో explain చేసి, future submissions కోసం guidance provide చేయవచ్చు
+* **Out-of-scope reports**: మేము మిమ్మల్ని appropriate vendor కు redirect చేస్తాము లేదా issue ఎందుకు covered కాదు explain చేస్తాము
+
+మా security ను కాపాడడంలో quality research మరియు constructive contributions ను మేము appreciate చేస్తాము. Appbox secure గా ఉండడంలో సహాయపడినందుకు ధన్యవాదాలు.

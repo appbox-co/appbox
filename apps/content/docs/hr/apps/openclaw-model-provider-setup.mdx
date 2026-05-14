@@ -1,0 +1,516 @@
+---
+title: Postavljanje pružatelja modela za OpenClaw
+description: Konfigurirajte OpenClaw s API ključem bilo kojeg pružatelja modela nakon instalacije.
+sort: 1
+---
+
+OpenClaw se u Appbox instalira bez potrebe za API ključem modela.
+
+Preporučeni način za dovršetak postavljanja jest povezati se sa svojom OpenClaw aplikacijom putem SSH i pokrenuti ugrađeni čarobnjak `openclaw onboard`. Čarobnjak je sigurniji od ručnog uređivanja cijele konfiguracije jer čuva postavke Appbox gatewaya, a istodobno vas vodi kroz pružatelje modela, API ključeve, kanale, provjere zdravlja i vještine.
+
+Ako ne možete ili ne želite koristiti SSH, umjesto toga upotrijebite [rezervnu metodu preko nadzorne ploče](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Preporučena metoda: pristupite OpenClaw putem SSH i pokrenite onboarding
+
+Koristite ovu metodu za nove instalacije i za postojeće instalacije kojima treba dodati ili promijeniti vjerodajnice pružatelja modela.
+
+### Što vam prvo treba
+
+- Stranica s pojedinostima vaše OpenClaw aplikacije u Appbox.
+- **SSH Command** prikazana u odjeljku Configuration.
+- Vaš **Gateway Token / SSH Password**. To je ista generirana tajna koja se koristi za prijavu u OpenClaw nadzornu ploču.
+- Račun ili API ključ pružatelja modela. Ako ga još nemate, pogledajte [Dobivanje API ključeva](#getting-api-keys-with-dashboard-links).
+
+Stranica s pojedinostima aplikacije prikazuje SSH naredbu spremnu za kopiranje:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Stranica s pojedinostima Appbox OpenClaw aplikacije s istaknutom SSH naredbom"
+  width="860"
+/>
+
+### Povezivanje s macOS
+
+1. Otvorite **Terminal** ili **iTerm2**.
+2. Kopirajte **SSH Command** sa stranice s pojedinostima OpenClaw aplikacije.
+3. Zalijepite je i pokrenite. Izgledat će slično ovome:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Ako macOS pita vjerujete li hostu, upišite `yes` i pritisnite Enter.
+5. Kada se zatraži lozinka, zalijepite svoj **Gateway Token / SSH Password** i pritisnite Enter. Terminal neće prikazivati znakove dok tipkate ili lijepite lozinku.
+
+### Povezivanje s Windows
+
+Windows 10 i Windows 11 prema zadanim postavkama uključuju OpenSSH klijent.
+
+1. Otvorite **Windows Terminal** ili **PowerShell**.
+2. Kopirajte **SSH Command** sa stranice s pojedinostima OpenClaw aplikacije.
+3. Zalijepite je i pokrenite:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Ako Windows pita vjerujete li hostu, upišite `yes` i pritisnite Enter.
+5. Kada se zatraži lozinka, zalijepite svoj **Gateway Token / SSH Password** i pritisnite Enter. PowerShell neće prikazati zalijepljenu lozinku.
+
+Ako Windows kaže da `ssh` nije prepoznat, instalirajte **OpenSSH Client** iz **Settings > System > Optional features**, zatim ponovno otvorite Windows Terminal i pokušajte opet.
+
+### Pokrenite OpenClaw onboarding čarobnjak
+
+Nakon što se SSH poveže, pokrenite:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 na macOS povezan s OpenClaw putem SSH i pokreće naredbu openclaw onboard"
+  width="860"
+/>
+
+Čarobnjak je interaktivan. Koristite ove odabire specifične za Appbox:
+
+1. **Postojeća konfiguracija:** odaberite opciju za pregled ili izmjenu trenutačne konfiguracije. Nemojte odabrati potpuno resetiranje osim ako namjerno želite ponovno izgraditi svoje OpenClaw postavljanje od početka.
+2. **Model i autentikacija:** odaberite svojeg pružatelja, kao što su OpenRouter, OpenAI, Anthropic, Google, xAI ili prilagođeni pružatelj kompatibilan s OpenAI. Zalijepite API ključ kada ga čarobnjak zatraži. OpenRouter je najlakši zadani odabir za većinu korisnika jer jedan ključ može usmjeravati prema mnogim modelima. Ako imate OpenAI Codex pretplatu, na popisu pružatelja odaberite **OpenAI Codex**, a ne opciju nazvanu samo `codex`.
+3. **Zadani model:** odaberite model koji čarobnjak preporučuje za tog pružatelja ili ručno unesite vrijednost `provider/model`, kao što je `openrouter/auto`.
+4. **Workspace:** zadržite zadani workspace osim ako imate poseban razlog za promjenu.
+5. **Gateway postavke:** zadržite postojeće postavke Appbox gatewaya. Posebno zadržite omogućenu token autentikaciju i postojeće postavke gateway porta/binda.
+6. **Kanali:** sada konfigurirajte WhatsApp, Telegram, Discord, Signal, iMessage ili druge kanale, ili ih preskočite i dodajte kasnije pomoću `openclaw configure`.
+7. **Web pretraživanje:** odaberite pružatelja pretraživanja ako ga imate ili to zasad preskočite.
+8. **Instalacija daemona/usluge:** Appbox već nadzire OpenClaw unutar kontejnera, pa preskočite instalaciju daemona ako je čarobnjak ponudi.
+9. **Provjera zdravlja:** dopustite čarobnjaku da pokrene provjeru zdravlja.
+10. **Vještine:** dopustite čarobnjaku da provjeri uključene vještine. Kada pita **Preferred node manager for skill installs**, odaberite `npm`.
+
+Kada onboarding završi, vratite se na svoju OpenClaw nadzornu ploču. Ako je nadzorna ploča već bila otvorena, osvježite je i testirajte kratki chat upit.
+
+Korisne naredbe za naknadni rad putem SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Dobivanje API ključeva (s poveznicama na nadzorne ploče)
+
+Koristite ove konzole pružatelja za generiranje ključeva. Kod preporučene SSH metode zalijepite ključ kada ga `openclaw onboard` zatraži. Kod rezervne metode preko nadzorne ploče spojite ključ u `Config > Secrets > Raw`.
+
+### Prvo preporučeno: OpenRouter (najbolji zadani odabir za većinu korisnika)
+
+Zašto ga preporučujemo:
+
+- Daje jedan ključ za mnogo pružatelja modela.
+- Možete koristiti `openrouter/auto`, koji može mijenjati modele ovisno o težini zadatka.
+- `auto` može smanjiti trošak usmjeravanjem jednostavnijih zadataka prema jeftinijim modelima.
+
+Kako dobiti ključ:
+
+1. Idite na [OpenRouter](https://openrouter.ai/) i prijavite se.
+2. Otvorite [postavke API ključeva](https://openrouter.ai/settings/keys).
+3. Kliknite **Create** i kopirajte ključ (prikazuje se jednom).
+4. Upotrijebite ga kada OpenClaw čarobnjak zatraži vaš OpenRouter API ključ. Za rezervnu metodu preko nadzorne ploče konfiguracijski ključ je `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Snimka zaslona stranice OpenRouter API ključeva iz javnog vodiča"
+  width="860"
+/>
+Izvorni vodič: [Kako dobiti OpenRouter API
+ključ](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Kako dobiti ključ:
+
+1. Prijavite se na [OpenAI Platform](https://platform.openai.com/).
+2. Otvorite [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Kliknite **Create new secret key**.
+4. Odmah ga kopirajte (OpenAI prikazuje punu vrijednost samo jednom).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Snimka zaslona postavki OpenAI API ključa iz javnog vodiča"
+  width="860"
+/>
+Izvorni vodič: [Kako dobiti OpenAI API
+ključ](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Kako dobiti ključ:
+
+1. Prijavite se u [Anthropic Console](https://console.anthropic.com/).
+2. Otvorite [API Keys](https://console.anthropic.com/settings/keys).
+3. Kliknite **Create Key**.
+4. Odmah kopirajte ključ (prikazuje se jednom).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Snimka zaslona stvaranja Anthropic API ključa iz javnog vodiča"
+  width="860"
+/>
+Izvorni vodič: [Kako dobiti svoj Claude API
+ključ](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini putem AI Studio)
+
+Kako dobiti ključ:
+
+1. Otvorite [Google AI Studio](https://aistudio.google.com/).
+2. Idite na [API Keys](https://aistudio.google.com/app/apikey).
+3. Kliknite **Create API key** (novi ili postojeći projekt).
+4. Kopirajte i spremite ključ.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Snimka zaslona stvaranja Google AI Studio API ključa iz javnog vodiča"
+  width="860"
+/>
+Izvorni vodič: [Nabavite Google AI API
+ključ](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Napomena: nadzorne ploče pružatelja mogu se često mijenjati i mogu prikazati zahtjev za prijavu ovisno o stanju vaše sesije.
+
+## Rezervna metoda: konfigurirajte autentikaciju pružatelja u nadzornoj ploči
+
+Koristite ovu metodu samo ako SSH nije dostupan ili ako preferirate ručnu konfiguraciju. Raw uređivač u nadzornoj ploči radi, ali uređuje cijeli OpenClaw konfiguracijski objekt odjednom. Pazite da spojite postavke pružatelja u postojeću datoteku umjesto da zamijenite Appbox zadane postavke gatewaya i vještina.
+
+1. Otvorite URL svoje OpenClaw nadzorne ploče sa stranice s pojedinostima instalirane aplikacije.
+2. Idite na **Config > Secrets**.
+3. Odaberite **Raw** umjesto Form.
+4. Kliknite gumb Reveal sensitive values (izgleda kao oko s kosom crtom).
+5. **Spojite** postavke pružatelja iz primjera u nastavku u svoju postojeću konfiguraciju (pogledajte [Kako se ručna konfiguracija pružatelja uklapa u cijelu datoteku](#how-manual-provider-config-fits-in-the-full-file)) — nemojte zamijeniti cijelu datoteku osim ako namjeravate resetirati gateway, vještine i druge Appbox zadane postavke.
+6. Spremite i primijenite promjene konfiguracije.
+
+### Kako se ručna konfiguracija pružatelja uklapa u cijelu datoteku
+
+**Config > Secrets > Raw** uređuje **cijelu** OpenClaw konfiguraciju u jednom objektu. Na Appbox ta datoteka već uključuje stvari kao što su `gateway` (bind, token autentikacija, Control UI), `skills.load.extraDirs` (uključene vještine), `commands`, a ponekad i `meta`. Isječci u odjeljku [Primjeri glavnih pružatelja](#major-provider-examples) prikazuju samo dijelove koji su vam potrebni za modele: stablo `models` i `agents.defaults.model.primary`.
+
+**Što učiniti:** zadržite postojeće ključeve najviše razine (`gateway`, `skills`, `commands` itd.) i **dodajte ili ažurirajte** ova dva odjeljka:
+
+- **`models.providers`** — dodajte svojeg pružatelja (npr. `openrouter`) i njegov `apiKey`, `baseUrl` gdje je potreban te popis `models`.
+- **`agents.defaults.model.primary`** — postavite zadani niz modela (npr. `openrouter/auto`) kako bi agent koristio tog pružatelja.
+
+Ako `models` ili `agents` već postoje, spojite nove ključeve u te objekte umjesto da ih duplicirate.
+
+U nastavku je primjer **jednog** oblika pune Raw datoteke kao **JSON** (uređivač u praksi može prihvatiti i JSON5 stil navodnika). Vaša stvarna datoteka može sadržavati više polja (npr. bogatije metapodatke modela, `meta`). **Blokovi pružatelja** u primjerima niže dijelovi su koje usklađujete s `models` i `agents` ovdje.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token nasuprot API ključu pružatelja:** `gateway.auth.token` služi samo za prijavu u OpenClaw Control UI / gateway. `models.providers.*.apiKey` vaš je ključ LLM pružatelja (OpenRouter, OpenAI itd.) — to su različite vrijednosti.
+
+## Primjeri glavnih pružatelja
+
+Najprije koristite jedan blok pružatelja, potvrdite da radi, a zatim dodajte više pružatelja. Svaki primjer u nastavku je **fragment za spajanje**: `...` je izostavljena konfiguracija (redci iznad ili ispod), a `},` prije `"models"` zatvara ključ koji se nalazi iznad `models` u vašoj datoteci (na primjer `skills` ili `commands`). Isječci sami po sebi nisu valjani JSON — spojite odjeljke `models` i `agents` u svoj korijenski objekt.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Napomena za Bedrock (bez API ključa)
+
+Amazon Bedrock koristi AWS vjerodajnice (na primjer `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) umjesto API ključa. Minimalan unos pružatelja izgleda ovako:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Napomene
+
+- Gateway auth token i API ključevi pružatelja modela različite su postavke.
+- Ako dobijete pogrešku pružatelja (na primjer nedostaje Anthropic ključ), ažurirajte zadani model na pružatelja koji ste konfigurirali.
+- Ako pružatelj ne prođe validaciju, najprije provjerite jesu li prisutna obavezna polja pružatelja (`baseUrl`, `models` i `apiKey` gdje je primjenjivo).
+
+## Službena dokumentacija pružatelja
+
+- [OpenClaw direktorij pružatelja](https://docs.openclaw.ai/providers/index)
+- [OpenRouter pružatelj](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI pružatelj](https://docs.openclaw.ai/providers/openai)
+- [Anthropic pružatelj](https://docs.openclaw.ai/providers/anthropic)
+- [Google pružatelj](https://docs.openclaw.ai/providers/google)
+- [xAI pružatelj](https://docs.openclaw.ai/providers/xai)
+- [Mistral pružatelj](https://docs.openclaw.ai/providers/mistral)
+- [Together AI pružatelj](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock pružatelj](https://docs.openclaw.ai/providers/bedrock)

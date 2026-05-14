@@ -113,31 +113,37 @@ export async function generateStaticParams(): Promise<
 export default async function PolicyPage(props: PolicyPageProps) {
   const params = await props.params
   setRequestLocale(params.locale || routing.defaultLocale)
+  const t = await getTranslations("policies")
 
   // If no slug is provided, render a policy index page
   if (!params.slug || params.slug.length === 0) {
-    const policies = allPolicies
-      .filter((policy) => policy.slugAsParams.startsWith(params.locale || "en"))
-      .sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically by title
+    const policiesInLocale = allPolicies.filter((policy) =>
+      policy.slugAsParams.startsWith(params.locale || "en")
+    )
+    const policies = (
+      policiesInLocale.length > 0
+        ? policiesInLocale
+        : allPolicies.filter((policy) =>
+            policy.slugAsParams.startsWith(routing.defaultLocale)
+          )
+    ).sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically by title
 
     return (
       <main className="relative py-6 lg:gap-10 lg:py-8">
         <div className="mx-auto w-full min-w-0">
-          <h1 className="text-3xl font-bold tracking-tight">Policies</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
 
           <div className="mb-8 mt-4">
             <p className="text-muted-foreground text-lg">
-              These policies govern your use of Appbox services and outline our
-              commitments to you. They include important information about
-              privacy, security, and your responsibilities as a user.
+              {t("index_description")}
             </p>
           </div>
 
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[300px]">Policy</TableHead>
-                <TableHead>Description</TableHead>
+                <TableHead className="w-[300px]">{t("policy")}</TableHead>
+                <TableHead>{t("description")}</TableHead>
                 <TableHead className="w-[100px] text-right"></TableHead>
               </TableRow>
             </TableHeader>
@@ -157,7 +163,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
                         href={`/${params.locale}/policies/${policySlug}`}
                         className="focus-visible:ring-ring ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                       >
-                        View
+                        {t("view")}
                       </Link>
                     </TableCell>
                   </TableRow>
@@ -171,14 +177,14 @@ export default async function PolicyPage(props: PolicyPageProps) {
   }
 
   const policy = await getPolicyFromParams({ params })
-  const t = await getTranslations("docs")
+  const tDocs = await getTranslations("docs")
 
   if (!policy) {
     return (
       <DocumentNotFound
         messages={{
-          title: t("not_found.title"),
-          description: t("not_found.description")
+          title: tDocs("not_found.title"),
+          description: tDocs("not_found.description")
         }}
       />
     )
@@ -212,9 +218,11 @@ export default async function PolicyPage(props: PolicyPageProps) {
                   toc={toc}
                   sourceFilePath={policy._raw.sourceFilePath}
                   messages={{
-                    onThisPage: t("on_this_page"),
-                    editPageOnGitHub: t("edit_page_on_github"),
-                    startDiscussionOnGitHub: t("start_discussion_on_github")
+                    onThisPage: tDocs("on_this_page"),
+                    editPageOnGitHub: tDocs("edit_page_on_github"),
+                    startDiscussionOnGitHub: tDocs(
+                      "start_discussion_on_github"
+                    )
                   }}
                 />
               </div>

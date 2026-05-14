@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - Useita verkkotunnuksia VPS-sovelluksille
+date: 2026-03-12 10:00:00
+excerpt: Launch Weekin neljäs päivä. VPS-sovellukset tukevat nyt useita verkkotunnuksia - lisää niin monta mukautettua verkkotunnusta ja Appbox-aliverkkotunnusta kuin tarvitset, kaikki automaattisella SSL:llä.
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: Useita verkkotunnuksia VPS-sovelluksille
+
+Päivä 4. Eilen annoimme sinulle täydet virtuaalikoneet. Tänään annamme niille kunnollisen verkkotunnustuen.
+
+Kun julkaisimme VPS:t päivänä 3, jokainen VM sai yhden verkkotunnuksen. Se riittää moniin käyttötapauksiin, mutta jos ajat verkkopalvelinta VPS:si sisällä - ja moni teistä tekee niin - yksi verkkotunnus ei riitä. Tarvitset useita verkkotunnuksia osoittamaan samaan koneeseen, jokaiselle oman SSL-varmenteen ja web-palvelimen määrityksen.
+
+Tänään VPS-sovellukset tukevat **useita verkkotunnuksia**. Lisää niin monta `*.user.appboxes.co`-aliverkkotunnusta kuin haluat, tuo omat mukautetut verkkotunnuksesi tai yhdistä molempia. Jokainen saa SSL:n ja valmiin web-palvelinmäärityksen.
+
+## Miten se toimii
+
+Avaa mikä tahansa käynnissä oleva VPS-sovellus, ja löydät yksityiskohtasivulta **Custom Domains** -kortin. Siellä kaikki verkkotunnuksesi ovat - haettava ja lajiteltava taulukko, joka näyttää jokaisen kyseiseen VPS:ään liitetyn verkkotunnuksen, mikä niistä on ensisijainen ja milloin se lisättiin.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains -taulukko VPS-sovelluksen yksityiskohtasivulla" width="860" className="mt-8 mb-10" />
+</p>
+
+Lisätäksesi uuden verkkotunnuksen klikkaa **Add Domain**. Valitset pääverkkotunnuksen ja syötät aliverkkotunnuksen, ja järjestelmä hoitaa loput.
+
+## Appbox-aliverkkotunnukset
+
+Nopein tapa lisätä verkkotunnus on käyttää olemassa olevaa Appbox-verkkotunnustasi. Valitse `user.appboxes.co`-verkkotunnuksesi pääverkkotunnukseksi, kirjoita aliverkkotunnus, ja olet valmis. DNS on jo hoidettu puolestasi, ja verkkotunnus vahvistetaan välittömästi.
+
+Tämä sopii erinomaisesti nopeiden projekti-URL:ien, staging-ympäristöjen tai VPS:n eri palveluiden omien osoitteiden luomiseen. Tarvitsetko `api.user.appboxes.co`-osoitteen backendille ja `app.user.appboxes.co`-osoitteen frontendille? Lisää molemmat alle minuutissa.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Appbox-aliverkkotunnuksen lisääminen VPS:ään" width="560" className="mt-8 mb-10" />
+</p>
+
+Koska nämä ovat olemassa olevan Appbox-wildcard-varmenteesi alla, SSL on automaattinen. Ei odottamista, ei varmenteen luontia, ei määrityksiä.
+
+## Mukautetut verkkotunnukset
+
+Voit myös osoittaa omat verkkotunnuksesi VPS:ääsi. Valitse mukautettu perusverkkotunnus (tai lisää uusi suoraan valintaikkunasta), syötä aliverkkotunnus, ja käyttöliittymä opastaa sinut DNS-määrityksen läpi.
+
+Valintaikkuna näyttää tarkan luotavan A-tietueen - isäntänimen, IP-osoitteen, kaiken. Siinä on jopa palveluntarjoajakohtaiset ohjeet Cloudflarelle ja muille suosituille DNS-palveluntarjoajille, joten sinun ei tarvitse etsiä, miten A-tietue lisätään.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Mukautetun verkkotunnuksen lisääminen DNS-vahvistuksella ja palveluntarjoajakohtaisilla ohjeilla" width="560" className="mt-8 mb-10" />
+</p>
+
+Kun DNS osoittaa oikeaan IP-osoitteeseen, paina **Verify Again**, ja järjestelmä vahvistaa tietueen oikeaksi ennen verkkotunnuksen lisäämistä.
+
+## SSL ja web-palvelimen määritys
+
+Jokainen lisäämäsi verkkotunnus saa SSL:n. Appbox-aliverkkotunnuksissa käytetään olemassa olevaa wildcard-varmennetta. Mukautetuille verkkotunnuksille varmenne provisioidaan automaattisesti.
+
+Tässä on se osa, joka tekee tästä oikeasti hyödyllistä VPS-käyttäjille: jokaisessa verkkotunnuksessa on **View Config** -painike, joka antaa valmiit liitettävät määrityspätkät sekä Nginxille että Apachelle. Määritys sisältää oikean `server_name`-arvon, SSL-varmenteiden polut, cipher suite -asetukset ja protokolla-asetukset. Kopioi pätkä, lisää se web-palvelimen määritykseen VM:n sisällä, lataa palvelin uudelleen, ja palvelet liikennettä kyseisellä verkkotunnuksella.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL-määrityspätkät Nginxille ja Apachelle" width="560" className="mt-8 mb-10" />
+</p>
+
+Ei tiedostopolkujen arvailua. Ei varmenteiden sijaintien etsimistä. Ei cipher-merkkijonojen selvittelyä. Kaikki on valmiina kopioitavaksi.
+
+## Miksi tällä on merkitystä VPS-käyttäjille
+
+VPS ilman usean verkkotunnuksen tukea on vain palvelin, jolla on yksi osoite. Se rajoittaa nopeasti ilmeisillä tavoilla:
+
+- Ajatko web-sovellusta erillisellä API:lla? Tarvitset vähintään kaksi verkkotunnusta.
+- Hostaatko useita sivustoja VM:ssäsi? Jokainen tarvitsee oman verkkotunnuksen.
+- Haluatko staging-ympäristön tuotannon rinnalle? Se on taas yksi verkkotunnus.
+- Kehitätkö paikallisesti ja haluat testata oikealla verkkotunnuksella? Vielä yksi.
+
+## Päivä 4 on nyt julkaistu
+
+Usean verkkotunnuksen tuki on saatavilla juuri nyt kaikille VPS-sovelluksille. Avaa VPS:si, vieritä Custom Domains -kohtaan ja aloita lisääminen.
+
+Huomenna on päivä 5, ja meillä on yllätys. Et tule arvaamaan sitä.
+
+---
+
+*Onko sinulla palautetta tai löysitkö ongelman? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,102 @@
+---
+title: بيانات Frontmatter
+description: تعلّم كيفية استخدام frontmatter في ملفات MDX.
+sort: 3
+---
+
+يُعد frontmatter جزءاً مهماً من ملف MDX.
+يُستخدم لتعريف معلومات حول محتوى الملف،
+مثل العنوان والوصف والمؤلف وتاريخ النشر وغير ذلك.
+
+تُعرَّف ترويسة البيانات الوصفية في بداية الملف، بين `---` (ثلاث واصلات) في البداية والنهاية.
+
+## التنسيق
+
+تُعرَّف ترويسة البيانات الوصفية بصيغة مفتاح وقيمة، حيث يكون المفتاح اسم البيانات الوصفية وتكون القيمة محتوى تلك البيانات.
+
+**مثال:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+بحسب نوع المستند (وثائق، منشور مدونة، إلخ)، يمكن استخدام بيانات وصفية مختلفة.
+
+## البيانات الوصفية للوثائق
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**مثال:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## البيانات الوصفية لمنشورات المدونة
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    هو معرّف مؤلف المنشور.
+    يجب أن يطابق `id` الخاص بالمؤلف والمُعرّف في ملف `src/config/blog.ts`،
+    وهو الملف الذي يحتوي على بيانات المؤلفين الكاملة.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    هذه هي الصورة التي ستُستخدم كصورة بارزة للمنشور عند مشاركته على وسائل التواصل الاجتماعي إذا لم تكن تريد استخدام الصورة المُنشأة تلقائياً.
+    يجب تخزين الصور في مجلد `public/blog-og`.
+    استخدم اسم ملف الصورة وامتدادها فقط.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**مثال:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

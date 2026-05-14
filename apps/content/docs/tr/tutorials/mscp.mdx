@@ -1,0 +1,258 @@
+---
+title: Hızlı dosya aktarımları için mscp kullanımı
+description: Birden fazla SSH bağlantısı kullanarak Appbox sunucunuza yüksek hızlı dosya aktarımı yapmak için mscp (multi-threaded scp) kullanmayı öğrenin.
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp**, dosyaları aynı anda birden fazla SSH (SFTP) bağlantısı üzerinden kopyalayan çok iş parçacıklı bir `scp` çeşididir. Bu, paralel bağlantılardan yararlanarak büyük dosyalar ve dizinler için çok daha hızlı aktarımlar sağlar.
+
+## Ön gereksinimler
+
+mscp kullanmadan önce SFTP kimlik bilgilerinizi almak için Appbox sunucunuza SFTPgo yüklemeniz gerekir.
+
+### Adım 1: SFTPgo yükleme
+
+1. Appbox App Store içindeki [SFTPgo uygulama sayfasını](https://www.appbox.co/appstore/app/232) ziyaret edin
+2. SFTPgo'yu sunucunuza eklemek için **Install** düğmesine tıklayın
+3. Kurulum tamamlandığında bağlantı bilgilerinizi alırsınız:
+   - **Username**: SFTP kullanıcı adınız
+   - **Password**: SFTP parolanız
+   - **Hostname**: örn. `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: örn. `25557`
+   - **FTP/FTPS Port**: örn. `25555`
+   - **WebDav URL**: WebDAV erişimi için
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">Not</AlertTitle>
+  <AlertDescription className="pl-2">
+    SFTPgo kimlik bilgilerinizi güvende tutun. mscp bağlantıları için hostname, kullanıcı adı, parola ve SFTP portu gerekir.
+  </AlertDescription>
+</Alert>
+
+## mscp kurulumu
+
+İşletim sisteminiz için kurulum yöntemini seçin:
+
+### macOS
+
+#### Homebrew kullanma (önerilen)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### MacPorts kullanma
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp'nin yerel Windows binary'leri yoktur, ancak WSL (Windows Subsystem for Linux) üzerinden kullanabilirsiniz:
+
+#### Adım 1: WSL yükleme
+
+PowerShell'i Administrator olarak açın ve şunu çalıştırın:
+
+```powershell
+wsl --install
+```
+
+İstendiğinde bilgisayarınızı yeniden başlatın.
+
+#### Adım 2: WSL içinde mscp yükleme
+
+WSL kurulduktan sonra (varsayılan Ubuntu'dur), WSL terminalini açın ve şunu çalıştırın:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">WSL içinde Windows dosya yolları</AlertTitle>
+  <AlertDescription className="pl-2">
+    WSL içinde Windows sürücülerinize `/mnt/` altında erişilebilir. Örneğin `C:\Users\YourName\Downloads`, `/mnt/c/Users/YourName/Downloads` olur.
+  </AlertDescription>
+</Alert>
+
+### Kaynaktan derleme
+
+Sisteminiz için paketler mevcut değilse mscp'yi kaynaktan derleyebilirsiniz:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## Temel kullanım
+
+mscp söz dizimi `scp` ile benzerdir. Yaygın kullanım kalıpları şunlardır.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Önemli: SFTP portunuzu kullanın</AlertTitle>
+  <AlertDescription className="pl-2">
+    Aşağıdaki örneklerde `25557`, SFTPgo ayarlarınızdaki **SFTP Port** değerini temsil eder. Bunu, SFTPgo Options panelinizde gösterilen gerçek SFTP portunuzla değiştirin.
+  </AlertDescription>
+</Alert>
+
+### Sunucunuza dosya yükleme
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### Dizin yükleme
+
+`scp`'den farklı olarak mscp, dizinler için `-r` flag'ini gerektirmez:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### Sunucunuzdan dosya indirme
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### Dizin indirme
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## Gelişmiş seçenekler
+
+### Birden fazla bağlantı kullanma
+
+Varsayılan olarak mscp birden fazla bağlantı kullanır. Bağlantı sayısını `-n` ile belirtebilirsiniz:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Başarısız aktarımları sürdürme (checkpointing)
+
+mscp, kesintiye uğrayan aktarımları sürdürmek için checkpointing destekler:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### SSH anahtarıyla kimlik doğrulamayı belirtme
+
+SFTPgo ile SSH anahtarı kimlik doğrulaması ayarladıysanız:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Bant genişliğini sınırlama
+
+Aktarım bant genişliğini sınırlamak için (paylaşılan bağlantılarda yararlıdır):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## Örnek: eksiksiz iş akışı
+
+Appbox'tan alınan SFTPgo kimlik bilgilerini kullanan eksiksiz bir örnek:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## Performans ipuçları
+
+1. **Büyük dosyalar için daha fazla bağlantı kullanın**: Büyük dosya aktarımları için `-n` değerini artırın (örn. `-n 8` veya `-n 16`)
+2. **Çok sayıda küçük dosya için daha az bağlantı kullanın**: Çok sayıda küçük dosya içeren dizinlerde daha az bağlantı daha verimli olabilir
+3. **Metin dosyaları için sıkıştırmayı etkinleştirin**: mscp, SSH sıkıştırmasını devralır; metin ağırlıklı aktarımlar için `-C` kullanın
+4. **Çok büyük aktarımlar için checkpointing kullanın**: Kesinti olursa sürdürmeye izin vermek için çok gigabyte'lı aktarımlarda checkpointing'i her zaman etkinleştirin
+
+## Sorun giderme
+
+### Bağlantı reddedildi
+
+SFTPgo ayarlarınızdaki doğru SFTP portunu kullandığınızdan emin olun (FTP portu değil):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### İzin reddedildi
+
+Kullanıcı adınızın ve parolanızın doğru olduğunu doğrulayın. Önce standart bir SFTP istemcisiyle test edebilirsiniz:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### Yavaş aktarımlar
+
+Paralel bağlantı sayısını ayarlamayı deneyin:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## Ek kaynaklar
+
+- [mscp GitHub deposu](https://github.com/upa/mscp)
+- [mscp dokümantasyonu](https://github.com/upa/mscp#documentation)
+- [Appbox üzerinde SFTPgo](https://www.appbox.co/appstore/app/232)

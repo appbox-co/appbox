@@ -1,0 +1,125 @@
+---
+title: OpenClaw - 能与你的应用对话的个人 AI 助手
+date: 2026-03-20 10:00:00
+excerpt: OpenClaw 现已登陆 Appbox。它是一个运行在你自己基础设施上的开源 AI 助手，可连接你的聊天应用，并能真正与你已安装的其他应用交互。
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# OpenClaw 现在登陆 Appbox
+
+我们刚刚向 app store 添加了一个我个人期待已久的东西。
+
+[OpenClaw](https://openclaw.ai) 是一个完全运行在你自己基础设施上的开源 AI 助手。可以把它看作云端 AI assistants 的私有、自托管替代品，只不过它住在你的 Appbox 上，记得你的对话，而且真的能帮你做事。
+
+你可以通过已经在用的聊天应用与它交谈。WhatsApp、Telegram、Discord、Slack、Signal，甚至 iMessage。它会调用 Anthropic、OpenAI、Google、xAI、Mistral 等模型的完整能力来回应。你带上自己的 API key，选择模型，一切都留在你的服务器上。
+
+仅这一点就已经很有用。但我专门写一篇博客，而不是悄悄把它加进商店的原因，是它与 Appbox 其他部分结合时会发生什么。
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="Web 仪表板中的 OpenClaw 聊天会话" width="860" className="mt-8 mb-10" />
+</p>
+
+## 它能看到你的其他应用
+
+这就是 Appbox 上的 OpenClaw 与在其他地方运行它不同的地方。
+
+每个 Appbox 都有一个共享数据层。你安装的每个应用都会在一个公共 mount 下获得自己的目录，并且还有一个所有应用都可以读写的共享存储区域。OpenClaw 可以访问同一个共享 filesystem。这意味着它能看到你其他已安装应用的数据和通用存储，不是通过脆弱的 API integration，而是通过直接 filesystem access。
+
+实际效果是，你的 AI 助手不会被隔离在一个没有上下文的独立 container 中。它就坐在你的文件、数据库、媒体、代码和配置旁边。
+
+## 它能登录你的其他应用
+
+除了共享 filesystem，OpenClaw 还内置了完整 headless browser（Chromium with Puppeteer），以及所有常见 database client 和 CLI tool。如果你给它某个其他应用的登录信息，它真的可以代表你登录并使用该应用。
+
+想更新 Docmost 上的团队文档？告诉 OpenClaw 要写什么，并给它 URL 和凭据。它会登录、导航到正确页面并进行编辑。需要在你的 Nginx & PHP stack 上创建新的 landing page？描述你的需求，OpenClaw 可以编写 HTML、CSS 和 JavaScript，然后通过共享 filesystem 直接部署文件到你的 web root。运行 WordPress？让它起草并发布博客文章、更新插件设置，或重新设计页面样式。它可以像你一样操作 admin dashboard。
+
+这也不限于 Web UIs。OpenClaw 自带 `mysql`、`psql`、`redis-cli`、`mongosh` 和 SSH 支持，因此可以使用你提供的任何凭据直接连接到数据库和服务。关键在于，OpenClaw 不需要为每个应用准备特殊 integrations 或 plugins。只要你能登录，它也能登录。
+
+## 实际会是什么样
+
+让我用更具体的例子说明，当 AI 助手可以访问你的 Appbox 生态时，你可以做什么。
+
+### 媒体服务器整理
+
+如果你在运行 Plex、Jellyfin 或 Emby，OpenClaw 内置了 `ffmpeg`、`mediainfo` 和 `exiftool`。这些工具很适合检查文件 metadata 或发现编码问题，不需要你手动翻目录。你可以让它列出文件夹内容、检查格式，或帮助整理命名规范，让媒体服务器能正确索引内容。
+
+### 不再痛苦的数据库工作
+
+OpenClaw 的 container 预装了 `mysql`、`psql`、`sqlite3`、`redis-cli` 和 `mongosh`。如果你运行 MariaDB，可以让 OpenClaw 查询数据库、检查 schemas、调试慢查询，或帮你编写 migrations。全部通过手机上的一条聊天消息完成。
+
+运行 WordPress 或其他由 MariaDB 支持的 CMS？让 OpenClaw 检查数据库健康状态、查找孤立的 post metadata，或导出特定内容。你无需 SSH 到任何地方，也不用记正确的 CLI flags。只需用自然语言描述需要什么。
+
+### GitLab 和代码工作流
+
+如果你安装了 GitLab，OpenClaw 可以直接与你的 repositories 协作。它内置 `git`，并带有用于快速代码搜索的 `ripgrep` 和 `fd`。你可以让它在多个 repos 中搜索特定 pattern、总结最近 commits，或帮助理解陌生代码。
+
+对于使用 GitLab 处理内部项目的团队来说，拥有一个能真正读取代码库并回答问题、而无需把代码发送到第三方云服务的 AI 助手，是对开发工作流的实质改进。
+
+### 文件整理和同步
+
+运行 Nextcloud、SFTPGo 或 File Browser？OpenClaw 可以帮助管理流经这些服务的文件。它可以搜索文档、重组目录结构、查找重复文件，并在共享存储和应用专用目录之间移动内容。
+
+它也提供 `rclone`，所以如果你需要设置同步任务，或在 cloud storage providers 之间移动数据，可以描述需求并让 OpenClaw 处理配置。
+
+### 监控和诊断
+
+如果你安装了 Uptime Kuma 来监控服务，OpenClaw 会在你的监控设置之上提供一个对话层。不只是接收 alerts，你还可以让 OpenClaw 运行网络诊断。它自带 `ping`、`dig`、`nslookup`、`traceroute`、`mtr`，甚至还有 `nmap` 和 `tcpdump` 用于更深入调查。
+
+某个东西宕了？给你的助手发消息，让它检查发生了什么，并获得自然语言解释，而不是盯着 dashboards 看。
+
+### 音乐和有声书库
+
+Navidrome 和 audiobookshelf 用户也能从 OpenClaw 的媒体工具中受益。让它扫描音乐库中缺失或错误的 metadata tags，识别可能需要重新编码的曲目，或帮助整理未正确拆分的有声书章节。`ffmpeg` 和 `exiftool` 的组合能处理大多数需求。
+
+### Jupyter 和数据工作
+
+如果你使用 Jupyter Notebook 做数据分析，OpenClaw 会是很好的补充。它带有 Python 3，并支持 pip 和 venv，因此可以帮助你编写脚本、处理共享存储中的数据文件，甚至直接运行快速分析。可以把它看成通向 notebooks 所处理同一份数据的对话式界面。
+
+### Infrastructure as Code
+
+对于更愿意折腾技术的用户，OpenClaw 自带 `docker`、`kubectl`、`terraform` 和 `ansible` CLIs。如果你在 Appbox 上运行 VPS 并管理基础设施，可以把 OpenClaw 用作对话式 ops assistant。描述你想部署什么，让它帮助生成并应用配置。
+
+## 持久记忆
+
+OpenClaw 与只是打开一个 AI model 聊天窗口的区别之一，是它会记住你。它会随着时间积累上下文：你的偏好、你喜欢的组织方式、你正在做的项目、你使用的命名规范。你与它互动越多，它就越有用。
+
+这在 Appbox 上尤其强大，因为上下文不只是对话。它扎根在你的真实环境中：你的文件、你的应用、你的数据。
+
+## 预加载技能
+
+OpenClaw 拥有技能系统，[ClawHub](https://clawhub.ai/skills) 上提供 50+ 个社区构建的扩展。Skills 会为 agent 提供面向特定应用、工具或工作流的专门能力。
+
+在 Appbox 上，我们给你的不只是裸 agent。镜像已经预装了一组精选 skills，因此 OpenClaw 开箱即懂你的环境：
+
+- **Platform awareness**：了解 Appbox 共享数据布局、可用 CLI tools，以及需要时如何引导你获取支持或 VPS upgrades
+- **App-specific skills**：已为 WordPress、Nginx、GitLab、Nextcloud、Emby、MariaDB、Tautulli、Mautic、WireGuard 和 Rocket.Chat 预加载，因此当你安装这些应用时，agent 已经知道如何与它们协作
+- **SSH essentials**：用于从 agent 直接连接你的 VPSes 或远程服务器
+- **Browser automation (Playwright MCP)**：提供登录并通过 Web UIs 操作其他应用的能力
+- **Web search and documentation lookup**：多引擎搜索和 ClawDDocs，可随时拉取参考资料
+- **Self-improvement**：用于在 ClawHub 上发现新 skills，并在安装前进行评估
+
+你可以随时安装额外 skills。只需在 [ClawHub](https://clawhub.ai/skills) 找到一个，复制链接并粘贴给你的 agent。它会自行下载并安装该 skill。
+
+## 开始使用
+
+像安装其他应用一样，从 Appbox app store 安装 OpenClaw。它需要两个 slots。
+
+安装后，你会在应用详情页看到 Gateway Token。这就是你的仪表板登录凭据。打开 dashboard URL，输入 token，就进去了。
+
+接下来唯一需要配置的是你的 AI model provider。添加你偏好的任意 provider 的 API key。OpenRouter 是最简单的起点，因为一个 key 就能访问许多模型。我们写了一份[完整设置指南](/docs/apps/openclaw-model-provider-setup)，逐步说明如何从 OpenRouter、OpenAI、Anthropic、Google、xAI、Mistral 等获取 API keys。
+
+配置好模型后，你就可以直接从仪表板开始与助手聊天。如果你想通过 WhatsApp、Telegram、Discord 或其他频道与它交谈，也可以在仪表板中配置。
+
+## 为什么这很重要
+
+市面上有很多 AI chat interfaces。其中大多数是云服务，只要你发送消息，数据就离开了你的控制。OpenClaw 不同，因为一切都留在你的 Appbox 上：助手、它的记忆、你的对话，以及它处理的数据。
+
+而且由于它与其他应用并排运行并拥有共享 filesystem access，它真的能跨你的 self-hosted stack 做事，而不只是回答关于它的问题。
+
+我们真的很好奇大家会用它构建什么。如果你设置了有趣的 workflow，或找到连接 OpenClaw 与其他应用的创意方式，我们很想听到。
+
+---
+
+*对 OpenClaw 有问题，或需要设置帮助？请通过 support@appbox.co 联系我们，或在 [billing.appbox.co](https://billing.appbox.co/submitticket.php) 提交工单。*

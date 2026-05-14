@@ -1,0 +1,108 @@
+---
+title: Launch Week 3. nap - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: "A Launch Week 3. napja. Teljes KVM virtual private serverek érhetők el az Appboxon. Válassz Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux vagy AlmaLinux közül, és kapj root hozzáférést egy valódi VM-hez."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week 3. nap: Virtual Private Servers
+
+3. nap. Ez a nagy bejelentés.
+
+Az Appbox a kezdetektől arról szólt, hogy egyszerűvé tegye a self-hosted appokat. Telepítesz egy appot, kapsz egy URL-t, kész. Ez a modell a legtöbb dologhoz hihetetlenül jól működik. De mindig volt egy olyan felhasználási kör, ahol egyszerűen egy teljes gépre van szükséged. Saját kernel, saját init rendszer, saját szabályok.
+
+Ma elindítjuk a **Virtual Private Servers** szolgáltatást az Appboxon.
+
+## Valódi VM-ek, nem konténerek
+
+Legyünk egyértelműek: ezek teljes KVM virtuális gépek dedikált hardveren, saját kernellel, saját systemddel és teljes root hozzáféréssel. Ez nem egy Docker konténer, amely OS-nek próbál látszani. Ez az igazi.
+
+Ez a különbség számít, mert mindent felold, amit a konténerek nem tudnak:
+
+- **Docker a VPS-eden belül** - futtasd a `docker compose up` parancsot, ahogy bármelyik szerveren tennéd
+- **Snaps és Flatpaks** - telepíts desktop szoftvereket úgy, ahogy azokat telepíteni kell
+- **Systemd szolgáltatások** - teljes szolgáltatáskezelés, timerek, journal, minden
+- **Egyéni kernelek és modulok** - root vagy, azt csinálsz, amit szeretnél
+- **Nested virtualization** - ha szükséged van rá, ott van
+
+Ha valaha falba ütköztél a Docker-alapú OS-einkkel vagy webtopjainkkal, mert valami egyszerűen nem működött a konténerkorlátok miatt, ez a fal eltűnt.
+
+## Hat Linux OS érhető el
+
+Mostantól hat Linux-disztribúció közül választhatsz:
+
+| OS | Leírás |
+|---|---|
+| **Ubuntu VPS** | Teljes Ubuntu 24.04 LTS |
+| **Debian VPS** | Teljes Debian 12 és 13 |
+| **Arch Linux VPS** | Rolling release, mindig naprakész |
+| **Fedora VPS** | Fedora 43 a legfrissebb csomagokkal |
+| **Rocky Linux VPS** | Vállalati szintű RHEL-kompatibilitás |
+| **AlmaLinux VPS** | RHEL-kompatibilis vállalati Linux hosszú távú támogatással |
+
+Válaszd azt, amelyiket ismered, vagy azt, amelyiket meg szeretnéd tanulni. Mindegyik ugyanazt a funkciókészletet kapja az Appboxon.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="VPS kategória az Appbox App Store-ban" width="860" className="mt-8 mb-10" />
+</p>
+
+## Beépített webes konzol
+
+Minden VPS-hez böngészőalapú konzol tartozik, közvetlenül az Appbox dashboardba építve. Kattints bármelyik VPS Console fülére, és élő terminálmunkamenetet kapsz közvetlenül a böngésződben.
+
+Ez azt jelenti, hogy soha nem zárhatod ki magad a szerveredről. Rosszul konfigurált SSH? Elrontott hálózati beállítás? Nem számít. A webes konzol közvetlenül a VM virtuális kijelzőjéhez csatlakozik, teljesen függetlenül a guest hálózati stackjétől. Mindig van bejáratod.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Webalapú VM konzol az Appbox dashboardban" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop Selkies-szel
+
+Itt válik igazán érdekessé. Az Ubuntu VPS-ünknek van egy **Selkies** által hajtott desktop változata, amely teljes grafikus Linux desktopot ad a böngészőből, hardveresen gyorsított streaminggel, teljes hangkimenettel és mikrofonbemenettel.
+
+Közvetlenül a Selkies csapatával dolgoztunk együtt, hogy ez KVM virtuális gépekben működjön, és az integrációt nyílt forráskódúvá tettük itt: [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Mit jelent ez a gyakorlatban? Teljes desktop környezetet futtathatsz a böngésződben valódi alkalmazásokkal. VS Code, Discord, Spotify, Slack - mind egyszerre fut, mind hanggal, és bármilyen böngészős eszközről elérhető.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu desktop Selkies-en keresztül, futó VS Code-dal, Spotifyjal és Discorddal" width="860" className="mt-8 mb-10" />
+</p>
+
+Gondolj bele egy pillanatra. Lehet egy állandó távoli fejlesztői környezeted, amely mindig be van kapcsolva, VS Code-ot futtat Docker konténerekkel a projektjeidhez, miközben a Discord nyitva van a csapatcsevegéshez, és a Spotify zenét játszik. Mindez egy böngészőfülben. A laptopodról, tabletedről vagy valaki más gépéről. A teljes munkaterületed csak egy URL-re van.
+
+## Az adataid követnek
+
+Minden VPS automatikus hozzáférést kap az Appbox tárhelyedhez az `/APPBOX_DATA/` könyvtáron keresztül. Belül ezt találod:
+
+- **`/APPBOX_DATA/apps/`** - a többi telepített Appbox appodból származó adatok
+- **`/APPBOX_DATA/storage/`** - az általános Appbox tárhelyed
+
+Ez virtiofs segítségével van megosztva, egy nagy teljesítményű fájlrendszer-passthrough-val, amely közel natív fájlhozzáférési sebességet ad. A VPS-ed olvasni és írni tud olyan fájlokat, amelyeket a többi appod is használ, így például feldolgozhatsz médiafájlokat a streaming appjaidból, vagy biztonsági mentést készíthetsz adatbázisokról a VPS-edből.
+
+## Működik az App Boosttal
+
+A VPS-ek ugyanazt az App Boost rendszert használják, amelyet a 2. napon indítottunk el. Több RAM-ot vagy CPU-t szeretnél a VM-ednek? Húzd fel a boost szintet, és rendelj hozzá több slotot a csomagodból. Az erőforrások hypervisor szinten kerülnek kiosztásra, így a VM-ed valóban több számítási kapacitást kap, nem csak magasabb cgroup limitet.
+
+Érdemes megjegyezni: a VPS-ek alapköltsége slotokban valamivel magasabb, mint a Docker-alapú OS appoké. Ez azt tükrözi, hogy egy teljes virtuális gép több valós erőforrást fogyaszt, mint egy, a host kernelt megosztó konténer. A kompromisszum egyértelmű: több képességet kapsz, és a slotköltség ezt őszintén tükrözi.
+
+## Mi jön még a VPS-ekhez?
+
+Ma teljes funkcionalitással indítjuk a VPS-eket, de a roadmapen van még további fejlesztés. A VPS példányok erőforrás-használati grafikonjai a közeljövőben érkeznek, így közvetlenül a dashboardról figyelheted majd a CPU-, RAM- és lemezhasználatot időben, akárcsak más appoknál.
+
+## Miért fontos ez?
+
+Az Appbox Docker-alapú OS-ei és webtopjai sok embernek szolgáltak már jól, és nem is tűnnek el. De a konténerben futtatásnak valódi korlátai vannak. Nem futtathatsz Dockert. Nem használhatsz snapeket. Nem tölthetsz be kernelmodulokat. Nem futtathatsz teljes init rendszert. Mindig valaki más namespace-ének korlátai között dolgozol.
+
+A VPS-ek ezeket a korlátokat teljesen eltávolítják. Valódi gépet kapsz. Ha meg tudod csinálni egy bármely más szolgáltatótól bérelt szerveren, itt is meg tudod csinálni - csak itt az adataid már fel vannak csatolva, a webes konzol már ott van, és az erőforrásaid csúszkával skálázhatók.
+
+## A 3. nap már éles
+
+A VPS-ek már most elérhetők az App Store-ban. Menj a VPS kategóriába, válaszd ki az OS-t, és telepítsd. Egy teljes VM provisionálása kicsit tovább tart, mint egy konténerappé, ezért számíts akár 15 percre, mire a VPS készen áll.
+
+Holnap jön a 4. nap. Nem lassítunk.
+
+---
+
+*Visszajelzésed van, vagy hibát találtál? Írj a support@appbox.co címre, vagy nyiss jegyet itt: [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

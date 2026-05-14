@@ -1,0 +1,66 @@
+---
+title: Acordo de Nível de Serviço
+description: Nosso compromisso com consistência e confiabilidade do serviço
+---
+
+Este Acordo de Nível de Serviço ("SLA") é um documento que rege os Termos e o uso dos Serviços fornecidos pela Appbox. Ao utilizar nossos Serviços, você reconhece e consente com os termos descritos abaixo.
+
+Como operamos em um ambiente compartilhado e fornecemos serviços de natureza específica, algum nível de indisponibilidade pode às vezes ser inevitável. Este acordo esclarece como gerenciamos ocorrências de indisponibilidade durante seu período de assinatura e descreve nossos compromissos para resolver disputas e oferecer compensação.
+
+## Indisponibilidade de servidores, manutenção de servidores e compensação
+
+A Appbox faz todos os esforços para manter nossos servidores operacionais e acessíveis a todos os usuários durante o prazo de cobrança.
+
+Quando uma manutenção de servidor é agendada com antecedência, os usuários serão notificados por vários canais, como atualizações por email, a Appbox Status Page e anúncios na Client Area. Qualquer usuário afetado por manutenção planejada não é elegível para compensação.
+
+Procedimentos de manutenção não programada ou emergencial serão comunicados o mais prontamente possível, e usuários afetados por esses eventos podem se qualificar para créditos conforme especificado abaixo:
+
+| Duração da indisponibilidade | Compensação                                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Até 6 horas                  | Determinada a critério da equipe                                                                                         |
+| Até 12 horas                 | Equivalente a 1 dia de crédito de serviço                                                                                |
+| Até 24 horas                 | Equivalente a 2 dias de crédito de serviço                                                                               |
+| Acima de 48 horas            | Creditada pelo dobro da duração da indisponibilidade (por exemplo, uma interrupção de 3 dias gera 6 dias de crédito)     |
+
+Esta política **exclui qualquer indisponibilidade associada às aplicações que você instalou.**
+
+## Falha de disco e perda de dados
+
+A plataforma da Appbox é baseada em uma infraestrutura compartilhada projetada para oferecer distribuição justa de recursos e uso abrangente de disco. Apesar dos nossos melhores esforços, falhas de hardware, como defeitos em discos, podem ocorrer.
+
+Se uma falha de disco fizer você perder acesso aos seus dados e eles não puderem ser recuperados, você se qualificará para **um mês completo de serviço sem custo**.
+
+Recomendamos fortemente manter backups de todos os dados essenciais que você armazena no serviço.
+
+Observe que, se os dados forem perdidos devido a ações iniciadas pelo usuário (por exemplo, exclusão acidental) e nenhum erro relacionado ao sistema for detectado, nenhuma compensação será fornecida.
+
+## Uso justo dos recursos do servidor
+
+Nossos Serviços são entregues em recursos compartilhados, portanto é crucial que cada cliente garanta que suas atividades não prejudiquem o desempenho de outros usuários e permaneçam dentro de limites aceitáveis de recursos.
+
+A Appbox pode, sem aviso prévio, interromper quaisquer aplicações ou processos que afetem negativamente a experiência de outros clientes. Em casos graves de uso indevido de recursos, o serviço do cliente pode ser suspenso ou encerrado por completo.
+
+### Política de uso justo de Disk I/O
+
+Esta política se aplica apenas a planos NG-8000 e menores (planos sem disco dedicado).
+
+Para garantir desempenho ideal para todos os usuários, a Appbox utiliza um sistema automatizado de monitoramento de Disk I/O que:
+
+1. Monitora continuamente a utilização de disco em todos os recursos compartilhados
+2. Identifica aplicações que consomem recursos excessivos de Disk I/O por períodos prolongados
+3. Aplica automaticamente medidas de throttling quando necessário
+
+Se sua aplicação for detectada consumindo Disk I/O excessivo:
+
+- Você pode receber uma notificação de aviso
+- Uso alto persistente resultará em throttling automático da velocidade de Disk I/O
+- Violações repetidas levarão a limites de throttling cada vez mais rigorosos
+- O throttling é temporário e será removido automaticamente quando o uso voltar a níveis normais
+
+Observe que aplicações intensivas em recursos podem acionar essas medidas se forem executadas sem consideração pelos outros usuários.
+
+Aplicamos esta política para garantir que todos os usuários tenham uma experiência satisfatória em nossa plataforma.
+
+## Tempos de resposta do suporte
+
+Não temos tempo mínimo de resposta ou resolução de suporte; no entanto, nosso objetivo é responder a todas as consultas de suporte em até 24 horas.

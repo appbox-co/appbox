@@ -1,0 +1,397 @@
+---
+title: Veri İşleme Politikası
+description: Verilerinizi nasıl yönettiğimiz ve koruduğumuz
+---
+
+Appbox olarak kayıtlarımızı tutmak ve hizmetlerimizi sunmak için gerekli olan minimum bilgiyi toplar ve saklarız. Appbox ekibi, verilerinizi azami gizlilik ve güvenlik anlayışıyla ele almak üzere eğitilmiştir ve güçlü kimlik bilgileri ile multi-factor authentication kullanımı dahil olmak üzere katı protokolleri izler. Tüm ödeme işlemleri tamamen ödeme işleyicilerimiz tarafından yürütülür ve ödeme kayıtları ile ilgili transaction ID'leri dışında finansal bilgilerinizin hiçbiri Appbox tarafından saklanmaz.
+
+## Email
+
+- **Kullanımlar**
+  - Appbox Client Area ve Appbox Control Panel için girişiniz olarak hizmet eder
+  - Appbox hizmet duyuruları için iletişim noktası
+  - Appbox Ticket System sorguları için iletişim noktası
+- **Toplama**
+  - Kayıt sırasında kullanıcı tarafından sağlanır
+- **Saklama**
+  - WHMCS = Düz metin
+  - Appbox API = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi
+    - Bu, destek veya herhangi bir hizmet duyurusu için kullanıcıyla iletişim kurmak içindir
+- **Saklama Süresi**
+  - Süresiz
+- **Daha fazla bilgi**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Kullanımlar**
+  - Kullanıcıyı Appbox Ticket System üzerinde tanımlar
+  - Kullanıcının Appbox slotunun adı olarak hizmet eder
+  - Kullanıcının slotunun deploy edildiği sunucuda yerel kullanıcı olarak kaydedilir ve kullanıcının çalışan süreçlerini gösterir
+  - Kurulu uygulamalar için kullanıcının username'i olarak hizmet eder
+- **Toplama**
+  - Kayıt sırasında kullanıcı tarafından sağlanır
+- **Saklama**
+  - WHMCS = Düz metin
+  - Appbox API = Düz metin
+  - Installed Applications = Uygulamaya bağlıdır
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi
+    - Destek sorguları için gereklidir
+    - Yüksek kaynak tüketen uygulamaları, sunucu kararsızlığı kaynaklarını veya yetkisiz uygulamaları arayarak sunucu sorunlarını araştırmak için gereklidir
+- **Saklama Süresi**
+  - Süresiz
+- **Daha Fazla Bilgi**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Kullanımlar**
+  - Kullanıcının seçtiği ülkeye göre geçerli vergileri hesaplamak için kullanılır
+- **Toplama**
+  - Kayıt sırasında kullanıcı tarafından sağlanır
+- **Saklama**
+  - WHMCS = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi
+- **Saklama Süresi**
+  - Süresiz
+- **Daha Fazla Bilgi**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Kullanımlar**
+  - Kullanıcının Appbox Client Area parolası olarak hizmet eder
+- **Toplama**
+  - Appbox Client Area üzerinde kayıt sırasında kullanıcı tarafından sağlanır
+- **Saklama**
+  - WHMCS = Şifrelenmiş
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi tarafından sınırlı erişim
+    - Appbox ekibi kullanıcının parolasını hashed olduğu için göremez, ancak doğrulamadan sonra parolanızı sıfırlayabilir
+- **Saklama Süresi**
+  - Süresiz
+- **Daha Fazla Bilgi**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - [account security page](https://billing.appbox.co/user/security) üzerinden two-factor authentication etkinleştirmenizi önemle öneririz
+
+### Appbox Control Panel Password
+
+- **Kullanımlar**
+  - Kullanıcının slotuna erişmek için Appbox Control Panel üzerindeki parolası olarak hizmet eder
+- **Toplama**
+  - Slotunun deploy edilmesinden sonra kullanıcı tarafından sağlanır
+- **Saklama**
+  - Appbox API = Şifrelenmiş
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi tarafından sınırlı erişim
+    - Appbox ekibi kullanıcının parolasını hashed olduğu için göremez, ancak doğrulamadan sonra parolanızı sıfırlayabilir
+- **Saklama Süresi**
+  - Süresiz
+- **Daha Fazla Bilgi**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - [account security page](https://billing.appbox.co/user/security) üzerinden two-factor authentication etkinleştirmenizi önemle öneririz
+
+### Application Passwords
+
+- **Kullanımlar**
+  - Kullanıcının kurulu uygulamalarının parolası olarak hizmet eder
+- **Toplama**
+  - Slotunun deploy edilmesinden sonra kullanıcı tarafından sağlanır
+- **Saklama**
+  - Appbox API = Düz metin
+  - Installed Applications = Uygulamaya bağlıdır
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi
+    - Kullanıcının izniyle uygulamaya özel destek sorguları için gereklidir
+- **Saklama Süresi**
+  - Kullanıcı uygulamayı kaldırana kadar
+- **Daha Fazla Bilgi**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - [account security page](https://billing.appbox.co/user/security) üzerinden two-factor authentication etkinleştirmenizi önemle öneririz
+
+## Payment Processing
+
+### PayPal
+
+- **Kullanımlar**
+  - Appbox'ın ödeme geçitlerinden biri olarak hizmet eder
+- **Toplama**
+  - Ödeme işleme tamamen PayPal tarafından yapılır. Kullanıcının hesabı altında WHMCS içinde kaydedilen tek veri **PayPal Transaction ID**'dir
+- **Saklama**
+  - WHMCS = Düz metin (PayPal Transaction ID)
+- **Erişim ve Erişim Nedenleri**
+  - Appbox Sales Team
+    - Appbox Sales Team, satış sürecimizin parçası olarak kullanıcının bilgilerini PayPal ile doğrulayabilir
+- **Saklama Süresi**
+  - Süresiz
+
+### Stripe
+
+- **Kullanımlar**
+  - Appbox'ın ödeme geçitlerinden biri olarak hizmet eder
+- **Toplama**
+  - Ödeme işleme tamamen Stripe tarafından yapılır. Kullanıcının hesabı altında WHMCS içinde kaydedilen tek veri **Stripe Payment ID, Hash, Card's last four digits and expiry** bilgisidir
+- **Saklama**
+  - WHMCS = Düz metin (Stripe Payment ID)
+- **Erişim ve Erişim Nedenleri**
+  - Appbox Sales Team
+    - Appbox Sales Team, satış sürecimizin parçası olarak kullanıcının bilgilerini Stripe ile doğrulayabilir
+- **Saklama Süresi**
+  - Süresiz
+
+### CoinGate
+
+- **Kullanımlar**
+  - Kripto para işlemleri için Appbox'ın ödeme geçitlerinden biri olarak hizmet eder
+- **Toplama**
+  - Ödeme işleme tamamen CoinGate tarafından yapılır. WHMCS içinde kaydedilen tek veri **CoinGate Transaction ID**'dir
+- **Saklama**
+  - WHMCS = Düz metin (Transaction ID)
+- **Erişim ve Erişim Nedenleri**
+  - Appbox Sales Team
+    - Appbox Sales Team, satış sürecimizin parçası olarak kullanıcının bilgilerini CoinGate ile doğrulayabilir
+- **Saklama Süresi**
+  - Süresiz
+
+*Not: CoinGate, hizmetlerinin parçası olarak blockchain transaction ID'sini ve göndericinin blockchain adresini kendisi saklar. Bu bilgiler Appbox tarafından saklanmaz.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Kullanımlar**
+  - Sunucuların sağlığını ve kaynak kullanımını izlemek için kullanılır
+- **Toplama**
+  - Kullanıcının slotunun deploy edilmesinden sonra oluşturulur
+- **Saklama**
+  - Appbox Servers = Düz metin
+  - Appbox API = Düz metin
+  - Posthog = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+    - Sunucu metrikleri slotunuzda kurulu çeşitli Linux yardımcı programları kullanılarak görüntülenebilir. Aşağıdaki başlıca metrikler görülebilir:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Çalışan süreçleriniz
+      - Aynı sunucudaki diğer kullanıcılar tarafından çalıştırılan süreçlere sizin tarafınızdan erişilemez
+      - Input/Output metrikleri
+      - Disk alanı
+      - Quota disk alanı (size ayrılan disk alanı)
+      - Fiziksel disk alanı
+  - Appbox Team
+    - Yukarıdaki metriklere ek olarak Appbox ekibi, tüm sunuculardan tüm metrikleri hızlıca toplamak ve ekibi herhangi bir hata konusunda uyarmak için Posthog kullanır
+    - Sunucu metrikleri destek sorguları ve herhangi bir kaynak kötüye kullanımını araştırmak için kullanılır
+- **Saklama Süresi**
+  - Süresiz
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Kullanımlar**
+  - Herhangi bir geçersiz erişim girişimi Appbox API içine kaydedilir; bu, belirli sayıda denemeden sonra kullanıcının belirli bir süre Control Panel'e giriş yapmasını kısıtlar. Buna şunlar dahildir:
+    - Kullanıcı tarafından girildiği şekilde username
+    - IP adresi
+    - Deneme sayısı
+    - Son deneme tarihi
+- **Toplama**
+  - Bir kullanıcı kimlik bilgilerini yanlış girdiğinde toplanır
+- **Saklama**
+  - Appbox API = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Appbox Team
+    - Herhangi bir brute-force girişimini tanımlamak için kullanılır
+    - Kullanıcılar, Ticket sistemi üzerinden talep ve doğrulama ile timeout'larının kaldırılmasını ve erişim denemesinin silinmesini isteyebilir
+- **Saklama Süresi**
+  - 24 saat veya kullanıcı talebi üzerine
+
+#### SSH Login Logs
+
+- **Kullanımlar**
+  - Ubuntu veya Debian gibi kullanıcı tarafından kurulan uygulamalarda SSH'ye giriş denemelerini ve başarılı girişleri kaydeder
+- **Toplama**
+  - Giriş denemeleri gerçekleştiğinde SSH sunucusu tarafından otomatik olarak oluşturulur
+- **Saklama**
+  - Application container = Düz metin (genellikle `/var/log/auth.log` veya benzeri)
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+    - Bu loglar kullanıcıların root (sudo) erişimine sahip olduğu uygulamalar içinde saklandığından, kullanıcılar bu loglar üzerinde tam kontrole ve erişime sahiptir
+    - Kullanıcılar bu logları gerektiği şekilde görüntüleyebilir, değiştirebilir veya silebilir
+  - Appbox ekibi
+    - Erişim yalnızca destek sorun giderme sırasında kullanıcı izniyle mümkündür
+- **Saklama Süresi**
+  - Kullanıcı tarafından yönetilir, çünkü container'a root erişimi vardır
+  - Kullanıcı tarafından değiştirilmediği sürece varsayılan log rotation politikaları geçerlidir
+
+### System Generated Logs
+
+- **Kullanımlar**
+  - Sunuculardaki sorunları tanımlamak için kullanılan sunucu geneli oluşturulan loglar
+- **Toplama**
+  - Sunucuların işletim sistemi tarafından oluşturulur
+- **Saklama**
+  - Appbox Servers = Düz metin
+  - Posthog = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Sınırlı Erişim Appbox ekibi
+    - Belirli sunuculardaki sorunları tanımlamak için kullanılır
+    - Loglar Posthog tarafından toplanır ve bu sistem ekibi herhangi bir hata konusunda uyarır
+- **Saklama Süresi**
+  - Süresiz
+
+### Logs Generated by Installed Applications
+
+- **Kullanımlar**
+  - Kurulu uygulamalar tarafından oluşturulan loglar, kullanıcının slotu içindeki sorunları tanımlamak için kullanılır
+- **Toplama**
+  - Kullanıcının kurulu uygulamaları tarafından oluşturulur
+- **Saklama**
+  - Appbox API = Düz metin
+  - Installed Applications = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi
+    - Kullanıcının izniyle uygulamaya özel destek sorguları için gereklidir
+- **Saklama Süresi**
+  - Kullanıcı uygulamayı kaldırana veya silene kadar
+
+### User's bash History
+
+- **Kullanımlar**
+  - Kullanıcının slot shell'inde girdiği tüm komutları kaydeder; `$HOME/.bash_history` konumunda bulunur
+- **Toplama**
+  - Shell'e girilen her komut kaydedilir
+- **Saklama**
+  - Appbox Servers = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+    - bash history dosyası kullanıcının home dizininde saklandığından, kullanıcılar bu dosya üzerinde tam kontrole sahiptir
+    - Kullanıcılar bu dosyayı gerektiği şekilde görüntüleyebilir, değiştirebilir, temizleyebilir veya silebilir (`history -c` gibi komutlarla veya dosyayı düzenleyip/kaldırarak)
+  - Appbox ekibi
+    - Kullanıcı tarafından girilen komutların doğru olup olmadığını doğrulamak gibi genel veya uygulamaya özel sorgular için, ancak yalnızca kullanıcı izniyle kullanılır
+    - Olası izinsiz girişleri veya sunucu kötüye kullanımını kontrol etmek için, ancak yalnızca güvenlik soruşturmaları için gerekli olduğunda kullanılır
+- **Saklama Süresi**
+  - Geçmişi istediği zaman temizleyebilen kullanıcı tarafından yönetilir
+  - Varsayılan olarak bash history, kullanıcı kaldırana kadar süresiz saklanır
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Kullanımlar**
+  - Kurulu uygulamaların düzgün çalışması için gerekli dosyalar
+- **Toplama**
+  - Kullanıcı tarafından slotuna kurulur
+- **Saklama**
+  - Appbox Servers = Uygulamaya bağlıdır
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+  - Appbox ekibi
+    - Kullanıcının izniyle uygulamaya özel destek sorguları için kullanılır
+- **Saklama Süresi**
+  - Kullanıcı kaldırana kadar süresiz
+
+#### User Data
+
+- **Kullanımlar**
+  - Kullanıcı ve/veya kullanıcının uygulamaları tarafından oluşturulan ve kullanıcının slotunda saklanan veriler
+- **Toplama**
+  - Kullanıcı ve/veya kullanıcının uygulamaları tarafından oluşturulur
+- **Saklama**
+  - Appbox Servers = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Kullanıcı
+    - Kullanıcının dosyaları Appbox sunucularındaki home klasörlerinde saklanır ve diğer kullanıcılardan izole edilir. Bunlara yalnızca kullanıcı erişebilir
+  - Appbox ekibi
+    - Kullanıcının izniyle destek sorguları için erişilebilir
+- **Saklama Süresi**
+  - Kullanıcı kaldırana kadar süresiz
+    - Meşru DMCA takedown bildirimleri için kullanıcıyı bilgilendirir ve içeriği 24 saat içinde silmesini isteriz
+- **Daha Fazla Bilgi**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Uyumluluğu
+
+UK Online Safety Act 2023 uyarınca Appbox, kullanıcıları korumak ve düzenleyici gerekliliklere uymak için belirli veri işleme uygulamaları uygular:
+
+### Content Safety Monitoring
+
+- **Kullanımlar**
+  - Yasa dışı ve zararlı içerik için risk değerlendirmesi ve azaltma
+  - Bildirilen içeriğin moderasyonu
+  - Yasa dışı içeriğin dağıtımının önlenmesi
+- **Toplama**
+  - İçerik bildirildiğinde veya işaretlendiğinde oluşturulur
+  - Bilinen yasa dışı materyaller için content hash değerleri
+- **Saklama**
+  - Appbox API = Şifrelenmiş
+  - Reports database = Düz metin
+- **Erişim ve Erişim Nedenleri**
+  - Appbox Compliance Team
+    - Bildirilen içeriği incelemek ve uygun işlem yapmak için
+    - Kanunen gerekli olduğunda UK makamlarıyla koordinasyon için
+  - UK düzenleyici makamları (kanunen gerekli olduğunda)
+    - Online Safety Act uyumluluğunu izlemek için
+    - Ciddi yasa dışı içeriği araştırmak için
+- **Saklama Süresi**
+  - Rapor verileri: çözümden sonra 2 yıl
+  - Content hash değerleri: Süresiz (yeniden dağıtımı önlemek için)
+
+### Risk Assessment Data
+
+- **Kullanımlar**
+  - Yasa dışı içerik ve çocuklara zararlı içerik için gerekli risk değerlendirmelerini yürütmek
+  - Orantılı güvenlik önlemleri uygulamak
+  - Düzenleyici makamlara uyumluluğu göstermek
+- **Toplama**
+  - Düzenli platform risk değerlendirmeleri yoluyla oluşturulur
+  - Potansiyel risk örüntülerini tanımlamak için toplulaştırılmış kullanım verileri
+- **Saklama**
+  - Appbox Compliance Systems = Korunmuş
+- **Erişim ve Erişim Nedenleri**
+  - Appbox Compliance Team
+    - Risk değerlendirmelerini yürütmek ve güncellemek için
+    - Güvenlik önlemlerini uygulamak için
+  - UK düzenleyici makamları (kanunen gerekli olduğunda)
+    - Risk değerlendirme yükümlülüklerine uyumu doğrulamak için
+- **Saklama Süresi**
+  - 3 yıl (sürekli uyumluluğu göstermek için)
+
+### Content Reporting System
+
+- **Kullanımlar**
+  - Kullanıcıların yasa dışı veya zararlı içerik bildirmesine olanak tanır
+  - Raporların durumunu ve alınan aksiyonları takip eder
+- **Toplama**
+  - Bildiren kullanıcılar tarafından sağlanan rapor ayrıntıları
+  - Bildirilen içerik hakkındaki bilgiler
+  - Raporlar üzerinde alınan aksiyonlar
+- **Saklama**
+  - Appbox API = Şifrelenmiş
+- **Erişim ve Erişim Nedenleri**
+  - Bildiren kullanıcı (kendi raporlarıyla sınırlı)
+  - İçeriği bildirilen kullanıcı (sınırlı bilgi)
+  - Appbox Compliance Team
+    - Raporları araştırmak ve çözmek için
+  - UK düzenleyici makamları (kanunen gerekli olduğunda)
+    - Ciddi yasa dışı içerik raporlarını araştırmak için
+- **Saklama Süresi**
+  - Çözümden sonra 2 yıl

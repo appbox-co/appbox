@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - VPS Uygulamaları için Birden Fazla Domain
+date: 2026-03-12 10:00:00
+excerpt: "Launch Week'in 4. günü. VPS uygulamaları artık birden fazla domain destekliyor; ihtiyaç duyduğunuz kadar özel domain ve Appbox subdomain ekleyin, hepsi otomatik SSL ile."
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: VPS Uygulamaları için Birden Fazla Domain
+
+4. gün. Dün size tam sanal makineler verdik. Bugün onlara düzgün domain desteği veriyoruz.
+
+3. günde VPS'leri yayınladığımızda her VM tek bir domain aldı. Bu pek çok kullanım senaryosu için yeterli, ancak VPS'iniz içinde bir web sunucusu çalıştırıyorsanız ve birçoğunuz çalıştırıyor, tek bir domain yetmez. Aynı makineye yönlenen, her birinin kendi SSL sertifikası ve web sunucusu yapılandırması olan birden fazla domaine ihtiyacınız olur.
+
+Bugün VPS uygulamaları **birden fazla domain** destekliyor. İstediğiniz kadar `*.user.appboxes.co` subdomain ekleyin, kendi özel domainlerinizi getirin veya ikisini karıştırın. Her biri SSL ve kullanıma hazır bir web sunucusu yapılandırması alır.
+
+## Nasıl Çalışır?
+
+Çalışan herhangi bir VPS uygulamasını açın; detay sayfasında bir **Custom Domains** kartı bulacaksınız. Tüm domainleriniz burada yer alır: o VPS'e bağlı her domaini, hangisinin birincil olduğunu ve ne zaman eklendiğini gösteren aranabilir, sıralanabilir bir tablo.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Bir VPS uygulama detay sayfasındaki Custom Domains tablosu" width="860" className="mt-8 mb-10" />
+</p>
+
+Yeni bir domain eklemek için **Add Domain**'e tıklayın. Bir parent domain seçer ve bir subdomain girersiniz; sistem geri kalanını halleder.
+
+## Appbox Subdomainleri
+
+Domain eklemenin en hızlı yolu mevcut Appbox domaininizi kullanmaktır. Parent olarak `user.appboxes.co` domaininizi seçin, bir subdomain yazın ve bitti. DNS sizin için zaten halledilmiştir ve domain anında doğrulanır.
+
+Bu, hızlı proje URL'leri, staging ortamları oluşturmak veya VPS'inizdeki farklı servislere kendi adreslerini vermek için harikadır. Backend'iniz için `api.user.appboxes.co` ve frontend'iniz için `app.user.appboxes.co` mu gerekiyor? İkisini de bir dakikadan kısa sürede ekleyin.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Bir VPS'e Appbox subdomain ekleme" width="560" className="mt-8 mb-10" />
+</p>
+
+Bunlar mevcut Appbox wildcard sertifikanızın altında yer aldığı için SSL otomatiktir. Beklemek yok, sertifika oluşturma yok, yapılandırma yok.
+
+## Özel Domainler
+
+Kendi domainlerinizi de VPS'inize yönlendirebilirsiniz. Özel base domaininizi seçin (veya doğrudan pencereden yeni bir tane ekleyin), subdomaini girin ve UI sizi DNS kurulumu boyunca yönlendirir.
+
+Pencere oluşturmanız gereken tam A kaydını gösterir: hostname, IP adresi, her şey. Hatta Cloudflare ve diğer popüler DNS sağlayıcıları için sağlayıcıya özel talimatlar da vardır; böylece A kaydının nasıl ekleneceğini aramanıza gerek kalmaz.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="DNS doğrulaması ve sağlayıcıya özel talimatlarla özel domain ekleme" width="560" className="mt-8 mb-10" />
+</p>
+
+DNS'iniz doğru IP'ye yöneldiğinde **Verify Again**'e basın; sistem domaini eklemeden önce kaydın doğru olduğunu onaylar.
+
+## SSL ve Web Sunucusu Yapılandırması
+
+Eklediğiniz her domain SSL alır. Appbox subdomainleri için mevcut wildcard sertifikası kullanılır. Özel domainler için sertifika otomatik olarak provision edilir.
+
+VPS kullanıcıları için bunu gerçekten faydalı kılan kısım şu: her domain, hem Nginx hem Apache için yapıştırmaya hazır yapılandırma parçaları veren bir **View Config** düğmesiyle gelir. Yapılandırma doğru `server_name`, SSL sertifika yolları, cipher suites ve protokol ayarlarını içerir. Parçayı kopyalayın, VM içindeki web sunucusu yapılandırmanıza bırakın, yeniden yükleyin ve o domain üzerinden trafik sunmaya başlayın.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="Nginx ve Apache için SSL yapılandırma parçaları" width="560" className="mt-8 mb-10" />
+</p>
+
+Dosya yollarını tahmin etmek yok. Sertifika konumlarını aramak yok. Cipher string'lerini çözmeye çalışmak yok. Hepsi orada, kopyalanmaya hazır.
+
+## Bu VPS Kullanıcıları için Neden Önemli?
+
+Çoklu domain desteği olmayan bir VPS, tek adresli bir sunucudan ibarettir. Bu, çok hızlı şekilde belirginleşen biçimlerde sınırlayıcıdır:
+
+- Ayrı API'si olan bir web app mi çalıştırıyorsunuz? En az iki domaine ihtiyacınız var.
+- VM'nizde birden fazla site mi barındırıyorsunuz? Her birinin kendi domainine ihtiyacı var.
+- Production yanında bir staging ortamı mı istiyorsunuz? Bu başka bir domain demek.
+- Yerelde geliştirme yapıyor ve gerçek bir domainle test etmek mi istiyorsunuz? Bir tane daha.
+
+## 4. Gün Şimdi Yayında
+
+Birden fazla domain desteği şu anda tüm VPS uygulamaları için kullanılabilir. VPS'inizi açın, Custom Domains'e kaydırın ve eklemeye başlayın.
+
+Yarın 5. gün ve bir sürprizimiz var. Geldiğini görmeyeceksiniz.
+
+---
+
+*Geri bildiriminiz mi var veya bir sorun mu buldunuz? support@appbox.co adresinden bize ulaşın ya da [billing.appbox.co](https://billing.appbox.co/submitticket.php) üzerinden bir ticket açın.*

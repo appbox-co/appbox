@@ -1,0 +1,99 @@
+---
+title: Uvod
+description: Dobrodošli v uradni dokumentaciji za odprtokodni frontend Appbox.
+sort: 1
+---
+
+**Dobrodošli v dokumentaciji Appbox**  
+Z veseljem sporočamo, da je frontend za [Appbox](https://www.appbox.co/) zdaj odprtokoden na [GitHub](https://github.com/appbox-co/appbox). Naš cilj je spodbujati sodelovalno skupnost, ki prispeva k dokumentaciji, razvija nove funkcije frontenda in pomaga izboljšati celotno izkušnjo Appbox.
+
+Čeprav je naša dokumentacija še vedno v zgodnji fazi, si prizadevamo zgraditi celovit vir, podoben drugim platformam v našem prostoru. Trenutno se dokumentacija osredotoča predvsem na smernice za prispevanje, vendar jo nameravamo razširiti s podrobnimi informacijami za vse aplikacije, ki so na voljo v Appbox.
+
+Dokler dokumentacija ne postane obsežnejša, za takojšnja vprašanja o posameznih aplikacijah ali storitvah obiščite našo [staro bazo znanja](https://billing.appbox.co/knowledgebase). Če potrebujete tehnično podporo, lahko [oddate zahtevek](https://billing.appbox.co/submitticket.php) za pomoč. Do teh novih dokumentov lahko vedno dostopate prek povezave v nogi našega spletnega mesta in spremljate naš napredek pri širitvi.
+
+## Prihodnji načrti
+
+- **Poglobljeni vodiči za aplikacije**  
+  Pokrivali bodo namestitev, odpravljanje težav in nasvete za vsako aplikacijo, podprto na naši platformi.
+- **Viri za uporabnike in razvijalce**  
+  Zagotavljali bodo vse od začetnikom prijaznih vodičev do naprednih referenc kode za prilagajanje vaše izkušnje Appbox.
+- **Vsebina, ki jo poganja skupnost**  
+  Spodbujamo pull requeste, povratne informacije in predloge — vsi so dobrodošli in pomagajo rasti temu projektu za vse.
+
+## Začetek
+
+Če si želite ogledati ali prispevati k naši odprtokodni kodi frontenda, klonirajte repozitorij [Appbox](https://github.com/appbox-co/appbox):
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Nato se premaknite v projekt in namestite njegove odvisnosti:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Vaša lokalna instanca bo na voljo na `http://localhost:3000`. Prosto raziskujte, spreminjajte in ustvarjajte pull requeste. Cenimo vsak prispevek!
+
+## Razvojna orodja
+
+### Linting
+
+Projekt vključuje celovito nastavitev lintinga z ESLint, TypeScript in integracijo Prettier. To zagotavlja dosleden slog kode in pomaga zgodaj ujeti pogoste napake. Preverjanja lintinga lahko zaženete ročno:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Naša konfiguracija ESLint vključuje:
+- pravila, specifična za TypeScript, prek `@typescript-eslint`,
+- linting, specifičen za Next.js, z `eslint-config-next`,
+- oblikovanje kode z integracijo Prettier.
+
+### Pre-commit Hooks
+
+Za upravljanje Git hook uporabljamo Husky, kar pomaga zagotoviti, da se v repozitorij potrdi samo kakovostna koda. Nastavljeni so naslednji hooki:
+
+- **pre-commit**: pred vsakim commit zažene `lint:fix`, da zagotovi kakovost kode
+- **commit-msg**: uporablja commitlint za uveljavljanje običajnega oblikovanja sporočil commit
+
+To pomeni, da bodo vaši commiti pred sprejetjem samodejno preverjeni glede kakovosti kode in pravilnega oblikovanja, kar ohranja visok standard v celotni kodni bazi.
+
+## Ustvarjanje Pull Requestov
+
+Ko ste pripravljeni prispevati svoje spremembe, sledite tem smernicam, da bo vaš Pull Request (PR) bolj verjetno sprejet:
+
+### Pred ustvarjanjem PR
+
+1. **Naredite rebase z najnovejše veje main**, da se izognete konfliktom pri združevanju:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Prepričajte se, da vsa preverjanja lintinga uspejo**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Prepričajte se, da vaša koda deluje lokalno**, tako da preizkusite ustrezno funkcionalnost.
+
+### Smernice za PR
+
+1. **PR naj bo osredotočen** - obravnavajte eno težavo ali funkcijo na PR.
+2. **Pišite jasna sporočila commit** - sledite običajnemu formatu sporočil commit.
+3. **Vključite jasne opise** - pojasnite, kaj vaš PR naredi in zakaj je potreben.
+4. **Dodajte teste** - kjer je primerno, dodajte teste, da preverite pravilno delovanje sprememb.
+5. **Dokumentirajte svojo kodo** - uporabite komentarje za zapleteno logiko in poskrbite, da so imena funkcij opisna.
+6. **Sledite obstoječim vzorcem** - vaša koda naj se ujema s slogom in vzorci, uporabljenimi v preostali kodni bazi.
+
+Pri večjih spremembah razmislite, da najprej odprete issue in razpravljate o pristopu, preden vložite čas v kodiranje. To pomaga zagotoviti, da je vaš prispevek usklajen s smerjo projekta, in prepreči nepotrebno delo.

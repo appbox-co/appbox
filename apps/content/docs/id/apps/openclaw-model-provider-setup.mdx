@@ -1,0 +1,516 @@
+---
+title: Setup provider model OpenClaw
+description: Konfigurasikan OpenClaw dengan API key provider model apa pun setelah instalasi.
+sort: 1
+---
+
+OpenClaw diinstal di Appbox tanpa mewajibkan API key model.
+
+Cara yang direkomendasikan untuk menyelesaikan setup adalah terhubung ke aplikasi OpenClaw Anda melalui SSH dan menjalankan wizard bawaan `openclaw onboard`. Wizard ini lebih aman daripada mengedit seluruh config secara manual karena mempertahankan pengaturan gateway Appbox sambil memandu Anda melalui provider model, API key, channel, health check, dan skill.
+
+Jika Anda tidak bisa atau tidak ingin menggunakan SSH, gunakan [metode dashboard cadangan](#backup-method-configure-provider-auth-in-the-dashboard) sebagai gantinya.
+
+## Metode yang direkomendasikan: SSH ke OpenClaw dan jalankan onboarding
+
+Gunakan metode ini untuk instalasi baru dan instalasi yang sudah ada yang perlu menambahkan atau mengubah kredensial provider model.
+
+### Yang Anda butuhkan terlebih dahulu
+
+- Halaman detail aplikasi OpenClaw Anda di Appbox.
+- **SSH Command** yang ditampilkan di bagian Configuration.
+- **Gateway Token / SSH Password** Anda. Ini adalah secret yang sama yang dibuat untuk login dashboard OpenClaw.
+- Akun provider model atau API key. Jika Anda belum memilikinya, lihat [Mendapatkan API key](#getting-api-keys-with-dashboard-links).
+
+Halaman detail aplikasi menampilkan perintah SSH yang siap disalin:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Halaman detail aplikasi Appbox OpenClaw dengan perintah SSH yang disorot"
+  width="860"
+/>
+
+### Terhubung dari macOS
+
+1. Buka **Terminal** atau **iTerm2**.
+2. Salin **SSH Command** dari halaman detail aplikasi OpenClaw.
+3. Tempel dan jalankan. Bentuknya akan mirip seperti ini:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Jika macOS menanyakan apakah Anda mempercayai host tersebut, ketik `yes` dan tekan Enter.
+5. Saat diminta password, tempel **Gateway Token / SSH Password** Anda dan tekan Enter. Terminal tidak akan menampilkan karakter apa pun saat Anda mengetik atau menempel password.
+
+### Terhubung dari Windows
+
+Windows 10 dan Windows 11 menyertakan klien OpenSSH secara default.
+
+1. Buka **Windows Terminal** atau **PowerShell**.
+2. Salin **SSH Command** dari halaman detail aplikasi OpenClaw.
+3. Tempel dan jalankan:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Jika Windows menanyakan apakah Anda mempercayai host tersebut, ketik `yes` dan tekan Enter.
+5. Saat diminta password, tempel **Gateway Token / SSH Password** Anda dan tekan Enter. PowerShell tidak akan menampilkan password yang ditempel.
+
+Jika Windows mengatakan `ssh` tidak dikenali, instal **OpenSSH Client** dari **Settings > System > Optional features**, lalu buka ulang Windows Terminal dan coba lagi.
+
+### Jalankan wizard onboarding OpenClaw
+
+Setelah SSH terhubung, jalankan:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 di macOS terhubung ke OpenClaw melalui SSH dan menjalankan perintah openclaw onboard"
+  width="860"
+/>
+
+Wizard ini interaktif. Gunakan pilihan khusus Appbox berikut:
+
+1. **Existing config:** pilih opsi untuk meninjau atau mengubah config saat ini. **Jangan** pilih reset penuh kecuali Anda sengaja ingin membangun ulang setup OpenClaw dari awal.
+2. **Model and auth:** pilih provider Anda, seperti OpenRouter, OpenAI, Anthropic, Google, xAI, atau provider custom yang kompatibel dengan OpenAI. Tempel API key saat wizard memintanya. OpenRouter adalah default termudah untuk sebagian besar pengguna karena satu key dapat merutekan ke banyak model. Jika Anda memiliki langganan OpenAI Codex, pilih **OpenAI Codex** dalam daftar provider, bukan opsi yang hanya bernama `codex`.
+3. **Default model:** pilih model yang direkomendasikan wizard untuk provider tersebut, atau masukkan nilai `provider/model` secara manual, seperti `openrouter/auto`.
+4. **Workspace:** pertahankan workspace default kecuali Anda punya alasan khusus untuk mengubahnya.
+5. **Gateway settings:** pertahankan pengaturan gateway Appbox yang sudah ada. Secara khusus, biarkan token auth aktif dan pertahankan pengaturan port/bind gateway yang sudah ada.
+6. **Channels:** konfigurasikan WhatsApp, Telegram, Discord, Signal, iMessage, atau channel lain sekarang, atau lewati dan tambahkan nanti dengan `openclaw configure`.
+7. **Web search:** pilih provider pencarian jika Anda memilikinya, atau lewati untuk saat ini.
+8. **Daemon/service install:** Appbox sudah mengawasi OpenClaw di dalam container, jadi lewati instalasi daemon jika wizard menawarkannya.
+9. **Health check:** biarkan wizard menjalankan health check.
+10. **Skills:** izinkan wizard memeriksa skill bawaan. Saat ditanya **Preferred node manager for skill installs**, pilih `npm`.
+
+Saat onboarding selesai, kembali ke dashboard OpenClaw Anda. Jika dashboard sudah terbuka, refresh dan uji prompt chat singkat.
+
+Perintah lanjutan yang berguna melalui SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Mendapatkan API key (dengan link dashboard)
+
+Gunakan console provider berikut untuk membuat key. Dengan metode SSH yang direkomendasikan, tempel key saat `openclaw onboard` memintanya. Dengan metode dashboard cadangan, gabungkan key ke `Config > Secrets > Raw`.
+
+### Direkomendasikan pertama: OpenRouter (default terbaik untuk sebagian besar pengguna)
+
+Mengapa kami merekomendasikannya:
+
+- Memberi satu key untuk banyak vendor model.
+- Anda dapat menggunakan `openrouter/auto`, yang dapat mengganti model berdasarkan tingkat kesulitan tugas.
+- `auto` dapat mengurangi biaya dengan merutekan tugas yang lebih sederhana ke model yang lebih murah.
+
+Cara mendapatkan key:
+
+1. Buka [OpenRouter](https://openrouter.ai/) dan masuk.
+2. Buka [pengaturan API Keys](https://openrouter.ai/settings/keys).
+3. Klik **Create** dan salin key (ditampilkan sekali).
+4. Gunakan saat wizard OpenClaw meminta API key OpenRouter Anda. Untuk metode dashboard cadangan, key config adalah `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Screenshot halaman API keys OpenRouter dari tutorial publik"
+  width="860"
+/>
+Tutorial sumber: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Cara mendapatkan key:
+
+1. Masuk ke [OpenAI Platform](https://platform.openai.com/).
+2. Buka [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Klik **Create new secret key**.
+4. Salin segera (OpenAI hanya menampilkan nilai lengkap satu kali).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Screenshot pengaturan API key OpenAI dari tutorial publik"
+  width="860"
+/>
+Tutorial sumber: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Cara mendapatkan key:
+
+1. Masuk ke [Anthropic Console](https://console.anthropic.com/).
+2. Buka [API Keys](https://console.anthropic.com/settings/keys).
+3. Klik **Create Key**.
+4. Salin key segera (ditampilkan sekali).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Screenshot pembuatan API key Anthropic dari tutorial publik"
+  width="860"
+/>
+Tutorial sumber: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini melalui AI Studio)
+
+Cara mendapatkan key:
+
+1. Buka [Google AI Studio](https://aistudio.google.com/).
+2. Buka [API Keys](https://aistudio.google.com/app/apikey).
+3. Klik **Create API key** (project baru atau yang sudah ada).
+4. Salin dan simpan key.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Screenshot pembuatan API key Google AI Studio dari tutorial publik"
+  width="860"
+/>
+Tutorial sumber: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Catatan: dashboard provider dapat sering berubah dan mungkin menampilkan prompt login tergantung status sesi Anda.
+
+## Metode cadangan: konfigurasikan auth provider di dashboard
+
+Gunakan metode ini hanya jika SSH tidak tersedia atau Anda lebih memilih konfigurasi manual. Editor Raw dashboard berfungsi, tetapi ia mengedit seluruh objek config OpenClaw sekaligus. Berhati-hatilah untuk menggabungkan pengaturan provider ke file yang sudah ada, bukan mengganti gateway Appbox dan default skill.
+
+1. Buka URL dashboard OpenClaw Anda dari halaman detail aplikasi terinstal.
+2. Masuk ke **Config > Secrets**.
+3. Pilih **Raw**, bukan Form.
+4. Klik tombol Reveal sensitive values (ikon mata dicoret).
+5. **Gabungkan** pengaturan provider dari contoh di bawah ke config Anda yang sudah ada (lihat [Bagaimana config provider manual masuk ke file penuh](#how-manual-provider-config-fits-in-the-full-file)) — jangan ganti seluruh file kecuali Anda memang ingin mereset gateway, skill, dan default Appbox lainnya.
+6. Simpan dan terapkan perubahan konfigurasi.
+
+### Bagaimana config provider manual masuk ke file penuh
+
+**Config > Secrets > Raw** mengedit **seluruh** config OpenClaw dalam satu objek. Di Appbox, file tersebut sudah mencakup hal-hal seperti `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (skill bawaan), `commands`, dan terkadang `meta`. Snippet di bagian [Contoh provider utama](#major-provider-examples) hanya menampilkan bagian yang Anda butuhkan untuk model: tree `models` dan `agents.defaults.model.primary`.
+
+**Yang harus dilakukan:** pertahankan key top-level yang sudah ada (`gateway`, `skills`, `commands`, dan sebagainya) lalu **tambahkan atau perbarui** dua bagian ini:
+
+- **`models.providers`** — tambahkan provider Anda (misalnya `openrouter`) beserta `apiKey`, `baseUrl` jika diperlukan, dan daftar `models`.
+- **`agents.defaults.model.primary`** — atur string model default (misalnya `openrouter/auto`) agar agent menggunakan provider tersebut.
+
+Jika `models` atau `agents` sudah ada, gabungkan key baru ke objek tersebut, bukan menduplikasinya.
+
+Di bawah ini contoh bentuk **satu** file Raw penuh sebagai **JSON** (editor mungkin juga menerima quote bergaya JSON5 dalam praktiknya). File asli Anda mungkin memiliki lebih banyak field (misalnya metadata model yang lebih kaya, `meta`). **Blok provider** di contoh berikutnya adalah bagian yang Anda selaraskan dengan `models` dan `agents` di sini.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Token gateway vs API key provider:** `gateway.auth.token` hanya untuk login ke OpenClaw Control UI / gateway. `models.providers.*.apiKey` adalah key vendor LLM Anda (OpenRouter, OpenAI, dan sebagainya) — keduanya berbeda.
+
+## Contoh provider utama
+
+Gunakan satu blok provider terlebih dahulu, pastikan berfungsi, lalu tambahkan provider lain. Setiap contoh di bawah adalah **fragmen merge**: `...` adalah config yang dihilangkan (baris di atas atau bawah), dan `},` sebelum `"models"` adalah penutup key apa pun yang berada di atas `models` dalam file Anda (misalnya `skills` atau `commands`). Snippet ini bukan JSON valid jika berdiri sendiri — gabungkan bagian `models` dan `agents` ke objek root Anda.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Catatan Bedrock (tanpa API key)
+
+Amazon Bedrock menggunakan kredensial AWS (misalnya `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) alih-alih API key. Entri provider minimal terlihat seperti:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Catatan
+
+- Token auth gateway dan API key provider model adalah pengaturan yang berbeda.
+- Jika Anda mendapat error provider (misalnya key Anthropic hilang), perbarui model default ke provider yang sudah Anda konfigurasi.
+- Jika provider gagal validasi, pastikan terlebih dahulu field provider yang diperlukan tersedia (`baseUrl`, `models`, dan `apiKey` jika relevan).
+
+## Dokumentasi provider resmi
+
+- [Direktori provider OpenClaw](https://docs.openclaw.ai/providers/index)
+- [Provider OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [Provider OpenAI](https://docs.openclaw.ai/providers/openai)
+- [Provider Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [Provider Google](https://docs.openclaw.ai/providers/google)
+- [Provider xAI](https://docs.openclaw.ai/providers/xai)
+- [Provider Mistral](https://docs.openclaw.ai/providers/mistral)
+- [Provider Together AI](https://docs.openclaw.ai/providers/together)
+- [Provider Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

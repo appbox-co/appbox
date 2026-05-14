@@ -1,0 +1,65 @@
+---
+title: Service Level Agreement
+description: Dedikasi kami terhadap konsistensi dan keandalan layanan
+---
+
+Service Level Agreement ("SLA") ini adalah dokumen yang mengatur Ketentuan dan penggunaan Layanan yang disediakan oleh Appbox. Dengan menggunakan Layanan kami, Anda mengakui dan menyetujui ketentuan yang dijelaskan di bawah ini.
+
+Karena kami beroperasi dalam lingkungan bersama dan menyediakan layanan dengan sifat tertentu, sejumlah downtime terkadang tidak dapat dihindari. Perjanjian ini menjelaskan bagaimana kami mengelola kejadian downtime sepanjang periode langganan Anda dan menjabarkan komitmen kami dalam menyelesaikan sengketa serta menawarkan kompensasi.
+
+## Downtime Server, Maintenance Server & Kompensasi
+
+Appbox berupaya sebaik mungkin untuk menjaga server tetap operasional dan dapat diakses semua pengguna sepanjang masa billing mereka.
+
+Saat maintenance server dijadwalkan sebelumnya, pengguna akan diberi tahu melalui beberapa kanal, seperti pembaruan email, Appbox Status Page, dan Client Area Announcements. Pengguna yang terdampak maintenance terencana tidak memenuhi syarat untuk kompensasi.
+
+Prosedur maintenance tidak terjadwal atau darurat akan dikomunikasikan secepat mungkin, dan pengguna yang terdampak kejadian tersebut dapat memenuhi syarat untuk kredit sebagaimana ditentukan di bawah ini:
+
+| Durasi Downtime  | Kompensasi                                                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Hingga 6 jam     | Ditentukan berdasarkan diskresi tim                                                                                                       |
+| Hingga 12 jam    | Setara dengan 1 hari kredit layanan                                                                                                       |
+| Hingga 24 jam    | Setara dengan 2 hari kredit layanan                                                                                                       |
+| Lebih dari 48 jam | Dikreditkan dua kali durasi downtime (misalnya, outage 3 hari menghasilkan 6 hari kredit layanan)                                        |
+
+Kebijakan ini **mengecualikan downtime apa pun yang terkait dengan aplikasi yang Anda instal.**
+
+## Kegagalan Drive dan Kehilangan Data
+
+Platform Appbox didasarkan pada infrastruktur bersama yang dirancang untuk menyediakan distribusi resource yang adil dan penggunaan disk menyeluruh. Meskipun kami berupaya sebaik mungkin, kegagalan hardware, seperti kerusakan drive, terkadang dapat terjadi.
+
+Jika kegagalan drive menyebabkan Anda kehilangan akses ke data dan data tersebut tidak dapat dipulihkan, Anda memenuhi syarat untuk **satu bulan penuh layanan tanpa biaya**.
+
+Kami sangat menyarankan untuk menyimpan backup semua data penting yang Anda simpan di layanan Anda.
+
+Harap dicatat bahwa jika data hilang akibat tindakan yang dimulai oleh pengguna (misalnya, penghapusan tidak sengaja) dan tidak ditemukan error terkait sistem, tidak ada kompensasi yang akan diberikan.
+
+## Penggunaan Wajar Resource Server
+
+Layanan kami diberikan di atas resource bersama, sehingga penting bagi setiap klien untuk memastikan aktivitas mereka tidak mengganggu performa pengguna lain dan tetap berada dalam batas resource yang dapat diterima.
+
+Appbox dapat, tanpa pemberitahuan sebelumnya, menghentikan aplikasi atau proses apa pun yang berdampak negatif pada pengalaman klien lain. Dalam kasus penyalahgunaan resource yang parah, layanan klien dapat ditangguhkan atau dihentikan sepenuhnya.
+
+### Kebijakan Penggunaan Wajar Disk I/O
+
+Kebijakan ini hanya berlaku untuk paket NG-8000 dan lebih kecil (paket disk non-dedicated).
+
+Untuk memastikan performa optimal bagi semua pengguna, Appbox menggunakan sistem monitoring Disk I/O otomatis yang:
+
+1. Terus memantau utilisasi disk di seluruh resource bersama
+2. Mengidentifikasi aplikasi yang mengonsumsi resource Disk I/O berlebihan dalam periode waktu yang panjang
+3. Secara otomatis menerapkan tindakan throttling bila diperlukan
+
+Jika aplikasi Anda terdeteksi mengonsumsi Disk I/O berlebihan:
+- Anda dapat menerima notifikasi peringatan
+- Penggunaan tinggi yang persisten akan mengakibatkan throttling otomatis pada kecepatan Disk I/O Anda
+- Pelanggaran berulang akan menghasilkan batas throttling yang semakin ketat
+- Throttling bersifat sementara dan akan dihapus otomatis setelah penggunaan kembali ke level normal
+
+Harap dicatat bahwa aplikasi intensif resource dapat memicu tindakan ini jika dijalankan tanpa mempertimbangkan pengguna lain.
+
+Kami menegakkan kebijakan ini untuk menjamin semua pengguna memiliki pengalaman yang memuaskan di platform kami.
+
+## Waktu Respons Dukungan
+
+Kami tidak memiliki waktu minimum respons atau penyelesaian dukungan, namun kami menargetkan untuk menjawab semua pertanyaan dukungan dalam 24 jam.

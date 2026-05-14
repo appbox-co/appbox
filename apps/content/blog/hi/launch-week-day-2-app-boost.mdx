@@ -1,0 +1,77 @@
+---
+title: Launch Week Day 2 - App Boost
+date: 2026-03-10 10:00:00
+excerpt: Launch Week का Day 2। पेश है App Boost, अपने plan को upgrade किए बिना apps को अधिक resources देने का नया तरीका।
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, प्रदर्शन, resources]
+---
+
+# Launch Week Day 2: App Boost पेश है
+
+Day 2। चलिए resources की बात करते हैं।
+
+हमें मिलने वाले सबसे common questions में से एक कुछ ऐसा होता है: "मैं इस app को अधिक RAM कैसे दूं?" या "क्या पूरा plan upgrade किए बिना इस एक app को faster बना सकता हूं?" आज तक जवाब हमेशा यही था: plan upgrade करें या जो है उसी में काम चलाएं।
+
+अब यह बदल रहा है। आज हम **App Boost** launch कर रहे हैं।
+
+## App Boost क्या है?
+
+App Boost आपको अपने available app slots का उपयोग करके individual apps को अधिक resources allocate करने देता है। हर app को आपके Appbox resources का fixed share मिलने के बजाय, अब आप किसी भी app पर boost level slide करके उसकी CPU और RAM allocation बढ़ा सकते हैं।
+
+Idea simple है: कुछ apps को ज्यादा power चाहिए होती है और कुछ minimum resources में पूरी तरह ठीक रहते हैं। Boost आपको अपने plan की unused capacity लेकर उसे वहीं direct करने देता है जहां सच में जरूरत है।
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="App Boost controls on the app detail page" width="860" className="mt-8 mb-10" />
+</p>
+
+## यह कैसे काम करता है
+
+हर Appbox plan में app slots की एक संख्या होती है। हर installed app उन slots में से कुछ इस्तेमाल करता है। App Boost के साथ, आप किसी app को additional slots assign कर सकते हैं ताकि उसका resource multiplier बढ़े।
+
+असल में आप यह control कर रहे हैं:
+
+- **Boost Slots**: इस app को dedicate किए गए extra slots की संख्या। हर slot resource multiplier को fixed increment से बढ़ाता है (आमतौर पर 0.1x per slot)।
+- **Multiplier**: resulting resource scaling factor। 0 boost slots पर आप 1.0x (baseline) पर होते हैं। Slide up करें और plan के अनुसार app को 1.3x, 2x या और higher तक push कर सकते हैं।
+- **RAM and CPUs**: slider drag करते ही ये real time में update होते हैं, ताकि commit करने से पहले आप ठीक-ठीक देख सकें कि app को कितनी memory और CPU मिलेगी।
+- **Slot Cost**: दिखाता है कि app total कितने slots consume करेगा (base cost plus boost slots), ताकि trade-off हमेशा साफ रहे।
+
+Slider whole multiplier values (2x, 3x आदि) पर milestone markers दिखाता है और उन्हें hit करने पर थोड़ा confetti भी चलाता है। हम रोक नहीं पाए।
+
+## Install Time पर Boost
+
+App boost करने के लिए आपको app install होने के बाद तक wait करने की जरूरत नहीं। Boost slider install dialog में built-in है, इसलिए app शुरू होने से पहले ही आप resource level चुन सकते हैं।
+
+यह especially heavier apps जैसे OSes या media servers के लिए useful है, जहां आपको upfront पता होता है कि extra resources से फायदा होगा।
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="Boost slider in the app install dialog" width="560" className="mt-8 mb-10" />
+</p>
+
+## Install के बाद Boost
+
+पहले से apps running हैं? किसी भी app की detail page खोलें और वहीं App Boost card मिलेगा। Slider drag करें, resources preview करें, Apply Boost दबाएं।
+
+Resource changes restart के बिना live apply होते हैं।
+
+## Existing Apps का क्या?
+
+अगर आपके पास आज से पहले installed apps हैं, तो वे पहले की तरह previous resource multiplier system ही इस्तेमाल करते रहेंगे। आगे newly installed apps के लिए App Boost enabled है। हम इसे cleanly roll out करना चाहते थे ताकि जो पहले से running है उसमें disruption न हो।
+
+## और Boost चाहिए?
+
+आप कितना maximum boost apply कर सकते हैं, यह आपके plan के available slots पर depend करता है। अगर room कम पड़ रहा है और आप और आगे जाना चाहते हैं, तो plan upgrade करने से आपको काम करने के लिए अधिक slots मिलेंगे। Boost UI में ही upgrade link है जो सीधे आपको billing area में ले जाता है।
+
+## Resource Preview
+
+जिन details से मैं सबसे ज्यादा खुश हूं, उनमें से एक slider के नीचे बैठा Resource Preview panel है। Drag करते समय यह multiplier, slot cost, RAM और CPUs को real time में update करता है। कोई guesswork नहीं, कोई surprise नहीं। Apply करने से पहले आपको ठीक पता होता है कि आपका app क्या पाएगा।
+
+## Day 2 अब Live है
+
+App Boost अभी सभी newly installed apps के लिए उपलब्ध है। Log in करें, app install करें और slider try करें।
+
+कल Day 3 है, और हमारे पास कुछ बड़ा है। तब मिलते हैं।
+
+---
+
+*Feedback है या issue मिला? support@appbox.co पर contact करें या [billing.appbox.co](https://billing.appbox.co/submitticket.php) पर ticket खोलें।*

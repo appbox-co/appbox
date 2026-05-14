@@ -1,0 +1,150 @@
+---
+title: Launch Week Day 1 - 新しいダッシュボード
+date: 2026-03-09 10:00:00
+excerpt: Launch Week Day 1 が始まりました。新しい Appbox ダッシュボードが公開されました。
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, ダッシュボード, セキュリティ, app-store, i18n, file-explorer]
+---
+
+# Launch Week Day 1: 新しいダッシュボードが公開されました
+
+Launch Week は月曜日に始まるとお伝えしました。そして Day 1 が公開されました。
+
+本日、新しい Appbox ダッシュボード体験をリリースします。これはコントロールパネル全体にわたる大きな UI とワークフローのアップグレードで、目的はシンプルです。日々の appboxes 運用を、より速く、より分かりやすく、より煩わしくなくすることです。
+
+このアップデートは長い間進めてきたもので、ようやく皆さんに届けられることをとても嬉しく思います。
+
+## 新しいコントロールセンター
+
+これまで、この情報は複数のページやフローに分散していました。今日からは、それらを1つの運用ビューにまとめる専用ダッシュボードを導入します。
+
+- 最新のブログとプラットフォーム更新
+- サービス概要カード
+- 通知
+- 最新および最近更新されたアプリ
+
+タブを行き来する代わりに、1ページを開くだけで重要な情報をすぐに確認できます。
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Appbox ダッシュボード概要" width="860" className="mt-8 mb-10" />
+</p>
+
+## Appbox 管理を再設計
+
+appboxes エリアは、よりすっきりしたカードレイアウトと、素早く把握しやすい表示に作り直しました。状態、ストレージ、転送量、スロット使用量をすぐに確認し、詳細へ直接移動できます。
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="新しいレイアウトで表示されたあなたの appboxes" width="860" className="mt-8 mb-10" />
+</p>
+
+各 appbox の中では、サマリービューがより運用向けになりました。リソースカード、チャート、主要アクションへアクセスしやすくなり、一目で理解しやすくなっています。
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="ライブ統計付きの Appbox サマリー" width="860" className="mt-8 mb-10" />
+</p>
+
+これは静的な情報画面ではなく、実際に環境を使いながら開いておく種類のページです。
+
+## App Store との統合を改善
+
+アプリの発見とアプリ詳細のフローも改善し、別々のツールではなく1つのシステムの一部として感じられるようにしました。
+
+ストアビューはより整理され、カテゴリは閲覧しやすくなり、発見からインストールまでの導線は短くなりました。
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="統合された App Store 体験" width="860" className="mt-8 mb-10" />
+</p>
+
+アプリ詳細ページでは、バージョンやリソースの詳細がより分かりやすくなり、インストールやアップグレード前に、より早く、少ない不安で判断できます。
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="改善されたアプリ詳細とバージョン表示" width="860" className="mt-8 mb-10" />
+</p>
+
+そして本日から、アプリは **複数のインストール可能バージョン** をフロー内で直接公開・サポートできるようになりました。必要なバージョンを選び、いつでも別のバージョンへ切り替えられます。
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="複数リリースを持つアプリのバージョンセレクター" width="304" className="mt-8 mb-10" />
+</p>
+
+## カスタムドメインが主要機能に
+
+カスタムドメインは、もう気まずい追加手順ではありません。インストール体験の中核になりました。
+
+アプリがドメインを必要とする場合、セットアップはインストールダイアログ内で、分かりやすいガイド付きフローとして行われます。
+
+1. Appbox を選択します。
+2. **Domain Type** を選びます。
+   - **Appbox Domain** は Appbox の既定ドメインを使います。
+   - **Custom Domain** は所有している独自ドメインを使います。
+3. **Base Domain** を選びます。
+4. 使用したい **Subdomain** を入力します。
+5. カスタムドメインを選んだ場合、Appbox は追加すべき正確な DNS レコード（host/name と target IP）を表示し、その場で検証できます。
+
+レコードを手探りで推測したり、ドキュメントをコピーしたり、インストールを何度もやり直したりする代わりに、アプリをインストールする同じ場所で、組み込みの DNS 設定と検証ステップを使えます。
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="DNS 検証付きのアプリインストール中カスタムドメイン設定" width="560" className="mt-8 mb-10" />
+</p>
+
+## 新しい File Explorer（ゼロから構築）
+
+File Explorer はゼロから作り直しました。以前の体験では、ファイル管理は削除に限られていました。今では、次の機能を備えた本格的なファイルマネージャーです。
+
+- アップロード
+- 新規フォルダ作成
+- 名前変更
+- 削除
+- ダウンロード
+- リスト/グリッド表示の切り替え
+- パンくずナビゲーションとコンテキストアクション
+
+追加のアプリをインストールしなくても、appbox ファイルをネイティブに管理できます。
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="拡張されたファイル操作を備えた新しい File Explorer" width="560" className="mt-8 mb-10" />
+</p>
+
+## 二要素認証
+
+2026年において、セキュリティは任意であるべきではありません。本日から、Appbox アカウントは組み込みの二要素認証に対応します。
+
+アカウントエリアから直接 2FA を有効化・管理でき、アカウント復旧用のリカバリーコード管理も含まれます。
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="二要素認証の管理" width="860" className="mt-8 mb-10" />
+</p>
+
+これはプラットフォームにとって大きなセキュリティ上の節目であり、ユーザーから最も継続的に要望されていた機能の1つです。
+
+## ダッシュボード全体の新しいデザイン言語
+
+ナビゲーション、余白、カード、タイポグラフィ、インタラクション状態にわたって、ビジュアルシステムを刷新しました。目標は一貫性と集中です。視覚的なノイズを減らし、階層を強め、読みやすさを高め、ダークテーマとライトテーマの両方でより現代的なプロダクト感を実現しました。
+
+真夜中にアプリをインストールするとき、まぶしい白画面に悩まされることはもうありません。
+
+## 毎日の UX を改善: テーマ、言語、より速いショートカット
+
+このリリースには、毎日のダッシュボード利用をより快適にする品質向上機能も含まれます。
+
+- UI 内で直接使える **ネイティブな言語切り替え**（今後さらに多くの言語を追加予定）。
+- サービスカード上に小さなクイックアクセスアイコンとして表示される **ピン留めアプリのショートカット**。よく使うアプリへより速く移動できます。
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="新しいダッシュボードのネイティブ言語切り替え" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="サービスカード上のピン留めアプリショートカット" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  言語切り替えとピン留めショートカットにより、日常的な操作が必要な場所に置かれます。
+</p>
+
+## Day 1 は今すぐ利用できます
+
+すでに Appbox ユーザーであれば、ログインして新しいダッシュボードをすぐに使い始められます。
+
+いつものように、フィードバックを歓迎します。Appbox を改善する最短の方法は、出荷し、耳を傾け、実際の利用に合わせて反復することです。
+
+---
+
+*フィードバックや問題を見つけましたか？support@appbox.co へ連絡するか、[billing.appbox.co](https://billing.appbox.co/submitticket.php) でチケットを開いてください。*

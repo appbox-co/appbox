@@ -1,0 +1,99 @@
+---
+title: Wprowadzenie
+description: Witamy w oficjalnej dokumentacji frontend Appbox udostępnionego jako open source.
+sort: 1
+---
+
+**Witamy w dokumentacji Appbox**  
+Z przyjemnością informujemy, że frontend [Appbox](https://www.appbox.co/) jest teraz udostępniony jako open source na [GitHub](https://github.com/appbox-co/appbox). Naszym celem jest rozwijanie współpracującej społeczności, która tworzy dokumentację, rozwija nowe funkcje frontendu i pomaga ulepszać całe doświadczenie Appbox.
+
+Nasza dokumentacja jest jeszcze na wczesnym etapie, ale pracujemy nad zbudowaniem kompleksowego zasobu podobnego do innych platform w naszej branży. Obecnie dokumentacja skupia się głównie na wytycznych dotyczących kontrybucji, ale planujemy rozszerzyć ją o szczegółowe informacje dotyczące wszystkich aplikacji dostępnych w Appbox.
+
+Dopóki dokumentacja nie będzie bardziej rozbudowana, w przypadku pilnych pytań o konkretne aplikacje lub usługi odwiedź naszą [starszą bazę wiedzy](https://billing.appbox.co/knowledgebase). Jeśli potrzebujesz wsparcia technicznego, możesz [wysłać zgłoszenie](https://billing.appbox.co/submitticket.php), aby uzyskać pomoc. Do nowych dokumentów zawsze możesz przejść z linku w stopce naszej strony i śledzić postępy ich rozbudowy.
+
+## Plany na przyszłość
+
+- **Szczegółowe przewodniki po aplikacjach**  
+  Obejmujące instalację, rozwiązywanie problemów i wskazówki dla każdej aplikacji obsługiwanej na naszej platformie.
+- **Zasoby dla użytkowników i deweloperów**  
+  Od poradników przyjaznych początkującym po zaawansowane referencje kodu do dostosowywania doświadczenia Appbox.
+- **Treści tworzone przez społeczność**  
+  Zachęcamy do pull requestów, opinii i sugestii. Wszystkie są mile widziane i pomagają rozwijać ten projekt dla wszystkich.
+
+## Pierwsze kroki
+
+Jeśli chcesz sprawdzić lub współtworzyć nasz frontend udostępniony jako open source, sklonuj repozytorium [Appbox](https://github.com/appbox-co/appbox):
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Następnie przejdź do projektu i zainstaluj jego zależności:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Twoja lokalna instancja będzie dostępna pod adresem `http://localhost:3000`. Zachęcamy do eksplorowania, wprowadzania zmian i tworzenia pull requestów. Doceniamy każdą kontrybucję!
+
+## Narzędzia developerskie
+
+### Linting
+
+Projekt zawiera rozbudowaną konfigurację lintingu z użyciem ESLint z TypeScript oraz integracją Prettier. Zapewnia to spójny styl kodu i pomaga wcześnie wychwytywać typowe błędy. Kontrole lintingu możesz uruchomić ręcznie:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Nasza konfiguracja ESLint obejmuje:
+- Reguły specyficzne dla TypeScript przez `@typescript-eslint`
+- Linting specyficzny dla Next.js z `eslint-config-next`
+- Formatowanie kodu z integracją Prettier
+
+### Hooki pre-commit
+
+Używamy Husky do zarządzania hookami Git, co pomaga zapewnić, że do repozytorium trafia tylko kod dobrej jakości. Skonfigurowane są następujące hooki:
+
+- **pre-commit**: Uruchamia `lint:fix` przed każdym commitem, aby zapewnić jakość kodu
+- **commit-msg**: Używa commitlint do wymuszania konwencjonalnego formatowania wiadomości commitów
+
+Oznacza to, że Twoje commity będą automatycznie sprawdzane pod kątem jakości kodu i poprawnego formatowania przed ich zaakceptowaniem, utrzymując wysoki standard w całej bazie kodu.
+
+## Tworzenie Pull Requestów
+
+Gdy będziesz gotowy do wniesienia swoich zmian, zastosuj się do tych wytycznych, aby zwiększyć szanse na zaakceptowanie Pull Requestu (PR):
+
+### Przed utworzeniem PR
+
+1. **Wykonaj rebase względem najnowszej gałęzi main**, aby uniknąć konfliktów scalania:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Upewnij się, że cały linting przechodzi pomyślnie**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Upewnij się, że kod działa lokalnie**, testując odpowiednią funkcjonalność.
+
+### Wytyczne dotyczące PR
+
+1. **Utrzymuj PR skupiony** - Rozwiązuj jeden problem lub jedną funkcję w ramach jednego PR.
+2. **Pisz jasne wiadomości commitów** - Zgodnie z konwencjonalnym formatem commitów.
+3. **Dodawaj czytelne opisy** - Wyjaśnij, co robi Twój PR i dlaczego jest potrzebny.
+4. **Dodawaj testy** - Tam, gdzie ma to zastosowanie, dodaj testy potwierdzające, że zmiany działają poprawnie.
+5. **Dokumentuj kod** - Używaj komentarzy przy złożonej logice i dbaj o opisowe nazwy funkcji.
+6. **Stosuj istniejące wzorce** - Twój kod powinien pasować do stylu i wzorców używanych w pozostałej części bazy kodu.
+
+Przy większych zmianach rozważ najpierw otwarcie issue, aby omówić podejście przed poświęceniem czasu na kodowanie. Pomaga to upewnić się, że Twoja kontrybucja jest zgodna z kierunkiem projektu i pozwala uniknąć niepotrzebnej pracy.

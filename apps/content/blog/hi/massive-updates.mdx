@@ -1,0 +1,108 @@
+---
+title: Appbox के लिए बड़े updates आने वाले हैं! 🚀
+date: 2025-04-08 11:58:00
+excerpt: नई website, open-source पहल, containerized apps, हमारा अपना network infrastructure, और Appbox में आने वाले कई रोमांचक developments!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, होस्टिंग, infrastructure, open-source, नेटवर्किंग]
+---
+
+# Appbox में एक नया era शुरू हो रहा है
+
+कई महीनों तक पर्दे के पीछे काम करने, देर रातों तक जागने, और बहुत ज्यादा coffee पीने के बाद, आखिरकार मैं आपको दिखाने के लिए excited हूं कि हम क्या बना रहे थे। यह सिर्फ एक और update नहीं है। यह Appbox को ground up से rebuild करने की शुरुआत है।
+
+## हमारे नए digital home में आपका स्वागत है
+
+आप हमारा बिल्कुल नया website देख रहे हैं! हमने आखिरकार पुराने WordPress setup को goodbye कह दिया है। पूरी चीज modern tech से rebuild की गई है, जो तेज है, ज्यादा secure है, और सच में properly scale करती है।
+
+यह नया site proper documentation, regular blog posts (जैसे यह वाला), और eventually हमारे नए platform के frontend का home बनेगा। Design सिर्फ clean नहीं है - यह functional भी है और चीजें ढूंढना काफी आसान बनाता है।
+
+Under the hood हम Next.js और ContentLayer इस्तेमाल कर रहे हैं, जिससे बहुत fast performance और बेहतर development experience मिलता है। Site multiple languages support करता है, SEO automatically handle करता है, XML और JSON दोनों में RSS feeds देता है, और dark mode भी शामिल है क्योंकि किसी को भी रात 2 बजे bright white screens से जूझना नहीं चाहिए।
+
+## हम open source हो रहे हैं!
+
+हम open source भी हो रहे हैं! जिस website पर आप यह पढ़ रहे हैं? उसका code public है और कोई भी इसमें contribute कर सकता है।
+
+यह हमारे लिए बहुत बड़ा कदम है। हमने हमेशा transparent रहने की कोशिश की है, लेकिन यह उस बात को सच में action में बदलना है: community के लिए ही नहीं, community के साथ build करना। अगर आप developer हैं और कभी उन tools को shape करने में मदद करना चाहते थे जिन्हें आप इस्तेमाल करते हैं, अब कर सकते हैं। Contribution guidelines और start करने के लिए जरूरी सब कुछ हमारे GitHub repo में देखें।
+
+## Appbox v2 का परिचय
+
+नया website सिर्फ शुरुआत है। हम Appbox v2 पर काम कर रहे हैं, जो हमारा अब तक का सबसे बड़ा update है।
+
+Container deployment हमेशा हमारी core strength रही है, लेकिन v2 उसे आगे ले जाता है उस चीज के साथ जो सब मांग रहे थे: full VPS support। VPS apps आपको बिना restrictions complete root access देंगे। अगर आपको अपने environment पर total control चाहिए, तो यही वह चीज है जिसका इंतजार था।
+
+हमने इसे एक server पर पहले ही working कर लिया है और यह बहुत अच्छी तरह चल रहा है। आप VPS apps को app store से किसी भी दूसरे app की तरह install कर पाएंगे। इससे आप ऐसे apps install कर सकेंगे जो अभी possible नहीं हैं, जैसे Docker, Snap, और Tailscale। इसे ज्यादा secure बनाने और performance boost करने के लिए हम कुछ नए virtualization features इस्तेमाल कर रहे हैं, इसलिए हमारे servers पर Debian 13 के लिए OS update चाहिए। Feature launch करने से पहले हमें वह update rollout करना होगा, लेकिन इस पर जल्द ही और updates आएंगे।
+
+यह हमारी proven container infrastructure को true VPS flexibility के साथ combine करता है, यानी दोनों worlds का best।
+
+## अपना network infrastructure बनाना
+
+यह सच में बड़ी खबर है: हम अपना खुद का network बना रहे हैं।
+
+सिर्फ ज्यादा servers जोड़ना या bandwidth upgrade करना नहीं। हमारे पास अपना Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) और अपना IP block (79.140.195.0/24) है, ताकि हम ऐसा network बना सकें जो पूरी तरह हमारा हो। Basically, हम अपनी official internet identity और address space के साथ अपना ISP बन रहे हैं, ताकि हम control कर सकें कि आपका data internet पर कैसे travel करता है [1]।
+
+आपके लिए इसका क्या मतलब है? हम सब कुछ control कर सकते हैं, Appbox users के लिए specifically optimize कर सकते हैं, और ऐसी reliability और performance दे सकते हैं जो पहले possible नहीं थी।
+
+## AMS-IX के साथ peering
+
+Network development के साथ, network setup हो जाने के बाद हम AMS-IX के साथ 100G connectivity के लिए peering शुरू करेंगे। इससे हमें दुनिया के सबसे बड़े internet exchanges में से एक तक direct access मिलेगा, यानी सबके लिए lower latency और बेहतर speeds। इसे ऐसे समझें जैसे major internet providers तक जाने के लिए back roads के बजाय direct highway मिल जाए [2]।
+
+इस तरह की connectivity आम तौर पर बहुत बड़ी companies को ही मिलती है, लेकिन हम enterprise-grade performance देना चाहते हैं चाहे आप किसी भी plan पर हों।
+
+हमने hardware purchase के लिए agreement finalize कर लिया है, इसलिए अब हम तैयार हैं। New hardware हमें October तक latest मिल जाएगा, शायद September में ही। इसका मतलब है कि shortly after हम नए network पर up and running हो जाने चाहिए।
+
+## कीमतों में बदलाव
+
+यह वह हिस्सा है जिसे लिखना हम सच में नहीं चाहते थे। इस तरह infrastructure बनाना expensive है, और हालांकि हम cost का बड़ा हिस्सा खुद उठा रहे हैं, हमें new और existing customers दोनों के लिए pricing में एक छोटा adjustment करना पड़ेगा।
+
+मैं इस बारे में upfront रहना चाहता हूं। New pricing site पर पहले से live है, और हम existing customers से जल्द contact करेंगे कि यह उन्हें कैसे affect करेगा।
+
+हम जानते हैं कि अभी हर कोई stretched है, और ईमानदारी से यह हमारे लिए सबसे कठिन decisions में से एक था। हमने increases को जितना possible था उतना छोटा रखा है - basically हम सिर्फ वह minimum cover कर रहे हैं जो इसे काम करने के लिए जरूरी है।
+
+लेकिन हम इस price increase को worth it से भी ज्यादा बनाएंगे। आपको performance और reliability में सच में difference दिखेगा। साथ ही इसका मतलब है कि हम आगे network expand कर सकते हैं और ज्यादा peering add कर सकते हैं, इसलिए चीजें यहां से और बेहतर होंगी।
+
+हमने नए customers के लिए ये updated prices 3 महीने पहले launch किए थे, और feedback अच्छा रहा है, इसलिए हमें लगता है कि affordability बनाए रखने और उन improvements को fund करने के बीच अच्छा balance मिला है जिनके आप हकदार हैं। हम अभी भी बहुत competitive हैं। उदाहरण के लिए, हमारा popular NG-4500 plan केवल €2.08 per month बढ़ रहा है, जो comparable competitor plans से अभी भी काफी कम है।
+
+Existing customers के लिए, आप केवल old और new pricing का difference pay करेंगे। अगर आपके पास promotional discounts हैं, तो वे new base price के ऊपर बने रहेंगे। हम आपकी loyalty की सराहना करते हैं, खासकर ऐसे समय में।
+
+हमारा discount structure वही रहेगा:
+- quarterly payments पर 5% off
+- 6-month payments पर 10% off
+- annual payments पर 15% off
+
+अगर आपके automatic payments setup हैं, तो email मिलने के बाद आपके अगले billing cycle में adjustment होगा। आपको कुछ करने की जरूरत नहीं है।
+
+## और ज्यादा storage!
+
+सब कुछ ज्यादा pay करने के बारे में नहीं है। हम अपने lowest plan पर storage को 3TB से बढ़ाकर 3.5TB भी कर रहे हैं। यह 16% increase है, जो price change के बावजूद हमारे entry-level plan को और बेहतर deal बनाता है।
+
+## आगे क्या?
+
+Appbox के लिए आने वाली चीजों की यह सिर्फ शुरुआत है। अगले कुछ हफ्तों और महीनों में आपको regular updates दिखेंगे क्योंकि हम नए features rollout करेंगे, existing चीजों को improve करेंगे, और app hosting की next generation के लिए infrastructure build करते रहेंगे।
+
+हम September/October में अपने नए network infrastructure की testing शुरू करने की planning कर रहे हैं, और progress के साथ आपको update करते रहेंगे।
+
+हमारे roadmap में शामिल है:
+- VPS apps जिनमें कोई restrictions नहीं होंगी (जैसे Docker, Snap, और Tailscale)
+- बेहतर documentation जो सच में सब कुछ cover करे
+- Appbox से लोग जो cool चीजें बना रहे हैं उनके लिए community showcase
+- हमारे infrastructure पर regular technical blog posts
+- Specific use cases के लिए नए containerized apps
+- बेहतर monitoring और analytics tools
+- सभी plans में enhanced security features
+
+हमारे साथ बने रहने के लिए धन्यवाद। हमारी community के बिना यह कुछ भी possible नहीं होता।
+
+More updates coming soon.
+
+---
+
+*नए Appbox में आप कौन से features या improvements देखना चाहेंगे? हमें support@appbox.co पर लिखें।*
+
+---
+
+**References:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

@@ -1,0 +1,91 @@
+---
+title: Launch Week Jour 5 - VPS Windows 11 Pro et App Freeze
+date: 2026-03-13 10:00:00
+excerpt: Jour 5 de la Launch Week. Windows 11 Pro est maintenant disponible comme VPS sur Appbox. En plus, une nouvelle fonctionnalité de gel vous permet de mettre des apps en pause et de récupérer leurs slots sans perdre de données.
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Jour 5 : VPS Windows 11 Pro et App Freeze
+
+Jour 5. Le dernier jour. Nous avions dit hier que vous ne le verriez pas venir, et nous le pensions.
+
+**Windows 11 Pro est maintenant disponible comme VPS sur Appbox.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows sur Appbox
+
+Lorsque nous avons lancé les VPS au jour 3 avec cinq distributions Linux, la question naturelle était : « et Windows ? » Faire fonctionner Windows correctement comme VPS géré sur Appbox a représenté un défi technique important. Les VM Linux utilisent virtiofs pour un partage de fichiers quasi natif entre l'hôte et l'invité. Windows ne prend pas en charge virtiofs. Nous avons donc construit une intégration basée sur Samba qui crée des partages SMB authentifiés pour chaque VM, donnant à Windows le même accès fluide à vos données Appbox que les VPS Linux, simplement via un protocole que Windows comprend nativement.
+
+Le résultat est une machine virtuelle Windows 11 Pro complète exécutée sur KVM, avec vos données Appbox montées comme lecteur `Z:` (`APPBOX_DATA`). Ouvrez l'Explorateur de fichiers, allez dans `Z:\`, et vous verrez vos dossiers `apps/` et `storage/` directement là.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Explorateur de fichiers Windows 11 montrant APPBOX_DATA comme lecteur Z: avec les dossiers apps et storage" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ce que cela ouvre
+
+Avoir un VPS Windows sur Appbox ouvre une toute nouvelle catégorie d'usages :
+
+- **Logiciels uniquement Windows** - exécutez des applications qui n'ont simplement pas de version Linux
+- **Développement .NET** - construisez et testez des applications .NET dans un vrai environnement Windows
+- **Office et productivité** - exécutez Microsoft Office, les outils Adobe ou n'importe quel logiciel desktop
+- **Serveurs de jeu** - hébergez des serveurs de jeu uniquement Windows
+- **Bureau à distance** - accédez à un bureau Windows complet depuis n'importe quel navigateur via la console web intégrée, ou connectez-vous avec Microsoft Remote Desktop pour une expérience RDP native
+- **Tests et CI** - testez vos logiciels sur Windows sans maintenir votre propre matériel
+
+C'est une installation Windows 11 Pro complète avec accès administrateur. Si cela fonctionne sur Windows, cela fonctionne ici.
+
+## Disponibilité selon la formule
+
+Windows 11 Pro a des besoins en ressources assez élevés et consomme beaucoup d'I/O disque. Pour garantir une bonne expérience à tout le monde, le VPS Windows est actuellement disponible uniquement sur les formules Appbox dédiées (NG-18000 et plus). Nous pourrons étendre sa disponibilité à d'autres formules à l'avenir à mesure que nous continuons à optimiser.
+
+## Licence
+
+Le VPS Windows 11 Pro n'inclut pas de clé produit. Windows fonctionnera non activé avec un filigrane persistant sur le bureau, des paramètres de personnalisation limités et des rappels d'activation périodiques, mais restera autrement entièrement fonctionnel. Pour supprimer ces restrictions, activez-le avec une clé Windows 11 Pro valide. Nous recommandons d'en acheter une chez [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Fonctionne avec App Boost
+
+Le VPS Windows 11 Pro prend entièrement en charge **App Boost** du jour 2. Si vous avez besoin de plus de performances pour des charges plus lourdes, faites glisser le niveau de boost vers le haut afin d'allouer plus de RAM et de CPU à votre VM.
+
+## App Freeze
+
+Une deuxième fonctionnalité arrive aujourd'hui, et elle s'applique à toutes les apps, pas seulement à Windows.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Page de détail du VPS Windows 11 Pro montrant App Boost et le nouveau bouton Freeze" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** vous permet de mettre en pause n'importe quelle app installée et de récupérer ses app slots sans perdre de données. L'app s'arrête, ses données restent exactement là où elles sont, et les slots qu'elle utilisait deviennent disponibles pour d'autres apps.
+
+Cela résout un problème qui revient constamment : vous voulez essayer une nouvelle app, mais vous avez utilisé tous vos slots. Avant aujourd'hui, vous auriez dû désinstaller quelque chose, et perdre ses données, simplement pour libérer assez de slots pour expérimenter. Maintenant, vous pouvez geler une app, utiliser ces slots pour installer et tester quelque chose de nouveau, puis dégeler l'app d'origine lorsque vous avez terminé. Tout reprend exactement là où vous l'aviez laissé.
+
+Le bouton Freeze se trouve directement dans la section Actions de la page de détail de n'importe quelle app, à côté de Start, Stop et Restart. Le gel arrête l'app, la marque comme gelée et rend ses slots (y compris les éventuels slots de boost) à votre pool disponible. Le dégel restaure l'app et consomme à nouveau les slots.
+
+Quelques points à noter :
+
+- Vous ne pouvez pas geler une app pendant son installation, sa mise à jour ou sa suppression
+- Vous ne pouvez pas dégeler si votre Appbox n'a pas assez de slots libres pour couvrir le coût
+- Les apps gelées conservent toutes leurs données et leur configuration intactes
+
+## C'est terminé
+
+Cinq jours. Cinq lancements.
+
+- **Jour 1** - le nouveau tableau de bord
+- **Jour 2** - App Boost
+- **Jour 3** - les VPS Linux
+- **Jour 4** - plusieurs domaines pour les apps VPS
+- **Jour 5** - VPS Windows 11 Pro et App Freeze
+
+Tout ce qui a été lancé cette semaine est disponible dès maintenant. Connectez-vous et essayez.
+
+La Launch Week est terminée, mais nous ne nous arrêtons pas. Beaucoup d'autres choses arrivent dans les prochains mois.
+
+---
+
+*Un retour ou un problème ? Contactez-nous à support@appbox.co ou ouvrez un ticket sur [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

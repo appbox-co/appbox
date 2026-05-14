@@ -1,83 +1,91 @@
 import { Icons } from "@/components/shared/icons"
 import { Footer2 } from "@/components/ui/shadcnblocks-com-footer2"
 import { siteConfig } from "@/config/site"
+import { getTranslations } from "next-intl/server"
 
-// import { getTranslations } from "next-intl/server"
+async function SiteFooter() {
+  const t = await getTranslations("site")
 
-const demoData = {
-  logo: {
-    src: Icons.emblem,
-    alt: "App hosting made easy",
-    title: "appbox.co",
-    url: "https://www.appbox.co"
-  },
-  tagline: "App hosting made easy.",
-  menuItems: [
-    {
-      title: "Product",
-      links: [
-        { text: "Home", url: "/" },
-        { text: "Features", url: "/#features" },
-        { text: "Apps", url: "/apps" },
-        { text: "Pricing", url: "/#plans-section" }
-      ]
+  const footerData = {
+    logo: {
+      src: Icons.emblem,
+      alt: t("tagline"),
+      title: "appbox.co",
+      url: "https://www.appbox.co"
     },
-    {
-      title: "Legal",
-      links: [
-        { text: "Terms of Service", url: "/policies/terms-of-service" },
-        {
-          text: "Service Level Agreement",
-          url: "/policies/service-level-agreement"
-        },
-        {
-          text: "Privacy & Data Handling",
-          url: "/policies/data-handling-policy"
-        },
-        {
-          text: "Global Privacy Practices",
-          url: "/policies/global-privacy-practices"
-        },
-        {
-          text: "Incident Response & Security",
-          url: "/policies/incident-response-and-security-policy"
-        },
-        { text: "View All Policies", url: "/policies" }
-      ]
-    },
-    {
-      title: "Resources",
-      links: [
-        { text: "Billing", url: "https://billing.appbox.co", external: true },
-        { text: "Control Panel", url: "/dashboard" },
-        { text: "Documentation (new)", url: "/docs" },
-        {
-          text: "Documentation (old)",
-          url: "https://billing.appbox.co/knowledgebase",
-          external: true
-        },
-        { text: "Blog", url: "/blog" },
-        { text: "FAQ", url: "/#faq" },
-        {
-          text: "Service Status",
-          url: "https://status.appbox.co",
-          external: true
-        }
-      ]
-    },
-    {
-      title: "Social",
-      links: [
-        { text: "GitHub", url: siteConfig.links.github.url, external: true }
-      ]
-    }
-  ],
-  copyright: `© ${new Date().getFullYear()} Copyright. All rights reserved.`,
-  bottomLinks: []
-}
+    tagline: t("tagline"),
+    menuItems: [
+      {
+        title: t("navigation.product"),
+        links: [
+          { text: t("words.home"), url: "/" },
+          { text: t("navigation.features"), url: "/#features" },
+          { text: t("navigation.apps"), url: "/apps" },
+          { text: t("navigation.pricing"), url: "/#plans-section" }
+        ]
+      },
+      {
+        title: t("words.legal"),
+        links: [
+          {
+            text: t("words.terms_of_service"),
+            url: "/policies/terms-of-service"
+          },
+          {
+            text: t("words.service_level_agreement"),
+            url: "/policies/service-level-agreement"
+          },
+          {
+            text: t("words.privacy_data_handling"),
+            url: "/policies/data-handling-policy"
+          },
+          {
+            text: t("words.global_privacy_practices"),
+            url: "/policies/global-privacy-practices"
+          },
+          {
+            text: t("words.incident_response_security"),
+            url: "/policies/incident-response-and-security-policy"
+          },
+          { text: t("words.view_all_policies"), url: "/policies" }
+        ]
+      },
+      {
+        title: t("navigation.resources"),
+        links: [
+          {
+            text: t("external_links.billing"),
+            url: "https://billing.appbox.co",
+            external: true
+          },
+          { text: t("external_links.control_panel"), url: "/dashboard" },
+          { text: t("words.documentation_new"), url: "/docs" },
+          {
+            text: t("words.documentation_old"),
+            url: "https://billing.appbox.co/knowledgebase",
+            external: true
+          },
+          { text: t("navigation.blog"), url: "/blog" },
+          { text: t("navigation.faq"), url: "/#faq" },
+          {
+            text: t("navigation.service_status"),
+            url: "https://status.appbox.co",
+            external: true
+          }
+        ]
+      },
+      {
+        title: t("words.social"),
+        links: [
+          { text: "GitHub", url: siteConfig.links.github.url, external: true }
+        ]
+      }
+    ],
+    copyright: t("footer.copyright", { year: new Date().getFullYear() }),
+    bottomLinks: []
+  }
 
-function SiteFooter() {
-  return <Footer2 {...demoData} />
+  return <Footer2 {...footerData} />
 }
 
 export { SiteFooter }

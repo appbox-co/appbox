@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - Meerdere domeinen voor VPS-apps
+date: 2026-03-12 10:00:00
+excerpt: Dag 4 van Launch Week. VPS-apps ondersteunen nu meerdere domeinen - voeg zoveel aangepaste domeinen en Appbox-subdomeinen toe als je nodig hebt, allemaal met automatische SSL.
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: meerdere domeinen voor VPS-apps
+
+Dag 4. Gisteren gaven we je volledige virtuele machines. Vandaag geven we ze goede domeinondersteuning.
+
+Toen we VPSes op Dag 3 lanceerden, kreeg elke VM een enkel domein. Dat is prima voor veel use cases, maar als je een webserver binnen je VPS draait - en velen van jullie doen dat - is een enkel domein niet genoeg. Je hebt meerdere domeinen nodig die naar dezelfde machine wijzen, elk met hun eigen SSL-certificaat en webserverconfiguratie.
+
+Vandaag ondersteunen VPS-apps **meerdere domeinen**. Voeg zoveel `*.user.appboxes.co`-subdomeinen toe als je wilt, gebruik je eigen aangepaste domeinen, of combineer beide. Elk domein krijgt SSL en een direct bruikbare webserverconfiguratie.
+
+## Hoe het werkt
+
+Open een draaiende VPS-app en je vindt een **Custom Domains**-kaart op de detailpagina. Hier staan al je domeinen - een doorzoekbare, sorteerbare tabel met elk domein dat aan die VPS is gekoppeld, welk domein primair is en wanneer het is toegevoegd.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains-tabel op een VPS-appdetailpagina" width="860" className="mt-8 mb-10" />
+</p>
+
+Klik op **Add Domain** om een nieuw domein toe te voegen. Je kiest een parentdomein, voert een subdomein in, en het systeem regelt de rest.
+
+## Appbox-subdomeinen
+
+De snelste manier om een domein toe te voegen is via je bestaande Appbox-domein. Kies je `user.appboxes.co`-domein als parent, typ een subdomein, en je bent klaar. DNS is al voor je geregeld en het domein wordt direct geverifieerd.
+
+Dit is ideaal om snel project-URL's, stagingomgevingen of aparte adressen voor verschillende services op je VPS aan te maken. `api.user.appboxes.co` nodig voor je backend en `app.user.appboxes.co` voor je frontend? Voeg ze allebei binnen een minuut toe.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Een Appbox-subdomein toevoegen aan een VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Omdat deze onder je bestaande Appbox-wildcardcertificaat vallen, is SSL automatisch. Geen wachten, geen certificaatgeneratie, geen configuratie.
+
+## Aangepaste domeinen
+
+Je kunt ook je eigen domeinen naar je VPS laten wijzen. Selecteer je aangepaste basisdomein (of voeg direct vanuit het dialoogvenster een nieuwe toe), voer het subdomein in, en de UI begeleidt je door de DNS-setup.
+
+Het dialoogvenster toont het exacte A-record dat je moet aanmaken - de hostname, het IP-adres, alles. Het bevat zelfs provider-specifieke instructies voor Cloudflare en andere populaire DNS-providers, zodat je niet hoeft op te zoeken hoe je een A-record toevoegt.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Een aangepast domein toevoegen met DNS-verificatie en provider-specifieke instructies" width="560" className="mt-8 mb-10" />
+</p>
+
+Zodra je DNS naar het juiste IP wijst, druk je op **Verify Again** en bevestigt het systeem dat het record correct is voordat het domein wordt toegevoegd.
+
+## SSL en webserverconfiguratie
+
+Elk domein dat je toevoegt krijgt SSL. Voor Appbox-subdomeinen gebruikt dit het bestaande wildcardcertificaat. Voor aangepaste domeinen wordt automatisch een certificaat ingericht.
+
+Dit is het deel dat dit echt nuttig maakt voor VPS-gebruikers: elk domein krijgt een **View Config**-knop met kant-en-klare configuratiesnippets voor zowel Nginx als Apache. De config bevat de juiste `server_name`, SSL-certificaatpaden, cipher suites en protocolinstellingen. Kopieer de snippet, plaats hem in je webserverconfig binnen de VM, reload, en je serveert verkeer op dat domein.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL-configuratiesnippets voor Nginx en Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Geen giswerk over bestandspaden. Geen zoektocht naar certificaatlocaties. Geen uitzoeken van cipher strings. Het staat er allemaal, klaar om te kopieren.
+
+## Waarom dit belangrijk is voor VPS-gebruikers
+
+Een VPS zonder multi-domain support is gewoon een server met een adres. Dat beperkt je op manieren die snel duidelijk worden:
+
+- Draai je een webapp met een aparte API? Dan heb je minstens twee domeinen nodig.
+- Host je meerdere sites in je VM? Elke site heeft zijn eigen domein nodig.
+- Wil je een stagingomgeving naast productie? Dat is nog een domein.
+- Ontwikkel je lokaal en wil je testen met een echt domein? Nog een.
+
+## Dag 4 is nu live
+
+Ondersteuning voor meerdere domeinen is nu beschikbaar voor alle VPS-apps. Open je VPS, scroll naar Custom Domains, en begin met toevoegen.
+
+Morgen is Dag 5, en we hebben een verrassing. Je ziet hem niet aankomen.
+
+---
+
+*Feedback of een probleem gevonden? Neem contact op via support@appbox.co of open een ticket op [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

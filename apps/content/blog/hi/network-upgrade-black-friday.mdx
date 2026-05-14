@@ -1,0 +1,92 @@
+---
+title: हमारे network को बड़ा upgrade मिला 🎉
+date: 2025-11-29 10:00:00
+excerpt: हमने अपना अब तक का सबसे बड़ा infrastructure upgrade पूरा कर लिया है - Nokia enterprise routers, अपना IP space, और 100G AMS-IX connectivity। साथ ही, हमारी Black Friday deal भी आ गई है!
+author_id: rid
+og_image: network-upgrade-og.jpg
+tags: [appbox, infrastructure, नेटवर्किंग, black-friday, प्रदर्शन]
+---
+
+# हमने कर दिखाया - हमारा network live है!
+
+April में याद है जब हमने announce किया था कि हम अपना network infrastructure बना रहे हैं? मुझे यह बताते हुए बहुत खुशी हो रही है कि कल से यह आखिरकार live है।
+
+इसे बनाने में महीनों लगे, और ईमानदारी से कहूं तो Appbox शुरू करने के बाद से इसे साथ आते देखना सबसे satisfying moments में से एक रहा है। आइए बताता हूं कि क्या बदला है।
+
+## Enterprise-grade hardware
+
+हमने अपने infrastructure में Nokia 7750 SR-1 routers deploy किए हैं। अगर आप Nokia के routing gear से familiar नहीं हैं, तो ये वही routers हैं जो दुनिया के कुछ सबसे बड़े ISPs और data centers को power करते हैं। ये scale पर reliability और performance के लिए built हैं, और अब आपका सारा traffic इन्हीं से handle हो रहा है।
+
+यह consumer या prosumer equipment नहीं है। यह proper enterprise networking hardware है जो हमें वह control और capabilities देता है जिनकी जरूरत आपको deserved performance देने के लिए है।
+
+## हमारा अपना IP space
+
+अब हम अपने Autonomous System ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) के तहत अपने IP addresses से traffic route कर रहे हैं। इसका मतलब है कि आपका data internet पर कैसे travel करता है, इस पर हमारा complete control है।
+
+यह क्यों मायने रखता है? क्योंकि हम routing को specifically Appbox users के लिए optimize कर सकते हैं, बेहतर DDoS protection implement कर सकते हैं, और future में dedicated IP addresses जैसे features offer कर सकते हैं जिन्हें उनकी जरूरत हो।
+
+## 100G AMS-IX connectivity
+
+सबसे बड़ा हिस्सा। अब हम AMS-IX के साथ 100 gigabits per second पर peer कर रहे हैं। AMS-IX दुनिया के सबसे बड़े internet exchanges में से एक है, और direct access का मतलब है कि आपका traffic major networks और content providers तक fastest possible route लेता है।
+
+Real terms में इसका मतलब है:
+- **Lower latency** - आपकी connections तेज और ज्यादा responsive हैं
+- **Better speeds** - ज्यादा bandwidth का मतलब कम congestion
+- **Improved reliability** - direct peering का मतलब fewer points of failure
+
+हम पिछले कुछ हफ्तों से traffic के subset के साथ इसे test कर रहे थे, और results exactly वैसे रहे जैसे हम उम्मीद कर रहे थे। अब इसका benefit सबको मिलेगा।
+
+## Black Friday - 3 महीनों के लिए 30% off
+
+इस milestone को celebrate करने के लिए (और क्योंकि Black Friday weekend है), हम अपना अब तक का सबसे बड़ा promotion चला रहे हैं।
+
+### नए customers
+
+किसी भी plan पर **पहले 3 महीनों के लिए 30% off** पाएं। Checkout पर code **APPBOX30** इस्तेमाल करें। यह केवल monthly subscriptions पर apply होता है, इसलिए अगर आप इस deal का फायदा उठाना चाहते हैं, तो monthly billing select करना सुनिश्चित करें।
+
+### मौजूदा customers - upgrades
+
+क्या आप बड़े plan पर upgrade करना चाहते हैं? हमने आपको भी cover किया है। Code **UPGRADE30** के साथ **upgrade पर 30% off** पाएं। Upgrade fee आपके current billing cycle के आधार पर prorated होगी, फिर 30% घटाई जाएगी। Upgrade के बाद आपके अगले 2 months में भी full price पर 30% off रहेगा।
+
+#### Upgrade कैसे करें
+
+1. अपने [billing account](https://billing.appbox.co/clientarea.php) में log in करें
+2. **My Products & Services** पर जाएं और अपना Appbox select करें
+3. Actions section में **Upgrade/Downgrade** button पर click करें
+4. अपना नया plan चुनें और checkout पर code **UPGRADE30** enter करें
+
+![How to upgrade your Appbox - click the Upgrade/Downgrade button](/blog-images/upgrade-guide.png)
+
+यह genuinely हमारी अब तक की best deal है, और Appbox community का हिस्सा बनने के लिए हमारा धन्यवाद कहने का तरीका है।
+
+## VPS Apps - Christmas से पहले आ रहे हैं
+
+मुझे पता है कि आपमें से बहुत से लोग इसका इंतजार कर रहे हैं। VPS apps अभी भी track पर हैं और हमारा लक्ष्य है कि वे Christmas से पहले ready हो जाएं।
+
+जिन लोगों ने earlier announcement miss किया था, VPS apps आपको बिना restrictions full root access देते हैं। आप Docker, Snap, Tailscale, और system-level access चाहने वाली कोई भी चीज चला पाएंगे। यह VPS की flexibility को हमारे one-click app deployment के साथ combine करता है।
+
+हमारे पास कुछ और भी development में है जिसे announce करने के लिए हम अभी ready नहीं हैं। इतना कह सकते हैं कि VPS release के साथ एक surprise feature आ रहा है जो हमें लगता है आपको बहुत पसंद आएगा। इस पर जल्द और बताएंगे।
+
+## आगे क्या
+
+यह network upgrade सिर्फ foundation है। अब जब हमारे पास infrastructure पर proper control है, हम ऐसे features build कर सकते हैं जो पहले possible नहीं थे:
+
+- **Dedicated IP addresses** - उन users के लिए जिन्हें अपना IP चाहिए
+- **Advanced routing options** - आपका traffic कैसे flow करता है, इस पर ज्यादा control
+- **Enhanced DDoS protection** - बेहतर security के लिए हमारे नए infrastructure का leverage
+- **Geographic optimization** - जैसे-जैसे हम peering relationships expand करेंगे
+
+इन features के develop होते ही हम आपको update देते रहेंगे।
+
+## धन्यवाद
+
+सच में, धन्यवाद। इस तरह infrastructure बनाना time, money, और users के trust की मांग करता है। जब हम इस पर काम कर रहे थे, तब आपका हमारे साथ बने रहना हमारे लिए बहुत मायने रखता है।
+
+अगर आपको नए network में कोई issue दिखे या feedback हो, तो कृपया reach out करें। हम सब कुछ closely monitor कर रहे हैं, लेकिन real users से real-world feedback अमूल्य है।
+
+तेज और ज्यादा reliable hosting के नाम। 🚀
+
+---
+
+*Upgrade या Black Friday deal के बारे में questions हैं? support@appbox.co पर हमें लिखें।*
+

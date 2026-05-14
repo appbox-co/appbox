@@ -1,0 +1,196 @@
+---
+title: "Components"
+description: "ใช้งาน components ในไฟล์ MDX ของคุณให้เชี่ยวชาญ"
+sort: 2
+---
+
+Components จะถูก inject เข้าไปในไฟล์ MDX ทั้งหมดโดยอัตโนมัติ โดยไม่จำเป็นต้อง import ด้วยตนเอง
+หมายความว่าคุณสามารถใช้ component ใดก็ได้ที่พร้อมใช้งาน!
+
+หากต้องการเรียนรู้เพิ่มเติม เพิ่ม หรือเปลี่ยน components ที่พร้อมใช้งาน โปรดดูไฟล์ `src/components/docs/mdx.tsx`
+
+## Accordion
+
+**ตัวอย่าง:**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      คำถามตัวอย่างเกี่ยวกับรายละเอียดเพิ่มเติมของเนื้อหานี้
+    </AccordionTrigger>
+
+    <AccordionContent>
+      นี่คือเนื้อหาตัวอย่างภายใน Accordion ที่อธิบายข้อมูลเพิ่มเติมสำหรับผู้ใช้ สามารถใช้พื้นที่นี้เพื่อใส่คำตอบ รายละเอียด หรือคำแนะนำที่ต้องการซ่อนไว้จนกว่าผู้ใช้จะเปิดดู
+
+      คุณสามารถเพิ่มย่อหน้าเพิ่มเติมเพื่ออธิบายบริบทให้ชัดเจนขึ้น เช่น ขั้นตอนถัดไป ข้อควรระวัง หรือข้อมูลสนับสนุนอื่นๆ ที่เกี่ยวข้องกับหัวข้อนี้
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      คำถามตัวอย่างข้อที่สองสำหรับแสดงรายการเพิ่มเติม
+    </AccordionTrigger>
+
+    <AccordionContent>
+      นี่คือเนื้อหาตัวอย่างสั้นๆ สำหรับ Accordion รายการที่สอง
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**Code:**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Alerts
+
+**ตัวอย่าง:**
+
+<Alert className="my-4">
+  <AlertTitle>Alert เริ่มต้น</AlertTitle>
+
+  <AlertDescription>
+    นี่คือ alert เริ่มต้น
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Alert คำเตือน</AlertTitle>
+
+  <AlertDescription>
+    นี่คือ alert คำเตือน
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Alert ข้อผิดพลาด</AlertTitle>
+
+  <AlertDescription>
+    นี่คือ alert ข้อผิดพลาด
+  </AlertDescription>
+</Alert>
+
+**Code:**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Tabs
+
+**ตัวอย่าง:**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">แท็บ 1</TabsTrigger>
+    <TabsTrigger value="tab-2">แท็บ 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    เนื้อหาแท็บ 1
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    เนื้อหาแท็บ 2
+  </TabsContent>
+</Tabs>
+
+**Code:**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Steps
+
+**ตัวอย่าง:**
+
+<Steps>
+  <Step>ขั้นตอน 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>ขั้นตอน 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**Code:**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

@@ -1,0 +1,508 @@
+---
+title: OpenClaw model sağlayıcısı kurulumu
+description: Kurulumdan sonra OpenClaw'u herhangi bir model sağlayıcı API anahtarıyla yapılandırın.
+sort: 1
+---
+
+OpenClaw, Appbox içinde model API anahtarı gerektirmeden kurulur.
+
+Kurulumu tamamlamanın önerilen yolu, OpenClaw uygulamanıza SSH üzerinden bağlanıp yerleşik `openclaw onboard` sihirbazını çalıştırmaktır. Sihirbaz, model sağlayıcıları, API anahtarları, kanallar, sağlık kontrolleri ve yetenekler boyunca size rehberlik ederken Appbox gateway ayarlarını koruduğu için tam yapılandırmayı elle düzenlemekten daha güvenlidir.
+
+SSH kullanamıyorsanız veya kullanmak istemiyorsanız bunun yerine [yedek dashboard yöntemini](#backup-method-configure-provider-auth-in-the-dashboard) kullanın.
+
+## Önerilen yöntem: OpenClaw'a SSH ile bağlanıp onboarding'i çalıştırma
+
+Bu yöntemi yeni kurulumlarda ve model sağlayıcı kimlik bilgilerinin eklenmesi veya değiştirilmesi gereken mevcut kurulumlarda kullanın.
+
+### Önce gerekenler
+
+- Appbox içindeki OpenClaw uygulama ayrıntıları sayfanız.
+- Configuration bölümünde gösterilen **SSH Command**.
+- **Gateway Token / SSH Password** değeriniz. Bu, OpenClaw dashboard oturum açması için kullanılan aynı oluşturulmuş gizli değerdir.
+- Bir model sağlayıcı hesabı veya API anahtarı. Henüz yoksa [API anahtarlarını alma](#getting-api-keys-with-dashboard-links) bölümüne bakın.
+
+Uygulama ayrıntıları sayfası kopyalamaya hazır SSH komutunu gösterir:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="SSH komutu vurgulanmış Appbox OpenClaw uygulama ayrıntıları sayfası"
+  width="860"
+/>
+
+### macOS'tan bağlanma
+
+1. **Terminal** veya **iTerm2** açın.
+2. OpenClaw uygulama ayrıntıları sayfasından **SSH Command** değerini kopyalayın.
+3. Yapıştırıp çalıştırın. Şuna benzer görünür:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. macOS ana makineye güvenip güvenmeyeceğinizi sorarsa `yes` yazıp Enter'a basın.
+5. Parola istendiğinde **Gateway Token / SSH Password** değerinizi yapıştırıp Enter'a basın. Terminal, parolayı yazarken veya yapıştırırken hiçbir karakter göstermez.
+
+### Windows'tan bağlanma
+
+Windows 10 ve Windows 11 varsayılan olarak OpenSSH istemcisini içerir.
+
+1. **Windows Terminal** veya **PowerShell** açın.
+2. OpenClaw uygulama ayrıntıları sayfasından **SSH Command** değerini kopyalayın.
+3. Yapıştırıp çalıştırın:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Windows ana makineye güvenip güvenmeyeceğinizi sorarsa `yes` yazıp Enter'a basın.
+5. Parola istendiğinde **Gateway Token / SSH Password** değerinizi yapıştırıp Enter'a basın. PowerShell, yapıştırılan parolayı göstermez.
+
+Windows `ssh` komutunun tanınmadığını söylerse **Settings > System > Optional features** üzerinden **OpenSSH Client** yükleyin, ardından Windows Terminal'i yeniden açıp tekrar deneyin.
+
+### OpenClaw onboarding sihirbazını çalıştırma
+
+SSH bağlantısı kurulduktan sonra şunu çalıştırın:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="macOS üzerinde iTerm2 ile SSH üzerinden OpenClaw'a bağlanılmış ve openclaw onboard komutu çalıştırılıyor"
+  width="860"
+/>
+
+Sihirbaz etkileşimlidir. Appbox'a özel şu seçimleri kullanın:
+
+1. **Mevcut yapılandırma:** mevcut yapılandırmayı gözden geçirme veya değiştirme seçeneğini seçin. OpenClaw kurulumunuzu baştan yeniden oluşturmak istemiyorsanız tam sıfırlamayı seçmeyin.
+2. **Model ve kimlik doğrulama:** OpenRouter, OpenAI, Anthropic, Google, xAI veya özel OpenAI uyumlu bir sağlayıcı gibi sağlayıcınızı seçin. Sihirbaz istediğinde API anahtarını yapıştırın. OpenRouter çoğu kullanıcı için en kolay varsayılandır, çünkü tek bir anahtar birçok modele yönlendirme yapabilir. OpenAI Codex aboneliğiniz varsa sağlayıcı listesinde yalnızca `codex` adlı bir seçenek yerine **OpenAI Codex** seçin.
+3. **Varsayılan model:** sihirbazın o sağlayıcı için önerdiği modeli seçin veya `openrouter/auto` gibi bir `provider/model` değerini elle girin.
+4. **Workspace:** değiştirmek için belirli bir nedeniniz yoksa varsayılan workspace'i koruyun.
+5. **Gateway ayarları:** mevcut Appbox gateway ayarlarını koruyun. Özellikle token auth etkin kalsın ve mevcut gateway port/bind ayarlarını koruyun.
+6. **Kanallar:** WhatsApp, Telegram, Discord, Signal, iMessage veya diğer kanalları şimdi yapılandırın ya da atlayıp daha sonra `openclaw configure` ile ekleyin.
+7. **Web arama:** varsa bir arama sağlayıcısı seçin veya şimdilik atlayın.
+8. **Daemon/service kurulumu:** Appbox, OpenClaw'u container içinde zaten denetlediği için sihirbaz sunarsa daemon kurulumunu atlayın.
+9. **Sağlık kontrolü:** sihirbazın sağlık kontrolünü çalıştırmasına izin verin.
+10. **Yetenekler:** sihirbazın paketlenmiş yetenekleri kontrol etmesine izin verin. **Preferred node manager for skill installs** sorulduğunda `npm` seçin.
+
+Onboarding bittiğinde OpenClaw dashboard'unuza dönün. Dashboard zaten açıksa yenileyin ve kısa bir sohbet istemiyle test edin.
+
+SSH üzerinden kullanılabilecek yararlı takip komutları:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## API anahtarlarını alma (dashboard bağlantılarıyla)
+
+Anahtar oluşturmak için bu sağlayıcı konsollarını kullanın. Önerilen SSH yönteminde, `openclaw onboard` istediğinde anahtarı yapıştırın. Yedek dashboard yönteminde anahtarı `Config > Secrets > Raw` içine birleştirin.
+
+### İlk öneri: OpenRouter (çoğu kullanıcı için en iyi varsayılan)
+
+Neden öneriyoruz:
+
+- Birçok model satıcısı için tek bir anahtar verir.
+- Görev zorluğuna göre model değiştirebilen `openrouter/auto` kullanabilirsiniz.
+- `auto`, daha basit görevleri daha ucuz modellere yönlendirerek maliyeti azaltabilir.
+
+Anahtar alma:
+
+1. [OpenRouter](https://openrouter.ai/) adresine gidin ve oturum açın.
+2. [API Keys settings](https://openrouter.ai/settings/keys) sayfasını açın.
+3. **Create** düğmesine tıklayın ve anahtarı kopyalayın (bir kez gösterilir).
+4. OpenClaw sihirbazı OpenRouter API anahtarınızı istediğinde bunu kullanın. Yedek dashboard yöntemi için yapılandırma anahtarı `models.providers.openrouter.apiKey` değeridir.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Herkese açık bir öğreticiden OpenRouter API anahtarları sayfası ekran görüntüsü"
+  width="860"
+/>
+
+### OpenAI
+
+Anahtar alma:
+
+1. [OpenAI Platform](https://platform.openai.com/) üzerinde oturum açın.
+2. [API Keys](https://platform.openai.com/settings/organization/api-keys) sayfasını açın.
+3. **Create new secret key** düğmesine tıklayın.
+4. Hemen kopyalayın (OpenAI tam değeri yalnızca bir kez gösterir).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Herkese açık bir öğreticiden OpenAI API anahtarı ayarları ekran görüntüsü"
+  width="860"
+/>
+
+### Anthropic
+
+Anahtar alma:
+
+1. [Anthropic Console](https://console.anthropic.com/) üzerinde oturum açın.
+2. [API Keys](https://console.anthropic.com/settings/keys) sayfasını açın.
+3. **Create Key** düğmesine tıklayın.
+4. Anahtarı hemen kopyalayın (bir kez gösterilir).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Herkese açık bir öğreticiden Anthropic API anahtarı oluşturma ekran görüntüsü"
+  width="860"
+/>
+
+### Google (AI Studio üzerinden Gemini)
+
+Anahtar alma:
+
+1. [Google AI Studio](https://aistudio.google.com/) açın.
+2. [API Keys](https://aistudio.google.com/app/apikey) sayfasına gidin.
+3. **Create API key** düğmesine tıklayın (yeni veya mevcut proje).
+4. Anahtarı kopyalayıp kaydedin.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Herkese açık bir öğreticiden Google AI Studio API anahtarı oluşturma ekran görüntüsü"
+  width="860"
+/>
+
+> Not: sağlayıcı dashboard'ları sık değişebilir ve oturum durumunuza bağlı olarak oturum açma istemi gösterebilir.
+
+## Yedek yöntem: dashboard içinde sağlayıcı kimlik doğrulamasını yapılandırma
+
+Bu yöntemi yalnızca SSH kullanılamıyorsa veya elle yapılandırmayı tercih ediyorsanız kullanın. Dashboard Raw düzenleyicisi çalışır, ancak OpenClaw yapılandırma nesnesinin tamamını tek seferde düzenler. Sağlayıcı ayarlarını mevcut dosyaya birleştirirken Appbox'ın gateway ve yetenek varsayılanlarını değiştirmemeye dikkat edin.
+
+1. Kurulu uygulama ayrıntıları sayfasından OpenClaw dashboard URL'nizi açın.
+2. **Config > Secrets** bölümüne gidin.
+3. Form yerine **Raw** seçin.
+4. Reveal sensitive values düğmesine tıklayın (üzeri çizili göz simgesi gibi görünür).
+5. Aşağıdaki örneklerdeki sağlayıcı ayarlarını mevcut yapılandırmanıza **birleştirin** ([Elle sağlayıcı yapılandırmasının tam dosyaya nasıl oturduğu](#how-manual-provider-config-fits-in-the-full-file) bölümüne bakın). Gateway, yetenekler ve diğer Appbox varsayılanlarını sıfırlamak istemiyorsanız tüm dosyayı değiştirmeyin.
+6. Yapılandırma değişikliklerini kaydedip uygulayın.
+
+### Elle sağlayıcı yapılandırmasının tam dosyaya nasıl oturduğu
+
+**Config > Secrets > Raw**, OpenClaw yapılandırmasının **tamamını** tek bir nesne içinde düzenler. Appbox üzerinde bu dosya zaten `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (paketlenmiş yetenekler), `commands` ve bazen `meta` gibi şeyler içerir. [Başlıca sağlayıcı örnekleri](#major-provider-examples) bölümündeki parçalar yalnızca modeller için gereken kısımları gösterir: `models` ağacı ve `agents.defaults.model.primary`.
+
+**Ne yapmalı:** mevcut üst düzey anahtarlarınızı (`gateway`, `skills`, `commands` vb.) koruyun ve şu iki bölümü **ekleyin veya güncelleyin**:
+
+- **`models.providers`** — sağlayıcınızı (örn. `openrouter`), `apiKey` değerini, gerektiği yerde `baseUrl` değerini ve `models` listesini ekleyin.
+- **`agents.defaults.model.primary`** — aracının bu sağlayıcıyı kullanması için varsayılan model dizesini (örn. `openrouter/auto`) ayarlayın.
+
+`models` veya `agents` zaten varsa yeni anahtarları çoğaltmak yerine bu nesnelerin içine birleştirin.
+
+Aşağıda **JSON** olarak **tek** bir tam Raw dosya şekli örneği yer alır (düzenleyici pratikte JSON5 tarzı tırnakları da kabul edebilir). Gerçek dosyanız daha fazla alan içerebilir (örn. daha zengin model metadata'sı, `meta`). Daha aşağıdaki örneklerde bulunan **sağlayıcı blokları**, burada `models` ve `agents` ile hizalayacağınız parçalardır.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token ve sağlayıcı API anahtarı:** `gateway.auth.token` yalnızca OpenClaw Control UI / gateway'e giriş yapmak içindir. `models.providers.*.apiKey`, LLM satıcısı anahtarınızdır (OpenRouter, OpenAI vb.) — bunlar farklıdır.
+
+## Başlıca sağlayıcı örnekleri
+
+Önce tek bir sağlayıcı bloğu kullanın, çalıştığını doğrulayın, ardından daha fazla sağlayıcı ekleyin. Aşağıdaki her örnek bir **birleştirme parçasıdır**: `...` atlanmış yapılandırmadır (üstteki veya alttaki satırlar), `"models"` öncesindeki `},` ise dosyanızda `models` üzerinde yer alan anahtarın kapanışıdır (örneğin `skills` veya `commands`). Parçalar tek başlarına geçerli JSON değildir — `models` ve `agents` bölümlerini kök nesnenize birleştirin.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock notu (API anahtarı yok)
+
+Amazon Bedrock, API anahtarı yerine AWS kimlik bilgilerini kullanır (örneğin `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`). En küçük sağlayıcı girdisi şöyle görünür:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Notlar
+
+- Gateway auth token ve model sağlayıcı API anahtarları farklı ayarlardır.
+- Bir sağlayıcı hatası alırsanız (örneğin eksik Anthropic anahtarı), varsayılan modelinizi yapılandırdığınız bir sağlayıcıya güncelleyin.
+- Bir sağlayıcı doğrulamadan geçemezse önce gerekli sağlayıcı alanlarının mevcut olduğundan emin olun (`baseUrl`, `models` ve uygulanabildiği yerde `apiKey`).
+
+## Resmi sağlayıcı dokümanları
+
+- [OpenClaw sağlayıcı dizini](https://docs.openclaw.ai/providers/index)
+- [OpenRouter sağlayıcısı](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI sağlayıcısı](https://docs.openclaw.ai/providers/openai)
+- [Anthropic sağlayıcısı](https://docs.openclaw.ai/providers/anthropic)
+- [Google sağlayıcısı](https://docs.openclaw.ai/providers/google)
+- [xAI sağlayıcısı](https://docs.openclaw.ai/providers/xai)
+- [Mistral sağlayıcısı](https://docs.openclaw.ai/providers/mistral)
+- [Together AI sağlayıcısı](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock sağlayıcısı](https://docs.openclaw.ai/providers/bedrock)

@@ -1,0 +1,65 @@
+---
+title: "Service Level Agreement"
+description: "Наша посвећеност доследности и поузданости услуге"
+---
+
+Овај Service Level Agreement ("SLA") је документ који регулише Terms и коришћење Services које Appbox пружа. Коришћењем наших Services потврђујете и пристајете на услове наведене у наставку.
+
+Пошто послујемо у shared environment-у и пружамо услуге специфичне природе, одређени ниво downtime-а понекад може бити неизбежан. Овај agreement појашњава како управљамо downtime occurrences током вашег subscription period-а и описује наше обавезе у погледу решавања спорова и понуде compensation-а.
+
+## Server downtimes, server maintenance и compensation
+
+Appbox улаже све напоре да наши сервери остану оперативни и доступни свим корисницима током њиховог billing term-а.
+
+Када се server maintenance унапред организује, корисници ће бити обавештени преко више канала, као што су email updates, Appbox Status Page и Client Area Announcements. Сваки корисник погођен planned maintenance-ом нема право на compensation.
+
+Unscheduled или emergency maintenance procedures биће саопштени што је брже могуће, а корисници погођени таквим догађајима могу се квалификовати за credits како је наведено у наставку:
+
+| Трајање downtime-а | Compensation |
+| ------------------ | ------------ |
+| До 6 сати          | Одређује се по нахођењу тима |
+| До 12 сати         | Еквивалент 1 дана service credit-а |
+| До 24 сата         | Еквивалент 2 дана service credit-а |
+| Преко 48 сати      | Credit у двоструком трајању downtime-а (на пример, outage од 3 дана даје 6 дана service credit-а) |
+
+Ова политика **искључује сваки downtime повезан са апликацијама које сте инсталирали.**
+
+## Drive failure и губитак података
+
+Appbox платформа се заснива на shared infrastructure дизајнираној да понуди правичну расподелу ресурса и свеобухватну употребу диска. Упркос нашим најбољим напорима, hardware failures, као што су drive malfunctions, понекад се могу догодити.
+
+Ако drive failure узрокује да изгубите приступ својим подацима и они не могу бити recovered, квалификоваћете се за **један пун месец услуге без трошка**.
+
+Снажно саветујемо да чувате backups свих essential data које складиштите на својој услузи.
+
+Имајте у виду да ако су подаци изгубљени због user-initiated actions (нпр. accidental deletion) и није откривена system-related error, compensation неће бити обезбеђен.
+
+## Fair use server resources
+
+Наше Services се испоручују на shared resources, па је од кључне важности да сваки клијент обезбеди да његове активности не ометају перформансе других корисника и да остану у прихватљивим resource limits.
+
+Appbox може, без претходног обавештења, зауставити било које applications или processes који негативно утичу на искуства других клијената. У тешким случајевима resource misuse-а, услуга клијента може бити suspended или terminated у потпуности.
+
+### Disk I/O Fair Use Policy
+
+Ова политика се односи само на планове NG-8000 и мање (non-dedicated disk plans).
+
+Да би обезбедио оптималне перформансе за све кориснике, Appbox користи аутоматизован Disk I/O monitoring system који:
+
+1. Континуирано надгледа disk utilization у свим shared resources
+2. Идентификује апликације које троше прекомерне disk I/O resources током продужених периода
+3. Аутоматски примењује throttling measures када је потребно
+
+Ако се открије да ваша апликација троши прекомерни disk I/O:
+- Можете добити warning notification
+- Persistent high usage ће довести до аутоматског throttling-а ваше disk I/O speed
+- Поновљена кршења довешће до све строжих throttling limits
+- Throttling је привремен и биће аутоматски уклоњен када се usage врати на нормалне нивое
+
+Имајте у виду да resource-intensive applications могу покренути ове мере ако се покрећу без обзира према другим корисницима.
+
+Ову политику спроводимо како бисмо гарантовали да сви корисници имају задовољавајуће искуство на нашој платформи.
+
+## Времена одговора support-а
+
+Немамо минимално support response или resolve time, међутим циљ нам је да одговоримо на све support queries у року од 24 сата.

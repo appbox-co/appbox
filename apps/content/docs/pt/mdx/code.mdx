@@ -1,14 +1,15 @@
 ---
 title: Código
-description: Masterizando códigos em seus arquivos MDX
+description: Dominando blocos de código nos seus arquivos MDX
 links:
   source: https://raw.githubusercontent.com/rehype-pretty/rehype-pretty-code/master/examples/next/src/app/index.mdx
+sort: 1
 ---
 
-O `opendocs` utiliza a biblioteca [`rehype-pretty-code`](https://github.com/atomiks/rehype-pretty-code)
-para lidar com os códigos em arquivos MDX. Isso permite que você customize bastante a forma como os códigos são exibidos!
+O `opendocs` usa a biblioteca [`rehype-pretty-code`](https://github.com/atomiks/rehype-pretty-code)
+para lidar com blocos de código em arquivos MDX. Isso permite personalizar bastante a forma como o código é exibido!
 
-Para mais informações, consulte a documentação e exemplos oficiais!
+Para mais informações, consulte a documentação e os exemplos oficiais.
 
 ## Títulos
 
@@ -64,17 +65,17 @@ module.exports = {
 
 **Exemplo:**
 
-The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
+O resultado de `[1, 2, 3].join('-'){:js}` é `'1-2-3'{:js}`.
 
 **Código:**
 
 ```mdx
-The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
+O resultado de `[1, 2, 3].join('-'){:js}` é `'1-2-3'{:js}`.
 ```
 
-## Destaque de código inline com reconhecimento de contexto
+## Destaque inline sensível ao contexto
 
-Por exemplo, se você tivesse o seguinte bloco de código:
+Por exemplo, se você tiver o seguinte bloco de código:
 
 ```js
 function getStringLength(str) {
@@ -82,15 +83,15 @@ function getStringLength(str) {
 }
 ```
 
-Quando referirmos `getStringLength{:.entity.name.function}` como uma função,
-nós podemos colorir ela como tal. O mesmo com `function{:.keyword}`, ou
+Quando nos referimos a `getStringLength{:.entity.name.function}` como uma função,
+podemos colori-la como tal. O mesmo vale para `function{:.keyword}`, ou
 `str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. Isso permite
 vincular semanticamente o código inline ao bloco de código mais próximo ao qual ele se refere.
 
-Código:
+**Código:**
 ````mdx
-Quando referirmos `getStringLength{:.entity.name.function}` como uma função,
-nós podemos colorir ela como tal. O mesmo com `function{:.keyword}`, ou
+Quando nos referimos a `getStringLength{:.entity.name.function}` como uma função,
+podemos colori-la como tal. O mesmo vale para `function{:.keyword}`, ou
 `str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. Isso permite
 vincular semanticamente o código inline ao bloco de código mais próximo ao qual ele se refere.
 ````
@@ -199,7 +200,7 @@ const alertVariants = cva(
 ```
 ````
 
-## Destaque em ANSI
+## Destaque ANSI
 
 **Exemplo:**
 
@@ -214,7 +215,7 @@ const alertVariants = cva(
 [0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
 ```
 
-Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+ANSI inline: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
 
 **Código:**
 
@@ -230,13 +231,13 @@ Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
 [0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
 ```
 
-Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+ANSI inline: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
 ````
 
-## Destaque de grupo de palavras por id
+## Destaque de grupos de palavras por id
 
-Coloque um id após `#` depois das palavras.
-Isso permite colorir caracteres de formas diferentes com base no id fornecido.
+Coloque um id depois de `#` após as palavras.
+Isso permite colorir caracteres de formas diferentes com base no id informado.
 
 **Exemplo:**
 

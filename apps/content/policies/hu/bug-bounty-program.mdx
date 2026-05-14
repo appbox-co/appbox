@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Program
+description: "Biztonsági sérülékenység-jelentési programunk és jutalmaink"
+---
+
+Az Appboxnál a biztonság alapvető prioritás. Aktívan ösztönözzük a biztonsági kutatókat, hogy segítsenek platformunk megerősítésében potenciális sérülékenységek azonosításával és jelentésével. Ez a program ismerteti a felelős biztonsági kutatáshoz való hozzáállásunkat, a sérülékenységi jelentések kezelésének módját, valamint azokat a jutalmakat, amelyeket a biztonsági helyzetünk javításában segítő kutatóknak kínálunk.
+
+## Vállalásunk
+
+Ha részt veszel bug bounty programunkban, vállaljuk, hogy:
+
+* Időben visszaigazoljuk és értékeljük a jelentésedet
+* A megerősített sérülékenységeket megfelelő sürgősséggel kezeljük
+* Elismerünk és jutalmazunk az egyedi, korábban nem jelentett sérülékenységekért, amelyek biztonsági javulást eredményeznek
+
+## Program hatóköre
+
+Ez a bug bounty program az alábbi Appbox platformokra vonatkozik:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Kizárólag infrastruktúra, nem ügyfélalkalmazások**
+
+**Megjegyzés:** Bár hosting infrastruktúránk (username.appboxes.co) hatókörön belül van, az ügyfelek által telepített harmadik féltől származó alkalmazások sérülékenységei nem tartoznak ide. Lásd az alábbi kizárásokat.
+
+## Mi minősül érvényes sérülékenységnek?
+
+Ahhoz, hogy egy bejelentés jogosult legyen bug bounty programunkban, az ÖSSZES alábbi feltételnek meg kell felelnie:
+
+### 1. Valós kihasználás bemutatása
+* Tartalmaznia kell működő proof of conceptet, amely bemutatja, hogy a sérülékenység kihasználható
+* Egyértelmű biztonsági hatást kell mutatnia; demonstrált kár nélküli elméleti sérülékenységek nem jogosultak
+* Bizonyítania kell, hogy egy támadó ténylegesen veszélyeztethetné felhasználói adatokat, fiókokat vagy a rendszer integritását
+
+### 2. Hatókörön belüli rendszereket érint
+* A sérülékenységnek az Appbox saját kódjában vagy infrastruktúrájában kell léteznie
+* A fenti "Program hatóköre" részben kifejezetten felsorolt rendszereket kell érintenie
+* Reprodukálhatónak kell lennie production vagy staging környezeteinken
+
+### 3. Korábban nem jelentett
+* A sérülékenységnek újonnan felfedezettnek kell lennie, és nem lehet már ismert számunkra
+* Ismert problémák duplikált jelentései vagy variációi nem jogosultak
+
+## Kizárt területek és problémák
+
+Az alábbiak **nem tartoznak** bug bounty programunk hatókörébe:
+
+### Harmadik féltől származó rendszerek és integrációk
+* WHMCS Client Area [https://billing.appbox.co] - Jelentés: [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - Jelentés: [Chatwoot Security](https://www.chatwoot.com/security)
+* **Ügyfelek által telepített alkalmazások** [app.username.appboxes.co] - Infrastruktúránkon hosztolt harmadik féltől származó alkalmazások (WordPress, Nextcloud stb.) sérülékenységeit az adott alkalmazás gyártóinak kell jelenteni
+* Bármely más harmadik féltől származó szolgáltatás, plugin vagy integráció, amelyet használunk
+* Nem közvetlenül az Appbox által ellenőrzött IP-címek vagy domainek
+* Már nem aktívan használt legacy vagy elavult rendszerek
+
+**Hosting infrastruktúra esetén hatókörön kívül:**
+* Ügyfelek által telepített alkalmazáskódban lévő sérülékenységek (WordPress, Nextcloud stb.)
+* Harmadik féltől származó alkalmazások alapértelmezett konfigurációi
+* Egy adott alkalmazásverzióra jellemző biztonsági problémák
+
+### Biztonsági headerek és hardening
+* Hiányzó biztonsági headerek (X-Frame-Options, COOP, COEP, MTA-STS stb.), **kivéve**, ha tényleges, adatkompromittáláshoz vezető kihasználást mutatsz be
+* Hiányzó `rel="noopener"` vagy `rel="noreferrer"` attribútumok
+* Szerververzió-közzététel vagy HTTP header információszivárgás
+* Cookie attribútumok nem érzékeny cookie-kon (analitika, preferenciák stb.)
+
+### Alacsony hatású információközlés
+* Részletes hibaüzenetek, amelyek nem fednek fel érzékeny adatokat (jelszavak, tokenek, PII)
+* Útvonal-közzététel bizonyított path traversal vagy fájlhozzáférés nélkül
+* Technológiai stack azonosítása (PHP verzió, framework felismerés stb.)
+* Általános alkalmazásválaszok vagy viselkedés
+
+### Tervezési döntések és elméleti problémák
+* Login CSRF (nem ad támadói hozzáférést az áldozat fiókjához)
+* Felhasználó-felsorolás timing attackokkal vagy eltérő válaszokkal (kivéve, ha nagyobb támadási lánc része)
+* Clickjacking érzékeny funkcionalitás bizonyított kihasználása nélkül
+* CORS konfigurációk nem érzékeny végpontokon
+* Hiányzó rate limiting, **kivéve**, ha tényleges visszaélést mutatsz be (a DoS továbbra is kizárt)
+
+### Támadási előfeltételek
+* Olyan biztonsági problémák, amelyek nem érintik alapértelmezett alkalmazáskonfigurációinkat
+* Nem szabványos konfigurációkat igénylő sérülékenységek
+* Olyan sérülékenységek a konténereinkben, amelyek egyéni vagy módosított beállításokat igényelnek
+* Hálózati szintű kompromittálást igénylő problémák (MITM, DNS poisoning, ARP spoofing)
+
+### Tiltott tesztelési módszerek
+* Timing-alapú információközlési támadások
+* Folyamatfelsorolási technikák
+* Bármilyen denial of service vagy nagy volumenű támadás
+* Social engineering és phishing technikák
+* Túlzott forgalmat vagy terhelést generáló automatizált biztonsági szkennelés
+* Nem működő funkciók vagy oldalak tesztelése (pl. még nem production signup oldalak)
+
+### Érvénytelen jelentéstípusok
+* Kizárólag automatizált scanner kimenetén alapuló jelentések kézi validáció nélkül
+* Általános ajánlások tényleges sérülékenységek bemutatása nélkül
+* Best practice javaslatok biztonsági hatás nélkül
+* Megfelelőségi észrevételek (PCI-DSS, GDPR stb.) kihasználhatóság bemutatása nélkül
+
+## Jutalomstruktúra
+
+### Fő weboldal és Control Panel
+
+| **Sérülékenység típusa**                           | **PayPal jutalom** | **Szolgáltatási kredit** |
+| -------------------------------------------------- | ------------------ | ------------------------ |
+| XSS                                                | EUR 100            | EUR 200                  |
+| XSS (CSP Bypass)                                   | EUR 200            | EUR 300                  |
+| CSRF                                               | EUR 300            | EUR 450                  |
+| Authentication Bypass                              | EUR 500            | EUR 750                  |
+| SQL Injection                                      | EUR 1000           | EUR 1500                 |
+| Arbitrary code execution                           | EUR 1000           | EUR 1500                 |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000                 |
+| Persistent code change                             | EUR 1000           | EUR 1500                 |
+
+### Hosting infrastruktúra
+
+| Sérülékenység típusa                       | PayPal jutalom | Szolgáltatási kredit |
+| ------------------------------------------ | -------------- | -------------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.) | EUR 500       | EUR 750              |
+| Authentication Bypass for Supported Apps   | EUR 100        | EUR 200              |
+| Local privilege escalation                 | EUR 500        | EUR 750              |
+
+Az érvényes sérülékenységeket jelentő közreműködőket elismerésünk jeléül feltüntetjük a Security Researchers Hall of Fame listánkon.
+
+## Elvárt jelentésminőség
+
+Minden sérülékenységi jelentésnek tartalmaznia kell:
+
+* **Egyértelmű sérülékenységleírás** - Magyarázd el, mi a sérülékenység, és miért számít
+* **Érintett rendszer/URL** - Pontosan add meg, hol található a sérülékenység
+* **Lépésről lépésre reprodukció** - Részletes lépések, amelyekkel reprodukálni tudjuk a problémát
+* **Működő proof of concept** - A kihasználás funkcionális bemutatása (kód, képernyőképek, videó)
+* **Tényleges biztonsági hatás** - Mutasd be, mit érhetne el egy támadó, ne csak elméleti lehetőségeket
+* **Saját tesztelés** - Validáld a megállapításokat kézzel, ne csak scanner kimenetet továbbíts
+
+Azok a jelentések, amelyekből ezek az elemek hiányoznak, vagy amelyek általános biztonsági ajánlásokból állnak, nem jogosultak jutalomra.
+
+## Jutalom igénylése
+
+* Két jutalmazási lehetőség közül választhatsz:  
+   * Közvetlen PayPal kifizetés (érvényes PayPal-fiók szükséges)
+   * Appbox szolgáltatási kreditek (bármely Appbox szolgáltatásra alkalmazható, nem átruházható)
+
+## Részvételi irányelvek
+
+* Tartsd be ezt a szabályzatot, [Szolgáltatási feltételeinket](/policies/terms-of-service) és minden alkalmazandó jogszabályt
+* A felfedezés után haladéktalanul jelentsd a sérülékenységeket
+* Kutatásod során tartsd tiszteletben a felhasználók magánszféráját és a rendszer integritását
+* Minden sérülékenységi jelentést kizárólag a [contact us form](https://billing.appbox.co/contact.php) űrlapon keresztül nyújts be
+* A felfedezett sérülékenységeket a megoldásig bizalmasan kezeld
+* Tesztelésedet kizárólag a programban kifejezetten szereplő rendszerekre korlátozd
+* Ha váratlanul érzékeny adatokhoz férsz hozzá: csak a probléma bemutatásához szükséges minimális mennyiséget érd el, azonnal hagyd abba a tesztelést, és haladéktalanul jelentsd a sérülékenységet
+* Rendszereinkkel való bármely interakcióhoz kizárólag saját tesztfiókjaidat használd
+* Soha ne próbáld meg zsarolni az Appboxot a megállapításaid alapján
+* **Ellenőrizd a megállapításaidat** - Beküldés előtt teszteld, hogy a proof of concept ténylegesen működik
+* **Fókuszálj a hatásra** - Azokat a sérülékenységeket priorizáld, amelyek valós kárt okozhatnak, az elméleti problémák helyett
+
+## Jogi védelem
+
+A jelen szabályzatot követő biztonsági kutatók az alábbiakra számíthatnak:
+
+* Védelem jogi lépésekkel szemben a jóhiszemű, ezen irányelvek keretein belül végzett biztonsági kutatásért
+* Mentesség anti-circumvention jogi igények alól, ha ez jogszerű biztonsági kutatáshoz szükséges
+* Bizonyos szabályzati korlátozások alóli mentesség, amelyek egyébként akadályoznák a biztonsági tesztelést
+* Annak elismerése, hogy a szabálykövető biztonsági kutatás hasznos és jóhiszeműen történik
+
+Továbbra is te vagy felelős minden alkalmazandó jogszabály betartásáért. Ha harmadik fél jogi eljárást indít ellened, miközben betartod ezt a szabályzatot, megerősítjük, hogy cselekedeteid programunknak megfelelően történtek. Ha bizonytalan vagy abban, hogy tervezett kutatási tevékenységeid megfelelnek-e ennek a szabályzatnak, kérjük, a folytatás előtt lépj kapcsolatba velünk a [contact us form](https://billing.appbox.co/contact.php) űrlapon keresztül.
+
+## Jelentési folyamat
+
+Sérülékenység jelentéséhez hozz létre részletes jegyet a [contact us form](https://billing.appbox.co/contact.php) űrlapon keresztül.
+
+* A jelentésednek átfogó reprodukciós lépéseket kell tartalmaznia. Útmutatóként használhatod ezt a sablont: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Minden programkommunikációnak hivatalos Support Ticket Platformunkon keresztül kell történnie
+* Bármely sérülékenység nyilvános közzététele az Appbox kifejezett írásbeli engedélye nélkül megsérti a program feltételeit, és kizár a jutalmazásból
+
+## Mi történik a jelentés után?
+
+* **Érvényes sérülékenységek**: Visszaigazoljuk a jelentésedet, dolgozunk a javításon, és feldolgozzuk a jutalmadat
+* **Érvénytelen jelentések**: Elmagyarázzuk, miért nem jogosult a jelentés, és útmutatást adhatunk jövőbeli beküldésekhez
+* **Hatókörön kívüli jelentések**: A megfelelő gyártóhoz irányítunk, vagy elmagyarázzuk, miért nem tartozik ide a probléma
+
+Nagyra értékeljük a minőségi kutatást és a biztonságunkhoz való konstruktív hozzájárulásokat. Köszönjük, hogy segítesz biztonságban tartani az Appboxot.

@@ -1,0 +1,62 @@
+---
+title: Legge til nye dokumenter
+description: Legg til nye dokumenter på dokumentasjonsnettstedet og bloggen din.
+sort: 2
+---
+
+# For dokumentasjon
+
+1. Opprett en ny `.mdx`-fil i mappen `apps/content/docs/[language]` med innholdet i dokumentet ditt.
+2. Legg dokumentet til i nettstedets navigasjonsmeny.
+    For å gjøre dette legger du til et nytt element i filen `src/config/docs.ts` i egenskapen `sidebarNav` med ønsket informasjon. Følg mønsteret fra de eksisterende elementene. Når du gjør dette, blir dokumentet også lagt til i søkekommandopaletten.
+
+## Innstillinger for MDX-dokumenter
+
+MDX-dokumenter lagres i mappene `apps/content/docs/[language]` og `apps/content/blog/[language]`. Hvert dokument er en MDX-fil som inneholder en topptekst med metadata, for eksempel tittel og beskrivelse. Nedenfor er et eksempel på en dokumenttopptekst:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Følgende metadatafelt støttes:
+
+- `title` (påkrevd): Tittelen på dokumentet.
+- `description` (påkrevd): En kort beskrivelse av dokumentet.
+- `sort` (valgfritt): Et tall som bestemmer rekkefølgen til dokumentet i navigasjonen. Dokumenter med lavere `sort`-verdier vises først. Hvis det ikke er angitt, sorteres dokumenter alfabetisk etter tittel.
+- `links` (valgfritt): Lenker til relaterte dokumenter, API-referanser, kildekode osv.
+- `toc` (valgfritt): Om innholdsfortegnelsen skal vises. Standardverdien er `true`.
+
+For å legge til nye metadata i dokumentet kan du legge til nye nøkler i toppteksten. Du kan for eksempel legge til en `author`-nøkkel for å angi dokumentforfatteren:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Når du legger til egendefinerte metadata, må du også oppdatere filen `contentlayer.config.ts`, som ligger i roten av prosjektet, og egenskapen `fields` i konstantene `Doc` eller `Blog`.
+Etter det må du vise den nye informasjonen i dokumentmalen. For å gjøre dette må du oppdatere filen `src/app/[locale]/docs/[[...slug]]/page.tsx`, eller `src/app/[locale]/blog/[[...slug]]/page.tsx`, eller en av underkomponentene.
+
+## Bygge Contentlayer på nytt
+
+Når du endrer dokumentasjonsinnhold, legger til nye dokumenter eller endrer filen `contentlayer.config.ts`, må du bygge Contentlayer-bufferen på nytt for at endringene skal tre i kraft under utvikling. Kjør:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Denne kommandoen regenererer innholdstypene og dataene applikasjonen trenger. Du må kjøre denne kommandoen hver gang du:
+
+- Legger til nye metadatafelt i filen `contentlayer.config.ts`
+- Legger til eller endrer MDX-innhold når utviklingsserveren ikke kjører
+- Endrer strukturen i innholdsorganiseringen
+
+Kommandoen kjøres automatisk når prosjektet bygges for produksjon, men du må kjøre den manuelt under utvikling hvis du gjør strukturelle endringer i innholdet.

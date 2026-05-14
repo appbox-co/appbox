@@ -1,0 +1,65 @@
+---
+title: Dodavanje nove dokumentacije
+description: Dodajte nove dokumente na svoju dokumentacijsku stranicu i blog.
+sort: 2
+---
+
+# Za dokumentaciju
+
+1. Stvorite novu `.mdx` datoteku u mapi `apps/content/docs/[language]` sa sadržajem svojeg dokumenta.
+2. Dodajte dokument u navigacijski izbornik web-mjesta.
+    Da biste to učinili, dodajte novu stavku u datoteku `src/config/docs.ts`, u svojstvo `sidebarNav`, sa željenim informacijama. Samo slijedite obrazac postojećih stavki. Time će dokument biti dodan i u paletu naredbi za pretraživanje.
+
+## Postavke MDX dokumenta
+
+MDX dokumenti pohranjuju se u mapama `apps/content/docs/[language]` i `apps/content/blog/[language]`. Svaki je dokument MDX datoteka koja sadrži zaglavlje s metapodacima, kao što su naslov i opis. U nastavku je primjer zaglavlja dokumenta:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Podržana su sljedeća polja metapodataka:
+
+- `title` (obavezno): Naslov dokumenta.
+- `description` (obavezno): Kratak opis dokumenta.
+- `sort` (neobavezno): Broj koji određuje redoslijed dokumenta u navigaciji. Dokumenti s nižim vrijednostima `sort` prikazuju se prvi. Ako nije navedeno, dokumenti se sortiraju abecedno prema naslovu.
+- `links` (neobavezno): Poveznice na povezane dokumente, API reference, izvorni kod itd.
+- `toc` (neobavezno): Treba li prikazati sadržaj. Zadana je vrijednost `true`.
+
+Da biste dokumentu dodali nove metapodatke, u zaglavlje možete dodati nove ključeve. Na primjer, možete dodati ključ `author` za označavanje autora dokumenta:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+No pri dodavanju prilagođenih metapodataka morate ažurirati i datoteku `contentlayer.config.ts`, koja se nalazi u korijenu projekta, unutar svojstva `fields` u konstantama `Doc` ili `Blog`.
+Nakon toga morat ćete prikazati nove informacije u predlošku dokumenta. Da biste to učinili, morat ćete ažurirati datoteku `src/app/[locale]/docs/[[...slug]]/page.tsx`, ili `src/app/[locale]/blog/[[...slug]]/page.tsx`, ili neku od njezinih podkomponenti.
+
+## Ponovna izgradnja Contentlayera
+
+Kada promijenite sadržaj dokumentacije, dodate nove dokumente ili izmijenite datoteku `contentlayer.config.ts`, morat ćete ponovno izgraditi Contentlayer predmemoriju kako bi promjene stupile na snagu tijekom razvoja. Pokrenite:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Ova naredba ponovno generira vrste sadržaja i podatke potrebne aplikaciji. Morat ćete pokrenuti ovu naredbu svaki put kada:
+
+- dodate nova polja metapodataka u datoteku `contentlayer.config.ts`
+- dodate ili izmijenite MDX sadržaj dok razvojni poslužitelj nije pokrenut
+- promijenite strukturu organizacije sadržaja
+
+Naredba se automatski pokreće pri izgradnji projekta za produkciju, ali tijekom razvoja morat ćete je pokrenuti ručno ako napravite strukturne promjene u sadržaju.
+
+
+

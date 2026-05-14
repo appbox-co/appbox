@@ -33,7 +33,18 @@
     "words": {
       "menu": "Menu",
       "docs": "Docs",
-      "blog": "Blog"
+      "blog": "Blog",
+      "home": "Home",
+      "legal": "Legal",
+      "terms_of_service": "Terms of Service",
+      "service_level_agreement": "Service Level Agreement",
+      "privacy_data_handling": "Privacy & Data Handling",
+      "global_privacy_practices": "Global Privacy Practices",
+      "incident_response_security": "Incident Response & Security",
+      "view_all_policies": "View All Policies",
+      "documentation_new": "Documentation (new)",
+      "documentation_old": "Documentation (old)",
+      "social": "Social"
     },
     "featured_cards": {
       "nextjs": {
@@ -591,7 +602,11 @@
   },
   "policies": {
     "title": "Policies",
-    "meta_description": "Review Appbox policies including Terms of Service, Privacy Policy, Refund Policy, and more. Understand your rights and our commitments."
+    "meta_description": "Review Appbox policies including Terms of Service, Privacy Policy, Refund Policy, and more. Understand your rights and our commitments.",
+    "index_description": "These policies govern your use of Appbox services and outline our commitments to you. They include important information about privacy, security, and your responsibilities as a user.",
+    "policy": "Policy",
+    "description": "Description",
+    "view": "View"
   },
   "auth": {
     "login": {
@@ -681,6 +696,7 @@
       "profile": "Profile",
       "abuse_reports": "Abuse Reports",
       "two_factor": "Two-Factor Auth",
+      "api_keys": "API Keys",
       "service_status": "Service Status",
       "support_billing": "Support & Billing",
       "add_appbox": "Add Appbox",
@@ -997,6 +1013,7 @@
     "title": "Appbox Manager",
     "cylos": {
       "title": "Your Appboxes",
+      "description": "Monitor storage, network, boost usage, and installed apps across every Appbox you manage.",
       "empty": "You don't have any appboxes yet.",
       "getCylo": "Get an Appbox",
       "viewDetails": "View Details",
@@ -1108,6 +1125,7 @@
     },
     "installedApps": {
       "title": "Installed Apps",
+      "description": "Manage apps installed across your Appboxes.",
       "searchPlaceholder": "Search by name, domain, appbox...",
       "name": "Name",
       "domain": "Domain",
@@ -1321,6 +1339,7 @@
     "title": "Account",
     "profile": {
       "title": "Profile",
+      "description": "Manage your display name, email, avatar, password, and account security settings.",
       "email": "Email",
       "alias": "Display Name",
       "aliasPlaceholder": "Enter display name",
@@ -1346,8 +1365,10 @@
     },
     "abuse": {
       "title": "Abuse Reports",
+      "headerDescription": "Review abuse reports associated with your account and follow their current status.",
       "id": "ID",
       "subject": "Subject",
+      "searchPlaceholder": "Search reports...",
       "status": "Status",
       "date": "Date",
       "description": "Description",
@@ -1358,11 +1379,13 @@
       "statusResolved": "Resolved",
       "statusClosed": "Closed",
       "backToList": "Back to Abuse Reports",
+      "detailDescription": "Track the report timeline, complainant details, and any response from the Appbox team.",
       "reportDetails": "Report Details",
       "conversation": "Conversation"
     },
     "twoFactor": {
       "title": "Two-Factor Authentication",
+      "description": "Protect your account with authenticator-app verification and recovery backup codes.",
       "setup": "Set Up 2FA",
       "scanQR": "Scan this QR code with your authenticator app",
       "secretKey": "Or enter this secret key manually:",
@@ -1371,6 +1394,8 @@
       "verify": "Verify",
       "backupCodes": "Backup Codes",
       "backupCodesDescription": "Save these backup codes in a safe place. Each code can only be used once.",
+      "newRecoveryCodes": "New Recovery Codes",
+      "newRecoveryCodesDescription": "Save these replacement codes now. Your previous recovery codes will no longer work.",
       "copyAll": "Copy All",
       "copied": "Copied!",
       "done": "Done",
@@ -1382,6 +1407,46 @@
       "verifying": "Verifying...",
       "next": "Next",
       "back": "Back"
+    },
+    "apiKeys": {
+      "title": "API Keys",
+      "description": "Create and manage account-level API keys. API keys authenticate as your user and have the same access as your account.",
+      "create": "Create API Key",
+      "createTitle": "Create API Key",
+      "createDescription": "Give this key a recognizable name. The secret will only be shown once.",
+      "name": "Name",
+      "namePlaceholder": "Automation script",
+      "expiresAt": "Expires at",
+      "optional": "Optional",
+      "never": "Never",
+      "created": "Created",
+      "lastUsed": "Last used",
+      "status": "Status",
+      "active": "Active",
+      "revoked": "Revoked",
+      "expired": "Expired",
+      "prefix": "Prefix",
+      "actions": "Actions",
+      "rename": "Rename",
+      "revoke": "Revoke",
+      "revokeTitle": "Revoke API Key",
+      "revokeDescription": "This will immediately disable the API key. Requests using it will stop working.",
+      "secretTitle": "Save Your API Key",
+      "secretDescription": "Copy this key now. You will not be able to view it again.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "close": "Close",
+      "cancel": "Cancel",
+      "save": "Save",
+      "confirmRevoke": "Revoke Key",
+      "noKeys": "No API keys yet.",
+      "loadFailed": "Failed to load API keys.",
+      "createSuccess": "API key created.",
+      "createFailed": "Failed to create API key.",
+      "updateSuccess": "API key updated.",
+      "updateFailed": "Failed to update API key.",
+      "revokeSuccess": "API key revoked.",
+      "revokeFailed": "Failed to revoke API key."
     }
   },
   "common": {

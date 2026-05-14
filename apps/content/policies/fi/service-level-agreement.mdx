@@ -1,0 +1,65 @@
+---
+title: Palvelutasosopimus
+description: Sitoutumisemme palvelun johdonmukaisuuteen ja luotettavuuteen
+---
+
+Tämä Service Level Agreement ("SLA") on asiakirja, joka säätelee Appboxin tarjoamien palveluiden ehtoja ja käyttöä. Käyttämällä palveluitamme vahvistat hyväksyväsi alla esitetyt ehdot.
+
+Koska toimimme jaetussa ympäristössä ja tarjoamme tietynluonteisia palveluita, jonkinasteinen käyttökatko voi joskus olla väistämätön. Tämä sopimus selventää, miten hallitsemme käyttökatkoja tilausjaksosi aikana, ja kuvaa sitoumuksemme riitojen ratkaisemiseen ja korvausten tarjoamiseen.
+
+## Palvelinkatkot, palvelinhuolto ja korvaukset
+
+Appbox tekee kaikkensa pitääkseen palvelimemme toiminnassa ja kaikkien käyttäjien saatavilla koko laskutuskauden ajan.
+
+Kun palvelinhuolto järjestetään etukäteen, käyttäjille ilmoitetaan useiden kanavien kautta, kuten sähköpostipäivityksillä, Appbox Status Page -sivulla ja Client Area Announcements -ilmoituksilla. Suunnitellusta huollosta vaikutuksen kohteena oleva käyttäjä ei ole oikeutettu korvaukseen.
+
+Suunnittelemattomista tai hätähuoltotoimenpiteistä viestitään mahdollisimman nopeasti, ja tällaisista tapahtumista vaikutuksen kohteena olevat käyttäjät voivat olla oikeutettuja krediitteihin alla määritellysti:
+
+| Käyttökatkon kesto   | Korvaus                                                                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enintään 6 tuntia    | Tiimin harkinnan mukaan                                                                                                                     |
+| Enintään 12 tuntia   | Vastaa 1 päivän palvelukrediittiä                                                                                                           |
+| Enintään 24 tuntia   | Vastaa 2 päivän palvelukrediittiä                                                                                                           |
+| Yli 48 tuntia        | Hyvitetään kaksinkertaisena käyttökatkon kestoon nähden (esimerkiksi 3 päivän katko tuottaa 6 päivän palvelukrediitin)                      |
+
+Tämä käytäntö **ei kata mitään käyttökatkoa, joka liittyy asentamiisi sovelluksiin.**
+
+## Levyvika ja datan menetys
+
+Appboxin alusta perustuu jaettuun infrastruktuuriin, joka on suunniteltu tarjoamaan oikeudenmukainen resurssien jako ja kattava levynkäyttö. Parhaista pyrkimyksistämme huolimatta laitteistovikoja, kuten levyvikoja, voi joskus ilmetä.
+
+Jos levyvika aiheuttaa sen, että menetät pääsyn dataasi eikä sitä voida palauttaa, olet oikeutettu **yhteen täyteen palvelukuukauteen veloituksetta**.
+
+Suosittelemme vahvasti pitämään varmuuskopiot kaikesta olennaisesta datasta, jota säilytät palvelussasi.
+
+Huomaa, että jos data menetetään käyttäjän aloittamien toimien vuoksi (esim. vahingossa tapahtuva poistaminen) eikä järjestelmään liittyvää virhettä havaita, korvausta ei anneta.
+
+## Palvelinresurssien reilu käyttö
+
+Palvelumme toimitetaan jaetuilla resursseilla, joten on ratkaisevan tärkeää, että jokainen asiakas varmistaa toimintansa olevan häiritsemättä muiden käyttäjien suorituskykyä ja pysyvän hyväksyttävissä resurssirajoissa.
+
+Appbox voi ilman ennakkoilmoitusta pysäyttää sovelluksia tai prosesseja, jotka vaikuttavat kielteisesti muiden asiakkaiden kokemuksiin. Vakavissa resurssien väärinkäyttötapauksissa asiakkaan palvelu voidaan keskeyttää tai päättää kokonaan.
+
+### Disk I/O Fair Use Policy
+
+Tämä käytäntö koskee vain paketteja NG-8000 ja pienempiä (ei-dedikoidun levyn paketit).
+
+Optimaalisen suorituskyvyn varmistamiseksi kaikille käyttäjille Appbox käyttää automaattista Disk I/O -valvontajärjestelmää, joka:
+
+1. Valvoo jatkuvasti levyn käyttöä kaikissa jaetuissa resursseissa
+2. Tunnistaa sovellukset, jotka kuluttavat liiallisesti Disk I/O -resursseja pidemmän ajan
+3. Soveltaa automaattisesti rajoitustoimenpiteitä tarvittaessa
+
+Jos sovelluksesi havaitaan kuluttavan liiallisesti Disk I/O:ta:
+- Saatat saada varoitusilmoituksen
+- Jatkuva korkea käyttö johtaa levysi I/O-nopeuden automaattiseen rajoittamiseen
+- Toistuvat rikkomukset johtavat asteittain tiukempiin rajoitusrajoihin
+- Rajoitus on väliaikainen ja poistetaan automaattisesti, kun käyttö palaa normaalille tasolle
+
+Huomaa, että resurssi-intensiiviset sovellukset voivat laukaista nämä toimenpiteet, jos niitä ajetaan huomioimatta muita käyttäjiä.
+
+Täytäntöönpanemme tätä käytäntöä taataksemme, että kaikilla käyttäjillä on tyydyttävä kokemus alustallamme.
+
+## Tuen vastausajat
+
+Meillä ei ole vähimmäisvaste- tai ratkaisuaikaa tuelle, mutta pyrimme vastaamaan kaikkiin tukikyselyihin 24 tunnin kuluessa.

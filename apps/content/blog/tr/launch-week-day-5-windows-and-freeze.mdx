@@ -1,0 +1,91 @@
+---
+title: Launch Week Day 5 - Windows 11 Pro VPS ve App Freeze
+date: 2026-03-13 10:00:00
+excerpt: "Launch Week'in 5. günü. Windows 11 Pro artık Appbox'ta VPS olarak mevcut. Ayrıca yeni freeze özelliği, veri kaybetmeden uygulamaları duraklatmanıza ve slotlarını geri kazanmanıza olanak tanır."
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Day 5: Windows 11 Pro VPS ve App Freeze
+
+5. gün. Son gün. Dün bunun geldiğini görmeyeceğinizi söylemiştik ve ciddiydik.
+
+**Windows 11 Pro artık Appbox'ta VPS olarak mevcut.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Appbox'ta Windows
+
+3. günde beş Linux dağıtımıyla VPS'leri yayınladığımızda doğal soru "Windows ne olacak?" idi. Windows'u Appbox üzerinde yönetilen bir VPS olarak düzgün çalıştırmak önemli bir teknik zorluktu. Linux VM'leri host ile guest arasında neredeyse yerel dosya paylaşımı için virtiofs kullanır. Windows virtiofs desteklemez. Bu yüzden her VM için kimliği doğrulanmış SMB paylaşımları oluşturan Samba tabanlı bir entegrasyon geliştirdik; böylece Windows, Linux VPS'lerin aldığı Appbox verilerinize aynı sorunsuz erişimi, Windows'un yerel olarak anladığı bir protokol üzerinden elde ediyor.
+
+Sonuç, Appbox verileriniz `Z:` sürücüsü (`APPBOX_DATA`) olarak mount edilmiş şekilde KVM üzerinde çalışan tam bir Windows 11 Pro sanal makinesi. File Explorer'ı açın, `Z:\` konumuna gidin ve `apps/` ile `storage/` klasörlerinizi orada göreceksiniz.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="APPBOX_DATA'yı Z: sürücüsü olarak ve apps ile storage klasörleriyle gösteren Windows 11 File Explorer" width="860" className="mt-8 mb-10" />
+</p>
+
+## Bunun Açtığı Alanlar
+
+Appbox üzerinde bir Windows VPS'e sahip olmak tamamen yeni bir kullanım senaryosu kategorisi açar:
+
+- **Yalnızca Windows yazılımları** - Linux sürümü bulunmayan uygulamaları çalıştırın
+- **.NET geliştirme** - .NET uygulamalarını gerçek bir Windows ortamında oluşturun ve test edin
+- **Office ve üretkenlik** - Microsoft Office, Adobe araçları veya herhangi bir masaüstü yazılımını çalıştırın
+- **Oyun sunucuları** - yalnızca Windows üzerinde çalışan oyun sunucularını barındırın
+- **Uzak masaüstü** - yerleşik web konsolu üzerinden herhangi bir tarayıcıdan tam bir Windows masaüstüne erişin veya yerel RDP deneyimi için Microsoft Remote Desktop ile bağlanın
+- **Test ve CI** - kendi donanımınızı bakımda tutmadan yazılımınızı Windows üzerinde test edin
+
+Bu, yönetici erişimine sahip tam bir Windows 11 Pro kurulumudur. Windows'ta çalışıyorsa burada da çalışır.
+
+## Plan Kullanılabilirliği
+
+Windows 11 Pro'nun kaynak gereksinimleri oldukça yüksektir ve disk I/O açısından ağırdır. Herkes için iyi bir deneyim sağlamak amacıyla Windows VPS şu anda yalnızca dedicated Appbox planlarında (NG-18000 ve üzeri) kullanılabilir. Optimize etmeye devam ettikçe gelecekte diğer planlara da genişletebiliriz.
+
+## Lisanslama
+
+Windows 11 Pro VPS ürün anahtarı içermez. Windows etkinleştirilmemiş olarak masaüstünde kalıcı filigran, sınırlı kişiselleştirme ayarları ve dönemsel etkinleştirme hatırlatmalarıyla çalışır; ancak bunun dışında tamamen işlevseldir. Bu kısıtlamaları kaldırmak için geçerli bir Windows 11 Pro anahtarıyla etkinleştirin. [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/) üzerinden satın almanızı öneririz.
+
+## App Boost ile Çalışır
+
+Windows 11 Pro VPS, 2. günden gelen **App Boost**'u tamamen destekler. Daha ağır iş yükleri için daha fazla performansa ihtiyacınız varsa boost seviyesini artırarak VM'nize daha fazla RAM ve CPU tahsis edin.
+
+## App Freeze
+
+Bugün yayınlanan ve yalnızca Windows için değil tüm uygulamalara uygulanan ikinci bir özellik daha var.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="App Boost ve yeni Freeze düğmesini gösteren Windows 11 Pro VPS detay sayfası" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze**, kurulu herhangi bir uygulamayı duraklatmanıza ve veri kaybetmeden uygulama slotlarını geri kazanmanıza olanak tanır. Uygulama durur, verileri tam olduğu yerde kalır ve kullandığı slotlar diğer uygulamalar için kullanılabilir hale gelir.
+
+Bu sürekli karşımıza çıkan bir sorunu çözüyor: yeni bir uygulama denemek istiyorsunuz ama tüm slotlarınızı kullanmışsınız. Bugüne kadar, deneme yapmak için yeterli slotu açmak adına bir şeyi kaldırmanız ve verilerini kaybetmeniz gerekirdi. Artık bir uygulamayı freeze edebilir, o slotları yeni bir şey kurup test etmek için kullanabilir ve işiniz bittiğinde orijinal uygulamayı unfreeze edebilirsiniz. Her şey kaldığınız yerden devam eder.
+
+Freeze düğmesi, herhangi bir uygulamanın detay sayfasındaki Actions bölümünde Start, Stop ve Restart'ın yanında yer alır. Freeze etmek uygulamayı durdurur, frozen olarak işaretler ve slotlarını (boost slotları dahil) kullanılabilir havuzunuza geri verir. Unfreeze etmek uygulamayı geri yükler ve slotları tekrar tüketir.
+
+Dikkate değer birkaç nokta:
+
+- Bir uygulama kurulurken, güncellenirken veya silinirken freeze edemezsiniz
+- Appbox'ınızın maliyeti karşılayacak kadar boş slotu yoksa unfreeze edemezsiniz
+- Frozen uygulamalar tüm verilerini ve yapılandırmalarını korur
+
+## İşte Bu Kadar
+
+Beş gün. Beş lansman.
+
+- **Day 1** - yeni dashboard
+- **Day 2** - App Boost
+- **Day 3** - Linux VPS'leri
+- **Day 4** - VPS uygulamaları için birden fazla domain
+- **Day 5** - Windows 11 Pro VPS ve App Freeze
+
+Bu hafta yayınlanan her şey şu anda canlı. Giriş yapın ve deneyin.
+
+Launch Week bitti, ama biz durmuyoruz. Önümüzdeki aylarda çok daha fazlası geliyor.
+
+---
+
+*Geri bildiriminiz mi var veya bir sorun mu buldunuz? support@appbox.co adresinden bize ulaşın ya da [billing.appbox.co](https://billing.appbox.co/submitticket.php) üzerinden bir ticket açın.*

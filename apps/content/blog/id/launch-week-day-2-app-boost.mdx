@@ -1,0 +1,77 @@
+---
+title: Launch Week Day 2 - App Boost
+date: 2026-03-10 10:00:00
+excerpt: Hari kedua Launch Week. Memperkenalkan App Boost, cara baru untuk memberi aplikasi Anda lebih banyak resource tanpa upgrade paket.
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, performa, resource]
+---
+
+# Launch Week Day 2: Memperkenalkan App Boost
+
+Hari 2. Mari bicara tentang resource.
+
+Salah satu pertanyaan paling umum yang kami terima adalah variasi dari "bagaimana cara memberi aplikasi ini lebih banyak RAM?" atau "bisakah saya membuat satu aplikasi ini lebih cepat tanpa upgrade seluruh paket?" Sampai hari ini, jawabannya selalu: upgrade paket Anda atau terima kondisi yang ada.
+
+Itu berubah sekarang. Hari ini kami meluncurkan **App Boost**.
+
+## Apa Itu App Boost?
+
+App Boost memungkinkan Anda mengalokasikan lebih banyak resource ke aplikasi tertentu menggunakan app slot yang tersedia. Alih-alih setiap aplikasi mendapat bagian resource Appbox yang tetap, kini Anda dapat menggeser level boost pada aplikasi apa pun untuk meningkatkan alokasi CPU dan RAM-nya.
+
+Idenya sederhana: mungkin ada aplikasi yang membutuhkan lebih banyak daya dan aplikasi lain yang baik-baik saja dengan minimum. Boost memungkinkan Anda mengambil kapasitas tak terpakai dari paket Anda dan mengarahkannya ke tempat yang benar-benar penting.
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="Kontrol App Boost di halaman detail aplikasi" width="860" className="mt-8 mb-10" />
+</p>
+
+## Cara Kerjanya
+
+Setiap paket Appbox memiliki sejumlah app slot. Setiap aplikasi yang Anda instal menggunakan sebagian slot tersebut. Dengan App Boost, Anda dapat menetapkan slot tambahan ke aplikasi untuk menaikkan resource multiplier-nya.
+
+Inilah yang sebenarnya Anda kontrol:
+
+- **Boost Slots**: jumlah slot tambahan yang Anda dedikasikan untuk aplikasi ini. Setiap slot menaikkan resource multiplier dengan kenaikan tetap (biasanya 0.1x per slot).
+- **Multiplier**: faktor penskalaan resource yang dihasilkan. Pada 0 boost slot, Anda berada di 1.0x (baseline). Geser ke atas dan Anda dapat mendorong aplikasi ke 1.3x, 2x, atau bahkan lebih tinggi tergantung paket Anda.
+- **RAM dan CPU**: diperbarui secara real time saat Anda menggeser slider, sehingga Anda dapat melihat persis berapa banyak memori dan CPU yang akan didapat aplikasi sebelum menerapkan.
+- **Slot Cost**: menunjukkan berapa total slot yang akan digunakan aplikasi (biaya dasar plus boost slot), sehingga Anda selalu tahu trade-off-nya.
+
+Slider menampilkan penanda milestone pada nilai multiplier penuh (2x, 3x, dan seterusnya) dan bahkan memicu sedikit confetti saat Anda mencapainya. Kami tidak tahan untuk tidak menambahkannya.
+
+## Boost Saat Instalasi
+
+Anda tidak perlu menunggu sampai aplikasi terinstal untuk melakukan boost. Slider boost dibangun langsung ke dalam dialog instalasi, sehingga Anda dapat memilih level resource sebelum aplikasi mulai berjalan.
+
+Ini sangat berguna untuk aplikasi yang lebih berat seperti OS atau server media, saat Anda sudah tahu sejak awal bahwa aplikasi tersebut akan mendapat manfaat dari resource tambahan.
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="Slider boost di dialog instalasi aplikasi" width="560" className="mt-8 mb-10" />
+</p>
+
+## Boost Setelah Instalasi
+
+Sudah punya aplikasi yang berjalan? Buka halaman detail aplikasi mana pun dan Anda akan menemukan kartu App Boost di sana. Geser slider, lihat pratinjau resource, lalu tekan Apply Boost.
+
+Perubahan resource diterapkan live tanpa restart.
+
+## Bagaimana dengan Aplikasi yang Sudah Ada?
+
+Jika Anda sudah memiliki aplikasi yang terinstal sebelum hari ini, aplikasi tersebut akan terus menggunakan sistem resource multiplier sebelumnya persis seperti sebelumnya. App Boost diaktifkan untuk aplikasi yang baru diinstal mulai sekarang. Kami ingin merilis ini secara bersih tanpa mengganggu apa pun yang sudah berjalan.
+
+## Ingin Boost Lebih Banyak?
+
+Boost maksimum yang dapat Anda terapkan bergantung pada slot yang tersedia di paket Anda. Jika ruang mulai habis dan ingin mendorong lebih jauh, upgrade paket memberi Anda lebih banyak slot untuk digunakan. Ada link upgrade langsung di UI boost yang membawa Anda ke area billing.
+
+## Pratinjau Resource
+
+Salah satu detail yang paling saya sukai adalah panel Resource Preview yang berada di bawah slider. Panel ini menampilkan multiplier, slot cost, RAM, dan CPU yang semuanya diperbarui secara real time saat Anda menggeser. Tidak ada tebakan, tidak ada kejutan. Anda tahu persis apa yang akan didapat aplikasi sebelum menerapkan apa pun.
+
+## Hari 2 Sudah Live Sekarang
+
+App Boost tersedia sekarang untuk semua aplikasi yang baru diinstal. Login, instal aplikasi, dan coba slidernya.
+
+Besok adalah Hari 3, dan kami punya sesuatu yang besar. Sampai jumpa.
+
+---
+
+*Punya masukan atau menemukan masalah? Hubungi support@appbox.co atau buka tiket di [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,65 @@
+---
+title: Yeni doküman ekleme
+description: Dokümantasyon sitenize ve blogunuza yeni belgeler ekleyin.
+sort: 2
+---
+
+# Dokümantasyon için
+
+1. Belgenizin içeriğiyle `apps/content/docs/[language]` klasöründe yeni bir `.mdx` dosyası oluşturun.
+2. Belgeyi sitenin gezinme menüsüne ekleyin.
+    Bunu yapmak için `src/config/docs.ts` dosyasındaki `sidebarNav` özelliğine, istenen bilgilerle yeni bir öğe ekleyin; mevcut öğelerin kalıbını takip etmeniz yeterlidir. Bunu yaptığınızda belge arama komut paletine de eklenir.
+
+## MDX belge ayarları
+
+MDX belgeleri `apps/content/docs/[language]` ve `apps/content/blog/[language]` klasörlerinde saklanır. Her belge, başlık ve açıklama gibi metadata içeren bir başlığa sahip bir MDX dosyasıdır. Aşağıda bir belge başlığı örneği yer alır:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Aşağıdaki metadata alanları desteklenir:
+
+- `title` (gerekli): Belgenin başlığı.
+- `description` (gerekli): Belgenin kısa açıklaması.
+- `sort` (isteğe bağlı): Belgenin gezinmede sırasını belirleyen sayı. Daha düşük sort değerine sahip belgeler önce görünür. Sağlanmazsa belgeler başlığa göre alfabetik sıralanır.
+- `links` (isteğe bağlı): İlgili belgelere, API referanslarına, kaynak koda vb. bağlantılar.
+- `toc` (isteğe bağlı): İçindekiler tablosunun gösterilip gösterilmeyeceği. Varsayılan olarak `true`.
+
+Belgeye yeni metadata eklemek için başlığa yeni anahtarlar ekleyebilirsiniz. Örneğin belge yazarını belirtmek için bir `author` anahtarı ekleyebilirsiniz:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Ancak özel metadata eklerken projenin kökünde bulunan `contentlayer.config.ts` dosyasını ve `Doc` veya `Blog` sabitlerindeki `fields` özelliğini de güncellemeniz gerekir.
+Bundan sonra yeni bilgiyi belge şablonunda göstermeniz gerekir. Bunu yapmak için `src/app/[locale]/docs/[[...slug]]/page.tsx` dosyasını ya da `src/app/[locale]/blog/[[...slug]]/page.tsx` dosyasını veya bunların alt bileşenlerinden birini güncellemeniz gerekir.
+
+## Contentlayer'ı yeniden oluşturma
+
+Dokümantasyon içeriğinde değişiklik yaptığınızda, yeni dokümanlar eklediğinizde veya `contentlayer.config.ts` dosyasını değiştirdiğinizde, geliştirme sırasında değişikliklerinizin etkili olması için contentlayer önbelleğini yeniden oluşturmanız gerekir. Şunu çalıştırın:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Bu komut, uygulamanın ihtiyaç duyduğu içerik türlerini ve verileri yeniden oluşturur. Şunları her yaptığınızda bu komutu çalıştırmanız gerekir:
+
+- `contentlayer.config.ts` dosyasına yeni metadata alanları ekleme
+- Geliştirme sunucusu çalışmıyorken MDX içeriği ekleme veya değiştirme
+- İçerik düzenleme yapınızın yapısını değiştirme
+
+Komut, projeyi üretim için derlerken otomatik olarak çalıştırılır; ancak geliştirme sırasında içerikte yapısal değişiklikler yaparsanız elle çalıştırmanız gerekir.
+
+
+

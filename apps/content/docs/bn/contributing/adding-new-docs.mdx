@@ -1,0 +1,65 @@
+---
+title: নতুন ডকস যোগ করা
+description: আপনার ডকুমেন্টেশন সাইট ও ব্লগে নতুন ডকুমেন্ট যোগ করুন।
+sort: 2
+---
+
+# ডকুমেন্টেশনের জন্য
+
+1. আপনার ডকুমেন্টের কনটেন্ট দিয়ে `apps/content/docs/[language]` ফোল্ডারে একটি নতুন `.mdx` ফাইল তৈরি করুন।
+2. সাইটের নেভিগেশন মেনুতে ডকুমেন্টটি যোগ করুন।
+    এটি করতে, `src/config/docs.ts` ফাইলের `sidebarNav` প্রপার্টিতে প্রয়োজনীয় তথ্যসহ একটি নতুন আইটেম যোগ করুন; বিদ্যমান আইটেমগুলোর প্যাটার্ন অনুসরণ করলেই হবে। এটি করলে ডকুমেন্টটি সার্চ কমান্ড প্যালেটেও যোগ হবে।
+
+## MDX ডকুমেন্ট সেটিংস
+
+MDX ডকুমেন্ট `apps/content/docs/[language]` এবং `apps/content/blog/[language]` ফোল্ডারে সংরক্ষিত থাকে। প্রতিটি ডকুমেন্ট একটি MDX ফাইল, যার হেডারে title ও description-এর মতো মেটাডেটা থাকে। নিচে একটি ডকুমেন্ট হেডারের উদাহরণ দেওয়া হলো:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+নিচের মেটাডেটা ফিল্ডগুলো সাপোর্ট করা হয়:
+
+- `title` (প্রয়োজনীয়): ডকুমেন্টের শিরোনাম।
+- `description` (প্রয়োজনীয়): ডকুমেন্টের সংক্ষিপ্ত বর্ণনা।
+- `sort` (ঐচ্ছিক): নেভিগেশনে ডকুমেন্টের ক্রম নির্ধারণ করে এমন একটি সংখ্যা। কম sort মানের ডকুমেন্ট আগে দেখায়। না দিলে ডকুমেন্টগুলো title অনুযায়ী বর্ণানুক্রমে সাজানো হয়।
+- `links` (ঐচ্ছিক): সম্পর্কিত ডকুমেন্ট, API reference, source code ইত্যাদির link।
+- `toc` (ঐচ্ছিক): table of contents দেখানো হবে কি না। ডিফল্ট `true`।
+
+ডকুমেন্টে নতুন মেটাডেটা যোগ করতে চাইলে হেডারে নতুন key যোগ করতে পারেন। উদাহরণস্বরূপ, ডকুমেন্ট author দেখাতে `author` key যোগ করা যায়:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+তবে custom metadata যোগ করলে project root-এ থাকা `contentlayer.config.ts` ফাইলের `Doc` বা `Blog` constants-এর `fields` property-ও update করতে হবে।
+এরপর ডকুমেন্ট template-এ নতুন তথ্য দেখাতে হবে। এটি করতে `src/app/[locale]/docs/[[...slug]]/page.tsx` ফাইল, অথবা `src/app/[locale]/blog/[[...slug]]/page.tsx` বা তার কোনো child component update করতে হবে।
+
+## Contentlayer পুনর্নির্মাণ
+
+ডকুমেন্টেশন content বদলালে, নতুন docs যোগ করলে, অথবা `contentlayer.config.ts` ফাইল পরিবর্তন করলে development চলাকালে পরিবর্তন কার্যকর করতে contentlayer cache পুনর্নির্মাণ করতে হবে। চালান:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+এই command application-এর জন্য প্রয়োজনীয় content type ও data আবার generate করে। নিচের কাজগুলোর যেকোনোটি করলে commandটি আবার চালাতে হবে:
+
+- `contentlayer.config.ts` ফাইলে নতুন metadata field যোগ করা
+- dev server চলমান না থাকলে MDX content যোগ বা পরিবর্তন করা
+- content organization-এর structure পরিবর্তন করা
+
+production build করার সময় commandটি স্বয়ংক্রিয়ভাবে চলে, তবে development-এ structural content change করলে এটি manually চালাতে হবে।
+
+
+

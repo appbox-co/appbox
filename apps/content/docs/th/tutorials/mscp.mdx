@@ -1,0 +1,258 @@
+---
+title: "การใช้ mscp สำหรับการถ่ายโอนไฟล์อย่างรวดเร็ว"
+description: "เรียนรู้วิธีใช้ mscp (multi-threaded scp) สำหรับการถ่ายโอนไฟล์ความเร็วสูงไปยังเซิร์ฟเวอร์ Appbox ของคุณโดยใช้การเชื่อมต่อ SSH หลายรายการ"
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** เป็นรูปแบบ multi-threaded ของ `scp` ที่คัดลอกไฟล์ผ่านการเชื่อมต่อ SSH (SFTP) หลายรายการพร้อมกัน สิ่งนี้ช่วยให้การถ่ายโอนไฟล์และไดเรกทอรีขนาดใหญ่เร็วขึ้นอย่างมากโดยใช้การเชื่อมต่อแบบขนาน
+
+## ข้อกำหนดเบื้องต้น
+
+ก่อนใช้ mscp คุณต้องติดตั้ง SFTPgo บนเซิร์ฟเวอร์ Appbox ของคุณเพื่อรับข้อมูลรับรอง SFTP
+
+### ขั้นตอน 1: ติดตั้ง SFTPgo
+
+1. ไปที่ [หน้าแอป SFTPgo](https://www.appbox.co/appstore/app/232) ใน Appbox App Store
+2. คลิก **Install** เพื่อเพิ่ม SFTPgo ลงในเซิร์ฟเวอร์ของคุณ
+3. เมื่อติดตั้งแล้ว คุณจะได้รับรายละเอียดการเชื่อมต่อ:
+   - **Username**: ชื่อผู้ใช้ SFTP ของคุณ
+   - **Password**: รหัสผ่าน SFTP ของคุณ
+   - **Hostname**: เช่น `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: เช่น `25557`
+   - **FTP/FTPS Port**: เช่น `25555`
+   - **WebDav URL**: สำหรับการเข้าถึง WebDAV
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">หมายเหตุ</AlertTitle>
+  <AlertDescription className="pl-2">
+    เก็บข้อมูลรับรอง SFTPgo ของคุณให้ปลอดภัย คุณจะต้องใช้ hostname, username, password และ SFTP port สำหรับการเชื่อมต่อ mscp
+  </AlertDescription>
+</Alert>
+
+## การติดตั้ง mscp
+
+เลือกวิธีติดตั้งสำหรับระบบปฏิบัติการของคุณ:
+
+### macOS
+
+#### ใช้ Homebrew (แนะนำ)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### ใช้ MacPorts
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp ไม่มี native Windows binaries แต่คุณสามารถใช้ผ่าน WSL (Windows Subsystem for Linux):
+
+#### ขั้นตอน 1: ติดตั้ง WSL
+
+เปิด PowerShell ในฐานะ Administrator แล้วรัน:
+
+```powershell
+wsl --install
+```
+
+รีสตาร์ทคอมพิวเตอร์เมื่อมีข้อความแจ้ง
+
+#### ขั้นตอน 2: ติดตั้ง mscp ใน WSL
+
+หลังจากตั้งค่า WSL แล้ว (Ubuntu เป็นค่าเริ่มต้น) ให้เปิด WSL terminal แล้วรัน:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Windows File Paths ใน WSL</AlertTitle>
+  <AlertDescription className="pl-2">
+    ใน WSL ไดรฟ์ Windows ของคุณเข้าถึงได้ใต้ `/mnt/` ตัวอย่างเช่น `C:\Users\YourName\Downloads` จะกลายเป็น `/mnt/c/Users/YourName/Downloads`
+  </AlertDescription>
+</Alert>
+
+### การ build จาก source
+
+หากไม่มี packages สำหรับระบบของคุณ คุณสามารถ build mscp จาก source ได้:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## การใช้งานพื้นฐาน
+
+syntax ของ mscp คล้ายกับ `scp` ด้านล่างคือรูปแบบการใช้งานทั่วไป
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">สำคัญ: ใช้ SFTP Port ของคุณ</AlertTitle>
+  <AlertDescription className="pl-2">
+    ในตัวอย่างด้านล่าง `25557` แทน **SFTP Port** จากการตั้งค่า SFTPgo ของคุณ ให้แทนที่ด้วย SFTP port จริงที่แสดงในแผง SFTPgo Options ของคุณ
+  </AlertDescription>
+</Alert>
+
+### อัปโหลดไฟล์ไปยังเซิร์ฟเวอร์ของคุณ
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### อัปโหลดไดเรกทอรี
+
+ต่างจาก `scp` ตรงที่ mscp ไม่ต้องใช้ flag `-r` สำหรับไดเรกทอรี:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### ดาวน์โหลดไฟล์จากเซิร์ฟเวอร์ของคุณ
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### ดาวน์โหลดไดเรกทอรี
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## ตัวเลือกขั้นสูง
+
+### ใช้การเชื่อมต่อหลายรายการ
+
+โดยค่าเริ่มต้น mscp ใช้การเชื่อมต่อหลายรายการ คุณสามารถระบุจำนวนการเชื่อมต่อด้วย `-n`:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### ดำเนินการถ่ายโอนที่ล้มเหลวต่อ (Checkpointing)
+
+mscp รองรับ checkpointing เพื่อดำเนินการถ่ายโอนที่ถูกขัดจังหวะต่อ:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### ระบุการยืนยันตัวตนด้วย SSH Key
+
+หากคุณตั้งค่าการยืนยันตัวตนด้วย SSH key กับ SFTPgo แล้ว:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### จำกัด bandwidth
+
+เพื่อจำกัด bandwidth การถ่ายโอน (มีประโยชน์บนการเชื่อมต่อที่ใช้ร่วมกัน):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## ตัวอย่าง: Workflow แบบครบถ้วน
+
+นี่คือตัวอย่างแบบครบถ้วนโดยใช้ข้อมูลรับรอง SFTPgo จาก Appbox:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## เคล็ดลับด้านประสิทธิภาพ
+
+1. **ใช้การเชื่อมต่อมากขึ้นสำหรับไฟล์ขนาดใหญ่**: เพิ่มค่า `-n` สำหรับการถ่ายโอนไฟล์ขนาดใหญ่ (เช่น `-n 8` หรือ `-n 16`)
+2. **ใช้การเชื่อมต่อน้อยลงสำหรับไฟล์เล็กจำนวนมาก**: สำหรับไดเรกทอรีที่มีไฟล์เล็กจำนวนมาก การเชื่อมต่อน้อยลงอาจมีประสิทธิภาพกว่า
+3. **เปิดใช้ compression สำหรับไฟล์ข้อความ**: mscp รับช่วง compression ของ SSH มา ใช้ `-C` สำหรับการถ่ายโอนที่มีข้อความจำนวนมาก
+4. **ใช้ checkpointing สำหรับการถ่ายโอนขนาดใหญ่มาก**: เปิดใช้ checkpointing เสมอสำหรับการถ่ายโอนหลายกิกะไบต์ เพื่อให้ดำเนินการต่อได้หากถูกขัดจังหวะ
+
+## การแก้ไขปัญหา
+
+### Connection Refused
+
+ตรวจสอบให้แน่ใจว่าคุณใช้ SFTP port ที่ถูกต้องจากการตั้งค่า SFTPgo ของคุณ (ไม่ใช่ FTP port):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Permission Denied
+
+ตรวจสอบว่า username และ password ของคุณถูกต้อง คุณสามารถทดสอบด้วย SFTP client มาตรฐานก่อนได้:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### การถ่ายโอนช้า
+
+ลองปรับจำนวนการเชื่อมต่อแบบขนาน:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## แหล่งข้อมูลเพิ่มเติม
+
+- [mscp GitHub Repository](https://github.com/upa/mscp)
+- [เอกสาร mscp](https://github.com/upa/mscp#documentation)
+- [SFTPgo บน Appbox](https://www.appbox.co/appstore/app/232)

@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - VPS Apps-এর জন্য Multiple Domains
+date: 2026-03-12 10:00:00
+excerpt: Launch Week-এর Day 4। VPS apps এখন multiple domains support করে - যত custom domains এবং Appbox subdomains দরকার add করুন, সবকিছু automatic SSL সহ।
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: VPS Apps-এর জন্য Multiple Domains
+
+Day 4। গতকাল আমরা আপনাকে full virtual machines দিয়েছি। আজ তাদের proper domain support দিচ্ছি।
+
+Day 3-তে VPSes launch করার সময় প্রতিটি VM একটি single domain পেত। অনেক use case-এর জন্য সেটি ঠিক আছে, কিন্তু আপনি যদি আপনার VPS-এর ভিতরে web server চালান - এবং আপনাদের অনেকেই চালান - তাহলে single domain যথেষ্ট নয়। একই machine-এ multiple domains point করা দরকার, প্রত্যেকটির নিজস্ব SSL certificate এবং web server configuration সহ।
+
+আজ থেকে VPS apps **multiple domains** support করে। যত খুশি `*.user.appboxes.co` subdomains add করুন, নিজের custom domains আনুন, অথবা দুটোই mix করুন। প্রত্যেকটি SSL এবং ready-to-use web server configuration পায়।
+
+## এটি কীভাবে কাজ করে
+
+যেকোনো running VPS app খুলুন, detail page-এ একটি **Custom Domains** card পাবেন। এখানেই আপনার সব domains থাকে - searchable, sortable table, যেখানে সেই VPS-এ attached প্রতিটি domain, কোনটি primary, এবং কখন add হয়েছে তা দেখা যায়।
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains table on a VPS app detail page" width="860" className="mt-8 mb-10" />
+</p>
+
+নতুন domain add করতে **Add Domain** click করুন। আপনি parent domain বেছে নেবেন এবং subdomain লিখবেন, বাকিটা system সামলাবে।
+
+## Appbox Subdomains
+
+Domain add করার দ্রুততম উপায় হলো আপনার existing Appbox domain ব্যবহার করা। Parent হিসেবে আপনার `user.appboxes.co` domain বেছে নিন, subdomain type করুন, কাজ শেষ। DNS আপনার জন্য আগেই handled, এবং domain সঙ্গে সঙ্গে verified।
+
+Quick project URLs, staging environments, বা আপনার VPS-এর different services-কে আলাদা address দেওয়ার জন্য এটি দারুণ। Backend-এর জন্য `api.user.appboxes.co` এবং frontend-এর জন্য `app.user.appboxes.co` দরকার? এক মিনিটের কম সময়ে দুটোই add করুন।
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Adding an Appbox subdomain to a VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+যেহেতু এগুলো আপনার existing Appbox wildcard certificate-এর নিচে থাকে, SSL automatic। কোনো waiting নেই, certificate generation নেই, configuration নেই।
+
+## Custom Domains
+
+আপনি নিজের domains-ও আপনার VPS-এ point করতে পারেন। আপনার custom base domain select করুন (অথবা dialog থেকেই নতুনটি add করুন), subdomain লিখুন, এবং UI আপনাকে DNS setup-এর মধ্য দিয়ে guide করবে।
+
+Dialog exact A record দেখায় - hostname, IP address, সবকিছু। Cloudflare এবং অন্যান্য popular DNS providers-এর জন্য provider-specific instructions-ও আছে, তাই A record কীভাবে add করতে হয় তা খুঁজতে হবে না।
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Adding a custom domain with DNS verification and provider-specific instructions" width="560" className="mt-8 mb-10" />
+</p>
+
+আপনার DNS ঠিক IP-তে pointing করলে, **Verify Again** চাপুন এবং system domain add করার আগে record সঠিক কি না confirm করবে।
+
+## SSL এবং Web Server Config
+
+আপনি add করা প্রতিটি domain SSL পায়। Appbox subdomains-এর জন্য এটি existing wildcard certificate ব্যবহার করে। Custom domains-এর জন্য certificate automatically provision করা হয়।
+
+এখানেই VPS users-এর জন্য বিষয়টি সত্যিই useful হয়: প্রতিটি domain-এর সাথে একটি **View Config** button থাকে, যা Nginx এবং Apache উভয়ের জন্য ready-to-paste configuration snippets দেয়। Config-এ সঠিক `server_name`, SSL certificate paths, cipher suites, এবং protocol settings থাকে। Snippet copy করুন, VM-এর ভিতরে আপনার web server config-এ drop করুন, reload করুন, এবং সেই domain-এ traffic serve করুন।
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL configuration snippets for Nginx and Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+File paths নিয়ে guessing নেই। Certificate locations খোঁজাখুঁজি নেই। Cipher strings বোঝার ঝামেলা নেই। সব আছে, copy করার জন্য ready।
+
+## VPS Users-এর জন্য কেন এটি গুরুত্বপূর্ণ
+
+Multi-domain support ছাড়া VPS শুধু এক address-ওয়ালা server। এটি খুব দ্রুতই সীমাবদ্ধতা তৈরি করে:
+
+- আলাদা API সহ web app চালাচ্ছেন? অন্তত দুইটি domains দরকার।
+- VM-এর মধ্যে multiple sites host করছেন? প্রতিটির নিজস্ব domain দরকার।
+- Production-এর পাশাপাশি staging environment চান? সেটি আরেকটি domain।
+- Locally develop করছেন এবং real domain দিয়ে test করতে চান? আরও একটি।
+
+## Day 4 এখন Live
+
+Multiple domain support এখনই সব VPS apps-এর জন্য available। আপনার VPS খুলুন, Custom Domains পর্যন্ত scroll করুন, এবং add করা শুরু করুন।
+
+আগামীকাল Day 5, এবং আমাদের কাছে একটি surprise আছে। এটা আসতে দেখবেন না।
+
+---
+
+*Feedback আছে বা কোনো issue পেয়েছেন? support@appbox.co-তে জানান অথবা [billing.appbox.co](https://billing.appbox.co/submitticket.php)-তে ticket খুলুন।*

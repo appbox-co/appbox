@@ -1,0 +1,397 @@
+---
+title: Gegevensverwerkingsbeleid
+description: Hoe wij je gegevens beheren en beschermen
+---
+
+Bij Appbox verzamelen en bewaren wij alleen de minimale informatie die nodig is om onze administratie bij te houden en onze diensten te leveren. Het Appbox-team is getraind om je gegevens te behandelen met maximale aandacht voor privacy en beveiliging en volgt strikte protocollen, waaronder het gebruik van sterke inloggegevens en multi-factor authentication. Alle betalingsverwerking wordt volledig door onze betalingsverwerkers afgehandeld, en geen van je financiële informatie wordt door Appbox opgeslagen, behalve betalingsgegevens en de bijbehorende transaction IDs.
+
+## E-mail
+
+- **Gebruik**
+  - Dient als je login voor je Appbox Client Area en Appbox Control Panel
+  - Contactpunt voor Appbox-serviceaankondigingen
+  - Contactpunt voor vragen via het Appbox Ticket System
+- **Verzameling**
+  - Verstrekt door de gebruiker tijdens signup
+- **Opslag**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Appbox team
+    - Dit is bedoeld om contact op te nemen met de gebruiker voor support of serviceaankondigingen
+- **Bewaring**
+  - Onbepaald
+- **Meer informatie**
+  - Sensitive Data Removal Policy
+
+## Gebruikersnaam
+
+- **Gebruik**
+  - Identificeert de gebruiker op het Appbox Ticket System
+  - Dient als naam van de Appbox-slot van de gebruiker
+  - Wordt geregistreerd als lokale gebruiker op de server waar de slot van de gebruiker is gedeployed, waarbij lopende processen van de gebruiker zichtbaar zijn
+  - Dient als gebruikersnaam van de gebruiker voor geïnstalleerde applicaties
+- **Verzameling**
+  - Verstrekt door de gebruiker tijdens signup
+- **Opslag**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Afhankelijk van de applicatie
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Appbox team
+    - Vereist voor supportvragen
+    - Vereist om serverissues te onderzoeken door te zoeken naar applicaties met hoog resourceverbruik, bronnen van serverinstabiliteit of ongeautoriseerde applicaties
+- **Bewaring**
+  - Onbepaald
+- **Meer informatie**
+  - Sensitive Data Removal Policy
+
+## Land
+
+- **Gebruik**
+  - Gebruikt om toepasselijke belastingen te berekenen op basis van het door de gebruiker gekozen land
+- **Verzameling**
+  - Verstrekt door de gebruiker tijdens signup
+- **Opslag**
+  - WHMCS = Cleartext
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Appbox team
+- **Bewaring**
+  - Onbepaald
+- **Meer informatie**
+  - Sensitive Data Removal Policy
+
+## Wachtwoord
+
+### Appbox Client Area-wachtwoord
+
+- **Gebruik**
+  - Dient als het wachtwoord van de gebruiker voor de Appbox Client Area
+- **Verzameling**
+  - Verstrekt door de gebruiker tijdens signup op de Appbox Client Area
+- **Opslag**
+  - WHMCS = Encrypted
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Beperkte toegang door het Appbox team
+    - Het Appbox team kan het wachtwoord van de gebruiker niet zien omdat het gehasht is, maar kan je wachtwoord na verificatie resetten
+- **Bewaring**
+  - Onbepaald
+- **Meer informatie**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - We raden sterk aan two-factor authentication in te schakelen op je [account security page](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel-wachtwoord
+
+- **Gebruik**
+  - Dient als het wachtwoord van de gebruiker op het Appbox Control Panel om toegang te krijgen tot zijn slot
+- **Verzameling**
+  - Verstrekt door de gebruiker na deployment van zijn slot
+- **Opslag**
+  - Appbox API = Encrypted
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Beperkte toegang door het Appbox team
+    - Het Appbox team kan het wachtwoord van de gebruiker niet zien omdat het gehasht is, maar kan je wachtwoord na verificatie resetten
+- **Bewaring**
+  - Onbepaald
+- **Meer informatie**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - We raden sterk aan two-factor authentication in te schakelen op je [account security page](https://billing.appbox.co/user/security)
+
+### Applicatiewachtwoorden
+
+- **Gebruik**
+  - Dient als wachtwoord voor de geïnstalleerde applicaties van de gebruiker
+- **Verzameling**
+  - Verstrekt door de gebruiker na deployment van zijn slot
+- **Opslag**
+  - Appbox API = Cleartext
+  - Installed Applications = Afhankelijk van de applicatie
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Appbox team
+    - Vereist voor applicatiespecifieke supportvragen, met toestemming van de gebruiker
+- **Bewaring**
+  - Totdat de gebruiker de applicatie verwijdert
+- **Meer informatie**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - We raden sterk aan two-factor authentication in te schakelen op je [account security page](https://billing.appbox.co/user/security)
+
+## Betalingsverwerking
+
+### PayPal
+
+- **Gebruik**
+  - Dient als een van Appbox's betalingsgateways
+- **Verzameling**
+  - Betalingsverwerking wordt volledig door PayPal gedaan. De enige data die in WHMCS onder het account van de gebruiker wordt opgeslagen is de **PayPal Transaction ID**
+- **Opslag**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Toegang en redenen voor toegang**
+  - Appbox Sales Team
+    - Het Appbox Sales Team kan de informatie van de gebruiker bij PayPal verifiëren als onderdeel van ons verkoopproces
+- **Bewaring**
+  - Onbepaald
+
+### Stripe
+
+- **Gebruik**
+  - Dient als een van Appbox's betalingsgateways
+- **Verzameling**
+  - Betalingsverwerking wordt volledig door Stripe gedaan. De enige data die in WHMCS onder het account van de gebruiker wordt opgeslagen is de **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Opslag**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Toegang en redenen voor toegang**
+  - Appbox Sales Team
+    - Het Appbox Sales Team kan de informatie van de gebruiker bij Stripe verifiëren als onderdeel van ons verkoopproces
+- **Bewaring**
+  - Onbepaald
+
+### CoinGate
+
+- **Gebruik**
+  - Dient als een van Appbox's betalingsgateways voor cryptocurrency-transacties
+- **Verzameling**
+  - Betalingsverwerking wordt volledig door CoinGate gedaan. De enige data die in WHMCS wordt opgeslagen is de **CoinGate Transaction ID**
+- **Opslag**
+  - WHMCS = Cleartext (Transaction ID)
+- **Toegang en redenen voor toegang**
+  - Appbox Sales Team
+    - Het Appbox Sales Team kan de informatie van de gebruiker bij CoinGate verifiëren als onderdeel van ons verkoopproces
+- **Bewaring**
+  - Onbepaald
+
+*Opmerking: CoinGate zelf bewaart de blockchain transaction ID en het blockchainadres van de afzender als onderdeel van hun dienst. Deze informatie wordt niet door Appbox opgeslagen.*
+
+## Logs en analytics
+
+### Servermetrics
+
+- **Gebruik**
+  - Gebruikt om de gezondheid en het resourcegebruik van de servers te monitoren
+- **Verzameling**
+  - Gegenereerd na deployment van de slot van de gebruiker
+- **Opslag**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+    - Servermetrics kunnen worden bekeken met verschillende Linux-utilities die op je slot zijn geïnstalleerd. De volgende belangrijke metrics kunnen worden gezien:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Je lopende processen
+      - Processen die door andere gebruikers op dezelfde server worden uitgevoerd zijn niet voor jou toegankelijk
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (je toegewezen schijfruimte)
+      - Physical disk space
+  - Appbox Team
+    - Naast de bovenstaande metrics gebruikt het Appbox team Posthog om snel alle metrics van alle servers te aggregeren en het team te waarschuwen voor fouten
+    - Servermetrics worden gebruikt voor supportvragen en om resource abuse te onderzoeken
+- **Bewaring**
+  - Onbepaald
+
+### Authenticatielogs
+
+#### Inlogpogingen op Appbox Control Panel
+
+- **Gebruik**
+  - Ongeldige toegangspogingen worden gelogd in Appbox API, die de gebruiker na een bepaald aantal pogingen gedurende een bepaalde periode verhindert in te loggen op het Control Panel. Dit omvat:
+    - Gebruikersnaam, zoals ingevoerd door de gebruiker
+    - IP-adres
+    - Aantal pogingen
+    - Laatste datum van poging
+- **Verzameling**
+  - Verzameld wanneer een gebruiker credentials onjuist invoert
+- **Opslag**
+  - Appbox API = Cleartext
+- **Toegang en redenen voor toegang**
+  - Appbox Team
+    - Gebruikt om brute-force-pogingen te identificeren
+    - Gebruikers kunnen verzoeken om hun timeout op te heffen en de toegangspoging te verwijderen, op verzoek en na verificatie via het Ticket system
+- **Bewaring**
+  - 24 uur of op verzoek van de gebruiker
+
+#### SSH-inloglogs
+
+- **Gebruik**
+  - Registreert inlogpogingen en succesvolle logins op SSH in door gebruikers geïnstalleerde applicaties zoals Ubuntu of Debian
+- **Verzameling**
+  - Automatisch gegenereerd door de SSH-server wanneer inlogpogingen plaatsvinden
+- **Opslag**
+  - Application container = Cleartext (meestal in `/var/log/auth.log` of vergelijkbaar)
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+    - Omdat deze logs worden opgeslagen binnen applicaties waar gebruikers root- (sudo-) toegang hebben, hebben gebruikers volledige controle over en toegang tot deze logs
+    - Gebruikers kunnen deze logs naar behoefte bekijken, wijzigen of verwijderen
+  - Appbox team
+    - Toegang is alleen beschikbaar met toestemming van de gebruiker tijdens support-troubleshooting
+- **Bewaring**
+  - Beheerd door de gebruiker, aangezien die roottoegang tot de container heeft
+  - Standaard logrotatiebeleid is van toepassing tenzij gewijzigd door de gebruiker
+
+### Systeemgegenereerde logs
+
+- **Gebruik**
+  - Serverbrede gegenereerde logs, gebruikt om issues op de servers te identificeren
+- **Verzameling**
+  - Gegenereerd door het besturingssysteem van de servers
+- **Opslag**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Toegang en redenen voor toegang**
+  - Beperkte toegang Appbox team
+    - Gebruikt om issues op specifieke servers te identificeren
+    - Logs worden geaggregeerd door Posthog, dat het team waarschuwt voor fouten
+- **Bewaring**
+  - Onbepaald
+
+### Logs gegenereerd door geïnstalleerde applicaties
+
+- **Gebruik**
+  - Logs gegenereerd door geïnstalleerde applicaties, gebruikt om issues binnen de slot van de gebruiker te identificeren
+- **Verzameling**
+  - Gegenereerd door de geïnstalleerde applicaties van de gebruiker
+- **Opslag**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Appbox team
+    - Vereist voor applicatiespecifieke supportvragen, met toestemming van de gebruiker
+- **Bewaring**
+  - Totdat de gebruiker de applicatie verwijdert of weghaalt
+
+### Bash history van de gebruiker
+
+- **Gebruik**
+  - Registreert alle commando's die de gebruiker invoert op de shell van de slot, opgeslagen in `$HOME/.bash_history`
+- **Verzameling**
+  - Elk commando dat op de shell wordt ingevoerd wordt geregistreerd
+- **Opslag**
+  - Appbox Servers = Cleartext
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+    - Omdat het bash history-bestand in de home directory van de gebruiker is opgeslagen, hebben gebruikers volledige controle over dit bestand
+    - Gebruikers kunnen dit bestand naar behoefte bekijken, wijzigen, leegmaken of verwijderen (met commando's zoals `history -c` of door het bestand te bewerken/verwijderen)
+  - Appbox team
+    - Gebruikt voor algemene of applicatiespecifieke vragen, zoals controleren of de door de gebruiker ingevoerde commando's correct zijn, maar alleen met toestemming van de gebruiker
+    - Gebruikt om te controleren op mogelijke intrusions of server abuse, maar alleen wanneer nodig voor beveiligingsonderzoeken
+- **Bewaring**
+  - Beheerd door de gebruiker, die de history op elk moment kan wissen
+  - Standaard wordt bash history onbepaald bewaard totdat de gebruiker deze verwijdert
+
+### Gehoste data
+
+#### Geinstalleerde applicaties
+
+- **Gebruik**
+  - Essentiele bestanden zodat geïnstalleerde applicaties correct kunnen draaien
+- **Verzameling**
+  - Geinstalleerd door de gebruiker op zijn slot
+- **Opslag**
+  - Appbox Servers = Afhankelijk van de applicatie
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+  - Appbox team
+    - Gebruikt voor applicatiespecifieke supportvragen, met toestemming van de gebruiker
+- **Bewaring**
+  - Onbepaald totdat de gebruiker deze verwijdert
+
+#### Gebruikersdata
+
+- **Gebruik**
+  - Data die door de gebruiker en/of de applicaties van de gebruiker is aangemaakt en op de slot van de gebruiker is opgeslagen
+- **Verzameling**
+  - Aangemaakt door de gebruiker en/of de applicaties van de gebruiker
+- **Opslag**
+  - Appbox Servers = Cleartext
+- **Toegang en redenen voor toegang**
+  - Gebruiker
+    - De bestanden van de gebruiker worden opgeslagen in home folders op Appbox-servers en zijn geïsoleerd van andere gebruikers. Alleen de gebruiker heeft er toegang toe
+  - Appbox team
+    - Kan worden geraadpleegd voor supportvragen, met toestemming van de gebruiker
+- **Bewaring**
+  - Onbepaald totdat de gebruiker deze verwijdert
+    - Voor legitieme DMCA takedown notices informeren we de gebruiker en vragen we deze de content binnen 24 uur te verwijderen
+- **Meer informatie**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## Naleving van de UK Online Safety Act
+
+In overeenstemming met de UK Online Safety Act 2023 implementeert Appbox specifieke gegevensverwerkingspraktijken om gebruikers te beschermen en aan wettelijke vereisten te voldoen:
+
+### Content safety monitoring
+
+- **Gebruik**
+  - Risicobeoordeling en mitigatie voor illegale en schadelijke content
+  - Moderatie van gerapporteerde content
+  - Voorkoming van distributie van illegale content
+- **Verzameling**
+  - Gegenereerd wanneer content wordt gerapporteerd of gemarkeerd
+  - Content hash values voor bekend illegaal materiaal
+- **Opslag**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Toegang en redenen voor toegang**
+  - Appbox Compliance Team
+    - Voor het beoordelen van gerapporteerde content en het nemen van passende actie
+    - Voor coördinatie met UK-autoriteiten wanneer wettelijk vereist
+  - UK regulatory authorities (wanneer wettelijk vereist)
+    - Voor het monitoren van naleving van de Online Safety Act
+    - Voor het onderzoeken van ernstige illegale content
+- **Bewaring**
+  - Rapportdata: 2 jaar na afhandeling
+  - Content hash values: Onbepaald (ter voorkoming van herdistributie)
+
+### Risicobeoordelingsdata
+
+- **Gebruik**
+  - Uitvoeren van vereiste risicobeoordelingen voor illegale content en content die schadelijk is voor kinderen
+  - Implementeren van proportionele veiligheidsmaatregelen
+  - Aantonen van naleving aan toezichthoudende autoriteiten
+- **Verzameling**
+  - Gegenereerd via regelmatige platformrisicobeoordelingen
+  - Geaggregeerde gebruiksdata om mogelijke risicopatronen te identificeren
+- **Opslag**
+  - Appbox Compliance Systems = Protected
+- **Toegang en redenen voor toegang**
+  - Appbox Compliance Team
+    - Voor het uitvoeren en bijwerken van risicobeoordelingen
+    - Voor het implementeren van veiligheidsmaatregelen
+  - UK regulatory authorities (wanneer wettelijk vereist)
+    - Voor het verifiëren van naleving van risicobeoordelingsverplichtingen
+- **Bewaring**
+  - 3 jaar (om voortdurende naleving aan te tonen)
+
+### Content reporting system
+
+- **Gebruik**
+  - Stelt gebruikers in staat illegale of schadelijke content te melden
+  - Volgt de status van meldingen en genomen acties
+- **Verzameling**
+  - Meldingsdetails verstrekt door meldende gebruikers
+  - Informatie over gerapporteerde content
+  - Acties genomen op meldingen
+- **Opslag**
+  - Appbox API = Encrypted
+- **Toegang en redenen voor toegang**
+  - Meldende gebruiker (beperkt tot eigen meldingen)
+  - Gebruiker wiens content is gemeld (beperkte informatie)
+  - Appbox Compliance Team
+    - Voor het onderzoeken en oplossen van meldingen
+  - UK regulatory authorities (wanneer wettelijk vereist)
+    - Voor het onderzoeken van ernstige meldingen van illegale content
+- **Bewaring**
+  - 2 jaar na afhandeling

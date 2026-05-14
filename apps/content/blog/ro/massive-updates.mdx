@@ -1,0 +1,108 @@
+---
+title: "Actualizări masive la orizont pentru Appbox! 🚀"
+date: 2025-04-08 11:58:00
+excerpt: "Site nou, inițiativă open-source, aplicații containerizate, propria noastră infrastructură de rețea și multe alte dezvoltări interesante care vin la Appbox!"
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Începe o nouă eră la Appbox
+
+După luni de lucru în culise, nopți târzii și mult prea multă cafea, sunt încântat să vă arăt în sfârșit ce am construit. Aceasta nu este doar încă o actualizare. Este reconstrucția Appbox de la zero.
+
+## Bun venit în noua noastră casă digitală
+
+Te uiți la site-ul nostru complet nou! Am spus în sfârșit adio vechii noastre configurări WordPress. Totul a fost reconstruit cu tehnologie modernă, mai rapidă, mai sigură și care chiar scalează cum trebuie.
+
+Noul site va deveni locul pentru documentație serioasă, postări regulate pe blog (ca aceasta) și, în cele din urmă, frontendul pentru noua noastră platformă. Designul nu este doar mai curat - este efectiv funcțional și face găsirea lucrurilor mult mai ușoară.
+
+Folosim Next.js cu ContentLayer dedesubt, ceea ce ne oferă performanță foarte rapidă și o experiență de dezvoltare mult mai bună. Site-ul acceptă mai multe limbi, gestionează SEO automat, are feeduri RSS atât în XML, cât și în JSON și include dark mode, pentru că nimeni nu ar trebui să se lupte cu ecrane alb strălucitor la 2 dimineața.
+
+## Trecem la open source!
+
+Trecem și la open source! Site-ul pe care îl citești acum? Codul este public și oricine poate contribui.
+
+Este un pas uriaș pentru noi. Am încercat mereu să fim transparenți, dar acum chiar punem faptele în spatele vorbelor și construim împreună cu comunitatea, nu doar pentru ea. Dacă ești dezvoltator și ai vrut vreodată să ajuți la modelarea instrumentelor pe care le folosești, acum poți. Consultă repo-ul nostru GitHub pentru ghidurile de contribuție și tot ce ai nevoie ca să începi.
+
+## Prezentăm Appbox v2
+
+Noul site este doar începutul. Lucrăm la Appbox v2, cea mai mare actualizare pe care am făcut-o vreodată.
+
+Deploymentul de containere a fost mereu zona noastră principală, dar v2 duce lucrurile mai departe cu ceea ce toată lumea a cerut: suport VPS complet. Aplicațiile VPS îți vor oferi acces root complet, fără restricții. Dacă ai nevoie de control total asupra mediului tău, asta a fost ceea ce așteptai.
+
+Îl avem deja funcțional pe un server și merge foarte bine. Vei putea instala aplicații VPS la fel ca orice altă aplicație din app store. Asta îți va permite să instalezi aplicații care nu sunt posibile în prezent, precum Docker, Snap și Tailscale. Necesită o actualizare de OS pe serverele noastre la Debian 13, deoarece folosim câteva funcții noi de virtualizare pentru a-l face mai sigur și pentru a crește performanța. Va trebui să lansăm acea actualizare înainte să putem lansa funcția, dar vor urma mai multe noutăți despre asta curând.
+
+Aceasta combină infrastructura noastră dovedită de containere cu flexibilitatea reală a VPS-urilor, oferindu-ți ce e mai bun din ambele lumi.
+
+## Construim propria noastră infrastructură de rețea
+
+Iată vestea cu adevărat mare: ne construim propria rețea.
+
+Nu doar adăugăm mai multe servere sau actualizăm lățimea de bandă. Avem propriul nostru Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) și propriul bloc IP (79.140.195.0/24) pentru a construi o rețea care este în întregime a noastră. Practic, devenim propriul nostru ISP, cu propria identitate oficială pe internet și propriul spațiu de adrese, astfel încât să putem controla modul în care datele tale călătoresc pe internet [1].
+
+Ce înseamnă asta pentru tine? Putem controla totul, îl putem optimiza specific pentru utilizatorii Appbox și putem livra fiabilitate și performanță care nu erau posibile înainte.
+
+## Peering cu AMS-IX
+
+Ca parte a dezvoltării rețelei noastre, odată ce avem rețeaua configurată, vom începe peering cu AMS-IX pentru 100G de conectivitate. Asta ne oferă acces direct la unul dintre cele mai mari exchange-uri de internet din lume, ceea ce înseamnă latență mai mică și viteze mai bune pentru toată lumea. Gândește-te la asta ca la o autostradă directă către marii furnizori de internet, în loc să mergi pe drumuri secundare [2].
+
+Acest tip de conectivitate este de obicei disponibil doar companiilor mult mai mari, dar vrem să oferim performanță de nivel enterprise indiferent de planul pe care îl ai.
+
+Avem acum acordul finalizat pentru achiziția hardware, așa că suntem gata să pornim. Vom primi noul hardware cel târziu în octombrie, posibil chiar în septembrie. Asta înseamnă că ar trebui să fim online pe noua rețea la scurt timp după aceea.
+
+## Ajustări de preț
+
+Aceasta este partea pe care chiar nu voiam să trebuiască să o scriem. Construirea unei astfel de infrastructuri este costisitoare și, deși suportăm noi cea mai mare parte a costului, din păcate trebuie să facem o mică ajustare a prețurilor pentru clienții noi și existenți.
+
+Vreau să fiu transparent în privința asta. Noile prețuri sunt deja live pe site și vom contacta curând clienții existenți cu detalii despre cum îi afectează.
+
+Știm cât de tensionate sunt lucrurile pentru toată lumea acum, iar aceasta a fost sincer una dintre cele mai grele decizii pe care a trebuit să le luăm. Am păstrat creșterile cât de mici am putut - practic acoperim totul cu excepția minimului absolut de care avem nevoie ca să facem acest lucru să funcționeze.
+
+Totuși, vom face ca această creștere de preț să merite mai mult decât suficient. Vei observa cu adevărat diferența în performanță și fiabilitate. În plus, asta înseamnă că putem continua să ne extindem rețeaua și să adăugăm mai mult peering pe viitor, deci lucrurile vor deveni doar mai bune de aici înainte.
+
+Am lansat aceste prețuri actualizate pentru clienții noi acum 3 luni, iar feedbackul a fost bun, așa că simțim că avem un echilibru bun între a păstra lucrurile accesibile și a finanța îmbunătățirile pe care le meritați; suntem în continuare foarte competitivi. De exemplu, popularul nostru plan NG-4500 crește cu doar €2.08 pe lună, ceea ce este încă mult mai puțin decât planuri comparabile de la competitori.
+
+Pentru clienții existenți, vei plăti doar diferența dintre prețul vechi și cel nou. Dacă ai reduceri promoționale, acestea rămân aplicate peste noul preț de bază. Îți apreciem loialitatea, mai ales în perioade ca aceasta.
+
+Structura noastră de reduceri rămâne aceeași:
+- 5% reducere pentru plăți trimestriale
+- 10% reducere pentru plăți pe 6 luni
+- 15% reducere pentru plăți anuale
+
+Dacă ai plăți automate configurate, ajustarea va avea loc odată cu următorul ciclu de facturare după ce primești emailul. Nu trebuie să faci nimic.
+
+## Mai multă stocare!
+
+Totuși, nu este vorba doar despre a plăti mai mult. Creștem și stocarea pe cel mai mic plan al nostru de la 3TB la 3.5TB. Este o creștere de 16%, ceea ce face planul nostru entry-level o ofertă și mai bună în ciuda schimbării de preț.
+
+## Ce urmează?
+
+Acesta este doar începutul a ceea ce urmează pentru Appbox. În următoarele săptămâni și luni, vei vedea actualizări regulate pe măsură ce lansăm funcții noi, le îmbunătățim pe cele existente și continuăm să construim infrastructura pentru următoarea generație de găzduire de aplicații.
+
+Plănuim să începem testarea noii noastre infrastructuri de rețea în septembrie/octombrie și te vom ține la curent pe măsură ce progresăm.
+
+Roadmapul nostru include:
+- aplicații VPS fără restricții (precum Docker, Snap și Tailscale)
+- documentație mai bună, care chiar acoperă totul
+- un showcase al comunității pentru lucrurile interesante pe care oamenii le construiesc cu Appbox
+- postări tehnice regulate pe blog despre infrastructura noastră
+- aplicații containerizate noi pentru cazuri de utilizare specifice
+- instrumente mai bune de monitorizare și analiză
+- funcții de securitate îmbunătățite pentru toate planurile
+
+Mulțumim că rămâi alături de noi. Fără comunitatea noastră, nimic din toate acestea nu ar fi posibil.
+
+Mai multe actualizări în curând.
+
+---
+
+*Ce funcții sau îmbunătățiri ai vrea să vezi în noul Appbox? Scrie-ne la support@appbox.co.*
+
+---
+
+**Referințe:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

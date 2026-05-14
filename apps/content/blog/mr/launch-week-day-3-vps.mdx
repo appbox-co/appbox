@@ -1,0 +1,108 @@
+---
+title: Launch Week Day 3 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: Launch Week चा Day 3. Full KVM virtual private servers आता Appbox वर उपलब्ध आहेत. Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux, किंवा AlmaLinux निवडा आणि real VM साठी root access मिळवा.
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Day 3: Virtual Private Servers
+
+Day 3. हे मोठे आहे.
+
+सुरुवातीपासून Appbox हे self-hosted apps सोपे करण्याबद्दल आहे. App install करा, URL मिळवा, झाले. बहुतेक गोष्टींसाठी हे model अफाट चालते. पण काही use cases नेहमी असे असतात जिथे तुम्हाला पूर्ण machine लागते. तुमचा स्वतःचा kernel, तुमची स्वतःची init system, तुमचे स्वतःचे rules.
+
+आज आम्ही Appbox वर **Virtual Private Servers** launch करत आहोत.
+
+## Real VMs, Containers नाहीत
+
+हे नेमके काय आहे ते स्पष्ट करूया. हे dedicated hardware वर चालणारे full KVM virtual machines आहेत, ज्यांच्याकडे स्वतःचा kernel, स्वतःचा systemd, आणि full root access आहे. OS असल्याचे भासवणारा Docker container नाही. ही खरी गोष्ट आहे.
+
+हा फरक महत्त्वाचा आहे कारण containers करू शकत नाहीत ते सगळे तो unlock करतो:
+
+- **तुमच्या VPS मध्ये Docker** - कोणत्याही server प्रमाणे `docker compose up` चालवा
+- **Snaps आणि Flatpaks** - desktop software जसे install व्हायला हवे तसे install करा
+- **Systemd services** - पूर्ण service management, timers, journal, सर्व काही
+- **Custom kernels आणि modules** - तुमच्याकडे root आहे, जे हवे ते करा
+- **Nested virtualization** - गरज असल्यास उपलब्ध आहे
+
+आमच्या Docker-based OSes किंवा webtops मध्ये container limitations मुळे काहीतरी चालत नव्हते, अशी wall कधी hit केली असेल तर ती wall आता नाही.
+
+## सहा Linux OSes उपलब्ध
+
+आता तुम्ही सहा Linux distributions मधून निवडू शकता:
+
+| OS | Description |
+|---|---|
+| **Ubuntu VPS** | Full Ubuntu 24.04 LTS |
+| **Debian VPS** | Full Debian 12 and 13 |
+| **Arch Linux VPS** | Rolling release, नेहमी up to date |
+| **Fedora VPS** | Latest packages सह Fedora 43 |
+| **Rocky Linux VPS** | Enterprise-grade RHEL compatibility |
+| **AlmaLinux VPS** | Long-term support सह RHEL-compatible enterprise Linux |
+
+तुम्हाला माहिती असलेले निवडा, किंवा शिकायचे आहे ते निवडा. Appbox वर सर्वांमध्ये समान feature set आहे.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="VPS category in the Appbox App Store" width="860" className="mt-8 mb-10" />
+</p>
+
+## Built-in Web Console
+
+प्रत्येक VPS मध्ये Appbox dashboard मध्येच built असलेला browser-based console येतो. कोणत्याही VPS वर Console tab क्लिक करा आणि तुम्हाला browser मध्ये थेट live terminal session मिळते.
+
+याचा अर्थ तुम्ही कधीही server मधून locked out होणार नाही. Misconfigured SSH? Network config मोडली? काही फरक पडत नाही. Web console guest network stack पासून पूर्ण independent राहून थेट VM च्या virtual display शी connect होतो. आत जाण्याचा मार्ग नेहमी असतो.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Web-based VM console in the Appbox dashboard" width="860" className="mt-8 mb-10" />
+</p>
+
+## Selkies सह Ubuntu Desktop
+
+इथे गोष्ट रोचक होते. आमच्या Ubuntu VPS मध्ये **Selkies** powered desktop variant आहे, ज्यामुळे hardware-accelerated streaming, full audio output, आणि microphone input सह full graphical Linux desktop तुमच्या browser मधून accessible होतो.
+
+हे KVM virtual machines मध्ये चालवण्यासाठी आम्ही Selkies team सोबत थेट काम केले, आणि integration [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop) येथे open-sourced केले आहे.
+
+याचा प्रत्यक्ष अर्थ काय? Browser मध्ये real applications सह full desktop environment चालवता येते. VS Code, Discord, Spotify, Slack - सर्व simultaneously चालू, audio सह, आणि web browser असलेल्या कोणत्याही device वरून accessible.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu desktop via Selkies with VS Code, Spotify, and Discord running" width="860" className="mt-8 mb-10" />
+</p>
+
+क्षणभर विचार करा. तुमच्याकडे नेहमी on असलेले persistent remote development environment असू शकते, तुमच्या projects साठी Docker containers सह VS Code चालू, team chat साठी Discord open, आणि Spotify music play होत आहे. सगळे एका browser tab मध्ये. तुमच्या laptop वरून, tablet वरून, किंवा दुसऱ्याच्या computer वरून. तुमचा संपूर्ण workspace फक्त एका URL वर.
+
+## तुमचा Data तुमच्यासोबत राहतो
+
+प्रत्येक VPS ला `/APPBOX_DATA/` directory द्वारे तुमच्या Appbox storage चा automatic access आहे. आत तुम्हाला दिसेल:
+
+- **`/APPBOX_DATA/apps/`** - तुमच्या इतर installed Appbox apps मधील data
+- **`/APPBOX_DATA/storage/`** - तुमचे general Appbox storage
+
+हे virtiofs वापरून share केले जाते, जो high-performance filesystem passthrough आहे आणि जवळपास native file access speeds देतो. तुमचा VPS तुमची इतर apps वापरत असलेल्या files read आणि write करू शकतो, त्यामुळे उदाहरणार्थ streaming apps मधील media files process करणे किंवा VPS मधून databases back up करणे शक्य आहे.
+
+## App Boost सह काम करते
+
+VPSes Day 2 ला launch केलेली तीच App Boost system वापरतात. तुमच्या VM साठी अधिक RAM किंवा CPU हवा आहे? Boost level वर slide करा आणि तुमच्या plan च्या अधिक slots त्याला dedicate करा. Resources hypervisor level वर allocate होतात, त्यामुळे तुमच्या VM ला खरोखर अधिक compute मिळतो, फक्त higher cgroup limit नाही.
+
+लक्षात घेण्यासारखे: VPSes चा base slot cost Docker-based OS apps पेक्षा थोडा जास्त आहे. Full virtual machine host kernel share करणाऱ्या container पेक्षा अधिक real-world resources वापरते, हे त्यात reflected आहे. Trade-off सरळ आहे: तुम्हाला अधिक capability मिळते, आणि slot cost ते प्रामाणिकपणे दाखवतो.
+
+## VPS साठी पुढे काय येत आहे
+
+आज आम्ही full functionality सह VPSes launch करत आहोत, पण roadmap वर अजून आहे. VPS instances साठी resource usage graphs जवळच्या भविष्यात जोडले जातील, त्यामुळे इतर apps प्रमाणेच dashboard मधून CPU, RAM, आणि disk usage over time monitor करता येईल.
+
+## हे महत्त्वाचे का आहे
+
+Appbox वरील Docker-based OSes आणि webtops यांनी अनेक लोकांना चांगली सेवा दिली आहे, आणि ते कुठेही जाणार नाहीत. पण container मध्ये चालवण्याच्या real limitations आहेत. Docker चालवता येत नाही. Snaps वापरता येत नाहीत. Kernel modules load करता येत नाहीत. Full init system चालवता येत नाही. तुम्ही नेहमी दुसऱ्याच्या namespace च्या constraints मध्ये काम करता.
+
+VPSes त्या constraints पूर्णपणे काढून टाकतात. तुम्हाला real machine मिळते. इतर कोणत्याही provider कडून rented server वर जे करता येते ते इथे करता येते - फरक इतकाच की तुमचा data आधीच mounted आहे, web console आधीच आहे, आणि resources slider ने scale होतात.
+
+## Day 3 आता Live आहे
+
+VPSes आत्ता App Store मध्ये उपलब्ध आहेत. VPS category मध्ये जा, तुमचा OS निवडा, आणि install करा. Full VM provision होण्यास container app पेक्षा थोडा जास्त वेळ लागतो, त्यामुळे VPS ready होण्यासाठी 15 minutes पर्यंत अपेक्षा ठेवा.
+
+उद्या Day 4 आहे. आम्ही मंदावत नाही.
+
+---
+
+*Feedback आहे किंवा issue सापडला? support@appbox.co वर संपर्क करा किंवा [billing.appbox.co](https://billing.appbox.co/submitticket.php) वर ticket उघडा.*

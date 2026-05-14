@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Program
+description: 当社のセキュリティ脆弱性報告プログラムと報酬
+---
+
+Appbox では、セキュリティを根本的な優先事項としています。当社は、潜在的な脆弱性を特定・報告することでプラットフォーム強化を支援してくださるセキュリティ研究者を積極的に歓迎しています。本プログラムは、責任あるセキュリティ研究に対する当社の考え方、脆弱性報告の取り扱い、そして当社のセキュリティ態勢改善に協力してくださる研究者への報酬を定めるものです。
+
+## 当社の約束
+
+Bug bounty program に参加する場合、当社は以下を約束します。
+
+* 適時に報告を確認し評価すること
+* 確認された脆弱性に適切な緊急度で対応すること
+* セキュリティ改善につながる、これまで報告されていない独自の脆弱性について、認知と報酬を提供すること
+
+## プログラム対象範囲
+
+この bug bounty program は、以下の Appbox プラットフォームに適用されます。
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **インフラのみ。顧客アプリケーションは対象外**
+
+**Note:** 当社の hosting infrastructure（username.appboxes.co）は対象範囲に含まれますが、顧客がデプロイした third-party applications の脆弱性は含まれません。下記の除外事項を参照してください。
+
+## 有効な脆弱性として認められる条件
+
+当社 bug bounty program の対象となるには、提出内容が以下のすべての基準を満たす必要があります。
+
+### 1. 実際の悪用を示すこと
+* 脆弱性が悪用可能であることを示す動作する proof of concept を含めること
+* 明確なセキュリティ影響を示すこと。実害が示されていない理論上の脆弱性は対象外です
+* 攻撃者が実際にユーザーデータ、アカウント、またはシステム完全性を侵害できることを証明すること
+
+### 2. 対象範囲内システムに影響すること
+* 脆弱性は Appbox の proprietary code または infrastructure に存在する必要があります
+* 上記「Program Coverage」に明示されたシステムに影響する必要があります
+* 当社の production または staging environments で再現可能である必要があります
+
+### 3. 以前に報告されていないこと
+* 脆弱性は新たに発見されたものであり、当社がすでに把握しているものではない必要があります
+* 重複報告または既知問題の変種は対象外です
+
+## 除外される領域および問題
+
+以下は、当社 bug bounty program の **対象外** とみなされます。
+
+### Third-Party Systems and Integrations
+* WHMCS Client Area [https://billing.appbox.co] - [WHMCS Security](https://www.whmcs.com/security-bounty-program/) へ報告してください
+* Chatwoot chat widget - [Chatwoot Security](https://www.chatwoot.com/security) へ報告してください
+* **顧客がデプロイしたアプリケーション** [app.username.appboxes.co] - 当社インフラ上でホストされる third-party applications（WordPress、Nextcloud など）の脆弱性は、それぞれの application vendors へ報告してください
+* 当社が使用するその他すべての third-party services、plugins、integrations
+* Appbox が直接管理していない IP addresses または domains
+* 現在 active use されていない legacy または deprecated systems
+
+**Hosting Infrastructure の対象外:**
+* 顧客がデプロイした application code（WordPress、Nextcloud など）内の脆弱性
+* Third-party applications の既定設定
+* 特定の application version に固有のセキュリティ問題
+
+### Security Headers and Hardening
+* Missing security headers（X-Frame-Options、COOP、COEP、MTA-STS など）。ただし、data compromise につながる実際の悪用を示した場合を除きます
+* Missing `rel="noopener"` または `rel="noreferrer"` attributes
+* Server version disclosure または HTTP header information leakage
+* Non-sensitive cookies（analytics、preferences など）の cookie attributes
+
+### Low-Impact Information Disclosure
+* Sensitive data（passwords、tokens、PII）を露出しない verbose error messages
+* Demonstrated path traversal または file access を伴わない path disclosure
+* Technology stack identification（PHP version、framework detection など）
+* 一般的な application responses または behavior
+
+### Design Decisions and Theoretical Issues
+* Login CSRF（攻撃者が被害者アカウントへアクセスできるわけではありません）
+* Timing attacks または differential responses による user enumeration（より大きな attack chain の一部である場合を除きます）
+* Sensitive functionality の実証された悪用を伴わない clickjacking
+* Non-sensitive endpoints の CORS configurations
+* Missing rate limiting。ただし、実際の abuse を示した場合を除きます（DoS は引き続き除外されます）
+
+### Attack Prerequisites
+* 当社の default application configurations に影響しないセキュリティ問題
+* Non-standard configurations を必要とする脆弱性
+* Custom または modified setups を必要とする当社 containers 内の脆弱性
+* Network-level compromise（MITM、DNS poisoning、ARP spoofing）を必要とする問題
+
+### 禁止されるテスト方法
+* Timing-based information disclosure attacks
+* Process enumeration techniques
+* あらゆる形式の denial of service または high-volume attacks
+* Social engineering および phishing techniques
+* 過剰な traffic または load を発生させる automated security scanning
+* Non-functional features または pages（例: まだ production でない signup pages）のテスト
+
+### 無効な報告タイプ
+* 手動検証なしに automated scanner output のみに基づく報告
+* 実際の脆弱性を示さない一般的な推奨事項
+* セキュリティ影響を伴わない best practice suggestions
+* Exploitability を示さない compliance observations（PCI-DSS、GDPR など）
+
+## 報酬構造
+
+### Main Website and Control Panel
+
+| **Vulnerability Type**                               | **PayPal Reward** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting Infrastructure
+
+| Vulnerability Type                           | PayPal Reward | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+有効な脆弱性を報告した貢献者は、感謝のしるしとして当社 Security Researchers Hall of Fame で表彰されます。
+
+## 必要な報告品質
+
+すべての脆弱性報告には、以下を含める必要があります。
+
+* **明確な脆弱性説明** - 脆弱性が何であり、なぜ重要なのかを説明してください
+* **影響を受けるシステム/URL** - 脆弱性が存在する場所を正確に指定してください
+* **Step-by-step reproduction** - 当社が問題を再現できる詳細な手順
+* **動作する proof of concept** - 悪用の機能的な実演（code、screenshots、video）
+* **実際のセキュリティ影響** - 理論上の可能性ではなく、攻撃者が何を達成できるかを示してください
+* **自身によるテスト** - scanner output を転送するだけでなく、手動で findings を検証してください
+
+これらの要素を欠く報告、または一般的なセキュリティ推奨事項のみで構成される報告は、報酬対象になりません。
+
+## 報酬の請求
+
+* 次の2つの報酬オプションから選択できます。  
+   * PayPal 直接支払い（有効な PayPal アカウントが必要）
+   * Appbox サービスクレジット（任意の Appbox サービスに適用可能、譲渡不可）
+
+## 参加ガイドライン
+
+* 本ポリシー、当社 [Terms of Service](/policies/terms-of-service)、および適用されるすべての法律を遵守してください
+* 発見後、速やかに脆弱性を報告してください
+* 調査中は user privacy と system integrity を尊重してください
+* すべての脆弱性報告は、当社 [contact us form](https://billing.appbox.co/contact.php) からのみ提出してください
+* 発見した脆弱性が解決されるまで機密を維持してください
+* テストは本プログラムに明示的に含まれるシステムに限定してください
+* 機微データへ予期せずアクセスした場合: 問題を示すために必要な最小限の量だけアクセスし、直ちにテストを停止し、速やかに脆弱性を報告してください
+* 当社システムとのやり取りには、自分自身の test accounts のみを使用してください
+* findings を根拠に Appbox を脅迫しようとしてはいけません
+* **Findings を検証してください** - 提出前に proof of concept が実際に動作することを確認してください
+* **Impact に集中してください** - 理論上の問題より、実害を引き起こし得る脆弱性を優先してください
+
+## 法的保護
+
+本ポリシーに従うセキュリティ研究者は、以下を期待できます。
+
+* これらのガイドライン内で誠実に行われた security research について、法的措置から保護されること
+* 正当な security research に必要な場合、anti-circumvention legal claims から免除されること
+* 通常なら security testing を妨げる特定の policy restrictions の waiver
+* 準拠した security research は有益であり、good faith で行われたものと認識されること
+
+適用されるすべての法律を遵守する責任は引き続きお客様にあります。本ポリシーに従っている間に第三者から法的措置を受けた場合、当社はお客様の行為が当社プログラムに準拠して行われたことを確認します。予定している research activities が本ポリシーに準拠するか不明な場合は、進める前に [contact us form](https://billing.appbox.co/contact.php) からお問い合わせください。
+
+## 報告プロセス
+
+脆弱性を報告するには、[contact us form](https://billing.appbox.co/contact.php) から詳細な ticket を作成してください。
+
+* 報告には、脆弱性を再現するための包括的な手順を含めてください。次のテンプレートを参考にできます: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* すべてのプログラム連絡は、当社公式 Support Ticket Platform を通じて行う必要があります
+* Appbox からの明示的な書面許可なしに脆弱性を公開することは、本プログラム条件に違反し、報酬受領資格を失わせます
+
+## 報告後の流れ
+
+* **Valid vulnerabilities**: 当社は報告を確認し、修正に取り組み、報酬を処理します
+* **Invalid reports**: 報告が対象外である理由を説明し、今後の提出に向けた guidance を提供する場合があります
+* **Out-of-scope reports**: 適切な vendor へ案内するか、その問題が対象外である理由を説明します
+
+当社は、質の高い研究とセキュリティへの建設的な貢献に感謝します。Appbox の安全性維持にご協力いただきありがとうございます。

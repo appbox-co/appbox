@@ -1,0 +1,258 @@
+---
+title: mscp:n käyttö nopeisiin tiedostonsiirtoihin
+description: Opi käyttämään mscp:tä (multi-threaded scp) nopeisiin tiedostonsiirtoihin Appbox-palvelimellesi useiden SSH-yhteyksien avulla.
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** on monisäikeinen muunnelma `scp`-komennosta, joka kopioi tiedostoja useiden SSH (SFTP) -yhteyksien kautta samanaikaisesti. Tämä mahdollistaa merkittävästi nopeammat siirrot suurille tiedostoille ja hakemistoille hyödyntämällä rinnakkaisia yhteyksiä.
+
+## Edellytykset
+
+Ennen mscp:n käyttöä sinun täytyy asentaa SFTPgo Appbox-palvelimellesi saadaksesi SFTP-tunnistetietosi.
+
+### Vaihe 1: Asenna SFTPgo
+
+1. Käy [SFTPgo-sovellussivulla](https://www.appbox.co/appstore/app/232) Appbox App Storessa
+2. Lisää SFTPgo palvelimellesi napsauttamalla **Install**
+3. Kun asennus on valmis, saat yhteystietosi:
+   - **Username**: SFTP-käyttäjänimesi
+   - **Password**: SFTP-salasanasi
+   - **Hostname**: esim. `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: esim. `25557`
+   - **FTP/FTPS Port**: esim. `25555`
+   - **WebDav URL**: WebDAV-käyttöä varten
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">Huomautus</AlertTitle>
+  <AlertDescription className="pl-2">
+    Säilytä SFTPgo-tunnistetietosi turvallisesti. Tarvitset isäntänimen, käyttäjänimen, salasanan ja SFTP-portin mscp-yhteyksiä varten.
+  </AlertDescription>
+</Alert>
+
+## mscp:n asentaminen
+
+Valitse käyttöjärjestelmällesi sopiva asennustapa:
+
+### macOS
+
+#### Homebrew'n käyttö (suositeltu)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### MacPorts-ohjelman käyttö
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp:lle ei ole natiiveja Windows-binäärejä, mutta voit käyttää sitä WSL:n (Windows Subsystem for Linux) kautta:
+
+#### Vaihe 1: Asenna WSL
+
+Avaa PowerShell järjestelmänvalvojana ja suorita:
+
+```powershell
+wsl --install
+```
+
+Käynnistä tietokone uudelleen, kun sitä pyydetään.
+
+#### Vaihe 2: Asenna mscp WSL:ssä
+
+Kun WSL on määritetty (Ubuntu on oletus), avaa WSL-pääte ja suorita:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Windows-tiedostopolut WSL:ssä</AlertTitle>
+  <AlertDescription className="pl-2">
+    WSL:ssä Windows-asemasi ovat käytettävissä `/mnt/`-hakemiston alla. Esimerkiksi `C:\Users\YourName\Downloads` muuttuu muotoon `/mnt/c/Users/YourName/Downloads`.
+  </AlertDescription>
+</Alert>
+
+### Rakentaminen lähdekoodista
+
+Jos paketteja ei ole saatavilla järjestelmällesi, voit rakentaa mscp:n lähdekoodista:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## Peruskäyttö
+
+mscp-syntaksi muistuttaa `scp`-komentoa. Tässä on yleisiä käyttötapoja.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Tärkeää: käytä SFTP-porttiasi</AlertTitle>
+  <AlertDescription className="pl-2">
+    Alla olevissa esimerkeissä `25557` edustaa **SFTP Port** -arvoa SFTPgo-asetuksistasi. Korvaa se todellisella SFTP-portilla, joka näkyy SFTPgo Options -paneelissasi.
+  </AlertDescription>
+</Alert>
+
+### Lataa tiedosto palvelimellesi
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### Lataa hakemisto
+
+Toisin kuin `scp`, mscp ei vaadi `-r`-lippua hakemistoille:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### Lataa tiedosto palvelimeltasi
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### Lataa hakemisto palvelimelta
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## Edistyneet asetukset
+
+### Useiden yhteyksien käyttö
+
+Oletuksena mscp käyttää useita yhteyksiä. Voit määrittää yhteyksien määrän `-n`-lipulla:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Epäonnistuneiden siirtojen jatkaminen (checkpointing)
+
+mscp tukee checkpointing-toimintoa keskeytyneiden siirtojen jatkamiseen:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### SSH-avainpohjaisen todennuksen määrittäminen
+
+Jos olet määrittänyt SSH-avainpohjaisen todennuksen SFTPgo:ssa:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Rajoita kaistanleveyttä
+
+Siirtokaistanleveyden rajoittaminen (hyödyllistä jaetuissa yhteyksissä):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## Esimerkki: kokonainen työnkulku
+
+Tässä on kokonainen esimerkki Appboxista saaduilla SFTPgo-tunnistetiedoilla:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## Suorituskykyvinkit
+
+1. **Käytä enemmän yhteyksiä suurille tiedostoille**: Kasvata `-n`-arvoa suurissa tiedostonsiirroissa (esim. `-n 8` tai `-n 16`)
+2. **Käytä vähemmän yhteyksiä monille pienille tiedostoille**: Hakemistoissa, joissa on paljon pieniä tiedostoja, vähemmän yhteyksiä voi olla tehokkaampaa
+3. **Ota pakkaus käyttöön tekstitiedostoille**: mscp perii SSH-pakkauksen; käytä `-C`-lippua tekstipainotteisiin siirtoihin
+4. **Käytä checkpointing-toimintoa erittäin suuriin siirtoihin**: Ota checkpointing aina käyttöön useiden gigatavujen siirroissa, jotta siirtoa voidaan jatkaa keskeytyksen jälkeen
+
+## Vianmääritys
+
+### Yhteys hylätty
+
+Varmista, että käytät oikeaa SFTP-porttia SFTPgo-asetuksistasi (et FTP-porttia):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Lupa evätty
+
+Varmista, että käyttäjänimesi ja salasanasi ovat oikein. Voit testata ensin tavallisella SFTP-asiakasohjelmalla:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### Hitaat siirrot
+
+Kokeile säätää rinnakkaisten yhteyksien määrää:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## Lisäresurssit
+
+- [mscp GitHub -repositorio](https://github.com/upa/mscp)
+- [mscp-dokumentaatio](https://github.com/upa/mscp#documentation)
+- [SFTPgo Appboxissa](https://www.appbox.co/appstore/app/232)

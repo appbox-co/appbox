@@ -1,0 +1,125 @@
+---
+title: OpenClaw - একটি Personal AI Assistant যা আপনার Apps-এর সাথে কথা বলে
+date: 2026-03-20 10:00:00
+excerpt: OpenClaw এখন Appbox-এ available। এটি একটি open-source AI assistant যা আপনার infrastructure-এ চলে, আপনার chat apps-এর সাথে connect করে, এবং আপনার অন্য installed apps-এর সাথে সত্যিই interact করতে পারে।
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# OpenClaw এখন Appbox-এ
+
+আমরা app store-এ এমন কিছু যোগ করেছি যা নিয়ে আমি ব্যক্তিগতভাবে অনেক দিন ধরে excited ছিলাম।
+
+[OpenClaw](https://openclaw.ai) একটি open-source AI assistant যা সম্পূর্ণভাবে আপনার নিজের infrastructure-এ চলে। এটিকে cloud AI assistants-এর private, self-hosted alternative হিসেবে ভাবুন, শুধু এই assistant আপনার Appbox-এ থাকে, আপনার conversations মনে রাখে, এবং সত্যিই আপনার জন্য কাজ করতে পারে।
+
+আপনি যেসব chat apps ইতিমধ্যেই ব্যবহার করেন, সেগুলোর মাধ্যমে এর সাথে কথা বলেন। WhatsApp, Telegram, Discord, Slack, Signal, এমনকি iMessage। এটি Anthropic, OpenAI, Google, xAI, Mistral, এবং অন্যান্য providers-এর models-এর full power দিয়ে respond করে। আপনি নিজের API key আনেন, model বেছে নেন, এবং সবকিছু আপনার server-এ থাকে।
+
+এটুকুই useful হতো। কিন্তু আমি শুধু চুপচাপ store-এ add না করে blog post লিখছি কারণ এটি আপনার Appbox-এর বাকি অংশের সাথে মিললে কী হয়।
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="OpenClaw chat session in the web dashboard" width="860" className="mt-8 mb-10" />
+</p>
+
+## এটি আপনার অন্য Apps দেখতে পারে
+
+Appbox-এ OpenClaw চালানো অন্য কোথাও চালানোর থেকে কেন আলাদা, সেটি এখানে।
+
+প্রতিটি Appbox-এর একটি shared data layer আছে। আপনার installed apps প্রতিটি common mount-এর নিচে একটি directory পায়, এবং একটি shared storage area থাকে যেখানে যেকোনো app read এবং write করতে পারে। OpenClaw এই একই shared filesystem-এ access পায়। এর মানে এটি আপনার অন্য installed apps এবং general storage-এর data দেখতে পারে, কোনো fragile API integration দিয়ে নয়, সরাসরি filesystem access দিয়ে।
+
+বাস্তবে, আপনার AI assistant কোনো context ছাড়া নিজের container-এ isolated নয়। এটি আপনার files, databases, media, code, এবং configurations-এর ঠিক পাশে বসে থাকে।
+
+## এটি আপনার অন্য Apps-এ Log In করতে পারে
+
+Shared filesystem-এর বাইরে, OpenClaw-এর built-in full headless browser (Chromium with Puppeteer), এবং সব common database client ও CLI tool আছে। আপনি যদি আপনার অন্য কোনো app-এর login details দেন, এটি সত্যিই sign in করে আপনার behalf-এ ব্যবহার করতে পারে।
+
+Docmost-এ team documentation update করতে চান? OpenClaw-কে কী লিখতে হবে বলুন এবং URL ও credentials দিন। এটি log in করবে, সঠিক page-এ যাবে, এবং edits করবে। আপনার Nginx & PHP stack-এ নতুন landing page দরকার? কী চান describe করুন, OpenClaw HTML, CSS, এবং JavaScript লিখে shared filesystem দিয়ে সরাসরি web root-এ files deploy করতে পারে। WordPress চালাচ্ছেন? এটিকে blog post draft ও publish করতে, plugin settings update করতে, বা page restyle করতে বলুন। এটি আপনার মতোই admin dashboard চালাতে পারে।
+
+এটি web UIs-এ সীমাবদ্ধ নয়। OpenClaw `mysql`, `psql`, `redis-cli`, `mongosh`, এবং SSH support সহ আসে, তাই আপনি যে credentials দেবেন তা ব্যবহার করে databases এবং services-এ সরাসরি connect করতে পারে। মূল কথা হলো প্রতিটি app-এর জন্য OpenClaw-এর special integrations বা plugins দরকার নেই। আপনি log in করতে পারলে, আপনার assistant-ও পারে।
+
+## বাস্তবে এটি কেমন দেখায়
+
+AI assistant আপনার Appbox ecosystem-এ access পেলে আপনি কী করতে পারেন, তার আরও কিছু specific examples দেখি।
+
+### Media Server Housekeeping
+
+আপনি Plex, Jellyfin, বা Emby চালালে, OpenClaw built-in `ffmpeg`, `mediainfo`, এবং `exiftool` সহ আসে। Directory manually খুঁড়ে না দেখে file metadata check করা বা encoding issues spot করার জন্য এগুলো handy। একটি folder-এ কী আছে list করতে, formats check করতে, বা naming conventions tidy করতে বলুন যাতে আপনার media server জিনিসগুলো properly index করে।
+
+### Database Work Without the Pain
+
+OpenClaw-এর container pre-installed `mysql`, `psql`, `sqlite3`, `redis-cli`, এবং `mongosh` সহ আসে। আপনি MariaDB চালালে, OpenClaw-কে databases query করতে, schemas inspect করতে, slow queries debug করতে, বা migrations লিখতে সাহায্য করতে বলতে পারেন। সবই আপনার phone-এর chat message দিয়ে।
+
+WordPress বা MariaDB-backed অন্য CMS চালাচ্ছেন? OpenClaw-কে database health check করতে, orphaned post metadata খুঁজতে, বা specific content export করতে বলুন। কিছুতে SSH করতে হবে না বা সঠিক CLI flags মনে রাখতে হবে না। Plain language-এ যা দরকার describe করুন।
+
+### GitLab এবং Code Workflows
+
+আপনার GitLab installed থাকলে, OpenClaw সরাসরি repositories-এর সাথে কাজ করতে পারে। Fast code search-এর জন্য এতে `git` built in আছে, সাথে `ripgrep` এবং `fd`। Specific pattern খুঁজতে, recent commits summarise করতে, বা unfamiliar code বুঝতে সাহায্য চাইতে পারেন।
+
+Internal projects-এর জন্য GitLab ব্যবহার করা teams-এর ক্ষেত্রে, এমন AI assistant থাকা যা আপনার codebase পড়ে questions answer করতে পারে, কিন্তু code third-party cloud service-এ পাঠায় না, development workflow-এর জন্য meaningful improvement।
+
+### File Organisation এবং Sync
+
+Nextcloud, SFTPGo, বা File Browser চালাচ্ছেন? OpenClaw ওই services দিয়ে flow করা files manage করতে সাহায্য করতে পারে। Documents search করতে, directory structures reorganise করতে, duplicates খুঁজতে, এবং shared storage ও app-specific directories-এর মধ্যে জিনিস move করতে পারে।
+
+এতে `rclone`-ও available, তাই sync jobs setup করতে বা cloud storage providers-এর মধ্যে data move করতে হলে, আপনি কী চান describe করুন এবং OpenClaw configuration handle করুক।
+
+### Monitoring এবং Diagnostics
+
+আপনি services monitor করতে Uptime Kuma install করে থাকলে, OpenClaw আপনার monitoring setup-এর ওপর conversational layer দেয়। শুধু alerts receive করার বাইরে, আপনি OpenClaw-কে network diagnostics চালাতে বলতে পারেন। এতে `ping`, `dig`, `nslookup`, `traceroute`, `mtr`, এমনকি deeper investigation-এর জন্য `nmap` এবং `tcpdump` আছে।
+
+কিছু down হলে? Assistant-কে message করুন, কী হচ্ছে check করতে বলুন, এবং dashboards-এর দিকে তাকিয়ে থাকার বদলে plain-language explanation পান।
+
+### Music এবং Audiobook Libraries
+
+Navidrome এবং audiobookshelf users OpenClaw-এর media tooling থেকে benefit পেতে পারেন। Missing বা incorrect metadata tags থাকা files খুঁজতে music library scan করতে, re-encoding দরকার হতে পারে এমন tracks identify করতে, বা ঠিকভাবে split না হওয়া audiobook chapters organise করতে বলুন। `ffmpeg` এবং `exiftool` combo আপনার দরকারি বেশিরভাগ কাজ সামলে নেয়।
+
+### Jupyter এবং Data Work
+
+আপনি data analysis-এর জন্য Jupyter Notebook ব্যবহার করলে, OpenClaw সুন্দরভাবে complement করে। এতে pip এবং venv support সহ Python 3 আছে, তাই scripts লিখতে, shared storage-এর data files process করতে, এমনকি quick analyses সরাসরি চালাতে সাহায্য করতে পারে। আপনার notebooks যে data নিয়ে কাজ করছে, সেটির ওপর conversational interface হিসেবে ভাবুন।
+
+### Infrastructure as Code
+
+আরও technically adventurous users-এর জন্য, OpenClaw `docker`, `kubectl`, `terraform`, এবং `ansible` CLIs সহ আসে। আপনি Appbox-এ VPS চালালে এবং infrastructure manage করলে, OpenClaw-কে conversational ops assistant হিসেবে ব্যবহার করতে পারেন। কী deploy করতে চান describe করুন এবং এটি configurations generate ও apply করতে সাহায্য করুক।
+
+## Persistent Memory
+
+OpenClaw-কে শুধু AI model-এর chat window থেকে আলাদা করে এমন একটি বিষয় হলো এটি আপনাকে মনে রাখে। সময়ের সাথে context তৈরি করে: আপনার preferences, আপনি কীভাবে জিনিস organise করতে পছন্দ করেন, আপনি কোন projects-এ কাজ করছেন, naming conventions কী ব্যবহার করেন। যত বেশি interact করবেন, এটি তত useful হবে।
+
+Appbox-এ এটি বিশেষভাবে powerful কারণ context শুধু conversational নয়। এটি আপনার actual environment-এ grounded। আপনার files, apps, data।
+
+## Pre-loaded Skills
+
+OpenClaw-এর skill system আছে, যেখানে [ClawHub](https://clawhub.ai/skills)-এ 50+ community-built extensions available। Skills agent-কে specific apps, tools, বা workflows-এর জন্য specialised capabilities দেয়।
+
+Appbox-এ আমরা আপনাকে শুধু bare agent দিই না। Image-টি curated skills আগে থেকেই installed অবস্থায় ship করে, যাতে OpenClaw out of the box আপনার environment বুঝতে পারে:
+
+- **Platform awareness**: Appbox shared data layout, available CLI tools, এবং প্রয়োজন হলে support বা VPS upgrades-এ guide করার উপায় জানে
+- **App-specific skills**: WordPress, Nginx, GitLab, Nextcloud, Emby, MariaDB, Tautulli, Mautic, WireGuard, এবং Rocket.Chat-এর জন্য pre-loaded, তাই এগুলো installed থাকলে agent আগেই জানে কীভাবে কাজ করতে হয়
+- **SSH essentials**: agent থেকে সরাসরি আপনার VPSes বা remote servers-এ connect করার জন্য
+- **Browser automation (Playwright MCP)**: আপনার অন্য apps-এর web UIs-এ log in করে চালানোর ability power করে
+- **Web search and documentation lookup**: reference material on the fly আনতে multi-engine search এবং ClawDDocs
+- **Self-improvement**: ClawHub-এ new skills discover করা এবং install-এর আগে vet করার skills
+
+আপনি যেকোনো সময় additional skills install করতে পারেন। [ClawHub](https://clawhub.ai/skills)-এ একটি খুঁজুন, link copy করুন, এবং agent-এ paste করুন। এটি নিজেই skill download এবং install করবে।
+
+## শুরু করা
+
+অন্য app-এর মতো Appbox app store থেকে OpenClaw install করুন। এটি দুই slots নেয়।
+
+Installation-এর পর app detail page-এ Gateway Token দেখবেন। সেটিই আপনার dashboard login। Dashboard URL খুলুন, token enter করুন, এবং আপনি ঢুকে যাবেন।
+
+সেখান থেকে শুধু একটি জিনিস configure করতে হবে: আপনার AI model provider। আপনার পছন্দের provider থেকে API key add করুন। OpenRouter সবচেয়ে সহজ starting point, কারণ একটি key দিয়ে অনেক models-এ access পাওয়া যায়। OpenRouter, OpenAI, Anthropic, Google, xAI, Mistral, এবং অন্য providers থেকে API keys নেওয়ার walkthrough সহ আমরা একটি [full setup guide](/docs/apps/openclaw-model-provider-setup) লিখেছি।
+
+Model configure হলে, dashboard থেকেই assistant-এর সাথে chat শুরু করতে পারেন। WhatsApp, Telegram, Discord, বা অন্য channels দিয়ে কথা বলতে চাইলে, সেগুলোও dashboard থেকেই configured হয়।
+
+## কেন এটি গুরুত্বপূর্ণ
+
+AI chat interfaces অনেক আছে। বেশিরভাগই cloud services, যেখানে message পাঠানোর মুহূর্তে আপনার data আপনার control ছেড়ে যায়। OpenClaw আলাদা কারণ সবকিছু আপনার Appbox-এ থাকে। Assistant, তার memory, আপনার conversations, এবং যে data নিয়ে এটি কাজ করে।
+
+আর যেহেতু এটি shared filesystem access সহ আপনার অন্য apps-এর পাশে থাকে, এটি শুধু আপনার self-hosted stack সম্পর্কে questions answer না করে, সত্যিই তার across কাজ করতে পারে।
+
+মানুষ এটি দিয়ে কী build করে তা দেখতে আমরা সত্যিই curious। আপনি যদি interesting workflow setup করেন বা OpenClaw-কে আপনার অন্য apps-এর সাথে connect করার creative উপায় খুঁজে পান, শুনতে ভালো লাগবে।
+
+---
+
+*OpenClaw নিয়ে প্রশ্ন আছে বা setup করতে সাহায্য দরকার? support@appbox.co-তে যোগাযোগ করুন অথবা [billing.appbox.co](https://billing.appbox.co/submitticket.php)-তে ticket খুলুন।*

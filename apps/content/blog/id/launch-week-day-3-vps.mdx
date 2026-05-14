@@ -1,0 +1,108 @@
+---
+title: Launch Week Day 3 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: Hari ketiga Launch Week. Virtual private server KVM penuh sekarang tersedia di Appbox. Pilih Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux, atau AlmaLinux dan dapatkan akses root ke VM sungguhan.
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Day 3: Virtual Private Servers
+
+Hari 3. Ini yang besar.
+
+Sejak awal, Appbox dibuat untuk memudahkan aplikasi self-hosted. Instal aplikasi, dapat URL, selesai. Model itu bekerja sangat baik untuk sebagian besar hal. Tetapi selalu ada kelas use case ketika Anda hanya membutuhkan mesin penuh. Kernel Anda sendiri, init system Anda sendiri, aturan Anda sendiri.
+
+Hari ini kami meluncurkan **Virtual Private Servers** di Appbox.
+
+## VM Sungguhan, Bukan Container
+
+Mari perjelas apa ini. Ini adalah mesin virtual KVM penuh yang berjalan di hardware khusus dengan kernel sendiri, systemd sendiri, dan akses root penuh. Ini bukan container Docker yang berpura-pura menjadi OS. Ini yang sebenarnya.
+
+Perbedaan itu penting karena membuka semua hal yang tidak bisa dilakukan container:
+
+- **Docker di dalam VPS Anda** - jalankan `docker compose up` seperti di server mana pun
+- **Snaps dan Flatpaks** - instal software desktop sebagaimana mestinya
+- **Layanan systemd** - manajemen layanan penuh, timer, journal, semuanya
+- **Kernel dan modul custom** - Anda punya root, lakukan apa yang Anda mau
+- **Nested virtualization** - jika Anda membutuhkannya, tersedia
+
+Jika Anda pernah menemui batas pada OS atau webtop berbasis Docker kami saat sesuatu tidak berfungsi karena batasan container, batas itu sekarang hilang.
+
+## Enam OS Linux Tersedia
+
+Anda sekarang dapat memilih dari enam distribusi Linux:
+
+| OS | Deskripsi |
+|---|---|
+| **Ubuntu VPS** | Ubuntu 24.04 LTS penuh |
+| **Debian VPS** | Debian 12 dan 13 penuh |
+| **Arch Linux VPS** | Rolling release, selalu terbaru |
+| **Fedora VPS** | Fedora 43 dengan package terbaru |
+| **Rocky Linux VPS** | Kompatibilitas RHEL kelas enterprise |
+| **AlmaLinux VPS** | Linux enterprise kompatibel RHEL dengan dukungan jangka panjang |
+
+Pilih yang Anda kenal, atau yang ingin Anda pelajari. Semuanya memiliki set fitur yang sama di Appbox.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Kategori VPS di Appbox App Store" width="860" className="mt-8 mb-10" />
+</p>
+
+## Web Console Bawaan
+
+Setiap VPS dilengkapi console berbasis browser yang terpasang langsung di dashboard Appbox. Klik tab Console pada VPS mana pun dan Anda mendapatkan sesi terminal live langsung di browser.
+
+Artinya Anda tidak akan pernah terkunci di luar server Anda. SSH salah konfigurasi? Konfigurasi jaringan rusak? Tidak masalah. Web console terhubung langsung ke tampilan virtual VM, sepenuhnya independen dari network stack guest. Anda selalu punya jalan masuk.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="VM console berbasis web di dashboard Appbox" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop dengan Selkies
+
+Di sinilah mulai menarik. Ubuntu VPS kami memiliki varian desktop yang didukung **Selkies**, memberi Anda desktop Linux grafis penuh yang dapat diakses dari browser dengan streaming hardware-accelerated, output audio penuh, dan input mikrofon.
+
+Kami bekerja langsung dengan tim Selkies agar ini berjalan di dalam mesin virtual KVM, dan kami telah meng-open-source integrasinya di [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Apa artinya dalam praktik? Anda dapat menjalankan environment desktop penuh di browser dengan aplikasi nyata. VS Code, Discord, Spotify, Slack - semuanya berjalan bersamaan, semuanya dengan audio, semuanya dapat diakses dari perangkat apa pun dengan web browser.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Desktop Ubuntu melalui Selkies dengan VS Code, Spotify, dan Discord berjalan" width="860" className="mt-8 mb-10" />
+</p>
+
+Pikirkan itu sebentar. Anda bisa memiliki environment pengembangan remote persisten yang selalu menyala, menjalankan VS Code dengan container Docker untuk project Anda, sekaligus membuka Discord untuk chat tim dan Spotify memutar musik. Semuanya dalam satu tab browser. Dari laptop Anda, tablet Anda, atau komputer orang lain. Seluruh workspace Anda hanya berjarak satu URL.
+
+## Data Anda Ikut Bersama Anda
+
+Setiap VPS memiliki akses otomatis ke penyimpanan Appbox Anda melalui direktori `/APPBOX_DATA/`. Di dalamnya Anda akan menemukan:
+
+- **`/APPBOX_DATA/apps/`** - data dari aplikasi Appbox lain yang Anda instal
+- **`/APPBOX_DATA/storage/`** - penyimpanan Appbox umum Anda
+
+Ini dibagikan menggunakan virtiofs, filesystem passthrough berperforma tinggi yang memberi Anda kecepatan akses file mendekati native. VPS Anda dapat membaca dan menulis file yang juga digunakan aplikasi lain, sehingga Anda bisa, misalnya, memproses file media dari aplikasi streaming atau membackup database dari dalam VPS.
+
+## Bekerja dengan App Boost
+
+VPS menggunakan sistem App Boost yang sama yang kami luncurkan pada Hari 2. Ingin lebih banyak RAM atau CPU untuk VM Anda? Geser level boost ke atas dan dedikasikan lebih banyak slot paket Anda untuk VM tersebut. Resource dialokasikan di level hypervisor, jadi VM Anda benar-benar mendapatkan compute lebih banyak, bukan sekadar batas cgroup yang lebih tinggi.
+
+Perlu dicatat: VPS memiliki biaya slot dasar yang sedikit lebih tinggi daripada aplikasi OS berbasis Docker. Ini mencerminkan fakta bahwa mesin virtual penuh mengonsumsi resource nyata lebih banyak daripada container yang berbagi kernel host. Trade-off-nya jelas: Anda mendapat kemampuan lebih besar, dan biaya slot mencerminkannya secara jujur.
+
+## Yang Akan Datang Berikutnya untuk VPS
+
+Kami meluncurkan VPS hari ini dengan fungsi penuh, tetapi masih ada lebih banyak di roadmap. Grafik penggunaan resource untuk instance VPS akan ditambahkan dalam waktu dekat, sehingga Anda dapat memantau penggunaan CPU, RAM, dan disk dari waktu ke waktu langsung dari dashboard, sama seperti aplikasi lain.
+
+## Mengapa Ini Penting
+
+OS dan webtop berbasis Docker di Appbox telah melayani banyak orang dengan baik, dan tidak akan hilang. Tetapi ada batasan nyata ketika berjalan di dalam container. Anda tidak bisa menjalankan Docker. Anda tidak bisa menggunakan snaps. Anda tidak bisa memuat modul kernel. Anda tidak bisa menjalankan init system penuh. Anda selalu bekerja dalam batas namespace milik orang lain.
+
+VPS menghapus batasan itu sepenuhnya. Anda mendapatkan mesin sungguhan. Jika Anda bisa melakukannya di server yang Anda sewa dari provider lain, Anda bisa melakukannya di sini - bedanya data Anda sudah ter-mount, web console sudah tersedia, dan resource Anda dapat diskalakan dengan slider.
+
+## Hari 3 Sudah Live Sekarang
+
+VPS tersedia di App Store sekarang. Buka kategori VPS, pilih OS Anda, dan instal. Provisioning VM penuh memerlukan sedikit lebih lama daripada aplikasi container, jadi perkirakan hingga 15 menit sampai VPS siap.
+
+Besok adalah Hari 4. Kami tidak melambat.
+
+---
+
+*Punya masukan atau menemukan masalah? Hubungi support@appbox.co atau buka tiket di [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

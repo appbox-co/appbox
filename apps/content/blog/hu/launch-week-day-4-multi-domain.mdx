@@ -1,0 +1,81 @@
+---
+title: Launch Week 4. nap - Több domain VPS appokhoz
+date: 2026-03-12 10:00:00
+excerpt: "A Launch Week 4. napja. A VPS appok mostantól több domaint támogatnak - adj hozzá annyi egyéni domaint és Appbox aldomaint, amennyire szükséged van, mind automatikus SSL-lel."
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week 4. nap: Több domain VPS appokhoz
+
+4. nap. Tegnap teljes virtuális gépeket adtunk. Ma megfelelő domaintámogatást adunk hozzájuk.
+
+Amikor a 3. napon elindítottuk a VPS-eket, minden VM egyetlen domaint kapott. Ez sok felhasználási esethez rendben van, de ha webszervert futtatsz a VPS-eden - és sokan ezt teszitek -, egyetlen domain nem elég. Több domainre van szükséged, amelyek ugyanarra a gépre mutatnak, mind saját SSL-tanúsítvánnyal és webszerver-konfigurációval.
+
+Ma a VPS appok **több domaint** támogatnak. Adj hozzá annyi `*.user.appboxes.co` aldomaint, amennyit szeretnél, hozd a saját egyéni domainjeidet, vagy keverd a kettőt. Mindegyik SSL-t és használatra kész webszerver-konfigurációt kap.
+
+## Hogyan működik
+
+Nyiss meg bármelyik futó VPS appot, és a részletező oldalon találsz egy **Custom Domains** kártyát. Itt él az összes domained - egy kereshető, rendezhető táblázat, amely megmutatja a VPS-hez csatolt összes domaint, melyik az elsődleges, és mikor lett hozzáadva.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains táblázat egy VPS app részletező oldalán" width="860" className="mt-8 mb-10" />
+</p>
+
+Új domain hozzáadásához kattints az **Add Domain** gombra. Kiválasztasz egy szülő domaint, megadsz egy aldomaint, a rendszer pedig elintézi a többit.
+
+## Appbox aldomainek
+
+A domain hozzáadásának leggyorsabb módja a meglévő Appbox domained használata. Válaszd a `user.appboxes.co` domainedet szülőként, írj be egy aldomaint, és kész. A DNS-t már mi kezeljük, a domain pedig azonnal ellenőrzött.
+
+Ez remek gyors projekt URL-ekhez, staging környezetekhez, vagy ahhoz, hogy a VPS-ed különböző szolgáltatásainak saját címet adj. Kell az `api.user.appboxes.co` a backendhez és az `app.user.appboxes.co` a frontendhez? Mindkettőt hozzáadhatod egy perc alatt.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Appbox aldomain hozzáadása VPS-hez" width="560" className="mt-8 mb-10" />
+</p>
+
+Mivel ezek a meglévő Appbox wildcard tanúsítványod alá tartoznak, az SSL automatikus. Nincs várakozás, nincs tanúsítványgenerálás, nincs konfiguráció.
+
+## Egyéni domainek
+
+A saját domainjeidet is a VPS-edre irányíthatod. Válaszd ki az egyéni alapdomainedet (vagy adj hozzá újat közvetlenül a párbeszédablakból), add meg az aldomaint, és a UI végigvezet a DNS-beállításon.
+
+A párbeszédablak megmutatja a pontos létrehozandó A rekordot - a hostnevet, az IP-címet, mindent. Még szolgáltatóspecifikus útmutatókat is tartalmaz Cloudflare-hez és más népszerű DNS-szolgáltatókhoz, így nem kell utánanézned, hogyan kell A rekordot hozzáadni.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Egyéni domain hozzáadása DNS-ellenőrzéssel és szolgáltatóspecifikus útmutatókkal" width="560" className="mt-8 mb-10" />
+</p>
+
+Amint a DNS a megfelelő IP-re mutat, nyomd meg a **Verify Again** gombot, és a rendszer megerősíti, hogy a rekord helyes, mielőtt hozzáadja a domaint.
+
+## SSL és webszerver-konfiguráció
+
+Minden hozzáadott domain SSL-t kap. Appbox aldomainek esetén ez a meglévő wildcard tanúsítványt használja. Egyéni domaineknél a tanúsítvány automatikusan kerül kiállításra.
+
+Ez az a rész, amely ezt igazán hasznossá teszi a VPS-felhasználóknak: minden domainhez tartozik egy **View Config** gomb, amely bemásolható konfigurációs részleteket ad Nginxhez és Apache-hoz. A config tartalmazza a megfelelő `server_name` értéket, SSL-tanúsítvány elérési utakat, cipher suite-okat és protokollbeállításokat. Másold ki a részletet, tedd be a VM-en belüli webszerver-configba, töltsd újra, és már azon a domainen szolgálod ki a forgalmat.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL konfigurációs részletek Nginxhez és Apache-hoz" width="560" className="mt-8 mb-10" />
+</p>
+
+Nincs találgatás fájlelérési utakról. Nincs tanúsítványhelyek keresgélése. Nincs cipher stringek kitalálása. Minden ott van, készen a másolásra.
+
+## Miért fontos ez a VPS-felhasználóknak?
+
+Egy többdomaintámogatás nélküli VPS csak egy szerver egy címmel. Ez olyan korlát, amely gyorsan nyilvánvalóvá válik:
+
+- Webappot futtatsz külön API-val? Legalább két domainre van szükséged.
+- Több webhelyet hosztolsz a VM-edben? Mindegyiknek saját domain kell.
+- Staging környezetet szeretnél a production mellé? Ez újabb domain.
+- Helyben fejlesztesz, és valódi domainnel szeretnél tesztelni? Még egy.
+
+## A 4. nap már éles
+
+A több domain támogatása mostantól minden VPS apphoz elérhető. Nyisd meg a VPS-edet, görgess a Custom Domains részhez, és kezdd el hozzáadni őket.
+
+Holnap jön az 5. nap, és van egy meglepetésünk. Nem fogod látni előre.
+
+---
+
+*Visszajelzésed van, vagy hibát találtál? Írj a support@appbox.co címre, vagy nyiss jegyet itt: [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

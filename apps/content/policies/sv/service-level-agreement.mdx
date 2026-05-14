@@ -1,0 +1,65 @@
+---
+title: "Service Level Agreement"
+description: "Vårt åtagande för tjänstekonsekvens och tillförlitlighet"
+---
+
+Detta Service Level Agreement ("SLA") är ett dokument som reglerar villkoren och användningen av de tjänster som tillhandahålls av Appbox. Genom att använda våra tjänster bekräftar och samtycker du till villkoren som anges nedan.
+
+Eftersom vi verkar i en delad miljö och tillhandahåller tjänster av särskild natur kan viss driftstopp ibland vara oundvikligt. Detta avtal förtydligar hur vi hanterar driftstopp under din abonnemangsperiod och beskriver våra åtaganden för att lösa tvister och erbjuda kompensation.
+
+## Serverdriftstopp, serverunderhåll och kompensation
+
+Appbox gör allt för att hålla våra servrar operativa och åtkomliga för alla användare under deras faktureringsperiod.
+
+När serverunderhåll planeras i förväg meddelas användare via flera kanaler, såsom e-postuppdateringar, Appbox Status Page och Client Area Announcements. Användare som påverkas av planerat underhåll är inte berättigade till kompensation.
+
+Oplanerade eller akuta underhållsåtgärder kommuniceras så skyndsamt som möjligt, och användare som påverkas av sådana händelser kan kvalificera sig för credits enligt nedan:
+
+| Driftstoppets längd  | Kompensation                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Upp till 6 timmar    | Bestäms efter teamets gottfinnande                                                                                                         |
+| Upp till 12 timmar   | Motsvarar 1 dag av service credit                                                                                                          |
+| Upp till 24 timmar   | Motsvarar 2 dagar av service credit                                                                                                        |
+| Över 48 timmar       | Krediteras med dubbla längden av driftstoppet (till exempel ger ett 3-dagars avbrott 6 dagar av service credit)                           |
+
+Denna policy **exkluderar driftstopp kopplat till de applikationer du har installerat.**
+
+## Diskfel och dataförlust
+
+Appbox plattform bygger på en delad infrastruktur utformad för att erbjuda rättvis resursfördelning och omfattande diskanvändning. Trots våra bästa ansträngningar kan hårdvarufel, såsom diskfel, ibland uppstå.
+
+Om ett diskfel gör att du förlorar åtkomst till dina data och de inte kan återställas, kvalificerar du dig för **en hel månads tjänst utan kostnad**.
+
+Vi rekommenderar starkt att du behåller säkerhetskopior av all viktig data som du lagrar på din tjänst.
+
+Observera att om data går förlorade på grund av åtgärder initierade av användaren (t.ex. oavsiktlig radering) och inget systemrelaterat fel upptäcks, ges ingen kompensation.
+
+## Rättvis användning av serverresurser
+
+Våra tjänster levereras på delade resurser, därför är det avgörande att varje klient säkerställer att deras aktiviteter inte stör andra användares prestanda och håller sig inom acceptabla resursgränser.
+
+Appbox kan, utan föregående meddelande, stoppa applikationer eller processer som negativt påverkar andra klienters upplevelser. Vid allvarligt resursmissbruk kan klientens tjänst suspenderas eller avslutas helt.
+
+### Policy för rättvis användning av Disk I/O
+
+Denna policy gäller endast planerna NG-8000 och mindre (icke-dedikerade diskplaner).
+
+För att säkerställa optimal prestanda för alla användare använder Appbox ett automatiserat system för övervakning av Disk I/O som:
+
+1. Kontinuerligt övervakar diskanvändning över alla delade resurser
+2. Identifierar applikationer som förbrukar överdrivna Disk I/O-resurser under längre perioder
+3. Automatiskt tillämpar strypningsåtgärder när det är nödvändigt
+
+Om din applikation upptäcks förbruka överdriven Disk I/O:
+- Du kan få en varningsnotis
+- Ihållande hög användning leder till automatisk strypning av din Disk I/O-hastighet
+- Upprepade överträdelser leder till allt striktare strypningsgränser
+- Strypning är tillfällig och tas automatiskt bort när användningen återgår till normala nivåer
+
+Observera att resursintensiva applikationer kan utlösa dessa åtgärder om de körs utan hänsyn till andra användare.
+
+Vi tillämpar denna policy för att garantera att alla användare får en tillfredsställande upplevelse på vår plattform.
+
+## Svarstider för support
+
+Vi har ingen minsta svarstid eller lösningstid för support, men vi strävar efter att besvara alla supportförfrågningar inom 24 timmar.

@@ -24,6 +24,7 @@ import type { SeriesStat } from "@/components/dashboard/charts/chart-wrapper"
 import { DashboardLineChart } from "@/components/dashboard/charts/line-chart"
 import { StatusCell } from "@/components/dashboard/data-table/data-table-cells"
 import { HistoryBackButton } from "@/components/dashboard/navigation/history-back-button"
+import { DashboardPageHeader } from "@/components/dashboard/page-header"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -371,46 +372,46 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
         anonymizeLabelSingleWord
       />
 
-      {/* Title + status */}
-      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex min-w-0 flex-wrap items-center gap-3">
-          <h1
-            data-anonymize-single
-            className="min-w-0 wrap-break-word text-2xl font-bold tracking-tight"
-          >
-            {cylo.name}
-          </h1>
-          <StatusCell status={cylo.status} className="text-xs" />
-          <span className="flex min-w-0 items-center gap-1 text-sm text-muted-foreground">
-            <Server className="size-3.5" />
-            <span className="min-w-0 break-all">{cylo.server_name}</span>
-          </span>
-          {cylo.server_host ? (
-            <span className="min-w-0 text-sm text-muted-foreground">
-              • <span className="break-all font-mono">{cylo.server_host}</span>
+      <DashboardPageHeader
+        title={<span data-anonymize-single>{cylo.name}</span>}
+        description={
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+            <StatusCell status={cylo.status} className="text-xs" />
+            <span className="flex min-w-0 items-center gap-1">
+              <Server className="size-3.5" />
+              <span className="min-w-0 break-all">{cylo.server_name}</span>
             </span>
-          ) : null}
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={
-            cylo.status === "restarting" ||
-            cylo.status === "migrating" ||
-            cylo.status === "installing" ||
-            restartMutation.isPending
-          }
-          onClick={() => setRestartOpen(true)}
-          className="w-full sm:w-auto"
-        >
-          {restartMutation.isPending ? (
-            <Loader2 className="mr-1.5 size-4 animate-spin" />
-          ) : (
-            <RotateCcw className="mr-1.5 size-4" />
-          )}
-          {t("cyloDetail.restart")}
-        </Button>
-      </div>
+            {cylo.server_host ? (
+              <span className="min-w-0 break-all font-mono">
+                {cylo.server_host}
+              </span>
+            ) : null}
+          </div>
+        }
+        icon={<Server className="size-[18px]" />}
+        gradient="from-[#6366f1] to-[#8b5cf6]"
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={
+              cylo.status === "restarting" ||
+              cylo.status === "migrating" ||
+              cylo.status === "installing" ||
+              restartMutation.isPending
+            }
+            onClick={() => setRestartOpen(true)}
+            className="w-full sm:w-auto"
+          >
+            {restartMutation.isPending ? (
+              <Loader2 className="mr-1.5 size-4 animate-spin" />
+            ) : (
+              <RotateCcw className="mr-1.5 size-4" />
+            )}
+            {t("cyloDetail.restart")}
+          </Button>
+        }
+      />
 
       {/* Restart confirmation dialog */}
       <Dialog open={restartOpen} onOpenChange={setRestartOpen}>

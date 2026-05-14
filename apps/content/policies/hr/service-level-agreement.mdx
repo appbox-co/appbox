@@ -1,0 +1,65 @@
+---
+title: Sporazum o razini usluge
+description: "Naša predanost dosljednosti i pouzdanosti usluge"
+---
+
+Ovaj Service Level Agreement ("SLA") dokument je koji uređuje Terms i korištenje Services koje pruža Appbox. Korištenjem naših Services potvrđujete i pristajete na uvjete navedene u nastavku.
+
+Budući da radimo u shared environmentu i pružamo usluge posebne prirode, određena razina downtimea ponekad može biti neizbježna. Ovaj sporazum pojašnjava kako upravljamo slučajevima downtimea tijekom vašeg razdoblja pretplate i opisuje naše obveze u vezi s rješavanjem sporova i pružanjem naknade.
+
+## Server Downtimes, Server Maintenance & Compensation
+
+Appbox ulaže sve napore kako bi naši serveri ostali operativni i dostupni svim korisnicima tijekom njihova billing term.
+
+Kada je održavanje servera unaprijed dogovoreno, korisnici će biti obaviješteni putem više kanala - kao što su email ažuriranja, Appbox Status Page i Client Area Announcements. Nijedan korisnik pogođen planiranim održavanjem nema pravo na naknadu.
+
+Neplanirani ili hitni postupci održavanja bit će priopćeni što je promptnije moguće, a korisnici pogođeni takvim događajima mogu se kvalificirati za kredite kako je navedeno u nastavku:
+
+| Trajanje downtimea  | Naknada                                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Do 6 sati         | Određuje se prema diskreciji tima                                                                                                            |
+| Do 12 sati        | Ekvivalent 1 dana service credit                                                                                                       |
+| Do 24 sata        | Ekvivalent 2 dana service credit                                                                                                      |
+| Više od 48 sati       | Kreditira se dvostruko trajanje downtimea (na primjer, 3-dnevni prekid daje 6 dana service credit)                                 |
+
+Ova politika **isključuje svaki downtime povezan s aplikacijama koje ste instalirali.**
+
+## Kvar diska i gubitak podataka
+
+Appboxova platforma temelji se na shared infrastructure osmišljenoj za pravednu raspodjelu resursa i sveobuhvatno korištenje diskova. Unatoč našim najboljim nastojanjima, hardverski kvarovi, poput kvarova diskova, ponekad se mogu dogoditi.
+
+Ako kvar diska prouzroči gubitak pristupa vašim podacima i oni se ne mogu oporaviti, kvalificirat ćete se za **jedan puni mjesec usluge bez troška**.
+
+Snažno savjetujemo održavanje sigurnosnih kopija svih ključnih podataka koje pohranjujete na svojoj usluzi.
+
+Imajte na umu da, ako su podaci izgubljeni zbog radnji koje je pokrenuo korisnik (npr. slučajno brisanje) i nije otkrivena pogreška povezana sa sustavom, naknada neće biti pružena.
+
+## Pošteno korištenje server resursa
+
+Naše Services pružaju se na shared resources, stoga je ključno da svaki klijent osigura da njegove aktivnosti ne ometaju performanse drugih korisnika i ostanu unutar prihvatljivih granica resursa.
+
+Appbox može, bez prethodne obavijesti, zaustaviti bilo koje aplikacije ili procese koji negativno utječu na iskustvo drugih klijenata. U težim slučajevima zlouporabe resursa, usluga klijenta može biti suspendirana ili u potpunosti ukinuta.
+
+### Disk I/O Fair Use Policy
+
+Ova politika odnosi se samo na planove NG-8000 i manje (non-dedicated disk plans).
+
+Kako bi osigurao optimalne performanse za sve korisnike, Appbox koristi automatizirani Disk I/O monitoring sustav koji:
+
+1. Kontinuirano prati iskorištenost diska na svim shared resources
+2. Identificira aplikacije koje dulje vrijeme troše pretjerane disk I/O resurse
+3. Automatski primjenjuje mjere throttlinga kada je potrebno
+
+Ako se otkrije da vaša aplikacija troši pretjeran disk I/O:
+- Možete primiti upozorenje
+- Trajno visoka upotreba rezultirat će automatskim throttlingom vaše disk I/O brzine
+- Ponavljana kršenja dovest će do sve strožih throttling limita
+- Throttling je privremen i automatski će se ukloniti kada se upotreba vrati na normalne razine
+
+Imajte na umu da resource-intensive aplikacije mogu pokrenuti ove mjere ako se izvode bez obzira prema drugim korisnicima.
+
+Ovu politiku provodimo kako bismo zajamčili da svi korisnici imaju zadovoljavajuće iskustvo na našoj platformi.
+
+## Vrijeme odgovora podrške
+
+Nemamo minimalno vrijeme odgovora ili rješavanja podrške, no cilj nam je odgovoriti na sve upite podrške u roku od 24 sata.

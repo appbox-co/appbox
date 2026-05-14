@@ -1,0 +1,150 @@
+---
+title: Launch Week 第 1 天 - 新仪表板
+date: 2026-03-09 10:00:00
+excerpt: Launch Week 第 1 天来了。全新的 Appbox 仪表板现已上线。
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, dashboard, security, app-store, i18n, file-explorer]
+---
+
+# Launch Week 第 1 天：新仪表板已上线
+
+我们说过 Launch Week 从周一开始。现在第 1 天已经上线。
+
+今天我们推出全新的 Appbox 仪表板体验。这是控制面板在 UI 和工作流上的一次重大升级，目标很简单：让你日常运行 appboxes 更快、更清晰，也更少烦恼。
+
+这个更新已经推进了很久，我很高兴终于能把它交到你手中。
+
+## 新的控制中心
+
+在今天之前，这些信息分散在不同页面和流程中。今天，我们引入一个专门的仪表板，把它们汇集到一个运营视图里：
+
+- 最新博客和平台更新
+- 你的服务概览卡片
+- 你的通知
+- 最新和最近更新的应用
+
+这样你不必在标签页之间来回跳转，只需打开一个页面，就能立即看到重要信息。
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Appbox 仪表板概览" width="860" className="mt-8 mb-10" />
+</p>
+
+## 重新设计的 Appbox 管理
+
+appboxes 区域已经用更清晰的卡片布局重建，也更容易快速浏览。你可以迅速看到状态、存储、流量、slot 使用情况，并直接进入详情。
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="新布局中的你的 appboxes" width="860" className="mt-8 mb-10" />
+</p>
+
+每个 appbox 内部的摘要视图现在更适合实际运维：资源卡片、图表和核心操作更容易找到，也更容易一眼理解。
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="带实时统计的 Appbox 摘要" width="860" className="mt-8 mb-10" />
+</p>
+
+这是你在真正使用环境时会保持打开的页面，而不只是一个静态信息屏。
+
+## App Store 集成更好
+
+我们也改进了应用发现和应用详情流程，让它们感觉像一个统一系统的一部分，而不是分散的工具。
+
+商店视图更清爽，分类更容易浏览，从发现到安装的路径也更短。
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="集成式 app store 体验" width="860" className="mt-8 mb-10" />
+</p>
+
+应用详情页现在会更清楚地展示版本和资源细节，让你在安装或升级前更快做决定，也少一些意外。
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="改进后的应用详情和版本视图" width="860" className="mt-8 mb-10" />
+</p>
+
+从今天开始，应用还可以在流程中直接暴露并支持**多个可安装版本**，你可以选择想要的版本，也可以随时切换到另一个版本。
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="带多个发布版本的应用版本选择器" width="304" className="mt-8 mb-10" />
+</p>
+
+## 自定义域名成为一等功能
+
+自定义域名现在是安装体验的核心部分，不再是尴尬的额外步骤。
+
+当应用需要域名时，设置会直接在安装对话框中通过清晰的引导流程完成：
+
+1. 选择你的 Appbox。
+2. 选择 **Domain Type**：
+   - **Appbox Domain** 使用你的 Appbox 默认域名。
+   - **Custom Domain** 使用你自己的某个域名。
+3. 选择 **Base Domain**。
+4. 输入你想使用的 **Subdomain**。
+5. 如果选择了自定义域名，Appbox 会显示需要添加的精确 DNS 记录（host/name 和目标 IP），并允许你立即验证。
+
+无需手动猜记录、复制文档、反复重试安装，你会在同一个安装位置获得内置 DNS 设置和验证步骤。
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="安装应用时进行自定义域名设置和 DNS 验证" width="560" className="mt-8 mb-10" />
+</p>
+
+## 新文件浏览器（从零构建）
+
+文件浏览器已经从零重新设计。旧体验中，文件管理基本只限于删除文件。现在它是一个真正的文件管理器，支持：
+
+- 上传
+- 新建文件夹
+- 重命名
+- 删除
+- 下载
+- 列表/网格视图切换
+- 面包屑导航和上下文操作
+
+因此你可以直接原生管理 appbox 文件，而不必安装额外应用。
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="带更多文件操作的新文件浏览器" width="560" className="mt-8 mb-10" />
+</p>
+
+## 双因素认证
+
+到了 2026 年，安全不应该还是可选项。从今天开始，Appbox 账号支持内置双因素认证。
+
+你可以直接在账号区域启用和管理 2FA，包括用于账号恢复的恢复码管理。
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="双因素认证管理" width="860" className="mt-8 mb-10" />
+</p>
+
+这是平台的重要安全里程碑，也是用户最持续要求的功能之一。
+
+## 仪表板全面采用新设计语言
+
+视觉系统在导航、间距、卡片、排版和交互状态上都进行了刷新。目标是保持一致和专注：更少视觉噪音、更强层级、更好可读性，并在深色和浅色主题下都呈现更现代的产品体验。
+
+以后你半夜安装应用时，不会再被刺眼的白屏晃到了！
+
+## 更好的日常体验：主题、语言和更快快捷入口
+
+本次发布还包含一些让仪表板日常更好用的体验改进：
+
+- **原生语言切换** 直接内置在 UI 中（未来会持续添加更多语言）。
+- **固定应用快捷方式** 以小图标形式显示在你的服务卡片上，让你更快进入最常用的应用。
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="新仪表板中的原生语言切换器" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="服务卡片上的固定应用快捷方式" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  语言切换和固定快捷方式把日常控制放在你需要的位置。
+</p>
+
+## 第 1 天现已上线
+
+如果你已经是 Appbox 用户，可以立即登录并开始使用新仪表板。
+
+一如既往，我们欢迎反馈。我们改进 Appbox 的最快方式，就是发布、倾听，并根据真实使用持续迭代。
+
+---
+
+*有反馈或发现问题？请通过 support@appbox.co 联系我们，或在 [billing.appbox.co](https://billing.appbox.co/submitticket.php) 提交工单。*

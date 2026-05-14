@@ -1,0 +1,397 @@
+---
+title: データ取り扱いポリシー
+description: 当社がお客様のデータを管理し保護する方法
+---
+
+Appbox では、記録を維持しサービスを提供するために必要な最小限の情報のみを収集・保存します。Appbox チームは、お客様のデータを最大限のプライバシーとセキュリティを念頭に置いて扱うよう訓練されており、強力な認証情報と multi-factor authentication の使用を含む厳格なプロトコルに従います。すべての支払い処理は支払い処理業者によって完全に処理され、支払い記録および対応する transaction IDs を除き、お客様の財務情報は Appbox に保存されません。
+
+## Email
+
+- **用途**
+  - Appbox Client Area および Appbox Control Panel へのログインとして機能します
+  - Appbox サービス告知の連絡先
+  - Appbox Ticket System 問い合わせの連絡先
+- **収集**
+  - signup 時にユーザーが提供します
+- **保存**
+  - WHMCS = 平文
+  - Appbox API = 平文
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team
+    - サポートまたはサービス告知のためにユーザーへ連絡するため
+- **保持**
+  - 無期限
+- **詳細情報**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **用途**
+  - Appbox Ticket System 上でユーザーを識別します
+  - ユーザーの Appbox slot の名前として機能します
+  - ユーザーの slot がデプロイされたサーバー上に local user として登録され、ユーザーが実行している processes を表示します
+  - インストール済みアプリケーションにおけるユーザー名として機能します
+- **収集**
+  - signup 時にユーザーが提供します
+- **保存**
+  - WHMCS = 平文
+  - Appbox API = 平文
+  - Installed Applications = Application によります
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team
+    - サポート問い合わせに必要です
+    - リソース消費が高い applications、サーバー不安定化の原因、または unauthorized applications を検索してサーバー問題を調査するために必要です
+- **保持**
+  - 無期限
+- **詳細情報**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **用途**
+  - ユーザーが選択した国に基づいて適用される税金を計算するために使用されます
+- **収集**
+  - signup 時にユーザーが提供します
+- **保存**
+  - WHMCS = 平文
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team
+- **保持**
+  - 無期限
+- **詳細情報**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **用途**
+  - Appbox Client Area におけるユーザーの password として機能します
+- **収集**
+  - Appbox Client Area での signup 時にユーザーが提供します
+- **保存**
+  - WHMCS = 暗号化
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team による限定的アクセス
+    - Appbox team は password が hashed されているため見ることはできませんが、verification 後にお客様の password を reset できます
+- **保持**
+  - 無期限
+- **詳細情報**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - [account security page](https://billing.appbox.co/user/security) で two-factor authentication を有効にすることを強くおすすめします
+
+### Appbox Control Panel Password
+
+- **用途**
+  - Appbox Control Panel 上でユーザーが自身の slot へアクセスするための password として機能します
+- **収集**
+  - slot のデプロイ後にユーザーが提供します
+- **保存**
+  - Appbox API = 暗号化
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team による限定的アクセス
+    - Appbox team は password が hashed されているため見ることはできませんが、verification 後にお客様の password を reset できます
+- **保持**
+  - 無期限
+- **詳細情報**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - [account security page](https://billing.appbox.co/user/security) で two-factor authentication を有効にすることを強くおすすめします
+
+### Application Passwords
+
+- **用途**
+  - ユーザーのインストール済み applications の password として機能します
+- **収集**
+  - slot のデプロイ後にユーザーが提供します
+- **保存**
+  - Appbox API = 平文
+  - Installed Applications = Application によります
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team
+    - ユーザーの許可を得たうえで、application-specific support inquiries に必要です
+- **保持**
+  - ユーザーが application をアンインストールするまで
+- **詳細情報**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - [account security page](https://billing.appbox.co/user/security) で two-factor authentication を有効にすることを強くおすすめします
+
+## Payment Processing
+
+### PayPal
+
+- **用途**
+  - Appbox の payment gateways の1つとして機能します
+- **収集**
+  - 支払い処理は PayPal によって完全に行われます。ユーザーアカウント配下の WHMCS に保存される唯一のデータは **PayPal Transaction ID** です
+- **保存**
+  - WHMCS = 平文（PayPal Transaction ID）
+- **アクセスおよびアクセス理由**
+  - Appbox Sales Team
+    - Appbox Sales Team は、販売プロセスの一環として PayPal でユーザー情報を確認する場合があります
+- **保持**
+  - 無期限
+
+### Stripe
+
+- **用途**
+  - Appbox の payment gateways の1つとして機能します
+- **収集**
+  - 支払い処理は Stripe によって完全に行われます。ユーザーアカウント配下の WHMCS に保存される唯一のデータは **Stripe Payment ID, Hash, Card's last four digits and expiry** です
+- **保存**
+  - WHMCS = 平文（Stripe Payment ID）
+- **アクセスおよびアクセス理由**
+  - Appbox Sales Team
+    - Appbox Sales Team は、販売プロセスの一環として Stripe でユーザー情報を確認する場合があります
+- **保持**
+  - 無期限
+
+### CoinGate
+
+- **用途**
+  - Cryptocurrency transactions 向けの Appbox payment gateways の1つとして機能します
+- **収集**
+  - 支払い処理は CoinGate によって完全に行われます。WHMCS に保存される唯一のデータは **CoinGate Transaction ID** です
+- **保存**
+  - WHMCS = 平文（Transaction ID）
+- **アクセスおよびアクセス理由**
+  - Appbox Sales Team
+    - Appbox Sales Team は、販売プロセスの一環として CoinGate でユーザー情報を確認する場合があります
+- **保持**
+  - 無期限
+
+*Note: CoinGate 自体は、サービスの一部として blockchain transaction ID と sender's blockchain address を保存します。この情報は Appbox には保存されません。*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **用途**
+  - サーバーの健全性とリソース使用状況を監視するために使用されます
+- **収集**
+  - ユーザーの slot デプロイ後に生成されます
+- **保存**
+  - Appbox Servers = 平文
+  - Appbox API = 平文
+  - Posthog = 平文
+- **アクセスおよびアクセス理由**
+  - ユーザー
+    - Server metrics は、slot にインストールされた各種 Linux utilities を使って確認できます。確認できる主な metrics は以下です。
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Your running processes
+      - 同じサーバー上の他ユーザーが実行する processes にはアクセスできません
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space（割り当てられた disk space）
+      - Physical disk space
+  - Appbox Team
+    - 上記 metrics に加え、Appbox team は Posthog を使って全サーバーのすべての metrics を迅速に集約し、errors を team に alert します
+    - Server metrics は、サポート問い合わせおよび resource abuse の調査に使用されます
+- **保持**
+  - 無期限
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **用途**
+  - 無効なアクセス試行は Appbox API に記録され、一定回数の試行後、指定期間ユーザーが Control Panel にログインできないよう制限します。これには以下が含まれます。
+    - Username（ユーザーが入力したもの）
+    - IP address
+    - Number of attempts
+    - Last date of attempt
+- **収集**
+  - ユーザーが credentials を誤って入力したときに収集されます
+- **保存**
+  - Appbox API = 平文
+- **アクセスおよびアクセス理由**
+  - Appbox Team
+    - brute-force attempts を特定するために使用されます
+    - ユーザーは、Ticket system による request と verification のうえで、timeout の解除および access attempt の削除を依頼できます
+- **保持**
+  - 24時間またはユーザー request 時
+
+#### SSH Login Logs
+
+- **用途**
+  - Ubuntu や Debian など、ユーザーがインストールした applications への SSH login attempts と successful logins を記録します
+- **収集**
+  - login attempts が発生したときに SSH server によって自動生成されます
+- **保存**
+  - Application container = 平文（通常 `/var/log/auth.log` または類似の場所）
+- **アクセスおよびアクセス理由**
+  - ユーザー
+    - これらの logs は、ユーザーが root (sudo) access を持つ applications 内に保存されるため、ユーザーはこれらの logs を完全に制御しアクセスできます
+    - ユーザーは必要に応じてこれらの logs を表示、変更、削除できます
+  - Appbox team
+    - サポート troubleshooting 中にユーザーの許可がある場合のみアクセス可能です
+- **保持**
+  - ユーザーが管理します。ユーザーは container に root access を持っています
+  - ユーザーが変更しない限り、default log rotation policies が適用されます
+
+### System Generated Logs
+
+- **用途**
+  - サーバー上の問題を特定するために使用される server-wide generated logs
+- **収集**
+  - サーバーの operating system によって生成されます
+- **保存**
+  - Appbox Servers = 平文
+  - Posthog = 平文
+- **アクセスおよびアクセス理由**
+  - Limited Access Appbox team
+    - 特定サーバーの問題を特定するために使用されます
+    - Logs は Posthog によって集約され、errors を team に alert します
+- **保持**
+  - 無期限
+
+### Logs Generated by Installed Applications
+
+- **用途**
+  - installed applications によって生成される logs で、ユーザーの slot 内の問題を特定するために使用されます
+- **収集**
+  - ユーザーの installed applications によって生成されます
+- **保存**
+  - Appbox API = 平文
+  - Installed Applications = 平文
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team
+    - ユーザーの許可を得たうえで、application-specific support inquiries に必要です
+- **保持**
+  - ユーザーが application をアンインストールまたは削除するまで
+
+### User's bash History
+
+- **用途**
+  - slot の shell 上でユーザーが入力したすべての commands を記録します。場所は `$HOME/.bash_history` です
+- **収集**
+  - shell に入力された各 command が記録されます
+- **保存**
+  - Appbox Servers = 平文
+- **アクセスおよびアクセス理由**
+  - ユーザー
+    - bash history file はユーザーの home directory に保存されるため、ユーザーはこの file を完全に制御できます
+    - ユーザーは必要に応じてこの file を表示、変更、clear、削除できます（`history -c` などの commands または file の編集/削除）
+  - Appbox team
+    - ユーザーが入力した commands が正しいかを確認するなど、general または application-specific inquiries に使用されます。ただしユーザーの許可がある場合のみです
+    - 侵入または server abuse の可能性を確認するために使用されます。ただし security investigations に必要な場合のみです
+- **保持**
+  - ユーザーが管理し、いつでも history を clear できます
+  - 既定では、ユーザーが削除するまで bash history は無期限に保持されます
+
+### Hosted Data
+
+#### Installed Applications
+
+- **用途**
+  - installed applications が正しく動作するために不可欠な files
+- **収集**
+  - ユーザーが自身の slot にインストールします
+- **保存**
+  - Appbox Servers = Application によります
+- **アクセスおよびアクセス理由**
+  - ユーザー
+  - Appbox team
+    - ユーザーの許可を得たうえで、application-specific support inquiries に使用されます
+- **保持**
+  - ユーザーが削除するまで無期限
+
+#### User Data
+
+- **用途**
+  - ユーザーおよび/またはユーザーの applications によって作成され、ユーザーの slot に保存されるデータ
+- **収集**
+  - ユーザーおよび/またはユーザーの applications によって作成されます
+- **保存**
+  - Appbox Servers = 平文
+- **アクセスおよびアクセス理由**
+  - ユーザー
+    - ユーザーの files は Appbox servers 上の home folders に保存され、他のユーザーから分離されています。アクセスできるのはユーザーのみです
+  - Appbox team
+    - ユーザーの許可を得たうえで、support inquiries のためにアクセスできます
+- **保持**
+  - ユーザーが削除するまで無期限
+    - 正当な DMCA takedown notices については、当社はユーザーへ通知し、24時間以内にコンテンツを削除するよう求めます
+- **詳細情報**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Compliance
+
+UK Online Safety Act 2023 に従い、Appbox はユーザーを保護し規制要件を遵守するため、特定のデータ取り扱い慣行を実施します。
+
+### Content Safety Monitoring
+
+- **用途**
+  - 違法および有害コンテンツに関する risk assessment と mitigation
+  - 報告されたコンテンツの moderation
+  - 違法コンテンツ配布の prevention
+- **収集**
+  - コンテンツが報告または flagged されたときに生成されます
+  - 既知の違法 material の content hash values
+- **保存**
+  - Appbox API = 暗号化
+  - Reports database = 平文
+- **アクセスおよびアクセス理由**
+  - Appbox Compliance Team
+    - 報告されたコンテンツを確認し適切な対応を取るため
+    - 法律で求められる場合に UK authorities と連携するため
+  - UK regulatory authorities（法律で求められる場合）
+    - Online Safety Act への compliance を監視するため
+    - 重大な違法コンテンツを調査するため
+- **保持**
+  - Report data: 解決後2年
+  - Content hash values: 無期限（再配布 prevention のため）
+
+### Risk Assessment Data
+
+- **用途**
+  - 違法コンテンツおよび children に有害なコンテンツに関する required risk assessments の実施
+  - proportionate safety measures の実装
+  - regulatory authorities への compliance 証明
+- **収集**
+  - 定期的な platform risk assessments を通じて生成されます
+  - potential risk patterns を特定するための aggregated usage data
+- **保存**
+  - Appbox Compliance Systems = Protected
+- **アクセスおよびアクセス理由**
+  - Appbox Compliance Team
+    - risk assessments の実施および更新のため
+    - safety measures の実装のため
+  - UK regulatory authorities（法律で求められる場合）
+    - risk assessment duties への compliance を確認するため
+- **保持**
+  - 3年（継続的な compliance を示すため）
+
+### Content Reporting System
+
+- **用途**
+  - ユーザーが違法または有害なコンテンツを報告できるようにします
+  - 報告の状態と実施された対応を追跡します
+- **収集**
+  - reporting users が提供する report details
+  - reported content に関する情報
+  - reports に対して実施された actions
+- **保存**
+  - Appbox API = 暗号化
+- **アクセスおよびアクセス理由**
+  - Reporting user（自分の reports に限定）
+  - コンテンツを報告されたユーザー（限定情報）
+  - Appbox Compliance Team
+    - reports を調査・解決するため
+  - UK regulatory authorities（法律で求められる場合）
+    - 重大な違法コンテンツ報告を調査するため
+- **保持**
+  - 解決後2年

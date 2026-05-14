@@ -1,0 +1,258 @@
+---
+title: जलद File Transfers साठी mscp वापरणे
+description: अनेक SSH connections वापरून तुमच्या Appbox server वर high-speed file transfers करण्यासाठी mscp (multi-threaded scp) कसे वापरायचे ते शिका.
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** हा `scp` चा multi-threaded variant आहे, जो अनेक SSH (SFTP) connections वरून files एकाच वेळी copy करतो. Parallel connections वापरल्यामुळे मोठ्या files आणि directories साठी transfers लक्षणीय वेगाने होतात.
+
+## पूर्वतयारी
+
+mscp वापरण्यापूर्वी, SFTP credentials मिळवण्यासाठी तुमच्या Appbox server वर SFTPgo install करणे आवश्यक आहे.
+
+### Step 1: SFTPgo install करा
+
+1. Appbox App Store मधील [SFTPgo app page](https://www.appbox.co/appstore/app/232) ला भेट द्या
+2. SFTPgo तुमच्या server वर जोडण्यासाठी **Install** क्लिक करा
+3. Install झाल्यावर तुम्हाला connection details मिळतील:
+   - **Username**: तुमचा SFTP username
+   - **Password**: तुमचा SFTP password
+   - **Hostname**: उदा., `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: उदा., `25557`
+   - **FTP/FTPS Port**: उदा., `25555`
+   - **WebDav URL**: WebDAV access साठी
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">टीप</AlertTitle>
+  <AlertDescription className="pl-2">
+    तुमची SFTPgo credentials सुरक्षित ठेवा. mscp connections साठी hostname, username, password, आणि SFTP port लागेल.
+  </AlertDescription>
+</Alert>
+
+## mscp install करणे
+
+तुमच्या operating system साठी installation method निवडा:
+
+### macOS
+
+#### Homebrew वापरून (शिफारस केलेले)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### MacPorts वापरून
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp साठी native Windows binaries नाहीत, पण तुम्ही ते WSL (Windows Subsystem for Linux) मधून वापरू शकता:
+
+#### Step 1: WSL install करा
+
+PowerShell Administrator म्हणून उघडा आणि चालवा:
+
+```powershell
+wsl --install
+```
+
+Prompt आल्यावर computer restart करा.
+
+#### Step 2: WSL मध्ये mscp install करा
+
+WSL setup झाल्यावर (Ubuntu default आहे), WSL terminal उघडा आणि चालवा:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">WSL मधील Windows File Paths</AlertTitle>
+  <AlertDescription className="pl-2">
+    WSL मध्ये तुमचे Windows drives `/mnt/` खाली उपलब्ध असतात. उदाहरणार्थ, `C:\Users\YourName\Downloads` हे `/mnt/c/Users/YourName/Downloads` बनते.
+  </AlertDescription>
+</Alert>
+
+### Source पासून build करणे
+
+तुमच्या system साठी packages उपलब्ध नसतील, तर तुम्ही source पासून mscp build करू शकता:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## Basic Usage
+
+mscp syntax `scp` सारखीच आहे. खाली common usage patterns आहेत.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">महत्त्वाचे: तुमचा SFTP Port वापरा</AlertTitle>
+  <AlertDescription className="pl-2">
+    खालील examples मध्ये, `25557` हा तुमच्या SFTPgo settings मधील **SFTP Port** दर्शवतो. तुमच्या SFTPgo Options panel मध्ये दिसणाऱ्या actual SFTP port ने तो बदला.
+  </AlertDescription>
+</Alert>
+
+### तुमच्या Server वर File upload करा
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### Directory upload करा
+
+`scp` पेक्षा वेगळे म्हणजे, directories साठी mscp ला `-r` flag लागत नाही:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### तुमच्या Server वरून File download करा
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### Directory download करा
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## Advanced Options
+
+### Multiple Connections वापरणे
+
+Default म्हणून mscp अनेक connections वापरते. `-n` वापरून connections ची संख्या specify करता येते:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Failed Transfers resume करणे (Checkpointing)
+
+Interrupted transfers resume करण्यासाठी mscp checkpointing support करते:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### SSH Key Authentication specify करणे
+
+तुम्ही SFTPgo सह SSH key authentication setup केले असल्यास:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Bandwidth मर्यादित करणे
+
+Transfer bandwidth मर्यादित करण्यासाठी (shared connections वर उपयुक्त):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## उदाहरण: Complete Workflow
+
+Appbox मधील SFTPgo credentials वापरून complete example:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## Performance Tips
+
+1. **मोठ्या files साठी अधिक connections वापरा**: मोठ्या file transfers साठी `-n` value वाढवा (उदा., `-n 8` किंवा `-n 16`)
+2. **अनेक छोट्या files साठी कमी connections वापरा**: अनेक छोट्या files असलेल्या directories साठी कमी connections अधिक कार्यक्षम असू शकतात
+3. **Text files साठी compression enable करा**: mscp SSH compression inherit करते; text-heavy transfers साठी `-C` वापरा
+4. **खूप मोठ्या transfers साठी checkpointing वापरा**: multi-gigabyte transfers मध्ये interruption झाल्यास resume करता यावे म्हणून checkpointing नेहमी enable करा
+
+## Troubleshooting
+
+### Connection Refused
+
+तुम्ही SFTPgo settings मधील योग्य SFTP port वापरत आहात याची खात्री करा (FTP port नाही):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Permission Denied
+
+तुमचे username आणि password योग्य आहेत का ते verify करा. आधी standard SFTP client वापरून test करू शकता:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### Slow Transfers
+
+Parallel connections ची संख्या adjust करून पहा:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## Additional Resources
+
+- [mscp GitHub Repository](https://github.com/upa/mscp)
+- [mscp Documentation](https://github.com/upa/mscp#documentation)
+- [SFTPgo on Appbox](https://www.appbox.co/appstore/app/232)

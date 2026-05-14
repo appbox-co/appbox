@@ -1,0 +1,1493 @@
+{
+  "_locale": "ja",
+  "site": {
+    "heading": "<span>数秒</span>でアプリをデプロイ",
+    "subheading": "{flipwords}をワンクリックでホスト",
+    "description": "複雑なサーバー設定は不要です。すぐにデプロイできる60種類以上のアプリから選び、インストールをクリックするだけで数秒後には公開できます。面倒のないパワフルなホスティングです。",
+    "meta_title": "Appbox - 数秒でアプリをデプロイ | ワンクリックアプリホスティング",
+    "flipwords": [
+      "ウェブサイト",
+      "データベース",
+      "サーバー",
+      "転送",
+      "ツール",
+      "チャット",
+      "ストレージ",
+      "分析",
+      "監視",
+      "パイプライン",
+      "ネットワーク",
+      "バックアップ",
+      "プロジェクト",
+      "ドキュメント",
+      "テスト"
+    ],
+    "announcement": "Launch Week の全記事を読む",
+    "announcement_tag": "Launch Week",
+    "changelog": "変更履歴",
+    "buttons": {
+      "get_started": "始める",
+      "browse_apps": "アプリを見る",
+      "toggle_menu": "メニューを切り替え",
+      "toggle_language": "言語を切り替え"
+    },
+    "words": {
+      "menu": "メニュー",
+      "docs": "ドキュメント",
+      "blog": "ブログ",
+      "home": "ホーム",
+      "legal": "法務",
+      "terms_of_service": "利用規約",
+      "service_level_agreement": "サービスレベル契約",
+      "privacy_data_handling": "プライバシーとデータの取り扱い",
+      "global_privacy_practices": "グローバルプライバシー慣行",
+      "incident_response_security": "インシデント対応とセキュリティ",
+      "view_all_policies": "すべてのポリシーを見る",
+      "documentation_new": "ドキュメント（新）",
+      "documentation_old": "ドキュメント（旧）",
+      "social": "ソーシャル"
+    },
+    "featured_cards": {
+      "nextjs": {
+        "description": "App Router を使用した Next.js で構築されています。"
+      },
+      "shadcn": {
+        "description": "Shadcn（site/components）をベースに構築されています。"
+      },
+      "tailwind": {
+        "description": "Tailwind CSS でスタイリングされています。"
+      },
+      "i18n": {
+        "description": "next-intl による国際化に対応しています。"
+      },
+      "more": {
+        "title": "さらに多数！",
+        "description": "MDX を使ったドキュメントやブログ記事、ダーク/ライトモード、検索コマンドパレット、国際化サイトマップなど、便利な機能を多数備えています..."
+      }
+    },
+    "footer": {
+      "copyright": "Copyright © {year} Appbox. 無断転載を禁じます。"
+    },
+    "search": {
+      "search": "検索",
+      "no_results_found": "結果が見つかりません",
+      "search_documentation": "ドキュメントを検索",
+      "type_command_or_search": "コマンドまたは検索語を入力"
+    },
+    "themes": {
+      "theme": "テーマ",
+      "dark": "ダーク",
+      "light": "ライト",
+      "system": "システム"
+    },
+    "apps_section": {
+      "title": "すぐにデプロイできる膨大なアプリコレクション",
+      "headline_1": "すぐにデプロイできるアプリ。",
+      "headline_2": "膨大なコレクション。",
+      "description": "データベースやメディアサーバーから開発ツール、コミュニケーション基盤までまとめてホストできます。数回のクリックでエンタープライズ級ソフトウェアをデプロイできます。"
+    },
+    "dashboard_promo": {
+      "headline_1": "新しいダッシュボード。",
+      "headline_2": "あなたのために設計。",
+      "description": "統合ダッシュボード、組み込み App Store、内蔵の二要素認証を備えた、完全に再設計されたコントロールパネルです。より速く移動でき、より分かりやすく、次に必要な機能にも対応できる設計です。",
+      "cta": "すべてのお知らせを読む",
+      "features": {
+        "dashboard": {
+          "title": "コントロールセンター。",
+          "description": "ブログ更新、サービスカード、通知、最新アプリを、1つの運用ビューで確認できます。"
+        },
+        "appstore": {
+          "title": "App Store。",
+          "description": "見やすいブラウズ、改善された詳細ページ、発見からインストールまでの短い導線を提供します。"
+        },
+        "boost": {
+          "title": "App Boost。",
+          "description": "利用可能なスロットを使って、個別のアプリに CPU と RAM を追加できます。プランのアップグレードは不要です。"
+        }
+      }
+    },
+    "vps_launch_promo": {
+      "headline_1": "Virtual Private Servers。",
+      "headline_2": "Linux と Windows。",
+      "description": "root アクセス、内蔵 Web コンソール、Linux または Windows 11 Pro の選択に対応したフル KVM 仮想マシンです。Docker、snaps、flatpaks、必要な Windows ソフトウェアを実行できます。",
+      "cta": "Launch Week の記事を読む",
+      "features": {
+        "console": {
+          "title": "Web コンソール。",
+          "description": "ダッシュボードに組み込まれたブラウザベースのターミナルです。締め出される心配がありません。"
+        },
+        "webtop": {
+          "title": "Selkies Desktop。",
+          "description": "音声、マイク、VS Code や Discord などの実アプリを備えたフル Ubuntu デスクトップをブラウザで利用できます。"
+        },
+        "distros": {
+          "title": "6種類の Linux ディストリビューション。",
+          "description": "Ubuntu、Debian、Arch Linux、Fedora、Rocky Linux、AlmaLinux から、使い慣れたものを選べます。"
+        },
+        "windows": {
+          "title": "Windows 11 Pro。",
+          "description": "RDP、Z: ドライブ上の Appbox データ、管理者アクセスを備えたフル Windows VM です。"
+        }
+      }
+    },
+    "openclaw_promo": {
+      "eyebrow": "Appbox で利用可能になりました",
+      "headline_1": "あなたの AI アシスタント。",
+      "headline_2": "あなたのサーバー上で動作。",
+      "description": "OpenClaw は Appbox 上で動作するオープンソースの AI アシスタントで、すべてのプランで利用できます。普段使っているチャットアプリから会話でき、ファイルやデータベースを参照し、他のアプリにログインして作業を進められます。",
+      "card_title": "OpenClaw は Appbox 全体で連携します。",
+      "card_description": "共有アプリデータの読み取り、ブラウザや CLI の利用、データベース照会、普段使っているチャットアプリでの応答ができます。",
+      "image_alt": "Web ダッシュボード上の OpenClaw チャットセッション",
+      "cta": "お知らせを読む",
+      "capabilities": {
+        "chat": {
+          "title": "どのチャットアプリでも。",
+          "description": "WhatsApp、Telegram、Discord、Slack、Signal、iMessage。いつもの場所から話しかけられます。"
+        },
+        "filesystem": {
+          "title": "共有ファイルシステム。",
+          "description": "他のアプリのデータや Appbox の共通ストレージに直接アクセスできます。API は不要です。"
+        },
+        "browser": {
+          "title": "ブラウザと CLI。",
+          "description": "ヘッドレスブラウザと主要なデータベースクライアントを内蔵しています。あなたに代わってアプリへログインできます。"
+        },
+        "tools": {
+          "title": "70以上のスキル。",
+          "description": "WordPress、GitLab、Nextcloud、MariaDB など向けの70以上のスキルが事前に用意されています。ClawHub から新しいスキルも追加できます。"
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "クリックするだけの簡単さ。",
+      "headline_2": "設定は不要。",
+      "description": "Appbox は複雑なオープンソースアプリのインストールを必要最小限に簡略化します。ユーザー名とパスワードを入力し、インストールをクリックするだけで、アプリの設定まで完了します。",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "数秒でインストール",
+      "description": "Appbox を選び、いくつかの項目を入力するだけで {appName} が公開されます。",
+      "dialog_title": "{appName} をインストール",
+      "requires_slots": "{count, plural, one {# App Slot が必要} other {# App Slots が必要}}",
+      "preview_badge": "プレビュー",
+      "demo_note": "このデモでは、Appbox を持っている場合のインストーラー画面を確認できます。",
+      "select_appbox": "Appbox を選択",
+      "slots_free": "（空きスロット {count}）",
+      "ready_note": "インストールする準備はできましたか？まず有効な Appbox が必要です。",
+      "cancel": "キャンセル",
+      "install": "インストール",
+      "footer_note": "これはインストールフォームのプレビューです。プランを選んで Appbox を作成し、実際にデプロイしてください。",
+      "domain": {
+        "recordType": "種類",
+        "recordHost": "ホスト / 名前",
+        "recordValue": "値（IP）",
+        "needHelp": "このレコードの追加でお困りですか？"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "ステップ1",
+          "title": "Appbox を選択",
+          "body": "Appbox が1つだけの場合は自動的に選択され、十分な空きスロットがある Appbox のみ表示されます。"
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "ドラッグしてリソースを追加",
+          "body": "追加の App Slot ごとに、このアプリの CPU と RAM が10%増え、プレビューもすぐに更新されます。",
+          "link": "アプリごとの Boost の仕組み"
+        },
+        "resource_preview": {
+          "eyebrow": "プレビュー",
+          "title": "リソースをリアルタイム確認",
+          "body": "インストール前に最終倍率、スロット消費、RAM、CPU を確認できます。Boost スロットを追加するごとにリソースが10%増えます。"
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "ドメイン",
+            "title": "管理ドメインまたはカスタムドメイン",
+            "body": "Appbox 管理ドメインをすぐに使うか、カスタムドメインをクリックして独自ドメインを利用できます。"
+          },
+          "custom": {
+            "eyebrow": "カスタム DNS",
+            "title": "独自ドメインを利用",
+            "body": "カスタムドメインでは、インストール前にベースドメイン選択、固定サブドメイン、DNS チェックリストが表示されます。"
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "ガイドを内蔵",
+          "body": "プレビューでは、インストール前に正確な A レコードと検証状態を確認できます。"
+        },
+        "configuration": {
+          "eyebrow": "予想外をなくす",
+          "title": "設定は最初に明示",
+          "body": "完全に動作するアプリを作るために必要な項目を最小限に絞っているため、追加設定を心配する必要はありません。"
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "ソブリンクラウド",
+      "headline_2": "あなたのクラウドを、あなたの条件で。",
+      "description": "Appbox は私たちが管理するハードウェアとネットワークインフラ上に構築されています。他社クラウドにプラットフォームを預けることなく、クラウドアプリの利便性を提供します。",
+      "eyebrow": "自社保有インフラ",
+      "card_title": "実サーバー。実ネットワーク。実責任。",
+      "card_description": "コンピュート、ストレージ、ルーティング、容量、物理的な場所といった重要部分は、直接管理することを重視しています。これにより Appbox を、他社プロバイダーの薄いレイヤーではなく、1つの製品として構築できます。",
+      "images": {
+        "rack_front": "ハードウェアが設置された Appbox サーバーラック",
+        "rack_network": "ネットワーク配線された Appbox サーバーラック",
+        "network_closeup": "Appbox 所有ネットワーク機器のクローズアップ"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "借り物のブラックボックスではありません",
+          "description": "アプリが動作するサーバーを私たち自身が所有・運用しているため、性能やメンテナンスが巨大クラウドの抽象化の裏に隠れることはありません。"
+        },
+        "network_control": {
+          "title": "ネットワーク制御",
+          "description": "ルーティングスタックを所有しているため、汎用クラウドの既定値ではなく、Appbox ワークロードに合わせて経路、容量、ピアリング、障害対応を調整できます。"
+        },
+        "custom_ocp_hardware": {
+          "title": "カスタム OCP ハードウェア",
+          "description": "カスタム Open Compute Project ハードウェアは、効率的なエアフロー、高密度、迅速な保守性を重視して設計されており、電力やスペースを無駄にせず容量を拡張できます。"
+        },
+        "clear_data_locality": {
+          "title": "明確なデータ所在地",
+          "description": "インフラはアムステルダムの Digital Realty AMS3 にある専用ラック内にあり、データがどこにホストされているかを明確に説明できます。"
+        },
+        "better_cost_discipline": {
+          "title": "より健全なコスト管理",
+          "description": "プラットフォームを所有することで、予期しないエグレス、IOPS、帯域倍率などのリクエスト単位クラウド課金の罠を避け、シンプルなプランを維持できます。"
+        },
+        "built_for_appbox": {
+          "title": "Appbox のために構築",
+          "description": "ハードウェアとネットワークを自社で管理しているため、App Slots、Boost、ストレージ、バックアップ、ワンクリックアプリインストールを前提に、基盤から設計できます。"
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "新規",
+      "headline_1": "VPS ホスティング。",
+      "headline_2": "ワンクリック。",
+      "description": "アプリと並べてフル Linux VPS をデプロイできます。root アクセス、専用リソース、Boost 機能を、Appbox から離れずに利用できます。",
+      "description_combined": "アプリと並べて Linux と Windows の仮想プライベートサーバーをデプロイできます。root アクセス、リモートデスクトップ、専用リソースを Appbox 内で利用できます。",
+      "group_label": "Linux VPS",
+      "cta": "VPS を見る",
+      "features": {
+        "f1": {
+          "title": "完全な root アクセス",
+          "description": "SSH による完全な制御"
+        },
+        "f2": {
+          "title": "拡張可能なリソース",
+          "description": "アプリごとに RAM と CPU を Boost"
+        },
+        "f3": {
+          "title": "ワンクリックデプロイ",
+          "description": "Ubuntu、Debian ほか"
+        }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "新規",
+      "headline_1": "Windows VPS。",
+      "headline_2": "どこからでも。",
+      "group_label": "Windows VPS",
+      "description": "完全な Remote Desktop アクセスで、Appbox 上に Windows Server を実行できます。Windows 専用ソフトウェア、ゲームサーバー、リモートワークステーションに最適です。",
+      "cta": "Windows アプリを見る",
+      "features": {
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "どのブラウザからでも完全な GUI"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "任意の Windows アプリケーションを実行"
+        },
+        "f3": {
+          "title": "リソース Boost",
+          "description": "必要に応じてリソースを追加"
+        }
+      }
+    },
+    "features": {
+      "section": {
+        "title": "誰にでも使いやすい強力な機能",
+        "headline_1": "強力な機能。",
+        "headline_2": "すべての人に。",
+        "description": "初心者にも上級者にも使いやすい機能で、Appbox の力を最大限に活用できます。"
+      },
+      "root_access": {
+        "title": "完全な root アクセス",
+        "description": "Debian や Ubuntu などのフル OS アプリを SSH アクセス付きでデプロイし、環境を完全に制御できます。"
+      },
+      "remote_desktop": {
+        "title": "Remote Desktop",
+        "description": "OS アプリへの完全なリモートデスクトップアクセスにより、当社サーバー上で UI アプリを実行し、デスクトップ体験をクラウドで利用できます。"
+      },
+      "one_click": {
+        "title": "本当のワンクリックインストール",
+        "description": "合理化されたセットアップフォームでインストール中にすべてを設定できます。デプロイ後の追加設定は不要です。"
+      },
+      "community": {
+        "title": "活発なコミュニティ",
+        "description": "コミュニティによるアプリ投稿、ドキュメント貢献、オープンソースの Web クライアントを通じて、成長するエコシステムに参加できます。"
+      },
+      "security": {
+        "title": "セキュリティとプライバシー",
+        "description": "Appbox ではセキュリティとプライバシーを真剣に考えています。すべてのアプリは root 権限なしの分離された名前空間で実行され、アプリ間を完全に隔離します。強化カーネルから定期的なセキュリティ監査まで、インフラはセキュリティ優先で設計されています。さらにプライバシーを高めるため、VPN アプリで通信を Appbox 経由にでき、オンライン活動を安全かつプライベートに保てます。Appbox なら、エンタープライズ級のセキュリティ機能を使いやすい形で利用できます。"
+      },
+      "deploy_fast": {
+        "title": "数秒でデプロイ",
+        "description": "非常に高速な最新ハードウェアにより、アプリのインストールを待ち続ける必要はありません。"
+      },
+      "custom_hardware": {
+        "title": "カスタムハードウェア",
+        "description": "業界の専門家と協力して独自のハードウェア基盤を構築し、プライバシー、セキュリティ、最適な性能を実現しています。"
+      },
+      "custom_network": {
+        "title": "カスタムネットワーク",
+        "description": "ネットワーク機器をすべて自社で所有しているため、任意のネットワークと柔軟にピアリングでき、接続をより高速にできます。"
+      },
+      "support": {
+        "title": "専門家によるサポート",
+        "description": "チケットによるサポートを提供しており、業界をリードする専門家のみが対応します。"
+      },
+      "documentation": {
+        "title": "見やすいドキュメント",
+        "description": "オープンソースのドキュメントシステムによりユーザーが貢献でき、常に成長する豊富で価値あるリソースを作れます。"
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "よくある質問",
+        "description": "よくある質問への回答を確認し、Appbox がどのように役立つかをご覧ください。"
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "どの支払い方法に対応していますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">ご購入をできるだけスムーズにするため、複数のお支払い方法を用意しています:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">デビット/クレジットカード<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (Including Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">暗号資産<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">月払い、四半期払い、半年払い、年払いの柔軟な請求周期も用意しています。ほかの選択肢をご希望の場合はお知らせください。</p>"
+        },
+        "deployment_time": {
+          "title": "Appbox はどれくらい早く使えますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">お支払いが確認されると、自動システムがすぐに Appbox をデプロイします。チェックアウト時に選んだアプリも即座に設定されるため、待たずに使い始められます。</p>"
+        },
+        "server_location": {
+          "title": "サーバーはどこにありますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">サーバーはオランダ・アムステルダムの Digital Realty AMS3 にある専用ラックに設置されており、高い性能と信頼性を確保しています。</p>"
+        },
+        "root_access": {
+          "title": "root アクセスは提供していますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">はい。VPS アプリでは Ubuntu、Debian、Arch Linux、Fedora、Rocky Linux、AlmaLinux で完全な root アクセスを利用できます。Windows 11 Pro VPS アプリでは完全な Remote Desktop と管理者アクセスを利用できます。</p><p class=\"mb-4 leading-relaxed\">これらはフル KVM 仮想マシンなので、カスタムソフトウェアのインストール、サービス管理、Docker、snaps、Flatpaks、カーネルモジュールの利用、Appbox アプリと並行した独自スタックの実行が可能です。</p>"
+        },
+        "docker": {
+          "title": "Docker は使えますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">はい。Docker は VPS アプリで利用できます。root アクセス付きのフル仮想マシンとして、OS を制御できます。</p><p class=\"mb-4 leading-relaxed\">管理型のワンクリックアプリ内では Docker は利用できません。これらのアプリは Appbox によって既にコンテナ化・分離されているためです。Docker が必要な場合は Linux VPS アプリをインストールして、そこで実行してください。</p>"
+        },
+        "security": {
+          "title": "どのようなセキュリティ機能がありますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">お客様のデータを守るため、複数レイヤーの保護を実装し、セキュリティを重視しています:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>各 Appbox は独自のサンドボックスで実行され、データを分離します</li><li>すべての接続は HTTPS を使用し、転送中のデータを暗号化します</li><li>対象パッケージでは無制限の VPN アカウントにより、通信を Appbox 経由にできます</li><li>FTP、SSH、HTTP、VPN などのログを毎日削除し、プライバシーをさらに保護します</li></ul>"
+        },
+        "data_access": {
+          "title": "自分のコンピューターから Appbox のデータにアクセスするには？",
+          "content": "<p class=\"mb-4 leading-relaxed\">Appbox のファイルやメディアを管理する便利な方法を複数用意しています:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Resilio や Syncthing などの同期アプリでファイルを自動的に最新状態に保てます。</li><li>Plex、Navidrome などのアプリで、どこからでもメディアをストリーミングできます。</li><li>FTP over TLS、HTTPS、その他のプロトコルで安全にファイルをダウンロードできます。</li></ul><p class=\"mb-4 leading-relaxed\">App Store には、お客様に合った方法でデータへ接続し続けるためのさまざまなアプリがあります。</p>"
+        },
+        "additional_software": {
+          "title": "App Store にないソフトウェアをインストールできますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">もちろんです。VPS アプリでは root アクセスでカスタムソフトウェアをインストールでき、Windows VPS アプリでは完全な Remote Desktop 体験を利用できます。必要なツールやアプリケーションを自由に実行できます。</p>"
+        },
+        "fuse_rclone": {
+          "title": "FuSE マウントや Rclone は利用できますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">はい、利用できます。OS アプリは FuSE に完全対応しており、クラウドストレージをすばやく簡単に統合できる専用 Rclone アプリも App Store で提供しています。</p>"
+        },
+        "refund_policy": {
+          "title": "返金ポリシーはどうなっていますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">新規のお客様には7日間の日割り返金期間を提供しています。既存のお客様には返金の対象条件が異なります。暗号資産でのお支払い、専用 IP アドレスの購入、一部の取引は返金対象外です。詳細は <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">完全な返金ポリシー</a> をご確認ください。</p>"
+        },
+        "custom_domain": {
+          "title": "独自ドメイン名を使えますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">はい。独自ドメインを割り当て、各アプリケーション用にサブドメインを設定できます。DNS で Appbox を指す A レコードを追加するだけで、残りは当社が処理し、スムーズに利用開始できるようにします。</p><p class=\"mb-4 leading-relaxed\">VPS アプリも複数のカスタムドメインと Appbox サブドメイン、自動 SSL に対応しているため、同じ VPS から複数のサイトやサービスをホストできます。</p>"
+        },
+        "upgrade_after_purchase": {
+          "title": "購入後にアップグレードできますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">はい。旧プランから新プランへすべてを自動的に移行します。</p><p class=\"mb-4 leading-relaxed\">内容はそのままで、ほとんど気付かないほどです。変更される可能性があるのは、FTP などアプリへポート番号で直接アクセスしている場合の特定のポート番号だけです。</p>"
+        },
+        "app_slots": {
+          "title": "App Slots とは何ですか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">App Slots は、Appbox がアプリをインストールするために使う容量単位です。各アプリはリソース要件に応じて1つ以上の App Slots を使用し、重いバージョンではより多くのスロットが必要になる場合があります。</p><p class=\"mb-4 leading-relaxed\"><a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">アプリページ</a> では、各アプリが使用する App Slots 数を確認できます。アプリ詳細ページでは、下部付近のリソースセクションまでスクロールすると、各バージョンに割り当てられる RAM と CPU を確認できます。</p><p class=\"mb-4 leading-relaxed\">空き App Slots を Per-App Boost に使い、プラン全体をアップグレードせずにインストール済みアプリへ CPU と RAM を追加することもできます。</p>"
+        },
+        "resource_multipliers": {
+          "title": "アプリごとの Boost はどのように動作しますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">各アプリは、バージョンに応じた基本 RAM と CPU リソースで開始します。Per-App Boost では、追加の App Slots を使って個別アプリのリソースを増やせます。</p><p class=\"mb-4 leading-relaxed\">Boost スロット1つごとに、そのアプリのリソースが +10% 増えます。どのアプリに追加リソースを与えるかを選び、いつでも Boost を調整できます。</p><p class=\"mb-4 leading-relaxed\">Per-App Boost はすべてのプランに含まれます。アプリのインストール時、または <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a> のインストール済みアプリページから設定できます。</p>"
+        },
+        "app_freeze": {
+          "title": "データを失わずにアプリを一時停止できますか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">はい。App Freeze では、インストール済みアプリのデータと設定を保持したまま停止し、App Slots を解放できます。</p><p class=\"mb-4 leading-relaxed\">凍結解除すると、同じデータでアプリが再び起動します。アプリ本体と使用していた Boost スロットをまかなえるだけの空き App Slots が必要です。</p>"
+        },
+        "excluded_app_categories": {
+          "title": "除外アプリカテゴリとは何ですか？",
+          "content": "<p class=\"mb-4 leading-relaxed\">一部のプランでは、インストールできない特定のアプリカテゴリに制限があります。これを「除外アプリカテゴリ」と呼びます。</p><p class=\"mb-4 leading-relaxed\">料金プランを確認すると、制限のあるプランには除外カテゴリがクリック可能なバッジとして表示されます。これにより、そのプランで利用できないアプリの種類を理解できます。</p><p class=\"mb-4 leading-relaxed\">除外カテゴリのバッジをクリックすると、そのカテゴリ内のすべてのアプリを表示でき、そのプランでインストールできないアプリを正確に確認できます。</p><p class=\"mb-4 leading-relaxed\">除外カテゴリのアプリが必要な場合は、その制限がない上位プランの選択をご検討ください。</p>"
+        },
+        "vps": {
+          "title": "VPS を利用するには？",
+          "content": "<p class=\"mb-4 leading-relaxed\">VPS アプリは他のアプリと同じように <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">App Store</a> で利用できます。Linux または Windows ディストリビューションを選び、Appbox にインストールすると、他のアプリと並んで実行されます。</p><p class=\"mb-4 leading-relaxed\">Per-App Boost を使って VPS に追加リソースを割り当て、追加の App Slots を消費することで RAM と CPU を増やせます。プラン全体をアップグレードせず、VPS を適切なサイズに調整できます。</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "製品",
+      "resources": "リソース",
+      "pricing": "料金",
+      "features": "機能",
+      "apps": "アプリ",
+      "documentation": "ドキュメント",
+      "blog": "ブログ",
+      "faq": "FAQ",
+      "service_status": "サービス状態",
+      "overview": "機能の概要",
+      "view_pricing": "料金プランを見る",
+      "explore_apps": "アプリを探す",
+      "read_docs": "ドキュメントを読む",
+      "latest_articles": "最新の記事とニュース",
+      "faq_description": "よくある質問",
+      "check_status": "サービス状態を確認",
+      "vps": "VPS",
+      "explore_vps": "VPS アプリを見る"
+    },
+    "external_links": {
+      "billing": "請求",
+      "control_panel": "コントロールパネル"
+    }
+  },
+  "docs": {
+    "on_this_page": "このページの内容",
+    "edit_page_on_github": "GitHub でこのページを編集",
+    "start_discussion_on_github": "GitHub でディスカッションを開始",
+    "api_reference": "API リファレンス",
+    "docs": "ドキュメント",
+    "source": "ソース",
+    "not_found": {
+      "description": "お探しのドキュメントは存在しません。",
+      "title": "ドキュメントが見つかりません"
+    },
+    "index_description": "Appbox の使い方、プロジェクトへの貢献方法などのドキュメントを探せます。",
+    "index": {
+      "title": "ドキュメント",
+      "section": "セクション",
+      "description": "説明",
+      "documents": "ドキュメント",
+      "view": "表示"
+    },
+    "meta_description": "包括的なドキュメントで Appbox の使い方を学べます。ホスティングを最大限に活用するためのガイド、チュートリアル、API リファレンスを確認してください。"
+  },
+  "blog": {
+    "words": {
+      "posts": "投稿",
+      "by": "投稿者"
+    },
+    "cards": {
+      "min_read": "分で読めます"
+    },
+    "buttons": {
+      "next": "次へ",
+      "previous": "前へ",
+      "rss_feed": "RSS フィード",
+      "read_more": "続きを読む",
+      "go_to_next_page": "次のページへ",
+      "go_to_previous_page": "前のページへ"
+    },
+    "meta_description": "Appbox チームからの最新ニュース、アップデート、チュートリアルをお読みください。新機能、アプリリリース、ホスティングのヒントを確認できます。"
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "月払い",
+      "quarterly": "四半期払い",
+      "semiannually": "半年払い",
+      "annually": "年払い",
+      "billed_every": "[cycle]請求"
+    },
+    "card": {
+      "storage": "ストレージ",
+      "traffic": "転送量",
+      "app_slots": "App Slots",
+      "connection_speed": "接続速度",
+      "resource_multiplier": "アプリ別 Boost",
+      "included": "含まれます",
+      "raid": "RAID",
+      "disks": "ディスク",
+      "per_month": "/月",
+      "order_now": "今すぐ注文",
+      "billed_as": "請求",
+      "excluded_app_categories": "除外アプリカテゴリ",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "対応",
+      "windows_vps_dedicated_only": "専用プランのみ（NG-18000+）"
+    }
+  },
+  "apps": {
+    "title": "アプリライブラリ",
+    "description": "すぐにデプロイできる膨大なアプリコレクションをご覧ください",
+    "meta_description": "データベース、メディアサーバー、開発ツールなど、すぐにデプロイできる60種類以上のアプリを閲覧できます。Appbox ホスティングでワンクリックインストールできます。",
+    "loading": "アプリを読み込み中...",
+    "error": "アプリの読み込みに失敗しました",
+    "no_results": "検索条件に一致するアプリはありません",
+    "back_to_apps": "アプリ一覧に戻る",
+    "app_not_found": "指定されたアプリが見つかりませんでした",
+    "search": {
+      "title": "検索",
+      "description": "用途に合うアプリを見つけましょう",
+      "name_search": "名前で検索",
+      "name_placeholder": "アプリ名またはキーワード",
+      "category": "カテゴリ",
+      "all_categories": "すべてのカテゴリ",
+      "app_slots": "App Slots",
+      "app_slots_placeholder": "任意の App Slots",
+      "sort_by": "並び替え",
+      "sort_popularity": "人気",
+      "sort_name": "名前（A-Z）",
+      "sort_date": "最近追加",
+      "reset_filters": "フィルターをリセット"
+    },
+    "card": {
+      "app_slots": "App Slots",
+      "view_details": "詳細を見る"
+    },
+    "detail": {
+      "by": "by",
+      "description": "説明",
+      "app_info": "アプリ情報",
+      "version": "バージョン",
+      "app_slots": "App Slots",
+      "released": "リリース日",
+      "developer_site": "開発者サイト",
+      "visit_site": "サイトを開く",
+      "deploy_app": "このアプリをデプロイ",
+      "community_ratings": "コミュニティ評価",
+      "upvotes": "賛成票",
+      "downvotes": "反対票",
+      "no_ratings_yet": "まだ評価はありません",
+      "deploy_dialog": {
+        "title": "Appbox にアプリをデプロイ",
+        "question": "アプリを実行するには有効な Appbox が必要です。対象プランを選んでアカウントと Appbox を作成するか、すでにお持ちの場合はインストーラーへ進んでください。",
+        "planLabel": "このアプリで利用できるプラン",
+        "planPlaceholder": "続行するプランを選択",
+        "planHelp": "このアプリカテゴリを除外しているプランは非表示です。プランを選択するとチェックアウトへ進みます。",
+        "noEligiblePlans": "このアプリで利用できるプランが見つかりませんでした。すべてのプランは引き続き表示できます。",
+        "viewAllPlans": "すべてのプランを見る",
+        "yes": "選択したプランで続行",
+        "no": "すでに Appbox を持っています"
+      }
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "つながるアプリエコシステム",
+      "headline_1": "つながるアプリ。",
+      "headline_2": "1つのエコシステム。",
+      "description": "各アプリは他のアプリの共有領域へファイルシステムアクセスでき、安全なローカルネットワークブリッジで相互接続されています。",
+      "visual_title": "アプリ同士が Appbox 内で連携できます。",
+      "visual_description": "アプリはそれぞれ独立した領域で動作しますが、Appbox はファイル共有やローカル通信を制御された方法で提供します。アシスタント、ダッシュボード、データベース、メディアツール、同期アプリを1つの連携ワークスペースにできます。",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "共有ファイルシステム",
+          "description": "アプリは共有ストレージと許可されたアプリデータに直接アクセスできます。"
+        },
+        "private_network": {
+          "title": "安全なローカルブリッジ",
+          "description": "サービスは公開インターネットではなく、プライベートなローカル経路で通信します。"
+        },
+        "cross_app_workflows": {
+          "title": "アプリ横断ワークフロー",
+          "description": "あるアプリが別のアプリのためにデータを読み取り、処理し、公開するワークフローを構築できます。"
+        }
+      }
+    }
+  },
+  "policies": {
+    "title": "ポリシー",
+    "meta_description": "利用規約、プライバシーポリシー、返金ポリシーなど Appbox のポリシーを確認できます。お客様の権利と当社の責任をご理解ください。",
+    "index_description": "これらのポリシーは Appbox サービスの利用を規定し、当社のお客様への責任を示します。プライバシー、セキュリティ、ユーザーとしての責任に関する重要な情報が含まれます。",
+    "policy": "ポリシー",
+    "description": "説明",
+    "view": "表示"
+  },
+  "auth": {
+    "login": {
+      "title": "おかえりなさい",
+      "description": "Appbox アカウントにサインイン",
+      "email_label": "メールアドレス",
+      "email_placeholder": "you@example.com",
+      "email_error": "有効なメールアドレスを入力してください",
+      "password_label": "パスワード",
+      "password_placeholder": "パスワードを入力",
+      "password_error": "パスワードは必須です",
+      "forgot_password": "パスワードをお忘れですか？",
+      "submit": "サインイン",
+      "external_signup": "Appbox が初めてですか？プランを選んでアカウントと Appbox を作成してください。",
+      "external_signup_link": "プランを見る",
+      "appbox_required_title": "アカウントが必要ですか？",
+      "appbox_required_description": "Appbox アカウントは Appbox プラン購入時に作成されます。アプリをデプロイしようとしていた場合は、まずプランを選び、その後 Appbox にアプリをインストールしてください。",
+      "appbox_required_link": "プランを見て登録",
+      "error_invalid": "メールアドレスまたはパスワードが正しくありません",
+      "error_generic": "問題が発生しました。もう一度お試しください。",
+      "success": "サインインしました",
+      "2fa_title": "二要素認証",
+      "2fa_description": "認証アプリの6桁のコードを入力してください",
+      "2fa_code_label": "確認コード",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "コードは6桁である必要があります",
+      "2fa_submit": "確認",
+      "2fa_back": "ログインに戻る",
+      "error_2fa_invalid": "確認コードが正しくありません"
+    },
+    "branding": {
+      "tagline": "あなたのクラウドを、あなたのルールで",
+      "subtitle": "私たちが所有・運用するソブリンインフラ上で、強力なアプリケーションをデプロイ・管理できます。",
+      "apps_count": "60種類以上のすぐにデプロイできるアプリ",
+      "one_click": "ワンクリックインストール",
+      "network_speed": "25Gbps ネットワーク",
+      "always_secure": "常に安全",
+      "categories_label": "アプリカテゴリ",
+      "category_cloud": "クラウド",
+      "category_cms": "CMS",
+      "category_databases": "データベース",
+      "category_music": "音楽",
+      "category_storage": "ストレージ",
+      "category_gaming": "ゲーム",
+      "category_development": "開発",
+      "category_virtual_servers": "仮想サーバー"
+    },
+    "forgot": {
+      "title": "パスワードを忘れた場合",
+      "description": "メールアドレスを入力すると、リセットリンクをお送りします",
+      "email_label": "メールアドレス",
+      "email_placeholder": "you@example.com",
+      "email_error": "有効なメールアドレスを入力してください",
+      "submit": "リセットリンクを送信",
+      "back_to_login": "ログインに戻る",
+      "error_generic": "問題が発生しました。もう一度お試しください。",
+      "success": "リセットリンクを送信しました。メールをご確認ください。"
+    },
+    "reset": {
+      "title": "パスワードをリセット",
+      "description": "新しいパスワードを入力してください",
+      "password_label": "新しいパスワード",
+      "password_placeholder": "新しいパスワードを入力",
+      "password_error": "パスワードは8文字以上である必要があります",
+      "confirm_password_label": "パスワード確認",
+      "confirm_password_placeholder": "新しいパスワードを確認",
+      "confirm_password_error": "パスワードが一致しません",
+      "submit": "パスワードをリセット",
+      "error_generic": "問題が発生しました。もう一度お試しください。",
+      "success": "パスワードをリセットしました！"
+    },
+    "email_sent": {
+      "title": "メールをご確認ください",
+      "description": "詳しい手順を記載したメールを送信しました",
+      "check_inbox": "メールが見当たらない場合は迷惑メールフォルダをご確認ください。リンクは24時間で期限切れになります。",
+      "back_to_login": "ログインに戻る"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "ダッシュボード",
+      "appstore": "App Store",
+      "appboxes": "Appboxes",
+      "installed_apps": "インストール済みアプリ",
+      "domains": "カスタムドメイン",
+      "account": "アカウント",
+      "profile": "プロフィール",
+      "abuse_reports": "不正利用報告",
+      "two_factor": "二要素認証",
+      "api_keys": "API キー",
+      "service_status": "サービス状態",
+      "support_billing": "サポートと請求",
+      "add_appbox": "Appbox を追加",
+      "admin": "管理者",
+      "knowledgebase": "ナレッジベース"
+    },
+    "header": {
+      "toggle_language": "言語を切り替え",
+      "theme_dark": "ダーク",
+      "theme_light": "ライト",
+      "theme_system": "システム",
+      "profile": "プロフィール",
+      "security": "セキュリティ",
+      "sign_out": "サインアウト",
+      "switch_to_admin": "管理者に切り替え",
+      "switch_to_user": "ユーザーに切り替え"
+    },
+    "overview": {
+      "title": "ダッシュボード",
+      "services": "あなたのサービス",
+      "servicesDescription": "有効なサービスとリソース",
+      "storage": "ストレージ",
+      "appSlots": "App Slots",
+      "network": "ネットワーク",
+      "upload": "アップロード",
+      "download": "ダウンロード",
+      "multiplier": "使用中の Boost スロット",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30d",
+      "downloadShort": "↓ 30d",
+      "pinnedApps": "ピン留めアプリ",
+      "viewCylo": "詳細を見る"
+    },
+    "twoFactor": {
+      "title": "アカウントを保護",
+      "description": "二要素認証を有効にして、アカウントに追加の保護を加えましょう。",
+      "enable": "2FA を有効化",
+      "dismiss": "閉じる"
+    },
+    "notifications": {
+      "title": "最近の通知",
+      "viewAll": "すべて表示",
+      "empty": "新しい通知はありません",
+      "dropdown_title": "通知",
+      "mark_all_read": "すべて既読にする",
+      "no_notifications": "新しい通知はありません",
+      "all_caught_up": "すべて確認済み",
+      "ui_update_title": "Appbox の新しいバージョンがあります",
+      "ui_update_description": "Appbox UI を更新しました。最新バージョンを利用するには、このページを再読み込みしてください。",
+      "refresh_later": "後で再読み込み",
+      "refresh_now": "今すぐ再読み込み",
+      "subtext": {
+        "instance_add": "アプリがインストールされました。下から確認してください！",
+        "instance_removed": "アプリはアンインストールされました。",
+        "instance_removing": "アプリをアンインストールしています。",
+        "instance_restart": "アプリを再起動しました。",
+        "instance_updating": "アプリを更新中のため、一時的にオフラインになります。",
+        "instance_updated": "アプリが更新され、利用できる状態になりました。",
+        "instance_stop": "アプリは停止しました。アクセスするには再度開始する必要があります。",
+        "instance_start": "アプリを開始しました。まもなくアクセスできるようになります。",
+        "user_updated": "ユーザープロフィール情報を更新しました。",
+        "cylo_add": "Appbox のセットアップが完了しました。下をクリックして表示してください。",
+        "cylo_remove": "Appbox はアンインストールされました。",
+        "cylo_migrating": "Appbox を別のディスク/サーバーへ移行しています。完了したら通知とメールでお知らせします。",
+        "cylo_migrated": "Appbox の移行が正常に完了しました。すべてのアプリは再び動作しているはずです。",
+        "cylo_userdecreasingquota": "Appbox のディスク容量が不足しつつあります。オンライン状態を維持するには、まもなく Appbox ダッシュボードの File Explorer タブから一部データを削除する必要があります。",
+        "cylo_userlowquota": "Appbox の空きディスク容量がなくなったため、一時的に停止しました。復旧するには Appbox ダッシュボードの File Explorer タブから一部データを削除してください。",
+        "cylo_adminlowquota": "Appbox の空き容量が少なくなっています。",
+        "cylo_brokenmount": "Appbox でマウント障害が発生しました。詳細はメールをご確認ください。",
+        "cylo_usernormalquota": "Appbox には通常動作に十分な空き容量があります。",
+        "cylo_adminnormalquota": "Appbox の容量不足は解消され、通常動作できます。",
+        "cylo_restarting": "Appbox を再起動中です。アプリは一時的にオフラインになります。",
+        "cylo_restarted": "Appbox の再起動が完了しました。アプリはまもなくオンラインになります。",
+        "blog": "新しいブログ記事を公開しました。下をクリックしてお読みください！",
+        "hwfailure_newfailure": "サーバーに問題があります。至急確認してください。",
+        "criticalalert_newalert": "新しい重大アラートがあります。至急確認してください。",
+        "abuse_unresolvable": "新しい未解決の不正利用報告が送信されました。",
+        "abuse_reply": "不正利用報告に新しいメッセージがあります。",
+        "abuse_user_new": "お客様の Appbox に関する不正利用報告を受け取りました。",
+        "abuse_user_closed": "お客様の Appbox に関する不正利用報告を終了しました。",
+        "throttledcylo_throttled": "Appbox にスロットリングが適用されています。",
+        "throttledcylo_unthrottled": "Appbox のスロットリングが解除されました。",
+        "throttled_throttled": "お客様の Appbox にスロットリングが適用されています。",
+        "throttled_warning": "お客様の Appbox は通常より多くのリソースを使用しています。",
+        "throttled_unthrottled": "お客様の Appbox のスロットリングが解除されました。"
+      }
+    },
+    "newestApps": {
+      "title": "最新アプリ",
+      "viewAll": "App Store を見る"
+    },
+    "recentlyUpdated": {
+      "title": "最近更新"
+    },
+    "yourUpdates": {
+      "title": "あなたの更新",
+      "description": "最近のアクティビティと新しいアプリ"
+    },
+    "blogPosts": {
+      "title": "ブログ最新情報",
+      "description": "Appbox からのお知らせと更新",
+      "readMore": "続きを読む"
+    },
+    "status": {
+      "online": "オンライン",
+      "offline": "オフライン",
+      "restarting": "再起動中",
+      "migrating": "移行中",
+      "installing": "インストール中",
+      "suspended": "停止中",
+      "frozen": "凍結中",
+      "throttled": "制限中",
+      "lowQuota": "容量不足"
+    }
+  },
+  "appstore": {
+    "title": "App Store",
+    "subtitle": "必要なサーバーアプリを、すべて1か所に。",
+    "search": {
+      "placeholder": "アプリを検索...",
+      "results": "検索結果",
+      "noResults": "検索に一致するアプリは見つかりませんでした。",
+      "noResultsDescription": "検索語やフィルターを調整して、目的のものを探してください。",
+      "showing": "{count} 件を表示中"
+    },
+    "featured": {
+      "title": "注目アプリ",
+      "description": "おすすめの厳選アプリ"
+    },
+    "top": {
+      "title": "人気アプリ",
+      "description": "ユーザーに最も人気"
+    },
+    "new": {
+      "title": "新しいアプリ",
+      "description": "ストアに最近追加"
+    },
+    "categories": {
+      "title": "カテゴリ",
+      "all": "すべてのカテゴリ"
+    },
+    "app": {
+      "getApp": "入手",
+      "installed": "インストール済み",
+      "restricted": "制限あり",
+      "disabled": "無効",
+      "install": "インストール",
+      "installing": "インストール中...",
+      "versions": "バージョン",
+      "version": "バージョン",
+      "appSlots": "App Slots",
+      "baseMemory": "基本メモリ（GB）",
+      "baseCpus": "基本 CPU",
+      "added": "追加日",
+      "changes": "変更点",
+      "changelog": "変更履歴",
+      "releasedOn": "リリース日",
+      "description": "説明",
+      "comments": "コメント",
+      "selectCylo": "Appbox を選択",
+      "selectVersion": "バージョンを選択",
+      "noSlots": "空き App Slot がありません",
+      "rating": "{count} 票",
+      "screenshots": "スクリーンショット",
+      "by": "by",
+      "requiresSlots": "{count} 個の App Slot が必要",
+      "visitDeveloper": "開発者サイトを開く",
+      "helpSupport": "ヘルプとサポート",
+      "resourceNote": "アプリは基本メモリと CPU から開始します。追加の App Slot を使うことで個別アプリを Boost できます（Boost スロットごとに +10%）。値が 0 の場合は無制限を意味します。",
+      "upvote": "賛成票",
+      "downvote": "反対票",
+      "installTitle": "{name} をインストール",
+      "installSuccess": "アプリのインストールを開始しました",
+      "minimumPlanShort": "{plan} から利用可能",
+      "minimumPlanLabel": "最低プラン"
+    },
+    "sort": {
+      "newest": "新しい順",
+      "popular": "人気順",
+      "updated": "最近更新",
+      "rating": "評価が高い順",
+      "slots_asc": "スロット: 少ない順",
+      "slots_desc": "スロット: 多い順"
+    },
+    "slots": {
+      "label": "スロット",
+      "all": "すべてのスロット",
+      "slot": "{count} スロット",
+      "slots": "{count} スロット"
+    },
+    "showAll": "すべて表示",
+    "install": {
+      "validation": {
+        "required": "この項目は必須です",
+        "alphanumeric": "文字と数字のみ使用できます",
+        "notOnlyAlpha": "数字または特殊文字を1つ以上含める必要があります",
+        "lowercase": "小文字を含める必要があります",
+        "uppercase": "大文字を含める必要があります",
+        "number": "数字を含める必要があります",
+        "specialChar": "特殊文字を含める必要があります",
+        "invalidEmail": "メールアドレスが正しくありません",
+        "invalidDate": "日付が正しくありません",
+        "invalidFormat": "形式が正しくありません",
+        "minLength": "{count} 文字以上",
+        "maxLength": "{count} 文字以下",
+        "invalidSubdomain": "小文字、数字、ハイフンのみ使用できます。",
+        "subdomainInUse": "このサブドメインは既に使用されています。別のものをお試しください。",
+        "domainIpMismatch": "ドメインの IP がサーバーと一致しません。",
+        "selectDomain": "ドメインを選択してください",
+        "validating": "検証中..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "先に Appbox を選択してください",
+        "selectPlaceholder": "{label} を選択...",
+        "searchPlaceholder": "{label} を検索...",
+        "noResults": "結果が見つかりません。"
+      },
+      "domain": {
+        "domainType": "ドメイン種別",
+        "typeAppbox": "Appbox ドメイン",
+        "typeCustom": "カスタムドメイン",
+        "subdomain": "サブドメイン",
+        "domain": "ドメイン",
+        "baseDomain": "ベースドメイン",
+        "selectAppboxFirst": "先に Appbox を選択してください",
+        "selectDomain": "ドメインを選択...",
+        "selectOrAddDomain": "ドメインを選択または追加...",
+        "searchDomains": "ドメインを検索...",
+        "noDomainsMatch": "検索に一致するドメインはありません。",
+        "noDomainsAvailable": "利用できるドメインはありません。",
+        "noCustomDomains": "カスタムドメインはまだありません。",
+        "yourDomains": "あなたのドメイン",
+        "addNewDomain": "新しいドメインを追加",
+        "add": "追加",
+        "domainSuffix": "ドメインを選択",
+        "appboxDomain": "Appbox ドメイン",
+        "customDomains": "カスタムドメイン",
+        "loadingDomains": "ドメインを読み込み中...",
+        "blockedDomain": "このドメインは予約済みのため使用できません。",
+        "invalidDomain": "有効なドメインを入力してください（例: mydomain.com）。",
+        "addDomainFailed": "ドメインの追加に失敗しました。もう一度お試しください。",
+        "dnsSetupTitle": "DNS 設定",
+        "dnsInstruction": "Appbox サーバーを指す A レコードを作成してください:",
+        "copyIp": "IP アドレスをコピー",
+        "copied": "コピーしました！",
+        "dnsNotPointing": "DNS はまだ正しい IP を指していません。",
+        "dnsResolvedTo": "現在の解決先: {ip}",
+        "verifyDns": "DNS を確認",
+        "verifying": "検証中...",
+        "retryVerify": "再確認",
+        "dnsVerified": "✓ {domain} の DNS を確認しました"
+      },
+      "field": {
+        "enabled": "有効",
+        "disabled": "無効",
+        "selectPlaceholder": "{label} を選択"
+      },
+      "guard": {
+        "appDisabled": "このアプリはメンテナンスのため一時的に無効です。",
+        "noCylos": "アプリをインストールするには先に Appbox が必要です。開始するには Appbox を注文してください。",
+        "getAppbox": "Appbox を入手",
+        "restricted": "このアプリは現在のパッケージでは利用できません。下をクリックしてプランをアップグレードし、アクセスを解除してください。",
+        "restrictedMinPlan": "このアプリは現在のパッケージでは利用できません。必要な最低プラン: {plan}。プランをアップグレードしてアクセスを解除してください。",
+        "upgradePackage": "パッケージをアップグレード",
+        "getAnotherAppbox": "別の Appbox を入手",
+        "noSlots": "このアプリには {count} 個の App Slot が必要ですが、どの Appbox にも十分な空きスロットがありません。プランをアップグレードして増やしてください。",
+        "getMoreSlots": "App Slots を増やす",
+        "noMulti": "このアプリは Appbox ごとに1つだけインストールできます。対象の Appbox すべてに既にインストールされています。別のインスタンスをインストールするには、追加の Appbox を注文できます。",
+        "checkingAvailability": "利用可否を確認中..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "現在のパッケージでは制限されています",
+        "noFreeSlots": "空きスロットなし（{used}/{total}）",
+        "alreadyInstalled": "インストール済み",
+        "notEligible": "対象外",
+        "selectToSeeOptions": "オプションを確認する Appbox を選択",
+        "upgradeThisAppbox": "この Appbox をアップグレード",
+        "alreadyInstalledDetail": "このアプリは Appbox ごとに1つだけインストールでき、ここには既にインストールされています。別のインスタンスをインストールするには、追加の Appbox を注文してください。",
+        "noneEligible": "現在、対象となる Appbox はありません。上で選択すると、その理由と解決方法を確認できます。",
+        "restrictedSingle": "{name} は対象外です。このアプリは現在のパッケージで制限されています。",
+        "restrictedMultiple": "{count} 個の Appbox は対象外です。このアプリはそれらの現在のパッケージで制限されています。",
+        "upgradeName": "{name} をアップグレード",
+        "noSlotsSingle": "{name} には十分な空き App Slot がありません。",
+        "noSlotsMultiple": "{count} 個の Appbox には十分な空き App Slot がありません。",
+        "installedSingle": "{name} には既にこのアプリがインストールされています。",
+        "installedMultiple": "{count} 個の Appbox には既にこのアプリがインストールされています。",
+        "onePerAppbox": "このアプリは Appbox ごとに1つだけインストールできます。",
+        "slotsFree": "空きスロット {count}",
+        "migrating": "Appbox は現在移行中です",
+        "restrictedOnPackageMinPlan": "現在のパッケージでは制限されています（最低プラン: {plan}）",
+        "migratingSingle": "{name} は現在移行中のため、インストールには一時的に利用できません。",
+        "migratingMultiple": "{count} 個の Appbox は現在移行中のため、インストールには一時的に利用できません。"
+      },
+      "dialog": {
+        "loadingVersions": "バージョンを読み込み中...",
+        "defaultVersion": "（既定）",
+        "versionsAvailable": "{count, plural, one {# バージョンが利用可能} other {# バージョンが利用可能}}",
+        "cancel": "キャンセル",
+        "installFailed": "インストールに失敗しました。もう一度お試しください。"
+      },
+      "boost": {
+        "loading": "Boost オプションを読み込み中...",
+        "title": "Boost スロット",
+        "resourcePreview": "リソースプレビュー",
+        "multiplier": "倍率",
+        "slotCost": "スロット消費",
+        "ram": "RAM",
+        "cpus": "CPU",
+        "cta": "さらに Boost が必要ですか？プランをアップグレードしてください"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "あなたの Appboxes",
+      "description": "管理しているすべての Appbox のストレージ、ネットワーク、Boost 使用量、インストール済みアプリを監視できます。",
+      "empty": "Appbox はまだありません。",
+      "getCylo": "Appbox を入手",
+      "viewDetails": "詳細を見る",
+      "storage": "ストレージ",
+      "appSlots": "App Slots",
+      "network": "ネットワーク",
+      "upload": "アップロード",
+      "download": "ダウンロード",
+      "multiplier": "使用中の Boost スロット",
+      "pinnedApps": "ピン留めアプリ",
+      "sortBy": "並び替え",
+      "filterByStatus": "状態で絞り込み",
+      "allStatuses": "すべての状態",
+      "name": "名前",
+      "server": "サーバー",
+      "status": "状態"
+    },
+    "cyloDetail": {
+      "summary": "概要",
+      "fileExplorer": "File Explorer",
+      "diskUsage": "ディスク使用量",
+      "diskUtilization": "ディスク使用率（IO）",
+      "networkTraffic": "ネットワークトラフィック",
+      "installedApps": "インストール済みアプリ",
+      "alerts": "アラート",
+      "migrationProgress": "移行中",
+      "migrationLive": "ライブ移行中もほとんどのアプリは通常どおり動作します。ライブ移行できないアプリは完了まで利用できません。",
+      "migrationOffline": "移行が完了するまでアプリは利用できません。",
+      "migrationTransferred": "転送済み: {total} GiB 中 {sent} GiB",
+      "migrationPhase1": "移行を初期化中",
+      "migrationPhase2": "暗号化キーを転送中",
+      "migrationPhase3": "SSL 証明書を転送中",
+      "migrationPhase4": "新しいサーバーで Appbox を設定中",
+      "migrationPhase5": "データを転送中",
+      "migrationPhase6": "新しいサーバーにアプリをインストール中",
+      "migrationPhase7": "移行を最終処理中",
+      "migrationPhase8": "移行を完了中",
+      "lowQuota": "ディスク容量不足",
+      "lowQuotaMessage": "空き容量を増やすまで Appbox はオフラインのままです。現在の空き容量は {available} GiB で、動作には 5 GiB 超が必要です。",
+      "lowQuotaMigratingMessage": "空き容量を増やすまで Appbox は移行されません。現在の空き容量は {available} GiB で、移行には 5 GiB 超が必要です。",
+      "lowQuotaHint": "File Explorer でデータを削除するか、より大きなプランへアップグレードしてください。",
+      "lowQuotaDeleteData": "データを削除",
+      "throttled": "ディスクスループット制限中",
+      "throttledMessage": "Appbox が長時間にわたりディスク速度の {percent}% を超えて使用していたため、公平利用のスロットリングが適用されました。",
+      "throttledHint": "制限は自動的に期限切れになります。今後の制限を防ぐには、同時転送を減らす、キューを有効にする、または負荷の高いジョブをオフピーク時間にスケジュールしてください。",
+      "throttleLevel": "制限レベル",
+      "throttleRate": "速度（MB/s）",
+      "throttleIops": "IOPS",
+      "throttleExpires": "期限",
+      "throttleTopApp": "最も使用量の多いアプリ",
+      "throttleTopProcess": "最も使用量の多いプロセス",
+      "suspended": "Appbox 停止中",
+      "suspendedMessage": "Appbox は現在停止されています。誤りだと思われる場合はサポートへお問い合わせください。",
+      "offline": "Appbox オフライン",
+      "offlineMessage": "Appbox は現在オフラインです。",
+      "upgradePlan": "プランをアップグレード",
+      "viewApp": "表示",
+      "noAlerts": "有効なアラートはありません",
+      "noApps": "この Appbox にインストール済みアプリはありません。",
+      "backToAppboxes": "Appboxes",
+      "notFound": "Appbox が見つかりません",
+      "notFoundDescription": "要求された Appbox が見つかりませんでした。",
+      "bandwidth": "帯域幅",
+      "uploadUsed": "アップロード使用量",
+      "downloadUsed": "ダウンロード使用量",
+      "restart": "再起動",
+      "restartTitle": "Appbox を再起動",
+      "restartDescription": "Appbox を再起動します。再起動が完了するまで、すべてのインストール済みアプリはオフラインになります。",
+      "cancel": "キャンセル"
+    },
+    "fileExplorer": {
+      "title": "File Explorer",
+      "upload": "アップロード",
+      "newFolder": "新規フォルダ",
+      "rename": "名前を変更",
+      "delete": "削除",
+      "download": "ダウンロード",
+      "name": "名前",
+      "size": "サイズ",
+      "modified": "更新日",
+      "type": "種類",
+      "emptyDirectory": "このフォルダは空です",
+      "emptyDirectoryDescription": "開始するにはファイルをアップロードするか、新しいフォルダを作成してください。",
+      "newFolderTitle": "新規フォルダ",
+      "newFolderPlaceholder": "フォルダ名",
+      "newFolderDescription": "新しいフォルダの名前を入力してください。",
+      "renameTitle": "名前を変更",
+      "renamePlaceholder": "新しい名前",
+      "renameDescription": "新しい名前を入力してください。",
+      "deleteTitle": "削除",
+      "deleteDescription": "「{name}」を削除してもよろしいですか？この操作は元に戻せません。",
+      "create": "作成",
+      "cancel": "キャンセル",
+      "save": "保存",
+      "confirm": "確認",
+      "uploading": "アップロード中...",
+      "uploadSuccess": "ファイルをアップロードしました",
+      "uploadError": "ファイルのアップロードに失敗しました",
+      "createFolderSuccess": "フォルダを作成しました",
+      "createFolderError": "フォルダの作成に失敗しました",
+      "renameSuccess": "名前を変更しました",
+      "renameError": "名前の変更に失敗しました",
+      "deleteSuccess": "削除しました",
+      "deleteError": "削除に失敗しました",
+      "dropFilesHere": "アップロードするファイルをここにドロップ",
+      "root": "ホーム",
+      "listView": "リスト表示",
+      "gridView": "グリッド表示"
+    },
+    "installedApps": {
+      "title": "インストール済みアプリ",
+      "description": "Appboxes にインストールされたアプリを管理します。",
+      "searchPlaceholder": "名前、ドメイン、Appbox で検索...",
+      "name": "名前",
+      "domain": "ドメイン",
+      "version": "バージョン",
+      "slots": "スロット",
+      "slot": "スロット",
+      "status": "状態",
+      "cylo": "Appbox",
+      "installedDate": "インストール済み",
+      "empty": "インストール済みアプリは見つかりません。",
+      "filterByStatus": "状態",
+      "filterByCylo": "Appbox",
+      "allCylos": "すべての Appboxes",
+      "bulkSelected": "{count} 件選択中",
+      "bulkUnavailable": "{count, plural, one {# 個のアプリが利用不可} other {# 個のアプリが利用不可}}"
+    },
+    "appDetail": {
+      "port": "ポート",
+      "installDate": "インストール日",
+      "server": "サーバー",
+      "customFields": "設定",
+      "actions": "操作",
+      "start": "開始",
+      "stop": "停止",
+      "restart": "再起動",
+      "update": "更新",
+      "uninstall": "アンインストール",
+      "switchVersion": "バージョンを切り替え",
+      "boost": {
+        "title": "App Boost",
+        "description": "アプリを Boost してリソースを増やせます。下で調整内容をプレビューできます。",
+        "current": "現在の Boost スロット:",
+        "multiplier": "倍率",
+        "preview": "プレビュー",
+        "resourcePreview": "リソースプレビュー",
+        "slotCost": "スロット消費",
+        "ram": "RAM",
+        "cpus": "CPU",
+        "apply": "Boost を適用",
+        "applying": "適用中...",
+        "dockerLive": "Docker アプリのリソースは再起動なしで即時適用されます。",
+        "vmRestart": "VM の Boost は、更新されたリソースを適用するために再起動が必要です。",
+        "getMore": "さらに Boost が必要ですか？プランをアップグレードしてください"
+      },
+      "freeze": "凍結",
+      "unfreeze": "凍結解除",
+      "confirmFreeze": "このアプリを凍結すると停止し、App Slots が解放されます。後で凍結解除して復元できます。",
+      "confirmUnfreeze": "このアプリを凍結解除すると、再び App Slots を消費します。続行しますか？",
+      "confirmUninstall": "このアプリをアンインストールしてもよろしいですか？この操作は元に戻せません。",
+      "pinApp": "アプリをピン留め",
+      "unpinApp": "アプリのピン留めを解除",
+      "backToInstalledApps": "インストール済みアプリ",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appboxes",
+      "backToDashboard": "ダッシュボード",
+      "notFound": "インストール済みアプリが見つかりません",
+      "notFoundDescription": "要求されたインストール済みアプリが見つかりませんでした。",
+      "version": "バージョン",
+      "cylo": "Appbox",
+      "appNote": "アプリメモ",
+      "appInfo": "アプリ情報",
+      "running": "実行中",
+      "stopped": "停止中",
+      "configuringApp": "{appName} を設定中...",
+      "sendingInstallPayload": "インストールペイロードを Appbox に送信中...",
+      "sendingUpdatePayload": "更新ペイロードを Appbox に送信中...",
+      "tabOverview": "概要",
+      "tabPorts": "ポート",
+      "tabConsole": "コンソール",
+      "consoleTitle": "VM コンソール",
+      "consoleUnavailable": "この VM が実行中かつ有効な場合のみコンソールを利用できます。",
+      "consoleLoading": "コンソール接続情報を読み込み中...",
+      "consoleLoadError": "コンソール接続情報の読み込みに失敗しました。",
+      "consolePortsMissing": "この VM のコンソール WebSocket エンドポイントは利用できません。",
+      "consoleConnecting": "接続中...",
+      "consoleConnected": "接続済み",
+      "consoleDisconnected": "切断済み",
+      "consoleConnectionError": "接続に失敗しました",
+      "consoleReconnect": "再接続",
+      "consoleWebsocketEndpoint": "WebSocket エンドポイント",
+      "portAssignments": "ポート割り当て",
+      "internalIp": "内部 IP",
+      "hostIp": "ホスト IP",
+      "internalPort": "内部ポート",
+      "hostPort": "ホストポート",
+      "protocol": "プロトコル",
+      "noPortAssignments": "ポート割り当ては見つかりません。",
+      "searchPorts": "ポートを検索…",
+      "customDomainsTitle": "カスタムドメイン",
+      "customDomainsDescription": "このアプリに設定されたカスタムドメインです。",
+      "customDomainsAdd": "ドメインを追加",
+      "customDomainsAddTitle": "カスタムドメインを追加",
+      "customDomainsAddDescription": "このインストール済みアプリにカスタムドメインを接続します。",
+      "customDomainsDomain": "ドメイン",
+      "customDomainsPrimary": "プライマリ",
+      "customDomainsPrimaryYes": "はい",
+      "customDomainsPrimaryNo": "いいえ",
+      "customDomainsAdded": "追加日",
+      "customDomainsConfig": "設定",
+      "customDomainsViewConfig": "設定を表示",
+      "customDomainsActions": "操作",
+      "customDomainsSearch": "ドメインを検索...",
+      "customDomainsEmpty": "カスタムドメインは見つかりません。",
+      "customDomainsParentDomain": "親ドメイン",
+      "customDomainsLoadingDomains": "ドメインを読み込み中...",
+      "customDomainsSelectDomain": "ドメインを選択",
+      "customDomainsSubdomain": "サブドメイン",
+      "customDomainsDomainSuffix": ".example.com",
+      "customDomainsCancel": "キャンセル",
+      "customDomainsSave": "ドメインを追加",
+      "customDomainsDelete": "ドメインを削除",
+      "customDomainsDeleteTitle": "ドメインを削除",
+      "customDomainsDeleteDescription": "このドメインを削除してもよろしいですか？",
+      "customDomainsVmRestartWarning": "user.appboxes.co ドメイン以外の親ドメインを使うと VM が再起動します。",
+      "customDomainsClose": "閉じる",
+      "customDomainsConfigTitle": "{domain} の SSL 設定",
+      "customDomainsConfigDescription": "適切なスニペットを Web サーバー設定にコピーしてください。",
+      "customDomainsSslQueued": "カスタムドメインの HTTPS はバックグラウンドで発行され、ドメイン追加後に有効になるまで数分かかる場合があります。",
+      "customDomainsWildcardSsl": "このドメインは既存のワイルドカード SSL 証明書を使用します。",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "ファイル",
+      "customDomainsConfigSnippet": "設定",
+      "customDomainsReloadCommand": "再読み込みコマンド",
+      "customDomainsNotes": "メモ",
+      "customDomainsCopy": "コピー",
+      "customDomainsCopied": "コピーしました！",
+      "customDomainsSubdomainRequired": "サブドメインは必須です。",
+      "customDomainsParentDomainRequired": "親ドメインを選択してください。",
+      "customDomainsSubdomainInvalid": "文字、数字、ハイフンのみ使用できます（先頭または末尾にハイフンは使用できません）。",
+      "customDomainsSubdomainLength": "サブドメインは2文字以上30文字以下にしてください。",
+      "customDomainsSubdomainInUse": "このサブドメインは既に使用されています。別のものをお試しください。",
+      "customDomainsSubdomainValidateFailed": "現在サブドメインを検証できません。",
+      "customDomainsDnsNotVerified": "DNS はまだ正しいサーバーを指していません。",
+      "customDomainsDnsNotVerifiedExpected": "DNS は正しいサーバーを指していません。期待される IP: {ip}",
+      "customDomainsDnsCheckFailed": "現在 DNS を確認できません。",
+      "customDomainsAddFailed": "カスタムドメインの追加に失敗しました。",
+      "customDomainsDeleteFailed": "ドメインの削除に失敗しました。",
+      "customDomainsConfigNotAvailable": "このドメインでは設定スニペットを利用できません。",
+      "customDomainsConfigFetchFailed": "設定スニペットの読み込みに失敗しました。",
+      "customTablesTitle": "アプリテーブル",
+      "customTablesLoading": "カスタムテーブルを読み込み中...",
+      "customTablesRowsUsage": "{max} 行中 {current} 行を使用中",
+      "customTablesAdd": "行を追加",
+      "customTablesAddTitle": "{label} に行を追加",
+      "customTablesAddDescription": "新しい行エントリを作成します。",
+      "customTablesEditTitle": "{label} の行を編集",
+      "customTablesEditDescription": "選択した行の値を更新します。",
+      "customTablesDeleteTitle": "行を削除",
+      "customTablesDeleteDescription": "この行を削除してもよろしいですか？",
+      "customTablesDelete": "削除",
+      "customTablesSave": "保存",
+      "customTablesUpdate": "更新",
+      "customTablesCancel": "キャンセル",
+      "customTablesActions": "操作",
+      "customTablesSearch": "{label} を検索...",
+      "customTablesEmpty": "行は見つかりません。",
+      "customTablesEnabled": "有効",
+      "customTablesDisabled": "無効",
+      "customTablesValidationRequired": "この項目は必須です。",
+      "customTablesValidationAlphanumeric": "文字と数字のみ使用できます。",
+      "customTablesValidationComplexPassword": "小文字、大文字、数字、特殊文字を含める必要があります。",
+      "customButtonValidation": {
+        "required": "この項目は必須です。",
+        "alphanumeric": "文字と数字のみ使用できます。",
+        "notOnlyAlpha": "数字または記号を1つ以上含めてください。",
+        "lowercase": "小文字を1つ以上含めてください。",
+        "uppercase": "大文字を1つ以上含めてください。",
+        "number": "数字を1つ以上含めてください。",
+        "specialChar": "特殊文字を1つ以上含めてください。",
+        "invalidEmail": "有効なメールアドレスを入力してください。",
+        "invalidDate": "有効な日付を入力してください。",
+        "minLength": "{count} 文字以上にしてください。",
+        "maxLength": "{count} 文字以下にしてください。",
+        "invalidFormat": "形式が正しくありません。"
+      },
+      "customTablesAddSuccess": "行を追加しました。",
+      "customTablesEditSuccess": "行を更新しました。",
+      "customTablesDeleteSuccess": "行を削除しました。",
+      "customTablesAddFailed": "行の追加に失敗しました。",
+      "customTablesEditFailed": "行の更新に失敗しました。",
+      "customTablesDeleteFailed": "行の削除に失敗しました。"
+    },
+    "domains": {
+      "title": "カスタムドメイン",
+      "pageDescription": "インストール済みアプリに追加したカスタムドメインです。",
+      "domain": "ドメイン",
+      "type": "種類",
+      "typeManaged": "管理対象",
+      "typeCustom": "カスタム",
+      "typeBase": "ベース",
+      "app": "アプリ",
+      "server": "サーバー",
+      "createdAt": "作成日",
+      "cylo": "Appbox",
+      "confirmDelete": "このドメインを削除してもよろしいですか？",
+      "deleteDomain": "ドメインを削除",
+      "deleteBlockedHasChildren": "削除できません。このドメインを使用しているサブドメインがあります。先にそれらを削除してください。",
+      "reverifyDns": "DNS を再確認",
+      "emptyTitle": "カスタムドメインはまだありません",
+      "emptyDescription": "カスタムドメインはアプリのインストール時に追加できます。ここにはそれらのみが表示され、プラットフォームドメインは自動管理されます。",
+      "goToAppStore": "App Store へ移動",
+      "dnsVerified": "DNS は正しく向いています。",
+      "dnsNotVerified": "DNS は正しい IP を指していません。",
+      "expectedIp": "期待値: {ip}",
+      "cancel": "キャンセル",
+      "searchPlaceholder": "ドメインを検索..."
+    }
+  },
+  "account": {
+    "title": "アカウント",
+    "profile": {
+      "title": "プロフィール",
+      "description": "表示名、メール、アバター、パスワード、アカウントのセキュリティ設定を管理します。",
+      "email": "メールアドレス",
+      "alias": "表示名",
+      "aliasPlaceholder": "表示名を入力",
+      "save": "変更を保存",
+      "memberSince": "登録日",
+      "twoFactorStatus": "二要素認証",
+      "twoFactorEnabled": "有効",
+      "twoFactorDisabled": "未有効",
+      "enable2FA": "2FA を有効化",
+      "manage2FA": "2FA を管理"
+    },
+    "password": {
+      "title": "パスワードを変更",
+      "current": "現在のパスワード",
+      "new": "新しいパスワード",
+      "confirm": "新しいパスワードの確認",
+      "change": "パスワードを変更",
+      "success": "パスワードを変更しました",
+      "successSigningOut": "パスワードを変更しました。すべてのセッションからサインアウトしています…",
+      "sessionWarning": "パスワードを変更すると、すべてのデバイスの有効なセッションから直ちにサインアウトされます。",
+      "mismatch": "パスワードが一致しません",
+      "minLength": "パスワードは8文字以上である必要があります"
+    },
+    "abuse": {
+      "title": "不正利用報告",
+      "headerDescription": "アカウントに関連付けられた不正利用報告を確認し、現在の状態を追跡します。",
+      "id": "ID",
+      "subject": "件名",
+      "searchPlaceholder": "報告を検索...",
+      "status": "状態",
+      "date": "日付",
+      "description": "説明",
+      "complainant": "申立人",
+      "adminResponse": "管理者の回答",
+      "noReports": "不正利用報告は見つかりません。",
+      "statusOpen": "未対応",
+      "statusResolved": "解決済み",
+      "statusClosed": "終了",
+      "backToList": "不正利用報告に戻る",
+      "detailDescription": "報告のタイムライン、申立人の詳細、Appbox チームからの回答を追跡します。",
+      "reportDetails": "報告の詳細",
+      "conversation": "会話"
+    },
+    "twoFactor": {
+      "title": "二要素認証",
+      "description": "認証アプリによる確認と復旧用バックアップコードでアカウントを保護します。",
+      "setup": "2FA を設定",
+      "scanQR": "認証アプリでこの QR コードをスキャンしてください",
+      "secretKey": "または、このシークレットキーを手動で入力してください:",
+      "enterCode": "認証アプリの6桁のコードを入力してください",
+      "codePlaceholder": "000000",
+      "verify": "確認",
+      "backupCodes": "バックアップコード",
+      "backupCodesDescription": "これらのバックアップコードを安全な場所に保存してください。各コードは1回だけ使用できます。",
+      "newRecoveryCodes": "新しい復旧コード",
+      "newRecoveryCodesDescription": "今すぐ代替コードを保存してください。以前の復旧コードは使用できなくなります。",
+      "copyAll": "すべてコピー",
+      "copied": "コピーしました！",
+      "done": "完了",
+      "disable": "2FA を無効化",
+      "disableWarning": "2FA を無効にすると、アカウントの安全性が低下します。",
+      "disableConfirm": "2FA を無効にするにはパスワードを入力してください",
+      "disabled": "2FA は無効化されました",
+      "generating": "生成中...",
+      "verifying": "確認中...",
+      "next": "次へ",
+      "back": "戻る"
+    },
+    "apiKeys": {
+      "title": "API キー",
+      "description": "アカウントレベルの API キーを作成・管理します。API キーはユーザーとして認証され、アカウントと同じアクセス権を持ちます。",
+      "create": "API キーを作成",
+      "createTitle": "API キーを作成",
+      "createDescription": "識別しやすい名前を付けてください。シークレットは一度だけ表示されます。",
+      "name": "名前",
+      "namePlaceholder": "自動化スクリプト",
+      "expiresAt": "有効期限",
+      "optional": "任意",
+      "never": "なし",
+      "created": "作成日",
+      "lastUsed": "最終使用",
+      "status": "状態",
+      "active": "有効",
+      "revoked": "取り消し済み",
+      "expired": "期限切れ",
+      "prefix": "プレフィックス",
+      "actions": "操作",
+      "rename": "名前を変更",
+      "revoke": "取り消し",
+      "revokeTitle": "API キーを取り消し",
+      "revokeDescription": "この API キーを直ちに無効にします。このキーを使ったリクエストは動作しなくなります。",
+      "secretTitle": "API キーを保存",
+      "secretDescription": "今すぐこのキーをコピーしてください。後で再表示することはできません。",
+      "copy": "コピー",
+      "copied": "コピーしました！",
+      "close": "閉じる",
+      "cancel": "キャンセル",
+      "save": "保存",
+      "confirmRevoke": "キーを取り消す",
+      "noKeys": "API キーはまだありません。",
+      "loadFailed": "API キーの読み込みに失敗しました。",
+      "createSuccess": "API キーを作成しました。",
+      "createFailed": "API キーの作成に失敗しました。",
+      "updateSuccess": "API キーを更新しました。",
+      "updateFailed": "API キーの更新に失敗しました。",
+      "revokeSuccess": "API キーを取り消しました。",
+      "revokeFailed": "API キーの取り消しに失敗しました。"
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "たった今",
+      "minutesAgo": "{count}分前",
+      "hoursAgo": "{count}時間前",
+      "daysAgo": "{count}日前"
+    },
+    "errors": {
+      "loadFailed": "データの読み込みに失敗しました。もう一度お試しください。",
+      "loadServicesFailed": "サービスの読み込みに失敗しました。もう一度お試しください。",
+      "loadAppsFailed": "アプリの読み込みに失敗しました。",
+      "loadNotificationsFailed": "通知の読み込みに失敗しました。",
+      "loadBlogFailed": "ブログ記事の読み込みに失敗しました。",
+      "loadAppboxesFailed": "Appbox の読み込みに失敗しました。もう一度お試しください。",
+      "loadProfileFailed": "プロフィールの読み込みに失敗しました。もう一度お試しください。"
+    },
+    "empty": {
+      "noServices": "サービスは見つかりません。開始するには請求ポータルにアクセスしてください。",
+      "noApps": "新しいアプリはありません。",
+      "noRecentlyUpdated": "最近更新されたアプリはありません。",
+      "noBlogPosts": "利用できるブログ記事はありません。",
+      "noAppboxes": "開始するには請求ポータルにアクセスしてください。",
+      "noMatchingAppboxes": "フィルターに一致する Appbox はありません。"
+    },
+    "toast": {
+      "displayNameUpdated": "表示名を更新しました",
+      "displayNameFailed": "表示名の更新に失敗しました"
+    },
+    "status": {
+      "online": "オンライン",
+      "offline": "オフライン",
+      "restarting": "再起動中",
+      "migrating": "移行中",
+      "installing": "インストール中",
+      "suspended": "停止中",
+      "frozen": "凍結中",
+      "throttled": "制限中",
+      "lowQuota": "容量不足"
+    }
+  }
+}

@@ -1,0 +1,196 @@
+---
+title: المكونات
+description: إتقان استخدام المكونات في ملفات MDX
+sort: 2
+---
+
+تُحقن المكونات تلقائياً في كل ملفات MDX، من دون الحاجة إلى import يدوي.
+هذا يعني أنك تستطيع استخدام أي مكون متاح!
+
+لمعرفة المزيد عن المكونات المتاحة، أو لإضافتها أو تغييرها، راجع ملف `src/components/docs/mdx.tsx`.
+
+## Accordion
+
+**مثال:**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      سؤال تجريبي يوضح كيف يظهر عنوان عنصر Accordion داخل مستند MDX.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      هذا محتوى عربي تجريبي داخل عنصر Accordion. يمكنك استخدام هذه المساحة لشرح إجابة طويلة، أو تقسيم المعلومات إلى فقرات صغيرة، أو عرض تفاصيل إضافية لا تريد إظهارها مباشرة في الصفحة.
+
+      يمكن أن يحتوي المحتوى على أكثر من فقرة، ويظل المكون مسؤولاً عن إظهارها وإخفائها بطريقة تفاعلية داخل الوثائق.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      سؤال آخر يوضح إمكانية وجود أكثر من عنصر داخل Accordion نفسه.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      هذا مثال قصير على محتوى العنصر الثاني.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**الكود:**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## التنبيهات
+
+**مثال:**
+
+<Alert className="my-4">
+  <AlertTitle>تنبيه افتراضي</AlertTitle>
+
+  <AlertDescription>
+    هذا تنبيه افتراضي.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>تنبيه تحذيري</AlertTitle>
+
+  <AlertDescription>
+    هذا تنبيه تحذيري.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>تنبيه خطأ</AlertTitle>
+
+  <AlertDescription>
+    هذا تنبيه خطأ.
+  </AlertDescription>
+</Alert>
+
+**الكود:**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Tabs
+
+**مثال:**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">التبويب 1</TabsTrigger>
+    <TabsTrigger value="tab-2">التبويب 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    محتوى التبويب 1
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    محتوى التبويب 2
+  </TabsContent>
+</Tabs>
+
+**الكود:**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## الخطوات
+
+**مثال:**
+
+<Steps>
+  <Step>الخطوة 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>الخطوة 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**الكود:**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

@@ -1,0 +1,258 @@
+---
+title: వేగవంతమైన ఫైల్ ట్రాన్స్‌ఫర్‌ల కోసం mscp ఉపయోగించడం
+description: బహుళ SSH కనెక్షన్‌లను ఉపయోగించి మీ Appbox server కు high-speed file transfers కోసం mscp (multi-threaded scp) ఎలా ఉపయోగించాలో తెలుసుకోండి.
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** అనేది `scp` యొక్క multi-threaded variant; ఇది ఒకేసారి బహుళ SSH (SFTP) కనెక్షన్‌లపై ఫైల్‌లను copy చేస్తుంది. parallel connections ఉపయోగించడం వల్ల పెద్ద files మరియు directories కోసం transfers గణనీయంగా వేగంగా జరుగుతాయి.
+
+## ముందస్తు అవసరాలు
+
+mscp ఉపయోగించే ముందు, మీ SFTP credentials పొందడానికి మీ Appbox server పై SFTPgo install చేయాలి.
+
+### Step 1: SFTPgo install చేయండి
+
+1. Appbox App Store లో [SFTPgo app page](https://www.appbox.co/appstore/app/232) ను సందర్శించండి
+2. మీ server కు SFTPgo జోడించడానికి **Install** క్లిక్ చేయండి
+3. install అయిన తర్వాత, మీకు connection details అందుతాయి:
+   - **Username**: మీ SFTP username
+   - **Password**: మీ SFTP password
+   - **Hostname**: ఉదా., `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: ఉదా., `25557`
+   - **FTP/FTPS Port**: ఉదా., `25555`
+   - **WebDav URL**: WebDAV access కోసం
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">గమనిక</AlertTitle>
+  <AlertDescription className="pl-2">
+    మీ SFTPgo credentials ను భద్రంగా ఉంచండి. mscp connections కోసం hostname, username, password, మరియు SFTP port అవసరం అవుతాయి.
+  </AlertDescription>
+</Alert>
+
+## mscp install చేయడం
+
+మీ operating system కోసం installation method ఎంచుకోండి:
+
+### macOS
+
+#### Homebrew ఉపయోగించి (సిఫార్సు చేయబడింది)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### MacPorts ఉపయోగించి
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp కి native Windows binaries లేవు, కానీ WSL (Windows Subsystem for Linux) ద్వారా ఉపయోగించవచ్చు:
+
+#### Step 1: WSL install చేయండి
+
+PowerShell ను Administrator గా తెరిచి నడపండి:
+
+```powershell
+wsl --install
+```
+
+అడిగినప్పుడు మీ computer restart చేయండి.
+
+#### Step 2: WSL లో mscp install చేయండి
+
+WSL setup అయిన తర్వాత (Ubuntu default), WSL terminal తెరిచి నడపండి:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">WSL లో Windows File Paths</AlertTitle>
+  <AlertDescription className="pl-2">
+    WSL లో మీ Windows drives `/mnt/` కింద అందుబాటులో ఉంటాయి. ఉదాహరణకు, `C:\Users\YourName\Downloads` అనేది `/mnt/c/Users/YourName/Downloads` అవుతుంది.
+  </AlertDescription>
+</Alert>
+
+### Source నుండి build చేయడం
+
+మీ system కోసం packages అందుబాటులో లేకపోతే, mscp ను source నుండి build చేయవచ్చు:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## ప్రాథమిక వినియోగం
+
+mscp syntax `scp` కు సమానంగా ఉంటుంది. కొన్ని సాధారణ usage patterns ఇవి.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">ముఖ్యం: మీ SFTP Port ఉపయోగించండి</AlertTitle>
+  <AlertDescription className="pl-2">
+    క్రింద ఉన్న examples లో `25557` మీ SFTPgo settings లోని **SFTP Port** ను సూచిస్తుంది. మీ SFTPgo Options panel లో కనిపించే నిజమైన SFTP port తో దీన్ని మార్చండి.
+  </AlertDescription>
+</Alert>
+
+### మీ Server కు File upload చేయండి
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### Directory upload చేయండి
+
+`scp` తో పోలిస్తే, directories కోసం mscp కు `-r` flag అవసరం లేదు:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### మీ Server నుండి File download చేయండి
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### Directory download చేయండి
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## అభివృద్ధి చెందిన Options
+
+### బహుళ connections ఉపయోగించడం
+
+Default గా, mscp బహుళ connections ఉపయోగిస్తుంది. `-n` తో connections సంఖ్యను పేర్కొనవచ్చు:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### విఫలమైన Transfers resume చేయడం (Checkpointing)
+
+Interrupted transfers ను resume చేయడానికి mscp checkpointing కు మద్దతు ఇస్తుంది:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### SSH Key Authentication పేర్కొనడం
+
+మీరు SFTPgo తో SSH key authentication setup చేసి ఉంటే:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Bandwidth పరిమితం చేయడం
+
+transfer bandwidth ను limit చేయడానికి (shared connections లో ఉపయోగకరం):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## ఉదాహరణ: పూర్తి Workflow
+
+Appbox నుండి SFTPgo credentials ఉపయోగించే పూర్తి example ఇది:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## Performance Tips
+
+1. **పెద్ద files కోసం ఎక్కువ connections ఉపయోగించండి**: పెద్ద file transfers కోసం `-n` విలువను పెంచండి (ఉదా., `-n 8` లేదా `-n 16`)
+2. **చాలా small files కోసం తక్కువ connections ఉపయోగించండి**: అనేక small files ఉన్న directories కోసం తక్కువ connections మరింత efficient కావచ్చు
+3. **Text files కోసం compression enable చేయండి**: mscp SSH compression ను inherit చేస్తుంది; text-heavy transfers కోసం `-C` ఉపయోగించండి
+4. **చాలా పెద్ద transfers కోసం checkpointing ఉపయోగించండి**: interrupted అయితే resume చేయడానికి multi-gigabyte transfers కోసం checkpointing ఎప్పుడూ enable చేయండి
+
+## సమస్యల పరిష్కారం
+
+### Connection Refused
+
+మీరు SFTPgo settings లోని సరైన SFTP port ఉపయోగిస్తున్నారని నిర్ధారించండి (FTP port కాదు):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Permission Denied
+
+మీ username మరియు password సరైనవో verify చేయండి. ముందుగా standard SFTP client తో test చేయవచ్చు:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### నెమ్మదైన Transfers
+
+parallel connections సంఖ్యను సర్దుబాటు చేసి చూడండి:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## అదనపు వనరులు
+
+- [mscp GitHub Repository](https://github.com/upa/mscp)
+- [mscp Documentation](https://github.com/upa/mscp#documentation)
+- [SFTPgo on Appbox](https://www.appbox.co/appstore/app/232)

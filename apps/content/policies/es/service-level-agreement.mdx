@@ -1,0 +1,65 @@
+---
+title: Acuerdo de nivel de servicio
+description: Nuestra dedicación a la consistencia y fiabilidad del servicio
+---
+
+Este Service Level Agreement ("SLA") es un documento que rige los términos y el uso de los servicios proporcionados por Appbox. Al utilizar nuestros servicios, reconoces y aceptas los términos establecidos a continuación.
+
+Dado que operamos en un entorno compartido y proporcionamos servicios de una naturaleza particular, cierto nivel de tiempo de inactividad puede ser inevitable en ocasiones. Este acuerdo aclara cómo gestionamos las ocurrencias de tiempo de inactividad durante tu periodo de suscripción y describe nuestros compromisos para resolver disputas y ofrecer compensación.
+
+## Tiempos de inactividad del servidor, mantenimiento del servidor y compensación
+
+Appbox hace todo lo posible por mantener nuestros servidores operativos y accesibles para todos los usuarios durante su periodo de facturación.
+
+Cuando el mantenimiento del servidor se organiza con antelación, los usuarios serán notificados mediante varios canales, como actualizaciones por email, Appbox Status Page y anuncios en Client Area. Cualquier usuario afectado por mantenimiento planificado no es elegible para compensación.
+
+Los procedimientos de mantenimiento no programado o de emergencia se comunicarán lo antes posible, y los usuarios afectados por dichos eventos pueden calificar para créditos según se especifica abajo:
+
+| Duración del tiempo de inactividad | Compensación                                                                                                                               |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hasta 6 horas                      | Determinada a discreción del equipo                                                                                                        |
+| Hasta 12 horas                     | Equivalente a 1 día de crédito de servicio                                                                                                 |
+| Hasta 24 horas                     | Equivalente a 2 días de crédito de servicio                                                                                                |
+| Más de 48 horas                    | Acreditado al doble de la duración del tiempo de inactividad (por ejemplo, una caída de 3 días genera 6 días de crédito de servicio)       |
+
+Esta política **excluye cualquier tiempo de inactividad asociado con las aplicaciones que has instalado.**
+
+## Fallo de unidad y pérdida de datos
+
+La plataforma de Appbox se basa en una infraestructura compartida diseñada para ofrecer una distribución justa de recursos y uso integral de disco. A pesar de nuestros mejores esfuerzos, a veces pueden producirse fallos de hardware, como fallos de unidad.
+
+Si un fallo de unidad provoca que pierdas acceso a tus datos y estos no puedan recuperarse, calificarás para **un mes completo de servicio sin coste**.
+
+Recomendamos encarecidamente mantener copias de seguridad de todos los datos esenciales que almacenes en tu servicio.
+
+Ten en cuenta que si los datos se pierden debido a acciones iniciadas por el usuario (por ejemplo, eliminación accidental) y no se detecta ningún error relacionado con el sistema, no se proporcionará compensación.
+
+## Uso justo de recursos del servidor
+
+Nuestros servicios se entregan sobre recursos compartidos, por lo que es crucial que cada cliente se asegure de que sus actividades no interrumpan el rendimiento de otros usuarios y se mantengan dentro de límites aceptables de recursos.
+
+Appbox puede, sin previo aviso, detener cualquier aplicación o proceso que afecte negativamente la experiencia de otros clientes. En casos graves de uso indebido de recursos, el servicio del cliente podría suspenderse o terminarse por completo.
+
+### Política de uso justo de Disk I/O
+
+Esta política aplica solo a planes NG-8000 y menores (planes sin disco dedicado).
+
+Para garantizar un rendimiento óptimo para todos los usuarios, Appbox emplea un sistema automatizado de monitorización de Disk I/O que:
+
+1. Monitoriza continuamente la utilización de disco en todos los recursos compartidos
+2. Identifica aplicaciones que consumen recursos excesivos de Disk I/O durante periodos prolongados
+3. Aplica automáticamente medidas de throttling cuando es necesario
+
+Si se detecta que tu aplicación consume Disk I/O excesivo:
+- Puedes recibir una notificación de advertencia
+- El uso alto persistente resultará en throttling automático de tu velocidad de Disk I/O
+- Las violaciones repetidas darán lugar a límites de throttling cada vez más estrictos
+- El throttling es temporal y se eliminará automáticamente cuando el uso vuelva a niveles normales
+
+Ten en cuenta que las aplicaciones intensivas en recursos pueden activar estas medidas si se ejecutan sin consideración por otros usuarios.
+
+Aplicamos esta política para garantizar que todos los usuarios tengan una experiencia satisfactoria en nuestra plataforma.
+
+## Tiempos de respuesta de soporte
+
+No tenemos un tiempo mínimo de respuesta o resolución de soporte; sin embargo, nuestro objetivo es responder todas las consultas de soporte dentro de 24 horas.

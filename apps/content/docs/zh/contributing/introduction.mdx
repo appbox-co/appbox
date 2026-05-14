@@ -1,0 +1,99 @@
+---
+title: 介绍
+description: 欢迎阅读开源 Appbox 前端的官方文档。
+sort: 1
+---
+
+**欢迎阅读 Appbox 文档**  
+我们很高兴地宣布，[Appbox](https://www.appbox.co/) 的前端现已在 [GitHub](https://github.com/appbox-co/appbox) 开源。我们的目标是培育一个协作社区，一起贡献文档、开发新的前端功能，并帮助改进整体 Appbox 体验。
+
+虽然我们的文档仍处于早期阶段，但我们正在努力构建一个与同类平台相当的完整资源。目前，文档主要聚焦于贡献指南，但我们计划扩展为涵盖 Appbox 上所有可用应用的详细信息。
+
+在文档变得更完善之前，如果你有关于特定应用或服务的即时问题，请访问我们的[旧版知识库](https://billing.appbox.co/knowledgebase)。如果你需要技术支持，可以[提交工单](https://billing.appbox.co/submitticket.php) 获取帮助。你也可以随时通过站点页脚中的链接访问这些新文档，查看我们扩充文档的进展。
+
+## 未来计划
+
+- **深入的应用指南**  
+  覆盖平台所支持每个应用的安装、故障排除和使用技巧。
+- **用户与开发者资源**  
+  提供从适合初学者的教程，到用于自定义 Appbox 体验的高级代码参考。
+- **社区驱动的内容**  
+  鼓励 pull request、反馈和建议；所有贡献都很受欢迎，并会帮助这个项目惠及每个人。
+
+## 开始使用
+
+如果你想查看或贡献我们的开源前端代码，请克隆 [Appbox](https://github.com/appbox-co/appbox) 仓库：
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+然后进入项目并安装依赖：
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+你的本地实例将在 `http://localhost:3000` 可用。欢迎探索、修改并创建 pull request。我们感谢每一份贡献！
+
+## 开发工具
+
+### Linting
+
+项目内置了完整的 linting 设置，使用 ESLint，并集成 TypeScript 和 Prettier。这能确保代码风格一致，并帮助尽早发现常见错误。你可以手动运行 linting 检查：
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+我们的 ESLint 配置包括：
+- 通过 `@typescript-eslint` 提供的 TypeScript 专用规则
+- 使用 `eslint-config-next` 的 Next.js 专用 linting
+- 集成 Prettier 的代码格式化
+
+### Pre-commit Hooks
+
+我们使用 Husky 管理 Git hooks，帮助确保只有高质量代码会提交到仓库。已设置以下 hooks：
+
+- **pre-commit**：每次提交前运行 `lint:fix`，确保代码质量
+- **commit-msg**：使用 commitlint 强制执行 conventional commit 消息格式
+
+这意味着你的提交在被接受前会自动检查代码质量和格式，从而在整个代码库中保持高标准。
+
+## 创建 Pull Request
+
+当你准备贡献更改时，请遵循以下指南，让你的 Pull Request (PR) 更有可能被接受：
+
+### 创建 PR 之前
+
+1. **从最新 main 分支 rebase**，避免合并冲突：
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **确保所有 linting 通过**：
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **确保你的代码在本地可用**，测试相关功能。
+
+### PR 指南
+
+1. **保持 PR 聚焦** - 每个 PR 只处理一个问题或功能。
+2. **编写清晰的提交消息** - 遵循 conventional commit 格式。
+3. **包含清晰描述** - 说明你的 PR 做了什么，以及为什么需要它。
+4. **添加测试** - 在适用时添加测试，验证你的更改能正常工作。
+5. **记录你的代码** - 对复杂逻辑使用注释，并确保函数名具有描述性。
+6. **遵循现有模式** - 你的代码应与代码库其余部分使用的风格和模式保持一致。
+
+对于重大更改，请考虑先创建 issue 讨论方案，再投入编码时间。这有助于确保你的贡献符合项目方向，并避免浪费精力。

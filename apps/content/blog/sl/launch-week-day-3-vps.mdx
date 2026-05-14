@@ -1,0 +1,108 @@
+---
+title: "Launch Week, 3. dan - Virtual Private Servers"
+date: 2026-03-11 10:00:00
+excerpt: "3. dan tedna Launch Week. Polni virtualni zasebni strežniki KVM so zdaj na voljo v Appbox. Izberite Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux ali AlmaLinux in dobite root dostop do prave VM."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week, 3. dan: Virtual Private Servers
+
+3. dan. To je velika stvar.
+
+Od samega začetka je bil Appbox namenjen temu, da je samostojno gostovanje aplikacij preprosto. Namestite aplikacijo, dobite URL, končano. Ta model za večino stvari deluje izjemno dobro. Vedno pa obstaja razred primerov uporabe, kjer preprosto potrebujete celoten stroj. Svoje jedro, svoj init sistem, svoja pravila.
+
+Danes v Appbox predstavljamo **Virtual Private Servers**.
+
+## Prave VM, ne kontejnerji
+
+Bodimo jasni, kaj to je. To so polni virtualni stroji KVM, ki tečejo na namenski strojni opremi, z lastnim jedrom, lastnim systemd in polnim root dostopom. To ni Docker kontejner, ki se pretvarja, da je OS. To je prava stvar.
+
+Ta razlika je pomembna, ker odklene vse, česar kontejnerji ne morejo:
+
+- **Docker znotraj vašega VPS** - zaženite `docker compose up`, kot bi to naredili na katerem koli strežniku
+- **Snaps in Flatpaks** - namestite namizno programsko opremo tako, kot je namenjena za namestitev
+- **Systemd storitve** - polno upravljanje storitev, časovniki, journal, vse
+- **Jedra in moduli po meri** - imate root, naredite, kar želite
+- **Gnezdena virtualizacija** - če jo potrebujete, je na voljo
+
+Če ste kdaj naleteli na zid pri naših Docker-baziranih OS-ih ali webtopih, kjer nekaj preprosto ni delovalo zaradi omejitev kontejnerjev, tega zidu ni več.
+
+## Na voljo je šest Linux OS-ov
+
+Zdaj lahko izbirate med šestimi distribucijami Linux:
+
+| OS | Opis |
+|---|---|
+| **Ubuntu VPS** | Polni Ubuntu 24.04 LTS |
+| **Debian VPS** | Polni Debian 12 in 13 |
+| **Arch Linux VPS** | Rolling release, vedno posodobljen |
+| **Fedora VPS** | Fedora 43 z najnovejšimi paketi |
+| **Rocky Linux VPS** | Združljivost z RHEL na ravni podjetij |
+| **AlmaLinux VPS** | Podjetniški Linux, združljiv z RHEL, z dolgoročno podporo |
+
+Izberite tistega, ki ga poznate, ali tistega, ki se ga želite naučiti. Vsi imajo v Appbox enak nabor funkcij.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Kategorija VPS v Appbox App Store" width="860" className="mt-8 mb-10" />
+</p>
+
+## Vgrajena spletna konzola
+
+Vsak VPS ima konzolo v brskalniku, vgrajeno neposredno v nadzorno ploščo Appbox. Kliknite zavihek Console na katerem koli VPS in dobite terminal v živo neposredno v brskalniku.
+
+To pomeni, da se nikoli ne morete zakleniti iz svojega strežnika. Napačno nastavljen SSH? Pokvarjena omrežna konfiguracija? Ni pomembno. Spletna konzola se poveže neposredno z virtualnim zaslonom VM, popolnoma neodvisno od omrežnega sklada gosta. Vedno imate pot noter.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Spletna konzola VM v nadzorni plošči Appbox" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop s Selkies
+
+Tukaj postane zanimivo. Naš Ubuntu VPS ima namizno različico, ki jo poganja **Selkies** in vam omogoča polno grafično namizje Linux, dostopno iz brskalnika, s strojno pospešenim pretakanjem, polnim zvočnim izhodom in vhodom za mikrofon.
+
+Neposredno smo sodelovali z ekipo Selkies, da smo to spravili v delovanje znotraj virtualnih strojev KVM, integracijo pa smo odprli kot odprtokodno na [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Kaj to dejansko pomeni v praksi? V brskalniku lahko poganjate polno namizno okolje z resničnimi aplikacijami. VS Code, Discord, Spotify, Slack - vse teče hkrati, vse z zvokom, vse dostopno iz katere koli naprave s spletnim brskalnikom.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu namizje prek Selkies z zagnanimi VS Code, Spotify in Discord" width="860" className="mt-8 mb-10" />
+</p>
+
+Pomislite na to za trenutek. Lahko imate trajno oddaljeno razvojno okolje, ki je vedno vklopljeno, poganja VS Code z Docker kontejnerji za vaše projekte, hkrati pa imate odprt Discord za pogovor z ekipo in Spotify za glasbo. Vse v zavihku brskalnika. Iz prenosnika, tablice ali tujega računalnika. Celoten vaš delovni prostor je oddaljen samo en URL.
+
+## Vaši podatki potujejo z vami
+
+Vsak VPS ima samodejen dostop do vaše shrambe Appbox prek imenika `/APPBOX_DATA/`. Znotraj boste našli:
+
+- **`/APPBOX_DATA/apps/`** - podatke iz drugih nameščenih aplikacij Appbox
+- **`/APPBOX_DATA/storage/`** - vašo splošno shrambo Appbox
+
+To je deljeno z uporabo virtiofs, visokozmogljivega prehoda datotečnega sistema, ki vam omogoča skoraj izvorne hitrosti dostopa do datotek. Vaš VPS lahko bere in piše datoteke, ki jih uporabljajo tudi vaše druge aplikacije, zato lahko na primer obdelujete medijske datoteke iz pretočnih aplikacij ali varnostno kopirate baze podatkov znotraj VPS.
+
+## Deluje z App Boost
+
+VPS-i uporabljajo isti sistem App Boost, ki smo ga predstavili 2. dan. Želite več RAM-a ali CPU-ja za svojo VM? Premaknite raven boosta navzgor in ji namenite več slotov svojega paketa. Viri se dodelijo na ravni hipervizorja, zato vaša VM resnično dobi več računske moči, ne le višjo omejitev cgroup.
+
+Vredno je omeniti: VPS-i imajo nekoliko višji osnovni strošek slotov kot Docker-bazirane OS aplikacije. To odraža dejstvo, da polni virtualni stroj porabi več resničnih virov kot kontejner, ki deli jedro gostitelja. Kompromis je preprost: dobite več zmožnosti, strošek slotov pa to pošteno odraža.
+
+## Kaj prihaja naslednje za VPS
+
+VPS-e danes predstavljamo s polno funkcionalnostjo, vendar je na časovnici še več. Grafi porabe virov za instance VPS bodo dodani v bližnji prihodnosti, zato boste lahko CPU, RAM in porabo diska skozi čas spremljali neposredno iz nadzorne plošče, enako kot pri drugih aplikacijah.
+
+## Zakaj je to pomembno
+
+Docker-bazirani OS-i in webtopi v Appbox so dobro služili veliko ljudem in nikamor ne odhajajo. Vendar obstajajo resnične omejitve pri delovanju znotraj kontejnerja. Ne morete poganjati Dockerja. Ne morete uporabljati snapov. Ne morete nalagati modulov jedra. Ne morete poganjati polnega init sistema. Vedno delate znotraj omejitev imenskega prostora nekoga drugega.
+
+VPS-i te omejitve v celoti odstranijo. Dobite pravi stroj. Če lahko to naredite na strežniku, ki bi ga najeli pri katerem koli drugem ponudniku, lahko to naredite tukaj - razen da so vaši podatki že priklopljeni, spletna konzola je že tam, vaši viri pa se skalirajo z drsnikom.
+
+## 3. dan je zdaj v živo
+
+VPS-i so zdaj na voljo v App Store. Pojdite v kategorijo VPS, izberite svoj OS in namestite. Provisioning polne VM traja nekoliko dlje kot pri kontejnerski aplikaciji, zato pričakujte do 15 minut, da bo vaš VPS pripravljen.
+
+Jutri je 4. dan. Ne upočasnjujemo.
+
+---
+
+*Imate povratne informacije ali ste našli težavo? Pišite na support@appbox.co ali odprite zahtevek na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,183 @@
+---
+title: Bug Bounty -ohjelma
+description: Tietoturvahaavoittuvuuksien ilmoitusohjelmamme ja palkkiot
+---
+
+Appboxissa tietoturva on perustavanlaatuinen prioriteetti. Kannustamme aktiivisesti tietoturvatutkijoita auttamaan alustamme vahvistamisessa tunnistamalla ja ilmoittamalla mahdollisista haavoittuvuuksista. Tässä ohjelmassa kuvataan lähestymistapamme vastuulliseen tietoturvatutkimukseen, miten käsittelemme haavoittuvuusilmoituksia ja mitä palkkioita tarjoamme tutkijoille, jotka auttavat parantamaan tietoturva-asemaamme.
+
+## Sitoumuksemme
+
+Kun osallistut bug bounty -ohjelmaamme, lupaamme:
+
+* Vahvistaa ja arvioida ilmoituksesi kohtuullisessa ajassa
+* Käsitellä vahvistetut haavoittuvuudet asianmukaisella kiireellisyydellä
+* Tunnustaa ja palkita sinut yksilöllisistä, aiemmin ilmoittamattomista haavoittuvuuksista, jotka johtavat tietoturvaparannuksiin
+
+## Ohjelman kattavuus
+
+Tämä bug bounty -ohjelma koskee seuraavia Appbox-alustoja:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Vain infrastruktuuri, ei asiakassovelluksia**
+
+**Huomautus:** Vaikka hosting-infrastruktuurimme (username.appboxes.co) kuuluu ohjelman piiriin, asiakkaiden käyttöönottojen kolmannen osapuolen sovellusten haavoittuvuudet eivät kuulu. Katso poissulut alla.
+
+## Mikä katsotaan kelvolliseksi haavoittuvuudeksi
+
+Jotta ilmoitus hyväksytään bug bounty -ohjelmaamme, sen on täytettävä KAIKKI seuraavat kriteerit:
+
+### 1. Osoita todellinen hyödyntäminen
+* Sisällytä toimiva proof of concept, joka osoittaa, että haavoittuvuutta voidaan hyödyntää
+* Osoita selkeä tietoturvavaikutus; teoreettiset haavoittuvuudet ilman osoitettua haittaa eivät kelpaa
+* Todista, että hyökkääjä voisi oikeasti vaarantaa käyttäjädatan, tilit tai järjestelmän eheyden
+
+### 2. Vaikuta ohjelman piirissä oleviin järjestelmiin
+* Haavoittuvuuden on oltava Appboxin omassa koodissa tai infrastruktuurissa
+* Sen on vaikutettava järjestelmiin, jotka on nimenomaisesti listattu yllä kohdassa "Ohjelman kattavuus"
+* Sen on oltava toistettavissa tuotanto- tai staging-ympäristöissämme
+
+### 3. Olla aiemmin ilmoittamaton
+* Haavoittuvuuden on oltava uusi löydös eikä jo meidän tiedossamme
+* Päällekkäiset ilmoitukset tai tunnettujen ongelmien muunnelmat eivät kelpaa
+
+## Poissuljetut alueet ja ongelmat
+
+Seuraavat katsotaan **bug bounty -ohjelmamme ulkopuolelle**:
+
+### Kolmannen osapuolen järjestelmät ja integraatiot
+* WHMCS Client Area [https://billing.appbox.co] - Ilmoita [WHMCS Security](https://www.whmcs.com/security-bounty-program/) -palveluun
+* Chatwoot-chat-widget - Ilmoita [Chatwoot Security](https://www.chatwoot.com/security) -palveluun
+* **Asiakkaiden käyttöönotetut sovellukset** [app.username.appboxes.co] - Kolmannen osapuolen sovellusten (WordPress, Nextcloud jne.) haavoittuvuudet, joita hostataan infrastruktuurissamme, tulee ilmoittaa kyseisten sovellusten toimittajille
+* Kaikki muut kolmannen osapuolen palvelut, lisäosat tai integraatiot, joita käytämme
+* IP-osoitteet tai verkkotunnukset, joita Appbox ei suoraan hallitse
+* Vanhoiksi jääneet tai käytöstä poistetut järjestelmät, jotka eivät ole enää aktiivisessa käytössä
+
+**Hosting-infrastruktuurin ulkopuolella:**
+* Haavoittuvuudet asiakkaiden käyttöönotetussa sovelluskoodissa (WordPress, Nextcloud jne.)
+* Kolmannen osapuolen sovellusten oletusmääritykset
+* Tiettyyn sovellusversioon liittyvät tietoturvaongelmat
+
+### Tietoturvaotsakkeet ja kovennus
+* Puuttuvat tietoturvaotsakkeet (X-Frame-Options, COOP, COEP, MTA-STS jne.) **ellei** osoiteta todellista hyödyntämistä, joka johtaa datan vaarantumiseen
+* Puuttuvat `rel="noopener"`- tai `rel="noreferrer"`-attribuutit
+* Palvelinversion paljastuminen tai HTTP-otsaketietojen vuoto
+* Evästeattribuutit ei-arkaluonteisissa evästeissä (analytiikka, asetukset jne.)
+
+### Vähävaikutteinen tietojen paljastuminen
+* Runsaat virheilmoitukset, jotka eivät paljasta arkaluonteista dataa (salasanat, tokenit, PII)
+* Polun paljastuminen ilman osoitettua path traversal -hyökkäystä tai tiedostopääsyä
+* Teknologiapinon tunnistaminen (PHP-versio, frameworkin tunnistus jne.)
+* Yleiset sovellusvastaukset tai käyttäytyminen
+
+### Suunnittelupäätökset ja teoreettiset ongelmat
+* Login CSRF (ei anna hyökkääjälle pääsyä uhrin tileille)
+* Käyttäjien enumerointi ajoitushyökkäyksillä tai erilaisten vastausten perusteella (ellei se ole osa laajempaa hyökkäysketjua)
+* Clickjacking ilman osoitettua arkaluonteisen toiminnon hyödyntämistä
+* CORS-määritykset ei-arkaluonteisissa päätepisteissä
+* Puuttuva rate limiting **ellei** osoiteta todellista väärinkäyttöä (DoS on edelleen poissuljettu)
+
+### Hyökkäyksen ennakkoedellytykset
+* Tietoturvaongelmat, jotka eivät vaikuta oletussovellusmäärityksiimme
+* Haavoittuvuudet, jotka edellyttävät epästandardeja määrityksiä
+* Haavoittuvuudet konteissamme, jotka edellyttävät mukautettuja tai muokattuja asetuksia
+* Ongelmat, jotka edellyttävät verkkotason vaarantumista (MITM, DNS poisoning, ARP spoofing)
+
+### Kielletyt testausmenetelmät
+* Ajoitukseen perustuvat tietojen paljastushyökkäykset
+* Prosessien enumerointitekniikat
+* Kaikenlaiset palvelunestohyökkäykset tai suurivolyymiset hyökkäykset
+* Social engineering ja phishing-tekniikat
+* Automaattinen tietoturvaskannaus, joka tuottaa liiallista liikennettä tai kuormaa
+* Ei-toiminnallisten ominaisuuksien tai sivujen testaaminen (esim. rekisteröitymissivut, jotka eivät ole vielä tuotannossa)
+
+### Kelpaamattomat ilmoitustyypit
+* Ilmoitukset, jotka perustuvat pelkästään automaattisen skannerin tulokseen ilman manuaalista validointia
+* Yleiset suositukset ilman todellisten haavoittuvuuksien osoittamista
+* Parhaiden käytäntöjen ehdotukset ilman tietoturvavaikutusta
+* Compliance-havainnot (PCI-DSS, GDPR jne.) ilman hyödynnettävyyden osoittamista
+
+## Palkkiorakenne
+
+### Pääsivusto ja Control Panel
+
+| **Haavoittuvuustyyppi**                             | **PayPal-palkkio** | **Palvelukrediitti** |
+| --------------------------------------------------- | ------------------ | -------------------- |
+| XSS                                                 | EUR 100            | EUR 200              |
+| XSS (CSP Bypass)                                    | EUR 200            | EUR 300              |
+| CSRF                                                | EUR 300            | EUR 450              |
+| Authentication Bypass                               | EUR 500            | EUR 750              |
+| SQL Injection                                       | EUR 1000           | EUR 1500             |
+| Mielivaltainen koodin suoritus                      | EUR 1000           | EUR 1500             |
+| Mielivaltainen koodin suoritus (oikeuksien korotuksella) | EUR 2000      | EUR 3000             |
+| Pysyvä koodimuutos                                  | EUR 1000           | EUR 1500             |
+
+### Hosting-infrastruktuuri
+
+| Haavoittuvuustyyppi                         | PayPal-palkkio | Palvelukrediitti |
+| ------------------------------------------- | -------------- | ---------------- |
+| Authentication Bypass (SSH, FTP, VPN jne.)  | EUR 500        | EUR 750          |
+| Authentication Bypass tuetuille sovelluksille | EUR 100      | EUR 200          |
+| Paikallinen käyttöoikeuksien korotus        | EUR 500        | EUR 750          |
+
+Kelvollisista haavoittuvuuksista ilmoittaneet osallistujat tunnustetaan Security Researchers Hall of Fame -listallamme kiitoksemme osoituksena.
+
+## Vaadittu ilmoituksen laatu
+
+Kaikkien haavoittuvuusilmoitusten on sisällettävä:
+
+* **Selkeä haavoittuvuuden kuvaus** - Selitä, mikä haavoittuvuus on ja miksi sillä on merkitystä
+* **Vaikuttava järjestelmä/URL** - Määritä tarkasti, missä haavoittuvuus sijaitsee
+* **Vaiheittainen toistaminen** - Yksityiskohtaiset vaiheet, joiden avulla voimme toistaa ongelman
+* **Toimiva proof of concept** - Toiminnallinen hyödyntämisen demonstraatio (koodi, kuvakaappaukset, video)
+* **Todellinen tietoturvavaikutus** - Osoita, mitä hyökkääjä voisi saavuttaa, ei teoreettisia mahdollisuuksia
+* **Oma testauksesi** - Vahvista löydökset manuaalisesti, älä vain välitä skannerin tulosta
+
+Ilmoitukset, joista nämä elementit puuttuvat tai jotka koostuvat yleisistä tietoturvasuosituksista, eivät kelpaa palkkioihin.
+
+## Palkkion lunastaminen
+
+* Voit valita kahdesta palkkiovaihtoehdosta:  
+   * Suora PayPal-maksu (edellyttää voimassa olevaa PayPal-tiliä)
+   * Appbox-palvelukrediitit (sovellettavissa mihin tahansa Appbox-palveluun, ei siirrettävissä)
+
+## Osallistumisohjeet
+
+* Noudata tätä käytäntöä, [Terms of Service](/policies/terms-of-service) -ehtojamme ja kaikkia soveltuvia lakeja
+* Ilmoita haavoittuvuudet viipymättä löydön jälkeen
+* Kunnioita käyttäjien yksityisyyttä ja järjestelmän eheyttä tutkimuksesi aikana
+* Toimita kaikki haavoittuvuusilmoitukset yksinomaan [contact us form](https://billing.appbox.co/contact.php) -lomakkeemme kautta
+* Säilytä löydettyjen haavoittuvuuksien luottamuksellisuus, kunnes ne on ratkaistu
+* Rajoita testauksesi nimenomaisesti tähän ohjelmaan sisältyviin järjestelmiin
+* Jos saat odottamattoman pääsyn arkaluonteiseen dataan: käytä vain vähimmäismäärä, joka tarvitaan ongelman osoittamiseen, lopeta testaus välittömästi ja ilmoita haavoittuvuus viipymättä
+* Käytä vain omia testitilejäsi kaikessa vuorovaikutuksessa järjestelmiemme kanssa
+* Älä koskaan yritä kiristää Appboxia löydöstesi perusteella
+* **Varmista löydöksesi** - Testaa, että proof of concept toimii oikeasti ennen lähettämistä
+* **Keskity vaikutukseen** - Priorisoi haavoittuvuuksia, jotka voivat aiheuttaa todellista haittaa, teoreettisten ongelmien sijaan
+
+## Oikeudellinen suoja
+
+Tätä käytäntöä noudattavat tietoturvatutkijat voivat odottaa:
+
+* Suojaa oikeustoimilta hyvässä uskossa tehdystä tietoturvatutkimuksesta, joka tehdään näiden ohjeiden puitteissa
+* Vapautusta kiertämisen vastaisista oikeudellisista vaatimuksista, kun se on tarpeen laillista tietoturvatutkimusta varten
+* Tiettyjen käytäntörajoitusten poikkeusta, jotka muuten estäisivät tietoturvatestauksen
+* Tunnustusta siitä, että sääntöjenmukainen tietoturvatutkimus on hyödyllistä ja tehdään hyvässä uskossa
+
+Olet edelleen vastuussa kaikkien soveltuvien lakien noudattamisesta. Jos kohtaat oikeustoimia kolmannelta osapuolelta noudattaessasi tätä käytäntöä, vahvistamme, että toimintasi tehtiin ohjelmamme mukaisesti. Jos olet epävarma siitä, noudattavatko suunnitellut tutkimustoimesi tätä käytäntöä, ota meihin yhteyttä [contact us form](https://billing.appbox.co/contact.php) -lomakkeen kautta ennen etenemistä.
+
+## Ilmoitusprosessi
+
+Ilmoittaaksesi haavoittuvuudesta luo yksityiskohtainen tiketti [contact us form](https://billing.appbox.co/contact.php) -lomakkeemme kautta.
+
+* Ilmoituksesi tulisi sisältää kattavat vaiheet haavoittuvuuden toistamiseksi. Voit käyttää tätä mallia ohjeena: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Kaiken ohjelmaviestinnän on kuljettava virallisen Support Ticket Platform -alustamme kautta
+* Minkä tahansa haavoittuvuuden julkinen paljastaminen ilman Appboxin nimenomaista kirjallista lupaa rikkoo tämän ohjelman ehtoja ja hylkää sinut palkkion saamisesta
+
+## Mitä tapahtuu ilmoituksen jälkeen
+
+* **Kelvolliset haavoittuvuudet**: Vahvistamme ilmoituksesi, työskentelemme korjauksen parissa ja käsittelemme palkkiosi
+* **Kelpaamattomat ilmoitukset**: Selitämme, miksi ilmoitus ei kelpaa, ja voimme antaa ohjeita tulevia lähetyksiä varten
+* **Ohjelman ulkopuoliset ilmoitukset**: Ohjaamme sinut asianmukaiselle toimittajalle tai selitämme, miksi ongelma ei kuulu ohjelmaan
+
+Arvostamme laadukasta tutkimusta ja rakentavia panoksia tietoturvaamme. Kiitos, että autat pitämään Appboxin turvallisena.

@@ -1,0 +1,150 @@
+---
+title: Launch Week Jour 1 - Nouveau tableau de bord
+date: 2026-03-09 10:00:00
+excerpt: Le jour 1 de la Launch Week est arrivé. Le nouveau tableau de bord Appbox est maintenant en ligne.
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, tableau de bord, sécurité, app-store, i18n, explorateur de fichiers]
+---
+
+# Launch Week Jour 1 : le nouveau tableau de bord est en ligne
+
+Nous avions dit que la Launch Week commencerait lundi. Le jour 1 est maintenant en ligne.
+
+Aujourd'hui, nous lançons la nouvelle expérience de tableau de bord Appbox. C'est une mise à niveau majeure de l'interface et des flux de travail dans tout le panneau de contrôle, avec un objectif simple : rendre la gestion de vos appboxes plus rapide, plus claire et moins pénible au quotidien.
+
+Cette mise à jour est en préparation depuis longtemps, et je suis très heureux que nous puissions enfin la mettre entre vos mains.
+
+## Un nouveau centre de contrôle
+
+Avant aujourd'hui, ces informations étaient réparties entre plusieurs pages et parcours. Aujourd'hui, nous introduisons un tableau de bord dédié qui les rassemble dans une seule vue opérationnelle :
+
+- dernières mises à jour du blog et de la plateforme
+- cartes d'aperçu de vos services
+- vos notifications
+- apps les plus récentes et récemment mises à jour
+
+Au lieu de passer d'un onglet à l'autre, vous pouvez donc ouvrir une seule page et voir immédiatement ce qui compte.
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Vue d'ensemble du tableau de bord Appbox" width="860" className="mt-8 mb-10" />
+</p>
+
+## Gestion Appbox repensée
+
+La zone des appboxes a été reconstruite avec une disposition de cartes plus claire et plus facile à parcourir rapidement. Vous pouvez repérer vite l'état, le stockage, le trafic, l'utilisation des slots, puis accéder directement aux détails.
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="Vos appboxes dans la nouvelle disposition" width="860" className="mt-8 mb-10" />
+</p>
+
+Dans chaque appbox, la vue récapitulative est désormais plus opérationnelle : cartes de ressources, graphiques et actions principales sont plus faciles à trouver et à comprendre d'un coup d'œil.
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="Résumé Appbox avec statistiques en direct" width="860" className="mt-8 mb-10" />
+</p>
+
+C'est le genre de page que vous gardez ouverte pendant que vous utilisez réellement votre environnement, pas seulement un écran d'information statique.
+
+## L'App Store est mieux intégré
+
+Nous avons aussi amélioré la découverte d'apps et les parcours de détail, afin qu'ils ressemblent à une seule expérience cohérente plutôt qu'à des outils séparés.
+
+La vue de la boutique est plus claire, les catégories sont plus faciles à parcourir, et le chemin entre la découverte et l'installation est plus court.
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="Expérience App Store intégrée" width="860" className="mt-8 mb-10" />
+</p>
+
+Les pages de détail des apps rendent maintenant les informations de versions et de ressources plus lisibles, afin que vous puissiez décider plus vite et avec moins de surprises avant d'installer ou de mettre à niveau.
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="Vue améliorée des détails et versions d'app" width="860" className="mt-8 mb-10" />
+</p>
+
+Et dès aujourd'hui, les apps peuvent exposer et prendre en charge **plusieurs versions installables** directement dans le flux, afin que vous puissiez choisir la version souhaitée et passer à une autre version à tout moment.
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="Sélecteur de version pour les apps avec plusieurs versions" width="304" className="mt-8 mb-10" />
+</p>
+
+## Les domaines personnalisés deviennent natifs
+
+Les domaines personnalisés font désormais partie intégrante de l'expérience d'installation, au lieu d'être une étape supplémentaire maladroite.
+
+Lorsqu'une app nécessite un domaine, la configuration se fait maintenant directement dans la boîte de dialogue d'installation avec un parcours guidé clair :
+
+1. Sélectionnez votre Appbox.
+2. Choisissez **Domain Type** :
+   - **Appbox Domain** pour utiliser le domaine par défaut de votre Appbox.
+   - **Custom Domain** pour utiliser l'un de vos propres domaines.
+3. Choisissez le **Base Domain**.
+4. Saisissez le **Subdomain** que vous voulez utiliser.
+5. Si vous avez choisi un domaine personnalisé, Appbox affiche l'enregistrement DNS exact à ajouter (hôte/nom et IP cible), puis vous permet de le vérifier immédiatement.
+
+Au lieu de deviner manuellement les enregistrements, copier de la documentation et relancer des installations, vous disposez d'une étape intégrée de configuration et vérification DNS, au même endroit que l'installation de l'app.
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="Configuration de domaine personnalisé pendant l'installation d'une app avec vérification DNS" width="560" className="mt-8 mb-10" />
+</p>
+
+## Nouvel explorateur de fichiers (reconstruit de zéro)
+
+L'explorateur de fichiers a été entièrement repensé. Dans l'ancienne expérience, la gestion des fichiers se limitait à la suppression. Désormais, c'est un vrai gestionnaire de fichiers avec :
+
+- upload
+- création de nouveaux dossiers
+- renommage
+- suppression
+- téléchargement
+- bascule entre vue liste et grille
+- navigation par fil d'Ariane et actions contextuelles
+
+Vous pouvez donc réellement gérer les fichiers de votre appbox nativement, sans installer une app supplémentaire.
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="Nouvel explorateur de fichiers avec actions étendues" width="560" className="mt-8 mb-10" />
+</p>
+
+## Authentification à deux facteurs
+
+La sécurité ne devrait pas être facultative en 2026. À partir d'aujourd'hui, les comptes Appbox prennent en charge l'authentification à deux facteurs intégrée.
+
+Vous pouvez activer et gérer la 2FA directement depuis votre espace compte, y compris la gestion des codes de récupération.
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="Gestion de l'authentification à deux facteurs" width="860" className="mt-8 mb-10" />
+</p>
+
+C'est une étape majeure pour la sécurité de la plateforme, et l'une des fonctionnalités que les utilisateurs ont le plus régulièrement demandées.
+
+## Un nouveau langage visuel dans tout le tableau de bord
+
+Le système visuel a été rafraîchi dans la navigation, les espacements, les cartes, la typographie et les états d'interaction. L'objectif était la cohérence et la concentration : moins de bruit visuel, une hiérarchie plus forte, une meilleure lisibilité et une sensation produit plus moderne dans les thèmes sombre et clair.
+
+Vous n'aurez plus un écran blanc aveuglant lorsque vous installez des apps à minuit !
+
+## Meilleure UX quotidienne : thème, langue et raccourcis plus rapides
+
+Cette sortie inclut aussi des améliorations de confort qui rendent le tableau de bord plus agréable à utiliser tous les jours :
+
+- **Changement de langue natif** directement dans l'interface (avec davantage de langues ajoutées au fil du temps).
+- **Raccourcis d'apps épinglées** affichés sous forme de petites icônes d'accès rapide sur vos cartes de services, pour accéder plus vite à vos apps les plus utilisées.
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="Sélecteur de langue natif dans le nouveau tableau de bord" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="Raccourcis d'apps épinglées sur les cartes de services" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  Le changement de langue et les raccourcis épinglés placent les contrôles quotidiens exactement là où vous en avez besoin.
+</p>
+
+## Le jour 1 est en ligne maintenant
+
+Si vous utilisez déjà Appbox, vous pouvez vous connecter et commencer immédiatement à utiliser le nouveau tableau de bord.
+
+Comme toujours, vos retours sont les bienvenus. La manière la plus rapide d'améliorer Appbox est d'expédier, d'écouter et d'itérer avec une utilisation réelle.
+
+---
+
+*Un retour ou un problème ? Contactez-nous à support@appbox.co ou ouvrez un ticket sur [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

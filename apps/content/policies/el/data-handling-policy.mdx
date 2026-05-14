@@ -1,0 +1,397 @@
+---
+title: "Πολιτική χειρισμού δεδομένων"
+description: "Πώς διαχειριζόμαστε και προστατεύουμε τα δεδομένα σας"
+---
+
+Στο Appbox, συλλέγουμε και αποθηκεύουμε μόνο τις ελάχιστες πληροφορίες που είναι απαραίτητες για τη διατήρηση των αρχείων μας και την παροχή των υπηρεσιών μας. Η ομάδα Appbox είναι εκπαιδευμένη να χειρίζεται τα δεδομένα σας με μέγιστη ιδιωτικότητα και ασφάλεια και ακολουθεί αυστηρά πρωτόκολλα, συμπεριλαμβανομένης της χρήσης ισχυρών credentials και multi-factor authentication. Όλη η επεξεργασία πληρωμών γίνεται εξ ολοκλήρου από τους payment processors μας και καμία από τις οικονομικές σας πληροφορίες δεν αποθηκεύεται από το Appbox, πέρα από αρχεία πληρωμών και τα αντίστοιχα transaction IDs τους.
+
+## Email
+
+- **Χρήσεις**
+  - Χρησιμεύει ως login για το Appbox Client Area και το Appbox Control Panel σας
+  - Σημείο επικοινωνίας για ανακοινώσεις υπηρεσιών Appbox
+  - Σημείο επικοινωνίας για ερωτήματα στο Appbox Ticket System
+- **Συλλογή**
+  - Παρέχεται από τον χρήστη κατά την εγγραφή
+- **Αποθήκευση**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Appbox team
+    - Αυτό γίνεται για επικοινωνία με τον χρήστη για support ή οποιεσδήποτε ανακοινώσεις υπηρεσιών
+- **Διατήρηση**
+  - Αόριστη
+- **Περισσότερες πληροφορίες**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Χρήσεις**
+  - Ταυτοποιεί τον χρήστη στο Appbox Ticket System
+  - Χρησιμεύει ως όνομα του Appbox slot του χρήστη
+  - Καταχωρίζεται ως local user στον server όπου αναπτύσσεται το slot του χρήστη, εμφανίζοντας οποιεσδήποτε running processes έχει ο χρήστης
+  - Χρησιμεύει ως username του χρήστη για installed applications
+- **Συλλογή**
+  - Παρέχεται από τον χρήστη κατά την εγγραφή
+- **Αποθήκευση**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Appbox team
+    - Απαιτείται για support inquiries
+    - Απαιτείται για διερεύνηση server issues αναζητώντας εφαρμογές με υψηλή κατανάλωση πόρων, πηγές server instability ή οποιεσδήποτε μη εξουσιοδοτημένες εφαρμογές
+- **Διατήρηση**
+  - Αόριστη
+- **Περισσότερες πληροφορίες**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Χρήσεις**
+  - Χρησιμοποιείται για τον υπολογισμό εφαρμοστέων φόρων με βάση τη χώρα που έχει επιλέξει ο χρήστης
+- **Συλλογή**
+  - Παρέχεται από τον χρήστη κατά την εγγραφή
+- **Αποθήκευση**
+  - WHMCS = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Appbox team
+- **Διατήρηση**
+  - Αόριστη
+- **Περισσότερες πληροφορίες**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Χρήσεις**
+  - Χρησιμεύει ως password του χρήστη για το Appbox Client Area
+- **Συλλογή**
+  - Παρέχεται από τον χρήστη κατά την εγγραφή στο Appbox Client Area
+- **Αποθήκευση**
+  - WHMCS = Encrypted
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Περιορισμένη πρόσβαση από την Appbox team
+    - Η Appbox team δεν μπορεί να δει το password του χρήστη καθώς είναι hashed, αλλά μπορεί να κάνει reset το password σας μετά από επαλήθευση
+- **Διατήρηση**
+  - Αόριστη
+- **Περισσότερες πληροφορίες**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Συνιστούμε έντονα την ενεργοποίηση two-factor authentication στη [account security page](https://billing.appbox.co/user/security) σας
+
+### Appbox Control Panel Password
+
+- **Χρήσεις**
+  - Χρησιμεύει ως password του χρήστη στο Appbox Control Panel για πρόσβαση στο slot του
+- **Συλλογή**
+  - Παρέχεται από τον χρήστη μετά την ανάπτυξη του slot του
+- **Αποθήκευση**
+  - Appbox API = Encrypted
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Περιορισμένη πρόσβαση από την Appbox team
+    - Η Appbox team δεν μπορεί να δει το password του χρήστη καθώς είναι hashed, αλλά μπορεί να κάνει reset το password σας μετά από επαλήθευση
+- **Διατήρηση**
+  - Αόριστη
+- **Περισσότερες πληροφορίες**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Συνιστούμε έντονα την ενεργοποίηση two-factor authentication στη [account security page](https://billing.appbox.co/user/security) σας
+
+### Application Passwords
+
+- **Χρήσεις**
+  - Χρησιμεύει ως password για τις installed applications του χρήστη
+- **Συλλογή**
+  - Παρέχεται από τον χρήστη μετά την ανάπτυξη του slot του
+- **Αποθήκευση**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Appbox team
+    - Απαιτείται για application-specific support inquiries, με την άδεια του χρήστη
+- **Διατήρηση**
+  - Μέχρι ο χρήστης να απεγκαταστήσει την εφαρμογή
+- **Περισσότερες πληροφορίες**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Συνιστούμε έντονα την ενεργοποίηση two-factor authentication στη [account security page](https://billing.appbox.co/user/security) σας
+
+## Payment Processing
+
+### PayPal
+
+- **Χρήσεις**
+  - Χρησιμεύει ως ένα από τα payment gateways του Appbox
+- **Συλλογή**
+  - Η επεξεργασία πληρωμών γίνεται εξ ολοκλήρου από το PayPal. Τα μόνα δεδομένα που αποθηκεύονται στο WHMCS κάτω από τον λογαριασμό του χρήστη είναι το **PayPal Transaction ID**
+- **Αποθήκευση**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Appbox Sales Team
+    - Η Appbox Sales Team μπορεί να επαληθεύσει τις πληροφορίες του χρήστη με το PayPal ως μέρος της διαδικασίας πωλήσεών μας
+- **Διατήρηση**
+  - Αόριστη
+
+### Stripe
+
+- **Χρήσεις**
+  - Χρησιμεύει ως ένα από τα payment gateways του Appbox
+- **Συλλογή**
+  - Η επεξεργασία πληρωμών γίνεται εξ ολοκλήρου από το Stripe. Τα μόνα δεδομένα που αποθηκεύονται στο WHMCS κάτω από τον λογαριασμό του χρήστη είναι το **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Αποθήκευση**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Appbox Sales Team
+    - Η Appbox Sales Team μπορεί να επαληθεύσει τις πληροφορίες του χρήστη με το Stripe ως μέρος της διαδικασίας πωλήσεών μας
+- **Διατήρηση**
+  - Αόριστη
+
+### CoinGate
+
+- **Χρήσεις**
+  - Χρησιμεύει ως ένα από τα payment gateways του Appbox για cryptocurrency transactions
+- **Συλλογή**
+  - Η επεξεργασία πληρωμών γίνεται εξ ολοκλήρου από το CoinGate. Τα μόνα δεδομένα που αποθηκεύονται στο WHMCS είναι το **CoinGate Transaction ID**
+- **Αποθήκευση**
+  - WHMCS = Cleartext (Transaction ID)
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Appbox Sales Team
+    - Η Appbox Sales Team μπορεί να επαληθεύσει τις πληροφορίες του χρήστη με το CoinGate ως μέρος της διαδικασίας πωλήσεών μας
+- **Διατήρηση**
+  - Αόριστη
+
+*Σημείωση: Το ίδιο το CoinGate αποθηκεύει το blockchain transaction ID και τη blockchain address του αποστολέα ως μέρος της υπηρεσίας του. Αυτές οι πληροφορίες δεν αποθηκεύονται από το Appbox.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Χρήσεις**
+  - Χρησιμοποιούνται για την παρακολούθηση της υγείας και της χρήσης πόρων των servers
+- **Συλλογή**
+  - Δημιουργούνται μετά την ανάπτυξη του slot του χρήστη
+- **Αποθήκευση**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+    - Τα server metrics μπορούν να προβληθούν χρησιμοποιώντας διάφορα Linux utilities εγκατεστημένα στο slot σας. Τα ακόλουθα κύρια metrics μπορούν να φανούν:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Οι running processes σας
+      - Processes που εκτελούνται από άλλους χρήστες στον ίδιο server δεν είναι προσβάσιμες από εσάς
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (your allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - Εκτός από τα παραπάνω metrics, η Appbox team χρησιμοποιεί Posthog για να συγκεντρώνει γρήγορα όλα τα metrics από όλους τους servers και να ειδοποιεί την ομάδα για τυχόν errors
+    - Τα server metrics χρησιμοποιούνται για support inquiries και για διερεύνηση τυχόν resource abuse
+- **Διατήρηση**
+  - Αόριστη
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Χρήσεις**
+  - Οποιεσδήποτε invalid access attempts καταγράφονται στο Appbox API, το οποίο περιορίζει τον χρήστη από το να συνδεθεί στο Control Panel μετά από συγκεκριμένο αριθμό προσπαθειών για καθορισμένο χρονικό διάστημα. Αυτό περιλαμβάνει:
+    - Username, όπως εισήχθη από τον χρήστη
+    - IP address
+    - Αριθμό προσπαθειών
+    - Τελευταία ημερομηνία προσπάθειας
+- **Συλλογή**
+  - Συλλέγεται όταν ένας χρήστης εισάγει credentials λανθασμένα
+- **Αποθήκευση**
+  - Appbox API = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Appbox Team
+    - Χρησιμοποιείται για τον εντοπισμό τυχόν brute-force attempts
+    - Οι χρήστες μπορούν να ζητήσουν άρση του timeout και αφαίρεση της access attempt, κατόπιν αιτήματος και επαλήθευσης μέσω του Ticket system
+- **Διατήρηση**
+  - 24 ώρες ή κατόπιν αιτήματος χρήστη
+
+#### SSH Login Logs
+
+- **Χρήσεις**
+  - Καταγράφει login attempts και successful logins σε SSH σε user-installed applications όπως Ubuntu ή Debian
+- **Συλλογή**
+  - Δημιουργούνται αυτόματα από τον SSH server όταν πραγματοποιούνται login attempts
+- **Αποθήκευση**
+  - Application container = Cleartext (συνήθως σε `/var/log/auth.log` ή παρόμοιο)
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+    - Καθώς αυτά τα logs αποθηκεύονται μέσα σε εφαρμογές όπου οι χρήστες έχουν root (sudo) access, οι χρήστες έχουν πλήρη έλεγχο και πρόσβαση σε αυτά τα logs
+    - Οι χρήστες μπορούν να βλέπουν, τροποποιούν ή διαγράφουν αυτά τα logs όπως χρειάζεται
+  - Appbox team
+    - Η πρόσβαση είναι διαθέσιμη μόνο με άδεια χρήστη κατά τη διάρκεια support troubleshooting
+- **Διατήρηση**
+  - Διαχειρίζεται από τον χρήστη, καθώς έχει root access στο container
+  - Εφαρμόζονται προεπιλεγμένες log rotation policies εκτός αν τροποποιηθούν από τον χρήστη
+
+### System Generated Logs
+
+- **Χρήσεις**
+  - Server-wide generated logs, χρησιμοποιούνται για τον εντοπισμό ζητημάτων στους servers
+- **Συλλογή**
+  - Δημιουργούνται από το operating system των servers
+- **Αποθήκευση**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Limited Access Appbox team
+    - Χρησιμοποιούνται για τον εντοπισμό ζητημάτων σε συγκεκριμένους servers
+    - Τα logs συγκεντρώνονται από το Posthog, το οποίο ειδοποιεί την ομάδα για τυχόν errors
+- **Διατήρηση**
+  - Αόριστη
+
+### Logs Generated by Installed Applications
+
+- **Χρήσεις**
+  - Logs που δημιουργούνται από installed applications, χρησιμοποιούνται για τον εντοπισμό ζητημάτων μέσα στο slot του χρήστη
+- **Συλλογή**
+  - Δημιουργούνται από τις installed applications του χρήστη
+- **Αποθήκευση**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Appbox team
+    - Απαιτείται για application-specific support inquiries, με την άδεια του χρήστη
+- **Διατήρηση**
+  - Μέχρι ο χρήστης να απεγκαταστήσει ή να αφαιρέσει την εφαρμογή
+
+### User's bash History
+
+- **Χρήσεις**
+  - Καταγράφει όλες τις εντολές που εισάγει ο χρήστης στο shell του slot, που βρίσκεται στο `$HOME/.bash_history`
+- **Συλλογή**
+  - Κάθε εντολή που εισάγεται στο shell καταγράφεται
+- **Αποθήκευση**
+  - Appbox Servers = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+    - Καθώς το bash history file αποθηκεύεται στον home directory του χρήστη, οι χρήστες έχουν πλήρη έλεγχο αυτού του αρχείου
+    - Οι χρήστες μπορούν να βλέπουν, τροποποιούν, καθαρίζουν ή διαγράφουν αυτό το αρχείο όπως χρειάζεται (χρησιμοποιώντας εντολές όπως `history -c` ή επεξεργάζοντας/αφαιρώντας το αρχείο)
+  - Appbox team
+    - Χρησιμοποιείται για general ή application-specific inquiries, όπως επαλήθευση ότι οι εντολές που εισήγαγε ο χρήστης είναι σωστές, αλλά μόνο με άδεια χρήστη
+    - Χρησιμοποιείται για έλεγχο πιθανών intrusions ή server abuse, αλλά μόνο όταν είναι απαραίτητο για security investigations
+- **Διατήρηση**
+  - Διαχειρίζεται από τον χρήστη, ο οποίος μπορεί να καθαρίσει το history οποιαδήποτε στιγμή
+  - Από προεπιλογή, το bash history διατηρείται επ' αόριστον μέχρι ο χρήστης να το αφαιρέσει
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Χρήσεις**
+  - Βασικά αρχεία ώστε οι installed applications να λειτουργούν σωστά
+- **Συλλογή**
+  - Εγκαθίστανται από τον χρήστη στο slot του
+- **Αποθήκευση**
+  - Appbox Servers = Depends on the Application
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+  - Appbox team
+    - Χρησιμοποιείται για application-specific support inquiries, με την άδεια του χρήστη
+- **Διατήρηση**
+  - Αόριστη μέχρι να το αφαιρέσει ο χρήστης
+
+#### User Data
+
+- **Χρήσεις**
+  - Δεδομένα που δημιουργούνται από τον χρήστη ή/και τις εφαρμογές του χρήστη και αποθηκεύονται στο slot του χρήστη
+- **Συλλογή**
+  - Δημιουργούνται από τον χρήστη ή/και τις εφαρμογές του χρήστη
+- **Αποθήκευση**
+  - Appbox Servers = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Χρήστης
+    - Τα αρχεία του χρήστη αποθηκεύονται σε home folders στους Appbox servers και είναι απομονωμένα από άλλους χρήστες. Μόνο ο χρήστης μπορεί να έχει πρόσβαση σε αυτά
+  - Appbox team
+    - Μπορούν να προσπελαστούν για support inquiries, με την άδεια του χρήστη
+- **Διατήρηση**
+  - Αόριστη μέχρι να τα αφαιρέσει ο χρήστης
+    - Για νόμιμες DMCA takedown notices, θα ενημερώσουμε τον χρήστη και θα του ζητήσουμε να διαγράψει το περιεχόμενο εντός 24 ωρών
+- **Περισσότερες πληροφορίες**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Compliance
+
+Σύμφωνα με το UK Online Safety Act 2023, το Appbox εφαρμόζει συγκεκριμένες πρακτικές χειρισμού δεδομένων για την προστασία των χρηστών και τη συμμόρφωση με τις κανονιστικές απαιτήσεις:
+
+### Content Safety Monitoring
+
+- **Χρήσεις**
+  - Risk assessment και mitigation για παράνομο και επιβλαβές περιεχόμενο
+  - Moderation αναφερόμενου περιεχομένου
+  - Πρόληψη διανομής παράνομου περιεχομένου
+- **Συλλογή**
+  - Δημιουργείται όταν περιεχόμενο αναφέρεται ή επισημαίνεται
+  - Content hash values για γνωστό παράνομο υλικό
+- **Αποθήκευση**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Appbox Compliance Team
+    - Για εξέταση αναφερόμενου περιεχομένου και λήψη κατάλληλων ενεργειών
+    - Για συντονισμό με τις αρχές του Ηνωμένου Βασιλείου όταν απαιτείται νομικά
+  - UK regulatory authorities (when required by law)
+    - Για παρακολούθηση συμμόρφωσης με το Online Safety Act
+    - Για διερεύνηση σοβαρού παράνομου περιεχομένου
+- **Διατήρηση**
+  - Report data: 2 χρόνια μετά την επίλυση
+  - Content hash values: Αόριστη (για πρόληψη αναδιανομής)
+
+### Risk Assessment Data
+
+- **Χρήσεις**
+  - Διενέργεια απαιτούμενων risk assessments για παράνομο περιεχόμενο και περιεχόμενο επιβλαβές για παιδιά
+  - Εφαρμογή αναλογικών safety measures
+  - Απόδειξη συμμόρφωσης προς regulatory authorities
+- **Συλλογή**
+  - Δημιουργείται μέσω τακτικών platform risk assessments
+  - Aggregated usage data για τον εντοπισμό πιθανών risk patterns
+- **Αποθήκευση**
+  - Appbox Compliance Systems = Protected
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Appbox Compliance Team
+    - Για διεξαγωγή και ενημέρωση risk assessments
+    - Για εφαρμογή safety measures
+  - UK regulatory authorities (when required by law)
+    - Για επαλήθευση συμμόρφωσης με risk assessment duties
+- **Διατήρηση**
+  - 3 χρόνια (για απόδειξη συνεχιζόμενης συμμόρφωσης)
+
+### Content Reporting System
+
+- **Χρήσεις**
+  - Επιτρέπει στους χρήστες να αναφέρουν παράνομο ή επιβλαβές περιεχόμενο
+  - Παρακολουθεί την κατάσταση αναφορών και τις ενέργειες που ελήφθησαν
+- **Συλλογή**
+  - Report details που παρέχονται από reporting users
+  - Πληροφορίες σχετικά με αναφερόμενο περιεχόμενο
+  - Ενέργειες που ελήφθησαν επί αναφορών
+- **Αποθήκευση**
+  - Appbox API = Encrypted
+- **Πρόσβαση και λόγοι πρόσβασης**
+  - Reporting user (περιορισμένη στα δικά του reports)
+  - Χρήστης του οποίου το περιεχόμενο αναφέρθηκε (περιορισμένες πληροφορίες)
+  - Appbox Compliance Team
+    - Για διερεύνηση και επίλυση reports
+  - UK regulatory authorities (when required by law)
+    - Για διερεύνηση serious illegal content reports
+- **Διατήρηση**
+  - 2 χρόνια μετά την επίλυση

@@ -1,0 +1,108 @@
+---
+title: Appbox için Ufukta Büyük Güncellemeler Var! 🚀
+date: 2025-04-08 11:58:00
+excerpt: "Yeni web sitesi, open-source girişimi, containerized uygulamalar, kendi ağ altyapımız ve Appbox'a gelen daha pek çok heyecan verici gelişme!"
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Appbox'ta Yeni Bir Dönem Başlıyor
+
+Aylarca perde arkasında çalıştıktan, geç saatlere kadar uğraştıktan ve fazlasıyla kahve içtikten sonra, sonunda ne inşa ettiğimizi size gösterebildiğim için heyecanlıyım. Bu sıradan bir güncelleme değil. Bu, Appbox'ı temelden yeniden inşa etmemiz.
+
+## Yeni Dijital Evimize Hoş Geldiniz
+
+Yepyeni web sitemize bakıyorsunuz! Sonunda eski WordPress kurulumumuza veda ettik. Her şey daha hızlı, daha güvenli ve gerçekten düzgün ölçeklenen modern teknolojiyle yeniden inşa edildi.
+
+Bu yeni site düzgün dokümantasyonun, düzenli blog yazılarının (bunun gibi) ve sonunda yeni platformumuzun frontend'inin evi olacak. Tasarım sadece daha temiz değil; gerçekten işlevsel ve aradığınız şeyleri bulmayı çok daha kolay hale getiriyor.
+
+Arka planda Next.js ve ContentLayer kullanıyoruz; bu bize gerçekten hızlı performans ve çok daha iyi bir geliştirme deneyimi sağlıyor. Site birden fazla dili destekliyor, SEO'yu otomatik yönetiyor, hem XML hem JSON olarak RSS feed'leri sunuyor ve kimsenin sabah 2'de parlak beyaz ekranlarla uğraşmak zorunda kalmaması için koyu mod içeriyor.
+
+## Open Source Oluyoruz!
+
+Ayrıca open source oluyoruz! Şu anda okuduğunuz web sitesi mi? Kodu herkese açık ve herkes katkıda bulunabilir.
+
+Bu bizim için çok büyük. Her zaman şeffaf olmaya çalıştık, ama bu kez sözümüzün arkasında gerçekten duruyor ve topluluk için değil, toplulukla birlikte inşa ediyoruz. Bir geliştiriciyseniz ve kullandığınız araçları şekillendirmeye katkıda bulunmak istediyseniz, artık bunu yapabilirsiniz. Katkı yönergeleri ve başlamak için ihtiyaç duyduğunuz her şey için GitHub depomuza göz atın.
+
+## Appbox v2 ile Tanışın
+
+Yeni web sitesi sadece başlangıç. Şimdiye kadar yaptığımız en büyük güncelleme olan Appbox v2 üzerinde çalışıyoruz.
+
+Container deployment her zaman bizim işimiz oldu, ancak v2 bunu herkesin istediği şeyle daha ileri taşıyor: tam VPS desteği. VPS uygulamaları size hiçbir kısıtlama olmadan tam root erişimi verecek. Ortamınız üzerinde tam kontrole ihtiyacınız varsa beklediğiniz şey bu.
+
+Bunu bir sunucuda çalışır hale getirdik bile ve gerçekten iyi çalışıyor. VPS uygulamalarını app store'dan herhangi bir uygulama gibi kurabileceksiniz. Bu, Docker, Snap ve Tailscale gibi şu anda mümkün olmayan uygulamaları kurmanıza olanak tanıyacak. Bunu daha güvenli hale getirmek ve performansı artırmak için bazı yeni sanallaştırma özelliklerini kullandığımızdan sunucularımızda Debian 13'e OS güncellemesi gerektiriyor. Özelliği yayınlamadan önce bu güncellemeyi kullanıma almamız gerekecek, ancak yakında bununla ilgili daha fazla güncelleme olacak.
+
+Bu, kanıtlanmış container altyapımızı gerçek VPS esnekliğiyle birleştirerek size iki dünyanın da en iyisini sunar.
+
+## Kendi Ağ Altyapımızı Kuruyoruz
+
+İşte gerçekten büyük haber: kendi ağımızı kuruyoruz.
+
+Sadece daha fazla sunucu eklemek veya bant genişliğini yükseltmek değil. Tamamen bize ait bir ağ inşa etmek için kendi Autonomous System Number'ımız ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) ve kendi IP bloğumuz (79.140.195.0/24) var. Temelde kendi resmi internet kimliğimiz ve adres alanımızla kendi ISP'miz haline geliyoruz; böylece verilerinizin internet üzerinde nasıl yol aldığını kontrol edebileceğiz [1].
+
+Bu sizin için ne anlama geliyor? Her şeyi kontrol edebilir, özellikle Appbox kullanıcıları için optimize edebilir ve daha önce mümkün olmayan güvenilirlik ve performans sunabiliriz.
+
+## AMS-IX ile Peering
+
+Ağ geliştirmemizle birlikte, ağ kurulumu tamamlandığında 100G bağlantı için AMS-IX ile peering yapmaya başlayacağız. Bu bize dünyanın en büyük internet değişim noktalarından birine doğrudan erişim sağlıyor; bu da herkes için daha düşük gecikme ve daha iyi hızlar demek. Bunu, arka yollardan gitmek yerine büyük internet sağlayıcılarına doğrudan bir otoyolunuz olması gibi düşünün [2].
+
+Bu tür bağlantı genellikle yalnızca çok daha büyük şirketlerin erişebildiği bir şeydir, ancak hangi planda olursanız olun enterprise-grade performans sunmak istiyoruz.
+
+Donanım alımımız için anlaşmayı artık tamamladık, bu yüzden hazırız. Yeni donanımı en geç Ekim'de, muhtemelen Eylül kadar erken bir tarihte alacağız. Bu, kısa süre sonra yeni ağda çalışır durumda olmamız gerektiği anlamına geliyor.
+
+## Fiyat Ayarlamaları
+
+Bu, gerçekten yazmak istemediğimiz kısım. Böyle bir altyapı kurmak pahalı ve maliyetin büyük kısmını kendimiz üstleniyor olsak da ne yazık ki hem yeni hem mevcut müşteriler için fiyatlarımızda küçük bir ayarlama yapmamız gerekiyor.
+
+Bu konuda açık olmak istiyorum. Yeni fiyatlandırma sitede zaten yayında ve mevcut müşterilerle bunun onları nasıl etkilediğine dair detaylarla yakında iletişime geçeceğiz.
+
+Herkesin şu anda ne kadar zorlandığını biliyoruz ve bu dürüst olmak gerekirse vermek zorunda kaldığımız en zor kararlardan biriydi. Artışları mümkün olduğunca küçük tuttuk; temelde bu işi yürütmek için ihtiyaç duyduğumuz mutlak minimum dışında her şeyi biz karşılıyoruz.
+
+Yine de bu fiyat artışını fazlasıyla değerli hale getireceğiz. Performans ve güvenilirlikte farkı gerçekten fark edeceksiniz. Ayrıca bu, ağımızı genişletmeye ve ileride daha fazla peering eklemeye devam edebileceğimiz anlamına geliyor; bu yüzden işler buradan itibaren daha da iyiye gidecek.
+
+Bu güncellenmiş fiyatları yeni müşteriler için 3 ay önce yayınladık ve geri bildirimler iyiydi; bu yüzden işleri uygun fiyatlı tutmak ile hak ettiğiniz iyileştirmeleri finanse etmek arasında iyi bir denge yakaladığımızı düşünüyoruz, hâlâ çok rekabetçiyiz. Örneğin popüler NG-4500 planımız ayda yalnızca €2.08 artıyor ve bu hâlâ rakiplerin benzer planlarından çok daha düşük.
+
+Mevcut müşteriler için yalnızca eski ve yeni fiyatlandırma arasındaki farkı ödeyeceksiniz. Promosyon indirimleriniz varsa bunlar yeni temel fiyatın üzerine uygulanmaya devam edecek. Özellikle böyle dönemlerde sadakatinizi takdir ediyoruz.
+
+İndirim yapımız aynı kalıyor:
+- üç aylık ödemelerde %5 indirim
+- 6 aylık ödemelerde %10 indirim
+- yıllık ödemelerde %15 indirim
+
+Otomatik ödeme ayarlarınız varsa, ayarlama e-postayı aldıktan sonraki bir sonraki faturalandırma döngünüzde gerçekleşecek. Hiçbir şey yapmanız gerekmiyor.
+
+## Daha Fazla Depolama!
+
+Her şey daha fazla ödeme yapmakla ilgili değil. En düşük planımızdaki depolamayı da 3TB'den 3.5TB'ye çıkarıyoruz. Bu %16 artış demek ve fiyat değişikliğine rağmen giriş seviyesi planımızı daha da iyi bir fırsat haline getiriyor.
+
+## Sırada Ne Var?
+
+Bu, Appbox için geleceklerin sadece başlangıcı. Önümüzdeki birkaç hafta ve ay boyunca yeni özellikleri kullanıma alırken, mevcut olanları geliştirirken ve yeni nesil uygulama barındırma için altyapıyı inşa etmeye devam ederken düzenli güncellemeler göreceksiniz.
+
+Yeni ağ altyapımızı Eylül/Ekim'de test etmeye başlamayı planlıyoruz ve ilerleme kaydettikçe sizi bilgilendirmeye devam edeceğiz.
+
+Yol haritamız şunları içeriyor:
+- hiçbir kısıtlaması olmayacak VPS uygulamaları (Docker, Snap ve Tailscale gibi)
+- gerçekten her şeyi kapsayan daha iyi dokümantasyon
+- insanların Appbox ile inşa ettiği harika şeyler için bir topluluk vitrini
+- altyapımız hakkında düzenli teknik blog yazıları
+- belirli kullanım senaryoları için yeni containerized uygulamalar
+- daha iyi izleme ve analiz araçları
+- tüm planlarda geliştirilmiş güvenlik özellikleri
+
+Bizimle kaldığınız için teşekkürler. Topluluğumuz olmadan bunların hiçbiri mümkün olmazdı.
+
+Yakında daha fazla güncelleme gelecek.
+
+---
+
+*Yeni Appbox'ta hangi özellikleri veya iyileştirmeleri görmek istersiniz? Bize support@appbox.co adresinden yazın.*
+
+---
+
+**Referanslar:**
+
+[1] [Autonomous System Number nedir?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [Internet Peering nedir?](https://en.wikipedia.org/wiki/Internet_exchange_point)

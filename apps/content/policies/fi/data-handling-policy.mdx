@@ -1,0 +1,397 @@
+---
+title: Datan käsittelyä koskeva käytäntö
+description: Miten hallinnoimme ja suojaamme dataasi
+---
+
+Appboxissa keräämme ja säilytämme vain vähimmäismäärän tietoa, joka on tarpeen kirjanpitomme ylläpitämiseksi ja palveluidemme toimittamiseksi. Appbox-tiimi on koulutettu käsittelemään dataasi mahdollisimman yksityisesti ja turvallisesti ja noudattaa tiukkoja protokollia, mukaan lukien vahvojen tunnistetietojen ja monivaiheisen tunnistautumisen käyttö. Kaikki maksunkäsittely hoidetaan kokonaan maksunkäsittelijöidemme toimesta, eikä Appbox säilytä mitään taloustietojasi lukuun ottamatta maksutietoja ja niihin liittyviä tapahtumatunnuksia.
+
+## Sähköposti
+
+- **Käyttötarkoitukset**
+  - Toimii kirjautumistunnuksenasi Appbox Client Area -alueelle ja Appbox Control Paneliin
+  - Yhteyspiste Appbox-palvelutiedotteille
+  - Yhteyspiste Appbox Ticket System -kyselyille
+- **Kerääminen**
+  - Käyttäjän antama rekisteröitymisen yhteydessä
+- **Säilytys**
+  - WHMCS = Selväkielinen
+  - Appbox API = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Appbox-tiimi
+    - Tätä käytetään käyttäjän yhteydenottoon tuen tai palvelutiedotteiden vuoksi
+- **Säilytysaika**
+  - Määrittelemätön
+- **Lisätietoja**
+  - Sensitive Data Removal Policy
+
+## Käyttäjänimi
+
+- **Käyttötarkoitukset**
+  - Tunnistaa käyttäjän Appbox Ticket System -järjestelmässä
+  - Toimii käyttäjän Appbox-slotin nimenä
+  - Rekisteröidään paikalliseksi käyttäjäksi palvelimelle, jolle käyttäjän slotti on otettu käyttöön, jolloin käyttäjän käynnissä olevat prosessit näkyvät
+  - Toimii käyttäjän käyttäjänimenä asennetuille sovelluksille
+- **Kerääminen**
+  - Käyttäjän antama rekisteröitymisen yhteydessä
+- **Säilytys**
+  - WHMCS = Selväkielinen
+  - Appbox API = Selväkielinen
+  - Asennetut sovellukset = Riippuu sovelluksesta
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Appbox-tiimi
+    - Tarvitaan tukipyyntöihin
+    - Tarvitaan palvelinongelmien tutkimiseen etsimällä sovelluksia, joilla on korkea resurssinkulutus, palvelimen epävakauden lähteitä tai luvattomia sovelluksia
+- **Säilytysaika**
+  - Määrittelemätön
+- **Lisätietoja**
+  - Sensitive Data Removal Policy
+
+## Maa
+
+- **Käyttötarkoitukset**
+  - Käytetään sovellettavien verojen laskemiseen käyttäjän valitseman maan perusteella
+- **Kerääminen**
+  - Käyttäjän antama rekisteröitymisen yhteydessä
+- **Säilytys**
+  - WHMCS = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Appbox-tiimi
+- **Säilytysaika**
+  - Määrittelemätön
+- **Lisätietoja**
+  - Sensitive Data Removal Policy
+
+## Salasana
+
+### Appbox Client Area -salasana
+
+- **Käyttötarkoitukset**
+  - Toimii käyttäjän salasanana Appbox Client Area -alueella
+- **Kerääminen**
+  - Käyttäjän antama rekisteröitymisen yhteydessä Appbox Client Area -alueella
+- **Säilytys**
+  - WHMCS = Salattu
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Rajoitettu pääsy Appbox-tiimillä
+    - Appbox-tiimi ei näe käyttäjän salasanaa, koska se on hajautettu, mutta he voivat nollata salasanasi vahvistuksen jälkeen
+- **Säilytysaika**
+  - Määrittelemätön
+- **Lisätietoja**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Suosittelemme vahvasti kaksivaiheisen tunnistautumisen käyttöönottoa [tilisi tietoturvasivulla](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel -salasana
+
+- **Käyttötarkoitukset**
+  - Toimii käyttäjän salasanana Appbox Control Panelissa hänen slottinsa käyttöä varten
+- **Kerääminen**
+  - Käyttäjän antama hänen slottinsa käyttöönoton jälkeen
+- **Säilytys**
+  - Appbox API = Salattu
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Rajoitettu pääsy Appbox-tiimillä
+    - Appbox-tiimi ei näe käyttäjän salasanaa, koska se on hajautettu, mutta he voivat nollata salasanasi vahvistuksen jälkeen
+- **Säilytysaika**
+  - Määrittelemätön
+- **Lisätietoja**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Suosittelemme vahvasti kaksivaiheisen tunnistautumisen käyttöönottoa [tilisi tietoturvasivulla](https://billing.appbox.co/user/security)
+
+### Sovellusten salasanat
+
+- **Käyttötarkoitukset**
+  - Toimii salasanana käyttäjän asennetuille sovelluksille
+- **Kerääminen**
+  - Käyttäjän antama hänen slottinsa käyttöönoton jälkeen
+- **Säilytys**
+  - Appbox API = Selväkielinen
+  - Asennetut sovellukset = Riippuu sovelluksesta
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Appbox-tiimi
+    - Tarvitaan sovelluskohtaisiin tukipyyntöihin käyttäjän luvalla
+- **Säilytysaika**
+  - Kunnes käyttäjä poistaa sovelluksen
+- **Lisätietoja**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Suosittelemme vahvasti kaksivaiheisen tunnistautumisen käyttöönottoa [tilisi tietoturvasivulla](https://billing.appbox.co/user/security)
+
+## Maksunkäsittely
+
+### PayPal
+
+- **Käyttötarkoitukset**
+  - Toimii yhtenä Appboxin maksuyhdyskäytävistä
+- **Kerääminen**
+  - Maksunkäsittely tehdään kokonaan PayPalin toimesta. Ainoa käyttäjän tilille WHMCS:ään tallennettu tieto on **PayPal Transaction ID**
+- **Säilytys**
+  - WHMCS = Selväkielinen (PayPal Transaction ID)
+- **Pääsy ja pääsyn syyt**
+  - Appbox Sales Team
+    - Appbox Sales Team voi vahvistaa käyttäjän tiedot PayPalilta osana myyntiprosessiamme
+- **Säilytysaika**
+  - Määrittelemätön
+
+### Stripe
+
+- **Käyttötarkoitukset**
+  - Toimii yhtenä Appboxin maksuyhdyskäytävistä
+- **Kerääminen**
+  - Maksunkäsittely tehdään kokonaan Stripen toimesta. Ainoat käyttäjän tilille WHMCS:ään tallennetut tiedot ovat **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Säilytys**
+  - WHMCS = Selväkielinen (Stripe Payment ID)
+- **Pääsy ja pääsyn syyt**
+  - Appbox Sales Team
+    - Appbox Sales Team voi vahvistaa käyttäjän tiedot Stripeltä osana myyntiprosessiamme
+- **Säilytysaika**
+  - Määrittelemätön
+
+### CoinGate
+
+- **Käyttötarkoitukset**
+  - Toimii yhtenä Appboxin maksuyhdyskäytävistä kryptovaluuttatapahtumille
+- **Kerääminen**
+  - Maksunkäsittely tehdään kokonaan CoinGaten toimesta. Ainoa WHMCS:ään tallennettu tieto on **CoinGate Transaction ID**
+- **Säilytys**
+  - WHMCS = Selväkielinen (Transaction ID)
+- **Pääsy ja pääsyn syyt**
+  - Appbox Sales Team
+    - Appbox Sales Team voi vahvistaa käyttäjän tiedot CoinGatelta osana myyntiprosessiamme
+- **Säilytysaika**
+  - Määrittelemätön
+
+*Huomautus: CoinGate itse säilyttää lohkoketjutapahtuman tunnuksen ja lähettäjän lohkoketjuosoitteen osana palveluaan. Appbox ei säilytä näitä tietoja.*
+
+## Lokit ja analytiikka
+
+### Palvelinmetriikat
+
+- **Käyttötarkoitukset**
+  - Käytetään palvelinten terveyden ja resurssien käytön seurantaan
+- **Kerääminen**
+  - Luodaan käyttäjän slotin käyttöönoton jälkeen
+- **Säilytys**
+  - Appbox Servers = Selväkielinen
+  - Appbox API = Selväkielinen
+  - Posthog = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+    - Palvelinmetriikoita voi tarkastella erilaisilla slotillesi asennetuilla Linux-työkaluilla. Seuraavat tärkeimmät metriikat ovat nähtävissä:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Käynnissä olevat prosessisi
+      - Muiden samalla palvelimella olevien käyttäjien ajamat prosessit eivät ole sinun käytettävissäsi
+      - Input/Output-metriikat
+      - Levytila
+      - Kiintiölevytila (sinulle allokoitu levytila)
+      - Fyysinen levytila
+  - Appbox Team
+    - Edellä mainittujen metriikoiden lisäksi Appbox-tiimi käyttää Posthogia kaikkien palvelinten metriikoiden nopeaan koontiin ja virheistä hälyttämiseen
+    - Palvelinmetriikoita käytetään tukipyyntöihin ja resurssien väärinkäytön tutkimiseen
+- **Säilytysaika**
+  - Määrittelemätön
+
+### Tunnistautumislokit
+
+#### Appbox Control Panel -kirjautumisyritykset
+
+- **Käyttötarkoitukset**
+  - Kaikki virheelliset pääsyyritykset kirjataan Appbox API:in, joka estää käyttäjää kirjautumasta Control Paneliin tietyn yritysmäärän jälkeen määritetyksi ajaksi. Tämä sisältää:
+    - Käyttäjänimi käyttäjän syöttämässä muodossa
+    - IP-osoite
+    - Yritysten määrä
+    - Viimeisen yrityksen päivämäärä
+- **Kerääminen**
+  - Kerätään, kun käyttäjä syöttää tunnistetietoja virheellisesti
+- **Säilytys**
+  - Appbox API = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Appbox Team
+    - Käytetään brute-force-yritysten tunnistamiseen
+    - Käyttäjät voivat pyytää aikakatkaisunsa poistamista ja pääsyyrityksen poistamista pyynnöstä ja Ticket-järjestelmän kautta tehdyn vahvistuksen jälkeen
+- **Säilytysaika**
+  - 24 tuntia tai käyttäjän pyynnöstä
+
+#### SSH-kirjautumislokit
+
+- **Käyttötarkoitukset**
+  - Kirjaa kirjautumisyritykset ja onnistuneet kirjautumiset SSH:han käyttäjän asentamissa sovelluksissa, kuten Ubuntu tai Debian
+- **Kerääminen**
+  - SSH-palvelin luo automaattisesti kirjautumisyritysten tapahtuessa
+- **Säilytys**
+  - Sovelluskontti = Selväkielinen (tyypillisesti tiedostossa `/var/log/auth.log` tai vastaavassa)
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+    - Koska nämä lokit säilytetään sovelluksissa, joissa käyttäjillä on root (sudo) -pääsy, käyttäjillä on täysi hallinta ja pääsy näihin lokeihin
+    - Käyttäjät voivat tarkastella, muokata tai poistaa näitä lokeja tarpeen mukaan
+  - Appbox-tiimi
+    - Pääsy on saatavilla vain käyttäjän luvalla tukivianmäärityksen aikana
+- **Säilytysaika**
+  - Käyttäjän hallinnoima, koska hänellä on root-pääsy konttiin
+  - Oletuslokikiertokäytännöt ovat voimassa, ellei käyttäjä muuta niitä
+
+### Järjestelmän tuottamat lokit
+
+- **Käyttötarkoitukset**
+  - Palvelinlaajuiset tuotetut lokit, joita käytetään palvelinten ongelmien tunnistamiseen
+- **Kerääminen**
+  - Palvelinten käyttöjärjestelmän tuottamat
+- **Säilytys**
+  - Appbox Servers = Selväkielinen
+  - Posthog = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Rajoitettu pääsy Appbox-tiimillä
+    - Käytetään tiettyjen palvelinten ongelmien tunnistamiseen
+    - Lokit koostetaan Posthogiin, joka hälyttää tiimiä virheistä
+- **Säilytysaika**
+  - Määrittelemätön
+
+### Asennettujen sovellusten tuottamat lokit
+
+- **Käyttötarkoitukset**
+  - Asennettujen sovellusten tuottamat lokit, joita käytetään käyttäjän slotin ongelmien tunnistamiseen
+- **Kerääminen**
+  - Käyttäjän asennettujen sovellusten tuottamat
+- **Säilytys**
+  - Appbox API = Selväkielinen
+  - Asennetut sovellukset = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Appbox-tiimi
+    - Tarvitaan sovelluskohtaisiin tukipyyntöihin käyttäjän luvalla
+- **Säilytysaika**
+  - Kunnes käyttäjä poistaa sovelluksen tai poistaa lokin
+
+### Käyttäjän bash History
+
+- **Käyttötarkoitukset**
+  - Tallentaa kaikki käyttäjän slotin shellissä syöttämät komennot, jotka sijaitsevat tiedostossa `$HOME/.bash_history`
+- **Kerääminen**
+  - Jokainen shellissä syötetty komento tallennetaan
+- **Säilytys**
+  - Appbox Servers = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+    - Koska bash history -tiedosto säilytetään käyttäjän kotihakemistossa, käyttäjillä on täysi hallinta tähän tiedostoon
+    - Käyttäjät voivat tarkastella, muokata, tyhjentää tai poistaa tämän tiedoston tarpeen mukaan (käyttämällä komentoja kuten `history -c` tai muokkaamalla/poistamalla tiedoston)
+  - Appbox-tiimi
+    - Käytetään yleisiin tai sovelluskohtaisiin kyselyihin, kuten sen varmistamiseen, ovatko käyttäjän syöttämät komennot oikein, mutta vain käyttäjän luvalla
+    - Käytetään mahdollisten tunkeutumisten tai palvelimen väärinkäytön tarkistamiseen, mutta vain silloin kun se on tarpeen tietoturvatutkimuksissa
+- **Säilytysaika**
+  - Käyttäjän hallinnoima; käyttäjä voi tyhjentää historian milloin tahansa
+  - Oletusarvoisesti bash history säilytetään määrittelemättömästi, kunnes käyttäjä poistaa sen
+
+### Hostattu data
+
+#### Asennetut sovellukset
+
+- **Käyttötarkoitukset**
+  - Oleelliset tiedostot asennettujen sovellusten asianmukaista toimintaa varten
+- **Kerääminen**
+  - Käyttäjän asentama hänen slottiinsa
+- **Säilytys**
+  - Appbox Servers = Riippuu sovelluksesta
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+  - Appbox-tiimi
+    - Käytetään sovelluskohtaisiin tukipyyntöihin käyttäjän luvalla
+- **Säilytysaika**
+  - Määrittelemätön, kunnes käyttäjä poistaa sen
+
+#### Käyttäjädata
+
+- **Käyttötarkoitukset**
+  - Käyttäjän ja/tai käyttäjän sovellusten luoma data, joka tallennetaan käyttäjän slottiin
+- **Kerääminen**
+  - Käyttäjän ja/tai käyttäjän sovellusten luoma
+- **Säilytys**
+  - Appbox Servers = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Käyttäjä
+    - Käyttäjän tiedostot säilytetään Appbox-palvelinten kotikansioissa ja eristetään muista käyttäjistä. Vain käyttäjä voi käyttää niitä
+  - Appbox-tiimi
+    - Voidaan käyttää tukipyyntöihin käyttäjän luvalla
+- **Säilytysaika**
+  - Määrittelemätön, kunnes käyttäjä poistaa sen
+    - Laillisten DMCA-poistopyyntöjen osalta ilmoitamme käyttäjälle ja pyydämme häntä poistamaan sisällön 24 tunnin kuluessa
+- **Lisätietoja**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act -noudattaminen
+
+UK Online Safety Act 2023 -lain mukaisesti Appbox toteuttaa erityisiä datankäsittelykäytäntöjä käyttäjien suojaamiseksi ja sääntelyvaatimusten noudattamiseksi:
+
+### Sisältöturvallisuuden valvonta
+
+- **Käyttötarkoitukset**
+  - Riskien arviointi ja lieventäminen laittoman ja haitallisen sisällön osalta
+  - Ilmoitetun sisällön moderointi
+  - Laittoman sisällön jakelun estäminen
+- **Kerääminen**
+  - Luodaan, kun sisältö ilmoitetaan tai merkitään
+  - Tunnetun laittoman materiaalin sisältöhajautusarvot
+- **Säilytys**
+  - Appbox API = Salattu
+  - Reports database = Selväkielinen
+- **Pääsy ja pääsyn syyt**
+  - Appbox Compliance Team
+    - Ilmoitetun sisällön tarkistamiseen ja asianmukaisten toimien tekemiseen
+    - Koordinointiin Yhdistyneen kuningaskunnan viranomaisten kanssa, kun laki sitä edellyttää
+  - Yhdistyneen kuningaskunnan sääntelyviranomaiset (kun laki edellyttää)
+    - Online Safety Act -lain noudattamisen valvontaan
+    - Vakavan laittoman sisällön tutkimiseen
+- **Säilytysaika**
+  - Raporttidata: 2 vuotta ratkaisun jälkeen
+  - Sisältöhajautusarvot: Määrittelemätön (uudelleenjakelun estämiseksi)
+
+### Riskinarviointidata
+
+- **Käyttötarkoitukset**
+  - Vaadittujen riskinarviointien tekeminen laittomasta sisällöstä ja lapsille haitallisesta sisällöstä
+  - Suhteellisten turvallisuustoimenpiteiden toteuttaminen
+  - Noudattamisen osoittaminen sääntelyviranomaisille
+- **Kerääminen**
+  - Luodaan säännöllisten alustan riskinarviointien kautta
+  - Koottu käyttödatan perusteella mahdollisten riskimallien tunnistamiseksi
+- **Säilytys**
+  - Appbox Compliance Systems = Suojattu
+- **Pääsy ja pääsyn syyt**
+  - Appbox Compliance Team
+    - Riskinarviointien tekemiseen ja päivittämiseen
+    - Turvallisuustoimenpiteiden toteuttamiseen
+  - Yhdistyneen kuningaskunnan sääntelyviranomaiset (kun laki edellyttää)
+    - Riskinarviointivelvoitteiden noudattamisen varmistamiseen
+- **Säilytysaika**
+  - 3 vuotta (jatkuvan noudattamisen osoittamiseksi)
+
+### Sisällön ilmoitusjärjestelmä
+
+- **Käyttötarkoitukset**
+  - Antaa käyttäjille mahdollisuuden ilmoittaa laittomasta tai haitallisesta sisällöstä
+  - Seuraa ilmoitusten tilaa ja tehtyjä toimenpiteitä
+- **Kerääminen**
+  - Ilmoittavien käyttäjien antamat ilmoituksen tiedot
+  - Tiedot ilmoitetusta sisällöstä
+  - Ilmoituksiin tehdyt toimenpiteet
+- **Säilytys**
+  - Appbox API = Salattu
+- **Pääsy ja pääsyn syyt**
+  - Ilmoittava käyttäjä (rajoitetusti omiin ilmoituksiinsa)
+  - Käyttäjä, jonka sisältö ilmoitettiin (rajoitetut tiedot)
+  - Appbox Compliance Team
+    - Ilmoitusten tutkimiseen ja ratkaisemiseen
+  - Yhdistyneen kuningaskunnan sääntelyviranomaiset (kun laki edellyttää)
+    - Vakavien laittoman sisällön ilmoitusten tutkimiseen
+- **Säilytysaika**
+  - 2 vuotta ratkaisun jälkeen

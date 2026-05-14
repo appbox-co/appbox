@@ -1,0 +1,258 @@
+---
+title: 使用 mscp 进行高速文件传输
+description: 了解如何使用 mscp（多线程 scp），通过多个 SSH 连接向你的 Appbox 服务器高速传输文件。
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** 是 `scp` 的多线程变体，可通过多个 SSH (SFTP) 连接同时复制文件。它利用并行连接，能显著加快大文件和目录的传输速度。
+
+## 前提条件
+
+使用 mscp 之前，你需要在 Appbox 服务器上安装 SFTPgo，以获取 SFTP 凭据。
+
+### 步骤 1：安装 SFTPgo
+
+1. 在 Appbox App Store 中访问 [SFTPgo 应用页面](https://www.appbox.co/appstore/app/232)
+2. 点击 **Install** 将 SFTPgo 添加到你的服务器
+3. 安装完成后，你会收到连接详情：
+   - **Username**：你的 SFTP 用户名
+   - **Password**：你的 SFTP 密码
+   - **Hostname**：例如 `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**：例如 `25557`
+   - **FTP/FTPS Port**：例如 `25555`
+   - **WebDav URL**：用于 WebDAV 访问
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">注意</AlertTitle>
+  <AlertDescription className="pl-2">
+    请妥善保管你的 SFTPgo 凭据。mscp 连接需要 hostname、username、password 和 SFTP port。
+  </AlertDescription>
+</Alert>
+
+## 安装 mscp
+
+选择适合你操作系统的安装方法：
+
+### macOS
+
+#### 使用 Homebrew（推荐）
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### 使用 MacPorts
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp 没有原生 Windows 二进制文件，但你可以通过 WSL（Windows Subsystem for Linux）使用它：
+
+#### 步骤 1：安装 WSL
+
+以管理员身份打开 PowerShell 并运行：
+
+```powershell
+wsl --install
+```
+
+按提示重启电脑。
+
+#### 步骤 2：在 WSL 中安装 mscp
+
+WSL 设置完成后（Ubuntu 是默认发行版），打开 WSL 终端并运行：
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">WSL 中的 Windows 文件路径</AlertTitle>
+  <AlertDescription className="pl-2">
+    在 WSL 中，你的 Windows 磁盘可在 `/mnt/` 下访问。例如，`C:\Users\YourName\Downloads` 会变成 `/mnt/c/Users/YourName/Downloads`。
+  </AlertDescription>
+</Alert>
+
+### 从源代码构建
+
+如果你的系统没有可用软件包，可以从源代码构建 mscp：
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## 基本用法
+
+mscp 的语法与 `scp` 类似。下面是常见用法模式。
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">重要：使用你的 SFTP 端口</AlertTitle>
+  <AlertDescription className="pl-2">
+    在下面的示例中，`25557` 代表 SFTPgo 设置中的 **SFTP Port**。请将它替换为 SFTPgo Options 面板中显示的实际 SFTP 端口。
+  </AlertDescription>
+</Alert>
+
+### 上传文件到服务器
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### 上传目录
+
+与 `scp` 不同，mscp 传输目录时不需要 `-r` 标志：
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### 从服务器下载文件
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### 下载目录
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## 高级选项
+
+### 使用多个连接
+
+默认情况下，mscp 会使用多个连接。你可以用 `-n` 指定连接数量：
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### 恢复失败的传输（Checkpointing）
+
+mscp 支持 checkpointing，可恢复中断的传输：
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### 指定 SSH 密钥认证
+
+如果你已经为 SFTPgo 设置了 SSH 密钥认证：
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### 限制带宽
+
+要限制传输带宽（在共享连接上很有用）：
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## 示例：完整工作流
+
+下面是一个使用 Appbox 中 SFTPgo 凭据的完整示例：
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## 性能建议
+
+1. **大文件使用更多连接**：针对大文件传输增加 `-n` 值（例如 `-n 8` 或 `-n 16`）
+2. **大量小文件使用更少连接**：对于包含许多小文件的目录，较少连接可能更高效
+3. **为文本文件启用压缩**：mscp 继承 SSH 压缩；对于以文本为主的传输使用 `-C`
+4. **超大传输使用 checkpointing**：对多 GB 级传输始终启用 checkpointing，以便中断后恢复
+
+## 故障排除
+
+### Connection Refused
+
+确保你使用的是 SFTPgo 设置中的正确 SFTP 端口（不是 FTP 端口）：
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Permission Denied
+
+验证你的用户名和密码是否正确。可以先用标准 SFTP 客户端测试：
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### 传输速度慢
+
+尝试调整并行连接数：
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## 其他资源
+
+- [mscp GitHub Repository](https://github.com/upa/mscp)
+- [mscp Documentation](https://github.com/upa/mscp#documentation)
+- [SFTPgo on Appbox](https://www.appbox.co/appstore/app/232)

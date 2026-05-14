@@ -1,0 +1,91 @@
+---
+title: Launch Week Day 5 - Windows 11 Pro VPS と App Freeze
+date: 2026-03-13 10:00:00
+excerpt: Launch Week Day 5。Windows 11 Pro が Appbox の VPS として利用可能になりました。さらに、新しい freeze 機能により、データを失わずにアプリを一時停止してスロットを取り戻せます。
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Day 5: Windows 11 Pro VPS と App Freeze
+
+Day 5。最終日です。昨日、これは予想できないはずだと言いました。本気でした。
+
+**Windows 11 Pro が Appbox の VPS として利用可能になりました。**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Appbox 上の Windows
+
+Day 3 に5つの Linux ディストリビューションで VPS をリリースしたとき、自然な疑問は「Windows は？」でした。Windows を Appbox 上の管理型 VPS として正しく動かすことは、大きな技術的課題でした。Linux VM は、ホストとゲスト間のほぼネイティブなファイル共有に virtiofs を使います。Windows は virtiofs をサポートしていません。そこで私たちは Samba ベースの統合を構築し、各 VM に認証付き SMB 共有を作成しました。これにより、Windows でも Linux VPS と同じように Appbox データへシームレスにアクセスできます。ただし、Windows がネイティブに理解するプロトコルを通じて行います。
+
+その結果、KVM 上で動作するフル Windows 11 Pro 仮想マシンに、Appbox データが `Z:` ドライブ（`APPBOX_DATA`）としてマウントされます。File Explorer を開いて `Z:\` に移動すると、そこに `apps/` と `storage/` フォルダーが表示されます。
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="APPBOX_DATA が Z: ドライブとして表示され、apps と storage フォルダーが見える Windows 11 File Explorer" width="860" className="mt-8 mb-10" />
+</p>
+
+## 何が可能になるか
+
+Appbox 上に Windows VPS があることで、まったく新しいカテゴリのユースケースが開かれます。
+
+- **Windows-only software** - Linux 版がないアプリケーションを実行
+- **.NET development** - 本物の Windows 環境で .NET アプリケーションをビルド・テスト
+- **Office and productivity** - Microsoft Office、Adobe ツール、その他のデスクトップソフトウェアを実行
+- **Game servers** - Windows 専用ゲームサーバーをホスト
+- **Remote desktop** - 組み込み Web コンソール経由で任意のブラウザからフル Windows デスクトップへアクセス、または Microsoft Remote Desktop でネイティブ RDP 体験
+- **Testing and CI** - 自前のハードウェアを維持せずに Windows 上でソフトウェアをテスト
+
+これは管理者アクセス付きのフル Windows 11 Pro インストールです。Windows で動くものなら、ここで動きます。
+
+## 利用可能プラン
+
+Windows 11 Pro はリソース要件がかなり高く、ディスク I/O も重めです。すべての人に良い体験を提供するため、Windows VPS は現在、専用 Appbox プラン（NG-18000 以上）でのみ利用可能です。最適化を続ける中で、将来的に他のプランへ利用範囲を広げる可能性があります。
+
+## ライセンス
+
+Windows 11 Pro VPS にはプロダクトキーは含まれません。Windows は未認証の状態で動作し、デスクトップ上の永続的なウォーターマーク、制限された個人設定、定期的な認証リマインダーが表示されますが、それ以外は完全に機能します。これらの制限を解除するには、有効な Windows 11 Pro キーで認証してください。[WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/) からの購入をおすすめします。
+
+## App Boost と連携
+
+Windows 11 Pro VPS は Day 2 の **App Boost** に完全対応しています。重いワークロードにより高い性能が必要な場合は、boost レベルを上げて VM により多くの RAM と CPU を割り当ててください。
+
+## App Freeze
+
+本日出荷する2つ目の機能は、Windows だけでなくすべてのアプリに適用されます。
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="App Boost と新しい Freeze ボタンを表示する Windows 11 Pro VPS 詳細ページ" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** を使うと、インストール済みの任意のアプリを一時停止し、データを失わずに app slots を取り戻せます。アプリは停止し、データはそのまま残り、そのアプリが使っていたスロットは他のアプリで利用可能になります。
+
+これは頻繁に発生していた問題を解決します。新しいアプリを試したいけれど、すべてのスロットを使い切っている。今日までは、試すだけの十分なスロットを空けるために何かをアンインストールし、そのデータを失う必要がありました。今はアプリを freeze し、そのスロットで新しいものをインストール・テストし、終わったら元のアプリを unfreeze できます。すべては中断した場所から再開します。
+
+Freeze ボタンは、任意のアプリ詳細ページの Actions セクションに、Start、Stop、Restart の隣に表示されます。Freeze するとアプリは停止し、frozen としてマークされ、使用していたスロット（boost slots を含む）が利用可能なプールへ戻ります。Unfreeze するとアプリが復元され、スロットを再度消費します。
+
+注意点がいくつかあります。
+
+- インストール中、更新中、削除中のアプリは freeze できません
+- Appbox に必要なコストをまかなう十分な空きスロットがない場合、unfreeze できません
+- Frozen apps はすべてのデータと設定をそのまま保持します
+
+## これで完了です
+
+5日間。5つのローンチ。
+
+- **Day 1** - 新しいダッシュボード
+- **Day 2** - App Boost
+- **Day 3** - Linux VPSes
+- **Day 4** - VPS アプリの複数ドメイン
+- **Day 5** - Windows 11 Pro VPS と App Freeze
+
+今週出荷したものはすべて、今すぐ利用できます。ログインして試してみてください。
+
+Launch Week は終わりましたが、私たちは止まりません。今後数か月で、さらに多くのものがやってきます。
+
+---
+
+*フィードバックや問題を見つけましたか？support@appbox.co へ連絡するか、[billing.appbox.co](https://billing.appbox.co/submitticket.php) でチケットを開いてください。*

@@ -1,0 +1,91 @@
+---
+title: Launch Week Den 5 - Windows 11 Pro VPS a App Freeze
+date: 2026-03-13 10:00:00
+excerpt: Den 5 Launch Week. Windows 11 Pro je nyní dostupný jako VPS na Appboxu. Nová funkce freeze navíc umožňuje pozastavit aplikace a získat zpět jejich sloty bez ztráty dat.
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Den 5: Windows 11 Pro VPS a App Freeze
+
+Den 5. Poslední den. Včera jsme řekli, že tohle neuvidíte přicházet, a mysleli jsme to vážně.
+
+**Windows 11 Pro je nyní dostupný jako VPS na Appboxu.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows na Appboxu
+
+Když jsme v Den 3 spustili VPSes s pěti Linux distribucemi, přirozená otázka zněla "a co Windows?" Zprovoznit Windows správně jako spravovaný VPS na Appboxu byla významná technická výzva. Linux VMs používají virtiofs pro téměř nativní sdílení souborů mezi hostitelem a guest systémem. Windows virtiofs nepodporuje. Vybudovali jsme proto integraci založenou na Sambě, která pro každou VM vytváří autentizované SMB sdílení a dává Windows stejný plynulý přístup k vašim Appbox datům, jaký dostávají Linux VPSes - jen přes protokol, kterému Windows nativně rozumí.
+
+Výsledkem je plnohodnotný virtuální stroj Windows 11 Pro běžící na KVM s vašimi Appbox daty připojenými jako disk `Z:` (`APPBOX_DATA`). Otevřete File Explorer, přejděte na `Z:\` a uvidíte tam své složky `apps/` a `storage/`.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Windows 11 File Explorer zobrazující APPBOX_DATA jako disk Z: se složkami apps a storage" width="860" className="mt-8 mb-10" />
+</p>
+
+## Co to odemyká
+
+Windows VPS na Appboxu otevírá úplně novou kategorii případů použití:
+
+- **Software pouze pro Windows** - spusťte aplikace, které prostě nemají Linux verze
+- **.NET vývoj** - build a test .NET aplikací ve skutečném Windows prostředí
+- **Office a produktivita** - provozujte Microsoft Office, Adobe nástroje nebo jakýkoli desktopový software
+- **Herní servery** - hostujte herní servery pouze pro Windows
+- **Vzdálená plocha** - přistupujte k plné Windows ploše z libovolného prohlížeče přes vestavěnou webovou konzoli, nebo se připojte pomocí Microsoft Remote Desktop pro nativní RDP zážitek
+- **Testování a CI** - testujte software na Windows bez údržby vlastního hardwaru
+
+Je to plná instalace Windows 11 Pro s administrátorským přístupem. Pokud to běží na Windows, běží to tady.
+
+## Dostupnost podle tarifu
+
+Windows 11 Pro má poměrně vysoké požadavky na zdroje a je náročný na disk I/O. Abychom zajistili dobrý zážitek pro všechny, Windows VPS je aktuálně dostupný pouze na dedicated Appbox tarifech (NG-18000 a výše). V budoucnu můžeme dostupnost rozšířit na další tarify, jak budeme pokračovat v optimalizaci.
+
+## Licencování
+
+Windows 11 Pro VPS neobsahuje product key. Windows poběží neaktivovaný s trvalým watermarkem na ploše, omezeným nastavením personalizace a pravidelnými připomenutími aktivace - jinak je ale plně funkční. Chcete-li tato omezení odstranit, aktivujte ho platným Windows 11 Pro klíčem. Doporučujeme koupit jeden od [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Funguje s App Boost
+
+Windows 11 Pro VPS plně podporuje **App Boost** z Dne 2. Pokud potřebujete více výkonu pro náročnější workloady, posuňte úroveň boostu nahoru a přidělte své VM více RAM a CPU.
+
+## App Freeze
+
+Dnes vychází ještě druhá funkce, která se vztahuje na všechny aplikace, nejen Windows.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Stránka detailu Windows 11 Pro VPS zobrazující App Boost a nové tlačítko Freeze" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** vám umožňuje pozastavit libovolnou nainstalovanou aplikaci a získat zpět její app sloty bez ztráty dat. Aplikace se zastaví, její data zůstanou přesně tam, kde jsou, a sloty, které používala, se uvolní pro jiné aplikace.
+
+Řeší to problém, který se objevoval pořád: chcete vyzkoušet novou aplikaci, ale už jste použili všechny sloty. Před dneškem byste museli něco odinstalovat - a přijít o data - jen abyste uvolnili dost slotů k experimentování. Teď můžete aplikaci zmrazit, použít ty sloty k instalaci a testování něčeho nového a potom původní aplikaci zase rozmrazit. Všechno naváže přesně tam, kde jste skončili.
+
+Tlačítko Freeze je přímo v sekci Actions na stránce detailu libovolné aplikace, vedle Start, Stop a Restart. Zmrazení aplikaci zastaví, označí ji jako frozen a vrátí její sloty (včetně případných boost slotů) do vašeho dostupného poolu. Rozmrazení aplikaci obnoví a sloty znovu spotřebuje.
+
+Několik věcí, které stojí za zmínku:
+
+- Aplikaci nelze zmrazit, když se instaluje, aktualizuje nebo maže
+- Nelze ji rozmrazit, pokud váš Appbox nemá dost volných slotů na pokrytí ceny
+- Zmrazené aplikace si ponechají všechna data a konfiguraci beze změny
+
+## A tím je hotovo
+
+Pět dní. Pět spuštění.
+
+- **Den 1** - nový dashboard
+- **Den 2** - App Boost
+- **Den 3** - Linux VPSes
+- **Den 4** - více domén pro VPS aplikace
+- **Den 5** - Windows 11 Pro VPS a App Freeze
+
+Všechno, co jsme tento týden vydali, je právě teď živě. Přihlaste se a vyzkoušejte to.
+
+Launch Week skončil, ale my nezastavujeme. V příštích měsících toho přijde ještě hodně.
+
+---
+
+*Máte zpětnou vazbu nebo jste našli problém? Ozvěte se na support@appbox.co nebo otevřete ticket na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,53 @@
+---
+title: "นโยบายการตอบสนองต่อเหตุการณ์และความปลอดภัย"
+description: "วิธีที่เราจัดการ security incidents และรักษาความปลอดภัยของ platform"
+---
+
+แม้เราจะพยายามอย่างดีที่สุดและมีการ audit อย่างเข้มงวด security incidents เป็นส่วนที่หลีกเลี่ยงไม่ได้ของธุรกิจ online ใด ๆ ความปลอดภัยของคุณสำคัญต่อเรา และเรามุ่งมั่นอย่างเต็มที่ทั้งต่อความปลอดภัยของคุณและของ platform ของเรา เรารักษาวัฒนธรรมแห่งความโปร่งใสและความซื่อสัตย์ ซึ่งครอบคลุมถึงแนวทางของเราในการรายงาน security incidents ในกรณีเกิด security incident, Appbox จะดำเนินการดังต่อไปนี้:
+
+1. หากจำเป็น เราจะจำกัด connections ไปยัง Appbox servers ที่ได้รับผลกระทบเพื่อแก้ไข incident อย่างรวดเร็ว
+2. ทันทีที่มีการรายงานหรือค้นพบ incidents ใด ๆ เราจะเผยแพร่รายละเอียดผ่าน communication channels ของเรา รวมถึง:
+   - website ของเรา
+   - [status page](https://status.appbox.co) ของเรา
+   - email notifications ถึง clients ที่ได้รับผลกระทบ
+
+เราจะเริ่มส่ง email โดยตรงถึง clients ที่ได้รับผลกระทบด้วย แม้อาจใช้เวลาสักระยะกว่าการสื่อสารทั้งหมดจะถูกส่งออกไป
+
+หากคุณกำลังประสบปัญหากับบริการของคุณ โปรดตรวจสอบ [status page](https://status.appbox.co) ของเรา มีความเป็นไปได้สูงที่คุณจะเห็น maintenance work ที่เกี่ยวข้องกับบริการของคุณ หากไม่มี maintenance ที่กำลังดำเนินอยู่ คุณสามารถ [เปิด support ticket](https://billing.appbox.co/submitticket.php?step=2&deptid=3) เพื่อให้เราตรวจสอบปัญหาของคุณและแนะนำคุณตามความเหมาะสม
+
+## นโยบาย
+
+เพื่อรักษาความไว้วางใจ เราได้เผยแพร่เอกสารสำคัญหลายฉบับที่ให้รายละเอียดวิธีที่เราดำเนินงาน เราพยายามโปร่งใสให้มากที่สุดเกี่ยวกับข้อมูลที่เรา collect, วิธีที่เรา store และวิธีที่เรา use
+
+* [Content Abuse Policy](/policies/content-abuse-policy)
+* [Subprocessors & Cookies Policy](/policies/subprocessors-and-cookies-policy)
+* [Bug Bounty Program](/policies/bug-bounty-program)
+* [Global Privacy Practices](/policies/global-privacy-practices)
+* [Password Policy](/policies/password-policy)
+* [Service Level Agreement](/policies/service-level-agreement)
+* [Data Handling Policy](/policies/data-handling-policy)
+* [Refund Policy](/policies/refund-policy)
+* [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+* [Terms of Service](/policies/terms-of-service)
+
+## ความปลอดภัย-First Infrastructure
+
+* เราประเมิน third-party partners และ vendors อย่างรอบคอบทั้งในด้านความเหมาะสมและ security risk เราทำให้แน่ใจว่ามี technical และ contractual commitments ที่เหมาะสมสำหรับ partnerships ทั้งหมด
+* เราใช้ data centers ระดับ enterprise-grade และ high-availability โดยคำนึงถึง availability และ security ของคุณ ทั้งหมดมีมาตรการ physical security ที่เข้มงวด
+* เรา implement private VLANs ภายใน network infrastructure ของเราเพื่อ isolate customer data, เพิ่ม security และป้องกัน potential network-level intrusions networking team ภายในของเราจัดการ VLANs เหล่านี้เพื่อให้มั่นใจถึง security ที่เหมาะสมที่สุด
+
+## คุณช่วยได้อย่างไร
+
+ตามที่อธิบายไว้ใน [Terms of Service](/policies/terms-of-service) และเอกสารด้าน security ของเรา เราดำเนินมาตรการอย่างกว้างขวางเพื่อให้ Appbox ปลอดภัย คุณสามารถช่วยเราปกป้อง platform เพิ่มเติมได้โดย:
+
+* ปฏิบัติตาม [Password Policy](/policies/password-policy) ของเรา
+* ระมัดระวังเกี่ยวกับ account sharing อย่า share account ของคุณกับคนที่คุณไม่รู้จักหรือไม่ไว้วางใจ
+* [แจ้ง Appbox ทันที](https://billing.appbox.co/submitticket.php?step=2&deptid=3) หากคุณสังเกตเห็น unauthorized access ใด ๆ ต่อ account ของคุณ รวมถึงการใช้ password ของคุณอย่างน่าสงสัย
+* เปิดใช้ two-factor authentication (2FA) บน account ของคุณ
+
+## การรายงาน Security Concerns
+
+* **Security Events**: โปรด [แจ้ง Appbox ทันที](https://billing.appbox.co/submitticket.php?step=2&deptid=3) เพื่อรายงาน security event เช่น unauthorized account usage หรือ suspected data breach
+* **Vulnerabilities**: โปรดไปที่ [Bug Bounty Program](/policies/bug-bounty-program) ของเราเพื่อดูข้อมูลโดยละเอียดเกี่ยวกับการรายงาน vulnerabilities และ potential rewards
+* **Sensitive Data**: หากคุณต้องการให้ลบ sensitive data ออกจาก Appbox โปรดดู [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy) ของเรา
+* **Content Abuse**: อ่าน [Content Abuse Policy](/policies/content-abuse-policy) ของเราเพื่อทำความเข้าใจว่าคุณสามารถรายงาน copyright หรือ content abuse issues ได้อย่างไร

@@ -1,0 +1,108 @@
+---
+title: Appbox కోసం భారీ Updates దారిలో ఉన్నాయి
+date: 2025-04-08 11:58:00
+excerpt: కొత్త website, open-source initiative, containerized apps, మా స్వంత network infrastructure, ఇంకా Appbox కు రాబోయే మరెన్నో exciting developments!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Appbox లో కొత్త యుగం ప్రారంభమవుతోంది
+
+నెలల తరబడి తెర వెనుక పని చేసి, రాత్రిళ్లు ఆలస్యంగా మేల్కొని, చాలా ఎక్కువ coffee తాగిన తర్వాత, మేము నిర్మిస్తున్న దాన్ని చివరకు మీకు చూపించడానికి నాకు చాలా excitement ఉంది. ఇది కేవలం మరో update కాదు. ఇది Appbox ను పునాది నుండి మళ్లీ నిర్మిస్తున్న మా పని.
+
+## మా కొత్త Digital Home కు స్వాగతం
+
+మీరు మా brand new website చూస్తున్నారు! మా పాత WordPress setup కు చివరకు goodbye చెప్పాము. మొత్తం site faster, more secure, నిజంగా properly scale అయ్యే modern tech తో rebuild చేయబడింది.
+
+ఈ కొత్త site proper documentation, regular blog posts (ఇదిలా), మరియు చివరకు మా కొత్త platform frontend కు home అవుతుంది. design కేవలం cleaner మాత్రమే కాదు - నిజంగా functional, stuff కనుగొనడం చాలా సులభం చేస్తుంది.
+
+మేము under the hood Next.js తో ContentLayer ఉపయోగిస్తున్నాము; ఇది మాకు చాలా వేగమైన performance మరియు మెరుగైన development experience ఇస్తుంది. site multiple languages support చేస్తుంది, SEO automatically handle చేస్తుంది, XML మరియు JSON రెండింటిలో RSS feeds ఉన్నాయి, అలాగే dark mode కూడా ఉంది, ఎందుకంటే తెల్లవారుజామున 2 గంటలకు bright white screens ఎవరికీ అవసరం లేదు.
+
+## మేము Open Source అవుతున్నాము!
+
+మేము open source కూడా అవుతున్నాము! మీరు చదువుతున్న ఈ website? code public, ఎవరైనా contribute చేయవచ్చు.
+
+ఇది మాకు పెద్ద విషయం. మేము ఎప్పుడూ transparent గా ఉండటానికి ప్రయత్నించాము, కానీ ఇది నిజంగా మాటల్లో కాకుండా community కోసం మాత్రమే కాకుండా community తో కలిసి build చేయడమే. మీరు developer అయితే, మీరు ఉపయోగించే tools ఆకారం మార్చడంలో ఎప్పుడైనా సహాయం చేయాలనుకున్నట్లయితే, ఇప్పుడు చేయవచ్చు. contribution guidelines మరియు ప్రారంభించడానికి కావాల్సిన అన్నింటి కోసం మా GitHub repo చూడండి.
+
+## Appbox v2 పరిచయం
+
+కొత్త website కేవలం ప్రారంభం మాత్రమే. మేము Appbox v2 పై పని చేస్తున్నాము, ఇది మేము ఇప్పటివరకు చేసిన అతిపెద్ద update.
+
+Container deployment ఎప్పుడూ మా thing, కానీ v2 అందరూ అడిగింది తీసుకుని ఇంకా ముందుకెళ్తుంది: full VPS support. VPS apps మీకు restrictions లేకుండా complete root access ఇస్తాయి. మీ environment పై total control అవసరమైతే, మీరు ఎదురుచూసింది ఇదే.
+
+ఇది ఇప్పటికే ఒక server పై పనిచేస్తోంది మరియు నిజంగా బాగా పనిచేస్తోంది. app store నుండి ఇతర app లాగానే VPS apps install చేయగలరు. దీని వల్ల ప్రస్తుతం సాధ్యం కాని Docker, Snap, Tailscale వంటి apps install చేయవచ్చు. దీన్ని మరింత secure చేసి performance boost చేయడానికి కొన్ని కొత్త virtualization features ఉపయోగిస్తున్నందున మా servers పై Debian 13 కు OS update అవసరం. feature launch చేయడానికి ముందు ఆ update roll out చేయాలి, కానీ దాని గురించి త్వరలో మరిన్ని updates ఉంటాయి.
+
+ఇది మా proven container infrastructure ను నిజమైన VPS flexibility తో కలిపి, మీకు రెండు ప్రపంచాల్లోనూ ఉత్తమమైనదాన్ని ఇస్తుంది.
+
+## మా స్వంత Network Infrastructure నిర్మించడం
+
+ఇదే నిజంగా పెద్ద వార్త: మేము మా స్వంత network నిర్మిస్తున్నాము.
+
+మరిన్ని servers జోడించడం లేదా bandwidth upgrade చేయడం మాత్రమే కాదు. పూర్తిగా మా స్వంతమైన network నిర్మించడానికి మా స్వంత Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) మరియు మా స్వంత IP block (79.140.195.0/24) ఉంది. సాదాసీదాగా చెప్పాలంటే, మా స్వంత official internet identity మరియు address space తో మేము మా స్వంత ISP అవుతున్నాము, కాబట్టి మీ data internet అంతటా ఎలా ప్రయాణిస్తుందో control చేయగలం [1].
+
+మీకు దీని అర్థం ఏమిటి? మేము అన్నీ control చేయగలం, Appbox users కోసం ప్రత్యేకంగా optimize చేయగలం, మరియు ముందు సాధ్యం కాని reliability మరియు performance అందించగలం.
+
+## AMS-IX తో Peering
+
+మా network development తో పాటు, network setup అయిన తర్వాత, 100G connectivity కోసం AMS-IX తో peering ప్రారంభిస్తాము. ఇది ప్రపంచంలోని అతిపెద్ద internet exchanges లో ఒకదానికి direct access ఇస్తుంది, అంటే అందరికీ lower latency మరియు better speeds. ఇది major internet providers కు back roads బదులుగా direct highway ఉన్నట్లుగా ఊహించండి [2].
+
+ఈ తరహా connectivity సాధారణంగా చాలా పెద్ద companies కు మాత్రమే అందుబాటులో ఉంటుంది, కానీ మీరు ఏ plan లో ఉన్నా enterprise-grade performance ఇవ్వాలని మేము కోరుకుంటున్నాము.
+
+మా hardware purchase కోసం agreement ఇప్పుడు sorted, కాబట్టి మేము సిద్ధంగా ఉన్నాము. కొత్త hardware October లోపు, బహుశా September నుంచే అందుతుంది. అంటే ఆ తర్వాత కొద్దికాలంలోనే కొత్త network పై up and running అవుతాము.
+
+## Price Adjustments
+
+ఇది రాయాల్సి రావడం మాకు నిజంగా ఇష్టం లేని భాగం. ఇలాంటి infrastructure నిర్మించడం expensive, మరియు ఎక్కువ cost మేమే భరిస్తున్నప్పటికీ, కొత్త మరియు existing customers కోసం pricing లో చిన్న adjustment చేయాల్సి వస్తోంది.
+
+ఈ విషయంలో upfront గా ఉండాలనుకుంటున్నాను. కొత్త pricing ఇప్పటికే site లో live ఉంది, మరియు ఇది existing customers పై ఎలా ప్రభావం చూపుతుందో వివరాలతో త్వరలో మేము వారిని contact చేస్తాము.
+
+ప్రస్తుతం అందరికీ ఎంత ఒత్తిడి ఉందో మాకు తెలుసు, ఇది నిజంగా మేము తీసుకున్న కఠినమైన నిర్ణయాల్లో ఒకటి. increases ను సాధ్యమైనంత చిన్నగా ఉంచాము - ఈ పని చేయడానికి అవసరమైన absolute minimum తప్ప దాదాపు మిగతా అన్నీ మేమే cover చేస్తున్నాము.
+
+ఈ price increase విలువైనదిగా మేము తప్పకుండా చేస్తాము. performance మరియు reliability లో difference నిజంగా గమనిస్తారు. అలాగే, దీని వల్ల మేము మా network విస్తరించడం, భవిష్యత్తులో మరిన్ని peering జోడించడం కొనసాగించగలం, కాబట్టి ఇక్కడి నుండి పరిస్థితులు ఇంకా మెరుగవుతూనే ఉంటాయి.
+
+మేము ఈ updated prices ను new customers కోసం 3 months ago launch చేశాము, feedback బాగుంది, కాబట్టి affordability నిలుపుకోవడం మరియు మీరు deserve చేసే improvements fund చేయడం మధ్య మంచి balance ఉన్నట్టు అనిపిస్తోంది; మేము ఇంకా చాలా competitive. ఉదాహరణకు, మా popular NG-4500 plan నెలకు కేవలం €2.08 మాత్రమే పెరుగుతుంది, ఇది competitors నుంచి comparable plans కంటే ఇంకా చాలా తక్కువ.
+
+Existing customers కోసం, మీరు old మరియు new pricing మధ్య difference మాత్రమే చెల్లిస్తారు. మీకు promotional discounts ఉంటే, అవి new base price పై అలాగే కొనసాగుతాయి. ఇలాంటి కాలాల్లో ముఖ్యంగా మీ loyalty ని మేము అభినందిస్తున్నాము.
+
+మా discount structure అలాగే ఉంటుంది:
+- quarterly payments కు 5% off
+- 6-month payments కు 10% off
+- annual payments కు 15% off
+
+మీరు automatic payments set up చేసి ఉంటే, email అందుకున్న తర్వాత మీ next billing cycle లో adjustment జరుగుతుంది. మీరు ఏమీ చేయాల్సిన అవసరం లేదు.
+
+## మరింత Storage!
+
+ఇది మొత్తం ఎక్కువ చెల్లించడం గురించి మాత్రమే కాదు. మా lowest plan storage ను 3TB నుండి 3.5TB కు పెంచుతున్నాము. ఇది 16% increase, price change ఉన్నప్పటికీ మా entry-level plan ను ఇంకా మంచి deal గా చేస్తుంది.
+
+## తర్వాత ఏమిటి?
+
+ఇది Appbox కోసం రాబోయేదానికి కేవలం ప్రారంభం మాత్రమే. వచ్చే కొన్ని వారాలు మరియు నెలల్లో, కొత్త features roll out చేస్తూ, existing ones మెరుగుపరుస్తూ, తదుపరి తరం app hosting కోసం infrastructure నిర్మిస్తూ regular updates చూస్తారు.
+
+మా కొత్త network infrastructure ను September/October లో testing ప్రారంభించాలని planning చేస్తున్నాము, progress జరుగుతున్న కొద్దీ మిమ్మల్ని update చేస్తాము.
+
+మా roadmap లో ఇవి ఉన్నాయి:
+- restrictions లేని VPS apps (Docker, Snap, Tailscale వంటి)
+- నిజంగా అన్నీ cover చేసే మెరుగైన documentation
+- Appbox తో ప్రజలు నిర్మిస్తున్న ఆసక్తికరమైన వాటి కోసం community showcase
+- మా infrastructure గురించి regular technical blog posts
+- specific use cases కోసం కొత్త containerized apps
+- మెరుగైన monitoring మరియు analytics tools
+- అన్ని plans అంతటా enhanced security features
+
+మా వెంట ఉన్నందుకు ధన్యవాదాలు. మా community లేకుండా వీటిలో ఏదీ సాధ్యం కాదు.
+
+మరిన్ని updates త్వరలో.
+
+---
+
+*కొత్త Appbox లో మీరు చూడాలనుకునే features లేదా improvements ఏమిటి? support@appbox.co వద్ద మాకు తెలియజేయండి.*
+
+---
+
+**References:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

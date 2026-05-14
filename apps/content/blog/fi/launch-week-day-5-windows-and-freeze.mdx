@@ -1,0 +1,91 @@
+---
+title: Launch Week Day 5 - Windows 11 Pro VPS ja App Freeze
+date: 2026-03-13 10:00:00
+excerpt: Launch Weekin viides päivä. Windows 11 Pro on nyt saatavilla VPS:nä Appboxissa. Lisäksi uusi freeze-ominaisuus antaa sinun keskeyttää sovelluksia ja vapauttaa niiden slotit menettämättä dataa.
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Day 5: Windows 11 Pro VPS ja App Freeze
+
+Päivä 5. Viimeinen päivä. Sanoimme eilen, ettet näkisi tätä tulevan, ja tarkoitimme sitä.
+
+**Windows 11 Pro on nyt saatavilla VPS:nä Appboxissa.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows Appboxissa
+
+Kun julkaisimme VPS:t päivänä 3 viidellä Linux-jakelulla, luonnollinen kysymys oli "entä Windows?" Windowsin saaminen toimimaan kunnolla hallittuna VPS:nä Appboxissa oli merkittävä tekninen haaste. Linux-VM:t käyttävät virtiofs:ää lähes natiiviin tiedostonjakoon hostin ja vieraan välillä. Windows ei tue virtiofs:ää. Siksi rakensimme Samba-pohjaisen integraation, joka luo todennetut SMB-jaot jokaiselle VM:lle ja antaa Windowsille saman saumattoman pääsyn Appbox-dataasi kuin Linux-VPS:t saavat - vain protokollalla, jota Windows ymmärtää natiivisti.
+
+Tuloksena on täysi Windows 11 Pro -virtuaalikone KVM:llä, jossa Appbox-datasi on liitetty `Z:`-asemaksi (`APPBOX_DATA`). Avaa File Explorer, siirry kohtaan `Z:\`, ja näet `apps/`- ja `storage/`-kansiosi siellä.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Windows 11 File Explorer näyttää APPBOX_DATA:n Z:-asemana apps- ja storage-kansioilla" width="860" className="mt-8 mb-10" />
+</p>
+
+## Mitä tämä mahdollistaa
+
+Windows VPS Appboxissa avaa kokonaan uuden käyttötapausten kategorian:
+
+- **Vain Windowsille saatavat ohjelmistot** - aja sovelluksia, joilla ei yksinkertaisesti ole Linux-versioita
+- **.NET-kehitys** - rakenna ja testaa .NET-sovelluksia oikeassa Windows-ympäristössä
+- **Office ja tuottavuus** - aja Microsoft Officea, Adobe-työkaluja tai mitä tahansa työpöytäohjelmistoa
+- **Pelipalvelimet** - hostaa vain Windowsilla toimivia pelipalvelimia
+- **Etätyöpöytä** - käytä täyttä Windows-työpöytää mistä tahansa selaimesta sisäänrakennetun verkkokonsolin kautta tai yhdistä Microsoft Remote Desktopilla natiivia RDP-kokemusta varten
+- **Testaus ja CI** - testaa ohjelmistoasi Windowsissa ylläpitämättä omaa laitteistoa
+
+Tämä on täysi Windows 11 Pro -asennus järjestelmänvalvojan oikeuksilla. Jos se toimii Windowsissa, se toimii täällä.
+
+## Pakettien saatavuus
+
+Windows 11 Prolla on melko korkeat resurssivaatimukset, ja se kuormittaa levy-I/O:ta paljon. Hyvän kokemuksen varmistamiseksi kaikille Windows VPS on tällä hetkellä saatavilla vain dedikoiduissa Appbox-paketeissa (NG-18000 ja sitä suuremmat). Saatamme laajentaa saatavuutta muihin paketteihin tulevaisuudessa optimoinnin jatkuessa.
+
+## Lisensointi
+
+Windows 11 Pro VPS ei sisällä tuoteavainta. Windows toimii aktivoimattomana niin, että työpöydällä näkyy pysyvä vesileima, personointiasetukset ovat rajalliset ja aktivointimuistutuksia näytetään ajoittain - mutta muuten se on täysin toimiva. Rajoitukset voi poistaa aktivoimalla kelvollisella Windows 11 Pro -avaimella. Suosittelemme ostamaan sellaisen palvelusta [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Toimii App Boostin kanssa
+
+Windows 11 Pro VPS tukee täysin päivän 2 **App Boostia**. Jos tarvitset enemmän suorituskykyä raskaammille työkuormille, nosta boost-tasoa ja allokoi VM:llesi enemmän RAM-muistia ja CPU:ta.
+
+## App Freeze
+
+Tänään julkaistaan myös toinen ominaisuus, joka koskee kaikkia sovelluksia, ei vain Windowsia.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Windows 11 Pro VPS:n yksityiskohtasivu, jossa näkyvät App Boost ja uusi Freeze-painike" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** antaa sinun keskeyttää minkä tahansa asennetun sovelluksen ja vapauttaa sen sovellusslotit menettämättä mitään dataa. Sovellus pysähtyy, sen data pysyy täsmälleen paikallaan, ja sen käyttämät slotit vapautuvat muille sovelluksille.
+
+Tämä ratkaisee ongelman, joka on tullut vastaan jatkuvasti: haluat kokeilla uutta sovellusta, mutta olet käyttänyt kaikki slottisi. Ennen tätä päivää sinun olisi pitänyt poistaa jotakin - ja menettää sen data - vain vapauttaaksesi tarpeeksi slotteja kokeilua varten. Nyt voit jäädyttää sovelluksen, käyttää nuo slotit uuden sovelluksen asentamiseen ja testaamiseen, ja vapauttaa alkuperäisen sovelluksen jäädytyksestä, kun olet valmis. Kaikki jatkuu juuri siitä, mihin jäit.
+
+Freeze-painike sijaitsee minkä tahansa sovelluksen yksityiskohtasivun Actions-osiossa Start-, Stop- ja Restart-painikkeiden vieressä. Jäädytys pysäyttää sovelluksen, merkitsee sen jäädytetyksi ja palauttaa sen slotit (mukaan lukien mahdolliset boost-slotit) vapaaseen pooliisi. Jäädytyksen purkaminen palauttaa sovelluksen ja kuluttaa slotit uudelleen.
+
+Muutama huomionarvoinen asia:
+
+- Et voi jäädyttää sovellusta, kun sitä asennetaan, päivitetään tai poistetaan
+- Et voi purkaa jäädytystä, jos Appboxissasi ei ole tarpeeksi vapaita slotteja kustannuksen kattamiseen
+- Jäädytetyt sovellukset säilyttävät kaiken datansa ja määrityksensä ennallaan
+
+## Siinä kaikki
+
+Viisi päivää. Viisi julkaisua.
+
+- **Day 1** - uusi dashboard
+- **Day 2** - App Boost
+- **Day 3** - Linux VPS:t
+- **Day 4** - useita verkkotunnuksia VPS-sovelluksille
+- **Day 5** - Windows 11 Pro VPS ja App Freeze
+
+Kaikki tällä viikolla julkaistu on saatavilla juuri nyt. Kirjaudu sisään ja kokeile.
+
+Launch Week on ohi, mutta emme pysähdy. Tulevina kuukausina on luvassa paljon lisää.
+
+---
+
+*Onko sinulla palautetta tai löysitkö ongelman? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

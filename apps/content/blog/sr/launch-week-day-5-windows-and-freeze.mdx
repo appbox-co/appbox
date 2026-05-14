@@ -1,0 +1,91 @@
+---
+title: "Launch Week дан 5 - Windows 11 Pro VPS и App Freeze"
+date: 2026-03-13 10:00:00
+excerpt: "Дан 5 Launch Week-а. Windows 11 Pro је сада доступан као VPS на Appbox-у. Плус, нова freeze функција вам омогућава да паузирате апликације и повратите њихове slot-ове без губитка података."
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week дан 5: Windows 11 Pro VPS и App Freeze
+
+Дан 5. Последњи дан. Јуче смо рекли да ово нећете очекивати и мислили смо озбиљно.
+
+**Windows 11 Pro је сада доступан као VPS на Appbox-у.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows на Appbox-у
+
+Када смо трећег дана покренули VPS-еве са пет Linux дистрибуција, природно питање је било "шта је са Windows-ом?" Натерати Windows да правилно ради као managed VPS на Appbox-у био је значајан технички изазов. Linux VM-ови користе virtiofs за дељење датотека између host-а и guest-а брзином блиском native приступу. Windows не подржава virtiofs. Зато смо изградили интеграцију засновану на Samba-и која креира аутентификоване SMB shares за сваку VM, дајући Windows-у исти беспрекоран приступ вашим Appbox подацима који добијају Linux VPS-еви, само преко протокола који Windows нативно разуме.
+
+Резултат је потпуна Windows 11 Pro виртуелна машина која ради на KVM-у, са вашим Appbox подацима монтираним као `Z:` drive (`APPBOX_DATA`). Отворите File Explorer, идите на `Z:\` и видећете своје `apps/` и `storage/` folder-е управо тамо.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Windows 11 File Explorer приказује APPBOX_DATA као Z: drive са apps и storage folder-има" width="860" className="mt-8 mb-10" />
+</p>
+
+## Шта ово отвара
+
+Windows VPS на Appbox-у отвара потпуно нову категорију случајева употребе:
+
+- **Windows-only software** - покрећите апликације које једноставно немају Linux верзије
+- **.NET development** - градите и тестирајте .NET апликације у правом Windows окружењу
+- **Office and productivity** - покрећите Microsoft Office, Adobe алате или било који desktop software
+- **Game servers** - хостујте Windows-only game server-е
+- **Remote desktop** - приступите пуном Windows desktop-у из било ког browser-а преко уграђене web конзоле или се повежите преко Microsoft Remote Desktop-а за native RDP искуство
+- **Testing and CI** - тестирајте software на Windows-у без одржавања сопственог хардвера
+
+Ово је потпуна Windows 11 Pro инсталација са administrator приступом. Ако ради на Windows-у, ради овде.
+
+## Доступност по плановима
+
+Windows 11 Pro има прилично високе захтеве за ресурсима и тежак је за disk I/O. Да бисмо обезбедили добро искуство за све, Windows VPS је тренутно доступан само на dedicated Appbox плановима (NG-18000 и изнад). Можда ћемо у будућности проширити доступност на друге планове док настављамо да оптимизујемо.
+
+## Лиценцирање
+
+Windows 11 Pro VPS не укључује product key. Windows ће радити неактивиран, са трајним watermark-ом на desktop-у, ограниченим personalization подешавањима и периодичним activation подсетницима, али је иначе потпуно функционалан. Да уклоните ова ограничења, активирајте га важећим Windows 11 Pro key-ем. Препоручујемо куповину са [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Ради са App Boost-ом
+
+Windows 11 Pro VPS у потпуности подржава **App Boost** из дана 2. Ако вам треба више перформанси за тежа радна оптерећења, померите boost ниво нагоре да алоцирате више RAM-а и CPU-а својој VM.
+
+## App Freeze
+
+Постоји и друга функција коју данас испоручујемо, а односи се на све апликације, не само на Windows.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Страница са детаљима Windows 11 Pro VPS-а приказује App Boost и ново Freeze дугме" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** вам омогућава да паузирате било коју инсталирану апликацију и повратите њене app slot-ове без губитка података. Апликација се зауставља, њени подаци остају тачно где јесу, а slot-ови које је користила постају доступни за друге апликације.
+
+Ово решава проблем који се стално појављивао: желите да пробате нову апликацију, али сте искористили све slot-ове. Пре данас, морали бисте нешто да деинсталирате и изгубите његове податке само да ослободите довољно slot-ова за експериментисање. Сада можете да freeze-ујете апликацију, искористите те slot-ове да инсталирате и тестирате нешто ново, а затим unfreeze-ујете оригиналну апликацију када завршите. Све наставља тачно тамо где сте стали.
+
+Freeze дугме се налази директно у Actions секцији странице са детаљима било које апликације, поред Start, Stop и Restart. Freezing зауставља апликацију, означава је као frozen и враћа њене slot-ове (укључујући све boost slot-ове) у ваш доступни pool. Unfreezing враћа апликацију и поново троши slot-ове.
+
+Неколико ствари вреди напоменути:
+
+- Не можете да freeze-ујете апликацију док се инсталира, ажурира или брише
+- Не можете да unfreeze-ујете ако ваш Appbox нема довољно слободних slot-ова да покрије трошак
+- Frozen апликације задржавају све своје податке и конфигурацију нетакнуте
+
+## То је то
+
+Пет дана. Пет лансирања.
+
+- **Дан 1** - нова контролна табла
+- **Дан 2** - App Boost
+- **Дан 3** - Linux VPS-еви
+- **Дан 4** - више домена за VPS апликације
+- **Дан 5** - Windows 11 Pro VPS и App Freeze
+
+Све што је испоручено ове недеље доступно је управо сада. Пријавите се и пробајте.
+
+Launch Week је завршен, али ми не стајемо. Много тога још долази у наредним месецима.
+
+---
+
+*Имате повратне информације или сте нашли проблем? Обратите нам се на support@appbox.co или отворите тикет на [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

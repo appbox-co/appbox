@@ -9,8 +9,8 @@ export interface CustomButton {
   label: string
   icon: string
   iconColor: string
-  /** HTTP method the backend expects: "get" for simple buttons, "put" when fields are required */
-  APIMethod: "get" | "put" | "post"
+  /** Mutating HTTP method returned by the backend for button execution */
+  APIMethod: "put" | "post"
   /** Relative API route: "buttons/action/{buttonId}/{instanceId}" */
   APIRoute: string
   dialogTitle?: string
@@ -67,16 +67,6 @@ export async function triggerCustomButton(
   switch (button.APIMethod?.toLowerCase()) {
     case "put":
       await apiPut(route, hasPayload ? payload : undefined)
-      break
-    case "get":
-      if (hasPayload) {
-        const params = Object.fromEntries(
-          Object.entries(payload).map(([key, value]) => [key, String(value)])
-        )
-        await apiGet(route, { params })
-      } else {
-        await apiGet(route)
-      }
       break
     default:
       await apiPost(route, hasPayload ? payload : undefined)

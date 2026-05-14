@@ -1,0 +1,91 @@
+---
+title: "Launch Week Day 5 - Windows 11 Pro VPS e App Freeze"
+date: 2026-03-13 10:00:00
+excerpt: "Day 5 della Launch Week. Windows 11 Pro è ora disponibile come VPS su Appbox. Inoltre, una nuova funzione freeze ti permette di mettere in pausa le app e recuperare i loro slot senza perdere dati."
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Day 5: Windows 11 Pro VPS e App Freeze
+
+Day 5. Il giorno finale. Ieri abbiamo detto che non te lo saresti aspettato, e lo pensavamo davvero.
+
+**Windows 11 Pro è ora disponibile come VPS su Appbox.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows su Appbox
+
+Quando abbiamo lanciato le VPS nel Day 3 con cinque distribuzioni Linux, la domanda naturale era "e Windows?". Far funzionare correttamente Windows come VPS gestita su Appbox è stata una sfida tecnica significativa. Le VM Linux usano virtiofs per una condivisione file quasi nativa tra host e guest. Windows non supporta virtiofs. Così abbiamo costruito un'integrazione basata su Samba che crea condivisioni SMB autenticate per ogni VM, dando a Windows lo stesso accesso senza soluzione di continuità ai tuoi dati Appbox che ottengono le VPS Linux, solo attraverso un protocollo che Windows comprende nativamente.
+
+Il risultato è una macchina virtuale Windows 11 Pro completa in esecuzione su KVM con i tuoi dati Appbox montati come unità `Z:` (`APPBOX_DATA`). Apri File Explorer, vai su `Z:\` e vedrai lì le cartelle `apps/` e `storage/`.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="File Explorer di Windows 11 che mostra APPBOX_DATA come unità Z: con cartelle apps e storage" width="860" className="mt-8 mb-10" />
+</p>
+
+## Cosa rende possibile
+
+Avere una VPS Windows su Appbox apre una categoria completamente nuova di casi d'uso:
+
+- **Software solo Windows** - esegui applicazioni che semplicemente non hanno versioni Linux
+- **Sviluppo .NET** - crea e testa applicazioni .NET in un vero ambiente Windows
+- **Office e produttività** - esegui Microsoft Office, strumenti Adobe o qualsiasi software desktop
+- **Game server** - ospita game server solo Windows
+- **Desktop remoto** - accedi a un desktop Windows completo da qualsiasi browser tramite la console web integrata, oppure collegati con Microsoft Remote Desktop per un'esperienza RDP nativa
+- **Testing e CI** - testa il tuo software su Windows senza mantenere hardware tuo
+
+Questa è un'installazione completa di Windows 11 Pro con accesso amministratore. Se gira su Windows, gira qui.
+
+## Disponibilità sui piani
+
+Windows 11 Pro ha requisiti di risorse piuttosto elevati ed è pesante sull'I/O del disco. Per garantire una buona esperienza a tutti, la Windows VPS è attualmente disponibile solo sui piani Appbox dedicati (NG-18000 e superiori). Potremmo estendere la disponibilità ad altri piani in futuro mentre continuiamo a ottimizzare.
+
+## Licenza
+
+La Windows 11 Pro VPS non include un product key. Windows funzionerà non attivato con un watermark persistente sul desktop, impostazioni di personalizzazione limitate e promemoria periodici di attivazione, ma per il resto è completamente funzionale. Per rimuovere queste restrizioni, attivalo con una chiave Windows 11 Pro valida. Consigliamo di acquistarne una da [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Funziona con App Boost
+
+Windows 11 Pro VPS supporta pienamente **App Boost** dal Day 2. Se ti serve più performance per carichi di lavoro pesanti, alza il livello di boost per allocare più RAM e CPU alla tua VM.
+
+## App Freeze
+
+C'è una seconda funzionalità rilasciata oggi che si applica a tutte le app, non solo a Windows.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Pagina di dettaglio della Windows 11 Pro VPS che mostra App Boost e il nuovo pulsante Freeze" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** ti permette di mettere in pausa qualsiasi app installata e recuperare i suoi slot app senza perdere dati. L'app si ferma, i suoi dati restano esattamente dove sono e gli slot che usava diventano disponibili per altre app.
+
+Questo risolve un problema emerso continuamente: vuoi provare una nuova app, ma hai usato tutti gli slot. Prima di oggi, avresti dovuto disinstallare qualcosa, perdendo i dati, solo per liberare abbastanza slot per sperimentare. Ora puoi congelare un'app, usare quegli slot per installare e testare qualcosa di nuovo, e poi scongelare l'app originale quando hai finito. Tutto riparte esattamente da dove l'avevi lasciato.
+
+Il pulsante Freeze si trova direttamente nella sezione Actions della pagina di dettaglio di qualsiasi app, accanto a Start, Stop e Restart. Il freeze ferma l'app, la marca come congelata e restituisce i suoi slot (inclusi eventuali boost slots) al tuo pool disponibile. L'unfreeze ripristina l'app e consuma nuovamente gli slot.
+
+Alcune cose da notare:
+
+- Non puoi congelare un'app mentre si sta installando, aggiornando o eliminando
+- Non puoi scongelare se il tuo Appbox non ha abbastanza slot liberi per coprire il costo
+- Le app congelate mantengono intatti tutti i dati e la configurazione
+
+## Si chiude qui
+
+Cinque giorni. Cinque lanci.
+
+- **Day 1** - la nuova dashboard
+- **Day 2** - App Boost
+- **Day 3** - VPS Linux
+- **Day 4** - domini multipli per app VPS
+- **Day 5** - Windows 11 Pro VPS e App Freeze
+
+Tutto ciò che è stato rilasciato questa settimana è live ora. Accedi e provalo.
+
+La Launch Week è finita, ma noi non ci fermiamo. C'è molto altro in arrivo nei prossimi mesi.
+
+---
+
+*Hai feedback o hai trovato un problema? Scrivici a support@appbox.co o apri un ticket su [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

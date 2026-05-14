@@ -1,0 +1,65 @@
+---
+title: Dodajanje nove dokumentacije
+description: Dodajte nove dokumente na svoje dokumentacijsko mesto in blog.
+sort: 2
+---
+
+# Za dokumentacijo
+
+1. Ustvarite novo datoteko `.mdx` v mapi `apps/content/docs/[language]` z vsebino svojega dokumenta.
+2. Dodajte dokument v navigacijski meni spletnega mesta.
+    To storite tako, da v datoteko `src/config/docs.ts`, v lastnost `sidebarNav`, dodate nov element z želenimi informacijami; sledite vzorcu obstoječih elementov. S tem bo dokument dodan tudi v iskalno ukazno paleto.
+
+## Nastavitve dokumenta MDX
+
+Dokumenti MDX so shranjeni v mapah `apps/content/docs/[language]` in `apps/content/blog/[language]`. Vsak dokument je datoteka MDX, ki vsebuje glavo z metapodatki, kot sta naslov in opis. Spodaj je primer glave dokumenta:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Podprta so naslednja polja metapodatkov:
+
+- `title` (obvezno): naslov dokumenta.
+- `description` (obvezno): kratek opis dokumenta.
+- `sort` (neobvezno): številka, ki določa vrstni red dokumenta v navigaciji. Dokumenti z nižjimi vrednostmi `sort` se prikažejo prvi. Če ni navedena, so dokumenti razvrščeni abecedno po naslovu.
+- `links` (neobvezno): povezave do povezanih dokumentov, referenc API, izvorne kode itd.
+- `toc` (neobvezno): ali naj se prikaže kazalo vsebine. Privzeta vrednost je `true`.
+
+Če želite dokumentu dodati nove metapodatke, lahko v glavo dodate nove ključe. Na primer, dodate lahko ključ `author`, ki označuje avtorja dokumenta:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Pri dodajanju metapodatkov po meri morate posodobiti tudi datoteko `contentlayer.config.ts`, ki je v korenu projekta, in sicer znotraj lastnosti `fields` v konstantah `Doc` ali `Blog`.
+Nato boste morali nove informacije prikazati v predlogi dokumenta. Za to morate posodobiti datoteko `src/app/[locale]/docs/[[...slug]]/page.tsx` ali `src/app/[locale]/blog/[[...slug]]/page.tsx` oziroma eno od njenih podrejenih komponent.
+
+## Ponovna izgradnja Contentlayer
+
+Ko spremenite vsebino dokumentacije, dodate novo dokumentacijo ali spremenite datoteko `contentlayer.config.ts`, morate ponovno zgraditi predpomnilnik Contentlayer, da spremembe začnejo veljati med razvojem. Zaženite:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Ta ukaz ponovno ustvari tipe vsebine in podatke, ki jih aplikacija potrebuje. Ukaz morate zagnati vsakič, ko:
+
+- dodate nova polja metapodatkov v datoteko `contentlayer.config.ts`,
+- dodate ali spremenite vsebino MDX, ko razvojni strežnik ne teče,
+- spremenite strukturo organizacije vsebine.
+
+Ukaz se samodejno zažene pri gradnji projekta za produkcijo, med razvojem pa ga morate zagnati ročno, če naredite strukturne spremembe vsebine.
+
+
+

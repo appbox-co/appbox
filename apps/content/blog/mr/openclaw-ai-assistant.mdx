@@ -1,0 +1,125 @@
+---
+title: OpenClaw - तुमच्या Apps शी बोलणारा वैयक्तिक AI Assistant
+date: 2026-03-20 10:00:00
+excerpt: OpenClaw आता Appbox वर उपलब्ध आहे. तो तुमच्या infrastructure वर चालणारा, chat apps शी connect होणारा, आणि तुमच्या इतर installed apps शी प्रत्यक्ष interact करू शकणारा open-source AI assistant आहे.
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, एकत्रीकरण, self-hosted]
+---
+
+# OpenClaw आता Appbox वर आहे
+
+आम्ही नुकतेच app store मध्ये काहीतरी जोडले आहे ज्याबद्दल मी वैयक्तिकरीत्या बराच काळ उत्सुक होतो.
+
+[OpenClaw](https://openclaw.ai) हा पूर्णपणे तुमच्या स्वतःच्या infrastructure वर चालणारा open-source AI assistant आहे. Cloud AI assistants चा private, self-hosted alternative समजा, पण हा तुमच्या Appbox वर राहतो, तुमच्या conversations लक्षात ठेवतो, आणि प्रत्यक्ष तुमच्यासाठी गोष्टी करू शकतो.
+
+तुम्ही आधीच वापरत असलेल्या chat apps मधून त्याच्याशी बोलता. WhatsApp, Telegram, Discord, Slack, Signal, अगदी iMessage. तो Anthropic, OpenAI, Google, xAI, Mistral, आणि इतर providers च्या models च्या पूर्ण power सह respond करतो. तुम्ही तुमची API key आणता, model निवडता, आणि सर्व काही तुमच्या server वर राहते.
+
+इतकेच असले तरी ते उपयुक्त ठरले असते. पण हे फक्त store मध्ये शांतपणे add करण्याऐवजी मी blog post लिहितो आहे कारण ते तुमच्या Appbox च्या उर्वरित भागासोबत combine केल्यावर काय घडते.
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="OpenClaw chat session in the web dashboard" width="860" className="mt-8 mb-10" />
+</p>
+
+## तो तुमची इतर Apps पाहू शकतो
+
+Appbox वर OpenClaw इतर कुठेही चालवण्यापेक्षा वेगळा का आहे ते येथे आहे.
+
+प्रत्येक Appbox कडे shared data layer असते. तुमच्या installed apps प्रत्येकाला common mount खाली directory मिळते, आणि कोणतेही app read/write करू शकते असा shared storage area असतो. OpenClaw ला हाच shared filesystem access आहे. म्हणजे तो तुमच्या इतर installed apps आणि general storage मधील data पाहू शकतो - fragile API integration मधून नाही, तर direct filesystem access मधून.
+
+प्रत्यक्षात, तुमचा AI assistant context शिवाय स्वतःच्या container मध्ये isolated नाही. तो तुमच्या files, databases, media, code, आणि configurations च्या अगदी शेजारी बसलेला आहे.
+
+## तो तुमच्या इतर Apps मध्ये Log In करू शकतो
+
+Shared filesystem व्यतिरिक्त, OpenClaw मध्ये full headless browser (Puppeteer सह Chromium) आणि प्रत्येक common database client व CLI tool built in आहे. तुमच्या इतर apps पैकी एखाद्याचे login details दिल्यास, तो तुमच्या वतीने sign in करून ते वापरू शकतो.
+
+Docmost वर team documentation update करायचे आहे? OpenClaw ला काय लिहायचे ते सांगा आणि URL व credentials द्या. तो log in करेल, योग्य page वर जाईल, आणि edits करेल. तुमच्या Nginx & PHP stack वर नवीन landing page हवी आहे? तुम्हाला काय हवे ते describe करा आणि OpenClaw HTML, CSS, आणि JavaScript लिहू शकतो, नंतर shared filesystem मधून files थेट web root मध्ये deploy करू शकतो. WordPress चालवत आहात? Blog post draft आणि publish करायला, plugin settings update करायला, किंवा page restyle करायला सांगा. तो admin dashboard तुम्ही वापराल तसाच drive करू शकतो.
+
+हे web UIs पुरते limited नाही. OpenClaw `mysql`, `psql`, `redis-cli`, `mongosh`, आणि SSH support सह येतो, त्यामुळे तुम्ही दिलेल्या credentials वापरून तो databases आणि services शी थेट connect होऊ शकतो. मुख्य मुद्दा असा की प्रत्येक app साठी OpenClaw ला special integrations किंवा plugins लागत नाहीत. तुम्ही log in करू शकत असाल, तर तुमचा assistantही करू शकतो.
+
+## हे प्रत्यक्षात कसे दिसते
+
+AI assistant ला तुमच्या Appbox ecosystem चा access असताना तुम्ही काय करू शकता याची काही अधिक specific examples पाहूया.
+
+### Media Server Housekeeping
+
+तुम्ही Plex, Jellyfin, किंवा Emby चालवत असाल, तर OpenClaw मध्ये `ffmpeg`, `mediainfo`, आणि `exiftool` built in आहेत. Directories manually खणून न पाहता file metadata check करणे किंवा encoding issues spot करणे यासाठी ही tools उपयोगी आहेत. Folder मध्ये काय आहे ते list करायला, formats check करायला, किंवा naming conventions tidy करायला सांगा जेणेकरून तुमचा media server गोष्टी properly index करेल.
+
+### त्रासाशिवाय Database Work
+
+OpenClaw च्या container मध्ये `mysql`, `psql`, `sqlite3`, `redis-cli`, आणि `mongosh` pre-installed आहेत. तुम्ही MariaDB चालवत असाल, तर OpenClaw ला databases query करायला, schemas inspect करायला, slow queries debug करायला, किंवा migrations लिहायला मदत करायला सांगू शकता. हे सगळे तुमच्या phone वरील chat message मधून.
+
+WordPress किंवा MariaDB backed दुसरा CMS चालवत आहात? OpenClaw ला database health check करायला, orphaned post metadata शोधायला, किंवा specific content export करायला सांगा. काहीही SSH करायची किंवा योग्य CLI flags लक्षात ठेवायची गरज नाही. तुम्हाला काय हवे ते साध्या भाषेत describe करा.
+
+### GitLab आणि Code Workflows
+
+GitLab installed असेल, तर OpenClaw तुमच्या repositories सोबत थेट काम करू शकतो. Fast code search साठी `ripgrep` आणि `fd` सोबत `git` built in आहे. तुमच्या repos मध्ये specific pattern search करायला, recent commits summarise करायला, किंवा unfamiliar code समजून घ्यायला मदत करायला सांगा.
+
+Internal projects साठी GitLab वापरणाऱ्या teams साठी, तुमचा codebase प्रत्यक्ष read करून त्याबद्दल प्रश्नांची उत्तरे देणारा AI assistant, code third-party cloud service कडे न पाठवता, development workflow साठी meaningful improvement आहे.
+
+### File Organisation आणि Sync
+
+Nextcloud, SFTPGo, किंवा File Browser चालवत आहात? OpenClaw त्या services मधून येणाऱ्या files manage करण्यात मदत करू शकतो. तो documents शोधू शकतो, directory structures reorganise करू शकतो, duplicates शोधू शकतो, आणि shared storage व app-specific directories मध्ये गोष्टी move करू शकतो.
+
+त्यात `rclone` देखील उपलब्ध आहे, त्यामुळे sync jobs setup करायचे असतील किंवा cloud storage providers मध्ये data move करायचा असेल, तर तुम्हाला काय हवे ते describe करा आणि OpenClaw configuration हाताळू द्या.
+
+### Monitoring आणि Diagnostics
+
+Services monitor करण्यासाठी Uptime Kuma install केले असेल, तर OpenClaw तुमच्या monitoring setup वर conversational layer देतो. Alerts मिळण्यापलीकडे, तुम्ही OpenClaw ला network diagnostics run करायला सांगू शकता. तो `ping`, `dig`, `nslookup`, `traceroute`, `mtr`, आणि अधिक खोल investigation साठी `nmap` व `tcpdump` सह येतो.
+
+काहीतरी down झाले? तुमच्या assistant ला message करा, काय घडते आहे ते check करायला सांगा, आणि dashboards कडे staring करण्याऐवजी plain-language explanation मिळवा.
+
+### Music आणि Audiobook Libraries
+
+Navidrome आणि audiobookshelf users OpenClaw च्या media tooling चा फायदा घेऊ शकतात. Missing किंवा incorrect metadata tags असलेल्या files साठी music library scan करायला, re-encoding लागेल अशा tracks identify करायला, किंवा योग्य split न झालेल्या audiobook chapters organize करायला सांगा. `ffmpeg` आणि `exiftool` combo बहुतेक गरजा हाताळते.
+
+### Jupyter आणि Data Work
+
+Data analysis साठी Jupyter Notebook वापरत असाल, तर OpenClaw त्याला छान complement करतो. त्यात pip आणि venv support सह Python 3 आहे, त्यामुळे scripts लिहिणे, shared storage मधील data files process करणे, आणि quick analyses थेट run करणे यात तो मदत करू शकतो. तुमची notebooks ज्या data वर काम करत आहेत त्याच data साठी conversational interface समजा.
+
+### Infrastructure as Code
+
+अधिक technically adventurous users साठी, OpenClaw `docker`, `kubectl`, `terraform`, आणि `ansible` CLIs सह येतो. Appbox वर VPS चालवत असाल आणि infrastructure manage करत असाल, तर OpenClaw conversational ops assistant म्हणून वापरू शकता. काय deploy करायचे आहे ते describe करा आणि configurations generate व apply करण्यात त्याला मदत करू द्या.
+
+## Persistent Memory
+
+OpenClaw ला फक्त AI model शी chat window ठेवण्यापेक्षा वेगळे बनवणारी गोष्ट म्हणजे तो तुम्हाला लक्षात ठेवतो. तो वेळोवेळी context तयार करतो: तुमच्या preferences, गोष्टी organize करण्याची तुमची पद्धत, तुम्ही काम करत असलेले projects, तुम्ही वापरत असलेल्या naming conventions. तुम्ही जितके interact कराल तितका तो अधिक useful होतो.
+
+Appbox वर हे विशेषतः powerful आहे कारण context फक्त conversational नाही. तो तुमच्या actual environment मध्ये grounded आहे. तुमच्या files, apps, data मध्ये.
+
+## Pre-loaded Skills
+
+OpenClaw मध्ये skill system आहे आणि [ClawHub](https://clawhub.ai/skills) वर 50+ community-built extensions उपलब्ध आहेत. Skills agent ला specific apps, tools, किंवा workflows साठी specialised capabilities देतात.
+
+Appbox वर आम्ही फक्त bare agent देत नाही. Image मध्ये curated skills आधीच installed येतात, त्यामुळे OpenClaw तुमचे environment out of the box समजतो:
+
+- **Platform awareness**: Appbox shared data layout, उपलब्ध CLI tools, आणि गरज पडल्यास support किंवा VPS upgrades कडे कसे guide करायचे हे जाणतो
+- **App-specific skills**: WordPress, Nginx, GitLab, Nextcloud, Emby, MariaDB, Tautulli, Mautic, WireGuard, आणि Rocket.Chat साठी pre-loaded, त्यामुळे ही apps installed असतील तेव्हा agent ला त्यांच्यासोबत कसे काम करायचे ते आधीच माहिती असते
+- **SSH essentials**: agent मधून तुमच्या VPSes किंवा remote servers शी थेट connect करण्यासाठी
+- **Browser automation (Playwright MCP)**: web UIs मधून तुमच्या इतर apps मध्ये log in करून त्यांना drive करण्याची क्षमता देते
+- **Web search and documentation lookup**: reference material on the fly आणण्यासाठी multi-engine search आणि ClawDDocs
+- **Self-improvement**: ClawHub वर नवीन skills discover करण्यासाठी आणि install करण्यापूर्वी त्यांची vetting करण्यासाठी skills
+
+तुम्ही कधीही additional skills install करू शकता. [ClawHub](https://clawhub.ai/skills) वर एक शोधा, link copy करा, आणि तुमच्या agent ला paste करा. तो skill स्वतः download आणि install करेल.
+
+## सुरुवात कशी करावी
+
+इतर कोणत्याही app प्रमाणे Appbox app store मधून OpenClaw install करा. त्याला दोन slots लागतात.
+
+Installation नंतर, app detail page वर Gateway Token दिसेल. तो तुमचा dashboard login आहे. Dashboard URL उघडा, token enter करा, आणि तुम्ही आत.
+
+त्यानंतर configure करायची एकच गोष्ट म्हणजे तुमचा AI model provider. तुम्हाला पसंत असलेल्या provider कडून API key जोडा. OpenRouter हा सर्वात सोपा starting point आहे कारण एका key ने अनेक models चा access मिळतो. OpenRouter, OpenAI, Anthropic, Google, xAI, Mistral, आणि इतरांकडून API keys मिळवणे दाखवणारा [full setup guide](/docs/apps/openclaw-model-provider-setup) आम्ही लिहिला आहे.
+
+Model configured झाल्यावर, dashboard मधूनच assistant सोबत chat सुरू करू शकता. WhatsApp, Telegram, Discord, किंवा इतर channels मधून बोलायचे असल्यास, तेही dashboard मधून configure होतात.
+
+## हे महत्त्वाचे का आहे
+
+AI chat interfaces खूप आहेत. त्यापैकी बहुतेक cloud services आहेत, जिथे message पाठवताच तुमचा data तुमच्या control बाहेर जातो. OpenClaw वेगळा आहे कारण सर्व काही तुमच्या Appbox वर राहते. Assistant, त्याची memory, तुमच्या conversations, आणि तो ज्या data वर काम करतो तो data.
+
+आणि shared filesystem access सह तो तुमच्या इतर apps च्या शेजारी बसलेला असल्यामुळे, तो तुमच्या self-hosted stack बद्दल फक्त प्रश्नांची उत्तरे न देता त्यात प्रत्यक्ष गोष्टी करू शकतो.
+
+लोक यासह काय build करतात हे पाहण्याची आम्हाला खरोखर उत्सुकता आहे. तुम्ही interesting workflow setup केला किंवा OpenClaw ला तुमच्या इतर apps शी connect करण्याचा creative मार्ग शोधला, तर आम्हाला त्याबद्दल ऐकायला आवडेल.
+
+---
+
+*OpenClaw बद्दल प्रश्न आहेत किंवा setup साठी मदत हवी आहे? support@appbox.co वर संपर्क करा किंवा [billing.appbox.co](https://billing.appbox.co/submitticket.php) वर ticket उघडा.*

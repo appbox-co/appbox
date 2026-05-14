@@ -1,0 +1,81 @@
+---
+title: Launch Week Día 4 - Múltiples dominios para apps VPS
+date: 2026-03-12 10:00:00
+excerpt: "Día 4 de Launch Week. Las apps VPS ahora admiten múltiples dominios: añade todos los dominios personalizados y subdominios de Appbox que necesites, todos con SSL automático."
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, dominios, ssl, dominios-personalizados]
+---
+
+# Launch Week Día 4: Múltiples dominios para apps VPS
+
+Día 4. Ayer te dimos máquinas virtuales completas. Hoy les damos soporte de dominios como corresponde.
+
+Cuando lanzamos los VPS el Día 3, cada VM recibió un único dominio. Eso está bien para muchos casos de uso, pero si ejecutas un servidor web dentro de tu VPS, y muchos de vosotros lo hacéis, un solo dominio no basta. Necesitas múltiples dominios apuntando a la misma máquina, cada uno con su propio certificado SSL y configuración de servidor web.
+
+Hoy, las apps VPS admiten **múltiples dominios**. Añade tantos subdominios `*.user.appboxes.co` como quieras, trae tus propios dominios personalizados o combina ambas opciones. Cada uno obtiene SSL y una configuración de servidor web lista para usar.
+
+## Cómo funciona
+
+Abre cualquier app VPS en ejecución y encontrarás una tarjeta **Custom Domains** en la página de detalles. Ahí viven todos tus dominios: una tabla con búsqueda y ordenación que muestra cada dominio asociado a ese VPS, cuál es el principal y cuándo se añadió.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Tabla de Custom Domains en una página de detalles de app VPS" width="860" className="mt-8 mb-10" />
+</p>
+
+Para añadir un dominio nuevo, haz clic en **Add Domain**. Elegirás un dominio padre, introducirás un subdominio y el sistema se encargará del resto.
+
+## Subdominios de Appbox
+
+La forma más rápida de añadir un dominio es usar tu dominio existente de Appbox. Elige tu dominio `user.appboxes.co` como padre, escribe un subdominio y listo. DNS ya está gestionado por ti, y el dominio se verifica al instante.
+
+Esto es ideal para crear URLs rápidas de proyectos, entornos de staging o simplemente dar a distintos servicios de tu VPS su propia dirección. ¿Necesitas `api.user.appboxes.co` para tu backend y `app.user.appboxes.co` para tu frontend? Añade ambos en menos de un minuto.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Añadir un subdominio de Appbox a un VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Como estos se encuentran bajo tu certificado wildcard existente de Appbox, SSL es automático. Sin esperas, sin generación de certificados, sin configuración.
+
+## Dominios personalizados
+
+También puedes apuntar tus propios dominios a tu VPS. Selecciona tu dominio base personalizado (o añade uno nuevo directamente desde el diálogo), introduce el subdominio y la UI te guía por la configuración de DNS.
+
+El diálogo te muestra el registro A exacto que debes crear: el hostname, la dirección IP, todo. Incluso incluye instrucciones específicas para Cloudflare y otros proveedores DNS populares, así no tienes que buscar cómo añadir un registro A.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Añadir un dominio personalizado con verificación DNS e instrucciones específicas por proveedor" width="560" className="mt-8 mb-10" />
+</p>
+
+Cuando tu DNS apunte a la IP correcta, pulsa **Verify Again** y el sistema confirmará que el registro es correcto antes de añadir el dominio.
+
+## SSL y configuración del servidor web
+
+Cada dominio que añades obtiene SSL. Para subdominios de Appbox, se usa el certificado wildcard existente. Para dominios personalizados, se aprovisiona un certificado automáticamente.
+
+Esta es la parte que lo hace realmente útil para usuarios de VPS: cada dominio viene con un botón **View Config** que te da snippets de configuración listos para pegar tanto para Nginx como para Apache. La configuración incluye el `server_name` correcto, las rutas de certificados SSL, las cipher suites y los ajustes de protocolo. Copia el snippet, pégalo en la configuración de tu servidor web dentro de la VM, recarga y estarás sirviendo tráfico en ese dominio.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="Snippets de configuración SSL para Nginx y Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Sin adivinar rutas de archivos. Sin buscar ubicaciones de certificados. Sin averiguar cadenas de cifrado. Todo está ahí, listo para copiar.
+
+## Por qué esto importa para usuarios de VPS
+
+Un VPS sin soporte multidominio es solo un servidor con una dirección. Eso limita de formas que se vuelven evidentes rápido:
+
+- ¿Ejecutas una web app con una API separada? Necesitas al menos dos dominios.
+- ¿Alojas varios sitios en tu VM? Cada uno necesita su propio dominio.
+- ¿Quieres un entorno de staging junto a producción? Ese es otro dominio.
+- ¿Desarrollas localmente y quieres probar con un dominio real? Uno más.
+
+## El Día 4 ya está disponible
+
+El soporte para múltiples dominios está disponible ahora mismo para todas las apps VPS. Abre tu VPS, baja hasta Custom Domains y empieza a añadir.
+
+Mañana es el Día 5, y tenemos una sorpresa. No la vas a ver venir.
+
+---
+
+*¿Tienes comentarios o encontraste un problema? Escríbenos a support@appbox.co o abre un ticket en [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

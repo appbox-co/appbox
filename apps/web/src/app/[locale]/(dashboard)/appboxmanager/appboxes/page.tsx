@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Plus, Server } from "lucide-react"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
+import { DashboardPageHeader } from "@/components/dashboard/page-header"
 import { useMarketingScreenshotMode } from "@/components/marketing/use-marketing-screenshot-mode"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -145,12 +146,12 @@ export default function AppboxesPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">
-          {t("cylos.title")}
-        </h1>
-      </div>
+      <DashboardPageHeader
+        title={t("cylos.title")}
+        description={t("cylos.description")}
+        icon={<Server className="size-[18px]" />}
+        gradient="from-[#6366f1] to-[#8b5cf6]"
+      />
 
       {/* Toolbar */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

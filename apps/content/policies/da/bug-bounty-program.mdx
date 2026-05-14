@@ -1,0 +1,183 @@
+---
+title: Bug Bounty-program
+description: Vores program til rapportering af sikkerhedssårbarheder og belønninger
+---
+
+Hos Appbox er sikkerhed en grundlæggende prioritet. Vi opfordrer aktivt sikkerhedsresearchere til at hjælpe med at styrke vores platform ved at identificere og rapportere potentielle sårbarheder. Dette program beskriver vores tilgang til ansvarlig sikkerhedsresearch, hvordan vi håndterer sårbarhedsrapporter, og de belønninger vi tilbyder til researchere, der hjælper med at forbedre vores sikkerhedsposition.
+
+## Vores forpligtelse
+
+Når du deltager i vores bug bounty-program, lover vi at:
+
+* Bekræfte modtagelse og evaluere din rapport rettidigt
+* Håndtere bekræftede sårbarheder med passende hast
+* Anerkende og belønne dig for unikke, tidligere urapporterede sårbarheder, der fører til sikkerhedsforbedringer
+
+## Programdækning
+
+Dette bug bounty-program gælder for følgende Appbox-platforme:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Kun infrastruktur, ikke kundeapplikationer**
+
+**Bemærk:** Selvom vores hostinginfrastruktur (username.appboxes.co) er omfattet, er sårbarheder i tredjepartsapplikationer, der er deployet af kunder, ikke omfattet. Se undtagelserne nedenfor.
+
+## Hvad der kvalificerer som en gyldig sårbarhed
+
+For at kvalificere sig til vores bug bounty-program skal en indsendelse opfylde ALLE følgende kriterier:
+
+### 1. Demonstrere faktisk udnyttelse
+* Inkludere et fungerende proof of concept, der demonstrerer, at sårbarheden kan udnyttes
+* Vise tydelig sikkerhedspåvirkning; teoretiske sårbarheder uden demonstreret skade kvalificerer sig ikke
+* Bevise, at en angriber faktisk kunne kompromittere brugerdata, konti eller systemintegritet
+
+### 2. Påvirke systemer inden for scope
+* Sårbarheden skal eksistere i Appbox' proprietære kode eller infrastruktur
+* Skal påvirke systemer, der eksplicit er angivet i "Programdækning" ovenfor
+* Skal kunne reproduceres i vores produktions- eller stagingmiljøer
+
+### 3. Være tidligere urapporteret
+* Sårbarheden skal være nyopdaget og ikke allerede kendt af os
+* Duplikerede rapporter eller variationer af kendte problemer kvalificerer sig ikke
+
+## Udelukkede områder og problemer
+
+Følgende anses for at være **uden for scope** for vores bug bounty-program:
+
+### Tredjepartssystemer og integrationer
+* WHMCS Client Area [https://billing.appbox.co] - Rapportér til [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - Rapportér til [Chatwoot Security](https://www.chatwoot.com/security)
+* **Kundedeployede applikationer** [app.username.appboxes.co] - Sårbarheder i tredjepartsapplikationer (WordPress, Nextcloud osv.) hostet på vores infrastruktur skal rapporteres til de respektive applikationsleverandører
+* Alle andre tredjepartstjenester, plugins eller integrationer, vi bruger
+* IP-adresser eller domæner, der ikke er direkte kontrolleret af Appbox
+* Legacy- eller udfasede systemer, der ikke længere er i aktiv brug
+
+**Uden for scope for hostinginfrastruktur:**
+* Sårbarheder i kundedeployet applikationskode (WordPress, Nextcloud osv.)
+* Standardkonfigurationer af tredjepartsapplikationer
+* Sikkerhedsproblemer, der er specifikke for en bestemt applikationsversion
+
+### Security headers og hardening
+* Manglende security headers (X-Frame-Options, COOP, COEP, MTA-STS osv.) **medmindre** du demonstrerer faktisk udnyttelse, der fører til datakompromittering
+* Manglende `rel="noopener"`- eller `rel="noreferrer"`-attributter
+* Afsløring af serverversion eller HTTP header-information
+* Cookieattributter på ikke-sensitive cookies (analytics, præferencer osv.)
+
+### Information disclosure med lav påvirkning
+* Verbose fejlmeddelelser, der ikke eksponerer sensitive data (adgangskoder, tokens, PII)
+* Path disclosure uden demonstreret path traversal eller filadgang
+* Identifikation af teknologistack (PHP-version, framework-detektion osv.)
+* Generiske applikationssvar eller adfærd
+
+### Designbeslutninger og teoretiske problemer
+* Login CSRF (giver ikke angriberen adgang til offerets konti)
+* Brugeropregning via timing-angreb eller differentielle svar (medmindre det er del af en større angrebskæde)
+* Clickjacking uden demonstreret udnyttelse af sensitiv funktionalitet
+* CORS-konfigurationer på ikke-sensitive endpoints
+* Manglende rate limiting **medmindre** du demonstrerer faktisk misbrug (DoS er stadig udelukket)
+
+### Angrebsforudsætninger
+* Sikkerhedsproblemer, der ikke påvirker vores standardapplikationskonfigurationer
+* Sårbarheder, der kræver ikke-standardkonfigurationer
+* Sårbarheder i vores containere, der kræver custom eller modificerede opsætninger
+* Problemer, der kræver kompromittering på netværksniveau (MITM, DNS poisoning, ARP spoofing)
+
+### Forbudte testmetoder
+* Timing-baserede information disclosure-angreb
+* Process enumeration-teknikker
+* Enhver form for denial of service eller højvolumenangreb
+* Social engineering og phishingteknikker
+* Automatiseret sikkerhedsscanning, der genererer overdreven trafik eller belastning
+* Test af ikke-funktionelle features eller sider (f.eks. signup-sider, der endnu ikke er i produktion)
+
+### Ugyldige rapporttyper
+* Rapporter udelukkende baseret på automatiseret scanneroutput uden manuel validering
+* Generiske anbefalinger uden demonstration af faktiske sårbarheder
+* Best practice-forslag uden sikkerhedspåvirkning
+* Compliance-observationer (PCI-DSS, GDPR osv.) uden demonstration af udnyttelighed
+
+## Belønningsstruktur
+
+### Hovedwebsite og kontrolpanel
+
+| **Sårbarhedstype**                                  | **PayPal-belønning** | **Servicekredit** |
+| ---------------------------------------------------- | -------------------- | ----------------- |
+| XSS                                                  | EUR 100              | EUR 200           |
+| XSS (CSP Bypass)                                     | EUR 200              | EUR 300           |
+| CSRF                                                 | EUR 300              | EUR 450           |
+| Authentication Bypass                                | EUR 500              | EUR 750           |
+| SQL Injection                                        | EUR 1000             | EUR 1500          |
+| Arbitrary code execution                             | EUR 1000             | EUR 1500          |
+| Arbitrary code execution (with privilege escalation) | EUR 2000             | EUR 3000          |
+| Persistent code change                               | EUR 1000             | EUR 1500          |
+
+### Hostinginfrastruktur
+
+| Sårbarhedstype                              | PayPal-belønning | Servicekredit |
+| ------------------------------------------- | ---------------- | ------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.) | EUR 500          | EUR 750       |
+| Authentication Bypass for Supported Apps    | EUR 100          | EUR 200       |
+| Lokal privilegieeskalering                  | EUR 500          | EUR 750       |
+
+Bidragydere, der rapporterer gyldige sårbarheder, vil blive anerkendt i vores Security Researchers Hall of Fame som et tegn på vores påskønnelse.
+
+## Krav til rapportkvalitet
+
+Alle sårbarhedsrapporter skal indeholde:
+
+* **Tydelig sårbarhedsbeskrivelse** - Forklar, hvad sårbarheden er, og hvorfor den betyder noget
+* **Berørt system/URL** - Angiv præcis, hvor sårbarheden findes
+* **Trinvis reproduktion** - Detaljerede trin, der gør det muligt for os at reproducere problemet
+* **Fungerende proof of concept** - Funktionel demonstration af udnyttelse (kode, screenshots, video)
+* **Faktisk sikkerhedspåvirkning** - Demonstrer, hvad en angriber kunne opnå, ikke teoretiske muligheder
+* **Din egen test** - Validér fund manuelt; videresend ikke blot scanneroutput
+
+Rapporter, der mangler disse elementer eller består af generiske sikkerhedsanbefalinger, kvalificerer sig ikke til belønninger.
+
+## Sådan gør du krav på din belønning
+
+* Du kan vælge mellem to belønningsmuligheder:  
+   * Direkte PayPal-betaling (kræver en gyldig PayPal-konto)
+   * Appbox-servicekreditter (gælder for enhver Appbox-tjeneste, kan ikke overdrages)
+
+## Retningslinjer for deltagelse
+
+* Overhold denne politik, vores [Servicevilkår](/policies/terms-of-service) og alle gældende love
+* Rapportér sårbarheder hurtigt efter opdagelse
+* Respektér brugeres privatliv og systemintegritet under din research
+* Indsend alle sårbarhedsrapporter udelukkende via vores [contact us form](https://billing.appbox.co/contact.php)
+* Oprethold fortrolighed om opdagede sårbarheder, indtil de er løst
+* Begræns din test til systemer, der eksplicit er omfattet af dette program
+* Hvis du får uventet adgang til sensitive data: tilgå kun den minimale mængde, der er nødvendig for at demonstrere problemet, stop testen øjeblikkeligt, og rapportér sårbarheden straks
+* Brug kun dine egne testkonti til enhver interaktion med vores systemer
+* Forsøg aldrig at afpresse Appbox baseret på dine fund
+* **Verificér dine fund** - Test, at dit proof of concept faktisk virker, før du indsender
+* **Fokuser på påvirkning** - Prioritér sårbarheder, der kan forårsage reel skade, frem for teoretiske problemer
+
+## Juridisk beskyttelse
+
+Sikkerhedsresearchere, der følger denne politik, kan forvente:
+
+* Beskyttelse mod retslige skridt for sikkerhedsresearch i god tro udført inden for disse retningslinjer
+* Undtagelse fra anti-circumvention juridiske krav, når det er nødvendigt for legitim sikkerhedsresearch
+* Frafald af visse politikbegrænsninger, der ellers ville forhindre sikkerhedstest
+* Anerkendelse af, at compliant sikkerhedsresearch er gavnlig og udføres i god tro
+
+Du er fortsat ansvarlig for at overholde alle gældende love. Hvis du møder retslige skridt fra en tredjepart, mens du overholder denne politik, vil vi bekræfte, at dine handlinger blev udført i overensstemmelse med vores program. Hvis du er usikker på, om dine planlagte researchaktiviteter overholder denne politik, bedes du kontakte os via [contact us form](https://billing.appbox.co/contact.php), før du fortsætter.
+
+## Rapporteringsproces
+
+For at rapportere en sårbarhed skal du oprette en detaljeret ticket via vores [contact us form](https://billing.appbox.co/contact.php).
+
+* Din rapport bør indeholde omfattende trin til at reproducere sårbarheden. Du kan bruge denne skabelon som vejledning: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Al programkommunikation skal gå gennem vores officielle Support Ticket Platform
+* Offentliggørelse af en sårbarhed uden eksplicit skriftlig tilladelse fra Appbox overtræder programmets vilkår og diskvalificerer dig fra at modtage en belønning
+
+## Hvad sker der, efter du rapporterer
+
+* **Gyldige sårbarheder**: Vi bekræfter din rapport, arbejder på en rettelse og behandler din belønning
+* **Ugyldige rapporter**: Vi forklarer, hvorfor rapporten ikke kvalificerer sig, og kan give vejledning til fremtidige indsendelser
+* **Rapporter uden for scope**: Vi henviser dig til den relevante leverandør eller forklarer, hvorfor problemet ikke er dækket
+
+Vi værdsætter kvalitetsresearch og konstruktive bidrag til vores sikkerhed. Tak fordi du hjælper med at holde Appbox sikker.

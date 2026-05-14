@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - Beberapa Domain untuk Aplikasi VPS
+date: 2026-03-12 10:00:00
+excerpt: Hari keempat Launch Week. Aplikasi VPS sekarang mendukung beberapa domain - tambahkan sebanyak mungkin custom domain dan subdomain Appbox yang Anda butuhkan, semuanya dengan SSL otomatis.
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domain, ssl, custom-domains]
+---
+
+# Launch Week Day 4: Beberapa Domain untuk Aplikasi VPS
+
+Hari 4. Kemarin kami memberi Anda mesin virtual penuh. Hari ini kami memberi dukungan domain yang layak untuknya.
+
+Saat kami meluncurkan VPS pada Hari 3, setiap VM mendapat satu domain. Itu cukup untuk banyak use case, tetapi jika Anda menjalankan web server di dalam VPS - dan banyak dari Anda melakukannya - satu domain tidak cukup. Anda membutuhkan beberapa domain yang mengarah ke mesin yang sama, masing-masing dengan sertifikat SSL dan konfigurasi web server sendiri.
+
+Hari ini, aplikasi VPS mendukung **beberapa domain**. Tambahkan sebanyak mungkin subdomain `*.user.appboxes.co` yang Anda inginkan, bawa custom domain Anda sendiri, atau campurkan keduanya. Masing-masing mendapatkan SSL dan konfigurasi web server siap pakai.
+
+## Cara Kerjanya
+
+Buka aplikasi VPS yang sedang berjalan dan Anda akan menemukan kartu **Custom Domains** di halaman detail. Di sinilah semua domain Anda berada - tabel yang dapat dicari dan diurutkan yang menampilkan setiap domain yang terpasang ke VPS tersebut, mana yang utama, dan kapan ditambahkan.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Tabel Custom Domains di halaman detail aplikasi VPS" width="860" className="mt-8 mb-10" />
+</p>
+
+Untuk menambahkan domain baru, klik **Add Domain**. Anda akan memilih domain induk dan memasukkan subdomain, lalu sistem menangani sisanya.
+
+## Subdomain Appbox
+
+Cara tercepat menambahkan domain adalah menggunakan domain Appbox yang sudah ada. Pilih domain `user.appboxes.co` Anda sebagai induk, ketik subdomain, dan selesai. DNS sudah ditangani untuk Anda, dan domain diverifikasi seketika.
+
+Ini sangat cocok untuk membuat URL project cepat, environment staging, atau memberi alamat sendiri untuk layanan berbeda di VPS Anda. Butuh `api.user.appboxes.co` untuk backend dan `app.user.appboxes.co` untuk frontend? Tambahkan keduanya dalam waktu kurang dari satu menit.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Menambahkan subdomain Appbox ke VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Karena berada di bawah sertifikat wildcard Appbox yang sudah ada, SSL otomatis. Tanpa menunggu, tanpa pembuatan sertifikat, tanpa konfigurasi.
+
+## Custom Domain
+
+Anda juga dapat mengarahkan domain Anda sendiri ke VPS. Pilih custom base domain Anda (atau tambahkan yang baru langsung dari dialog), masukkan subdomain, dan UI memandu Anda melalui setup DNS.
+
+Dialog menampilkan record A yang tepat untuk dibuat - hostname, alamat IP, semuanya. Bahkan ada instruksi khusus provider untuk Cloudflare dan provider DNS populer lainnya, sehingga Anda tidak perlu mencari cara menambahkan record A.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Menambahkan custom domain dengan verifikasi DNS dan instruksi khusus provider" width="560" className="mt-8 mb-10" />
+</p>
+
+Setelah DNS Anda mengarah ke IP yang benar, tekan **Verify Again** dan sistem akan mengonfirmasi record sudah benar sebelum menambahkan domain.
+
+## SSL dan Konfigurasi Web Server
+
+Setiap domain yang Anda tambahkan mendapat SSL. Untuk subdomain Appbox, ini menggunakan sertifikat wildcard yang sudah ada. Untuk custom domain, sertifikat disediakan secara otomatis.
+
+Bagian yang membuat ini benar-benar berguna bagi pengguna VPS: setiap domain memiliki tombol **View Config** yang memberi snippet konfigurasi siap tempel untuk Nginx dan Apache. Config mencakup `server_name` yang benar, path sertifikat SSL, cipher suite, dan pengaturan protokol. Salin snippet, masukkan ke konfigurasi web server di dalam VM, reload, dan Anda sudah melayani traffic di domain tersebut.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="Snippet konfigurasi SSL untuk Nginx dan Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Tidak perlu menebak path file. Tidak perlu mencari lokasi sertifikat. Tidak perlu mencari string cipher. Semuanya ada, siap disalin.
+
+## Mengapa Ini Penting untuk Pengguna VPS
+
+VPS tanpa dukungan multi-domain hanyalah server dengan satu alamat. Itu membatasi dengan cara yang cepat terasa:
+
+- Anda menjalankan web app dengan API terpisah? Anda membutuhkan minimal dua domain.
+- Anda meng-host beberapa situs dalam VM? Masing-masing membutuhkan domain sendiri.
+- Anda ingin environment staging berdampingan dengan production? Itu domain lain.
+- Anda mengembangkan secara lokal dan ingin menguji dengan domain sungguhan? Satu lagi.
+
+## Hari 4 Sudah Live Sekarang
+
+Dukungan beberapa domain tersedia sekarang untuk semua aplikasi VPS. Buka VPS Anda, gulir ke Custom Domains, dan mulai tambahkan.
+
+Besok adalah Hari 5, dan kami punya kejutan. Anda tidak akan menyangkanya.
+
+---
+
+*Punya masukan atau menemukan masalah? Hubungi support@appbox.co atau buka tiket di [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

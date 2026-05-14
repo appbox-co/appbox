@@ -1,0 +1,99 @@
+---
+title: परिचय
+description: open-sourced Appbox frontend च्या अधिकृत दस्तऐवजीकरणात स्वागत.
+sort: 1
+---
+
+**Appbox दस्तऐवजीकरणात स्वागत**  
+[Appbox](https://www.appbox.co/) साठीचा frontend आता [GitHub](https://github.com/appbox-co/appbox) वर open-sourced झाला आहे, हे जाहीर करताना आम्हाला आनंद होत आहे. दस्तऐवजीकरणात योगदान देणारा, नवीन frontend features तयार करणारा, आणि एकूण Appbox अनुभव सुधारण्यास मदत करणारा सहयोगी समुदाय तयार करणे हे आमचे उद्दिष्ट आहे.
+
+आमचे दस्तऐवजीकरण अजून सुरुवातीच्या टप्प्यात असले तरी, आमच्या क्षेत्रातील इतर प्लॅटफॉर्मसारखा सर्वसमावेशक resource तयार करण्याचे काम आम्ही करत आहोत. सध्या आमचे docs प्रामुख्याने contribution guidelines वर लक्ष केंद्रित करतात, पण Appbox वर उपलब्ध सर्व apps साठी तपशीलवार माहिती देऊन ते वाढवण्याचा आमचा बेत आहे.
+
+आमचे documentation अधिक मजबूत होईपर्यंत, विशिष्ट apps किंवा services बद्दल तातडीच्या प्रश्नांसाठी कृपया आमचा [legacy knowledge base](https://billing.appbox.co/knowledgebase) वापरा. Technical support हवी असल्यास, मदतीसाठी तुम्ही [ticket submit](https://billing.appbox.co/submitticket.php) करू शकता. आम्ही विस्तार करत असताना प्रगती पाहण्यासाठी साइटच्या footer मधील link द्वारे तुम्ही हे नवीन docs कधीही उघडू शकता.
+
+## पुढील योजना
+
+- **सखोल App Guides**  
+  आमच्या platform वर समर्थित प्रत्येक app साठी installation, troubleshooting, आणि tips.
+- **User आणि Developer Resources**  
+  Appbox अनुभव customize करण्यासाठी beginner-friendly tutorials पासून advanced code references पर्यंत सर्व काही.
+- **Community-Driven Content**  
+  Pull requests, feedback, आणि suggestions यांना प्रोत्साहन. सर्वांचे स्वागत आहे आणि हा project सर्वांसाठी वाढवण्यात त्यांची मदत होते.
+
+## सुरुवात कशी करावी
+
+आमचा open-sourced frontend code पाहायचा किंवा त्यात योगदान द्यायचे असल्यास, [Appbox](https://github.com/appbox-co/appbox) repository clone करा:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+नंतर project मध्ये जा आणि dependencies install करा:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+तुमची local instance `http://localhost:3000` वर उपलब्ध असेल. Explore करा, बदल करा, आणि pull requests तयार करा. प्रत्येक योगदानाबद्दल आम्ही आभारी आहोत.
+
+## Development Tools
+
+### Linting
+
+या project मध्ये TypeScript आणि Prettier integration सह ESLint वापरून सर्वसमावेशक linting setup दिलेला आहे. यामुळे code style सातत्यपूर्ण राहते आणि सामान्य चुका लवकर सापडतात. Linting checks manually चालवण्यासाठी:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+आमच्या ESLint configuration मध्ये समाविष्ट आहे:
+- `@typescript-eslint` द्वारे TypeScript-specific rules
+- `eslint-config-next` सह Next.js specific linting
+- Prettier integration सह code formatting
+
+### Pre-commit Hooks
+
+Git hooks manage करण्यासाठी आम्ही Husky वापरतो, ज्यामुळे repository मध्ये फक्त quality code commit होतो. खालील hooks setup केलेले आहेत:
+
+- **pre-commit**: code quality सुनिश्चित करण्यासाठी प्रत्येक commit पूर्वी `lint:fix` चालवतो
+- **commit-msg**: conventional commit message formatting enforce करण्यासाठी commitlint वापरतो
+
+याचा अर्थ तुमचे commits स्वीकारण्यापूर्वी code quality आणि योग्य formatting साठी आपोआप तपासले जातील, त्यामुळे संपूर्ण codebase मध्ये उच्च दर्जा राखला जाईल.
+
+## Pull Requests करणे
+
+तुमचे बदल contribute करण्यासाठी तयार झाल्यावर, तुमचा Pull Request (PR) स्वीकारला जाण्याची शक्यता वाढवण्यासाठी या guidelines follow करा:
+
+### PR तयार करण्यापूर्वी
+
+1. **Latest main branch वरून rebase करा** जेणेकरून merge conflicts टाळता येतील:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **सर्व linting pass होते याची खात्री करा**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **तुमचा code locally काम करतो याची खात्री करा**, संबंधित functionality test करून.
+
+### PR Guidelines
+
+1. **PRs focused ठेवा** - प्रत्येक PR मध्ये एक issue किंवा feature address करा.
+2. **स्पष्ट commit messages लिहा** - conventional commit format पाळा.
+3. **स्पष्ट descriptions द्या** - तुमचा PR काय करतो आणि तो का आवश्यक आहे ते समजवा.
+4. **Tests जोडा** - लागू असल्यास, तुमचे बदल योग्य काम करतात हे verify करण्यासाठी tests जोडा.
+5. **तुमचा code document करा** - complex logic साठी comments वापरा आणि function names descriptive आहेत याची खात्री करा.
+6. **विद्यमान patterns follow करा** - तुमचा code codebase च्या उर्वरित style आणि patterns शी जुळला पाहिजे.
+
+मोठे बदल करताना, coding मध्ये वेळ गुंतवण्यापूर्वी approach बद्दल चर्चा करण्यासाठी issue उघडण्याचा विचार करा. यामुळे तुमचे contribution project च्या दिशेशी जुळते याची खात्री होते आणि वाया जाणारा प्रयत्न टळतो.

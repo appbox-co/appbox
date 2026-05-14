@@ -1,0 +1,65 @@
+---
+title: Añadir nuevos documentos
+description: Añade nuevos documentos a tu sitio de documentación y blog.
+sort: 2
+---
+
+# Para documentación
+
+1. Crea un nuevo archivo `.mdx` en la carpeta `apps/content/docs/[language]` con el contenido de tu documento.
+2. Añade el documento al menú de navegación del sitio.
+    Para hacerlo, añade un nuevo elemento al archivo `src/config/docs.ts`, dentro de la propiedad `sidebarNav`, con la información deseada. Solo tienes que seguir el patrón de los elementos existentes. Al hacerlo, el documento también se añadirá a la paleta de comandos de búsqueda.
+
+## Configuración de documentos MDX
+
+Los documentos MDX se almacenan en las carpetas `apps/content/docs/[language]` y `apps/content/blog/[language]`. Cada documento es un archivo MDX que contiene un encabezado con metadatos, como título y descripción. A continuación tienes un ejemplo de encabezado de documento:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Se admiten los siguientes campos de metadatos:
+
+- `title` (obligatorio): el título del documento.
+- `description` (obligatorio): una breve descripción del documento.
+- `sort` (opcional): un número que determina el orden del documento en la navegación. Los documentos con valores de `sort` más bajos aparecen primero. Si no se proporciona, los documentos se ordenan alfabéticamente por título.
+- `links` (opcional): enlaces a documentos relacionados, referencias de API, código fuente, etc.
+- `toc` (opcional): si se debe mostrar la tabla de contenidos. Por defecto es `true`.
+
+Para añadir nuevos metadatos al documento, puedes agregar nuevas claves al encabezado. Por ejemplo, puedes añadir una clave `author` para indicar el autor del documento:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Pero al añadir metadatos personalizados, también tienes que actualizar el archivo `contentlayer.config.ts`, ubicado en la raíz del proyecto, dentro de la propiedad `fields` de las constantes `Doc` o `Blog`.
+Después, tendrás que mostrar la nueva información en la plantilla del documento. Para hacerlo, actualiza el archivo `src/app/[locale]/docs/[[...slug]]/page.tsx`, o `src/app/[locale]/blog/[[...slug]]/page.tsx`, o alguno de sus componentes hijos.
+
+## Reconstruir Contentlayer
+
+Cuando hagas cambios en el contenido de la documentación, añadas nuevos documentos o modifiques el archivo `contentlayer.config.ts`, tendrás que reconstruir la caché de Contentlayer para que tus cambios surtan efecto durante el desarrollo. Ejecuta:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+Este comando regenera los tipos de contenido y los datos que necesita la aplicación. Tendrás que ejecutarlo siempre que:
+
+- Añadas nuevos campos de metadatos al archivo `contentlayer.config.ts`
+- Añadas o modifiques contenido MDX cuando el servidor de desarrollo no esté en ejecución
+- Cambies la estructura de organización del contenido
+
+El comando se ejecuta automáticamente al compilar el proyecto para producción, pero tendrás que ejecutarlo manualmente durante el desarrollo si haces cambios estructurales en el contenido.
+
+
+

@@ -1,0 +1,77 @@
+---
+title: Launch Week 第 2 天 - App Boost
+date: 2026-03-10 10:00:00
+excerpt: Launch Week 第 2 天。介绍 App Boost：一种无需升级套餐，也能给应用分配更多资源的新方式。
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, 性能, 资源]
+---
+
+# Launch Week 第 2 天：介绍 App Boost
+
+第 2 天。我们来聊聊资源。
+
+我们最常听到的问题之一，大概是“怎样给这个应用更多 RAM？”或者“我能不能不升级整个套餐，只让这一个应用更快？”在今天之前，答案一直是：升级套餐，或者接受现状。
+
+现在不同了。今天我们发布 **App Boost**。
+
+## 什么是 App Boost？
+
+App Boost 让你可以使用可用的 app slots，为单个应用分配更多资源。过去每个应用都会获得 Appbox 资源的固定份额；现在你可以在任意应用上拖动 boost 等级，提升它的 CPU 和 RAM 分配。
+
+思路很简单：你可能有些应用需要更多性能，也有些应用用最低资源就完全够用。Boost 让你把套餐中的闲置容量投向真正需要的地方。
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="应用详情页上的 App Boost 控件" width="860" className="mt-8 mb-10" />
+</p>
+
+## 工作方式
+
+每个 Appbox 套餐都包含一定数量的 app slots。你安装的每个应用都会使用其中一部分。使用 App Boost 时，你可以给某个应用分配额外 slots 来提高它的资源倍率。
+
+你实际控制的是：
+
+- **Boost Slots**：你分配给该应用的额外 slots 数量。每个 slot 都会按固定增量提高资源倍率（通常每个 slot 为 0.1x）。
+- **Multiplier**：最终的资源缩放系数。0 个 boost slots 时为 1.0x（基线）。向上拖动后，可根据套餐把应用推到 1.3x、2x，甚至更高。
+- **RAM and CPUs**：拖动滑块时会实时更新，让你在确认前清楚看到应用将获得多少内存和 CPU。
+- **Slot Cost**：显示应用总共会消耗多少 slots（基础成本加 boost slots），让你始终了解取舍。
+
+滑块会在整数倍率位置显示里程碑标记（2x、3x 等），命中这些位置时甚至会触发一点五彩纸屑效果。我们没忍住。
+
+## 安装时 Boost
+
+你不必等应用安装完成后才 boost。boost 滑块已经内置在安装对话框里，因此在应用开始运行前，你就能选择资源等级。
+
+这对较重的应用特别有用，例如 OS 或媒体服务器，因为你一开始就知道它们会从额外资源中受益。
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="应用安装对话框中的 Boost 滑块" width="560" className="mt-8 mb-10" />
+</p>
+
+## 安装后 Boost
+
+已经有正在运行的应用？打开任意应用详情页，你会在那里看到 App Boost 卡片。拖动滑块、预览资源，然后点击 Apply Boost。
+
+资源变更会实时应用，无需重启。
+
+## 已有应用怎么办？
+
+如果你在今天之前已经安装了应用，它们会继续像以前一样使用原有资源倍率系统。App Boost 会从今后新安装的应用开始启用。我们希望以干净的方式上线，避免影响任何已经运行的内容。
+
+## 想要更多 Boost？
+
+你能应用的最大 boost 取决于套餐中的可用 slots。如果空间快用完了，还想进一步提高资源，升级套餐会给你更多 slots。boost UI 中就有升级链接，可直接带你到 billing 区域。
+
+## 资源预览
+
+我最满意的细节之一，是位于滑块下方的 Resource Preview 面板。拖动时，它会实时更新 multiplier、slot cost、RAM 和 CPUs。无需猜测，没有意外。应用在应用变更前会获得什么资源，你一眼就能知道。
+
+## 第 2 天现已上线
+
+App Boost 现在已对所有新安装应用开放。登录、安装一个应用，然后试试滑块。
+
+明天是第 3 天，我们准备了一个大东西。到时见。
+
+---
+
+*有反馈或发现问题？请通过 support@appbox.co 联系我们，或在 [billing.appbox.co](https://billing.appbox.co/submitticket.php) 提交工单。*

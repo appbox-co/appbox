@@ -1,0 +1,150 @@
+---
+title: Launch Week Day 1 - نیا Dashboard
+date: 2026-03-09 10:00:00
+excerpt: Launch Week کا Day 1 آ گیا ہے۔ نیا Appbox dashboard اب live ہے۔
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, dashboard, سیکیورٹی, app-store, i18n, file-explorer]
+---
+
+# Launch Week Day 1: نیا Dashboard Live ہے
+
+ہم نے کہا تھا Launch Week Monday کو شروع ہوگا۔ Day 1 اب live ہے۔
+
+آج ہم نیا Appbox dashboard experience ship کر رہے ہیں۔ یہ control panel میں ایک major UI اور workflow upgrade ہے، اور اس کا simple goal ہے: اپنے appboxes چلانا روزمرہ میں faster، clearer، اور کم annoying بنانا۔
+
+یہ update کافی عرصے سے progress میں تھا، اور مجھے خوشی ہے کہ آخرکار ہم اسے آپ کے ہاتھوں میں دے سکتے ہیں۔
+
+## نیا Control Center
+
+آج سے پہلے یہ information separate pages اور flows میں بکھری ہوئی تھی۔ آج ہم ایک dedicated dashboard introduce کر رہے ہیں جو اسے ایک operational view میں اکٹھا کرتا ہے:
+
+- latest blog اور platform updates
+- آپ کے service overview cards
+- آپ کی notifications
+- newest اور recently updated apps
+
+لہٰذا tabs کے درمیان jump کرنے کے بجائے، آپ ایک page open کر کے فوراً دیکھ سکتے ہیں کہ کیا matter کرتا ہے۔
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Appbox dashboard کا overview" width="860" className="mt-8 mb-10" />
+</p>
+
+## Appbox management نئے انداز میں
+
+appboxes area کو cleaner card layout اور faster scanability کے ساتھ rebuild کیا گیا ہے۔ آپ status، storage، traffic، slot usage quickly spot کر سکتے ہیں، اور direct details میں jump کر سکتے ہیں۔
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="نئے layout میں آپ کے appboxes" width="860" className="mt-8 mb-10" />
+</p>
+
+ہر appbox کے اندر summary view اب زیادہ operational ہے: resource cards، charts، اور core actions تک پہنچنا آسان ہے اور ایک نظر میں سمجھنا بھی آسان ہے۔
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="live stats کے ساتھ Appbox summary" width="860" className="mt-8 mb-10" />
+</p>
+
+یہ وہ kind of page ہے جو آپ اپنے environment کو actually use کرتے وقت open رکھتے ہیں، صرف static info screen نہیں۔
+
+## App Store بہتر طور پر integrated ہے
+
+ہم نے app discovery اور app detail flows بھی improve کیے ہیں تاکہ وہ separate tools کے بجائے ایک system کا حصہ محسوس ہوں۔
+
+Store view cleaner ہے، categories browse کرنا آسان ہے، اور discovery سے install تک path shorter ہے۔
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="integrated App Store experience" width="860" className="mt-8 mb-10" />
+</p>
+
+App detail pages اب version/resource details کو clearer بناتے ہیں، تاکہ install یا upgrade سے پہلے آپ faster اور fewer surprises کے ساتھ decide کر سکیں۔
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="بہتر app detail اور versions view" width="860" className="mt-8 mb-10" />
+</p>
+
+اور آج سے apps directly flow میں **multiple installable versions** expose اور support کر سکتی ہیں، تاکہ آپ اپنی desired version choose کریں، اور کسی بھی وقت دوسری version پر switch کریں۔
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="multiple releases والی apps کے لیے version selector" width="304" className="mt-8 mb-10" />
+</p>
+
+## Custom Domains اب First Class ہیں
+
+Custom domains اب install experience کا core حصہ ہیں، کوئی awkward extra step نہیں۔
+
+جب app کو domain require ہو، setup اب clear guided flow کے ساتھ install dialog میں directly ہوتا ہے:
+
+1. اپنا Appbox select کریں۔
+2. **Domain Type** choose کریں:
+   - اپنے Appbox default domain کے لیے **Appbox Domain**۔
+   - اپنے domains میں سے کسی کے لیے **Custom Domain**۔
+3. **Base Domain** pick کریں۔
+4. desired **Subdomain** enter کریں۔
+5. اگر آپ نے custom domain select کیا ہے، Appbox exact DNS record دکھاتا ہے جو add کرنا ہے (host/name اور target IP)، پھر اسے immediately verify کرنے دیتا ہے۔
+
+Records manually guess کرنے، docs copy کرنے، اور installs retry کرنے کے بجائے، آپ کو app install کرنے والی same جگہ پر built-in DNS setup اور verification step ملتا ہے۔
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="app install کے دوران DNS verification کے ساتھ custom domain setup" width="560" className="mt-8 mb-10" />
+</p>
+
+## نیا File Explorer، scratch سے built
+
+File explorer کو scratch سے reimagine کیا گیا ہے۔ previous experience میں file management صرف files delete کرنے تک limited تھا۔ اب یہ proper file manager ہے جس میں ہے:
+
+- uploads
+- new folder creation
+- rename
+- delete
+- download
+- list/grid view switching
+- breadcrumb navigation اور contextual actions
+
+لہٰذا آپ additional app install کرنے کے بجائے اپنے appbox files natively manage کر سکتے ہیں۔
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="expanded file actions کے ساتھ نیا file explorer" width="560" className="mt-8 mb-10" />
+</p>
+
+## Two-Factor Authentication
+
+2026 میں security optional نہیں ہونی چاہیے۔ آج سے Appbox accounts built-in two-factor authentication support کرتے ہیں۔
+
+آپ account area سے directly 2FA enable اور manage کر سکتے ہیں، account recovery کے لیے recovery code management سمیت۔
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="two-factor authentication management" width="860" className="mt-8 mb-10" />
+</p>
+
+یہ platform کے لیے major security milestone ہے، اور ان features میں سے ہے جو users نے سب سے consistently request کی ہیں۔
+
+## Dashboard بھر میں نیا Design Language
+
+Visual system navigation، spacing، cards، typography، اور interaction states میں refresh کیا گیا ہے۔ target consistency اور focus تھا: کم visual noise، stronger hierarchy، بہتر readability، اور dark و light themes دونوں میں زیادہ modern product feel۔
+
+اب midnight پر apps install کرتے ہوئے آپ کے سامنے چبھتی ہوئی white screen نہیں ہوگی!
+
+## بہتر Daily UX: Theme، Language، اور Faster Shortcuts
+
+اس release میں quality-of-life features بھی شامل ہیں جو dashboard کو روزانہ use کرنے کے لیے nicer بناتے ہیں:
+
+- **Native language switching** directly UI میں (وقت کے ساتھ مزید languages add ہو رہی ہیں)۔
+- **Pinned app shortcuts** آپ کے service cards پر small quick-access icons کے طور پر دکھتے ہیں، تاکہ آپ اپنی most-used apps میں faster jump کر سکیں۔
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="نئے dashboard میں native language switcher" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="service cards پر pinned app shortcuts" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  Language switching اور pinned shortcuts daily controls کو وہیں رکھتے ہیں جہاں آپ کو ضرورت ہے۔
+</p>
+
+## Day 1 اب Live ہے
+
+اگر آپ already Appbox user ہیں، تو log in کر کے immediately نیا dashboard استعمال کرنا شروع کر سکتے ہیں۔
+
+ہمیشہ کی طرح feedback welcome ہے۔ Appbox کو improve کرنے کا fastest way shipping، listening، اور real usage کے ساتھ iterating ہے۔
+
+---
+
+*Feedback ہے یا issue ملا؟ support@appbox.co پر رابطہ کریں یا [billing.appbox.co](https://billing.appbox.co/submitticket.php) پر ticket open کریں۔*

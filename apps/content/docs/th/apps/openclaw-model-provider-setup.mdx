@@ -1,0 +1,520 @@
+---
+title: "การตั้งค่า model provider ของ OpenClaw"
+description: "กำหนดค่า OpenClaw ด้วย API key ของ model provider ใดก็ได้หลังการติดตั้ง"
+sort: 1
+---
+
+OpenClaw ถูกติดตั้งใน Appbox โดยไม่จำเป็นต้องใช้ model API key
+
+วิธีที่แนะนำในการตั้งค่าให้เสร็จสมบูรณ์คือเชื่อมต่อไปยังแอป OpenClaw ของคุณผ่าน SSH แล้วรัน wizard ในตัว `openclaw onboard` wizard นี้ปลอดภัยกว่าการแก้ไข config ทั้งหมดด้วยมือ เพราะจะรักษาการตั้งค่า gateway ของ Appbox ไว้ ขณะพาคุณตั้งค่า model providers, API keys, channels, health checks และ skills
+
+หากคุณไม่สามารถหรือไม่ต้องการใช้ SSH ให้ใช้ [วิธีสำรองผ่าน dashboard](#backup-method-configure-provider-auth-in-the-dashboard) แทน
+
+## วิธีที่แนะนำ: SSH เข้า OpenClaw และรัน onboarding
+
+ใช้วิธีนี้สำหรับการติดตั้งใหม่ และสำหรับการติดตั้งเดิมที่ต้องเพิ่มหรือเปลี่ยนข้อมูลรับรองของ model provider
+
+### สิ่งที่คุณต้องมีก่อน
+
+- หน้ารายละเอียดแอป OpenClaw ของคุณใน Appbox
+- **SSH Command** ที่แสดงในส่วน Configuration
+- **Gateway Token / SSH Password** ของคุณ นี่คือ secret ที่สร้างขึ้นชุดเดียวกับที่ใช้สำหรับเข้าสู่ระบบ dashboard ของ OpenClaw
+- บัญชี model provider หรือ API key หากยังไม่มี โปรดดู [การรับ API keys](#getting-api-keys-with-dashboard-links)
+
+หน้ารายละเอียดแอปจะแสดงคำสั่ง SSH ที่พร้อมคัดลอก:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="หน้ารายละเอียดแอป Appbox OpenClaw ที่ไฮไลต์คำสั่ง SSH"
+  width="860"
+/>
+
+### เชื่อมต่อจาก macOS
+
+1. เปิด **Terminal** หรือ **iTerm2**
+2. คัดลอก **SSH Command** จากหน้ารายละเอียดแอป OpenClaw
+3. วางและรันคำสั่งนั้น คำสั่งจะมีลักษณะคล้ายกับนี้:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. หาก macOS ถามว่าจะเชื่อถือ host หรือไม่ ให้พิมพ์ `yes` แล้วกด Enter
+5. เมื่อระบบถามรหัสผ่าน ให้วาง **Gateway Token / SSH Password** ของคุณแล้วกด Enter Terminal จะไม่แสดงตัวอักษรใดๆ ขณะที่คุณพิมพ์หรือวางรหัสผ่าน
+
+### เชื่อมต่อจาก Windows
+
+Windows 10 และ Windows 11 มี OpenSSH client รวมมาให้ตามค่าเริ่มต้น
+
+1. เปิด **Windows Terminal** หรือ **PowerShell**
+2. คัดลอก **SSH Command** จากหน้ารายละเอียดแอป OpenClaw
+3. วางและรัน:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. หาก Windows ถามว่าจะเชื่อถือ host หรือไม่ ให้พิมพ์ `yes` แล้วกด Enter
+5. เมื่อระบบถามรหัสผ่าน ให้วาง **Gateway Token / SSH Password** ของคุณแล้วกด Enter PowerShell จะไม่แสดงรหัสผ่านที่วางไว้
+
+หาก Windows แจ้งว่าไม่รู้จัก `ssh` ให้ติดตั้ง **OpenSSH Client** จาก **Settings > System > Optional features** จากนั้นเปิด Windows Terminal ใหม่แล้วลองอีกครั้ง
+
+### รัน OpenClaw onboarding wizard
+
+หลังจากเชื่อมต่อ SSH แล้ว ให้รัน:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 บน macOS ที่เชื่อมต่อกับ OpenClaw ผ่าน SSH และรันคำสั่ง openclaw onboard"
+  width="860"
+/>
+
+wizard เป็นแบบโต้ตอบ ให้ใช้ตัวเลือกเฉพาะสำหรับ Appbox เหล่านี้:
+
+1. **Existing config:** เลือกตัวเลือกเพื่อ review หรือ modify config ปัจจุบัน อย่าเลือก full reset เว้นแต่คุณตั้งใจจะสร้างการตั้งค่า OpenClaw ใหม่ทั้งหมดตั้งแต่ต้น
+2. **Model and auth:** เลือก provider ของคุณ เช่น OpenRouter, OpenAI, Anthropic, Google, xAI หรือ provider แบบ OpenAI-compatible ที่กำหนดเอง วาง API key เมื่อ wizard ถาม OpenRouter เป็นค่าเริ่มต้นที่ง่ายที่สุดสำหรับผู้ใช้ส่วนใหญ่ เพราะ key เดียวสามารถ route ไปยัง models จำนวนมากได้ หากคุณมี subscription ของ OpenAI Codex ให้เลือก **OpenAI Codex** ในรายการ provider ไม่ใช่ตัวเลือกที่ชื่อเพียง `codex`
+3. **Default model:** เลือก model ที่ wizard แนะนำสำหรับ provider นั้น หรือป้อนค่า `provider/model` ด้วยตนเอง เช่น `openrouter/auto`
+4. **Workspace:** ใช้ workspace ค่าเริ่มต้นไว้ เว้นแต่คุณมีเหตุผลเฉพาะที่จะเปลี่ยน
+5. **Gateway settings:** คงการตั้งค่า gateway ของ Appbox ที่มีอยู่ไว้ โดยเฉพาะให้เปิด token auth ไว้ และคงการตั้งค่า gateway port/bind เดิม
+6. **Channels:** กำหนดค่า WhatsApp, Telegram, Discord, Signal, iMessage หรือ channels อื่นตอนนี้ หรือข้ามไว้ก่อนแล้วเพิ่มภายหลังด้วย `openclaw configure`
+7. **Web search:** เลือก search provider หากคุณมี หรือข้ามไว้ก่อน
+8. **Daemon/service install:** Appbox ดูแล OpenClaw ภายใน container อยู่แล้ว ดังนั้นให้ข้ามการติดตั้ง daemon หาก wizard เสนอให้
+9. **Health check:** ให้ wizard รัน health check
+10. **Skills:** อนุญาตให้ wizard ตรวจสอบ bundled skills เมื่อระบบถาม **Preferred node manager for skill installs** ให้เลือก `npm`
+
+เมื่อ onboarding เสร็จสิ้น ให้กลับไปที่ dashboard ของ OpenClaw หาก dashboard เปิดอยู่แล้ว ให้ refresh แล้วทดสอบ chat prompt สั้นๆ
+
+คำสั่งติดตามผลที่มีประโยชน์ผ่าน SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## การรับ API keys (พร้อมลิงก์ dashboard)
+
+ใช้ consoles ของ providers เหล่านี้เพื่อสร้าง keys ด้วยวิธี SSH ที่แนะนำ ให้วาง key เมื่อ `openclaw onboard` ถามหา ด้วยวิธีสำรองผ่าน dashboard ให้ merge key เข้าไปใน `Config > Secrets > Raw`
+
+### แนะนำเป็นอันดับแรก: OpenRouter (ค่าเริ่มต้นที่ดีที่สุดสำหรับผู้ใช้ส่วนใหญ่)
+
+เหตุผลที่เราแนะนำ:
+
+- ให้ key เดียวสำหรับ model vendors หลายราย
+- คุณสามารถใช้ `openrouter/auto` ซึ่งสามารถสลับ models ตามความยากของงานได้
+- `auto` ช่วยลดค่าใช้จ่ายได้โดย route งานที่ง่ายกว่าไปยัง models ที่ถูกกว่า
+
+วิธีรับ key:
+
+1. ไปที่ [OpenRouter](https://openrouter.ai/) แล้ว sign in
+2. เปิด [การตั้งค่า API Keys](https://openrouter.ai/settings/keys)
+3. คลิก **Create** แล้วคัดลอก key (แสดงเพียงครั้งเดียว)
+4. ใช้ key นี้เมื่อ OpenClaw wizard ถามหา OpenRouter API key ของคุณ สำหรับวิธีสำรองผ่าน dashboard คีย์ config คือ `models.providers.openrouter.apiKey`
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="ภาพหน้าจอหน้า API keys ของ OpenRouter จากบทช่วยสอนสาธารณะ"
+  width="860"
+/>
+
+บทช่วยสอนต้นทาง: [วิธีรับ OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+วิธีรับ key:
+
+1. Sign in เข้า [OpenAI Platform](https://platform.openai.com/)
+2. เปิด [API Keys](https://platform.openai.com/settings/organization/api-keys)
+3. คลิก **Create new secret key**
+4. คัดลอกทันที (OpenAI แสดงค่าเต็มเพียงครั้งเดียว)
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="ภาพหน้าจอการตั้งค่า OpenAI API key จากบทช่วยสอนสาธารณะ"
+  width="860"
+/>
+
+บทช่วยสอนต้นทาง: [วิธีรับ OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+วิธีรับ key:
+
+1. Sign in เข้า [Anthropic Console](https://console.anthropic.com/)
+2. เปิด [API Keys](https://console.anthropic.com/settings/keys)
+3. คลิก **Create Key**
+4. คัดลอก key ทันที (แสดงเพียงครั้งเดียว)
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="ภาพหน้าจอการสร้าง Anthropic API key จากบทช่วยสอนสาธารณะ"
+  width="860"
+/>
+
+บทช่วยสอนต้นทาง: [วิธีรับ Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini ผ่าน AI Studio)
+
+วิธีรับ key:
+
+1. เปิด [Google AI Studio](https://aistudio.google.com/)
+2. ไปที่ [API Keys](https://aistudio.google.com/app/apikey)
+3. คลิก **Create API key** (โปรเจกต์ใหม่หรือที่มีอยู่)
+4. คัดลอกและบันทึก key
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="ภาพหน้าจอการสร้าง Google AI Studio API key จากบทช่วยสอนสาธารณะ"
+  width="860"
+/>
+
+บทช่วยสอนต้นทาง: [รับ Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> หมายเหตุ: dashboard ของ provider อาจเปลี่ยนแปลงบ่อย และอาจแสดง prompt ให้ login ขึ้นอยู่กับสถานะ session ของคุณ
+
+## วิธีสำรอง: กำหนดค่า provider auth ใน dashboard
+
+ใช้วิธีนี้เฉพาะเมื่อ SSH ไม่พร้อมใช้งาน หรือคุณต้องการกำหนดค่าด้วยตนเอง Raw editor ใน dashboard ใช้งานได้ แต่จะแก้ไข object config ทั้งหมดของ OpenClaw ในครั้งเดียว โปรดระวังให้ merge การตั้งค่า provider เข้าไปในไฟล์เดิม แทนที่จะเขียนทับค่า gateway และ skills defaults ของ Appbox
+
+1. เปิด URL dashboard ของ OpenClaw จากหน้ารายละเอียดแอปที่ติดตั้ง
+2. ไปที่ **Config > Secrets**
+3. เลือก **Raw** แทน Form
+4. คลิกปุ่ม Reveal sensitive values (มีลักษณะเป็นรูปตาที่มีเส้นขีดทับ)
+5. **Merge** การตั้งค่า provider จากตัวอย่างด้านล่างเข้าไปใน config เดิมของคุณ (ดู [manual provider config วางอยู่ตรงไหนในไฟล์เต็ม](#how-manual-provider-config-fits-in-the-full-file)) — อย่าแทนที่ทั้งไฟล์ เว้นแต่คุณตั้งใจจะ reset gateway, skills และค่าเริ่มต้นอื่นๆ ของ Appbox
+6. บันทึกและ apply configuration changes
+
+### manual provider config วางอยู่ตรงไหนในไฟล์เต็ม
+
+**Config > Secrets > Raw** แก้ไข config ของ OpenClaw **ทั้งหมด** ใน object เดียว บน Appbox ไฟล์นั้นมีสิ่งต่างๆ อยู่แล้ว เช่น `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (bundled skills), `commands` และบางครั้ง `meta` snippets ในส่วน [ตัวอย่าง provider หลัก](#major-provider-examples) แสดงเฉพาะส่วนที่คุณต้องใช้สำหรับ models: tree `models` และ `agents.defaults.model.primary`
+
+**สิ่งที่ต้องทำ:** คง top-level keys เดิมของคุณ (`gateway`, `skills`, `commands` ฯลฯ) ไว้ และ **เพิ่มหรืออัปเดต** สองส่วนนี้:
+
+- **`models.providers`** — เพิ่ม provider ของคุณ (เช่น `openrouter`) และ `apiKey`, `baseUrl` เมื่อจำเป็น และรายการ `models`
+- **`agents.defaults.model.primary`** — ตั้งค่า default model string (เช่น `openrouter/auto`) เพื่อให้ agent ใช้ provider นั้น
+
+หาก `models` หรือ `agents` มีอยู่แล้ว ให้ merge keys ใหม่เข้าไปใน objects เหล่านั้นแทนการทำซ้ำ
+
+ด้านล่างเป็นตัวอย่าง shape ของไฟล์ Raw เต็ม **หนึ่ง** แบบในรูป **JSON** (ในทางปฏิบัติ editor อาจรับ quotes แบบ JSON5 ได้ด้วย) ไฟล์จริงของคุณอาจมี fields มากกว่านี้ (เช่น model metadata ที่สมบูรณ์กว่า, `meta`) **provider blocks** ในตัวอย่างถัดลงไปคือส่วนที่คุณนำมา align กับ `models` และ `agents` ที่นี่
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token เทียบกับ provider API key:** `gateway.auth.token` ใช้สำหรับเข้าสู่ OpenClaw Control UI / gateway เท่านั้น `models.providers.*.apiKey` คือ key ของผู้ให้บริการ LLM ของคุณ (OpenRouter, OpenAI ฯลฯ) — ทั้งสองอย่างต่างกัน
+
+## ตัวอย่าง provider หลัก
+
+เริ่มด้วย provider block ทีละรายการก่อน ยืนยันว่าใช้งานได้ แล้วจึงเพิ่ม providers เพิ่มเติม แต่ละตัวอย่างด้านล่างเป็น **merge fragment**: `...` คือ config ที่ละไว้ (บรรทัดด้านบนหรือด้านล่าง) และ `},` ก่อน `"models"` คือการปิด key ใดก็ตามที่อยู่เหนือ `models` ในไฟล์ของคุณ (เช่น `skills` หรือ `commands`) snippets เหล่านี้ไม่ใช่ JSON ที่ถูกต้องด้วยตัวเอง — ให้ merge ส่วน `models` และ `agents` เข้าไปใน root object ของคุณ
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## หมายเหตุ Bedrock (ไม่มี API key)
+
+Amazon Bedrock ใช้ AWS credentials (เช่น `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) แทน API key รายการ provider ขั้นต่ำมีลักษณะดังนี้:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## หมายเหตุ
+
+- Gateway auth token และ API keys ของ model provider เป็นการตั้งค่าคนละรายการ
+- หากคุณได้รับ provider error (เช่น Anthropic key หายไป) ให้อัปเดต default model ไปยัง provider ที่คุณกำหนดค่าไว้แล้ว
+- หาก provider ไม่ผ่าน validation ให้ตรวจสอบก่อนว่ามี fields ที่จำเป็นของ provider อยู่ครบ (`baseUrl`, `models` และ `apiKey` เมื่อเกี่ยวข้อง)
+
+## เอกสาร provider อย่างเป็นทางการ
+
+- [ไดเรกทอรี provider ของ OpenClaw](https://docs.openclaw.ai/providers/index)
+- [provider OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [provider OpenAI](https://docs.openclaw.ai/providers/openai)
+- [provider Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [provider Google](https://docs.openclaw.ai/providers/google)
+- [provider xAI](https://docs.openclaw.ai/providers/xai)
+- [provider Mistral](https://docs.openclaw.ai/providers/mistral)
+- [provider Together AI](https://docs.openclaw.ai/providers/together)
+- [provider Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

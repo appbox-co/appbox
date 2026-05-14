@@ -1,0 +1,516 @@
+---
+title: OpenClaw modellprovider beállítása
+description: OpenClaw konfigurálása bármely modellprovider API kulcsával a telepítés után.
+sort: 1
+---
+
+Az OpenClaw telepítése az Appboxban nem igényel modell API kulcsot.
+
+A beállítás befejezésének ajánlott módja, hogy SSH-n keresztül csatlakozol az OpenClaw alkalmazásodhoz, és lefuttatod a beépített `openclaw onboard` varázslót. A varázsló biztonságosabb, mint a teljes konfiguráció kézi szerkesztése, mert megőrzi az Appbox gateway beállításait, miközben végigvezet a modellprovidereken, API kulcsokon, csatornákon, állapotellenőrzéseken és skilleken.
+
+Ha nem tudsz vagy nem szeretnél SSH-t használni, használd inkább a [tartalék dashboard módszert](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Ajánlott módszer: SSH belépés az OpenClaw-ba és onboarding futtatása
+
+Ezt a módszert használd új telepítéseknél, valamint meglévő telepítéseknél, ahol modellprovider hitelesítő adatokat kell hozzáadni vagy módosítani.
+
+### Amire először szükséged lesz
+
+- Az OpenClaw alkalmazás részletező oldala az Appboxban.
+- A Configuration szakaszban látható **SSH Command**.
+- A **Gateway Token / SSH Password**. Ez ugyanaz a generált titok, amelyet az OpenClaw dashboard belépéshez használsz.
+- Modellprovider-fiók vagy API kulcs. Ha még nincs ilyened, lásd az [API kulcsok beszerzése](#getting-api-keys-with-dashboard-links) szakaszt.
+
+Az alkalmazás részletező oldala megjeleníti a másolásra kész SSH parancsot:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw alkalmazás részletező oldala kiemelt SSH paranccsal"
+  width="860"
+/>
+
+### Csatlakozás macOS-ről
+
+1. Nyisd meg a **Terminal** vagy **iTerm2** alkalmazást.
+2. Másold ki az **SSH Command** értéket az OpenClaw alkalmazás részletező oldaláról.
+3. Illeszd be és futtasd. Ehhez hasonlóan fog kinézni:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Ha a macOS megkérdezi, hogy megbízol-e a hosztban, írd be, hogy `yes`, majd nyomj Entert.
+5. Amikor jelszót kér, illeszd be a **Gateway Token / SSH Password** értéket, majd nyomj Entert. A Terminal nem jelenít meg karaktereket a jelszó begépelésekor vagy beillesztésekor.
+
+### Csatlakozás Windowsról
+
+A Windows 10 és Windows 11 alapértelmezetten tartalmazza az OpenSSH klienst.
+
+1. Nyisd meg a **Windows Terminal** vagy **PowerShell** alkalmazást.
+2. Másold ki az **SSH Command** értéket az OpenClaw alkalmazás részletező oldaláról.
+3. Illeszd be és futtasd:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Ha a Windows megkérdezi, hogy megbízol-e a hosztban, írd be, hogy `yes`, majd nyomj Entert.
+5. Amikor jelszót kér, illeszd be a **Gateway Token / SSH Password** értéket, majd nyomj Entert. A PowerShell nem jeleníti meg a beillesztett jelszót.
+
+Ha a Windows azt jelzi, hogy az `ssh` nem ismert, telepítsd az **OpenSSH Client** összetevőt a **Settings > System > Optional features** alatt, majd nyisd meg újra a Windows Terminalt, és próbáld meg ismét.
+
+### Az OpenClaw onboarding varázsló futtatása
+
+Miután az SSH kapcsolat létrejött, futtasd:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 macOS-en, SSH-n keresztül OpenClaw-hoz csatlakozva, az openclaw onboard parancs futtatásával"
+  width="860"
+/>
+
+A varázsló interaktív. Használd ezeket az Appbox-specifikus választásokat:
+
+1. **Existing config:** válaszd a jelenlegi konfiguráció áttekintésére vagy módosítására szolgáló opciót. Ne válassz teljes visszaállítást, hacsak nem szándékosan szeretnéd nulláról újraépíteni az OpenClaw beállításodat.
+2. **Model and auth:** válaszd ki a provideredet, például OpenRouter, OpenAI, Anthropic, Google, xAI vagy egy egyéni OpenAI-kompatibilis provider. Illeszd be az API kulcsot, amikor a varázsló kéri. Az OpenRouter a legtöbb felhasználó számára a legegyszerűbb alapértelmezés, mert egy kulccsal sok modellhez tud útválasztani. Ha OpenAI Codex előfizetésed van, a providerlistában az **OpenAI Codex** opciót válaszd, ne egy csak `codex` nevű opciót.
+3. **Default model:** válaszd ki a varázsló által az adott providerhez ajánlott modellt, vagy adj meg kézzel egy `provider/model` értéket, például `openrouter/auto`.
+4. **Workspace:** hagyd meg az alapértelmezett workspace-t, hacsak nincs konkrét okod a módosítására.
+5. **Gateway settings:** tartsd meg a meglévő Appbox gateway beállításokat. Különösen hagyd bekapcsolva a token auth opciót, és tartsd meg a meglévő gateway port/bind beállításokat.
+6. **Channels:** konfiguráld most a WhatsApp, Telegram, Discord, Signal, iMessage vagy más csatornákat, vagy hagyd ki őket, és add hozzá később az `openclaw configure` paranccsal.
+7. **Web search:** válassz keresőprovidert, ha van ilyened, vagy egyelőre hagyd ki.
+8. **Daemon/service install:** Az Appbox már felügyeli az OpenClaw-t a konténeren belül, ezért hagyd ki a daemon telepítését, ha a varázsló felajánlja.
+9. **Health check:** engedd, hogy a varázsló lefuttassa az állapotellenőrzést.
+10. **Skills:** engedd, hogy a varázsló ellenőrizze a csomagolt skilleket. Amikor megkérdezi: **Preferred node manager for skill installs**, válaszd az `npm` opciót.
+
+Amikor az onboarding befejeződik, térj vissza az OpenClaw dashboardhoz. Ha a dashboard már nyitva volt, frissítsd, majd tesztelj egy rövid chat promptot.
+
+Hasznos követő parancsok SSH-n keresztül:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## API kulcsok beszerzése (dashboard linkekkel)
+
+Ezeket a provider konzolokat használd kulcsok generálásához. Az ajánlott SSH módszerrel illeszd be a kulcsot, amikor az `openclaw onboard` kéri. A tartalék dashboard módszerrel egyesítsd a kulcsot a `Config > Secrets > Raw` részbe.
+
+### Elsőként ajánlott: OpenRouter (legjobb alapértelmezés a legtöbb felhasználónak)
+
+Miért ajánljuk:
+
+- Egy kulcsot ad sok modellgyártóhoz.
+- Használhatod az `openrouter/auto` értéket, amely a feladat nehézsége alapján modelleket válthat.
+- Az `auto` csökkentheti a költségeket azzal, hogy az egyszerűbb feladatokat olcsóbb modellekhez irányítja.
+
+Kulcs beszerzése:
+
+1. Nyisd meg az [OpenRouter](https://openrouter.ai/) oldalt, és jelentkezz be.
+2. Nyisd meg az [API Keys beállításokat](https://openrouter.ai/settings/keys).
+3. Kattints a **Create** gombra, és másold ki a kulcsot (csak egyszer jelenik meg).
+4. Használd, amikor az OpenClaw varázsló az OpenRouter API kulcsodat kéri. A tartalék dashboard módszernél a konfigurációs kulcs: `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="OpenRouter API kulcsok oldalának képernyőképe egy nyilvános oktatóanyagból"
+  width="860"
+/>
+Forrás oktatóanyag: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Kulcs beszerzése:
+
+1. Jelentkezz be az [OpenAI Platform](https://platform.openai.com/) oldalra.
+2. Nyisd meg az [API Keys](https://platform.openai.com/settings/organization/api-keys) oldalt.
+3. Kattints a **Create new secret key** gombra.
+4. Azonnal másold ki (az OpenAI csak egyszer mutatja a teljes értéket).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="OpenAI API kulcs beállítások képernyőképe egy nyilvános oktatóanyagból"
+  width="860"
+/>
+Forrás oktatóanyag: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Kulcs beszerzése:
+
+1. Jelentkezz be az [Anthropic Console](https://console.anthropic.com/) oldalra.
+2. Nyisd meg az [API Keys](https://console.anthropic.com/settings/keys) oldalt.
+3. Kattints a **Create Key** gombra.
+4. Azonnal másold ki a kulcsot (csak egyszer jelenik meg).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Anthropic API kulcs létrehozásának képernyőképe egy nyilvános oktatóanyagból"
+  width="860"
+/>
+Forrás oktatóanyag: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini AI Studio-n keresztül)
+
+Kulcs beszerzése:
+
+1. Nyisd meg a [Google AI Studio](https://aistudio.google.com/) oldalt.
+2. Lépj az [API Keys](https://aistudio.google.com/app/apikey) oldalra.
+3. Kattints a **Create API key** gombra (új vagy meglévő projekthez).
+4. Másold ki és mentsd el a kulcsot.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Google AI Studio API kulcs létrehozásának képernyőképe egy nyilvános oktatóanyagból"
+  width="860"
+/>
+Forrás oktatóanyag: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Megjegyzés: a provider dashboardok gyakran változhatnak, és a munkamenet állapotától függően bejelentkezési felszólítást jeleníthetnek meg.
+
+## Tartalék módszer: provider auth konfigurálása a dashboardban
+
+Ezt a módszert csak akkor használd, ha az SSH nem érhető el, vagy a kézi konfigurálást részesíted előnyben. A dashboard Raw szerkesztője működik, de egyszerre az egész OpenClaw konfigurációs objektumot szerkeszti. Ügyelj arra, hogy a providerbeállításokat a meglévő fájlba egyesítsd, ahelyett, hogy lecserélnéd az Appbox gateway és skill alapértelmezéseit.
+
+1. Nyisd meg az OpenClaw dashboard URL-jét a telepített alkalmazás részletező oldaláról.
+2. Lépj a **Config > Secrets** részhez.
+3. Válaszd a **Raw** nézetet a Form helyett.
+4. Kattints a Reveal sensitive values gombra (úgy néz ki, mint egy áthúzott szem).
+5. **Egyesítsd** az alábbi példák providerbeállításait a meglévő konfigurációddal (lásd: [Hogyan illeszkedik a kézi providerkonfiguráció a teljes fájlba](#how-manual-provider-config-fits-in-the-full-file)) — ne cseréld le az egész fájlt, hacsak nem szándékozol gateway, skillek és más Appbox alapértelmezések visszaállítását végezni.
+6. Mentsd és alkalmazd a konfigurációs módosításokat.
+
+### Hogyan illeszkedik a kézi providerkonfiguráció a teljes fájlba
+
+A **Config > Secrets > Raw** az OpenClaw konfiguráció **egészét** szerkeszti egy objektumban. Appboxon ez a fájl már tartalmaz olyan részeket, mint a `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (csomagolt skillek), `commands` és néha `meta`. A [Fő provider példák](#major-provider-examples) szakaszban szereplő részletek csak a modellekhez szükséges darabokat mutatják: a `models` fát és az `agents.defaults.model.primary` értéket.
+
+**Teendő:** tartsd meg a meglévő legfelső szintű kulcsokat (`gateway`, `skills`, `commands` stb.), és **add hozzá vagy frissítsd** ezt a két szakaszt:
+
+- **`models.providers`** — add hozzá a provideredet (például `openrouter`) és annak `apiKey`, szükség esetén `baseUrl`, valamint `models` listáját.
+- **`agents.defaults.model.primary`** — állítsd be az alapértelmezett modellkarakterláncot (például `openrouter/auto`), hogy az agent ezt a providert használja.
+
+Ha a `models` vagy `agents` már létezik, az új kulcsokat ezekbe az objektumokba egyesítsd, ne duplikáld őket.
+
+Alább egy példa látható **egy** teljes Raw fájl alakjára **JSON** formátumban (a szerkesztő a gyakorlatban JSON5-stílusú idézőjeleket is elfogadhat). A valódi fájlod több mezőt is tartalmazhat (például részletesebb modellmetaadatokat, `meta`). A lentebbi példákban szereplő **provider blokkok** azok a részek, amelyeket itt a `models` és `agents` részekhez kell igazítanod.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token kontra provider API kulcs:** a `gateway.auth.token` csak az OpenClaw Control UI / gateway belépéshez használatos. A `models.providers.*.apiKey` az LLM vendor kulcsod (OpenRouter, OpenAI stb.) — ezek különböznek.
+
+## Fő provider példák
+
+Először egyszerre egy provider blokkot használj, erősítsd meg, hogy működik, majd adj hozzá további providereket. Az alábbi példák mind **egyesítési részletek**: a `...` kihagyott konfigurációt jelöl (a felette vagy alatta lévő sorokat), a `"models"` előtti `},` pedig annak a kulcsnak a lezárása, amely a fájlodban a `models` felett található (például `skills` vagy `commands`). A részletek önmagukban nem érvényes JSON-ok — a `models` és `agents` szakaszokat a gyökérobjektumodba kell egyesítened.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock megjegyzés (nincs API kulcs)
+
+Az Amazon Bedrock API kulcs helyett AWS hitelesítő adatokat használ (például `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`). Egy minimális provider bejegyzés így néz ki:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Megjegyzések
+
+- A gateway auth token és a modellprovider API kulcsok különböző beállítások.
+- Ha providerhibát kapsz (például hiányzó Anthropic kulcs), frissítsd az alapértelmezett modelledet olyan providerre, amelyet már konfiguráltál.
+- Ha egy provider validációja sikertelen, először győződj meg róla, hogy a szükséges providermezők jelen vannak (`baseUrl`, `models`, valamint ahol alkalmazható, `apiKey`).
+
+## Hivatalos provider dokumentáció
+
+- [OpenClaw provider könyvtár](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)

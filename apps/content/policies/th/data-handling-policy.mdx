@@ -1,0 +1,397 @@
+---
+title: "นโยบายการจัดการข้อมูล"
+description: "วิธีที่เราจัดการและปกป้องข้อมูลของคุณ"
+---
+
+ที่ Appbox เรา collect และ store เฉพาะ information ขั้นต่ำที่จำเป็นเพื่อรักษา records ของเราและส่งมอบบริการของเรา ทีม Appbox ได้รับการฝึกอบรมให้จัดการ data ของคุณโดยคำนึงถึง privacy และ security สูงสุด และปฏิบัติตาม protocols ที่เข้มงวด รวมถึงการใช้ strong credentials และ multi-factor authentication payment processing ทั้งหมดถูกจัดการโดย payment processors ของเราโดยสมบูรณ์ และ Appbox ไม่ store financial information ของคุณ ยกเว้น payment records และ transaction IDs ที่เกี่ยวข้อง
+
+## อีเมล
+
+- **การใช้งาน**
+  - ใช้เป็น login ของคุณสำหรับ Appbox Client Area และ Appbox Control Panel
+  - จุดติดต่อสำหรับ Appbox service announcements
+  - จุดติดต่อสำหรับ Appbox Ticket System inquiries
+- **การเก็บรวบรวม**
+  - ผู้ใช้ให้ไว้ระหว่าง signup
+- **การจัดเก็บ**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - ทีม Appbox
+    - ใช้สำหรับติดต่อผู้ใช้เพื่อ support หรือ service announcements ใด ๆ
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+- **ข้อมูลเพิ่มเติม**
+  - Sensitive Data Removal Policy
+
+## ชื่อผู้ใช้
+
+- **การใช้งาน**
+  - ระบุผู้ใช้บน Appbox Ticket System
+  - ใช้เป็นชื่อของ Appbox slot ของผู้ใช้
+  - ลงทะเบียนเป็น local user บน server ที่ slot ของผู้ใช้ถูก deploy โดยแสดง running processes ใด ๆ ที่ผู้ใช้มี
+  - ใช้เป็น username ของผู้ใช้สำหรับ installed applications
+- **การเก็บรวบรวม**
+  - ผู้ใช้ให้ไว้ระหว่าง signup
+- **การจัดเก็บ**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = ขึ้นอยู่กับ Application
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - ทีม Appbox
+    - จำเป็นสำหรับ support inquiries
+    - จำเป็นเพื่อ investigate server issues โดยค้นหา applications ที่ใช้ resources สูง, แหล่งที่มาของ server instability หรือ unauthorized applications ใด ๆ
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+- **ข้อมูลเพิ่มเติม**
+  - Sensitive Data Removal Policy
+
+## ประเทศ
+
+- **การใช้งาน**
+  - ใช้คำนวณ taxes ที่เกี่ยวข้องตาม country ที่ผู้ใช้เลือก
+- **การเก็บรวบรวม**
+  - ผู้ใช้ให้ไว้ระหว่าง signup
+- **การจัดเก็บ**
+  - WHMCS = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - ทีม Appbox
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+- **ข้อมูลเพิ่มเติม**
+  - Sensitive Data Removal Policy
+
+## รหัสผ่าน
+
+### รหัสผ่าน Appbox Client Area
+
+- **การใช้งาน**
+  - ใช้เป็น password ของผู้ใช้สำหรับ Appbox Client Area
+- **การเก็บรวบรวม**
+  - ผู้ใช้ให้ไว้ระหว่าง signup บน Appbox Client Area
+- **การจัดเก็บ**
+  - WHMCS = Encrypted
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - การเข้าถึงแบบจำกัดโดยทีม Appbox
+    - ทีม Appbox ไม่สามารถเห็น password ของผู้ใช้ได้เนื่องจากถูก hashed แต่สามารถ reset password ของคุณหลัง verification
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+- **ข้อมูลเพิ่มเติม**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - เราแนะนำอย่างยิ่งให้เปิดใช้ two-factor authentication บน [account security page](https://billing.appbox.co/user/security) ของคุณ
+
+### รหัสผ่าน Appbox Control Panel
+
+- **การใช้งาน**
+  - ใช้เป็น password ของผู้ใช้บน Appbox Control Panel เพื่อ access slot ของตน
+- **การเก็บรวบรวม**
+  - ผู้ใช้ให้ไว้หลัง deployment ของ slot
+- **การจัดเก็บ**
+  - Appbox API = Encrypted
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - การเข้าถึงแบบจำกัดโดยทีม Appbox
+    - ทีม Appbox ไม่สามารถเห็น password ของผู้ใช้ได้เนื่องจากถูก hashed แต่สามารถ reset password ของคุณหลัง verification
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+- **ข้อมูลเพิ่มเติม**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - เราแนะนำอย่างยิ่งให้เปิดใช้ two-factor authentication บน [account security page](https://billing.appbox.co/user/security) ของคุณ
+
+### รหัสผ่านของแอปพลิเคชัน
+
+- **การใช้งาน**
+  - ใช้เป็น password สำหรับ installed applications ของผู้ใช้
+- **การเก็บรวบรวม**
+  - ผู้ใช้ให้ไว้หลัง deployment ของ slot
+- **การจัดเก็บ**
+  - Appbox API = Cleartext
+  - Installed Applications = ขึ้นอยู่กับ Application
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - ทีม Appbox
+    - จำเป็นสำหรับ application-specific support inquiries โดยได้รับ permission จากผู้ใช้
+- **การเก็บรักษา**
+  - จนกว่าผู้ใช้จะ uninstall application
+- **ข้อมูลเพิ่มเติม**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - เราแนะนำอย่างยิ่งให้เปิดใช้ two-factor authentication บน [account security page](https://billing.appbox.co/user/security) ของคุณ
+
+## การประมวลผลการชำระเงิน
+
+### PayPal
+
+- **การใช้งาน**
+  - ทำหน้าที่เป็นหนึ่งใน payment gateways ของ Appbox
+- **การเก็บรวบรวม**
+  - payment processing ดำเนินการทั้งหมดโดย PayPal ข้อมูลเดียวที่ save ใน WHMCS ภายใต้ account ของผู้ใช้คือ **PayPal Transaction ID**
+- **การจัดเก็บ**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ทีมขาย Appbox
+    - ทีมขาย Appbox อาจ verify information ของผู้ใช้กับ PayPal เป็นส่วนหนึ่งของ sales process ของเรา
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+
+### Stripe
+
+- **การใช้งาน**
+  - ทำหน้าที่เป็นหนึ่งใน payment gateways ของ Appbox
+- **การเก็บรวบรวม**
+  - payment processing ดำเนินการทั้งหมดโดย Stripe ข้อมูลเดียวที่ save ใน WHMCS ภายใต้ account ของผู้ใช้คือ **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **การจัดเก็บ**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ทีมขาย Appbox
+    - ทีมขาย Appbox อาจ verify information ของผู้ใช้กับ Stripe เป็นส่วนหนึ่งของ sales process ของเรา
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+
+### CoinGate
+
+- **การใช้งาน**
+  - ทำหน้าที่เป็นหนึ่งใน payment gateways ของ Appbox สำหรับ cryptocurrency transactions
+- **การเก็บรวบรวม**
+  - payment processing ดำเนินการทั้งหมดโดย CoinGate ข้อมูลเดียวที่ save ใน WHMCS คือ **CoinGate Transaction ID**
+- **การจัดเก็บ**
+  - WHMCS = Cleartext (Transaction ID)
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ทีมขาย Appbox
+    - ทีมขาย Appbox อาจ verify information ของผู้ใช้กับ CoinGate เป็นส่วนหนึ่งของ sales process ของเรา
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+
+*หมายเหตุ: CoinGate เอง store blockchain transaction ID และ sender's blockchain address เป็นส่วนหนึ่งของบริการ ข้อมูลนี้ไม่ได้ถูก store โดย Appbox*
+
+## บันทึกและการวิเคราะห์
+
+### ตัวชี้วัดของเซิร์ฟเวอร์
+
+- **การใช้งาน**
+  - ใช้ monitor health และ resource usage ของ servers
+- **การเก็บรวบรวม**
+  - สร้างขึ้นหลัง deployment ของ slot ของผู้ใช้
+- **การจัดเก็บ**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+    - Server metrics สามารถดูได้โดยใช้ Linux utilities ต่าง ๆ ที่ installed บน slot ของคุณ metrics หลักต่อไปนี้สามารถเห็นได้:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - running processes ของคุณ
+      - Processes ที่รันโดยผู้ใช้อื่นบน server เดียวกัน คุณไม่สามารถ access ได้
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (disk space ที่จัดสรรให้คุณ)
+      - Physical disk space
+  - ทีม Appbox
+    - นอกเหนือจาก metrics ข้างต้น Appbox team ใช้ Posthog เพื่อ aggregate metrics ทั้งหมดจาก servers ทั้งหมดอย่างรวดเร็ว และ alert team เกี่ยวกับ errors ใด ๆ
+    - Server metrics ใช้สำหรับ support inquiries และเพื่อ investigate resource abuse ใด ๆ
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+
+### บันทึกการยืนยันตัวตน
+
+#### ความพยายามเข้าสู่ระบบ Appbox Control Panel
+
+- **การใช้งาน**
+  - invalid access attempts ใด ๆ จะถูก logged ลงใน Appbox API ซึ่ง restrict ผู้ใช้ไม่ให้ log into Control Panel หลังจากจำนวน attempts หนึ่งในช่วงเวลาที่กำหนด ซึ่งรวมถึง:
+    - ผู้ใช้name ตามที่ผู้ใช้ input
+    - IP address
+    - จำนวน attempts
+    - date ล่าสุดของ attempt
+- **การเก็บรวบรวม**
+  - collected เมื่อผู้ใช้กรอก credentials ไม่ถูกต้อง
+- **การจัดเก็บ**
+  - Appbox API = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ทีม Appbox
+    - ใช้ identify brute-force attempts ใด ๆ
+    - ผู้ใช้s สามารถ request ให้ยกเลิก timeout และลบ access attempt ได้ เมื่อร้องขอและ verification ผ่าน Ticket system
+- **การเก็บรักษา**
+  - 24 ชั่วโมงหรือเมื่อผู้ใช้ request
+
+#### บันทึกการเข้าสู่ระบบ SSH
+
+- **การใช้งาน**
+  - บันทึก login attempts และ successful logins ไปยัง SSH บน user-installed applications เช่น Ubuntu หรือ Debian
+- **การเก็บรวบรวม**
+  - สร้างโดยอัตโนมัติโดย SSH server เมื่อเกิด login attempts
+- **การจัดเก็บ**
+  - Application container = Cleartext (โดยทั่วไปอยู่ใน `/var/log/auth.log` หรือคล้ายกัน)
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+    - เนื่องจาก logs เหล่านี้ store ภายใน applications ที่ users มี root (sudo) access ผู้ใช้จึงมี control และ access เต็มรูปแบบต่อ logs เหล่านี้
+    - ผู้ใช้s สามารถ view, modify หรือ delete logs เหล่านี้ได้ตามต้องการ
+  - ทีม Appbox
+    - access มีให้เฉพาะเมื่อได้รับ user permission ระหว่าง support troubleshooting
+- **การเก็บรักษา**
+  - จัดการโดยผู้ใช้ เนื่องจากพวกเขามี root access ไปยัง container
+  - default log rotation policies ใช้ เว้นแต่ผู้ใช้จะ modify
+
+### บันทึกที่ระบบสร้างขึ้น
+
+- **การใช้งาน**
+  - server-wide generated logs ใช้เพื่อ identify issues บน servers
+- **การเก็บรวบรวม**
+  - สร้างโดย operating system ของ servers
+- **การจัดเก็บ**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ทีม Appbox ที่มีสิทธิ์เข้าถึงแบบจำกัด
+    - ใช้ identify issues ใน servers เฉพาะ
+    - Logs ถูก aggregated โดย Posthog ซึ่ง alert team เกี่ยวกับ errors ใด ๆ
+- **การเก็บรักษา**
+  - ไม่มีกำหนด
+
+### บันทึกที่สร้างโดยแอปพลิเคชันที่ติดตั้ง
+
+- **การใช้งาน**
+  - Logs ที่ generated โดย installed applications ใช้เพื่อ identify issues ภายใน slot ของผู้ใช้
+- **การเก็บรวบรวม**
+  - สร้างโดย installed applications ของผู้ใช้
+- **การจัดเก็บ**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - ทีม Appbox
+    - จำเป็นสำหรับ application-specific support inquiries โดยได้รับ permission จากผู้ใช้
+- **การเก็บรักษา**
+  - จนกว่าผู้ใช้จะ uninstall application หรือ remove
+
+### ประวัติ bash ของผู้ใช้
+
+- **การใช้งาน**
+  - บันทึก commands ทั้งหมดที่ผู้ใช้ใส่ใน shell ของ slot ซึ่งอยู่ใน `$HOME/.bash_history`
+- **การเก็บรวบรวม**
+  - command แต่ละรายการที่ป้อนใน shell จะถูกบันทึก
+- **การจัดเก็บ**
+  - Appbox Servers = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+    - เนื่องจาก bash history file ถูก store ใน home directory ของผู้ใช้ ผู้ใช้มี control เต็มรูปแบบเหนือ file นี้
+    - ผู้ใช้s สามารถ view, modify, clear หรือ delete file นี้ได้ตามต้องการ (โดยใช้ commands เช่น `history -c` หรือแก้ไข/ลบ file)
+  - ทีม Appbox
+    - ใช้สำหรับ general หรือ application-specific inquiries เช่น verify ว่า commands ที่ผู้ใช้ป้อนถูกต้องหรือไม่ แต่เฉพาะเมื่อได้รับ user permission
+    - ใช้ตรวจสอบ possible intrusions หรือ server abuse แต่เฉพาะเมื่อจำเป็นสำหรับ security investigations
+- **การเก็บรักษา**
+  - จัดการโดยผู้ใช้ ซึ่งสามารถ clear history ได้ทุกเมื่อ
+  - โดย default bash history จะ retained indefinitely จนกว่าผู้ใช้จะ remove
+
+### ข้อมูลที่โฮสต์ไว้
+
+#### แอปพลิเคชันที่ติดตั้ง
+
+- **การใช้งาน**
+  - files สำคัญสำหรับให้ installed applications ทำงานอย่างถูกต้อง
+- **การเก็บรวบรวม**
+  - installed โดยผู้ใช้บน slot ของตน
+- **การจัดเก็บ**
+  - Appbox Servers = ขึ้นอยู่กับ Application
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+  - ทีม Appbox
+    - ใช้สำหรับ application-specific support inquiries โดยได้รับ permission จากผู้ใช้
+- **การเก็บรักษา**
+  - ไม่มีกำหนดจนกว่าผู้ใช้จะ remove
+
+#### ข้อมูลของผู้ใช้
+
+- **การใช้งาน**
+  - Data ที่สร้างโดยผู้ใช้และ/หรือ applications ของผู้ใช้ และ store บน slot ของผู้ใช้
+- **การเก็บรวบรวม**
+  - สร้างโดยผู้ใช้และ/หรือ applications ของผู้ใช้
+- **การจัดเก็บ**
+  - Appbox Servers = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - ผู้ใช้
+    - files ของผู้ใช้ store ใน home folders บน Appbox servers และ isolate จากผู้ใช้อื่น เฉพาะผู้ใช้เท่านั้นที่ access ได้
+  - ทีม Appbox
+    - สามารถ access สำหรับ support inquiries โดยได้รับ permission จากผู้ใช้
+- **การเก็บรักษา**
+  - ไม่มีกำหนดจนกว่าผู้ใช้จะ remove
+    - สำหรับ legitimate DMCA takedown notices เราจะแจ้งผู้ใช้และขอให้ลบ content ภายใน 24 ชั่วโมง
+- **ข้อมูลเพิ่มเติม**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## การปฏิบัติตาม UK Online Safety Act
+
+ตาม UK Online Safety Act 2023, Appbox implement data handling practices เฉพาะเพื่อปกป้องผู้ใช้และปฏิบัติตาม regulatory requirements:
+
+### การติดตามความปลอดภัยของเนื้อหา
+
+- **การใช้งาน**
+  - risk assessment และ mitigation สำหรับ illegal และ harmful content
+  - moderation ของ reported content
+  - prevention of distribution ของ illegal content
+- **การเก็บรวบรวม**
+  - generated เมื่อ content ถูกรายงานหรือ flagged
+  - Content hash values สำหรับ known illegal material
+- **การจัดเก็บ**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - Appbox Compliance Team
+    - สำหรับ reviewing reported content และ taking appropriate action
+    - สำหรับ coordinating กับ UK authorities เมื่อกฎหมายกำหนด
+  - UK regulatory authorities (เมื่อกฎหมายกำหนด)
+    - สำหรับ monitoring compliance กับ Online Safety Act
+    - สำหรับ investigating serious illegal content
+- **การเก็บรักษา**
+  - Report data: 2 ปีหลัง resolution
+  - Content hash values: ไม่มีกำหนด (เพื่อ prevention of redistribution)
+
+### ข้อมูลการประเมินความเสี่ยง
+
+- **การใช้งาน**
+  - ดำเนิน required risk assessments สำหรับ illegal content และ content harmful to children
+  - implement proportionate safety measures
+  - demonstrate compliance ต่อ regulatory authorities
+- **การเก็บรวบรวม**
+  - generated ผ่าน regular platform risk assessments
+  - aggregated usage data เพื่อ identify potential risk patterns
+- **การจัดเก็บ**
+  - Appbox Compliance Systems = Protected
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - Appbox Compliance Team
+    - สำหรับ conducting และ updating risk assessments
+    - สำหรับ implementing safety measures
+  - UK regulatory authorities (เมื่อกฎหมายกำหนด)
+    - สำหรับ verifying compliance กับ risk assessment duties
+- **การเก็บรักษา**
+  - 3 ปี (เพื่อ demonstrate ongoing compliance)
+
+### ระบบรายงานเนื้อหา
+
+- **การใช้งาน**
+  - อนุญาตให้ users รายงาน illegal หรือ harmful content
+  - track status ของ reports และ actions taken
+- **การเก็บรวบรวม**
+  - Report details ที่ provided โดย reporting users
+  - Information เกี่ยวกับ reported content
+  - Actions taken on reports
+- **การจัดเก็บ**
+  - Appbox API = Encrypted
+- **การเข้าถึงและเหตุผลในการเข้าถึง**
+  - Reporting user (จำกัดเฉพาะ reports ของตนเอง)
+  - ผู้ใช้ whose content was reported (limited information)
+  - Appbox Compliance Team
+    - สำหรับ investigating และ resolving reports
+  - UK regulatory authorities (เมื่อกฎหมายกำหนด)
+    - สำหรับ investigating serious illegal content reports
+- **การเก็บรักษา**
+  - 2 ปีหลัง resolution

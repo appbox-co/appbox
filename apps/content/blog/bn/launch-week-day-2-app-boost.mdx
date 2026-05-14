@@ -1,0 +1,77 @@
+---
+title: Launch Week Day 2 - App Boost
+date: 2026-03-10 10:00:00
+excerpt: Launch Week-এর Day 2। App Boost পরিচয় করিয়ে দিচ্ছি, আপনার plan upgrade না করেই apps-কে আরও resources দেওয়ার নতুন উপায়।
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, performance, resources]
+---
+
+# Launch Week Day 2: App Boost পরিচয় করিয়ে দিচ্ছি
+
+Day 2। আজ resources নিয়ে কথা বলা যাক।
+
+আমরা সবচেয়ে বেশি যে প্রশ্নগুলোর variation পাই তার একটি হলো "এই app-কে কীভাবে আরও RAM দেব?" বা "পুরো plan upgrade না করে কি এই একটি app দ্রুত করা যায়?" আজ পর্যন্ত উত্তর সবসময় ছিল: plan upgrade করুন, অথবা যা আছে তা নিয়েই থাকুন।
+
+এখন সেটা বদলাচ্ছে। আজ আমরা **App Boost** launch করছি।
+
+## App Boost কী?
+
+App Boost আপনার available app slots ব্যবহার করে individual apps-এ আরও resources allocate করতে দেয়। প্রতিটি app আপনার Appbox-এর resources-এর fixed share পাওয়ার বদলে, এখন আপনি যেকোনো app-এ boost level slide করে তার CPU এবং RAM allocation বাড়াতে পারবেন।
+
+ধারণাটি সহজ: সম্ভবত আপনার কিছু apps বেশি power চায়, আর কিছু apps minimum দিয়েই একদম ঠিক থাকে। Boost আপনাকে আপনার plan-এর unused capacity নিয়ে যেখানে সত্যিই দরকার সেখানে দিতে দেয়।
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="App Boost controls on the app detail page" width="860" className="mt-8 mb-10" />
+</p>
+
+## এটি কীভাবে কাজ করে
+
+প্রতিটি Appbox plan নির্দিষ্ট সংখ্যক app slots নিয়ে আসে। আপনার install করা প্রতিটি app সেই slots-এর কিছু অংশ ব্যবহার করে। App Boost দিয়ে আপনি কোনো app-এ additional slots assign করতে পারেন, যাতে তার resource multiplier বাড়ে।
+
+আপনি আসলে যা control করছেন:
+
+- **Boost Slots**: এই app-এর জন্য dedicated করা extra slots-এর সংখ্যা। প্রতিটি slot resource multiplier-কে fixed increment দিয়ে বাড়ায় (সাধারণত slot প্রতি 0.1x)।
+- **Multiplier**: এটি resulting resource scaling factor। 0 boost slots-এ আপনি 1.0x (baseline)-এ থাকেন। Slider বাড়ালে app-কে 1.3x, 2x, বা আপনার plan অনুযায়ী আরও বেশি পর্যন্ত নিতে পারেন।
+- **RAM and CPUs**: slider drag করার সাথে সাথে এগুলো real time-এ update হয়, তাই apply করার আগে app কত memory এবং CPU পাবে তা ঠিকভাবে দেখতে পারবেন।
+- **Slot Cost**: app মোট কত slots consume করবে (base cost plus boost slots) দেখায়, যাতে trade-off সবসময় পরিষ্কার থাকে।
+
+Slider whole multiplier values-এ (2x, 3x, ইত্যাদি) milestone markers দেখায় এবং সেগুলো hit করলে ছোট confetti-ও fire করে। আমরা আটকাতে পারিনি।
+
+## Install Time-এই Boost
+
+App install হওয়ার পর পর্যন্ত boost করার জন্য অপেক্ষা করতে হবে না। Boost slider install dialog-এর মধ্যেই built-in, তাই app শুরু হওয়ার আগেই resource level বেছে নিতে পারেন।
+
+এটি বিশেষ করে OSes বা media servers-এর মতো heavier apps-এর জন্য useful, যেখানে আপনি আগেই জানেন extra resources কাজে লাগবে।
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="Boost slider in the app install dialog" width="560" className="mt-8 mb-10" />
+</p>
+
+## Install-এর পরে Boost
+
+আগেই apps চলছে? যেকোনো app-এর detail page খুলুন, App Boost card সেখানেই পাবেন। Slider drag করুন, resources preview করুন, Apply Boost চাপুন।
+
+Resource changes restart ছাড়াই live apply হয়।
+
+## Existing Apps-এর কী হবে?
+
+আপনার যদি আজকের আগে install করা apps থাকে, সেগুলো আগের resource multiplier system ঠিক আগের মতোই ব্যবহার করতে থাকবে। App Boost সামনে থেকে newly installed apps-এর জন্য enabled। যা ইতিমধ্যেই চলছে তা disrupt না করে আমরা এটি পরিষ্কারভাবে roll out করতে চেয়েছি।
+
+## আরও Boost চান?
+
+আপনি সর্বোচ্চ কত boost apply করতে পারবেন তা আপনার plan-এর available slots-এর ওপর নির্ভর করে। Room কমে গেলে এবং আরও এগোতে চাইলে, plan upgrade করলে কাজ করার জন্য আরও slots পাবেন। Boost UI-তেই upgrade link আছে, যা আপনাকে সরাসরি billing area-তে নিয়ে যায়।
+
+## Resource Preview
+
+যে details নিয়ে আমি সবচেয়ে খুশি তার একটি হলো slider-এর নিচে থাকা Resource Preview panel। Drag করার সাথে সাথে এটি multiplier, slot cost, RAM, এবং CPUs real time-এ update করে দেখায়। কোনো অনুমান নয়, কোনো surprise নয়। Apply করার আগে আপনার app ঠিক কী পাবে তা আপনি জানেন।
+
+## Day 2 এখন Live
+
+App Boost এখনই সব newly installed apps-এর জন্য available। Login করুন, একটি app install করুন, আর slider try করুন।
+
+আগামীকাল Day 3, এবং আমাদের কাছে বড় কিছু আছে। তখন দেখা হবে।
+
+---
+
+*Feedback আছে বা কোনো issue পেয়েছেন? support@appbox.co-তে জানান অথবা [billing.appbox.co](https://billing.appbox.co/submitticket.php)-তে ticket খুলুন।*

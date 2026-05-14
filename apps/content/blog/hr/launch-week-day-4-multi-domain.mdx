@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - Više domena za VPS aplikacije
+date: 2026-03-12 10:00:00
+excerpt: "Day 4 Launch Weeka. VPS aplikacije sada podržavaju više domena - dodajte koliko god custom domains i Appbox subdomena trebate, sve s automatskim SSL-om."
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: Više domena za VPS aplikacije
+
+Day 4. Jučer smo vam dali potpune virtualne mašine. Danas im dajemo pravu podršku za domene.
+
+Kada smo pokrenuli VPS-ove na Day 3, svaka VM dobila je jednu domenu. To je dovoljno za mnogo slučajeva upotrebe, ali ako unutar VPS-a pokrećete web server - a mnogi od vas ga pokreću - jedna domena nije dovoljna. Treba vam više domena koje pokazuju na isti stroj, svaka sa svojim SSL certifikatom i konfiguracijom web servera.
+
+Danas VPS aplikacije podržavaju **više domena**. Dodajte koliko god `*.user.appboxes.co` subdomena želite, povežite vlastite custom domains ili kombinirajte oboje. Svaka dobiva SSL i spremnu konfiguraciju web servera.
+
+## Kako radi
+
+Otvorite bilo koju pokrenutu VPS aplikaciju i na stranici detalja pronaći ćete karticu **Custom Domains**. Ondje se nalaze sve vaše domene - pretraživa i sortirajuća tablica koja prikazuje svaku domenu povezanu s tim VPS-om, koja je primarna i kada je dodana.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains tablica na stranici detalja VPS aplikacije" width="860" className="mt-8 mb-10" />
+</p>
+
+Za dodavanje nove domene kliknite **Add Domain**. Odabrat ćete nadređenu domenu i unijeti subdomenu, a sustav će se pobrinuti za ostalo.
+
+## Appbox subdomene
+
+Najbrži način za dodavanje domene je korištenje vaše postojeće Appbox domene. Odaberite svoju `user.appboxes.co` domenu kao nadređenu, upišite subdomenu i gotovo. DNS je već riješen za vas, a domena se verificira trenutačno.
+
+Ovo je odlično za brzo pokretanje URL-ova projekata, staging okruženja ili jednostavno davanje vlastite adrese različitim servisima na vašem VPS-u. Treba vam `api.user.appboxes.co` za backend i `app.user.appboxes.co` za frontend? Dodajte oboje za manje od minute.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Dodavanje Appbox subdomene na VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Budući da se nalaze ispod vašeg postojećeg Appbox wildcard certifikata, SSL je automatski. Bez čekanja, bez generiranja certifikata, bez konfiguracije.
+
+## Custom Domains
+
+Možete usmjeriti i vlastite domene na svoj VPS. Odaberite svoju custom base domain (ili dodajte novu izravno iz dijaloga), unesite subdomenu, a sučelje vas vodi kroz DNS postavljanje.
+
+Dijalog prikazuje točan A record koji trebate stvoriti - hostname, IP adresu, sve. Čak ima upute specifične za pružatelje kao što su Cloudflare i drugi popularni DNS pružatelji, tako da ne morate tražiti kako dodati A record.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Dodavanje custom domaina s DNS provjerom i uputama specifičnima za pružatelja" width="560" className="mt-8 mb-10" />
+</p>
+
+Kada vaš DNS pokazuje na ispravnu IP adresu, pritisnite **Verify Again** i sustav potvrđuje da je zapis ispravan prije dodavanja domene.
+
+## SSL i konfiguracija web servera
+
+Svaka domena koju dodate dobiva SSL. Za Appbox subdomene koristi se postojeći wildcard certifikat. Za custom domains certifikat se izdaje automatski.
+
+Evo dijela koji ovo čini zaista korisnim za VPS korisnike: svaka domena dolazi s gumbom **View Config** koji vam daje spremne konfiguracijske isječke za Nginx i Apache. Konfiguracija uključuje ispravan `server_name`, putanje SSL certifikata, cipher suites i postavke protokola. Kopirajte isječak, ubacite ga u konfiguraciju web servera unutar VM-a, ponovno učitajte i posluživanje prometa na toj domeni radi.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL konfiguracijski isječci za Nginx i Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Bez pogađanja putanja datoteka. Bez traženja lokacija certifikata. Bez shvaćanja cipher stringova. Sve je ondje, spremno za kopiranje.
+
+## Zašto je ovo važno za VPS korisnike
+
+VPS bez podrške za više domena samo je server s jednom adresom. To je ograničavajuće na načine koji brzo postanu očiti:
+
+- Pokrećete web app s odvojenim API-jem? Trebaju vam barem dvije domene.
+- Hostate više web mjesta u svojoj VM? Svako treba vlastitu domenu.
+- Želite staging okruženje uz produkciju? To je još jedna domena.
+- Razvijate lokalno i želite testirati s pravom domenom? Još jedna.
+
+## Day 4 je sada dostupan
+
+Podrška za više domena dostupna je odmah za sve VPS aplikacije. Otvorite svoj VPS, pomaknite se do Custom Domains i počnite dodavati.
+
+Sutra je Day 5 i imamo iznenađenje. Nećete ga vidjeti kako dolazi.
+
+---
+
+*Imate povratne informacije ili ste pronašli problem? Javite se na support@appbox.co ili otvorite ticket na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

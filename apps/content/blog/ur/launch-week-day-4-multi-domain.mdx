@@ -1,0 +1,81 @@
+---
+title: Launch Week Day 4 - VPS Apps کے لیے Multiple Domains
+date: 2026-03-12 10:00:00
+excerpt: Launch Week کا Day 4۔ VPS apps اب multiple domains support کرتی ہیں - جتنے custom domains اور Appbox subdomains چاہیں add کریں، سب automatic SSL کے ساتھ۔
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: VPS Apps کے لیے Multiple Domains
+
+Day 4۔ کل ہم نے آپ کو full virtual machines دیں۔ آج ہم انہیں proper domain support دے رہے ہیں۔
+
+جب ہم نے Day 3 پر VPSes launch کیے، ہر VM کو ایک single domain ملا۔ بہت سے use cases کے لیے یہ ٹھیک ہے، لیکن اگر آپ اپنے VPS کے اندر web server چلا رہے ہیں، اور آپ میں سے بہت سے چلا رہے ہیں، تو single domain کافی نہیں۔ آپ کو ایک ہی machine کی طرف point کرنے والے multiple domains چاہیے، ہر ایک اپنے SSL certificate اور web server configuration کے ساتھ۔
+
+آج سے VPS apps **multiple domains** support کرتی ہیں۔ جتنے `*.user.appboxes.co` subdomains چاہیں add کریں، اپنے custom domains لائیں، یا دونوں mix کریں۔ ہر ایک کو SSL اور ready-to-use web server configuration ملتی ہے۔
+
+## یہ کیسے کام کرتا ہے
+
+کوئی بھی running VPS app open کریں اور detail page پر **Custom Domains** card ملے گا۔ یہیں آپ کے تمام domains رہتے ہیں: searchable، sortable table جو اس VPS سے attached ہر domain، کون سا primary ہے، اور کب add ہوا دکھاتی ہے۔
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Custom Domains table on a VPS app detail page" width="860" className="mt-8 mb-10" />
+</p>
+
+نیا domain add کرنے کے لیے **Add Domain** پر click کریں۔ آپ parent domain pick کریں گے اور subdomain enter کریں گے، باقی system handle کر لے گا۔
+
+## Appbox Subdomains
+
+Domain add کرنے کا تیز ترین طریقہ اپنا existing Appbox domain استعمال کرنا ہے۔ اپنا `user.appboxes.co` domain parent کے طور پر pick کریں، subdomain type کریں، اور کام مکمل۔ DNS آپ کے لیے پہلے ہی handled ہے، اور domain instantly verified ہو جاتا ہے۔
+
+یہ quick project URLs، staging environments، یا اپنے VPS پر different services کو اپنی address دینے کے لیے great ہے۔ backend کے لیے `api.user.appboxes.co` اور frontend کے لیے `app.user.appboxes.co` چاہیے؟ دونوں ایک minute سے کم میں add کریں۔
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Adding an Appbox subdomain to a VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+چونکہ یہ آپ کے existing Appbox wildcard certificate کے تحت بیٹھتے ہیں، SSL automatic ہے۔ کوئی waiting نہیں، کوئی certificate generation نہیں، کوئی configuration نہیں۔
+
+## Custom Domains
+
+آپ اپنے domains کو بھی اپنے VPS کی طرف point کر سکتے ہیں۔ اپنا custom base domain select کریں، یا dialog سے right there نیا add کریں، subdomain enter کریں، اور UI آپ کو DNS setup سے walk through کرے گی۔
+
+Dialog exact A record دکھاتا ہے جو create کرنا ہے، hostname، IP address، سب کچھ۔ Cloudflare اور دیگر popular DNS providers کے لیے provider-specific instructions بھی ہیں، اس لیے آپ کو A record add کرنے کا طریقہ ڈھونڈنے کی ضرورت نہیں۔
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Adding a custom domain with DNS verification and provider-specific instructions" width="560" className="mt-8 mb-10" />
+</p>
+
+جب آپ کا DNS right IP کی طرف point کر رہا ہو، **Verify Again** hit کریں اور system domain add کرنے سے پہلے confirm کرے گا کہ record correct ہے۔
+
+## SSL اور Web Server Config
+
+آپ جو ہر domain add کرتے ہیں اسے SSL ملتا ہے۔ Appbox subdomains کے لیے یہ existing wildcard certificate استعمال کرتا ہے۔ custom domains کے لیے certificate automatically provision ہوتا ہے۔
+
+یہ وہ part ہے جو اسے VPS users کے لیے واقعی useful بناتا ہے: ہر domain کے ساتھ **View Config** button آتا ہے جو Nginx اور Apache دونوں کے لیے ready-to-paste configuration snippets دیتا ہے۔ config میں correct `server_name`، SSL certificate paths، cipher suites، اور protocol settings شامل ہیں۔ snippet copy کریں، VM کے اندر اپنے web server config میں ڈالیں، reload کریں، اور آپ اس domain پر traffic serve کر رہے ہیں۔
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="SSL configuration snippets for Nginx and Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+File paths پر کوئی guessing نہیں۔ certificate locations ڈھونڈنے کی ضرورت نہیں۔ cipher strings figure out کرنے کی ضرورت نہیں۔ سب کچھ موجود ہے، copy کرنے کے لیے ready۔
+
+## VPS Users کے لیے یہ کیوں اہم ہے
+
+Multi-domain support کے بغیر VPS صرف ایک address والا server ہے۔ یہ ایسے طریقوں سے limiting ہے جو جلد obvious ہو جاتے ہیں:
+
+- الگ API کے ساتھ web app چلا رہے ہیں؟ کم از کم دو domains چاہیے۔
+- VM میں multiple sites host کر رہے ہیں؟ ہر ایک کو اپنا domain چاہیے۔
+- production کے ساتھ staging environment چاہتے ہیں؟ یہ ایک اور domain ہے۔
+- locally develop کر رہے ہیں اور real domain سے test کرنا چاہتے ہیں؟ ایک اور۔
+
+## Day 4 اب Live ہے
+
+Multiple domain support right now تمام VPS apps کے لیے available ہے۔ اپنا VPS open کریں، Custom Domains تک scroll کریں، اور add کرنا start کریں۔
+
+کل Day 5 ہے، اور ہمارے پاس surprise ہے۔ آپ اسے آتے نہیں دیکھیں گے۔
+
+---
+
+*Feedback ہے یا issue ملا؟ support@appbox.co پر رابطہ کریں یا [billing.appbox.co](https://billing.appbox.co/submitticket.php) پر ticket open کریں۔*

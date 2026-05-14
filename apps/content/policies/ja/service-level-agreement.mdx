@@ -1,0 +1,65 @@
+---
+title: Service Level Agreement
+description: サービスの一貫性と信頼性に対する当社の取り組み
+---
+
+本 Service Level Agreement ("SLA") は、Appbox が提供する Services の Terms および利用を規律する文書です。当社 Services を利用することにより、お客様は以下に定める条件を承認し同意したものとみなされます。
+
+当社は共有環境で運用し、特定の性質のサービスを提供しているため、ある程度の downtime は時に避けられない場合があります。本契約は、subscription period 中の downtime occurrences を当社がどのように管理するかを明確にし、紛争解決および compensation 提供に関する当社の commitments を説明します。
+
+## Server Downtimes, Server Maintenance & Compensation
+
+Appbox は、請求期間を通じてすべてのユーザーが servers を operational かつ accessible に保てるよう、あらゆる努力を行います。
+
+Server maintenance が事前に計画されている場合、users には email updates、Appbox Status Page、Client Area Announcements など複数の channels を通じて通知されます。Planned maintenance の影響を受ける user は compensation の対象外です。
+
+Unscheduled または emergency maintenance procedures は可能な限り速やかに通知され、そのような events の影響を受ける users は、以下に定める credits の対象となる場合があります。
+
+| Duration of Downtime  | Compensation                                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Up to 6 hours         | Team の裁量により決定                                                                                                                       |
+| Up to 12 hours        | 1日分の service credit 相当                                                                                                                  |
+| Up to 24 hours        | 2日分の service credit 相当                                                                                                                  |
+| Beyond 48 hours       | Downtime の2倍の長さで credit 付与（例: 3日間の outage は6日分の service credit）                                                            |
+
+本ポリシーは **お客様がインストールした applications に関連する downtime を除外します。**
+
+## Drive Failure and Data Loss
+
+Appbox のプラットフォームは、公平な resource distribution と包括的な disk usage を提供するよう設計された shared infrastructure に基づいています。最善を尽くしていても、drive malfunctions などの hardware failures が発生する場合があります。
+
+Drive failure によりお客様がデータへアクセスできなくなり、それを recovery できない場合、お客様は **1か月分の service を無料** で受ける資格があります。
+
+当社は、service 上に保存するすべての essential data について backups を保持することを強くおすすめします。
+
+ユーザー主導の actions（例: accidental deletion）によりデータが失われ、system-related error が検出されない場合、compensation は提供されませんのでご注意ください。
+
+## Fair Use of Server Resources
+
+当社 Services は shared resources 上で提供されるため、各 client は自身の活動が他の users の performance を妨げず、許容される resource limits 内に留まるようにすることが重要です。
+
+Appbox は、他の clients の experience に悪影響を与える applications または processes を、事前通知なしに halt する場合があります。深刻な resource misuse の場合、client の service は suspended または完全に terminated されることがあります。
+
+### Disk I/O Fair Use Policy
+
+本ポリシーは、NG-8000 以下のプラン（non-dedicated disk plans）にのみ適用されます。
+
+すべての users に optimal performance を確保するため、Appbox は automated Disk I/O monitoring system を採用しています。この system は:
+
+1. すべての shared resources にわたって disk utilization を継続的に監視します
+2. 長時間にわたり過剰な disk I/O resources を消費している applications を特定します
+3. 必要な場合に throttling measures を自動適用します
+
+お客様の application が過剰な disk I/O を消費していると検出された場合:
+- Warning notification を受け取る場合があります
+- Persistent high usage は、お客様の disk I/O speed の automatic throttling を引き起こします
+- Repeated violations は、より厳しい throttling limits につながります
+- Throttling は一時的であり、usage が normal levels に戻ると自動的に解除されます
+
+Resource-intensive applications は、他の users への配慮なしに実行された場合、これらの measures を trigger する可能性があります。
+
+当社は、すべての users が当社プラットフォームで満足できる experience を得られるよう、本ポリシーを適用します。
+
+## Support Response Times
+
+当社には minimum support response または resolve time はありませんが、すべての support queries に24時間以内に回答することを目標としています。

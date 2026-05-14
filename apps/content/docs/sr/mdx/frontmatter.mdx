@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: Научите како да користите frontmatter у MDX датотекама.
+sort: 3
+---
+
+Frontmatter је важан део MDX датотеке.
+Користи се за дефинисање информација о садржају датотеке,
+као што су наслов, опис, аутор, датум објављивања итд.
+
+Metadata заглавље се дефинише на почетку датотеке, између `---` (три цртице) на почетку и крају.
+
+## Формат
+
+Metadata заглавље се дефинише у формату кључ-вредност, где је кључ назив metadata податка, а вредност је садржај metadata податка.
+
+**Пример:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+У зависности од типа документа (документација, blog post итд.), могу се користити различити metadata подаци.
+
+## Metadata за документацију
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Пример:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Metadata за blog post-ове
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Ово је идентификатор аутора поста.
+    Мора да се поклапа са `id` аутора дефинисаним у датотеци `src/config/blog.ts`,
+    која садржи потпуне податке о ауторима.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Ово је слика која ће се користити као featured image поста када се дели на друштвеним мрежама, ако не желите да користите аутоматски генерисану слику.
+    Слике морају бити сачуване у фасцикли `public/blog-og`.
+    Користите само име датотеке слике и екстензију.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Пример:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

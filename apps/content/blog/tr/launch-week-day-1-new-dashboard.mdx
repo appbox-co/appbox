@@ -1,0 +1,150 @@
+---
+title: Launch Week Day 1 - Yeni Dashboard
+date: 2026-03-09 10:00:00
+excerpt: "Launch Week'in 1. günü burada. Yeni Appbox dashboard artık yayında."
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, dashboard, security, app-store, i18n, file-explorer]
+---
+
+# Launch Week Day 1: Yeni Dashboard Yayında
+
+Launch Week'in Pazartesi başlayacağını söylemiştik. Ve 1. gün artık yayında.
+
+Bugün yeni Appbox dashboard deneyimini yayınlıyoruz. Bu, kontrol paneli genelinde önemli bir UI ve iş akışı yükseltmesi ve tek bir basit hedefi var: appbox'larınızı günlük kullanımda daha hızlı, daha net ve daha az yorucu şekilde yönetmenizi sağlamak.
+
+Bu güncelleme uzun süredir geliştiriliyordu ve sonunda onu sizin kullanımınıza sunabildiğimiz için çok mutluyum.
+
+## Yeni Bir Kontrol Merkezi
+
+Bugünden önce bu bilgiler ayrı sayfalara ve akışlara dağılmış durumdaydı. Bugün bunları tek bir operasyonel görünümde bir araya getiren özel bir dashboard sunuyoruz:
+
+- en son blog ve platform güncellemeleri
+- hizmet genel bakış kartlarınız
+- bildirimleriniz
+- en yeni ve yakın zamanda güncellenen uygulamalar
+
+Böylece sekmeler arasında gidip gelmek yerine tek bir sayfa açıp önemli olanı hemen görebilirsiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Appbox dashboard genel görünümü" width="860" className="mt-8 mb-10" />
+</p>
+
+## Yeniden Tasarlanan Appbox Yönetimi
+
+Appbox'lar bölümü daha temiz bir kart düzeni ve daha hızlı taranabilirlik ile yeniden inşa edildi. Durumu, depolamayı, trafiği, slot kullanımını hızlıca görebilir ve doğrudan ayrıntılara geçebilirsiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="Yeni düzende appbox'larınız" width="860" className="mt-8 mb-10" />
+</p>
+
+Her appbox içinde özet görünümü artık daha operasyonel: kaynak kartlarına, grafiklere ve temel işlemlere ulaşmak daha kolay ve bunları bir bakışta anlamak daha net.
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="Canlı istatistiklerle Appbox özeti" width="860" className="mt-8 mb-10" />
+</p>
+
+Bu, yalnızca statik bir bilgi ekranı değil, ortamınızı gerçekten kullanırken açık tutacağınız türden bir sayfa.
+
+## App Store Daha İyi Entegre Edildi
+
+Uygulama keşfini ve uygulama detay akışlarını da geliştirdik; böylece ayrı araçlar gibi değil, tek bir sistemin parçası gibi hissettiriyorlar.
+
+Mağaza görünümü daha temiz, kategorilere göz atmak daha kolay ve keşiften kuruluma giden yol daha kısa.
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="Entegre app store deneyimi" width="860" className="mt-8 mb-10" />
+</p>
+
+Uygulama detay sayfaları artık sürüm/kaynak ayrıntılarını daha net gösteriyor; böylece kurulum veya yükseltme öncesinde daha hızlı ve daha az sürprizle karar verebilirsiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="Geliştirilmiş uygulama detayı ve sürüm görünümü" width="860" className="mt-8 mb-10" />
+</p>
+
+Ve bugünden itibaren uygulamalar, akışın içinde doğrudan **birden fazla kurulabilir sürüm** sunup destekleyebilir; böylece istediğiniz sürümü seçebilir ve istediğiniz zaman başka bir sürüme geçebilirsiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="Birden fazla sürümü olan uygulamalar için sürüm seçici" width="304" className="mt-8 mb-10" />
+</p>
+
+## Özel Domainler Artık Birinci Sınıf
+
+Özel domainler artık kurulum deneyiminin temel bir parçası; garip bir ek adım değil.
+
+Bir uygulama domain gerektirdiğinde kurulum artık doğrudan kurulum penceresinde, açık ve yönlendirmeli bir akışla gerçekleşiyor:
+
+1. Appbox'ınızı seçin.
+2. **Domain Type** seçin:
+   - Appbox varsayılan domaininizi kullanmak için **Appbox Domain**.
+   - Kendi domainlerinizden birini kullanmak için **Custom Domain**.
+3. **Base Domain** seçin.
+4. Kullanmak istediğiniz **Subdomain** değerini girin.
+5. Özel domain seçtiyseniz Appbox eklenecek tam DNS kaydını (host/ad ve hedef IP) gösterir, ardından bunu hemen doğrulamanıza izin verir.
+
+Kayıtları elle tahmin etmek, doküman kopyalamak ve kurulumları tekrar denemek yerine, uygulamayı kurduğunuz aynı yerde yerleşik bir DNS kurulumu ve doğrulama adımı elde edersiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="DNS doğrulamasıyla uygulama kurulumu sırasında özel domain kurulumu" width="560" className="mt-8 mb-10" />
+</p>
+
+## Yeni Dosya Gezgini (Sıfırdan İnşa Edildi)
+
+Dosya gezgini sıfırdan yeniden düşünüldü. Önceki deneyimde dosya yönetimi yalnızca dosya silmekle sınırlıydı. Artık şu özelliklere sahip gerçek bir dosya yöneticisi:
+
+- yükleme
+- yeni klasör oluşturma
+- yeniden adlandırma
+- silme
+- indirme
+- liste/grid görünümü arasında geçiş
+- breadcrumb gezinme ve bağlamsal işlemler
+
+Böylece ek bir uygulama kurmak yerine appbox dosyalarınızı yerel olarak gerçekten yönetebilirsiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="Genişletilmiş dosya işlemleriyle yeni dosya gezgini" width="560" className="mt-8 mb-10" />
+</p>
+
+## İki Faktörlü Kimlik Doğrulama
+
+2026'da güvenlik isteğe bağlı olmamalı. Bugünden itibaren Appbox hesapları yerleşik iki faktörlü kimlik doğrulamayı destekliyor.
+
+Hesap kurtarma için kurtarma kodu yönetimi dahil olmak üzere 2FA'yı doğrudan hesap alanınızdan etkinleştirip yönetebilirsiniz.
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="İki faktörlü kimlik doğrulama yönetimi" width="860" className="mt-8 mb-10" />
+</p>
+
+Bu, platform için büyük bir güvenlik kilometre taşı ve kullanıcıların en istikrarlı şekilde talep ettiği özelliklerden biri.
+
+## Dashboard Genelinde Yeni Tasarım Dili
+
+Görsel sistem; gezinme, boşluklar, kartlar, tipografi ve etkileşim durumları genelinde yenilendi. Hedef tutarlılık ve odaktı: daha az görsel gürültü, daha güçlü hiyerarşi, daha iyi okunabilirlik ve hem koyu hem açık temalarda daha modern bir ürün hissi.
+
+Artık gece yarısı uygulama kurarken göz kamaştıran beyaz bir ekranla karşılaşmayacaksınız!
+
+## Daha İyi Günlük UX: Tema, Dil ve Daha Hızlı Kısayollar
+
+Bu sürüm ayrıca dashboard'u her gün kullanmayı daha keyifli hale getiren yaşam kalitesi özellikleri içeriyor:
+
+- **Yerel dil değiştirme** doğrudan UI içinde (zamanla daha fazla dil eklenecek).
+- **Sabitlenmiş uygulama kısayolları** hizmet kartlarınızda küçük hızlı erişim ikonları olarak gösterilir; böylece en sık kullandığınız uygulamalara daha hızlı geçebilirsiniz.
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="Yeni dashboard'da yerel dil değiştirici" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="Hizmet kartlarında sabitlenmiş uygulama kısayolları" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  Dil değiştirme ve sabitlenmiş kısayollar, günlük kontrolleri tam ihtiyaç duyduğunuz yere koyar.
+</p>
+
+## 1. Gün Şimdi Yayında
+
+Zaten Appbox kullanıcısıysanız giriş yapabilir ve yeni dashboard'u hemen kullanmaya başlayabilirsiniz.
+
+Her zaman olduğu gibi geri bildirimlerinizi bekliyoruz. Appbox'ı geliştirmenin en hızlı yolu yayınlamak, dinlemek ve gerçek kullanımla yinelemektir.
+
+---
+
+*Geri bildiriminiz mi var veya bir sorun mu buldunuz? support@appbox.co adresinden bize ulaşın ya da [billing.appbox.co](https://billing.appbox.co/submitticket.php) üzerinden bir ticket açın.*

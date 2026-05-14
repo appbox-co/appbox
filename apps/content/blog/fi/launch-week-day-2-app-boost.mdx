@@ -1,0 +1,77 @@
+---
+title: Launch Week Day 2 - App Boost
+date: 2026-03-10 10:00:00
+excerpt: Launch Weekin toinen päivä. Esittelemme App Boostin, uuden tavan antaa sovelluksillesi enemmän resursseja ilman paketin päivittämistä.
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, performance, resources]
+---
+
+# Launch Week Day 2: Esittelyssä App Boost
+
+Päivä 2. Puhutaan resursseista.
+
+Yksi yleisimmistä kysymyksistä, joita saamme, on jokin versio kysymyksestä "miten annan tälle sovellukselle enemmän RAM-muistia?" tai "voinko tehdä tästä yhdestä sovelluksesta nopeamman päivittämättä koko pakettiani?" Tähän asti vastaus oli aina: päivitä pakettisi tai elä nykyisellä.
+
+Se muuttuu nyt. Tänään julkaisemme **App Boostin**.
+
+## Mikä App Boost on?
+
+App Boost antaa sinun kohdistaa lisäresursseja yksittäisille sovelluksille käyttämällä saatavilla olevia sovellusslottejasi. Sen sijaan, että jokainen sovellus saisi kiinteän osuuden Appboxisi resursseista, voit nyt nostaa minkä tahansa sovelluksen boost-tasoa ja kasvattaa sen CPU- ja RAM-allokaatiota.
+
+Ajatus on yksinkertainen: sinulla on todennäköisesti sovelluksia, jotka tarvitsevat enemmän tehoa, ja sovelluksia, joille minimi riittää hyvin. Boost antaa sinun ottaa paketissasi käyttämättä olevan kapasiteetin ja ohjata sen sinne, missä sillä on oikeasti merkitystä.
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="App Boost -säätimet sovelluksen yksityiskohtasivulla" width="860" className="mt-8 mb-10" />
+</p>
+
+## Miten se toimii
+
+Jokaisessa Appbox-paketissa on tietty määrä sovellusslotteja. Jokainen asentamasi sovellus käyttää osan näistä sloteista. App Boostin avulla voit määrittää sovellukselle lisäslotit ja kasvattaa sen resurssikerrointa.
+
+Tätä olet käytännössä säätämässä:
+
+- **Boost Slots**: tähän sovellukseen kohdistamiesi lisäslottien määrä. Jokainen slotti kasvattaa resurssikerrointa kiinteällä askeleella (tyypillisesti 0.1x per slotti).
+- **Multiplier**: tästä syntyvä resurssien skaalauskerroin. Kun boost-slotteja on 0, taso on 1.0x (perustaso). Vedä säädintä ylöspäin, ja voit nostaa sovelluksen tasolle 1.3x, 2x tai jopa korkeammalle paketistasi riippuen.
+- **RAM and CPUs**: nämä päivittyvät reaaliajassa, kun vedät liukusäädintä, joten näet tarkalleen, kuinka paljon muistia ja CPU:ta sovellus saa ennen vahvistamista.
+- **Slot Cost**: näyttää, kuinka monta slottia sovellus kuluttaa yhteensä (peruskustannus plus boost-slotit), joten tiedät aina kompromissin.
+
+Liukusäädin näyttää virstanpylväät kokonaislukukertoimissa (2x, 3x jne.) ja laukaisee jopa pienen konfettiefektin, kun osut niihin. Emme malttaneet olla lisäämättä sitä.
+
+## Boost asennuksen aikana
+
+Sinun ei tarvitse odottaa sovelluksen asentamisen jälkeen boostataksesi sitä. Boost-liukusäädin on rakennettu suoraan asennusikkunaan, joten voit valita resurssitason jo ennen kuin sovellus edes käynnistyy.
+
+Tämä on erityisen hyödyllistä raskaammille sovelluksille, kuten käyttöjärjestelmille tai mediapalvelimille, joiden tiedät jo etukäteen hyötyvän lisäresursseista.
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="Boost-liukusäädin sovelluksen asennusikkunassa" width="560" className="mt-8 mb-10" />
+</p>
+
+## Boost asennuksen jälkeen
+
+Onko sinulla jo sovelluksia käynnissä? Avaa minkä tahansa sovelluksen yksityiskohtasivu, ja löydät App Boost -kortin sieltä. Vedä liukusäädintä, esikatsele resurssit ja paina Apply Boost.
+
+Resurssimuutokset otetaan käyttöön livenä ilman uudelleenkäynnistystä.
+
+## Entä olemassa olevat sovellukset?
+
+Jos sinulla on sovelluksia asennettuna ennen tätä päivää, ne jatkavat aiemman resurssikerroinjärjestelmän käyttöä täsmälleen kuten ennenkin. App Boost otetaan käyttöön tästä eteenpäin uusille asennetuille sovelluksille. Halusimme julkaista tämän siististi häiritsemättä mitään, mikä on jo käynnissä.
+
+## Haluatko lisää boostia?
+
+Suurin boost, jonka voit käyttää, riippuu pakettisi vapaista sloteista. Jos tila loppuu ja haluat mennä pidemmälle, paketin päivittäminen antaa lisää slotteja käytettäväksi. Boost-käyttöliittymässä on päivityslinkki, joka vie sinut suoraan laskutusalueellesi.
+
+## Resurssien esikatselu
+
+Yksi yksityiskohta, johon olen erityisen tyytyväinen, on liukusäätimen alla oleva Resource Preview -paneeli. Se näyttää kertoimen, slottikustannuksen, RAM-muistin ja CPU:t, ja kaikki päivittyy reaaliajassa vetäessäsi säädintä. Ei arvailua, ei yllätyksiä. Tiedät tarkalleen, mitä sovelluksesi saa ennen kuin otat mitään käyttöön.
+
+## Päivä 2 on nyt julkaistu
+
+App Boost on saatavilla juuri nyt kaikille uusille asennetuille sovelluksille. Kirjaudu sisään, asenna sovellus ja kokeile liukusäädintä.
+
+Huomenna on päivä 3, ja meillä on luvassa jotain suurta. Nähdään silloin.
+
+---
+
+*Onko sinulla palautetta tai löysitkö ongelman? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

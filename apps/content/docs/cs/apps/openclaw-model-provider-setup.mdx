@@ -1,0 +1,516 @@
+---
+title: Nastavení poskytovatele modelů OpenClaw
+description: Nastavte OpenClaw po instalaci s API klíčem libovolného poskytovatele modelů.
+sort: 1
+---
+
+OpenClaw se v Appbox instaluje bez nutnosti zadat API klíč modelu.
+
+Doporučený způsob dokončení nastavení je připojit se k aplikaci OpenClaw přes SSH a spustit vestavěného průvodce `openclaw onboard`. Průvodce je bezpečnější než ruční úprava celé konfigurace, protože zachová nastavení brány Appbox a zároveň vás provede poskytovateli modelů, API klíči, kanály, kontrolami stavu a dovednostmi.
+
+Pokud SSH nemůžete nebo nechcete použít, použijte místo toho [záložní metodu v dashboardu](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Doporučená metoda: připojte se přes SSH do OpenClaw a spusťte onboarding
+
+Tuto metodu použijte pro nové instalace i pro existující instalace, ve kterých je potřeba přidat nebo změnit přihlašovací údaje poskytovatele modelů.
+
+### Co potřebujete nejdříve
+
+- Stránku s podrobnostmi aplikace OpenClaw v Appbox.
+- **SSH Command** zobrazený v části Configuration.
+- Váš **Gateway Token / SSH Password**. Jde o stejné vygenerované tajemství, které se používá pro přihlášení do dashboardu OpenClaw.
+- Účet u poskytovatele modelů nebo API klíč. Pokud ho zatím nemáte, přečtěte si [Získání API klíčů](#getting-api-keys-with-dashboard-links).
+
+Stránka s podrobnostmi aplikace zobrazuje SSH příkaz připravený ke zkopírování:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Stránka s podrobnostmi aplikace OpenClaw v Appbox se zvýrazněným SSH příkazem"
+  width="860"
+/>
+
+### Připojení z macOS
+
+1. Otevřete **Terminal** nebo **iTerm2**.
+2. Zkopírujte **SSH Command** ze stránky s podrobnostmi aplikace OpenClaw.
+3. Vložte ho a spusťte. Bude vypadat podobně jako tento:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Pokud se macOS zeptá, zda hostiteli důvěřujete, napište `yes` a stiskněte Enter.
+5. Po výzvě k zadání hesla vložte svůj **Gateway Token / SSH Password** a stiskněte Enter. Terminal při psaní nebo vkládání hesla nezobrazí žádné znaky.
+
+### Připojení z Windows
+
+Windows 10 a Windows 11 standardně obsahují klienta OpenSSH.
+
+1. Otevřete **Windows Terminal** nebo **PowerShell**.
+2. Zkopírujte **SSH Command** ze stránky s podrobnostmi aplikace OpenClaw.
+3. Vložte ho a spusťte:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Pokud se Windows zeptají, zda hostiteli důvěřujete, napište `yes` a stiskněte Enter.
+5. Po výzvě k zadání hesla vložte svůj **Gateway Token / SSH Password** a stiskněte Enter. PowerShell vložené heslo nezobrazí.
+
+Pokud Windows oznámí, že `ssh` nebyl rozpoznán, nainstalujte **OpenSSH Client** přes **Settings > System > Optional features**, potom znovu otevřete Windows Terminal a zkuste to znovu.
+
+### Spuštění průvodce onboardingem OpenClaw
+
+Po připojení přes SSH spusťte:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 na macOS připojený k OpenClaw přes SSH a spouštějící příkaz openclaw onboard"
+  width="860"
+/>
+
+Průvodce je interaktivní. Použijte tyto volby specifické pro Appbox:
+
+1. **Existing config:** vyberte možnost zkontrolovat nebo upravit aktuální konfiguraci. Nevybírejte úplný reset, pokud záměrně nechcete znovu vytvořit celé nastavení OpenClaw od začátku.
+2. **Model and auth:** vyberte poskytovatele, například OpenRouter, OpenAI, Anthropic, Google, xAI nebo vlastního poskytovatele kompatibilního s OpenAI. Jakmile se průvodce zeptá, vložte API klíč. OpenRouter je pro většinu uživatelů nejjednodušší výchozí volba, protože jeden klíč může směrovat požadavky na mnoho modelů. Pokud máte předplatné OpenAI Codex, vyberte v seznamu poskytovatelů **OpenAI Codex**, ne možnost pojmenovanou pouze `codex`.
+3. **Default model:** vyberte model, který průvodce pro daného poskytovatele doporučí, nebo ručně zadejte hodnotu `provider/model`, například `openrouter/auto`.
+4. **Workspace:** ponechte výchozí workspace, pokud nemáte konkrétní důvod ho změnit.
+5. **Gateway settings:** ponechte existující nastavení brány Appbox. Zejména ponechte zapnuté ověřování tokenem a zachovejte existující nastavení portu/bind brány.
+6. **Channels:** nakonfigurujte WhatsApp, Telegram, Discord, Signal, iMessage nebo jiné kanály hned, případně je přeskočte a přidejte později pomocí `openclaw configure`.
+7. **Web search:** vyberte poskytovatele vyhledávání, pokud nějakého máte, nebo ho zatím přeskočte.
+8. **Daemon/service install:** Appbox už OpenClaw uvnitř kontejneru dohlíží, takže instalaci daemonu přeskočte, pokud ji průvodce nabídne.
+9. **Health check:** nechte průvodce spustit kontrolu stavu.
+10. **Skills:** povolte průvodci zkontrolovat přibalené dovednosti. Když se zeptá na **Preferred node manager for skill installs**, vyberte `npm`.
+
+Po dokončení onboardingu se vraťte do dashboardu OpenClaw. Pokud už byl dashboard otevřený, obnovte ho a otestujte krátkou chatovací výzvu.
+
+Užitečné následné příkazy přes SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Získání API klíčů (s odkazy na dashboardy)
+
+K vygenerování klíčů použijte tyto konzole poskytovatelů. U doporučené SSH metody vložte klíč, až se na něj zeptá `openclaw onboard`. U záložní metody v dashboardu sloučte klíč do `Config > Secrets > Raw`.
+
+### Doporučeno jako první: OpenRouter (nejlepší výchozí volba pro většinu uživatelů)
+
+Proč ho doporučujeme:
+
+- Poskytuje jeden klíč pro mnoho dodavatelů modelů.
+- Můžete použít `openrouter/auto`, které umí přepínat modely podle náročnosti úkolu.
+- `auto` může snížit náklady tím, že jednodušší úkoly směruje na levnější modely.
+
+Jak získat klíč:
+
+1. Přejděte na [OpenRouter](https://openrouter.ai/) a přihlaste se.
+2. Otevřete [nastavení API Keys](https://openrouter.ai/settings/keys).
+3. Klikněte na **Create** a zkopírujte klíč (zobrazí se jen jednou).
+4. Použijte ho, až se průvodce OpenClaw zeptá na váš OpenRouter API klíč. Pro záložní metodu v dashboardu je konfigurační klíč `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Snímek stránky API klíčů OpenRouter z veřejného návodu"
+  width="860"
+/>
+Zdrojový návod: [Jak získat OpenRouter API
+klíč](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Jak získat klíč:
+
+1. Přihlaste se do [OpenAI Platform](https://platform.openai.com/).
+2. Otevřete [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Klikněte na **Create new secret key**.
+4. Klíč ihned zkopírujte (OpenAI zobrazí celou hodnotu pouze jednou).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Snímek nastavení OpenAI API klíče z veřejného návodu"
+  width="860"
+/>
+Zdrojový návod: [Jak získat OpenAI API
+klíč](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Jak získat klíč:
+
+1. Přihlaste se do [Anthropic Console](https://console.anthropic.com/).
+2. Otevřete [API Keys](https://console.anthropic.com/settings/keys).
+3. Klikněte na **Create Key**.
+4. Klíč ihned zkopírujte (zobrazí se jen jednou).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Snímek vytvoření Anthropic API klíče z veřejného návodu"
+  width="860"
+/>
+Zdrojový návod: [Jak získat Claude API
+klíč](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini přes AI Studio)
+
+Jak získat klíč:
+
+1. Otevřete [Google AI Studio](https://aistudio.google.com/).
+2. Přejděte na [API Keys](https://aistudio.google.com/app/apikey).
+3. Klikněte na **Create API key** (nový nebo existující projekt).
+4. Klíč zkopírujte a uložte.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Snímek vytvoření Google AI Studio API klíče z veřejného návodu"
+  width="860"
+/>
+Zdrojový návod: [Získání Google AI API
+klíče](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Poznámka: dashboardy poskytovatelů se mohou často měnit a podle stavu vaší relace mohou zobrazit výzvu k přihlášení.
+
+## Záložní metoda: konfigurace ověření poskytovatele v dashboardu
+
+Tuto metodu použijte jen tehdy, když SSH není dostupné nebo dáváte přednost ruční konfiguraci. Editor Raw v dashboardu funguje, ale upravuje celý konfigurační objekt OpenClaw najednou. Dávejte pozor, abyste nastavení poskytovatele sloučili do existujícího souboru, místo abyste nahradili výchozí nastavení brány a dovedností Appbox.
+
+1. Otevřete URL dashboardu OpenClaw ze stránky s podrobnostmi nainstalované aplikace.
+2. Přejděte na **Config > Secrets**.
+3. Místo Form vyberte **Raw**.
+4. Klikněte na tlačítko Reveal sensitive values (vypadá jako oko s přeškrtnutím).
+5. **Sloučte** nastavení poskytovatele z níže uvedených příkladů do své existující konfigurace (viz [Jak ruční konfigurace poskytovatele zapadá do celého souboru](#how-manual-provider-config-fits-in-the-full-file)) - nenahrazujte celý soubor, pokud nechcete resetovat bránu, dovednosti a další výchozí nastavení Appbox.
+6. Uložte a použijte změny konfigurace.
+
+### Jak ruční konfigurace poskytovatele zapadá do celého souboru
+
+**Config > Secrets > Raw** upravuje **celou** konfiguraci OpenClaw jako jeden objekt. V Appbox tento soubor už obsahuje věci jako `gateway` (bind, ověřování tokenem, Control UI), `skills.load.extraDirs` (přibalené dovednosti), `commands` a někdy `meta`. Úryvky v části [Příklady hlavních poskytovatelů](#major-provider-examples) ukazují pouze části, které potřebujete pro modely: strom `models` a `agents.defaults.model.primary`.
+
+**Co udělat:** ponechte své existující klíče nejvyšší úrovně (`gateway`, `skills`, `commands` atd.) a **přidejte nebo aktualizujte** tyto dvě části:
+
+- **`models.providers`** - přidejte svého poskytovatele (např. `openrouter`) a jeho `apiKey`, případně požadované `baseUrl` a seznam `models`.
+- **`agents.defaults.model.primary`** - nastavte výchozí řetězec modelu (např. `openrouter/auto`), aby agent používal daného poskytovatele.
+
+Pokud už `models` nebo `agents` existují, sloučte nové klíče do těchto objektů místo jejich duplikování.
+
+Níže je příklad tvaru **jednoho** kompletního souboru Raw jako **JSON** (editor může v praxi přijímat také uvozovky ve stylu JSON5). Váš skutečný soubor může obsahovat více polí (např. bohatší metadata modelů, `meta`). **Bloky poskytovatelů** v příkladech níže jsou části, které zde zarovnáte s `models` a `agents`.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token vs provider API key:** `gateway.auth.token` slouží pouze k přihlášení do OpenClaw Control UI / gateway. `models.providers.*.apiKey` je váš klíč dodavatele LLM (OpenRouter, OpenAI atd.) - jsou to různé věci.
+
+## Příklady hlavních poskytovatelů
+
+Nejprve použijte vždy jeden blok poskytovatele, potvrďte, že funguje, a teprve potom přidejte další poskytovatele. Každý níže uvedený příklad je **slučovací fragment**: `...` znamená vynechanou konfiguraci (řádky nad nebo pod) a `},` před `"models"` uzavírá libovolný klíč, který se ve vašem souboru nachází nad `models` (například `skills` nebo `commands`). Úryvky samy o sobě nejsou platný JSON - sloučte části `models` a `agents` do kořenového objektu.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Poznámka k Bedrock (bez API klíče)
+
+Amazon Bedrock používá přihlašovací údaje AWS (například `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) místo API klíče. Minimální položka poskytovatele vypadá takto:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Poznámky
+
+- Ověřovací token brány a API klíče poskytovatele modelů jsou různá nastavení.
+- Pokud dostanete chybu poskytovatele (například chybějící klíč Anthropic), změňte výchozí model na poskytovatele, kterého máte nakonfigurovaného.
+- Pokud validace poskytovatele selže, nejdříve ověřte, že jsou přítomna požadovaná pole poskytovatele (`baseUrl`, `models` a případně `apiKey`).
+
+## Oficiální dokumentace poskytovatelů
+
+- [Adresář poskytovatelů OpenClaw](https://docs.openclaw.ai/providers/index)
+- [Poskytovatel OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [Poskytovatel OpenAI](https://docs.openclaw.ai/providers/openai)
+- [Poskytovatel Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [Poskytovatel Google](https://docs.openclaw.ai/providers/google)
+- [Poskytovatel xAI](https://docs.openclaw.ai/providers/xai)
+- [Poskytovatel Mistral](https://docs.openclaw.ai/providers/mistral)
+- [Poskytovatel Together AI](https://docs.openclaw.ai/providers/together)
+- [Poskytovatel Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

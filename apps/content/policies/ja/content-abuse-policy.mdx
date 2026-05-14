@@ -1,0 +1,113 @@
+---
+title: コンテンツ不正利用ポリシー
+description: コンテンツ不正利用報告の処理と対応に関する当社ポリシー
+---
+
+Appbox は、サービス利用に関連して高い水準の責任ある行動を促進し、他者の権利を尊重します。また、Appbox サービスのユーザーにも同じことを求めます。権利者が自らの権利を効果的に行使できるようにし、Appbox サービスの不正利用を是正するため、Appbox は不正利用および違法コンテンツ処理ポリシーを採用しています。
+
+## UK 法令遵守
+
+UK に拠点を置く hosting provider として、Appbox はコンテンツモデレーションおよび不正利用報告に関する、以下を含むがこれらに限定されない、適用されるすべての UK 法令を遵守します。
+
+- Copyright, Designs and Patents Act 1988
+- Defamation Act 2013
+- Computer Misuse Act 1990
+- Digital Economy Act 2017
+- Online Safety Act 2023
+- Counter-Terrorism and Border Security Act 2019
+
+当社は、違法コンテンツの報告に迅速に対応し、法律で求められる場合には UK authorities と協力することを約束します。
+
+## 不正利用報告について
+
+Appbox は、顧客または end user がサービスをどのように利用しているかを完全に監視することはできません。Appbox サービスが Appbox Policies または適用法に違反して使用されていることを確認した場合、またはお客様のコンテンツがお客様の権利を侵害する形で使用されていると考える場合、不正利用または違法コンテンツ通知を Appbox に送ることができます。
+
+Appbox Compliance department は、受信したすべての通知に迅速に対応します。すべての通知は Appbox の automatic Abuse Prevention Tool によって評価されます。このツールは 24/7 で稼働し、年間を通じて通知を処理します。
+
+## 重大な違法コンテンツへの優先対応
+
+UK law に従い、当社は以下に関する報告を優先します。
+
+1. Child sexual abuse material (CSAM)
+2. Terrorist content
+3. 公共の安全に差し迫った脅威をもたらすコンテンツ
+
+これらの報告は緊急に処理され、適切な場合には Internet Watch Foundation (IWF) または Counter Terrorism Internet Referral Unit (CTIRU) などの関連 UK authorities へ報告されます。
+
+## 報告要件と手続き
+
+Appbox によってホストおよび/または送信されたコンテンツについて通知を提出する際は、以下の要件に従ってください。迅速な処理には、これらのガイドラインへの適切な準拠が不可欠です。
+
+### すべての不正利用報告に関する一般要件
+
+* 通知は plain text format で提出してください
+* English language のみを使用してください
+* 不正利用通知は指定アドレス abusebox (at) appbox (dot) co へ送信してください
+* NO-REPLY email address から通知を送信しないでください
+* 氏名、住所、電話番号、メールアドレスを含めてください
+* 報告対象コンテンツが存在する static URL を記載してください（この URL は Appbox に割り当てられた IP address へ解決される必要があります）
+* 1つの通知には IP address を1つだけ含めてください
+* 解決を求める URLs または domains のみを含めてください
+* 報告するコンテンツの詳細な説明と、それが適用法に違反する理由を記載してください
+* 件名に以下のいずれかの keyword を含めてください: [Child abuse] [Live streaming] [Copyright] [Trademark] [VoIP/SIP] [Phishing] [DDoS] [Spam] [Hack] [Malware] [Gambling] [Zoophilia] [Defamation] [Personal data] [Photos of persons]
+
+### 著作権侵害報告の追加要件
+
+著作権者として DMCA complaint を提出する場合、以下も含める必要があります。
+
+1. 侵害されたと主張する著作権対象コンテンツの具体的な特定（URL と claim に関する詳細情報を含む）
+2. Good faith belief の陳述。具体的には: "I hereby state that I have a good faith belief that the disputed use of the copyrighted material is not authorized by the copyright owner, its agent, or the law (e.g., as a fair use)."
+3. Perjury 罰則下での陳述: "I hereby state that the information in this notice is accurate and, under penalty of perjury, that I am the owner, or authorized to act on behalf of the owner of the copyright or of an exclusive right under the copyright that is allegedly infringed."
+4. 法的氏名と digital signature
+
+### その他の報告タイプに関する特別要件
+
+* **Trademark Infringement**: 登録番号を含む登録詳細を含めてください
+* **Hacking, Scanning, DDoS, or Malware Reports**: 活動の説明、日付、timestamp、関与した IP addresses、port information、関連 log files を提供してください
+
+通知を提出すると、Appbox Abuse Prevention Tool へのリンクを含むメールが届きます。このツールは、通知者と Appbox 顧客の双方が通知の状態を追跡し、当社 Compliance department と直接連絡するための interface を提供します。
+
+## 不正利用通知のレビュー手続き
+
+不正利用または違法コンテンツ通知を受け取ると、以下の手続きが実施されます。
+
+### 初回提出
+1. 申立人が、監視対象メールアドレス abusebox (at) appbox (dot) co に不正利用通知を送信します
+2. より効率的な処理のため、不正利用通知には標準 XML structure に従うことを推奨します（詳細は request に応じて提供可能）
+
+### 自動処理
+1. 当社の自動システムが通知から abuse details の抽出を試みます
+2. システムは file names、IP addresses、port numbers などの特定情報を探します
+
+### コンテンツ確認と対応
+1. 特定の詳細情報が正常に抽出された場合、システムは当社 physical storage 上で侵害コンテンツを検索します
+2. 特定されたコンテンツが見つかった場合:
+   - データは直ちに quarantine へ移動され、ユーザーからアクセスできなくなります
+   - コンテンツは永久削除前に7日間 quarantine に保持されます
+   - 顧客が通知を承認した場合、7日間を待たずにデータは直ちに削除されます
+
+### コミュニケーション手続き
+1. 申立人は、各段階でメールによる自動更新を受け取ります
+2. 追加の status information は、当社 abuse notification web portal から利用できます
+3. 申立人と顧客の双方は、abuse system を通じていつでも当社へ連絡できます
+
+### 特別ケースの処理
+1. 指定されたコンテンツが当社システム上で見つからない場合、complaint は適切な通知とともに自動的に終了されます
+2. 当社自動システムが特定の詳細情報（file name、IP、port number など）を抽出できない場合、通知は manual review の対象として flagged されます
+3. Compliance team のメンバーが、manual flagged notifications を個別に確認し対応します
+
+この手続きにより、関係するすべての当事者への公平性を保ちながら、不正利用通知を効率的に処理できます。
+
+## Client Counter-Notice
+
+クライアントが報告対象コンテンツに対して適切な権利を持っていると考える場合、申立人に対して直接、法的に報告に異議を申し立てることができます。ただし、十分な情報を添えて、まず当社に通知する必要があります。この法的事項において、Appbox は仲介者として行動しません。
+
+## Repeat Infringers に対する終了ポリシー
+
+Appbox は、"Repeat Infringer" と判断されたクライアント、または指定期間後も報告対象コンテンツを削除していないクライアントのサービスを終了する権利を留保します。Appbox は、ユーザーが "repeat infringer" に該当するかを判断する基準を定義する単独裁量を保持します。
+
+終了前には、クライアントが Appbox サービス上に存在するデータを backup できるよう、24時間の期間が提供されます。
+
+## 免責事項
+
+本 Content Abuse Policy により、申立人および当社クライアントは、Appbox がそのサービス上のクライアントコンテンツに対する法的措置について責任を負わないことに同意します。Appbox は [Terms of Service](/policies/terms-of-service) で説明されるとおり、common carrier としてのみ行動します。

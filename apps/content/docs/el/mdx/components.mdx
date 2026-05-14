@@ -1,0 +1,196 @@
+---
+title: "Στοιχεία"
+description: "Εξοικείωση με τα components στα αρχεία MDX σας"
+sort: 2
+---
+
+Τα components εισάγονται αυτόματα σε όλα τα αρχεία MDX, χωρίς να απαιτείται χειροκίνητο import.
+Αυτό σημαίνει ότι μπορείτε να χρησιμοποιήσετε οποιοδήποτε διαθέσιμο component!
+
+Για να μάθετε περισσότερα, να προσθέσετε ή να αλλάξετε τα διαθέσιμα components, δείτε το αρχείο `src/components/docs/mdx.tsx`
+
+## Accordion
+
+**Παράδειγμα:**
+
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Αυτό είναι ένα παράδειγμα ερώτησης για το πρώτο στοιχείο του accordion.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Αυτό είναι ενδεικτικό περιεχόμενο για το πρώτο στοιχείο του accordion. Μπορεί να περιλαμβάνει μεγαλύτερες παραγράφους, επεξηγήσεις και λεπτομέρειες που ο χρήστης βλέπει αφού ανοίξει το στοιχείο. Χρησιμοποιήστε το για να παρουσιάσετε πληροφορίες με συμπτυσσόμενο τρόπο.
+
+      Μπορείτε επίσης να προσθέσετε δεύτερη παράγραφο με πρόσθετες λεπτομέρειες, παραδείγματα ή σημειώσεις που σχετίζονται με την ίδια ερώτηση.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Αυτό είναι ένα δεύτερο παράδειγμα ερώτησης μέσα στο accordion.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Αυτό είναι σύντομο ενδεικτικό περιεχόμενο για το δεύτερο στοιχείο.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+**Κώδικας:**
+
+```jsx
+<Accordion type="multiple">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      Id qui enim sunt do sit ut ex voluptate consequat sint aliqua.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Aliqua et adipisicing sunt anim adipisicing nostrud nostrud veniam aliquip ea. Aute fugiat incididunt laboris ullamco et voluptate fugiat fugiat sunt. Consectetur commodo sint exercitation esse consectetur deserunt ipsum sunt minim ea ipsum aliqua ad. Veniam velit dolore commodo officia ex ullamco fugiat occaecat minim excepteur incididunt officia. Sit irure eiusmod officia esse pariatur sint elit commodo. Ullamco ea eu labore duis dolore quis dolor eiusmod in minim culpa proident. Est magna dolor id elit.
+
+      Velit dolore quis veniam ex aliqua. Et velit occaecat ea aliquip id quis voluptate ipsum culpa eu enim quis amet tempor. Minim cillum deserunt quis consequat esse eu irure sunt dolore nisi dolor sit adipisicing. Dolor aliqua nulla sit culpa incididunt magna commodo voluptate qui labore cillum consequat consequat.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      Esse aute exercitation amet irure incididunt fugiat sint cupidatat culpa dolore duis officia aliquip.
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Eiusmod labore eu eu eu reprehenderit aute anim duis labore nisi laborum magna enim.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Alerts
+
+**Παράδειγμα:**
+
+<Alert className="my-4">
+  <AlertTitle>Προεπιλεγμένο alert</AlertTitle>
+
+  <AlertDescription>
+    Αυτό είναι ένα προεπιλεγμένο alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Προειδοποιητικό alert</AlertTitle>
+
+  <AlertDescription>
+    Αυτό είναι ένα προειδοποιητικό alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Alert σφάλματος</AlertTitle>
+
+  <AlertDescription>
+    Αυτό είναι ένα alert σφάλματος.
+  </AlertDescription>
+</Alert>
+
+**Κώδικας:**
+
+```jsx
+<Alert className="my-4">
+  <AlertTitle>Default alert</AlertTitle>
+
+  <AlertDescription>
+    This is a default alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning alert</AlertTitle>
+
+  <AlertDescription>
+    This is a warning alert.
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="my-4">
+  <AlertTitle>Error alert</AlertTitle>
+
+  <AlertDescription>
+    This is an error alert.
+  </AlertDescription>
+</Alert>
+```
+
+## Tabs
+
+**Παράδειγμα:**
+
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Καρτέλα 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Καρτέλα 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Περιεχόμενο καρτέλας 1
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Περιεχόμενο καρτέλας 2
+  </TabsContent>
+</Tabs>
+
+**Κώδικας:**
+
+```jsx
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="tab-1">
+    Tab 1 content
+  </TabsContent>
+
+  <TabsContent value="tab-2">
+    Tab 2 content
+  </TabsContent>
+</Tabs>
+```
+
+## Steps
+
+**Παράδειγμα:**
+
+<Steps>
+  <Step>Βήμα 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Βήμα 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+
+**Κώδικας:**
+
+````jsx
+<Steps>
+  <Step>Step 1:</Step>
+
+  ```bash
+  npx something
+  ```
+
+  <Step>Step 2:</Step>
+
+  ```bash
+  npx something-else
+  ```
+</Steps>
+````

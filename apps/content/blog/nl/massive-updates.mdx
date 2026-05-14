@@ -1,0 +1,108 @@
+---
+title: "Grote updates aan de horizon voor Appbox! 🚀"
+date: 2025-04-08 11:58:00
+excerpt: Nieuwe website, open-source initiatief, containerized apps, onze eigen netwerkinfrastructuur en meer spannende ontwikkelingen die naar Appbox komen!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Een nieuw tijdperk begint bij Appbox
+
+Na maanden achter de schermen werken, late avonden maken en veel te veel koffie drinken, ben ik enthousiast om eindelijk te laten zien wat we hebben gebouwd. Dit is niet zomaar nog een update. Dit is Appbox opnieuw opbouwen vanaf de basis.
+
+## Welkom in ons nieuwe digitale thuis
+
+Je kijkt naar onze gloednieuwe website! We hebben eindelijk afscheid genomen van onze oude WordPress-setup. Alles is opnieuw gebouwd met moderne technologie die sneller en veiliger is en echt goed schaalt.
+
+Deze nieuwe site wordt de thuisbasis voor goede documentatie, regelmatige blogposts (zoals deze) en uiteindelijk de frontend voor ons nieuwe platform. Het design is niet alleen schoner - het is ook echt functioneel en maakt dingen vinden veel makkelijker.
+
+Onder de motorkap gebruiken we Next.js met ContentLayer, wat ons zeer snelle prestaties en een veel betere ontwikkelervaring geeft. De site ondersteunt meerdere talen, verwerkt SEO automatisch, heeft RSS-feeds in zowel XML als JSON, en bevat dark mode omdat niemand om 2 uur 's nachts met felwitte schermen zou moeten omgaan.
+
+## We gaan open source!
+
+We gaan ook open source! De website waarop je dit leest? De code is openbaar en iedereen kan eraan bijdragen.
+
+Dit is enorm voor ons. We hebben altijd geprobeerd transparant te zijn, maar hiermee voegen we de daad bij het woord en bouwen we echt met de community in plaats van alleen voor hen. Als je developer bent en ooit hebt willen helpen de tools die je gebruikt vorm te geven, dan kan dat nu. Bekijk onze GitHub-repo voor contributierichtlijnen en alles wat je nodig hebt om te beginnen.
+
+## Maak kennis met Appbox v2
+
+De nieuwe website is pas het begin. We werken aan Appbox v2, de grootste update die we ooit hebben gedaan.
+
+Container deployment is altijd ons ding geweest, maar v2 gaat verder met waar iedereen om heeft gevraagd: volledige VPS-ondersteuning. De VPS-apps geven je complete roottoegang zonder beperkingen. Als je volledige controle over je omgeving nodig hebt, is dit waar je op hebt gewacht.
+
+We hebben het al werkend op een server en het draait erg goed. Je zult VPS-apps kunnen installeren net als elke andere app uit de app store. Hierdoor kun je apps installeren die nu niet mogelijk zijn, zoals Docker, Snap en Tailscale. Het vereist een OS-update op onze servers naar Debian 13, omdat we enkele nieuwe virtualisatiefuncties gebruiken om het veiliger te maken en de prestaties te verhogen. We moeten die update uitrollen voordat we de functie kunnen lanceren, maar daarover komen binnenkort meer updates.
+
+Dit combineert onze bewezen containerinfrastructuur met echte VPS-flexibiliteit, zodat je het beste van beide werelden krijgt.
+
+## Onze eigen netwerkinfrastructuur bouwen
+
+Dit is het echt grote nieuws: we bouwen ons eigen netwerk.
+
+Niet alleen meer servers toevoegen of bandwidth upgraden. We hebben ons eigen Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) en ons eigen IP-blok (79.140.195.0/24) om een netwerk te bouwen dat volledig van ons is. In feite worden we onze eigen ISP met onze eigen officiële internetidentiteit en adresruimte, zodat we kunnen controleren hoe je data over het internet reist [1].
+
+Wat betekent dit voor jou? We kunnen alles controleren, specifiek optimaliseren voor Appbox-gebruikers, en betrouwbaarheid en prestaties leveren die eerder niet mogelijk waren.
+
+## Peering met AMS-IX
+
+Naast onze netwerkontwikkeling beginnen we, zodra de netwerksetup klaar is, met peering met AMS-IX voor 100G connectiviteit. Dit geeft ons directe toegang tot een van de grootste internet exchanges ter wereld, wat lagere latency en betere snelheden voor iedereen betekent. Zie het als een directe snelweg naar grote internetproviders in plaats van binnendoor rijden [2].
+
+Dit soort connectiviteit is normaal gesproken alleen beschikbaar voor veel grotere bedrijven, maar wij willen enterprise-grade prestaties bieden, ongeacht welk plan je gebruikt.
+
+We hebben nu de overeenkomst voor onze hardwareaankoop rond, dus we zijn klaar om te gaan. We ontvangen de nieuwe hardware uiterlijk in oktober, mogelijk al in september. Dat betekent dat we kort daarna op het nieuwe netwerk live zouden moeten zijn.
+
+## Prijsaanpassingen
+
+Dit is het deel dat we echt liever niet hadden geschreven. Infrastructuur als deze bouwen is duur, en hoewel we het grootste deel van de kosten zelf dragen, moeten we helaas een kleine aanpassing doen aan onze prijzen voor zowel nieuwe als bestaande klanten.
+
+Ik wil hier eerlijk over zijn. De nieuwe prijzen staan al live op de site, en we nemen binnenkort contact op met bestaande klanten met details over wat dit voor hen betekent.
+
+We weten hoe krap iedereen het op dit moment heeft, en dit was eerlijk gezegd een van de moeilijkste beslissingen die we hebben moeten nemen. We hebben de verhogingen zo klein gehouden als we maar konden - we dekken in feite alles behalve het absolute minimum dat we nodig hebben om dit te laten werken.
+
+We gaan deze prijsverhoging echter meer dan de moeite waard maken. Je zult het verschil in prestaties en betrouwbaarheid echt merken. Bovendien betekent dit dat we ons netwerk kunnen blijven uitbreiden en meer peering kunnen toevoegen, dus vanaf hier wordt het alleen maar beter.
+
+We hebben deze bijgewerkte prijzen 3 maanden geleden voor nieuwe klanten gelanceerd en de feedback is goed geweest, dus we denken dat we een goede balans hebben gevonden tussen betaalbaar blijven en de verbeteringen financieren die jullie verdienen. We zijn nog steeds zeer competitief. Ons populaire NG-4500-plan stijgt bijvoorbeeld slechts met €2.08 per maand, wat nog steeds veel minder is dan vergelijkbare plannen van concurrenten.
+
+Voor bestaande klanten betaal je alleen het verschil tussen oude en nieuwe prijzen. Als je promotiekortingen hebt, blijven die bovenop de nieuwe basisprijs gelden. We waarderen je loyaliteit, zeker in tijden als deze.
+
+Onze kortingsstructuur blijft hetzelfde:
+- 5% korting bij kwartaalbetalingen
+- 10% korting bij betalingen voor 6 maanden
+- 15% korting bij jaarlijkse betalingen
+
+Als je automatische betalingen hebt ingesteld, vindt de aanpassing plaats bij je volgende factureringscyclus nadat je de e-mail hebt ontvangen. Je hoeft niets te doen.
+
+## Meer opslag!
+
+Het gaat niet alleen om meer betalen. We verhogen ook de opslag op ons laagste plan van 3TB naar 3.5TB. Dat is een stijging van 16%, waardoor ons instapplan ondanks de prijswijziging een nog betere deal wordt.
+
+## Wat volgt?
+
+Dit is pas het begin van wat eraan komt voor Appbox. In de komende weken en maanden zie je regelmatige updates terwijl we nieuwe functies uitrollen, bestaande verbeteren en blijven bouwen aan de infrastructuur voor de volgende generatie apphosting.
+
+We zijn van plan om in september/oktober te beginnen met het testen van onze nieuwe netwerkinfrastructuur, en we houden je op de hoogte terwijl we voortgang boeken.
+
+Onze roadmap bevat:
+- VPS-apps zonder beperkingen (zoals Docker, Snap en Tailscale)
+- Betere documentatie die echt alles behandelt
+- Een community showcase voor coole dingen die mensen met Appbox bouwen
+- Regelmatige technische blogposts over onze infrastructuur
+- Nieuwe containerized apps voor specifieke use cases
+- Betere monitoring- en analytics-tools
+- Verbeterde securityfuncties in alle plannen
+
+Bedankt dat jullie bij ons blijven. Zonder onze community zou dit allemaal niet mogelijk zijn.
+
+Binnenkort meer updates.
+
+---
+
+*Welke functies of verbeteringen zou jij in de nieuwe Appbox willen zien? Stuur ons een bericht via support@appbox.co.*
+
+---
+
+**Referenties:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

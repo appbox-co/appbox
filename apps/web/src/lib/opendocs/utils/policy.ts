@@ -1,4 +1,5 @@
 import { allPolicies } from "contentlayer/generated"
+import { routing } from "@/i18n/routing"
 import { LocaleOptions } from "../types/i18n"
 
 interface GetPolicyFromParamsProps {
@@ -16,13 +17,19 @@ export async function getPolicyFromParams({
 
   const slugWithLocale = locale ? `${locale}/${slug}` : slug
 
-  const policy = allPolicies.find(
+  let policy = allPolicies.find(
     (policy) => policy.slugAsParams === slugWithLocale
   )
 
   if (!policy) {
-    return null
+    const defaultSlugWithLocale = [routing.defaultLocale, slug]
+      .filter(Boolean)
+      .join("/")
+
+    policy = allPolicies.find(
+      (policy) => policy.slugAsParams === defaultSlugWithLocale
+    )
   }
 
-  return policy
+  return policy || null
 }

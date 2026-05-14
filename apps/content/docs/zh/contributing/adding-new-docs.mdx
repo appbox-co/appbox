@@ -1,0 +1,64 @@
+---
+title: 添加新文档
+description: 向你的文档站点和博客添加新文档。
+sort: 2
+---
+
+# 用于文档
+
+1. 在 `apps/content/docs/[language]` 文件夹中创建新的 `.mdx` 文件，并写入你的文档内容。
+2. 将该文档添加到站点导航菜单。
+    为此，请在 `src/config/docs.ts` 文件的 `sidebarNav` 属性中按现有项目的模式添加一个新项目，并填入所需信息。这样做后，该文档也会被添加到搜索命令面板中。
+
+## MDX 文档设置
+
+MDX 文档存储在 `apps/content/docs/[language]` 和 `apps/content/blog/[language]` 文件夹中。每个文档都是一个 MDX 文件，文件头包含元数据，例如标题和描述。下面是一个文档头示例：
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+支持以下元数据字段：
+
+- `title`（必填）：文档标题。
+- `description`（必填）：文档的简短描述。
+- `sort`（可选）：决定文档在导航中顺序的数字。`sort` 值较低的文档会优先显示。如果未提供，则按标题字母顺序排序。
+- `links`（可选）：指向相关文档、API 参考、源代码等的链接。
+- `toc`（可选）：是否显示目录。默认为 `true`。
+
+要向文档添加新的元数据，可以在文件头中添加新键。例如，你可以添加 `author` 键来表示文档作者：
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+但添加自定义元数据时，还需要更新项目根目录下的 `contentlayer.config.ts` 文件，并在 `Doc` 或 `Blog` 常量的 `fields` 属性中添加相应字段。
+之后，你需要在文档模板中显示新信息。为此，需要更新 `src/app/[locale]/docs/[[...slug]]/page.tsx` 文件，或 `src/app/[locale]/blog/[[...slug]]/page.tsx`，或其中的某个子组件。
+
+## 重建 Contentlayer
+
+当你更改文档内容、添加新文档或修改 `contentlayer.config.ts` 文件时，需要重建 contentlayer 缓存，才能在开发过程中让更改生效。运行：
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+此命令会重新生成应用所需的内容类型和数据。每当你进行以下操作时，都需要运行此命令：
+
+- 向 `contentlayer.config.ts` 文件添加新的元数据字段
+- 在开发服务器未运行时添加或修改 MDX 内容
+- 更改内容组织结构
+
+构建生产版本时会自动运行此命令，但在开发过程中如果你对内容做了结构性更改，则需要手动运行。
+
+

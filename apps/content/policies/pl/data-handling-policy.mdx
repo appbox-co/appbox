@@ -1,0 +1,397 @@
+---
+title: "Polityka obsługi danych"
+description: "Jak zarządzamy Twoimi danymi i je chronimy"
+---
+
+W Appbox zbieramy i przechowujemy wyłącznie minimalną ilość informacji niezbędną do utrzymania naszych rejestrów i świadczenia usług. Zespół Appbox jest przeszkolony w obsłudze Twoich danych z najwyższą dbałością o prywatność i bezpieczeństwo oraz przestrzega ścisłych protokołów, w tym korzystania z silnych danych uwierzytelniających i uwierzytelniania wieloskładnikowego. Całe przetwarzanie płatności jest obsługiwane wyłącznie przez naszych procesorów płatności, a Appbox nie przechowuje żadnych Twoich informacji finansowych poza rejestrami płatności i odpowiadającymi im identyfikatorami transakcji.
+
+## Email
+
+- **Zastosowania**
+  - Służy jako login do Appbox Client Area i Appbox Control Panel
+  - Punkt kontaktowy dla ogłoszeń dotyczących usług Appbox
+  - Punkt kontaktowy dla zapytań w Appbox Ticket System
+- **Zbieranie**
+  - Podany przez użytkownika podczas rejestracji
+- **Przechowywanie**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Zespół Appbox
+    - Służy do kontaktowania się z użytkownikiem w sprawie wsparcia lub ogłoszeń usługowych
+- **Retencja**
+  - Bezterminowa
+- **Więcej informacji**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Zastosowania**
+  - Identyfikuje użytkownika w Appbox Ticket System
+  - Służy jako nazwa slotu Appbox użytkownika
+  - Jest rejestrowany jako lokalny użytkownik na serwerze, na którym wdrożono slot użytkownika, pokazując wszelkie uruchomione procesy użytkownika
+  - Służy jako nazwa użytkownika dla zainstalowanych aplikacji
+- **Zbieranie**
+  - Podany przez użytkownika podczas rejestracji
+- **Przechowywanie**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Zespół Appbox
+    - Wymagane przy zapytaniach do wsparcia
+    - Wymagane do badania problemów serwera przez wyszukiwanie aplikacji o wysokim zużyciu zasobów, źródeł niestabilności serwera lub nieautoryzowanych aplikacji
+- **Retencja**
+  - Bezterminowa
+- **Więcej informacji**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Zastosowania**
+  - Używany do obliczania obowiązujących podatków na podstawie kraju wybranego przez użytkownika
+- **Zbieranie**
+  - Podany przez użytkownika podczas rejestracji
+- **Przechowywanie**
+  - WHMCS = Cleartext
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Zespół Appbox
+- **Retencja**
+  - Bezterminowa
+- **Więcej informacji**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Zastosowania**
+  - Służy jako hasło użytkownika do Appbox Client Area
+- **Zbieranie**
+  - Podane przez użytkownika podczas rejestracji w Appbox Client Area
+- **Przechowywanie**
+  - WHMCS = Encrypted
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Ograniczony dostęp zespołu Appbox
+    - Zespół Appbox nie może zobaczyć hasła użytkownika, ponieważ jest ono hashowane, ale może zresetować Twoje hasło po weryfikacji
+- **Retencja**
+  - Bezterminowa
+- **Więcej informacji**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Zdecydowanie zalecamy włączenie uwierzytelniania dwuskładnikowego na [stronie bezpieczeństwa konta](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel Password
+
+- **Zastosowania**
+  - Służy jako hasło użytkownika w Appbox Control Panel do dostępu do jego slotu
+- **Zbieranie**
+  - Podane przez użytkownika po wdrożeniu jego slotu
+- **Przechowywanie**
+  - Appbox API = Encrypted
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Ograniczony dostęp zespołu Appbox
+    - Zespół Appbox nie może zobaczyć hasła użytkownika, ponieważ jest ono hashowane, ale może zresetować Twoje hasło po weryfikacji
+- **Retencja**
+  - Bezterminowa
+- **Więcej informacji**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Zdecydowanie zalecamy włączenie uwierzytelniania dwuskładnikowego na [stronie bezpieczeństwa konta](https://billing.appbox.co/user/security)
+
+### Application Passwords
+
+- **Zastosowania**
+  - Służą jako hasła do zainstalowanych aplikacji użytkownika
+- **Zbieranie**
+  - Podane przez użytkownika po wdrożeniu jego slotu
+- **Przechowywanie**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Zespół Appbox
+    - Wymagane przy zapytaniach wsparcia specyficznych dla aplikacji, za zgodą użytkownika
+- **Retencja**
+  - Do momentu odinstalowania aplikacji przez użytkownika
+- **Więcej informacji**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Zdecydowanie zalecamy włączenie uwierzytelniania dwuskładnikowego na [stronie bezpieczeństwa konta](https://billing.appbox.co/user/security)
+
+## Payment Processing
+
+### PayPal
+
+- **Zastosowania**
+  - Służy jako jedna z bramek płatności Appbox
+- **Zbieranie**
+  - Przetwarzanie płatności odbywa się w całości przez PayPal. Jedynymi danymi zapisanymi w WHMCS na koncie użytkownika są **PayPal Transaction ID**
+- **Przechowywanie**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Dostęp i powody dostępu**
+  - Appbox Sales Team
+    - Appbox Sales Team może weryfikować informacje użytkownika w PayPal jako część naszego procesu sprzedaży
+- **Retencja**
+  - Bezterminowa
+
+### Stripe
+
+- **Zastosowania**
+  - Służy jako jedna z bramek płatności Appbox
+- **Zbieranie**
+  - Przetwarzanie płatności odbywa się w całości przez Stripe. Jedynymi danymi zapisanymi w WHMCS na koncie użytkownika są **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Przechowywanie**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Dostęp i powody dostępu**
+  - Appbox Sales Team
+    - Appbox Sales Team może weryfikować informacje użytkownika w Stripe jako część naszego procesu sprzedaży
+- **Retencja**
+  - Bezterminowa
+
+### CoinGate
+
+- **Zastosowania**
+  - Służy jako jedna z bramek płatności Appbox dla transakcji kryptowalutowych
+- **Zbieranie**
+  - Przetwarzanie płatności odbywa się w całości przez CoinGate. Jedynymi danymi zapisanymi w WHMCS są **CoinGate Transaction ID**
+- **Przechowywanie**
+  - WHMCS = Cleartext (Transaction ID)
+- **Dostęp i powody dostępu**
+  - Appbox Sales Team
+    - Appbox Sales Team może weryfikować informacje użytkownika w CoinGate jako część naszego procesu sprzedaży
+- **Retencja**
+  - Bezterminowa
+
+*Uwaga: CoinGate sam przechowuje identyfikator transakcji blockchain oraz adres blockchain nadawcy jako część swojej usługi. Informacje te nie są przechowywane przez Appbox.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Zastosowania**
+  - Używane do monitorowania kondycji i wykorzystania zasobów serwerów
+- **Zbieranie**
+  - Generowane po wdrożeniu slotu użytkownika
+- **Przechowywanie**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Dostęp i powody dostępu**
+  - Użytkownik
+    - Metryki serwera można przeglądać przy użyciu różnych narzędzi Linux zainstalowanych w Twoim slocie. Widoczne są następujące główne metryki:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Twoje uruchomione procesy
+      - Procesy uruchamiane przez innych użytkowników na tym samym serwerze nie są dla Ciebie dostępne
+      - Metryki Input/Output
+      - Przestrzeń dyskowa
+      - Quota disk space (przydzielona przestrzeń dyskowa)
+      - Fizyczna przestrzeń dyskowa
+  - Appbox Team
+    - Oprócz powyższych metryk zespół Appbox używa Posthog do szybkiej agregacji wszystkich metryk ze wszystkich serwerów i ostrzegania zespołu o błędach
+    - Metryki serwera są używane przy zapytaniach wsparcia i do badania nadużyć zasobów
+- **Retencja**
+  - Bezterminowa
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Zastosowania**
+  - Wszelkie nieprawidłowe próby dostępu są logowane w Appbox API, które ogranicza użytkownikowi możliwość logowania do Control Panel po określonej liczbie prób przez wskazany okres. Obejmuje to:
+    - Username, zgodnie z wpisem użytkownika
+    - Adres IP
+    - Liczba prób
+    - Ostatnia data próby
+- **Zbieranie**
+  - Zbierane, gdy użytkownik błędnie wprowadzi dane uwierzytelniające
+- **Przechowywanie**
+  - Appbox API = Cleartext
+- **Dostęp i powody dostępu**
+  - Appbox Team
+    - Używane do identyfikacji prób brute-force
+    - Użytkownicy mogą poprosić o zdjęcie timeoutu i usunięcie próby dostępu, na żądanie i po weryfikacji przez system Ticket
+- **Retencja**
+  - 24 godziny lub na żądanie użytkownika
+
+#### SSH Login Logs
+
+- **Zastosowania**
+  - Rejestruje próby logowania i udane logowania do SSH w aplikacjach zainstalowanych przez użytkownika, takich jak Ubuntu lub Debian
+- **Zbieranie**
+  - Generowane automatycznie przez serwer SSH, gdy występują próby logowania
+- **Przechowywanie**
+  - Application container = Cleartext (zwykle w `/var/log/auth.log` lub podobnym)
+- **Dostęp i powody dostępu**
+  - Użytkownik
+    - Ponieważ te logi są przechowywane w aplikacjach, w których użytkownicy mają dostęp root (sudo), użytkownicy mają pełną kontrolę nad tymi logami i dostęp do nich
+    - Użytkownicy mogą przeglądać, modyfikować lub usuwać te logi według potrzeb
+  - Zespół Appbox
+    - Dostęp jest dostępny wyłącznie za zgodą użytkownika podczas rozwiązywania problemów przez wsparcie
+- **Retencja**
+  - Zarządzana przez użytkownika, ponieważ ma dostęp root do kontenera
+  - Domyślne polityki rotacji logów mają zastosowanie, chyba że zostaną zmodyfikowane przez użytkownika
+
+### System Generated Logs
+
+- **Zastosowania**
+  - Logi generowane dla całego serwera, używane do identyfikacji problemów na serwerach
+- **Zbieranie**
+  - Generowane przez system operacyjny serwerów
+- **Przechowywanie**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Dostęp i powody dostępu**
+  - Ograniczony dostęp zespołu Appbox
+    - Używane do identyfikacji problemów na konkretnych serwerach
+    - Logi są agregowane przez Posthog, który ostrzega zespół o błędach
+- **Retencja**
+  - Bezterminowa
+
+### Logs Generated by Installed Applications
+
+- **Zastosowania**
+  - Logi generowane przez zainstalowane aplikacje, używane do identyfikacji problemów w slocie użytkownika
+- **Zbieranie**
+  - Generowane przez zainstalowane aplikacje użytkownika
+- **Przechowywanie**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Zespół Appbox
+    - Wymagane przy zapytaniach wsparcia specyficznych dla aplikacji, za zgodą użytkownika
+- **Retencja**
+  - Do momentu odinstalowania lub usunięcia aplikacji przez użytkownika
+
+### User's bash History
+
+- **Zastosowania**
+  - Rejestruje wszystkie polecenia wpisane przez użytkownika w powłoce slotu, znajdujące się w `$HOME/.bash_history`
+- **Zbieranie**
+  - Każde polecenie wpisane w powłoce jest rejestrowane
+- **Przechowywanie**
+  - Appbox Servers = Cleartext
+- **Dostęp i powody dostępu**
+  - Użytkownik
+    - Ponieważ plik historii bash jest przechowywany w katalogu domowym użytkownika, użytkownicy mają pełną kontrolę nad tym plikiem
+    - Użytkownicy mogą przeglądać, modyfikować, czyścić lub usuwać ten plik według potrzeb (używając poleceń takich jak `history -c` lub edytując/usuwając plik)
+  - Zespół Appbox
+    - Używane przy ogólnych lub specyficznych dla aplikacji zapytaniach, takich jak weryfikacja, czy polecenia wpisane przez użytkownika są poprawne, ale wyłącznie za zgodą użytkownika
+    - Używane do sprawdzania możliwych włamań lub nadużyć serwera, ale tylko wtedy, gdy jest to konieczne dla dochodzeń bezpieczeństwa
+- **Retencja**
+  - Zarządzana przez użytkownika, który może wyczyścić historię w dowolnym momencie
+  - Domyślnie historia bash jest przechowywana bezterminowo, dopóki użytkownik jej nie usunie
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Zastosowania**
+  - Istotne pliki potrzebne do prawidłowego działania zainstalowanych aplikacji
+- **Zbieranie**
+  - Instalowane przez użytkownika w jego slocie
+- **Przechowywanie**
+  - Appbox Servers = Depends on the Application
+- **Dostęp i powody dostępu**
+  - Użytkownik
+  - Zespół Appbox
+    - Używane przy zapytaniach wsparcia specyficznych dla aplikacji, za zgodą użytkownika
+- **Retencja**
+  - Bezterminowa, dopóki użytkownik ich nie usunie
+
+#### User Data
+
+- **Zastosowania**
+  - Dane utworzone przez użytkownika i/lub aplikacje użytkownika oraz przechowywane w slocie użytkownika
+- **Zbieranie**
+  - Utworzone przez użytkownika i/lub aplikacje użytkownika
+- **Przechowywanie**
+  - Appbox Servers = Cleartext
+- **Dostęp i powody dostępu**
+  - Użytkownik
+    - Pliki użytkownika są przechowywane w folderach domowych na serwerach Appbox i są izolowane od innych użytkowników. Tylko użytkownik może mieć do nich dostęp
+  - Zespół Appbox
+    - Mogą być dostępne przy zapytaniach wsparcia, za zgodą użytkownika
+- **Retencja**
+  - Bezterminowa, dopóki użytkownik ich nie usunie
+    - W przypadku zasadnych powiadomień DMCA o usunięciu poinformujemy użytkownika i poprosimy o usunięcie treści w ciągu 24 godzin
+- **Więcej informacji**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Compliance
+
+Zgodnie z UK Online Safety Act 2023 Appbox wdraża konkretne praktyki obsługi danych w celu ochrony użytkowników i spełnienia wymogów regulacyjnych:
+
+### Content Safety Monitoring
+
+- **Zastosowania**
+  - Ocena i ograniczanie ryzyka dotyczącego nielegalnych i szkodliwych treści
+  - Moderacja zgłoszonych treści
+  - Zapobieganie dystrybucji nielegalnych treści
+- **Zbieranie**
+  - Generowane, gdy treść zostaje zgłoszona lub oznaczona
+  - Wartości hash treści dla znanych nielegalnych materiałów
+- **Przechowywanie**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Dostęp i powody dostępu**
+  - Appbox Compliance Team
+    - Do przeglądu zgłoszonych treści i podejmowania odpowiednich działań
+    - Do koordynacji z organami UK, gdy jest to prawnie wymagane
+  - Organy regulacyjne UK (gdy wymagane przez prawo)
+    - Do monitorowania zgodności z Online Safety Act
+    - Do badania poważnych nielegalnych treści
+- **Retencja**
+  - Dane zgłoszenia: 2 lata po rozwiązaniu
+  - Wartości hash treści: Bezterminowo (w celu zapobiegania ponownej dystrybucji)
+
+### Risk Assessment Data
+
+- **Zastosowania**
+  - Przeprowadzanie wymaganych ocen ryzyka dotyczących nielegalnych treści i treści szkodliwych dla dzieci
+  - Wdrażanie proporcjonalnych środków bezpieczeństwa
+  - Wykazywanie zgodności organom regulacyjnym
+- **Zbieranie**
+  - Generowane przez regularne oceny ryzyka platformy
+  - Zagregowane dane użytkowania w celu identyfikacji potencjalnych wzorców ryzyka
+- **Przechowywanie**
+  - Appbox Compliance Systems = Protected
+- **Dostęp i powody dostępu**
+  - Appbox Compliance Team
+    - Do przeprowadzania i aktualizowania ocen ryzyka
+    - Do wdrażania środków bezpieczeństwa
+  - Organy regulacyjne UK (gdy wymagane przez prawo)
+    - Do weryfikacji zgodności z obowiązkami oceny ryzyka
+- **Retencja**
+  - 3 lata (w celu wykazania ciągłej zgodności)
+
+### Content Reporting System
+
+- **Zastosowania**
+  - Pozwala użytkownikom zgłaszać nielegalne lub szkodliwe treści
+  - Śledzi status zgłoszeń i podjętych działań
+- **Zbieranie**
+  - Szczegóły zgłoszenia podane przez zgłaszających użytkowników
+  - Informacje o zgłoszonej treści
+  - Działania podjęte w związku ze zgłoszeniami
+- **Przechowywanie**
+  - Appbox API = Encrypted
+- **Dostęp i powody dostępu**
+  - Zgłaszający użytkownik (ograniczone do własnych zgłoszeń)
+  - Użytkownik, którego treść zgłoszono (ograniczone informacje)
+  - Appbox Compliance Team
+    - Do badania i rozwiązywania zgłoszeń
+  - Organy regulacyjne UK (gdy wymagane przez prawo)
+    - Do badania poważnych zgłoszeń nielegalnych treści
+- **Retencja**
+  - 2 lata po rozwiązaniu

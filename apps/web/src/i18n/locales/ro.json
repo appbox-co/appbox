@@ -1,0 +1,1493 @@
+{
+  "_locale": "ro",
+  "site": {
+    "heading": "Lansează aplicații în <span>secunde</span>",
+    "subheading": "Găzduiește {flipwords} cu un singur clic",
+    "description": "Evită configurarea complicată a serverelor. Alege dintre peste 60 de aplicații gata de lansare, apasă pe instalare și ești online în câteva secunde. Găzduire puternică, fără bătăi de cap.",
+    "meta_title": "Appbox - Lansează aplicații în secunde | Găzduire de aplicații cu un singur clic",
+    "flipwords": [
+      "site-uri web",
+      "baze de date",
+      "servere",
+      "transferuri",
+      "instrumente",
+      "chat",
+      "stocare",
+      "analiză",
+      "monitorizare",
+      "pipeline-uri",
+      "rețele",
+      "backupuri",
+      "proiecte",
+      "documentație",
+      "testare"
+    ],
+    "announcement": "Citește toate articolele din Săptămâna lansării",
+    "announcement_tag": "Săptămâna lansării",
+    "changelog": "Jurnal de modificări",
+    "buttons": {
+      "get_started": "Începe",
+      "browse_apps": "Răsfoiește aplicațiile",
+      "toggle_menu": "Comută meniul",
+      "toggle_language": "Comută limba"
+    },
+    "words": {
+      "menu": "Meniu",
+      "docs": "Documentație",
+      "blog": "Blog",
+      "home": "Acasă",
+      "legal": "Legal",
+      "terms_of_service": "Termeni de utilizare",
+      "service_level_agreement": "Acord privind nivelul serviciilor",
+      "privacy_data_handling": "Confidențialitate și gestionarea datelor",
+      "global_privacy_practices": "Practici globale de confidențialitate",
+      "incident_response_security": "Răspuns la incidente și securitate",
+      "view_all_policies": "Vezi toate politicile",
+      "documentation_new": "Documentație (nouă)",
+      "documentation_old": "Documentație (veche)",
+      "social": "Social"
+    },
+    "featured_cards": {
+      "nextjs": {
+        "description": "Construit cu Next.js folosind app router."
+      },
+      "shadcn": {
+        "description": "Construit pe baza Shadcn (site/components)."
+      },
+      "tailwind": {
+        "description": "Stilizat cu Tailwind CSS."
+      },
+      "i18n": {
+        "description": "Suport pentru internaționalizare cu next-intl."
+      },
+      "more": {
+        "title": "și multe altele!",
+        "description": "Multe alte funcții utile, precum documente și articole de blog folosind MDX, mod întunecat și mod luminos, paletă de comenzi pentru căutare, sitemap internaționalizat și altele..."
+      }
+    },
+    "footer": {
+      "copyright": "Copyright © {year} Appbox. Toate drepturile rezervate."
+    },
+    "search": {
+      "search": "Caută",
+      "no_results_found": "Nu s-au găsit rezultate",
+      "search_documentation": "Caută în documentație",
+      "type_command_or_search": "Tastează o comandă sau caută"
+    },
+    "themes": {
+      "theme": "Temă",
+      "dark": "Întunecată",
+      "light": "Luminoasă",
+      "system": "Sistem"
+    },
+    "apps_section": {
+      "title": "Colecție masivă de aplicații gata de lansare",
+      "headline_1": "Aplicații gata de lansare.",
+      "headline_2": "O colecție masivă.",
+      "description": "Găzduiește orice, de la baze de date și servere media până la instrumente de dezvoltare și platforme de comunicare. Lansează software de nivel enterprise cu doar câteva clicuri."
+    },
+    "dashboard_promo": {
+      "headline_1": "Noul dashboard.",
+      "headline_2": "Construit pentru tine.",
+      "description": "Un panou de control complet redesenat, cu un dashboard unificat, magazin de aplicații integrat și autentificare cu doi factori încorporată. Mai rapid de navigat, mai ușor de înțeles și pregătit pentru ce urmează.",
+      "cta": "Citește anunțurile complete",
+      "features": {
+        "dashboard": {
+          "title": "Centru de control.",
+          "description": "Actualizări de blog, carduri de servicii, notificări și cele mai noi aplicații, toate într-o singură vedere operațională."
+        },
+        "appstore": {
+          "title": "Magazin de aplicații.",
+          "description": "Navigare mai clară, pagini de detalii mai bune și un drum mai scurt de la descoperire la instalare."
+        },
+        "boost": {
+          "title": "App Boost.",
+          "description": "Oferă aplicațiilor individuale mai mult CPU și RAM folosind sloturile disponibile. Nu este necesară trecerea la un plan superior."
+        }
+      }
+    },
+    "vps_launch_promo": {
+      "headline_1": "Servere private virtuale.",
+      "headline_2": "Linux și Windows.",
+      "description": "Mașini virtuale KVM complete, cu acces root, consolă web integrată și posibilitatea de a alege Linux sau Windows 11 Pro. Rulează Docker, snaps, flatpaks sau orice software Windows de care ai nevoie.",
+      "cta": "Citește articolele din Săptămâna lansării",
+      "features": {
+        "console": {
+          "title": "Consolă web.",
+          "description": "Un terminal în browser integrat în dashboard. Nu vei rămâne niciodată blocat pe dinafară."
+        },
+        "webtop": {
+          "title": "Selkies Desktop.",
+          "description": "Un desktop Ubuntu complet în browser, cu audio, microfon și aplicații reale precum VS Code și Discord."
+        },
+        "distros": {
+          "title": "Șase distribuții Linux.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux și AlmaLinux. Alege-o pe cea pe care o cunoști."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "O VM Windows completă, cu RDP, datele tale Appbox pe unitatea Z: și acces de administrator."
+        }
+      }
+    },
+    "openclaw_promo": {
+      "eyebrow": "Acum disponibil pe Appbox",
+      "headline_1": "Asistentul tău AI.",
+      "headline_2": "Rulează pe serverul tău.",
+      "description": "OpenClaw este un asistent AI open-source care rulează pe Appbox-ul tău și este disponibil pe toate planurile. Comunică prin aplicațiile de chat pe care le folosești deja, vede fișierele și bazele tale de date și se poate autentifica în celelalte aplicații ale tale pentru a rezolva sarcini.",
+      "card_title": "OpenClaw funcționează în întregul tău Appbox.",
+      "card_description": "Poate citi date partajate ale aplicațiilor, poate folosi un browser și CLI, poate interoga baze de date și poate răspunde prin aplicațiile de chat pe care le folosești deja.",
+      "image_alt": "Sesiune de chat OpenClaw în dashboardul web",
+      "cta": "Citește anunțul",
+      "capabilities": {
+        "chat": {
+          "title": "Orice aplicație de chat.",
+          "description": "WhatsApp, Telegram, Discord, Slack, Signal, iMessage. Vorbește cu el acolo unde ești deja."
+        },
+        "filesystem": {
+          "title": "Sistem de fișiere partajat.",
+          "description": "Acces direct la datele celorlalte aplicații și la stocarea generală Appbox. Nu sunt necesare API-uri."
+        },
+        "browser": {
+          "title": "Browser și CLI.",
+          "description": "Un browser headless și toți clienții obișnuiți pentru baze de date sunt integrați. Se poate autentifica în aplicațiile tale pentru tine."
+        },
+        "tools": {
+          "title": "Peste 70 de abilități.",
+          "description": "Preîncărcat cu peste 70 de abilități pentru WordPress, GitLab, Nextcloud, MariaDB și altele. Instalează altele noi din ClawHub."
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "Simplu ca un clic.",
+      "headline_2": "Fără configurare.",
+      "description": "Appbox reduce instalările complexe de aplicații open-source la esențial: introdu un nume de utilizator și o parolă, apasă pe instalare, iar aplicația este configurată pentru tine.",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "Instalează în câteva secunde",
+      "description": "Alege-ți Appbox-ul, completează câteva câmpuri, iar {appName} este online.",
+      "dialog_title": "Instalează {appName}",
+      "requires_slots": "{count, plural, one {Necesită # slot de aplicație} other {Necesită # sloturi de aplicații}}",
+      "preview_badge": "Previzualizare",
+      "demo_note": "Această demonstrație arată cum arată instalatorul după ce ai un Appbox.",
+      "select_appbox": "Selectează Appbox",
+      "slots_free": "({count} sloturi libere)",
+      "ready_note": "Ești gata să instalezi? Mai întâi ai nevoie de un Appbox activ.",
+      "cancel": "Anulează",
+      "install": "Instalează",
+      "footer_note": "Aceasta este o previzualizare a formularului de instalare. Alege un plan pentru a-ți crea Appbox-ul și a lansa aplicația pe bune.",
+      "domain": {
+        "recordType": "Tip",
+        "recordHost": "Gazdă / Nume",
+        "recordValue": "Valoare (IP)",
+        "needHelp": "Ai nevoie de ajutor pentru adăugarea acestei înregistrări?"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "Pasul 1",
+          "title": "Selectează-ți Appbox-ul",
+          "body": "Instalatorul îți va selecta automat Appbox-ul dacă ai doar unul și afișează doar Appbox-urile cu suficiente sloturi libere."
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "Trage pentru mai multă putere",
+          "body": "Fiecare slot de aplicație suplimentar adaugă cu 10% mai mult CPU și RAM acestei aplicații, iar previzualizarea se actualizează instantaneu.",
+          "link": "Cum funcționează boostul per aplicație"
+        },
+        "resource_preview": {
+          "eyebrow": "Previzualizare",
+          "title": "Verifică resursele în timp real",
+          "body": "Vezi multiplicatorul final, costul în sloturi, RAM-ul și CPU-ul înainte de instalare. Fiecare slot de boost adăugat crește resursele cu 10%."
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "Domenii",
+            "title": "Domenii gestionate sau personalizate",
+            "body": "Folosește instantaneu un domeniu gestionat de Appbox sau apasă pe Domeniu personalizat pentru a-l aduce pe al tău."
+          },
+          "custom": {
+            "eyebrow": "DNS personalizat",
+            "title": "Adu-ți propriul domeniu",
+            "body": "Domeniul personalizat afișează selectorul domeniului de bază, subdomeniul fix și lista de verificare DNS înainte de instalare."
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "Îndrumare integrată",
+          "body": "Previzualizarea arată înregistrarea A exactă și starea verificării înainte de instalare."
+        },
+        "configuration": {
+          "eyebrow": "Fără surprize",
+          "title": "Configurarea este prezentată dinainte",
+          "body": "Reducem câmpurile necesare la minimumul indispensabil pentru a crea o aplicație complet funcțională, astfel încât să nu trebuiască să te îngrijorezi de configurări ulterioare."
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "Cloud suveran",
+      "headline_2": "Cloudul tău, în termenii tăi.",
+      "description": "Appbox este construit pe hardware și infrastructură de rețea pe care le controlăm, oferindu-ți confortul aplicațiilor cloud fără să predai platforma către cloudul altcuiva.",
+      "eyebrow": "Infrastructură proprie",
+      "card_title": "Servere reale. Rețea reală. Responsabilitate reală.",
+      "card_description": "Preferăm controlul direct asupra părților care contează: calcul, stocare, rutare, capacitate și locație fizică. Asta ne permite să construim Appbox ca produs, nu ca un strat subțire peste un alt furnizor.",
+      "images": {
+        "rack_front": "Rackuri de servere Appbox cu hardware instalat",
+        "rack_network": "Rackuri de servere Appbox cu cablare de rețea",
+        "network_closeup": "Prim-plan cu echipamente de rețea deținute de Appbox"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "Fără cutii negre închiriate",
+          "description": "Deținem și operăm serverele pe care rulează aplicațiile tale, așa că performanța și mentenanța nu sunt ascunse în spatele unei abstracții de cloud hyperscale."
+        },
+        "network_control": {
+          "title": "Control asupra rețelei",
+          "description": "Deținerea stackului de rutare ne permite să ajustăm traseele, capacitatea, peeringul și răspunsul la defecțiuni în jurul sarcinilor Appbox, nu al setărilor implicite generice de cloud."
+        },
+        "custom_ocp_hardware": {
+          "title": "Hardware OCP personalizat",
+          "description": "Hardware-ul nostru personalizat Open Compute Project este proiectat pentru flux de aer eficient, densitate ridicată și service rapid, astfel încât să putem scala capacitatea fără a risipi energie sau spațiu."
+        },
+        "clear_data_locality": {
+          "title": "Localizare clară a datelor",
+          "description": "Infrastructura se află în rackuri dedicate la Digital Realty AMS3 în Amsterdam, oferindu-ți un răspuns clar despre locul unde sunt găzduite datele tale."
+        },
+        "better_cost_discipline": {
+          "title": "Disciplină mai bună a costurilor",
+          "description": "Deținerea platformei evită capcanele de facturare cloud per solicitare, precum egress surpriză, IOPS sau multiplicatori de lățime de bandă, ajutând la păstrarea planurilor simple."
+        },
+        "built_for_appbox": {
+          "title": "Construit pentru Appbox",
+          "description": "Pentru că hardware-ul și rețeaua sunt ale noastre, putem proiecta totul de la zero în jurul sloturilor de aplicații, boostului, stocării, backupurilor și instalărilor de aplicații cu un singur clic."
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "Nou",
+      "headline_1": "Găzduire VPS.",
+      "headline_2": "Un singur clic.",
+      "description": "Lansează VPS-uri Linux complete alături de aplicațiile tale. Acces root, resurse dedicate și puterea de a face boost, totul fără să părăsești Appbox.",
+      "description_combined": "Lansează servere private virtuale Linux și Windows alături de aplicațiile tale. Acces root, desktop la distanță, resurse dedicate, totul fără să părăsești Appbox.",
+      "group_label": "VPS Linux",
+      "cta": "Răsfoiește VPS-uri",
+      "features": {
+        "f1": {
+          "title": "Acces root complet",
+          "description": "Control complet prin SSH"
+        },
+        "f2": {
+          "title": "Resurse scalabile",
+          "description": "Boost RAM și CPU per aplicație"
+        },
+        "f3": {
+          "title": "Lansare cu un clic",
+          "description": "Ubuntu, Debian și altele"
+        }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "Nou",
+      "headline_1": "VPS Windows.",
+      "headline_2": "Oriunde.",
+      "group_label": "VPS Windows",
+      "description": "Rulează Windows Server pe Appbox-ul tău cu acces complet Remote Desktop. Perfect pentru software disponibil doar pe Windows, servere de jocuri și stații de lucru la distanță.",
+      "cta": "Răsfoiește aplicațiile Windows",
+      "features": {
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "Interfață grafică completă din orice browser"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Rulează orice aplicație Windows"
+        },
+        "f3": {
+          "title": "Boost de resurse",
+          "description": "Alocă mai multă putere după necesități"
+        }
+      }
+    },
+    "features": {
+      "section": {
+        "title": "Funcții puternice pentru toată lumea",
+        "headline_1": "Funcții puternice.",
+        "headline_2": "Pentru toată lumea.",
+        "description": "Experimentează întreaga putere a Appbox-ului tău cu funcții concepute atât pentru începători, cât și pentru experți."
+      },
+      "root_access": {
+        "title": "Acces root complet",
+        "description": "Lansează aplicații cu sistem de operare complet, precum Debian și Ubuntu, cu acces SSH, oferindu-ți control complet asupra mediului tău."
+      },
+      "remote_desktop": {
+        "title": "Desktop la distanță",
+        "description": "Rulează aplicații cu interfață grafică pe serverele noastre, cu acces complet la desktop la distanță pentru aplicațiile OS, aducând experiențe de desktop în cloud."
+      },
+      "one_click": {
+        "title": "Instalări reale cu un singur clic",
+        "description": "Configurează totul în timpul instalării cu formularele noastre simplificate de configurare - nu este necesară nicio configurare suplimentară după lansare."
+      },
+      "community": {
+        "title": "Comunitate bogată",
+        "description": "Alătură-te ecosistemului nostru activ, cu aplicații trimise de comunitate, contribuții la documentație și un client web open-source."
+      },
+      "security": {
+        "title": "Securitate și confidențialitate",
+        "description": "Tratăm securitatea și confidențialitatea cu maximă seriozitate la Appbox. Toate aplicațiile rulează în namespace-uri separate, fără acces root, oferind izolare completă între aplicații. Infrastructura noastră este proiectată cu o abordare security-first - de la kerneluri securizate până la audituri de securitate periodice. Pentru confidențialitate sporită, aplicația noastră VPN îți permite să îți rutezi tot traficul prin Appbox, asigurând că activitățile tale online rămân private și sigure. Cu Appbox, primești funcții de securitate de nivel enterprise într-un pachet ușor de folosit."
+      },
+      "deploy_fast": {
+        "title": "Lansează în câteva secunde",
+        "description": "Cu hardware-ul nostru ultrarapid, de ultimă generație, nu trebuie să aștepți după instalarea aplicațiilor."
+      },
+      "custom_hardware": {
+        "title": "Hardware personalizat",
+        "description": "Am lucrat cu experți din industrie pentru a crea propria noastră infrastructură hardware, asigurând confidențialitate, securitate și performanță optimă."
+      },
+      "custom_network": {
+        "title": "Rețea personalizată",
+        "description": "Deținem toate echipamentele noastre de rețea, ceea ce ne oferă flexibilitatea de a face peering cu rețelele alese de noi, făcând conexiunea ta mult mai rapidă."
+      },
+      "support": {
+        "title": "Suport expert",
+        "description": "Oferim suport prin tichete, la care răspund doar experți de top din industrie."
+      },
+      "documentation": {
+        "title": "Documentație frumoasă",
+        "description": "Sistemul nostru de documentație open-source permite utilizatorilor să contribuie, creând o resursă extinsă și valoroasă, în continuă creștere."
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "Întrebări frecvente",
+        "description": "Găsește răspunsuri la cele mai comune întrebări și descoperă cum te poate ajuta Appbox."
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "Ce metode de plată acceptați?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Oferim mai multe opțiuni de plată pentru ca achiziția ta să fie cât mai simplă:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Carduri de debit/credit<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (inclusiv Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Criptomonede<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">Oferim și cicluri de facturare flexibile - lunar, trimestrial, semestrial sau anual. Dacă ai vrea să vezi mai multe opțiuni, spune-ne.</p>"
+        },
+        "deployment_time": {
+          "title": "Cât de repede îmi voi primi Appbox-ul?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Imediat ce plata este confirmată, sistemul nostru automat îți lansează Appbox-ul pe loc. Orice aplicații alegi în timpul checkoutului sunt configurate instantaneu, astfel încât să le poți folosi fără întârziere.</p>"
+        },
+        "server_location": {
+          "title": "Unde se află serverele voastre?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Serverele noastre se află în rackuri dedicate la Digital Realty AMS3 în Amsterdam, Țările de Jos, asigurând performanță și fiabilitate de top.</p>"
+        },
+        "root_access": {
+          "title": "Oferiți acces root?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Da. Aplicațiile VPS îți oferă acces root complet pe Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux și AlmaLinux. Aplicațiile VPS Windows 11 Pro oferă acces complet Remote Desktop și acces de administrator.</p><p class=\"mb-4 leading-relaxed\">Pentru că acestea sunt mașini virtuale KVM complete, poți instala software personalizat, gestiona servicii, folosi Docker, snaps, Flatpaks, module de kernel și rula propriul stack alături de aplicațiile tale Appbox.</p>"
+        },
+        "docker": {
+          "title": "Pot folosi Docker?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Da. Docker este disponibil în aplicațiile VPS, unde primești o mașină virtuală completă cu acces root și control asupra sistemului de operare.</p><p class=\"mb-4 leading-relaxed\">Docker nu este disponibil în aplicațiile gestionate cu un singur clic, deoarece acele aplicații sunt deja containerizate și izolate de Appbox. Dacă ai nevoie de Docker, instalează o aplicație VPS Linux și rulează-l acolo.</p>"
+        },
+        "security": {
+          "title": "Ce funcții de securitate oferiți?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Tratăm securitatea cu seriozitate și implementăm mai multe straturi de protecție pentru a-ți proteja datele:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Fiecare Appbox rulează în propriul sandbox pentru a-ți izola datele</li><li>Toate conexiunile folosesc HTTPS, criptând datele în tranzit</li><li>Conturile VPN nelimitate (pentru pachetele eligibile) îți permit să îți rutezi traficul prin Appbox</li><li>Ștergerea zilnică a jurnalelor (FTP, SSH, HTTP, VPN etc.) pentru confidențialitate suplimentară</li></ul>"
+        },
+        "data_access": {
+          "title": "Cum îmi pot accesa datele Appbox de pe computer?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Oferim mai multe moduri convenabile de a-ți gestiona fișierele și media din Appbox:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Folosește aplicații de sincronizare precum Resilio sau Syncthing pentru a menține fișierele actualizate automat.</li><li>Redă media de oriunde cu Plex, Navidrome sau aplicații similare.</li><li>Descarcă fișiere în siguranță folosind FTP peste TLS, HTTPS sau alte protocoale.</li></ul><p class=\"mb-4 leading-relaxed\">Magazinul de aplicații include diverse aplicații care te ajută să rămâi conectat la datele tale în modul care ți se potrivește cel mai bine.</p>"
+        },
+        "additional_software": {
+          "title": "Pot instala software care nu este disponibil în magazinul de aplicații?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Absolut. Aplicațiile noastre VPS îți permit să instalezi software personalizat cu acces root, iar aplicațiile VPS Windows includ o experiență Remote Desktop completă. Asta îți oferă libertatea de a rula instrumentele și aplicațiile de care ai nevoie.</p>"
+        },
+        "fuse_rclone": {
+          "title": "Permiteți montări FuSE sau Rclone?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Da, permitem. Aplicațiile noastre OS acceptă complet FuSE, iar în magazinul de aplicații oferim o aplicație Rclone dedicată pentru integrare rapidă și ușoară cu stocarea cloud.</p>"
+        },
+        "refund_policy": {
+          "title": "Care este politica voastră de rambursare?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Oferim clienților noi o perioadă de rambursare pro-rata de 7 zile. Clienții existenți au criterii diferite de eligibilitate pentru rambursări. Plățile făcute cu criptomonede, achizițiile de adrese IP dedicate și anumite alte tranzacții nu sunt rambursabile. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Vezi politica noastră completă de rambursare</a> pentru detalii complete.</p>"
+        },
+        "custom_domain": {
+          "title": "Pot folosi propriul meu nume de domeniu?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Da. Îți poți mapa propriul domeniu și poți configura subdomenii pentru fiecare aplicație. Adaugă pur și simplu o înregistrare A în DNS-ul tău care indică spre Appbox-ul tău, iar noi ne ocupăm de restul pentru ca totul să funcționeze fără probleme.</p><p class=\"mb-4 leading-relaxed\">Aplicațiile VPS acceptă și mai multe domenii personalizate și subdomenii Appbox cu SSL automat, astfel încât să poți găzdui mai multe site-uri sau servicii de pe același VPS.</p>"
+        },
+        "upgrade_after_purchase": {
+          "title": "Pot face upgrade după achiziție?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Da, vom transfera automat totul de pe vechiul tău plan pe noul plan.</p><p class=\"mb-4 leading-relaxed\">Totul va rămâne la fel, nici nu vei observa. Singurul lucru care se poate schimba sunt anumite numere de port, dacă accesezi o aplicație direct prin numărul portului, de exemplu FTP.</p>"
+        },
+        "app_slots": {
+          "title": "Ce sunt sloturile de aplicații?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Sloturile de aplicații sunt unitățile de capacitate pe care Appbox-ul tău le folosește pentru a instala aplicații. Fiecare aplicație folosește unul sau mai multe sloturi de aplicații, în funcție de cerințele sale de resurse, iar versiunile mai grele pot necesita mai multe sloturi.</p><p class=\"mb-4 leading-relaxed\">Pagina <a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">Aplicații</a> arată câte sloturi de aplicații folosește fiecare aplicație. Pe pagina de detalii a unei aplicații, derulează până la secțiunea de resurse din partea de jos pentru a vedea RAM-ul și CPU-ul alocate fiecărei versiuni.</p><p class=\"mb-4 leading-relaxed\">Poți folosi și sloturile de aplicații libere pentru Boost per aplicație, ca să oferi unei aplicații instalate mai mult CPU și RAM fără să îți actualizezi întregul plan.</p>"
+        },
+        "resource_multipliers": {
+          "title": "Cum funcționează boostul per aplicație?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Fiecare aplicație pornește cu resurse RAM și CPU de bază, determinate de versiunea sa. Boostul per aplicație îți permite să mărești aceste resurse pentru aplicații individuale folosind sloturi de aplicații suplimentare.</p><p class=\"mb-4 leading-relaxed\">Fiecare slot de boost adaugă +10% resurse aplicației. Tu decizi ce aplicații primesc mai multă putere și poți ajusta boostul oricând.</p><p class=\"mb-4 leading-relaxed\">Boostul per aplicație este inclus în toate planurile. Îl poți configura când instalezi o aplicație sau din pagina aplicației instalate în <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a>.</p>"
+        },
+        "app_freeze": {
+          "title": "Pot pune o aplicație pe pauză fără să pierd date?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Da. App Freeze îți permite să oprești o aplicație instalată și să recuperezi sloturile sale de aplicații, păstrând datele și configurația intacte.</p><p class=\"mb-4 leading-relaxed\">Când dezgheți aplicația, aceasta pornește din nou cu aceleași date. Ai nevoie doar de suficiente sloturi de aplicații libere pentru a acoperi aplicația și eventualele sloturi de boost pe care le folosea.</p>"
+        },
+        "excluded_app_categories": {
+          "title": "Ce sunt categoriile de aplicații excluse?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Unele planuri au restricții pentru anumite categorii de aplicații care nu pot fi instalate pe ele. Acestea se numesc „Categorii de aplicații excluse”.</p><p class=\"mb-4 leading-relaxed\">Când vezi planurile noastre tarifare, vei vedea categoriile excluse listate ca badge-uri clicabile sub planurile care au restricții. Asta te ajută să înțelegi ce tipuri de aplicații nu vor fi disponibile pe acel plan.</p><p class=\"mb-4 leading-relaxed\">Poți apăsa pe orice badge de categorie exclusă pentru a vedea toate aplicațiile din acea categorie, astfel încât să știi exact ce aplicații nu ar putea fi instalate pe acel plan.</p><p class=\"mb-4 leading-relaxed\">Dacă ai nevoie de acces la aplicații dintr-o categorie exclusă, ia în considerare alegerea unui plan de nivel superior care nu are acele restricții.</p>"
+        },
+        "vps": {
+          "title": "Cum obțin un VPS?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Aplicațiile VPS sunt disponibile în <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">magazinul de aplicații</a>, la fel ca orice altă aplicație. Alege o distribuție Linux sau Windows, instaleaz-o pe Appbox-ul tău, iar aceasta rulează alături de celelalte aplicații.</p><p class=\"mb-4 leading-relaxed\">Poți aloca resurse suplimentare VPS-ului tău folosind Boost per aplicație, oferindu-i mai mult RAM și CPU prin sloturi de aplicații suplimentare. Asta îți permite să dimensionezi VPS-ul corect fără să îți actualizezi întregul plan.</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "Produs",
+      "resources": "Resurse",
+      "pricing": "Prețuri",
+      "features": "Funcții",
+      "apps": "Aplicații",
+      "documentation": "Documentație",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "service_status": "Starea serviciilor",
+      "overview": "Prezentarea funcțiilor",
+      "view_pricing": "Vezi planurile noastre tarifare",
+      "explore_apps": "Explorează aplicațiile noastre",
+      "read_docs": "Citește documentația",
+      "latest_articles": "Cele mai noi articole și știri",
+      "faq_description": "Întrebări frecvente",
+      "check_status": "Verifică starea serviciilor",
+      "vps": "VPS",
+      "explore_vps": "Răsfoiește aplicațiile VPS"
+    },
+    "external_links": {
+      "billing": "Facturare",
+      "control_panel": "Panou de control"
+    }
+  },
+  "docs": {
+    "on_this_page": "Pe această pagină",
+    "edit_page_on_github": "Editează această pagină pe GitHub",
+    "start_discussion_on_github": "Începe o discuție pe GitHub",
+    "api_reference": "Referință API",
+    "docs": "Documentație",
+    "source": "Sursă",
+    "not_found": {
+      "description": "Documentul pe care îl cauți nu există.",
+      "title": "Document negăsit"
+    },
+    "index_description": "Găsește documentație despre cum să folosești Appbox, cum să contribui la proiect și multe altele.",
+    "index": {
+      "title": "Documentație",
+      "section": "Secțiune",
+      "description": "Descriere",
+      "documents": "Documente",
+      "view": "Vezi"
+    },
+    "meta_description": "Află cum să folosești Appbox cu documentația noastră completă. Găsește ghiduri, tutoriale și referințe API pentru a profita la maximum de găzduirea ta."
+  },
+  "blog": {
+    "words": {
+      "posts": "Articole",
+      "by": "de"
+    },
+    "cards": {
+      "min_read": "min de citit"
+    },
+    "buttons": {
+      "next": "Următorul",
+      "previous": "Anteriorul",
+      "rss_feed": "Flux RSS",
+      "read_more": "citește mai mult",
+      "go_to_next_page": "Mergi la pagina următoare",
+      "go_to_previous_page": "Mergi la pagina anterioară"
+    },
+    "meta_description": "Citește cele mai noi știri, actualizări și tutoriale de la echipa Appbox. Rămâi la curent cu funcții noi, lansări de aplicații și sfaturi de găzduire."
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "Lunar",
+      "quarterly": "Trimestrial",
+      "semiannually": "Semestrial",
+      "annually": "Anual",
+      "billed_every": "Facturat [cycle]"
+    },
+    "card": {
+      "storage": "Stocare",
+      "traffic": "Trafic",
+      "app_slots": "Sloturi de aplicații",
+      "connection_speed": "Viteză conexiune",
+      "resource_multiplier": "Boost per aplicație",
+      "included": "Inclus",
+      "raid": "RAID",
+      "disks": "Discuri",
+      "per_month": "/lună",
+      "order_now": "Comandă acum",
+      "billed_as": "Facturat",
+      "excluded_app_categories": "Categorii de aplicații excluse",
+      "windows_vps": "VPS Windows",
+      "windows_vps_supported": "Acceptat",
+      "windows_vps_dedicated_only": "Doar planuri dedicate (NG-18000+)"
+    }
+  },
+  "apps": {
+    "title": "Bibliotecă de aplicații",
+    "description": "Explorează colecția noastră masivă de aplicații gata de lansare",
+    "meta_description": "Răsfoiește peste 60 de aplicații gata de lansare, inclusiv baze de date, servere media, instrumente de dezvoltare și altele. Instalare cu un singur clic cu găzduire Appbox.",
+    "loading": "Se încarcă aplicațiile...",
+    "error": "Nu s-au putut încărca aplicațiile",
+    "no_results": "Nicio aplicație nu corespunde criteriilor tale de căutare",
+    "back_to_apps": "Înapoi la aplicații",
+    "app_not_found": "Aplicația solicitată nu a putut fi găsită",
+    "search": {
+      "title": "Căutare",
+      "description": "Găsește aplicația perfectă pentru nevoile tale",
+      "name_search": "Caută după nume",
+      "name_placeholder": "Numele aplicației sau cuvânt-cheie",
+      "category": "Categorie",
+      "all_categories": "Toate categoriile",
+      "app_slots": "Sloturi de aplicații",
+      "app_slots_placeholder": "Orice sloturi de aplicații",
+      "sort_by": "Sortează după",
+      "sort_popularity": "Popularitate",
+      "sort_name": "Nume (A-Z)",
+      "sort_date": "Adăugate recent",
+      "reset_filters": "Resetează filtrele"
+    },
+    "card": {
+      "app_slots": "Sloturi de aplicații",
+      "view_details": "Vezi detalii"
+    },
+    "detail": {
+      "by": "de",
+      "description": "Descriere",
+      "app_info": "Informații despre aplicație",
+      "version": "Versiune",
+      "app_slots": "Sloturi de aplicații",
+      "released": "Lansată",
+      "developer_site": "Site-ul dezvoltatorului",
+      "visit_site": "Vizitează site-ul",
+      "deploy_app": "Lansează această aplicație",
+      "community_ratings": "Evaluări ale comunității",
+      "upvotes": "Voturi pozitive",
+      "downvotes": "Voturi negative",
+      "no_ratings_yet": "Încă nu există evaluări",
+      "deploy_dialog": {
+        "title": "Lansează aplicații pe un Appbox",
+        "question": "Aplicațiile au nevoie de un Appbox activ pentru a rula. Alege un plan eligibil pentru a-ți crea contul și Appbox-ul sau continuă către instalator dacă ai deja unul.",
+        "planLabel": "Planuri eligibile pentru această aplicație",
+        "planPlaceholder": "Alege un plan pentru a continua",
+        "planHelp": "Planurile care exclud această categorie de aplicații sunt ascunse. Selectarea unui plan te duce direct la checkout.",
+        "noEligiblePlans": "Nu au fost găsite planuri eligibile pentru această aplicație. Poți vedea în continuare toate planurile.",
+        "viewAllPlans": "Vezi toate planurile",
+        "yes": "Continuă cu planul selectat",
+        "no": "Am deja un Appbox"
+      }
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "Ecosistem de aplicații conectate",
+      "headline_1": "Aplicații conectate.",
+      "headline_2": "Un singur ecosistem.",
+      "description": "Fiecare aplicație are acces la sistemul de fișiere pentru părți partajate ale altor aplicații, toate fiind conectate între ele printr-o punte locală securizată de rețea.",
+      "visual_title": "Aplicațiile tale pot lucra împreună fără să părăsească Appbox-ul.",
+      "visual_description": "Aplicațiile rulează în propriile spații, dar Appbox le oferă moduri controlate de a partaja fișiere și de a comunica local. Asta înseamnă că asistenții, dashboardurile, bazele de date, instrumentele media și aplicațiile de sincronizare pot deveni un singur spațiu de lucru conectat.",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "Sistem de fișiere partajat",
+          "description": "Aplicațiile pot accesa direct stocarea partajată și datele aprobate ale aplicațiilor."
+        },
+        "private_network": {
+          "title": "Punte locală securizată",
+          "description": "Serviciile comunică prin rute locale private, nu prin internetul public."
+        },
+        "cross_app_workflows": {
+          "title": "Fluxuri de lucru între aplicații",
+          "description": "Construiește fluxuri de lucru în care o aplicație poate citi, procesa și publica date pentru alta."
+        }
+      }
+    }
+  },
+  "policies": {
+    "title": "Politici",
+    "meta_description": "Consultă politicile Appbox, inclusiv Termenii de utilizare, Politica de confidențialitate, Politica de rambursare și altele. Înțelege-ți drepturile și angajamentele noastre.",
+    "index_description": "Aceste politici guvernează utilizarea serviciilor Appbox și descriu angajamentele noastre față de tine. Ele includ informații importante despre confidențialitate, securitate și responsabilitățile tale ca utilizator.",
+    "policy": "Politică",
+    "description": "Descriere",
+    "view": "Vezi"
+  },
+  "auth": {
+    "login": {
+      "title": "Bine ai revenit",
+      "description": "Autentifică-te în contul tău Appbox",
+      "email_label": "Email",
+      "email_placeholder": "tu@example.com",
+      "email_error": "Introdu o adresă de email validă",
+      "password_label": "Parolă",
+      "password_placeholder": "Introdu parola",
+      "password_error": "Parola este obligatorie",
+      "forgot_password": "Ai uitat parola?",
+      "submit": "Autentificare",
+      "external_signup": "Nou pe Appbox? Alege un plan pentru a-ți crea contul și Appbox-ul.",
+      "external_signup_link": "Vezi planurile",
+      "appbox_required_title": "Ai nevoie de un cont?",
+      "appbox_required_description": "Conturile Appbox sunt create atunci când cumperi un plan Appbox. Dacă încercai să lansezi o aplicație, alege mai întâi un plan, apoi revino pentru a instala aplicații pe Appbox-ul tău.",
+      "appbox_required_link": "Vezi planurile și înscrie-te",
+      "error_invalid": "Email sau parolă invalidă",
+      "error_generic": "Ceva nu a mers bine. Te rugăm să încerci din nou.",
+      "success": "Te-ai autentificat cu succes",
+      "2fa_title": "Autentificare cu doi factori",
+      "2fa_description": "Introdu codul din 6 cifre din aplicația ta de autentificare",
+      "2fa_code_label": "Cod de verificare",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "Codul trebuie să aibă 6 cifre",
+      "2fa_submit": "Verifică",
+      "2fa_back": "Înapoi la autentificare",
+      "error_2fa_invalid": "Cod de verificare invalid"
+    },
+    "branding": {
+      "tagline": "Cloudul tău, regulile tale",
+      "subtitle": "Lansează și gestionează aplicații puternice pe infrastructură suverană pe care o deținem și operăm.",
+      "apps_count": "Peste 60 de aplicații gata de lansare",
+      "one_click": "Instalare cu un clic",
+      "network_speed": "Rețea de 25Gbps",
+      "always_secure": "Mereu securizat",
+      "categories_label": "Categorii de aplicații",
+      "category_cloud": "Cloud",
+      "category_cms": "CMS",
+      "category_databases": "Baze de date",
+      "category_music": "Muzică",
+      "category_storage": "Stocare",
+      "category_gaming": "Gaming",
+      "category_development": "Dezvoltare",
+      "category_virtual_servers": "Servere virtuale"
+    },
+    "forgot": {
+      "title": "Parolă uitată",
+      "description": "Introdu emailul și îți vom trimite un link de resetare",
+      "email_label": "Email",
+      "email_placeholder": "tu@example.com",
+      "email_error": "Introdu o adresă de email validă",
+      "submit": "Trimite linkul de resetare",
+      "back_to_login": "Înapoi la autentificare",
+      "error_generic": "Ceva nu a mers bine. Te rugăm să încerci din nou.",
+      "success": "Linkul de resetare a fost trimis! Verifică-ți emailul."
+    },
+    "reset": {
+      "title": "Resetează parola",
+      "description": "Introdu noua parolă",
+      "password_label": "Parolă nouă",
+      "password_placeholder": "Introdu parola nouă",
+      "password_error": "Parola trebuie să aibă cel puțin 8 caractere",
+      "confirm_password_label": "Confirmă parola",
+      "confirm_password_placeholder": "Confirmă parola nouă",
+      "confirm_password_error": "Parolele nu se potrivesc",
+      "submit": "Resetează parola",
+      "error_generic": "Ceva nu a mers bine. Te rugăm să încerci din nou.",
+      "success": "Parola a fost resetată cu succes!"
+    },
+    "email_sent": {
+      "title": "Verifică-ți emailul",
+      "description": "Ți-am trimis un email cu instrucțiuni suplimentare",
+      "check_inbox": "Dacă nu vezi emailul, verifică folderul spam. Linkul va expira în 24 de ore.",
+      "back_to_login": "Înapoi la autentificare"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "appstore": "Magazin de aplicații",
+      "appboxes": "Appbox-uri",
+      "installed_apps": "Aplicații instalate",
+      "domains": "Domenii personalizate",
+      "account": "Cont",
+      "profile": "Profil",
+      "abuse_reports": "Rapoarte de abuz",
+      "two_factor": "Autentificare cu doi factori",
+      "api_keys": "Chei API",
+      "service_status": "Starea serviciilor",
+      "support_billing": "Suport și facturare",
+      "add_appbox": "Adaugă Appbox",
+      "admin": "Admin",
+      "knowledgebase": "Bază de cunoștințe"
+    },
+    "header": {
+      "toggle_language": "Comută limba",
+      "theme_dark": "Întunecată",
+      "theme_light": "Luminoasă",
+      "theme_system": "Sistem",
+      "profile": "Profil",
+      "security": "Securitate",
+      "sign_out": "Deconectare",
+      "switch_to_admin": "Comută la admin",
+      "switch_to_user": "Comută la utilizator"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "services": "Serviciile tale",
+      "servicesDescription": "Serviciile și resursele tale active",
+      "storage": "Stocare",
+      "appSlots": "Sloturi de aplicații",
+      "network": "Rețea",
+      "upload": "Încărcare",
+      "download": "Descărcare",
+      "multiplier": "Sloturi de boost folosite",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30z",
+      "downloadShort": "↓ 30z",
+      "pinnedApps": "Aplicații fixate",
+      "viewCylo": "Vezi detalii"
+    },
+    "twoFactor": {
+      "title": "Securizează-ți contul",
+      "description": "Activează autentificarea cu doi factori pentru a adăuga un strat suplimentar de securitate contului tău.",
+      "enable": "Activează 2FA",
+      "dismiss": "Închide"
+    },
+    "notifications": {
+      "title": "Notificări recente",
+      "viewAll": "Vezi toate",
+      "empty": "Nu există notificări noi",
+      "dropdown_title": "Notificări",
+      "mark_all_read": "Marchează toate ca citite",
+      "no_notifications": "Nu există notificări noi",
+      "all_caught_up": "Ești la zi",
+      "ui_update_title": "Există o versiune nouă de Appbox",
+      "ui_update_description": "Tocmai am actualizat interfața Appbox. Reîmprospătează această pagină pentru a obține cea mai nouă versiune.",
+      "refresh_later": "Reîmprospătează mai târziu",
+      "refresh_now": "Reîmprospătează acum",
+      "subtext": {
+        "instance_add": "Aplicația ta este instalată, vezi-o mai jos!",
+        "instance_removed": "Aplicația a fost dezinstalată.",
+        "instance_removing": "Aplicația este în curs de dezinstalare.",
+        "instance_restart": "Aplicația a fost repornită.",
+        "instance_updating": "Aplicația se actualizează și va fi temporar offline.",
+        "instance_updated": "Aplicația a fost actualizată și este acum gata de utilizare.",
+        "instance_stop": "Aplicația a fost oprită; va trebui să o pornești din nou pentru a o accesa.",
+        "instance_start": "Aplicația a fost pornită și ar trebui să fie accesibilă în scurt timp.",
+        "user_updated": "Datele profilului tău de utilizator au fost actualizate.",
+        "cylo_add": "Appbox-ul tău a terminat configurarea; apasă mai jos pentru a-l vedea.",
+        "cylo_remove": "Appbox-ul tău a fost dezinstalat.",
+        "cylo_migrating": "Appbox-ul tău migrează pe alt disc/server; te vom notifica și îți vom trimite un email când este gata.",
+        "cylo_migrated": "Appbox-ul tău a fost migrat cu succes; toate aplicațiile ar trebui să funcționeze din nou acum.",
+        "cylo_userdecreasingquota": "Appbox-ul tău rămâne fără spațiu pe disc. În curând va trebui să ștergi unele date din fila File Explorer din dashboardul Appbox pentru ca acesta să rămână online.",
+        "cylo_userlowquota": "Appbox-ul tău nu mai are spațiu pe disc, așa că l-am oprit temporar. Va trebui să ștergi unele date din fila File Explorer din dashboardul Appbox pentru a-l readuce online.",
+        "cylo_adminlowquota": "Un Appbox are puțin spațiu disponibil.",
+        "cylo_brokenmount": "Appbox-ul tău a avut o eroare de montare. Verifică-ți emailul pentru mai multe informații.",
+        "cylo_usernormalquota": "Appbox-ul tău are acum suficient spațiu disponibil pentru a funcționa normal.",
+        "cylo_adminnormalquota": "Appbox-ul nu mai are spațiu insuficient și poate funcționa normal.",
+        "cylo_restarting": "Appbox-ul tău se repornește acum; aplicațiile tale vor fi temporar offline.",
+        "cylo_restarted": "Appbox-ul tău a terminat repornirea; aplicațiile ar trebui să fie online în scurt timp.",
+        "blog": "Tocmai am publicat un nou articol pe blog; apasă mai jos pentru a-l citi!",
+        "hwfailure_newfailure": "Un server are o problemă, te rugăm să investighezi cât mai curând!",
+        "criticalalert_newalert": "Alertă critică nouă, te rugăm să investighezi cât mai curând!",
+        "abuse_unresolvable": "A fost trimis un nou raport de abuz nerezolvabil.",
+        "abuse_reply": "Există un mesaj nou la raportul de abuz.",
+        "abuse_user_new": "Am primit un raport de abuz privind Appbox-ul tău.",
+        "abuse_user_closed": "Am închis un raport de abuz privind Appbox-ul tău.",
+        "throttledcylo_throttled": "Un Appbox este limitat.",
+        "throttledcylo_unthrottled": "Un Appbox nu mai este limitat.",
+        "throttled_throttled": "Appbox-ul tău este limitat.",
+        "throttled_warning": "Appbox-ul tău folosește mai multe resurse decât în mod normal.",
+        "throttled_unthrottled": "Appbox-ul tău nu mai este limitat."
+      }
+    },
+    "newestApps": {
+      "title": "Cele mai noi aplicații",
+      "viewAll": "Răsfoiește magazinul de aplicații"
+    },
+    "recentlyUpdated": {
+      "title": "Actualizate recent"
+    },
+    "yourUpdates": {
+      "title": "Actualizările tale",
+      "description": "Activitate recentă și aplicații noi"
+    },
+    "blogPosts": {
+      "title": "Cele mai noi de pe blog",
+      "description": "Știri și actualizări de la Appbox",
+      "readMore": "Citește mai mult"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Se repornește",
+      "migrating": "Se migrează",
+      "installing": "Se instalează",
+      "suspended": "Suspendat",
+      "frozen": "Înghețat",
+      "throttled": "Limitat",
+      "lowQuota": "Cotă redusă"
+    }
+  },
+  "appstore": {
+    "title": "Magazin de aplicații",
+    "subtitle": "Toate aplicațiile de server de care ai nevoie, într-un singur loc.",
+    "search": {
+      "placeholder": "Caută aplicații...",
+      "results": "Rezultatele căutării",
+      "noResults": "Nu s-au găsit aplicații care să corespundă căutării tale.",
+      "noResultsDescription": "Încearcă să ajustezi căutarea sau filtrul pentru a găsi ce cauți.",
+      "showing": "Se afișează {count} rezultate"
+    },
+    "featured": {
+      "title": "Aplicații recomandate",
+      "description": "Aplicații alese manual pe care le recomandăm"
+    },
+    "top": {
+      "title": "Aplicații de top",
+      "description": "Cele mai populare printre utilizatorii noștri"
+    },
+    "new": {
+      "title": "Aplicații noi",
+      "description": "Adăugate recent în magazin"
+    },
+    "categories": {
+      "title": "Categorii",
+      "all": "Toate categoriile"
+    },
+    "app": {
+      "getApp": "Obține",
+      "installed": "Instalată",
+      "restricted": "Restricționată",
+      "disabled": "Dezactivată",
+      "install": "Instalează",
+      "installing": "Se instalează...",
+      "versions": "Versiuni",
+      "version": "Versiune",
+      "appSlots": "Sloturi de aplicații",
+      "baseMemory": "Memorie de bază (GB)",
+      "baseCpus": "CPU-uri de bază",
+      "added": "Adăugată",
+      "changes": "Modificări",
+      "changelog": "Jurnal de modificări",
+      "releasedOn": "Lansată pe",
+      "description": "Descriere",
+      "comments": "Comentarii",
+      "selectCylo": "Selectează Appbox",
+      "selectVersion": "Selectează versiunea",
+      "noSlots": "Nu există sloturi de aplicații libere disponibile",
+      "rating": "{count} voturi",
+      "screenshots": "Capturi de ecran",
+      "by": "de",
+      "requiresSlots": "Necesită {count} slot(uri) de aplicație",
+      "visitDeveloper": "Vizitează site-ul dezvoltatorului",
+      "helpSupport": "Ajutor și suport",
+      "resourceNote": "Aplicațiile pornesc cu memorie și CPU de bază. Poți face boost aplicațiilor individuale folosind sloturi de aplicații suplimentare (+10% per slot de boost). O valoare de 0 înseamnă nelimitat.",
+      "upvote": "Votează pozitiv",
+      "downvote": "Votează negativ",
+      "installTitle": "Instalează {name}",
+      "installSuccess": "Instalarea aplicației a început",
+      "minimumPlanShort": "Disponibil de la {plan}",
+      "minimumPlanLabel": "Plan minim"
+    },
+    "sort": {
+      "newest": "Cele mai noi",
+      "popular": "Cele mai populare",
+      "updated": "Actualizate recent",
+      "rating": "Cele mai bine evaluate",
+      "slots_asc": "Sloturi: de la puține la multe",
+      "slots_desc": "Sloturi: de la multe la puține"
+    },
+    "slots": {
+      "label": "Sloturi",
+      "all": "Toate sloturile",
+      "slot": "{count} slot",
+      "slots": "{count} sloturi"
+    },
+    "showAll": "Afișează tot",
+    "install": {
+      "validation": {
+        "required": "Acest câmp este obligatoriu",
+        "alphanumeric": "Sunt permise doar litere și cifre",
+        "notOnlyAlpha": "Trebuie să conțină cel puțin o cifră sau un caracter special",
+        "lowercase": "Trebuie să conțină o literă mică",
+        "uppercase": "Trebuie să conțină o literă mare",
+        "number": "Trebuie să conțină o cifră",
+        "specialChar": "Trebuie să conțină un caracter special",
+        "invalidEmail": "Adresă de email invalidă",
+        "invalidDate": "Dată invalidă",
+        "invalidFormat": "Format invalid",
+        "minLength": "Minimum {count} caractere",
+        "maxLength": "Maximum {count} caractere",
+        "invalidSubdomain": "Sunt permise doar litere mici, cifre și cratime.",
+        "subdomainInUse": "Acest subdomeniu este deja folosit, încearcă altul.",
+        "domainIpMismatch": "IP-ul domeniului nu corespunde serverului.",
+        "selectDomain": "Selectează un domeniu",
+        "validating": "Se validează..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "Selectează mai întâi un Appbox",
+        "selectPlaceholder": "Selectează {label}...",
+        "searchPlaceholder": "Caută {label}...",
+        "noResults": "Nu s-au găsit rezultate."
+      },
+      "domain": {
+        "domainType": "Tip domeniu",
+        "typeAppbox": "Domeniu Appbox",
+        "typeCustom": "Domeniu personalizat",
+        "subdomain": "Subdomeniu",
+        "domain": "Domeniu",
+        "baseDomain": "Domeniu de bază",
+        "selectAppboxFirst": "Selectează mai întâi un Appbox",
+        "selectDomain": "Selectează un domeniu...",
+        "selectOrAddDomain": "Selectează sau adaugă un domeniu...",
+        "searchDomains": "Caută domenii...",
+        "noDomainsMatch": "Niciun domeniu nu corespunde căutării tale.",
+        "noDomainsAvailable": "Nu există domenii disponibile.",
+        "noCustomDomains": "Încă nu există domenii personalizate.",
+        "yourDomains": "Domeniile tale",
+        "addNewDomain": "Adaugă domeniu nou",
+        "add": "Adaugă",
+        "domainSuffix": "selectează un domeniu",
+        "appboxDomain": "Domeniu Appbox",
+        "customDomains": "Domenii personalizate",
+        "loadingDomains": "Se încarcă domeniile...",
+        "blockedDomain": "Acest domeniu este rezervat și nu poate fi folosit.",
+        "invalidDomain": "Introdu un domeniu valid (de ex. mydomain.com).",
+        "addDomainFailed": "Nu s-a putut adăuga domeniul. Te rugăm să încerci din nou.",
+        "dnsSetupTitle": "Configurare DNS",
+        "dnsInstruction": "Creează o înregistrare A care indică spre serverul tău Appbox:",
+        "copyIp": "Copiază adresa IP",
+        "copied": "Copiat!",
+        "dnsNotPointing": "DNS-ul încă nu indică spre IP-ul corect.",
+        "dnsResolvedTo": "În prezent se rezolvă la: {ip}",
+        "verifyDns": "Verifică DNS",
+        "verifying": "Se verifică...",
+        "retryVerify": "Verifică din nou",
+        "dnsVerified": "✓ DNS verificat pentru {domain}"
+      },
+      "field": {
+        "enabled": "Activat",
+        "disabled": "Dezactivat",
+        "selectPlaceholder": "Selectează {label}"
+      },
+      "guard": {
+        "appDisabled": "Această aplicație este dezactivată temporar pentru mentenanță.",
+        "noCylos": "Ai nevoie de un Appbox înainte să poți instala aplicații. Comandă unul pentru a începe.",
+        "getAppbox": "Obține un Appbox",
+        "restricted": "Această aplicație nu este disponibilă cu pachetul tău actual. Apasă mai jos pentru a-ți actualiza planul și a debloca accesul.",
+        "restrictedMinPlan": "Această aplicație nu este disponibilă cu pachetul tău actual. Plan minim necesar: {plan}. Actualizează-ți planul pentru a debloca accesul.",
+        "upgradePackage": "Actualizează-ți pachetul",
+        "getAnotherAppbox": "Obține încă un Appbox",
+        "noSlots": "Această aplicație necesită {count} slot(uri) de aplicație, dar niciunul dintre Appbox-urile tale nu are suficiente sloturi libere. Actualizează-ți planul pentru a obține mai multe.",
+        "getMoreSlots": "Obține mai multe sloturi de aplicații",
+        "noMulti": "Această aplicație permite o singură instalare per Appbox și este deja instalată pe toate Appbox-urile tale eligibile. Pentru a instala o altă instanță, poți comanda un Appbox suplimentar.",
+        "checkingAvailability": "Se verifică disponibilitatea..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "Restricționat pe pachetul actual",
+        "noFreeSlots": "Nu există sloturi libere ({used}/{total})",
+        "alreadyInstalled": "Deja instalată",
+        "notEligible": "Neeligibil",
+        "selectToSeeOptions": "Selectează un Appbox pentru a vedea opțiunile",
+        "upgradeThisAppbox": "Actualizează acest Appbox",
+        "alreadyInstalledDetail": "Această aplicație permite o singură instalare per Appbox și este deja instalată aici. Pentru a instala o altă instanță, comandă un Appbox suplimentar.",
+        "noneEligible": "Niciunul dintre Appbox-urile tale nu este eligibil în acest moment. Selectează unul de mai sus pentru a vedea de ce și cum poți rezolva.",
+        "restrictedSingle": "{name} nu este eligibil — această aplicație este restricționată pe pachetul său actual.",
+        "restrictedMultiple": "{count} Appbox-uri nu sunt eligibile — această aplicație este restricționată pe pachetele lor actuale.",
+        "upgradeName": "Actualizează {name}",
+        "noSlotsSingle": "{name} nu are suficiente sloturi de aplicații libere.",
+        "noSlotsMultiple": "{count} Appbox-uri nu au suficiente sloturi de aplicații libere.",
+        "installedSingle": "{name} are deja această aplicație instalată.",
+        "installedMultiple": "{count} Appbox-uri au deja această aplicație instalată.",
+        "onePerAppbox": "Această aplicație permite o singură instalare per Appbox.",
+        "slotsFree": "{count} sloturi libere",
+        "migrating": "Appbox-ul migrează în prezent",
+        "restrictedOnPackageMinPlan": "Restricționat pe pachetul actual (plan minim: {plan})",
+        "migratingSingle": "{name} migrează în prezent și este temporar indisponibil pentru instalări.",
+        "migratingMultiple": "{count} Appbox-uri migrează în prezent și sunt temporar indisponibile pentru instalări."
+      },
+      "dialog": {
+        "loadingVersions": "Se încarcă versiunile...",
+        "defaultVersion": "(implicită)",
+        "versionsAvailable": "{count, plural, one {# versiune disponibilă} other {# versiuni disponibile}}",
+        "cancel": "Anulează",
+        "installFailed": "Instalarea a eșuat. Te rugăm să încerci din nou."
+      },
+      "boost": {
+        "loading": "Se încarcă opțiunile de boost...",
+        "title": "Sloturi de boost",
+        "resourcePreview": "Previzualizare resurse",
+        "multiplier": "Multiplicator",
+        "slotCost": "Cost în sloturi",
+        "ram": "RAM",
+        "cpus": "CPU-uri",
+        "cta": "Vrei mai mult boost? Actualizează-ți planul"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "Appbox-urile tale",
+      "description": "Monitorizează stocarea, rețeaua, utilizarea boostului și aplicațiile instalate pe fiecare Appbox pe care îl gestionezi.",
+      "empty": "Nu ai încă niciun Appbox.",
+      "getCylo": "Obține un Appbox",
+      "viewDetails": "Vezi detalii",
+      "storage": "Stocare",
+      "appSlots": "Sloturi de aplicații",
+      "network": "Rețea",
+      "upload": "Încărcare",
+      "download": "Descărcare",
+      "multiplier": "Sloturi de boost folosite",
+      "pinnedApps": "Aplicații fixate",
+      "sortBy": "Sortează după",
+      "filterByStatus": "Filtrează după stare",
+      "allStatuses": "Toate stările",
+      "name": "Nume",
+      "server": "Server",
+      "status": "Stare"
+    },
+    "cyloDetail": {
+      "summary": "Rezumat",
+      "fileExplorer": "File Explorer",
+      "diskUsage": "Utilizare disc",
+      "diskUtilization": "Utilizare disc (IO)",
+      "networkTraffic": "Trafic de rețea",
+      "installedApps": "Aplicații instalate",
+      "alerts": "Alerte",
+      "migrationProgress": "Migrare în desfășurare",
+      "migrationLive": "Majoritatea aplicațiilor vor continua să funcționeze normal în timpul migrării live. Aplicațiile care nu pot fi migrate live vor fi indisponibile până la finalizare.",
+      "migrationOffline": "Aplicațiile tale vor fi indisponibile până la finalizarea migrării.",
+      "migrationTransferred": "Transferat: {sent} GiB din {total} GiB",
+      "migrationPhase1": "Se inițializează migrarea",
+      "migrationPhase2": "Se transferă cheile de criptare",
+      "migrationPhase3": "Se transferă certificatele SSL",
+      "migrationPhase4": "Se configurează appbox-ul pe noul server",
+      "migrationPhase5": "Se transferă datele",
+      "migrationPhase6": "Se instalează aplicațiile pe noul server",
+      "migrationPhase7": "Se finalizează migrarea",
+      "migrationPhase8": "Se completează migrarea",
+      "lowQuota": "Spațiu redus pe disc",
+      "lowQuotaMessage": "Appbox-ul tău va rămâne offline până eliberezi spațiu. În prezent ai {available} GiB disponibili și ai nevoie de mai mult de 5 GiB pentru a funcționa.",
+      "lowQuotaMigratingMessage": "Appbox-ul tău nu va fi migrat până nu eliberezi spațiu. În prezent ai {available} GiB disponibili și ai nevoie de mai mult de 5 GiB pentru migrare.",
+      "lowQuotaHint": "Folosește File Explorer pentru a șterge date sau actualizează la un plan mai mare.",
+      "lowQuotaDeleteData": "Șterge unele date",
+      "throttled": "Debit disc limitat",
+      "throttledMessage": "Appbox-ul tău a folosit peste {percent}% din viteza discului pentru o perioadă prelungită. A fost aplicată limitarea de utilizare echitabilă.",
+      "throttledHint": "Limita expiră automat. Pentru a preveni limitări viitoare, redu transferurile simultane, activează coada de așteptare sau programează sarcinile intensive în afara orelor de vârf.",
+      "throttleLevel": "Nivel de limitare",
+      "throttleRate": "Rată (MB/s)",
+      "throttleIops": "IOPS",
+      "throttleExpires": "Expiră",
+      "throttleTopApp": "Aplicația cu cea mai mare utilizare",
+      "throttleTopProcess": "Procesul cu cea mai mare utilizare",
+      "suspended": "Appbox suspendat",
+      "suspendedMessage": "Appbox-ul tău este suspendat în prezent. Contactează suportul dacă crezi că este o eroare.",
+      "offline": "Appbox offline",
+      "offlineMessage": "Appbox-ul tău este în prezent offline.",
+      "upgradePlan": "Actualizează planul",
+      "viewApp": "Vezi",
+      "noAlerts": "Nu există alerte active",
+      "noApps": "Nu există aplicații instalate pe acest appbox.",
+      "backToAppboxes": "Appbox-uri",
+      "notFound": "Appbox negăsit",
+      "notFoundDescription": "Appbox-ul solicitat nu a putut fi găsit.",
+      "bandwidth": "Lățime de bandă",
+      "uploadUsed": "Încărcare folosită",
+      "downloadUsed": "Descărcare folosită",
+      "restart": "Repornește",
+      "restartTitle": "Repornește Appbox",
+      "restartDescription": "Aceasta va reporni Appbox-ul tău. Toate aplicațiile instalate vor fi offline până când repornirea se finalizează.",
+      "cancel": "Anulează"
+    },
+    "fileExplorer": {
+      "title": "File Explorer",
+      "upload": "Încarcă",
+      "newFolder": "Folder nou",
+      "rename": "Redenumește",
+      "delete": "Șterge",
+      "download": "Descarcă",
+      "name": "Nume",
+      "size": "Dimensiune",
+      "modified": "Modificat",
+      "type": "Tip",
+      "emptyDirectory": "Acest folder este gol",
+      "emptyDirectoryDescription": "Încarcă fișiere sau creează un folder nou pentru a începe.",
+      "newFolderTitle": "Folder nou",
+      "newFolderPlaceholder": "Nume folder",
+      "newFolderDescription": "Introdu un nume pentru noul folder.",
+      "renameTitle": "Redenumește",
+      "renamePlaceholder": "Nume nou",
+      "renameDescription": "Introdu un nume nou.",
+      "deleteTitle": "Șterge",
+      "deleteDescription": "Sigur vrei să ștergi „{name}”? Această acțiune nu poate fi anulată.",
+      "create": "Creează",
+      "cancel": "Anulează",
+      "save": "Salvează",
+      "confirm": "Confirmă",
+      "uploading": "Se încarcă...",
+      "uploadSuccess": "Fișierele au fost încărcate cu succes",
+      "uploadError": "Încărcarea fișierelor a eșuat",
+      "createFolderSuccess": "Folder creat",
+      "createFolderError": "Nu s-a putut crea folderul",
+      "renameSuccess": "Redenumit cu succes",
+      "renameError": "Redenumirea a eșuat",
+      "deleteSuccess": "Șters cu succes",
+      "deleteError": "Ștergerea a eșuat",
+      "dropFilesHere": "Plasează fișierele aici pentru a le încărca",
+      "root": "Acasă",
+      "listView": "Vizualizare listă",
+      "gridView": "Vizualizare grilă"
+    },
+    "installedApps": {
+      "title": "Aplicații instalate",
+      "description": "Gestionează aplicațiile instalate pe Appbox-urile tale.",
+      "searchPlaceholder": "Caută după nume, domeniu, appbox...",
+      "name": "Nume",
+      "domain": "Domeniu",
+      "version": "Versiune",
+      "slots": "Sloturi",
+      "slot": "slot",
+      "status": "Stare",
+      "cylo": "Appbox",
+      "installedDate": "Instalat",
+      "empty": "Nu s-au găsit aplicații instalate.",
+      "filterByStatus": "Stare",
+      "filterByCylo": "Appbox",
+      "allCylos": "Toate Appbox-urile",
+      "bulkSelected": "{count} selectate",
+      "bulkUnavailable": "{count, plural, one {# aplicație indisponibilă} other {# aplicații indisponibile}}"
+    },
+    "appDetail": {
+      "port": "Port",
+      "installDate": "Data instalării",
+      "server": "Server",
+      "customFields": "Configurare",
+      "actions": "Acțiuni",
+      "start": "Pornește",
+      "stop": "Oprește",
+      "restart": "Repornește",
+      "update": "Actualizează",
+      "uninstall": "Dezinstalează",
+      "switchVersion": "Schimbă versiunea",
+      "boost": {
+        "title": "App Boost",
+        "description": "Fă boost aplicației pentru a-i crește resursele. Poți previzualiza ajustările mai jos.",
+        "current": "Sloturi de boost curente:",
+        "multiplier": "Multiplicator",
+        "preview": "Previzualizare",
+        "resourcePreview": "Previzualizare resurse",
+        "slotCost": "Cost în sloturi",
+        "ram": "RAM",
+        "cpus": "CPU-uri",
+        "apply": "Aplică boost",
+        "applying": "Se aplică...",
+        "dockerLive": "Resursele aplicațiilor Docker sunt aplicate live, fără repornire.",
+        "vmRestart": "Boosturile pentru VM necesită repornire pentru a aplica resursele actualizate.",
+        "getMore": "Vrei mai mult boost? Actualizează-ți planul"
+      },
+      "freeze": "Îngheață",
+      "unfreeze": "Dezgheață",
+      "confirmFreeze": "Înghețarea acestei aplicații o va opri și îi va elibera sloturile de aplicații. O poți dezgheța mai târziu pentru a o restaura.",
+      "confirmUnfreeze": "Dezghețarea acestei aplicații va consuma din nou sloturi de aplicații. Continui?",
+      "confirmUninstall": "Sigur vrei să dezinstalezi această aplicație? Această acțiune nu poate fi anulată.",
+      "pinApp": "Fixează aplicația",
+      "unpinApp": "Anulează fixarea aplicației",
+      "backToInstalledApps": "Aplicații instalate",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appbox-uri",
+      "backToDashboard": "Dashboard",
+      "notFound": "Aplicația instalată nu a fost găsită",
+      "notFoundDescription": "Aplicația instalată solicitată nu a putut fi găsită.",
+      "version": "Versiune",
+      "cylo": "Appbox",
+      "appNote": "Notă aplicație",
+      "appInfo": "Informații despre aplicație",
+      "running": "Rulează",
+      "stopped": "Oprită",
+      "configuringApp": "Se configurează {appName}...",
+      "sendingInstallPayload": "Se trimite payloadul de instalare către appbox-ul tău...",
+      "sendingUpdatePayload": "Se trimite payloadul de actualizare către appbox-ul tău...",
+      "tabOverview": "Prezentare generală",
+      "tabPorts": "Porturi",
+      "tabConsole": "Consolă",
+      "consoleTitle": "Consolă VM",
+      "consoleUnavailable": "Consola este disponibilă doar când această VM rulează și este activată.",
+      "consoleLoading": "Se încarcă detaliile conexiunii la consolă...",
+      "consoleLoadError": "Nu s-au putut încărca detaliile conexiunii la consolă.",
+      "consolePortsMissing": "Endpointul WebSocket al consolei nu este disponibil pentru această VM.",
+      "consoleConnecting": "Se conectează...",
+      "consoleConnected": "Conectat",
+      "consoleDisconnected": "Deconectat",
+      "consoleConnectionError": "Conexiunea a eșuat",
+      "consoleReconnect": "Reconectează",
+      "consoleWebsocketEndpoint": "Endpoint WebSocket",
+      "portAssignments": "Alocări de porturi",
+      "internalIp": "IP intern",
+      "hostIp": "IP gazdă",
+      "internalPort": "Port intern",
+      "hostPort": "Port gazdă",
+      "protocol": "Protocol",
+      "noPortAssignments": "Nu s-au găsit alocări de porturi.",
+      "searchPorts": "Caută porturi…",
+      "customDomainsTitle": "Domenii personalizate",
+      "customDomainsDescription": "Domenii personalizate configurate pentru această aplicație.",
+      "customDomainsAdd": "Adaugă domeniu",
+      "customDomainsAddTitle": "Adaugă domeniu personalizat",
+      "customDomainsAddDescription": "Conectează un domeniu personalizat la această aplicație instalată.",
+      "customDomainsDomain": "Domeniu",
+      "customDomainsPrimary": "Principal",
+      "customDomainsPrimaryYes": "Da",
+      "customDomainsPrimaryNo": "Nu",
+      "customDomainsAdded": "Adăugat",
+      "customDomainsConfig": "Config",
+      "customDomainsViewConfig": "Vezi config",
+      "customDomainsActions": "Acțiuni",
+      "customDomainsSearch": "Caută domenii...",
+      "customDomainsEmpty": "Nu s-au găsit domenii personalizate.",
+      "customDomainsParentDomain": "Domeniu părinte",
+      "customDomainsLoadingDomains": "Se încarcă domeniile...",
+      "customDomainsSelectDomain": "Selectează un domeniu",
+      "customDomainsSubdomain": "Subdomeniu",
+      "customDomainsDomainSuffix": ".example.com",
+      "customDomainsCancel": "Anulează",
+      "customDomainsSave": "Adaugă domeniu",
+      "customDomainsDelete": "Șterge domeniul",
+      "customDomainsDeleteTitle": "Șterge domeniul",
+      "customDomainsDeleteDescription": "Sigur vrei să ștergi acest domeniu?",
+      "customDomainsVmRestartWarning": "Folosirea unui domeniu părinte diferit de domeniul tău user.appboxes.co va reporni VM-ul.",
+      "customDomainsClose": "Închide",
+      "customDomainsConfigTitle": "Configurare SSL pentru {domain}",
+      "customDomainsConfigDescription": "Copiază fragmentul potrivit în configurația serverului tău web.",
+      "customDomainsSslQueued": "HTTPS pentru domeniile personalizate este emis în fundal și poate dura câteva minute să devină activ după adăugarea domeniului.",
+      "customDomainsWildcardSsl": "Acest domeniu folosește un certificat SSL wildcard existent.",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "Fișier",
+      "customDomainsConfigSnippet": "Configurare",
+      "customDomainsReloadCommand": "Comandă de reîncărcare",
+      "customDomainsNotes": "Note",
+      "customDomainsCopy": "Copiază",
+      "customDomainsCopied": "Copiat!",
+      "customDomainsSubdomainRequired": "Subdomeniul este obligatoriu.",
+      "customDomainsParentDomainRequired": "Selectează un domeniu părinte.",
+      "customDomainsSubdomainInvalid": "Sunt permise doar litere, cifre și cratime (nu poate începe sau se termina cu o cratimă).",
+      "customDomainsSubdomainLength": "Subdomeniul trebuie să aibă între 2 și 30 de caractere.",
+      "customDomainsSubdomainInUse": "Acest subdomeniu este deja folosit. Încearcă altul.",
+      "customDomainsSubdomainValidateFailed": "Nu se poate valida subdomeniul acum.",
+      "customDomainsDnsNotVerified": "DNS-ul încă nu indică spre serverul corect.",
+      "customDomainsDnsNotVerifiedExpected": "DNS-ul nu indică spre serverul corect. IP așteptat: {ip}",
+      "customDomainsDnsCheckFailed": "Nu se poate verifica DNS-ul acum.",
+      "customDomainsAddFailed": "Nu s-a putut adăuga domeniul personalizat.",
+      "customDomainsDeleteFailed": "Nu s-a putut șterge domeniul.",
+      "customDomainsConfigNotAvailable": "Fragmentele de configurare nu sunt disponibile pentru acest domeniu.",
+      "customDomainsConfigFetchFailed": "Nu s-au putut încărca fragmentele de configurare.",
+      "customTablesTitle": "Tabele aplicație",
+      "customTablesLoading": "Se încarcă tabelele personalizate...",
+      "customTablesRowsUsage": "Se folosesc {current} din {max} rânduri",
+      "customTablesAdd": "Adaugă rând",
+      "customTablesAddTitle": "Adaugă rând în {label}",
+      "customTablesAddDescription": "Creează o nouă intrare de rând.",
+      "customTablesEditTitle": "Editează rândul din {label}",
+      "customTablesEditDescription": "Actualizează valorile rândului selectat.",
+      "customTablesDeleteTitle": "Șterge rândul",
+      "customTablesDeleteDescription": "Sigur vrei să ștergi acest rând?",
+      "customTablesDelete": "Șterge",
+      "customTablesSave": "Salvează",
+      "customTablesUpdate": "Actualizează",
+      "customTablesCancel": "Anulează",
+      "customTablesActions": "Acțiuni",
+      "customTablesSearch": "Caută {label}...",
+      "customTablesEmpty": "Nu s-au găsit rânduri.",
+      "customTablesEnabled": "Activat",
+      "customTablesDisabled": "Dezactivat",
+      "customTablesValidationRequired": "Acest câmp este obligatoriu.",
+      "customTablesValidationAlphanumeric": "Sunt permise doar litere și cifre.",
+      "customTablesValidationComplexPassword": "Trebuie să includă literă mică, literă mare, cifră și caracter special.",
+      "customButtonValidation": {
+        "required": "Acest câmp este obligatoriu.",
+        "alphanumeric": "Sunt permise doar litere și cifre.",
+        "notOnlyAlpha": "Include cel puțin o cifră sau un simbol.",
+        "lowercase": "Include cel puțin o literă mică.",
+        "uppercase": "Include cel puțin o literă mare.",
+        "number": "Include cel puțin o cifră.",
+        "specialChar": "Include cel puțin un caracter special.",
+        "invalidEmail": "Introdu o adresă de email validă.",
+        "invalidDate": "Introdu o dată validă.",
+        "minLength": "Trebuie să aibă cel puțin {count} caractere.",
+        "maxLength": "Trebuie să aibă cel mult {count} caractere.",
+        "invalidFormat": "Format invalid."
+      },
+      "customTablesAddSuccess": "Rând adăugat cu succes.",
+      "customTablesEditSuccess": "Rând actualizat cu succes.",
+      "customTablesDeleteSuccess": "Rând șters cu succes.",
+      "customTablesAddFailed": "Nu s-a putut adăuga rândul.",
+      "customTablesEditFailed": "Nu s-a putut actualiza rândul.",
+      "customTablesDeleteFailed": "Nu s-a putut șterge rândul."
+    },
+    "domains": {
+      "title": "Domenii personalizate",
+      "pageDescription": "Domenii personalizate pe care le-ai adăugat aplicațiilor tale instalate.",
+      "domain": "Domeniu",
+      "type": "Tip",
+      "typeManaged": "Gestionat",
+      "typeCustom": "Personalizat",
+      "typeBase": "Bază",
+      "app": "Aplicație",
+      "server": "Server",
+      "createdAt": "Creat",
+      "cylo": "Appbox",
+      "confirmDelete": "Sigur vrei să ștergi acest domeniu?",
+      "deleteDomain": "Șterge domeniul",
+      "deleteBlockedHasChildren": "Nu se poate șterge — acest domeniu are subdomenii care îl folosesc. Elimină-le mai întâi.",
+      "reverifyDns": "Reverifică DNS",
+      "emptyTitle": "Încă nu există domenii personalizate",
+      "emptyDescription": "Domeniile personalizate pot fi adăugate la instalarea unei aplicații. Doar acelea apar aici; domeniile platformei sunt gestionate automat.",
+      "goToAppStore": "Mergi la magazinul de aplicații",
+      "dnsVerified": "DNS-ul indică corect.",
+      "dnsNotVerified": "DNS-ul nu indică spre IP-ul corect.",
+      "expectedIp": "Așteptat: {ip}",
+      "cancel": "Anulează",
+      "searchPlaceholder": "Caută domenii..."
+    }
+  },
+  "account": {
+    "title": "Cont",
+    "profile": {
+      "title": "Profil",
+      "description": "Gestionează numele afișat, emailul, avatarul, parola și setările de securitate ale contului.",
+      "email": "Email",
+      "alias": "Nume afișat",
+      "aliasPlaceholder": "Introdu numele afișat",
+      "save": "Salvează modificările",
+      "memberSince": "Membru din",
+      "twoFactorStatus": "Autentificare cu doi factori",
+      "twoFactorEnabled": "Activată",
+      "twoFactorDisabled": "Neactivată",
+      "enable2FA": "Activează 2FA",
+      "manage2FA": "Gestionează 2FA"
+    },
+    "password": {
+      "title": "Schimbă parola",
+      "current": "Parolă curentă",
+      "new": "Parolă nouă",
+      "confirm": "Confirmă parola nouă",
+      "change": "Schimbă parola",
+      "success": "Parola a fost schimbată cu succes",
+      "successSigningOut": "Parola a fost schimbată. Te deconectăm din toate sesiunile…",
+      "sessionWarning": "Schimbarea parolei te va deconecta imediat din toate sesiunile active de pe toate dispozitivele.",
+      "mismatch": "Parolele nu se potrivesc",
+      "minLength": "Parola trebuie să aibă cel puțin 8 caractere"
+    },
+    "abuse": {
+      "title": "Rapoarte de abuz",
+      "headerDescription": "Revizuiește rapoartele de abuz asociate contului tău și urmărește starea lor curentă.",
+      "id": "ID",
+      "subject": "Subiect",
+      "searchPlaceholder": "Caută rapoarte...",
+      "status": "Stare",
+      "date": "Dată",
+      "description": "Descriere",
+      "complainant": "Reclamant",
+      "adminResponse": "Răspuns admin",
+      "noReports": "Nu s-au găsit rapoarte de abuz.",
+      "statusOpen": "Deschis",
+      "statusResolved": "Rezolvat",
+      "statusClosed": "Închis",
+      "backToList": "Înapoi la rapoartele de abuz",
+      "detailDescription": "Urmărește cronologia raportului, detaliile reclamantului și orice răspuns de la echipa Appbox.",
+      "reportDetails": "Detalii raport",
+      "conversation": "Conversație"
+    },
+    "twoFactor": {
+      "title": "Autentificare cu doi factori",
+      "description": "Protejează-ți contul cu verificare prin aplicație de autentificare și coduri de recuperare de rezervă.",
+      "setup": "Configurează 2FA",
+      "scanQR": "Scanează acest cod QR cu aplicația ta de autentificare",
+      "secretKey": "Sau introdu manual această cheie secretă:",
+      "enterCode": "Introdu codul din 6 cifre din aplicația ta de autentificare",
+      "codePlaceholder": "000000",
+      "verify": "Verifică",
+      "backupCodes": "Coduri de rezervă",
+      "backupCodesDescription": "Salvează aceste coduri de rezervă într-un loc sigur. Fiecare cod poate fi folosit o singură dată.",
+      "newRecoveryCodes": "Coduri de recuperare noi",
+      "newRecoveryCodesDescription": "Salvează acum aceste coduri de înlocuire. Codurile tale de recuperare anterioare nu vor mai funcționa.",
+      "copyAll": "Copiază tot",
+      "copied": "Copiat!",
+      "done": "Gata",
+      "disable": "Dezactivează 2FA",
+      "disableWarning": "Dezactivarea 2FA îți va face contul mai puțin sigur.",
+      "disableConfirm": "Introdu parola pentru a dezactiva 2FA",
+      "disabled": "2FA a fost dezactivată",
+      "generating": "Se generează...",
+      "verifying": "Se verifică...",
+      "next": "Următorul",
+      "back": "Înapoi"
+    },
+    "apiKeys": {
+      "title": "Chei API",
+      "description": "Creează și gestionează chei API la nivel de cont. Cheile API se autentifică drept utilizatorul tău și au același acces ca al contului tău.",
+      "create": "Creează cheie API",
+      "createTitle": "Creează cheie API",
+      "createDescription": "Dă acestei chei un nume ușor de recunoscut. Secretul va fi afișat o singură dată.",
+      "name": "Nume",
+      "namePlaceholder": "Script de automatizare",
+      "expiresAt": "Expiră la",
+      "optional": "Opțional",
+      "never": "Niciodată",
+      "created": "Creată",
+      "lastUsed": "Folosită ultima dată",
+      "status": "Stare",
+      "active": "Activă",
+      "revoked": "Revocată",
+      "expired": "Expirată",
+      "prefix": "Prefix",
+      "actions": "Acțiuni",
+      "rename": "Redenumește",
+      "revoke": "Revocă",
+      "revokeTitle": "Revocă cheia API",
+      "revokeDescription": "Aceasta va dezactiva imediat cheia API. Solicitările care o folosesc nu vor mai funcționa.",
+      "secretTitle": "Salvează cheia API",
+      "secretDescription": "Copiază această cheie acum. Nu o vei mai putea vedea din nou.",
+      "copy": "Copiază",
+      "copied": "Copiat!",
+      "close": "Închide",
+      "cancel": "Anulează",
+      "save": "Salvează",
+      "confirmRevoke": "Revocă cheia",
+      "noKeys": "Încă nu există chei API.",
+      "loadFailed": "Nu s-au putut încărca cheile API.",
+      "createSuccess": "Cheie API creată.",
+      "createFailed": "Nu s-a putut crea cheia API.",
+      "updateSuccess": "Cheie API actualizată.",
+      "updateFailed": "Nu s-a putut actualiza cheia API.",
+      "revokeSuccess": "Cheie API revocată.",
+      "revokeFailed": "Nu s-a putut revoca cheia API."
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "chiar acum",
+      "minutesAgo": "acum {count}m",
+      "hoursAgo": "acum {count}h",
+      "daysAgo": "acum {count}z"
+    },
+    "errors": {
+      "loadFailed": "Nu s-au putut încărca datele. Te rugăm să încerci din nou.",
+      "loadServicesFailed": "Nu s-au putut încărca serviciile. Te rugăm să încerci din nou.",
+      "loadAppsFailed": "Nu s-au putut încărca aplicațiile.",
+      "loadNotificationsFailed": "Nu s-au putut încărca notificările.",
+      "loadBlogFailed": "Nu s-au putut încărca articolele de blog.",
+      "loadAppboxesFailed": "Nu s-au putut încărca appbox-urile. Te rugăm să încerci din nou.",
+      "loadProfileFailed": "Nu s-a putut încărca profilul. Te rugăm să încerci din nou."
+    },
+    "empty": {
+      "noServices": "Nu s-au găsit servicii. Vizitează portalul de facturare pentru a începe.",
+      "noApps": "Nu există aplicații noi disponibile.",
+      "noRecentlyUpdated": "Nu există aplicații actualizate recent.",
+      "noBlogPosts": "Nu există articole de blog disponibile.",
+      "noAppboxes": "Vizitează portalul de facturare pentru a începe.",
+      "noMatchingAppboxes": "Niciun appbox nu corespunde filtrelor tale."
+    },
+    "toast": {
+      "displayNameUpdated": "Numele afișat a fost actualizat",
+      "displayNameFailed": "Nu s-a putut actualiza numele afișat"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Se repornește",
+      "migrating": "Se migrează",
+      "installing": "Se instalează",
+      "suspended": "Suspendat",
+      "frozen": "Înghețat",
+      "throttled": "Limitat",
+      "lowQuota": "Cotă redusă"
+    }
+  }
+}

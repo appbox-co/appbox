@@ -1,0 +1,108 @@
+---
+title: Launch Week Day 3 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: Launch Week Day 3。フル KVM virtual private servers が Appbox で利用可能になりました。Ubuntu、Debian、Arch Linux、Fedora、Rocky Linux、AlmaLinux から選び、本物の VM に root アクセスできます。
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Day 3: Virtual Private Servers
+
+Day 3。これは大きな発表です。
+
+最初から、Appbox はセルフホストアプリを簡単にするためのものでした。アプリをインストールし、URL を取得し、完了。このモデルは多くの用途で非常にうまく機能します。しかし、どうしてもフルマシンが必要になる種類のユースケースも常にありました。自分のカーネル、自分の init system、自分のルールです。
+
+本日、Appbox 上で **Virtual Private Servers** をリリースします。
+
+## コンテナではなく本物の VM
+
+これが何なのかをはっきりさせましょう。これは専用ハードウェア上で動作するフル KVM 仮想マシンで、独自のカーネル、独自の systemd、完全な root アクセスを備えています。OS のふりをした Docker コンテナではありません。本物です。
+
+この違いは重要です。コンテナではできないことをすべて解放するからです。
+
+- **VPS 内の Docker** - どのサーバーでも行うように `docker compose up` を実行できます
+- **Snaps and Flatpaks** - 本来の方法でデスクトップソフトウェアをインストールできます
+- **Systemd services** - 完全なサービス管理、timers、journal、すべて
+- **Custom kernels and modules** - root を持っています。必要なことを行えます
+- **Nested virtualization** - 必要であれば利用できます
+
+当社の Docker ベース OS や webtops で、コンテナの制限により何かが動かないという壁にぶつかったことがあるなら、その壁はなくなります。
+
+## 6つの Linux OS が利用可能
+
+現在、6つの Linux ディストリビューションから選べます。
+
+| OS | Description |
+|---|---|
+| **Ubuntu VPS** | Full Ubuntu 24.04 LTS |
+| **Debian VPS** | Full Debian 12 and 13 |
+| **Arch Linux VPS** | Rolling release, always up to date |
+| **Fedora VPS** | Fedora 43 with latest packages |
+| **Rocky Linux VPS** | Enterprise-grade RHEL compatibility |
+| **AlmaLinux VPS** | RHEL-compatible enterprise Linux with long-term support |
+
+慣れているものを選ぶことも、学びたいものを選ぶこともできます。Appbox 上では、どれも同じ機能セットを備えています。
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Appbox App Store の VPS カテゴリ" width="860" className="mt-8 mb-10" />
+</p>
+
+## 組み込み Web コンソール
+
+すべての VPS には、Appbox ダッシュボードに直接組み込まれたブラウザベースのコンソールが付属します。任意の VPS で Console タブをクリックすると、ブラウザ内でライブのターミナルセッションを利用できます。
+
+つまり、サーバーから締め出されることがありません。SSH 設定を間違えた？ネットワーク設定を壊した？問題ありません。Web コンソールは VM の仮想ディスプレイへ直接接続し、ゲストのネットワークスタックから完全に独立しています。いつでも入る手段があります。
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Appbox ダッシュボード内の Web ベース VM コンソール" width="860" className="mt-8 mb-10" />
+</p>
+
+## Selkies 搭載 Ubuntu Desktop
+
+ここからさらに面白くなります。当社の Ubuntu VPS には **Selkies** によるデスクトップ版があり、ハードウェアアクセラレーション付きストリーミング、完全な音声出力、マイク入力を備えたフルグラフィカル Linux デスクトップをブラウザから利用できます。
+
+私たちは Selkies チームと直接協力して、これを KVM 仮想マシン内で動作させました。その統合は [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop) でオープンソース化しています。
+
+実際には何ができるのでしょうか。ブラウザ内で、本物のアプリケーションを備えたフルデスクトップ環境を実行できます。VS Code、Discord、Spotify、Slack が同時に動作し、すべて音声付きで、Web ブラウザのある任意のデバイスからアクセスできます。
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="VS Code、Spotify、Discord が動作する Selkies 経由の Ubuntu desktop" width="860" className="mt-8 mb-10" />
+</p>
+
+少し考えてみてください。常時稼働する永続的なリモート開発環境を持ち、プロジェクト用 Docker コンテナを使って VS Code を動かしながら、チームチャット用に Discord を開き、Spotify で音楽を流せます。すべてブラウザタブの中です。自分の laptop、tablet、または他の人のコンピューターから。ワークスペース全体が、URL の先にあります。
+
+## データはあなたについてきます
+
+すべての VPS は、`/APPBOX_DATA/` ディレクトリ経由で Appbox ストレージへ自動アクセスできます。中には次のものがあります。
+
+- **`/APPBOX_DATA/apps/`** - 他のインストール済み Appbox アプリのデータ
+- **`/APPBOX_DATA/storage/`** - 一般的な Appbox ストレージ
+
+これは virtiofs によって共有されます。virtiofs は、高性能な filesystem passthrough で、ほぼネイティブに近いファイルアクセス速度を提供します。VPS は、他のアプリも使うファイルを読み書きできるため、たとえばストリーミングアプリからメディアファイルを処理したり、VPS 内からデータベースをバックアップしたりできます。
+
+## App Boost と連携
+
+VPS は Day 2 でリリースした同じ App Boost システムを使用します。VM にもっと RAM や CPU が必要ですか？boost レベルを上げ、プランのスロットをより多く割り当ててください。リソースは hypervisor レベルで割り当てられるため、VM は単に cgroup 制限が上がるだけでなく、実際により多くの compute を得ます。
+
+補足すると、VPS は Docker ベース OS アプリよりも基本スロットコストがやや高くなります。これは、フル仮想マシンがホストカーネルを共有するコンテナよりも多くの実リソースを消費することを反映しています。トレードオフは明快です。より多くの能力を得て、スロットコストはそれを正直に反映しています。
+
+## VPS の今後
+
+VPS は本日、完全な機能付きでリリースしますが、ロードマップにはまだ続きがあります。近い将来、VPS インスタンス向けのリソース使用グラフを追加します。ほかのアプリと同じように、CPU、RAM、ディスク使用量をダッシュボードから直接、時系列で監視できるようになります。
+
+## なぜ重要なのか
+
+Appbox の Docker ベース OS と webtops は、多くの人に役立ってきましたし、今後もなくなりません。しかし、コンテナ内で動作することには実際の制限があります。Docker を実行できません。snaps を使えません。kernel modules を読み込めません。フル init system を実行できません。常に誰かの namespace の制約内で作業することになります。
+
+VPS はそれらの制約を完全に取り除きます。本物のマシンを手に入れます。他のプロバイダーから借りたサーバーでできることなら、ここでもできます。ただし、データはすでにマウントされ、Web コンソールはすでに用意され、リソースはスライダーで拡張できます。
+
+## Day 3 は今すぐ利用できます
+
+VPS は今すぐ App Store で利用できます。VPS カテゴリへ移動し、OS を選び、インストールしてください。フル VM のプロビジョニングはコンテナアプリより少し時間がかかるため、VPS の準備が整うまで最大15分ほど見込んでください。
+
+明日は Day 4 です。私たちはペースを落としません。
+
+---
+
+*フィードバックや問題を見つけましたか？support@appbox.co へ連絡するか、[billing.appbox.co](https://billing.appbox.co/submitticket.php) でチケットを開いてください。*

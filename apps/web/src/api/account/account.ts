@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "@/api/client"
+import { apiDelete, apiGet, apiPost, apiPut } from "@/api/client"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -95,6 +95,33 @@ export interface TwoFactorStatus {
 
 export interface RegenerateRecoveryCodesResult {
   recovery_codes: string[]
+}
+
+export interface ApiKey {
+  id: number
+  user_id: number
+  name: string
+  key_prefix: string
+  created_at: string
+  updated_at: string
+  last_used_at: string | null
+  expires_at: string | null
+  revoked_at: string | null
+}
+
+export interface CreateApiKeyInput {
+  name: string
+  expires_at?: string | null
+}
+
+export interface UpdateApiKeyInput {
+  name?: string
+  expires_at?: string | null
+}
+
+export interface CreateApiKeyResult {
+  key: string
+  item: ApiKey
 }
 
 /* -------------------------------------------------------------------------- */
@@ -310,4 +337,39 @@ export async function regenerateRecoveryCodes(data: {
     "users/2fa/recovery-codes",
     data
   )
+}
+
+/**
+ * Backend: GET /v1/users/api-keys (PRIV)
+ */
+export async function getApiKeys(): Promise<ApiKey[]> {
+  const res = await apiGet<{ items: ApiKey[] }>("users/api-keys")
+  return res.items ?? []
+}
+
+/**
+ * Backend: PUT /v1/users/api-keys (PRIV)
+ * Returns the raw API key only once.
+ */
+export async function createApiKey(
+  data: CreateApiKeyInput
+): Promise<CreateApiKeyResult> {
+  return apiPut<CreateApiKeyResult>("users/api-keys", data)
+}
+
+/**
+ * Backend: POST /v1/users/api-keys/{id} (PRIV)
+ */
+export async function updateApiKey(
+  id: number,
+  data: UpdateApiKeyInput
+): Promise<ApiKey> {
+  return apiPost<ApiKey>(`users/api-keys/${id}`, data)
+}
+
+/**
+ * Backend: DELETE /v1/users/api-keys/{id} (PRIV)
+ */
+export async function revokeApiKey(id: number): Promise<ApiKey> {
+  return apiDelete<ApiKey>(`users/api-keys/${id}`)
 }

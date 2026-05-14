@@ -1,28 +1,29 @@
 ---
-title: Cabeçalho de metadados
-description: Aprenda a usar o cabeçalho de metadados em arquivos MDX.
+title: Frontmatter
+description: Aprenda a usar frontmatter em arquivos MDX.
+sort: 3
 ---
 
-O cabeçalho de metadados é uma parte importante de um arquivo MDX.
+O frontmatter é uma parte importante de um arquivo MDX.
 Ele é usado para definir informações sobre o conteúdo do arquivo,
-como título, descrição, autor, data de publicação, etc.
+como título, descrição, autor, data de publicação etc.
 
-O cabeçalho de metadados é definido no início do arquivo, entre `---` (três hífens) no início e no final.
+O cabeçalho de metadados é definido no início do arquivo, entre `---` (três hífens) no começo e no fim.
 
-## Estrutura
+## Formato
 
-O cabeçalho de metadados é definido em formato de chave-valor, onde a chave é o nome do metadado e o valor é o conteúdo do metadado.
+O cabeçalho de metadados é definido no formato chave-valor, em que a chave é o nome do metadado e o valor é o conteúdo desse metadado.
 
 **Exemplo:**
 
 ```mdx
 ---
-title: Título do documento
-description: Descrição do documento
+title: Document title
+description: Document description
 ---
 ```
 
-Dependendo do tipo de documento (documentação, post de blog, etc.), diferentes metadados podem ser usados.
+Dependendo do tipo de documento (documentação, post de blog etc.), diferentes metadados podem ser usados.
 
 ## Metadados para documentação
 
@@ -38,8 +39,8 @@ Dependendo do tipo de documento (documentação, post de blog, etc.), diferentes
 
 ```mdx
 ---
-title: Título do documento
-description: Descrição do documento
+title: Document title
+description: Document description
 links:
   source: https://google.com
   docs: /docs
@@ -48,7 +49,7 @@ links:
 ---
 ```
 
-## Metadados para post de blog
+## Metadados para posts de blog
 
 <Alert className="my-4" variant="warning">
   <AlertTitle className="font-bold">`author_id`</AlertTitle>
@@ -64,9 +65,9 @@ links:
   <AlertTitle className="font-bold">`og_image`</AlertTitle>
 
   <AlertDescription className="pl-2">
-    É a imagem que será usada como imagem de destaque do post ao ser compartilhada nas redes sociais caso não queira usar a imagem gerada automaticamente.
+    Esta é a imagem que será usada como imagem de destaque do post quando ele for compartilhado nas redes sociais, caso você não queira usar a imagem gerada automaticamente.
     As imagens devem ser armazenadas na pasta `public/blog-og`.
-    Use somente o nome e a extensão do arquivo da imagem.
+    Use apenas o nome do arquivo de imagem e sua extensão.
   </AlertDescription>
 </Alert>
 
@@ -86,9 +87,9 @@ links:
 
 ```mdx
 ---
-title: Título do post
+title: Post title
 date: 2024-08-07 22:33:00
-excerpt: Resumo do post
+excerpt: Post excerpt
 author_id: daltonmenezes
 og_image: introducing-blogs-og.jpg
 links:
@@ -99,8 +100,3 @@ links:
 tags: [next.js, open-graph, blog]
 ---
 ```
-
-
-
-
-

@@ -1,0 +1,183 @@
+---
+title: Program Bug Bounty
+description: Program pelaporan kerentanan keamanan dan hadiah kami
+---
+
+Di Appbox, keamanan adalah prioritas mendasar. Kami secara aktif mendorong peneliti keamanan untuk membantu memperkuat platform kami dengan mengidentifikasi dan melaporkan potensi kerentanan. Program ini menguraikan pendekatan kami terhadap riset keamanan yang bertanggung jawab, cara kami menangani laporan kerentanan, dan hadiah yang kami tawarkan kepada peneliti yang membantu meningkatkan postur keamanan kami.
+
+## Komitmen Kami
+
+Saat Anda berpartisipasi dalam program bug bounty kami, kami berjanji untuk:
+
+* Mengakui dan mengevaluasi laporan Anda secara tepat waktu
+* Menangani kerentanan terkonfirmasi dengan urgensi yang sesuai
+* Mengakui dan memberi hadiah kepada Anda untuk kerentanan unik yang sebelumnya belum dilaporkan dan menghasilkan peningkatan keamanan
+
+## Cakupan Program
+
+Program bug bounty ini berlaku untuk platform Appbox berikut:
+
+* Website Utama Appbox [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Infrastruktur Hosting Appbox [username.appboxes.co] - **Hanya infrastruktur, bukan aplikasi pelanggan**
+
+**Catatan:** Meskipun infrastruktur hosting kami (username.appboxes.co) termasuk cakupan, kerentanan pada aplikasi pihak ketiga yang di-deploy oleh pelanggan tidak termasuk. Lihat pengecualian di bawah.
+
+## Apa yang Memenuhi Syarat sebagai Kerentanan Valid
+
+Untuk memenuhi syarat dalam program bug bounty kami, pengajuan harus memenuhi SEMUA kriteria berikut:
+
+### 1. Menunjukkan Eksploitasi Nyata
+* Menyertakan proof of concept yang berfungsi dan menunjukkan kerentanan dapat dieksploitasi
+* Menunjukkan dampak keamanan yang jelas; kerentanan teoritis tanpa kerugian yang didemonstrasikan tidak memenuhi syarat
+* Membuktikan bahwa penyerang benar-benar dapat mengompromikan data pengguna, akun, atau integritas sistem
+
+### 2. Memengaruhi Sistem Dalam Cakupan
+* Kerentanan harus ada di kode proprietary atau infrastruktur Appbox
+* Harus memengaruhi sistem yang secara eksplisit tercantum dalam "Cakupan Program" di atas
+* Harus dapat direproduksi pada environment production atau staging kami
+
+### 3. Belum Pernah Dilaporkan
+* Kerentanan harus baru ditemukan dan belum diketahui oleh kami
+* Laporan duplikat atau variasi dari issue yang sudah diketahui tidak memenuhi syarat
+
+## Area dan Issue yang Dikecualikan
+
+Berikut dianggap **di luar cakupan** program bug bounty kami:
+
+### Sistem dan Integrasi Pihak Ketiga
+* WHMCS Client Area [https://billing.appbox.co] - Laporkan ke [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Widget chat Chatwoot - Laporkan ke [Chatwoot Security](https://www.chatwoot.com/security)
+* **Aplikasi yang di-deploy pelanggan** [app.username.appboxes.co] - Kerentanan pada aplikasi pihak ketiga (WordPress, Nextcloud, dan sebagainya) yang di-host di infrastruktur kami harus dilaporkan ke vendor aplikasi masing-masing
+* Layanan, plugin, atau integrasi pihak ketiga lain yang kami gunakan
+* Alamat IP atau domain yang tidak dikontrol langsung oleh Appbox
+* Sistem legacy atau deprecated yang tidak lagi digunakan secara aktif
+
+**Di Luar Cakupan untuk Infrastruktur Hosting:**
+* Kerentanan dalam kode aplikasi yang di-deploy pelanggan (WordPress, Nextcloud, dan sebagainya)
+* Konfigurasi default aplikasi pihak ketiga
+* Issue keamanan khusus untuk versi aplikasi tertentu
+
+### Security Header dan Hardening
+* Security header yang hilang (X-Frame-Options, COOP, COEP, MTA-STS, dan sebagainya) **kecuali** Anda menunjukkan eksploitasi nyata yang menyebabkan kompromi data
+* Atribut `rel="noopener"` atau `rel="noreferrer"` yang hilang
+* Pengungkapan versi server atau kebocoran informasi header HTTP
+* Atribut cookie pada cookie non-sensitif (analitik, preferensi, dan sebagainya)
+
+### Pengungkapan Informasi Berdampak Rendah
+* Pesan error verbose yang tidak mengekspos data sensitif (password, token, PII)
+* Pengungkapan path tanpa demonstrasi path traversal atau akses file
+* Identifikasi tech stack (versi PHP, deteksi framework, dan sebagainya)
+* Respons atau perilaku aplikasi generik
+
+### Keputusan Desain dan Issue Teoritis
+* Login CSRF (tidak memberi penyerang akses ke akun korban)
+* User enumeration melalui timing attack atau respons berbeda (kecuali bagian dari chain serangan yang lebih besar)
+* Clickjacking tanpa demonstrasi eksploitasi fungsi sensitif
+* Konfigurasi CORS pada endpoint non-sensitif
+* Rate limiting yang hilang **kecuali** Anda menunjukkan penyalahgunaan nyata (DoS tetap dikecualikan)
+
+### Prasyarat Serangan
+* Issue keamanan yang tidak memengaruhi konfigurasi aplikasi default kami
+* Kerentanan yang memerlukan konfigurasi non-standar
+* Kerentanan dalam container kami yang memerlukan setup custom atau termodifikasi
+* Issue yang memerlukan kompromi level jaringan (MITM, DNS poisoning, ARP spoofing)
+
+### Metode Pengujian yang Dilarang
+* Serangan pengungkapan informasi berbasis timing
+* Teknik enumerasi proses
+* Segala bentuk denial of service atau serangan volume tinggi
+* Teknik social engineering dan phishing
+* Pemindaian keamanan otomatis yang menghasilkan traffic atau load berlebihan
+* Menguji fitur atau halaman non-fungsional (misalnya, halaman signup yang belum production)
+
+### Jenis Laporan Tidak Valid
+* Laporan yang hanya didasarkan pada output scanner otomatis tanpa validasi manual
+* Rekomendasi generik tanpa menunjukkan kerentanan nyata
+* Saran praktik terbaik tanpa dampak keamanan
+* Observasi kepatuhan (PCI-DSS, GDPR, dan sebagainya) tanpa menunjukkan exploitability
+
+## Struktur Hadiah
+
+### Website Utama dan Control Panel
+
+| **Jenis Kerentanan**                               | **Hadiah PayPal** | **Kredit Layanan** |
+| -------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                   | EUR 200           | EUR 300            |
+| CSRF                                               | EUR 300           | EUR 450            |
+| Authentication Bypass                              | EUR 500           | EUR 750            |
+| SQL Injection                                      | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                           | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000        | EUR 3000           |
+| Persistent code change                             | EUR 1000          | EUR 1500           |
+
+### Infrastruktur Hosting
+
+| Jenis Kerentanan                           | Hadiah PayPal | Kredit Layanan |
+| ------------------------------------------ | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.) | EUR 500      | EUR 750        |
+| Authentication Bypass for Supported Apps   | EUR 100       | EUR 200        |
+| Local privilege escalation                 | EUR 500       | EUR 750        |
+
+Kontributor yang melaporkan kerentanan valid akan diakui di Security Researchers Hall of Fame kami sebagai tanda apresiasi.
+
+## Kualitas Laporan yang Diperlukan
+
+Semua laporan kerentanan harus menyertakan:
+
+* **Deskripsi kerentanan yang jelas** - Jelaskan apa kerentanannya dan mengapa penting
+* **Sistem/URL terdampak** - Sebutkan secara tepat di mana kerentanan berada
+* **Reproduksi langkah demi langkah** - Langkah terperinci yang memungkinkan kami mereproduksi issue
+* **Proof of concept yang berfungsi** - Demonstrasi fungsional eksploitasi (kode, screenshot, video)
+* **Dampak keamanan nyata** - Tunjukkan apa yang dapat dicapai penyerang, bukan kemungkinan teoritis
+* **Pengujian Anda sendiri** - Validasi temuan secara manual, jangan hanya meneruskan output scanner
+
+Laporan yang tidak memiliki elemen ini atau hanya berisi rekomendasi keamanan generik tidak akan memenuhi syarat untuk hadiah.
+
+## Mengklaim Hadiah Anda
+
+* Anda dapat memilih antara dua opsi hadiah:  
+   * Pembayaran PayPal langsung (memerlukan akun PayPal valid)
+   * Kredit layanan Appbox (berlaku untuk layanan Appbox apa pun, tidak dapat ditransfer)
+
+## Panduan Partisipasi
+
+* Patuhi kebijakan ini, [Ketentuan Layanan](/policies/terms-of-service) kami, dan semua hukum yang berlaku
+* Laporkan kerentanan segera setelah ditemukan
+* Hormati privasi pengguna dan integritas sistem selama riset Anda
+* Kirim semua laporan kerentanan secara eksklusif melalui [contact us form](https://billing.appbox.co/contact.php) kami
+* Jaga kerahasiaan kerentanan yang ditemukan sampai diselesaikan
+* Batasi pengujian Anda pada sistem yang secara eksplisit termasuk dalam program ini
+* Jika Anda mendapat akses tak terduga ke data sensitif: akses hanya jumlah minimum yang dibutuhkan untuk menunjukkan issue, hentikan pengujian segera, dan laporkan kerentanan secepatnya
+* Gunakan hanya akun test Anda sendiri untuk interaksi apa pun dengan sistem kami
+* Jangan pernah mencoba memeras Appbox berdasarkan temuan Anda
+* **Verifikasi temuan Anda** - Uji bahwa proof of concept Anda benar-benar bekerja sebelum mengirim
+* **Fokus pada dampak** - Prioritaskan kerentanan yang dapat menyebabkan kerugian nyata dibanding issue teoritis
+
+## Perlindungan Hukum
+
+Peneliti keamanan yang mengikuti kebijakan ini dapat mengharapkan:
+
+* Perlindungan dari tindakan hukum untuk riset keamanan beritikad baik yang dilakukan dalam panduan ini
+* Pengecualian dari klaim hukum anti-circumvention bila diperlukan untuk riset keamanan yang sah
+* Pengesampingan beberapa pembatasan kebijakan yang jika tidak demikian akan mencegah pengujian keamanan
+* Pengakuan bahwa riset keamanan yang patuh bermanfaat dan dilakukan dengan itikad baik
+
+Anda tetap bertanggung jawab untuk mematuhi semua hukum yang berlaku. Jika Anda menghadapi tindakan hukum dari pihak ketiga saat mematuhi kebijakan ini, kami akan menegaskan bahwa tindakan Anda dilakukan sesuai program kami. Jika Anda tidak yakin apakah aktivitas riset yang direncanakan mematuhi kebijakan ini, silakan hubungi kami melalui [contact us form](https://billing.appbox.co/contact.php) sebelum melanjutkan.
+
+## Proses Pelaporan
+
+Untuk melaporkan kerentanan, buat tiket terperinci melalui [contact us form](https://billing.appbox.co/contact.php) kami.
+
+* Laporan Anda harus menyertakan langkah komprehensif untuk mereproduksi kerentanan. Anda dapat menggunakan template ini sebagai panduan: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Semua komunikasi program harus melalui Support Ticket Platform resmi kami
+* Pengungkapan publik atas kerentanan apa pun tanpa izin tertulis eksplisit dari Appbox melanggar ketentuan program ini dan akan membuat Anda tidak memenuhi syarat menerima hadiah
+
+## Apa yang Terjadi Setelah Anda Melapor
+
+* **Kerentanan valid**: Kami akan mengakui laporan Anda, mengerjakan perbaikan, dan memproses hadiah Anda
+* **Laporan tidak valid**: Kami akan menjelaskan mengapa laporan tidak memenuhi syarat dan mungkin memberikan panduan untuk pengajuan berikutnya
+* **Laporan di luar cakupan**: Kami akan mengarahkan Anda ke vendor yang sesuai atau menjelaskan mengapa issue tersebut tidak tercakup
+
+Kami menghargai riset berkualitas dan kontribusi konstruktif terhadap keamanan kami. Terima kasih telah membantu menjaga Appbox tetap aman.

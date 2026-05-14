@@ -1,0 +1,1493 @@
+{
+  "_locale": "nl",
+  "site": {
+    "heading": "Implementeer apps in <span>seconden</span>",
+    "subheading": "Host {flipwords} met een klik",
+    "description": "Sla de complexe serverconfiguratie over. Kies uit meer dan 60 direct te implementeren apps, klik op installeren en je bent binnen seconden live. Krachtige hosting zonder gedoe.",
+    "meta_title": "Appbox - Implementeer apps in seconden | App-hosting met een klik",
+    "flipwords": [
+      "websites",
+      "databases",
+      "servers",
+      "transfers",
+      "tools",
+      "chat",
+      "opslag",
+      "analytics",
+      "monitoring",
+      "pipelines",
+      "netwerken",
+      "back-ups",
+      "projecten",
+      "docs",
+      "tests"
+    ],
+    "announcement": "Lees alle Launch Week-berichten",
+    "announcement_tag": "Launch Week",
+    "changelog": "Changelog",
+    "buttons": {
+      "get_started": "Aan de slag",
+      "browse_apps": "Apps bekijken",
+      "toggle_menu": "Menu schakelen",
+      "toggle_language": "Taal wijzigen"
+    },
+    "words": {
+      "menu": "Menu",
+      "docs": "Docs",
+      "blog": "Blog",
+      "home": "Home",
+      "legal": "Juridisch",
+      "terms_of_service": "Servicevoorwaarden",
+      "service_level_agreement": "Service Level Agreement",
+      "privacy_data_handling": "Privacy en gegevensverwerking",
+      "global_privacy_practices": "Wereldwijde privacypraktijken",
+      "incident_response_security": "Incidentrespons en beveiliging",
+      "view_all_policies": "Alle beleidsdocumenten bekijken",
+      "documentation_new": "Documentatie (nieuw)",
+      "documentation_old": "Documentatie (oud)",
+      "social": "Sociaal"
+    },
+    "featured_cards": {
+      "nextjs": {
+        "description": "Gebouwd met Next.js en de app router."
+      },
+      "shadcn": {
+        "description": "Gebouwd boven op Shadcn (site/components)."
+      },
+      "tailwind": {
+        "description": "Gestyled met Tailwind CSS."
+      },
+      "i18n": {
+        "description": "Ondersteuning voor internationalisatie met next-intl."
+      },
+      "more": {
+        "title": "en meer!",
+        "description": "Nog veel meer functies, zoals documenten en blogberichten met MDX, donkere en lichte modus, zoek-commandopalet, geinternationaliseerde sitemap en meer..."
+      }
+    },
+    "footer": {
+      "copyright": "Copyright © {year} Appbox. Alle rechten voorbehouden."
+    },
+    "search": {
+      "search": "Zoeken",
+      "no_results_found": "Geen resultaten gevonden",
+      "search_documentation": "Documentatie doorzoeken",
+      "type_command_or_search": "Typ een commando of zoekopdracht"
+    },
+    "themes": {
+      "theme": "Thema",
+      "dark": "Donker",
+      "light": "Licht",
+      "system": "Systeem"
+    },
+    "apps_section": {
+      "title": "Enorme collectie direct te implementeren apps",
+      "headline_1": "Direct te implementeren apps.",
+      "headline_2": "Een enorme collectie.",
+      "description": "Host alles van databases en mediaservers tot ontwikkeltools en communicatieplatforms. Implementeer software van enterprise-kwaliteit met slechts een paar klikken."
+    },
+    "dashboard_promo": {
+      "headline_1": "Het nieuwe dashboard.",
+      "headline_2": "Gebouwd voor jou.",
+      "description": "Een volledig vernieuwd controlepaneel met een uniform dashboard, geintegreerde app store en ingebouwde tweefactorauthenticatie. Sneller om door te navigeren, makkelijker te begrijpen en klaar voor wat hierna komt.",
+      "cta": "Lees de volledige aankondigingen",
+      "features": {
+        "dashboard": {
+          "title": "Controlecentrum.",
+          "description": "Blogupdates, servicekaarten, meldingen en nieuwste apps, allemaal in een operationeel overzicht."
+        },
+        "appstore": {
+          "title": "App Store.",
+          "description": "Overzichtelijker browsen, betere detailpagina's en een kortere weg van ontdekking naar installatie."
+        },
+        "boost": {
+          "title": "App Boost.",
+          "description": "Geef afzonderlijke apps meer CPU en RAM met je beschikbare slots. Geen planupgrade nodig."
+        }
+      }
+    },
+    "vps_launch_promo": {
+      "headline_1": "Virtual Private Servers.",
+      "headline_2": "Linux en Windows.",
+      "description": "Volledige KVM virtual machines met root-toegang, een ingebouwde webconsole en keuze uit Linux of Windows 11 Pro. Draai Docker, snaps, flatpaks of welke Windows-software je ook nodig hebt.",
+      "cta": "Lees de Launch Week-berichten",
+      "features": {
+        "console": {
+          "title": "Webconsole.",
+          "description": "Een browsergebaseerde terminal ingebouwd in het dashboard. Je raakt nooit buitengesloten."
+        },
+        "webtop": {
+          "title": "Selkies Desktop.",
+          "description": "Een volledige Ubuntu-desktop in je browser met audio, microfoon en echte apps zoals VS Code en Discord."
+        },
+        "distros": {
+          "title": "Zes Linux-distro's.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux en AlmaLinux. Kies wat je kent."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "Een volledige Windows VM met RDP, je Appbox-gegevens op de Z:-schijf en beheerderstoegang."
+        }
+      }
+    },
+    "openclaw_promo": {
+      "eyebrow": "Nu beschikbaar op Appbox",
+      "headline_1": "Je AI-assistent.",
+      "headline_2": "Draait op je server.",
+      "description": "OpenClaw is een open-source AI-assistent die op je Appbox draait en beschikbaar is op alle plannen. Hij praat via de chat-apps die je al gebruikt, ziet je bestanden en databases en kan inloggen op je andere apps om dingen voor je te regelen.",
+      "card_title": "OpenClaw werkt in je hele Appbox.",
+      "card_description": "Hij kan gedeelde appgegevens lezen, een browser en CLI gebruiken, databases bevragen en reageren via de chat-apps die je al gebruikt.",
+      "image_alt": "OpenClaw-chatsessie in het webdashboard",
+      "cta": "Lees de aankondiging",
+      "capabilities": {
+        "chat": {
+          "title": "Elke chat-app.",
+          "description": "WhatsApp, Telegram, Discord, Slack, Signal, iMessage. Praat ermee waar je al bent."
+        },
+        "filesystem": {
+          "title": "Gedeeld bestandssysteem.",
+          "description": "Directe toegang tot de gegevens van je andere apps en je algemene Appbox-opslag. Geen APIs nodig."
+        },
+        "browser": {
+          "title": "Browser en CLI.",
+          "description": "Een headless browser en elke gangbare databaseclient zijn ingebouwd. Hij kan namens jou inloggen op je apps."
+        },
+        "tools": {
+          "title": "70+ skills.",
+          "description": "Vooraf geladen met meer dan 70 skills voor WordPress, GitLab, Nextcloud, MariaDB en meer. Installeer nieuwe vanuit ClawHub."
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "Zo simpel als klikken.",
+      "headline_2": "Geen configuratie.",
+      "description": "Appbox brengt complexe installaties van open-source apps terug tot de essentie: voer een gebruikersnaam en wachtwoord in, klik op installeren en je app wordt voor je geconfigureerd.",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "Installeer in seconden",
+      "description": "Kies je Appbox, vul een paar velden in en {appName} is live.",
+      "dialog_title": "{appName} installeren",
+      "requires_slots": "{count, plural, one {Vereist # App Slot} other {Vereist # App Slots}}",
+      "preview_badge": "Preview",
+      "demo_note": "Deze demo laat zien hoe de installer eruitziet nadat je een Appbox hebt.",
+      "select_appbox": "Appbox selecteren",
+      "slots_free": "({count} slots vrij)",
+      "ready_note": "Klaar om te installeren? Je hebt eerst een actieve Appbox nodig.",
+      "cancel": "Annuleren",
+      "install": "Installeren",
+      "footer_note": "Dit is een preview van het installatieformulier. Kies een plan om je Appbox te maken en echt te implementeren.",
+      "domain": {
+        "recordType": "Type",
+        "recordHost": "Host / naam",
+        "recordValue": "Waarde (IP)",
+        "needHelp": "Hulp nodig bij het toevoegen van dit record?"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "Stap 1",
+          "title": "Selecteer je Appbox",
+          "body": "De installer selecteert je Appbox automatisch als je er maar een hebt en toont alleen Appboxes met genoeg vrije slots."
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "Sleep voor meer kracht",
+          "body": "Elke extra App Slot voegt 10% meer CPU en RAM toe aan deze app, en de preview wordt direct bijgewerkt.",
+          "link": "Hoe boost per app werkt"
+        },
+        "resource_preview": {
+          "eyebrow": "Preview",
+          "title": "Controleer resources live",
+          "body": "Bekijk de uiteindelijke multiplier, slotkosten, RAM en CPU voordat je installeert. Elke toegevoegde boost-slot verhoogt resources met 10%."
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "Domeinen",
+            "title": "Beheerde of eigen domeinen",
+            "body": "Gebruik direct een door Appbox beheerd domein of klik op Eigen domein om je eigen domein te gebruiken."
+          },
+          "custom": {
+            "eyebrow": "Eigen DNS",
+            "title": "Gebruik je eigen domein",
+            "body": "Eigen domein toont de basisdomeinkiezer, vaste subdomein en DNS-checklist voordat je installeert."
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "Begeleiding ingebouwd",
+          "body": "De preview toont het exacte A-record en de verificatiestatus voor de installatie."
+        },
+        "configuration": {
+          "eyebrow": "Geen verrassingen",
+          "title": "Configuratie staat vooraf klaar",
+          "body": "We brengen de vereiste velden terug tot het absolute minimum om een volledig werkende app te maken, zodat je je geen zorgen hoeft te maken over verdere configuratie."
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "Soevereine cloud",
+      "headline_2": "Jouw cloud, jouw voorwaarden.",
+      "description": "Appbox is gebouwd op hardware- en netwerkinfrastructuur die wij beheren, zodat je het gemak van cloud-apps krijgt zonder het platform over te dragen aan de cloud van iemand anders.",
+      "eyebrow": "Eigen infrastructuur",
+      "card_title": "Echte servers. Echt netwerk. Echte verantwoordelijkheid.",
+      "card_description": "Wij kiezen voor directe controle over de onderdelen die ertoe doen: compute, opslag, routing, capaciteit en fysieke locatie. Zo kunnen we Appbox bouwen als product, niet als dunne laag boven op een andere provider.",
+      "images": {
+        "rack_front": "Appbox-serverracks met geinstalleerde hardware",
+        "rack_network": "Appbox-serverracks met netwerkbekabeling",
+        "network_closeup": "Close-up van netwerkapparatuur in eigendom van Appbox"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "Geen gehuurde black box",
+          "description": "Wij bezitten en beheren de servers waarop je apps draaien, zodat prestaties en onderhoud niet verborgen zitten achter een hyperscale-cloudabstractie."
+        },
+        "network_control": {
+          "title": "Netwerkcontrole",
+          "description": "Doordat we de routingstack bezitten, kunnen we routes, capaciteit, peering en storingsrespons afstemmen op Appbox-workloads in plaats van generieke cloudstandaarden."
+        },
+        "custom_ocp_hardware": {
+          "title": "Custom OCP-hardware",
+          "description": "Onze custom Open Compute Project-hardware is ontworpen voor efficiente airflow, hoge dichtheid en snelle servicebaarheid, zodat we capaciteit kunnen opschalen zonder stroom of ruimte te verspillen."
+        },
+        "clear_data_locality": {
+          "title": "Duidelijke datalocatie",
+          "description": "De infrastructuur staat in dedicated racks bij Digital Realty AMS3 in Amsterdam, zodat je precies weet waar je gegevens worden gehost."
+        },
+        "better_cost_discipline": {
+          "title": "Betere kostendiscipline",
+          "description": "Door het platform zelf te bezitten, vermijden we cloudfactureringsvallen per request zoals onverwachte egress, IOPS of bandbreedtemultipliers, waardoor plannen eenvoudig blijven."
+        },
+        "built_for_appbox": {
+          "title": "Gebouwd voor Appbox",
+          "description": "Omdat de hardware en het netwerk van ons zijn, kunnen we vanaf de basis ontwerpen rond App Slots, boost, opslag, back-ups en app-installaties met een klik."
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "Nieuw",
+      "headline_1": "VPS-hosting.",
+      "headline_2": "Een klik.",
+      "description": "Implementeer volledige Linux VPS naast je apps. Root-toegang, dedicated resources en de kracht om te boosten, allemaal zonder Appbox te verlaten.",
+      "description_combined": "Implementeer Linux- en Windows-virtual private servers naast je apps. Root-toegang, remote desktop en dedicated resources, allemaal zonder Appbox te verlaten.",
+      "group_label": "Linux VPS",
+      "cta": "VPS bekijken",
+      "features": {
+        "f1": {
+          "title": "Volledige root-toegang",
+          "description": "Volledige controle via SSH"
+        },
+        "f2": {
+          "title": "Schaalbare resources",
+          "description": "Boost RAM en CPU per app"
+        },
+        "f3": {
+          "title": "Implementatie met een klik",
+          "description": "Ubuntu, Debian en meer"
+        }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "Nieuw",
+      "headline_1": "Windows VPS.",
+      "headline_2": "Overal.",
+      "group_label": "Windows VPS",
+      "description": "Draai Windows Server op je Appbox met volledige Remote Desktop-toegang. Perfect voor software die alleen op Windows werkt, gameservers en remote workstations.",
+      "cta": "Windows-apps bekijken",
+      "features": {
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "Volledige GUI vanuit elke browser"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Draai elke Windows-applicatie"
+        },
+        "f3": {
+          "title": "Resource Boost",
+          "description": "Wijs extra kracht toe wanneer nodig"
+        }
+      }
+    },
+    "features": {
+      "section": {
+        "title": "Krachtige functies voor iedereen",
+        "headline_1": "Krachtige functies.",
+        "headline_2": "Voor iedereen.",
+        "description": "Ervaar de volledige kracht van je Appbox met functies die zijn ontworpen voor zowel beginners als experts."
+      },
+      "root_access": {
+        "title": "Volledige root-toegang",
+        "description": "Implementeer volledige OS-apps zoals Debian en Ubuntu met SSH-toegang, zodat je volledige controle hebt over je omgeving."
+      },
+      "remote_desktop": {
+        "title": "Remote Desktop",
+        "description": "Draai UI-applicaties op onze servers met volledige remote desktop-toegang tot OS-apps, zodat desktopervaringen naar de cloud komen."
+      },
+      "one_click": {
+        "title": "Echte installaties met een klik",
+        "description": "Configureer alles tijdens de installatie met onze gestroomlijnde setupformulieren. Geen extra configuratie nodig na implementatie."
+      },
+      "community": {
+        "title": "Rijke community",
+        "description": "Sluit je aan bij ons bloeiende ecosysteem met appinzendingen van de community, bijdragen aan documentatie en een open-source webclient."
+      },
+      "security": {
+        "title": "Beveiliging en privacy",
+        "description": "We nemen beveiliging en privacy serieus bij Appbox. Alle apps draaien in afzonderlijke namespaces zonder root-toegang, met volledige isolatie tussen applicaties. Onze infrastructuur is ontworpen met security-first als uitgangspunt, van geharde kernels tot regelmatige beveiligingsaudits. Voor extra privacy kun je met onze VPN-app al je verkeer via je Appbox routeren, zodat je online activiteiten prive en veilig blijven. Met Appbox krijg je enterprise-grade beveiligingsfuncties in een gebruiksvriendelijk pakket."
+      },
+      "deploy_fast": {
+        "title": "Implementeer in seconden",
+        "description": "Met onze razendsnelle, state-of-the-art hardware hoef je niet te wachten tot je apps zijn geinstalleerd."
+      },
+      "custom_hardware": {
+        "title": "Custom hardware",
+        "description": "We hebben met branche-experts samengewerkt om onze eigen hardware-infrastructuur te maken, met privacy, beveiliging en optimale prestaties als resultaat."
+      },
+      "custom_network": {
+        "title": "Custom netwerk",
+        "description": "Wij bezitten al onze netwerkapparatuur, waardoor we flexibel kunnen peeren met netwerken naar keuze en je verbinding veel sneller wordt."
+      },
+      "support": {
+        "title": "Expert-support",
+        "description": "We bieden support via tickets die uitsluitend worden beantwoord door toonaangevende experts uit de branche."
+      },
+      "documentation": {
+        "title": "Mooie documentatie",
+        "description": "Ons open-source documentatiesysteem laat gebruikers bijdragen, waardoor een uitgebreide en waardevolle bron ontstaat die voortdurend groeit."
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "Veelgestelde vragen",
+        "description": "Vind antwoorden op onze meestgestelde vragen en ontdek hoe Appbox jou kan helpen."
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "Welke betaalmethoden accepteren jullie?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We bieden meerdere betaalopties om je aankoop zo soepel mogelijk te laten verlopen:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Betaalpassen en creditcards<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (inclusief Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Cryptocurrencies<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">We bieden ook flexibele factureringscycli: maandelijks, per kwartaal, halfjaarlijks of jaarlijks. Laat het ons weten als je meer opties wilt zien.</p>"
+        },
+        "deployment_time": {
+          "title": "Hoe snel krijg ik mijn Appbox?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Zodra je betaling is bevestigd, implementeert ons geautomatiseerde systeem je Appbox direct. Apps die je tijdens het afrekenen kiest, worden ook meteen ingesteld, zodat je ze zonder vertraging kunt gebruiken.</p>"
+        },
+        "server_location": {
+          "title": "Waar staan jullie servers?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Onze servers staan in dedicated racks bij Digital Realty AMS3 in Amsterdam, Nederland, voor topprestaties en betrouwbaarheid.</p>"
+        },
+        "root_access": {
+          "title": "Bieden jullie root-toegang?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. VPS-apps geven je volledige root-toegang op Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux en AlmaLinux. Windows 11 Pro VPS-apps bieden volledige Remote Desktop- en beheerderstoegang.</p><p class=\"mb-4 leading-relaxed\">Omdat dit volledige KVM virtual machines zijn, kun je custom software installeren, services beheren, Docker, snaps, Flatpaks en kernelmodules gebruiken en je eigen stack naast je Appbox-apps draaien.</p>"
+        },
+        "docker": {
+          "title": "Kan ik Docker gebruiken?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Docker is beschikbaar op VPS-apps, waar je een volledige virtual machine krijgt met root-toegang en controle over het besturingssysteem.</p><p class=\"mb-4 leading-relaxed\">Docker is niet beschikbaar binnen beheerde apps met een klik, omdat die apps al door Appbox zijn gecontaineriseerd en geisoleerd. Als je Docker nodig hebt, installeer dan een Linux VPS-app en draai het daar.</p>"
+        },
+        "security": {
+          "title": "Welke beveiligingsfuncties bieden jullie?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We nemen beveiliging serieus en gebruiken meerdere beschermingslagen om je gegevens te beveiligen:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Elke Appbox draait in zijn eigen sandbox om je gegevens te isoleren</li><li>Alle verbindingen gebruiken HTTPS, waardoor gegevens onderweg worden versleuteld</li><li>Onbeperkte VPN-accounts (voor in aanmerking komende pakketten) laten je je verkeer via Appbox routeren</li><li>Dagelijkse verwijdering van logs (FTP, SSH, HTTP, VPN, enz.) voor extra privacy</li></ul>"
+        },
+        "data_access": {
+          "title": "Hoe krijg ik vanaf mijn computer toegang tot mijn Appbox-gegevens?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We bieden verschillende handige manieren om je Appbox-bestanden en media te beheren:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Gebruik sync-apps zoals Resilio of Syncthing om bestanden automatisch bijgewerkt te houden.</li><li>Stream media vanaf elke locatie met Plex, Navidrome of vergelijkbare apps.</li><li>Download bestanden veilig via FTP over TLS, HTTPS of andere protocollen.</li></ul><p class=\"mb-4 leading-relaxed\">De App Store bevat verschillende apps die je helpen verbonden te blijven met je gegevens op de manier die voor jou het beste werkt.</p>"
+        },
+        "additional_software": {
+          "title": "Kan ik software installeren die niet beschikbaar is in de App Store?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Absoluut. Met onze VPS-apps kun je custom software installeren met root-toegang, en Windows VPS-apps bevatten een volledige Remote Desktop-ervaring. Zo heb je de vrijheid om de tools en applicaties te draaien die je nodig hebt.</p>"
+        },
+        "fuse_rclone": {
+          "title": "Staan jullie FuSE-mounts of Rclone toe?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Onze OS-apps ondersteunen FuSE volledig en we bieden een dedicated Rclone-app in de App Store voor snelle en eenvoudige integratie met cloudopslag.</p>"
+        },
+        "refund_policy": {
+          "title": "Wat is jullie restitutiebeleid?",
+          "content": "<p class=\"mb-4 leading-relaxed\">We bieden nieuwe klanten een pro-rata restitutietermijn van 7 dagen. Voor bestaande klanten gelden andere criteria voor restitutie. Betalingen met cryptocurrencies, aankopen van dedicated IP-adressen en bepaalde andere transacties kunnen niet worden terugbetaald. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Bekijk ons volledige restitutiebeleid</a> voor alle details.</p>"
+        },
+        "custom_domain": {
+          "title": "Kan ik mijn eigen domeinnaam gebruiken?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Je kunt je eigen domein koppelen en subdomeinen instellen voor elke applicatie. Voeg simpelweg een A-record toe in je DNS dat naar je Appbox wijst, dan regelen wij de rest zodat je soepel live gaat.</p><p class=\"mb-4 leading-relaxed\">VPS-apps ondersteunen ook meerdere eigen domeinen en Appbox-subdomeinen met automatische SSL, zodat je meerdere sites of services vanaf dezelfde VPS kunt hosten.</p>"
+        },
+        "upgrade_after_purchase": {
+          "title": "Kan ik upgraden na aankoop?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, we zetten alles automatisch over van je oude plan naar je nieuwe plan.</p><p class=\"mb-4 leading-relaxed\">Alles blijft hetzelfde; je merkt er nauwelijks iets van. Het enige dat kan veranderen zijn specifieke poortnummers, als je bijvoorbeeld een app rechtstreeks via een poortnummer benadert, zoals FTP.</p>"
+        },
+        "app_slots": {
+          "title": "Wat zijn App Slots?",
+          "content": "<p class=\"mb-4 leading-relaxed\">App Slots zijn de capaciteitseenheden die je Appbox gebruikt om apps te installeren. Elke app gebruikt een of meer App Slots, afhankelijk van de resourcevereisten, en zwaardere versies kunnen meer slots nodig hebben.</p><p class=\"mb-4 leading-relaxed\">De <a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">Apps-pagina</a> toont hoeveel App Slots elke app gebruikt. Scrol op een appdetailpagina naar de resources-sectie onderaan om de RAM en CPU te zien die aan elke versie zijn toegewezen.</p><p class=\"mb-4 leading-relaxed\">Je kunt vrije App Slots ook besteden aan Per-App Boost om een geinstalleerde app meer CPU en RAM te geven zonder je hele plan te upgraden.</p>"
+        },
+        "resource_multipliers": {
+          "title": "Hoe werkt boost per app?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Elke app begint met basisresources voor RAM en CPU die door de versie worden bepaald. Met Per-App Boost kun je die resources voor afzonderlijke apps verhogen door extra App Slots te gebruiken.</p><p class=\"mb-4 leading-relaxed\">Elke boost-slot voegt +10% resources toe aan de app. Jij bepaalt welke apps meer kracht krijgen en kunt de boost op elk moment aanpassen.</p><p class=\"mb-4 leading-relaxed\">Per-App Boost is inbegrepen bij alle plannen. Je kunt het configureren tijdens het installeren van een app of vanaf de pagina van de geinstalleerde app in <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a>.</p>"
+        },
+        "app_freeze": {
+          "title": "Kan ik een app pauzeren zonder gegevens te verliezen?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja. Met App Freeze kun je een geinstalleerde app stoppen en de App Slots terugwinnen, terwijl de gegevens en configuratie behouden blijven.</p><p class=\"mb-4 leading-relaxed\">Wanneer je de app unfreezet, start hij opnieuw met dezelfde gegevens. Je hebt alleen genoeg vrije App Slots nodig om de app en eventuele boost-slots die hij gebruikte te dekken.</p>"
+        },
+        "excluded_app_categories": {
+          "title": "Wat zijn uitgesloten appcategorieen?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Sommige plannen hebben beperkingen voor bepaalde appcategorieen die daarop niet geinstalleerd kunnen worden. Deze heten \"Uitgesloten appcategorieen\".</p><p class=\"mb-4 leading-relaxed\">Wanneer je onze prijsplannen bekijkt, zie je uitgesloten categorieen als klikbare badges onder plannen met beperkingen. Zo begrijp je welke soorten apps niet beschikbaar zijn op dat specifieke plan.</p><p class=\"mb-4 leading-relaxed\">Je kunt op elke badge voor een uitgesloten categorie klikken om alle apps in die categorie te bekijken, zodat je precies weet welke applicaties niet op dat plan geinstalleerd kunnen worden.</p><p class=\"mb-4 leading-relaxed\">Als je toegang nodig hebt tot apps in een uitgesloten categorie, kies dan een hoger plan zonder die beperkingen.</p>"
+        },
+        "vps": {
+          "title": "Hoe krijg ik een VPS?",
+          "content": "<p class=\"mb-4 leading-relaxed\">VPS-apps zijn beschikbaar in de <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">App Store</a>, net als elke andere app. Kies een Linux- of Windows-distributie, installeer die op je Appbox en hij draait naast je andere apps.</p><p class=\"mb-4 leading-relaxed\">Je kunt extra resources aan je VPS toewijzen met Per-App Boost, waardoor hij meer RAM en CPU krijgt door extra App Slots te gebruiken. Zo kun je je VPS precies passend maken zonder je volledige plan te upgraden.</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "Product",
+      "resources": "Bronnen",
+      "pricing": "Prijzen",
+      "features": "Functies",
+      "apps": "Apps",
+      "documentation": "Documentatie",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "service_status": "Servicestatus",
+      "overview": "Overzicht van functies",
+      "view_pricing": "Bekijk onze prijsplannen",
+      "explore_apps": "Ontdek onze apps",
+      "read_docs": "Lees de docs",
+      "latest_articles": "Nieuwste artikelen en nieuws",
+      "faq_description": "Veelgestelde vragen",
+      "check_status": "Bekijk onze servicestatus",
+      "vps": "VPS",
+      "explore_vps": "VPS-apps bekijken"
+    },
+    "external_links": {
+      "billing": "Facturering",
+      "control_panel": "Controlepaneel"
+    }
+  },
+  "docs": {
+    "on_this_page": "Op deze pagina",
+    "edit_page_on_github": "Deze pagina bewerken op GitHub",
+    "start_discussion_on_github": "Een discussie starten op GitHub",
+    "api_reference": "API-referentie",
+    "docs": "Docs",
+    "source": "Bron",
+    "not_found": {
+      "description": "Het document dat je zoekt bestaat niet.",
+      "title": "Document niet gevonden"
+    },
+    "index_description": "Vind documentatie over hoe je Appbox gebruikt, bijdraagt aan het project en nog veel meer.",
+    "index": {
+      "title": "Documentatie",
+      "section": "Sectie",
+      "description": "Beschrijving",
+      "documents": "Documenten",
+      "view": "Bekijken"
+    },
+    "meta_description": "Leer Appbox gebruiken met onze uitgebreide documentatie. Vind gidsen, tutorials en API-referenties om het meeste uit je hosting te halen."
+  },
+  "blog": {
+    "words": {
+      "posts": "Berichten",
+      "by": "door"
+    },
+    "cards": {
+      "min_read": "min lezen"
+    },
+    "buttons": {
+      "next": "Volgende",
+      "previous": "Vorige",
+      "rss_feed": "RSS-feed",
+      "read_more": "meer lezen",
+      "go_to_next_page": "Ga naar volgende pagina",
+      "go_to_previous_page": "Ga naar vorige pagina"
+    },
+    "meta_description": "Lees het laatste nieuws, updates en tutorials van het Appbox-team. Blijf op de hoogte van nieuwe functies, appreleases en hostingtips."
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "Maandelijks",
+      "quarterly": "Per kwartaal",
+      "semiannually": "Halfjaarlijks",
+      "annually": "Jaarlijks",
+      "billed_every": "Gefactureerd [cycle]"
+    },
+    "card": {
+      "storage": "Opslag",
+      "traffic": "Verkeer",
+      "app_slots": "App Slots",
+      "connection_speed": "Verbindingssnelheid",
+      "resource_multiplier": "Per-App Boost",
+      "included": "Inbegrepen",
+      "raid": "RAID",
+      "disks": "Schijven",
+      "per_month": "/mnd",
+      "order_now": "Nu bestellen",
+      "billed_as": "Gefactureerd",
+      "excluded_app_categories": "Uitgesloten appcategorieen",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "Ondersteund",
+      "windows_vps_dedicated_only": "Alleen dedicated plannen (NG-18000+)"
+    }
+  },
+  "apps": {
+    "title": "Appbibliotheek",
+    "description": "Ontdek onze enorme collectie direct te implementeren apps",
+    "meta_description": "Bekijk meer dan 60 direct te implementeren apps, waaronder databases, mediaservers, ontwikkeltools en meer. Installatie met een klik met Appbox-hosting.",
+    "loading": "Apps laden...",
+    "error": "Apps laden mislukt",
+    "no_results": "Geen apps komen overeen met je zoekcriteria",
+    "back_to_apps": "Terug naar apps",
+    "app_not_found": "De gevraagde app kon niet worden gevonden",
+    "search": {
+      "title": "Zoeken",
+      "description": "Vind de perfecte app voor jouw behoeften",
+      "name_search": "Zoeken op naam",
+      "name_placeholder": "Appnaam of trefwoord",
+      "category": "Categorie",
+      "all_categories": "Alle categorieen",
+      "app_slots": "App Slots",
+      "app_slots_placeholder": "Alle appslots",
+      "sort_by": "Sorteren op",
+      "sort_popularity": "Populariteit",
+      "sort_name": "Naam (A-Z)",
+      "sort_date": "Recent toegevoegd",
+      "reset_filters": "Filters resetten"
+    },
+    "card": {
+      "app_slots": "App Slots",
+      "view_details": "Details bekijken"
+    },
+    "detail": {
+      "by": "door",
+      "description": "Beschrijving",
+      "app_info": "Appinformatie",
+      "version": "Versie",
+      "app_slots": "App Slots",
+      "released": "Uitgebracht",
+      "developer_site": "Ontwikkelaarssite",
+      "visit_site": "Site bezoeken",
+      "deploy_app": "Deze app implementeren",
+      "community_ratings": "Communitybeoordelingen",
+      "upvotes": "Upvotes",
+      "downvotes": "Downvotes",
+      "no_ratings_yet": "Nog geen beoordelingen",
+      "deploy_dialog": {
+        "title": "Apps implementeren op een Appbox",
+        "question": "Apps hebben een actieve Appbox nodig om te draaien. Kies een geschikt plan om je account en Appbox te maken, of ga door naar de installer als je er al een hebt.",
+        "planLabel": "Geschikte plannen voor deze app",
+        "planPlaceholder": "Kies een plan om door te gaan",
+        "planHelp": "Plannen die deze appcategorie uitsluiten zijn verborgen. Als je een plan selecteert, ga je direct naar afrekenen.",
+        "noEligiblePlans": "Er zijn geen geschikte plannen gevonden voor deze app. Je kunt nog steeds alle plannen bekijken.",
+        "viewAllPlans": "Alle plannen bekijken",
+        "yes": "Doorgaan met geselecteerd plan",
+        "no": "Ik heb al een Appbox"
+      }
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "Verbonden app-ecosysteem",
+      "headline_1": "Verbonden apps.",
+      "headline_2": "Een ecosysteem.",
+      "description": "Elke app heeft bestandssysteemtoegang tot gedeelde delen van andere apps, allemaal met elkaar verbonden via een veilige lokale netwerkbridge.",
+      "visual_title": "Je apps kunnen samenwerken zonder je Appbox te verlaten.",
+      "visual_description": "Apps draaien in hun eigen omgevingen, maar Appbox geeft ze gecontroleerde manieren om bestanden te delen en lokaal met elkaar te praten. Zo kunnen assistenten, dashboards, databases, mediatools en sync-apps een verbonden werkruimte worden.",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "Gedeeld bestandssysteem",
+          "description": "Apps hebben rechtstreeks toegang tot gedeelde opslag en goedgekeurde appgegevens."
+        },
+        "private_network": {
+          "title": "Veilige lokale bridge",
+          "description": "Services communiceren via private lokale routes in plaats van het openbare internet."
+        },
+        "cross_app_workflows": {
+          "title": "Workflows tussen apps",
+          "description": "Bouw workflows waarin de ene app gegevens voor een andere kan lezen, verwerken en publiceren."
+        }
+      }
+    }
+  },
+  "policies": {
+    "title": "Beleidsdocumenten",
+    "meta_description": "Bekijk het Appbox-beleid, waaronder Servicevoorwaarden, Privacybeleid, Restitutiebeleid en meer. Begrijp je rechten en onze verplichtingen.",
+    "index_description": "Deze beleidsdocumenten regelen je gebruik van Appbox-services en beschrijven onze verplichtingen aan jou. Ze bevatten belangrijke informatie over privacy, beveiliging en je verantwoordelijkheden als gebruiker.",
+    "policy": "Beleid",
+    "description": "Beschrijving",
+    "view": "Bekijken"
+  },
+  "auth": {
+    "login": {
+      "title": "Welkom terug",
+      "description": "Log in op je Appbox-account",
+      "email_label": "E-mail",
+      "email_placeholder": "you@example.com",
+      "email_error": "Voer een geldig e-mailadres in",
+      "password_label": "Wachtwoord",
+      "password_placeholder": "Voer je wachtwoord in",
+      "password_error": "Wachtwoord is verplicht",
+      "forgot_password": "Wachtwoord vergeten?",
+      "submit": "Inloggen",
+      "external_signup": "Nieuw bij Appbox? Kies een plan om je account en Appbox te maken.",
+      "external_signup_link": "Plannen bekijken",
+      "appbox_required_title": "Account nodig?",
+      "appbox_required_description": "Appbox-accounts worden gemaakt wanneer je een Appbox-plan koopt. Als je een app probeerde te implementeren, kies dan eerst een plan en kom daarna terug om apps op je Appbox te installeren.",
+      "appbox_required_link": "Plannen bekijken en aanmelden",
+      "error_invalid": "Ongeldig e-mailadres of wachtwoord",
+      "error_generic": "Er is iets misgegaan. Probeer het opnieuw.",
+      "success": "Succesvol ingelogd",
+      "2fa_title": "Tweefactorauthenticatie",
+      "2fa_description": "Voer de 6-cijferige code uit je authenticator-app in",
+      "2fa_code_label": "Verificatiecode",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "Code moet 6 cijfers bevatten",
+      "2fa_submit": "Verifiëren",
+      "2fa_back": "Terug naar inloggen",
+      "error_2fa_invalid": "Ongeldige verificatiecode"
+    },
+    "branding": {
+      "tagline": "Jouw cloud, jouw regels",
+      "subtitle": "Implementeer en beheer krachtige applicaties op soevereine infrastructuur die wij bezitten en beheren.",
+      "apps_count": "60+ direct te implementeren apps",
+      "one_click": "Installatie met een klik",
+      "network_speed": "25Gbps-netwerk",
+      "always_secure": "Altijd veilig",
+      "categories_label": "Appcategorieen",
+      "category_cloud": "Cloud",
+      "category_cms": "CMS",
+      "category_databases": "Databases",
+      "category_music": "Muziek",
+      "category_storage": "Opslag",
+      "category_gaming": "Gaming",
+      "category_development": "Ontwikkeling",
+      "category_virtual_servers": "Virtuele servers"
+    },
+    "forgot": {
+      "title": "Wachtwoord vergeten",
+      "description": "Voer je e-mailadres in en we sturen je een resetlink",
+      "email_label": "E-mail",
+      "email_placeholder": "you@example.com",
+      "email_error": "Voer een geldig e-mailadres in",
+      "submit": "Resetlink verzenden",
+      "back_to_login": "Terug naar inloggen",
+      "error_generic": "Er is iets misgegaan. Probeer het opnieuw.",
+      "success": "Resetlink verzonden! Controleer je e-mail."
+    },
+    "reset": {
+      "title": "Wachtwoord resetten",
+      "description": "Voer je nieuwe wachtwoord in",
+      "password_label": "Nieuw wachtwoord",
+      "password_placeholder": "Voer nieuw wachtwoord in",
+      "password_error": "Wachtwoord moet minimaal 8 tekens bevatten",
+      "confirm_password_label": "Nieuw wachtwoord bevestigen",
+      "confirm_password_placeholder": "Bevestig nieuw wachtwoord",
+      "confirm_password_error": "Wachtwoorden komen niet overeen",
+      "submit": "Wachtwoord resetten",
+      "error_generic": "Er is iets misgegaan. Probeer het opnieuw.",
+      "success": "Wachtwoord succesvol gereset!"
+    },
+    "email_sent": {
+      "title": "Controleer je e-mail",
+      "description": "We hebben je een e-mail gestuurd met verdere instructies",
+      "check_inbox": "Zie je de e-mail niet? Controleer dan je spammap. De link verloopt over 24 uur.",
+      "back_to_login": "Terug naar inloggen"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "appstore": "App Store",
+      "appboxes": "Appboxes",
+      "installed_apps": "Geinstalleerde apps",
+      "domains": "Eigen domeinen",
+      "account": "Account",
+      "profile": "Profiel",
+      "abuse_reports": "Abuse-meldingen",
+      "two_factor": "Tweefactorauthenticatie",
+      "api_keys": "API Keys",
+      "service_status": "Servicestatus",
+      "support_billing": "Support en facturering",
+      "add_appbox": "Appbox toevoegen",
+      "admin": "Admin",
+      "knowledgebase": "Kennisbank"
+    },
+    "header": {
+      "toggle_language": "Taal wijzigen",
+      "theme_dark": "Donker",
+      "theme_light": "Licht",
+      "theme_system": "Systeem",
+      "profile": "Profiel",
+      "security": "Beveiliging",
+      "sign_out": "Uitloggen",
+      "switch_to_admin": "Overschakelen naar admin",
+      "switch_to_user": "Overschakelen naar gebruiker"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "services": "Je services",
+      "servicesDescription": "Je actieve services en resources",
+      "storage": "Opslag",
+      "appSlots": "App Slots",
+      "network": "Netwerk",
+      "upload": "Upload",
+      "download": "Download",
+      "multiplier": "Gebruikte boost-slots",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30d",
+      "downloadShort": "↓ 30d",
+      "pinnedApps": "Vastgezette apps",
+      "viewCylo": "Details bekijken"
+    },
+    "twoFactor": {
+      "title": "Beveilig je account",
+      "description": "Schakel tweefactorauthenticatie in om een extra beveiligingslaag aan je account toe te voegen.",
+      "enable": "2FA inschakelen",
+      "dismiss": "Sluiten"
+    },
+    "notifications": {
+      "title": "Recente meldingen",
+      "viewAll": "Alles bekijken",
+      "empty": "Geen nieuwe meldingen",
+      "dropdown_title": "Meldingen",
+      "mark_all_read": "Alles als gelezen markeren",
+      "no_notifications": "Geen nieuwe meldingen",
+      "all_caught_up": "Je bent helemaal bij",
+      "ui_update_title": "Er is een nieuwe versie van Appbox",
+      "ui_update_description": "We hebben zojuist de Appbox UI bijgewerkt. Vernieuw deze pagina om de nieuwste versie te gebruiken.",
+      "refresh_later": "Later vernieuwen",
+      "refresh_now": "Nu vernieuwen",
+      "subtext": {
+        "instance_add": "Je app is geinstalleerd, bekijk hem hieronder!",
+        "instance_removed": "De app is verwijderd.",
+        "instance_removing": "De app wordt momenteel verwijderd.",
+        "instance_restart": "De app is opnieuw gestart.",
+        "instance_updating": "De app wordt bijgewerkt en is tijdelijk offline.",
+        "instance_updated": "De app is bijgewerkt en is nu klaar voor gebruik.",
+        "instance_stop": "De app is nu gestopt; je moet hem opnieuw starten om toegang te krijgen.",
+        "instance_start": "De app is nu gestart en zou binnenkort toegankelijk moeten zijn.",
+        "user_updated": "Je gebruikersprofielgegevens zijn bijgewerkt.",
+        "cylo_add": "Je Appbox is klaar met instellen, klik hieronder om hem te bekijken.",
+        "cylo_remove": "Je Appbox is verwijderd.",
+        "cylo_migrating": "Je Appbox wordt gemigreerd naar een andere schijf of server. We sturen je een melding en een e-mail zodra dit is voltooid.",
+        "cylo_migrated": "Je Appbox is succesvol gemigreerd; alle apps zouden nu weer moeten werken.",
+        "cylo_userdecreasingquota": "Je Appbox heeft bijna geen schijfruimte meer. Je moet binnenkort wat gegevens verwijderen via het tabblad File Explorer op het Appbox-dashboard zodat hij online blijft.",
+        "cylo_userlowquota": "Je Appbox heeft geen schijfruimte meer, dus we hebben hem tijdelijk uitgeschakeld. Je moet wat gegevens verwijderen via het tabblad File Explorer op het Appbox-dashboard om hem weer online te krijgen.",
+        "cylo_adminlowquota": "Een Appbox heeft weinig beschikbare ruimte.",
+        "cylo_brokenmount": "Je Appbox had een mountfout. Controleer je e-mail voor meer informatie.",
+        "cylo_usernormalquota": "Je Appbox heeft nu genoeg beschikbare ruimte om normaal te functioneren.",
+        "cylo_adminnormalquota": "De Appbox heeft niet langer weinig ruimte en kan normaal functioneren.",
+        "cylo_restarting": "Je Appbox wordt nu opnieuw gestart; je apps zijn tijdelijk offline.",
+        "cylo_restarted": "Je Appbox is klaar met opnieuw starten; je apps zouden binnenkort online moeten zijn.",
+        "blog": "We hebben zojuist een nieuw blogbericht geplaatst, klik hieronder om het te lezen!",
+        "hwfailure_newfailure": "Een server heeft een probleem, bekijk dit zo snel mogelijk!",
+        "criticalalert_newalert": "Nieuwe kritieke melding, bekijk dit zo snel mogelijk!",
+        "abuse_unresolvable": "Er is een nieuwe niet-oplosbare abuse-melding ingediend.",
+        "abuse_reply": "Er is een nieuw bericht bij de abuse-melding.",
+        "abuse_user_new": "We hebben een abuse-melding ontvangen over je Appbox.",
+        "abuse_user_closed": "We hebben een abuse-melding over je Appbox gesloten.",
+        "throttledcylo_throttled": "Een Appbox wordt gethrottled.",
+        "throttledcylo_unthrottled": "Een Appbox wordt niet langer gethrottled.",
+        "throttled_throttled": "Je Appbox wordt gethrottled.",
+        "throttled_warning": "Je Appbox gebruikt meer resources dan normaal.",
+        "throttled_unthrottled": "Je Appbox wordt niet langer gethrottled."
+      }
+    },
+    "newestApps": {
+      "title": "Nieuwste apps",
+      "viewAll": "App Store bekijken"
+    },
+    "recentlyUpdated": {
+      "title": "Recent bijgewerkt"
+    },
+    "yourUpdates": {
+      "title": "Je updates",
+      "description": "Recente activiteit en nieuwe apps"
+    },
+    "blogPosts": {
+      "title": "Laatste van de blog",
+      "description": "Nieuws en updates van Appbox",
+      "readMore": "Meer lezen"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Opnieuw starten",
+      "migrating": "Migreren",
+      "installing": "Installeren",
+      "suspended": "Opgeschort",
+      "frozen": "Bevroren",
+      "throttled": "Gethrottled",
+      "lowQuota": "Weinig quota"
+    }
+  },
+  "appstore": {
+    "title": "App Store",
+    "subtitle": "Alle server-apps die je nodig hebt, op een plek.",
+    "search": {
+      "placeholder": "Apps zoeken...",
+      "results": "Zoekresultaten",
+      "noResults": "Geen apps gevonden die overeenkomen met je zoekopdracht.",
+      "noResultsDescription": "Pas je zoekopdracht of filter aan om te vinden wat je zoekt.",
+      "showing": "Toont {count} resultaten"
+    },
+    "featured": {
+      "title": "Uitgelichte apps",
+      "description": "Handgekozen apps die we aanbevelen"
+    },
+    "top": {
+      "title": "Topapps",
+      "description": "Het populairst bij onze gebruikers"
+    },
+    "new": {
+      "title": "Nieuwe apps",
+      "description": "Recent toegevoegd aan de store"
+    },
+    "categories": {
+      "title": "Categorieen",
+      "all": "Alle categorieen"
+    },
+    "app": {
+      "getApp": "Ophalen",
+      "installed": "Geinstalleerd",
+      "restricted": "Beperkt",
+      "disabled": "Uitgeschakeld",
+      "install": "Installeren",
+      "installing": "Installeren...",
+      "versions": "Versies",
+      "version": "Versie",
+      "appSlots": "App Slots",
+      "baseMemory": "Basisgeheugen (GB)",
+      "baseCpus": "Basis-CPUs",
+      "added": "Toegevoegd",
+      "changes": "Wijzigingen",
+      "changelog": "Changelog",
+      "releasedOn": "Uitgebracht op",
+      "description": "Beschrijving",
+      "comments": "Reacties",
+      "selectCylo": "Appbox selecteren",
+      "selectVersion": "Versie selecteren",
+      "noSlots": "Geen vrije appslots beschikbaar",
+      "rating": "{count} stemmen",
+      "screenshots": "Screenshots",
+      "by": "door",
+      "requiresSlots": "Vereist {count} appslot(s)",
+      "visitDeveloper": "Ontwikkelaarssite bezoeken",
+      "helpSupport": "Hulp en support",
+      "resourceNote": "Apps beginnen met basisgeheugen en CPU. Je kunt afzonderlijke apps boosten door extra appslots te gebruiken (+10% per boost-slot). Een waarde van 0 betekent onbeperkt.",
+      "upvote": "Upvote",
+      "downvote": "Downvote",
+      "installTitle": "{name} installeren",
+      "installSuccess": "App-installatie gestart",
+      "minimumPlanShort": "Beschikbaar vanaf {plan}",
+      "minimumPlanLabel": "Minimaal plan"
+    },
+    "sort": {
+      "newest": "Nieuwste",
+      "popular": "Populairst",
+      "updated": "Recent bijgewerkt",
+      "rating": "Hoogst beoordeeld",
+      "slots_asc": "Slots: laag naar hoog",
+      "slots_desc": "Slots: hoog naar laag"
+    },
+    "slots": {
+      "label": "Slots",
+      "all": "Alle slots",
+      "slot": "{count} slot",
+      "slots": "{count} slots"
+    },
+    "showAll": "Alles tonen",
+    "install": {
+      "validation": {
+        "required": "Dit veld is verplicht",
+        "alphanumeric": "Alleen letters en cijfers zijn toegestaan",
+        "notOnlyAlpha": "Moet minimaal een cijfer of speciaal teken bevatten",
+        "lowercase": "Moet een kleine letter bevatten",
+        "uppercase": "Moet een hoofdletter bevatten",
+        "number": "Moet een cijfer bevatten",
+        "specialChar": "Moet een speciaal teken bevatten",
+        "invalidEmail": "Ongeldig e-mailadres",
+        "invalidDate": "Ongeldige datum",
+        "invalidFormat": "Ongeldig formaat",
+        "minLength": "Minimaal {count} tekens",
+        "maxLength": "Maximaal {count} tekens",
+        "invalidSubdomain": "Alleen kleine letters, cijfers en koppeltekens zijn toegestaan.",
+        "subdomainInUse": "Dit subdomein is al in gebruik, probeer een ander.",
+        "domainIpMismatch": "Het IP-adres van het domein komt niet overeen met de server.",
+        "selectDomain": "Selecteer een domein",
+        "validating": "Valideren..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "Selecteer eerst een Appbox",
+        "selectPlaceholder": "Selecteer {label}...",
+        "searchPlaceholder": "Zoek {label}...",
+        "noResults": "Geen resultaten gevonden."
+      },
+      "domain": {
+        "domainType": "Domeintype",
+        "typeAppbox": "Appbox-domein",
+        "typeCustom": "Eigen domein",
+        "subdomain": "Subdomein",
+        "domain": "Domein",
+        "baseDomain": "Basisdomein",
+        "selectAppboxFirst": "Selecteer eerst een Appbox",
+        "selectDomain": "Selecteer een domein...",
+        "selectOrAddDomain": "Selecteer of voeg een domein toe...",
+        "searchDomains": "Domeinen zoeken...",
+        "noDomainsMatch": "Geen domeinen komen overeen met je zoekopdracht.",
+        "noDomainsAvailable": "Geen domeinen beschikbaar.",
+        "noCustomDomains": "Nog geen eigen domeinen.",
+        "yourDomains": "Je domeinen",
+        "addNewDomain": "Nieuw domein toevoegen",
+        "add": "Toevoegen",
+        "domainSuffix": "selecteer een domein",
+        "appboxDomain": "Appbox-domein",
+        "customDomains": "Eigen domeinen",
+        "loadingDomains": "Domeinen laden...",
+        "blockedDomain": "Dit domein is gereserveerd en kan niet worden gebruikt.",
+        "invalidDomain": "Voer een geldig domein in (bijv. mydomain.com).",
+        "addDomainFailed": "Domein toevoegen mislukt. Probeer het opnieuw.",
+        "dnsSetupTitle": "DNS-instelling",
+        "dnsInstruction": "Maak een A-record dat naar je Appbox-server wijst:",
+        "copyIp": "IP-adres kopieren",
+        "copied": "Gekopieerd!",
+        "dnsNotPointing": "DNS wijst nog niet naar het juiste IP-adres.",
+        "dnsResolvedTo": "Wordt momenteel omgezet naar: {ip}",
+        "verifyDns": "DNS controleren",
+        "verifying": "Verifiëren...",
+        "retryVerify": "Opnieuw verifieren",
+        "dnsVerified": "✓ DNS geverifieerd voor {domain}"
+      },
+      "field": {
+        "enabled": "Ingeschakeld",
+        "disabled": "Uitgeschakeld",
+        "selectPlaceholder": "Selecteer {label}"
+      },
+      "guard": {
+        "appDisabled": "Deze app is tijdelijk uitgeschakeld voor onderhoud.",
+        "noCylos": "Je hebt een Appbox nodig voordat je apps kunt installeren. Bestel er een om te beginnen.",
+        "getAppbox": "Een Appbox nemen",
+        "restricted": "Deze app is niet beschikbaar met je huidige pakket. Klik hieronder om je plan te upgraden en toegang te ontgrendelen.",
+        "restrictedMinPlan": "Deze app is niet beschikbaar met je huidige pakket. Minimaal vereist plan: {plan}. Upgrade je plan om toegang te ontgrendelen.",
+        "upgradePackage": "Je pakket upgraden",
+        "getAnotherAppbox": "Nog een Appbox nemen",
+        "noSlots": "Deze app vereist {count} appslot(s), maar geen van je Appboxes heeft genoeg vrije slots. Upgrade je plan om er meer te krijgen.",
+        "getMoreSlots": "Meer appslots krijgen",
+        "noMulti": "Deze app staat slechts een installatie per Appbox toe en is al geinstalleerd op al je geschikte Appboxes. Bestel een extra Appbox om nog een instantie te installeren.",
+        "checkingAvailability": "Beschikbaarheid controleren..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "Beperkt op huidig pakket",
+        "noFreeSlots": "Geen vrije slots ({used}/{total})",
+        "alreadyInstalled": "Al geinstalleerd",
+        "notEligible": "Niet geschikt",
+        "selectToSeeOptions": "Selecteer een Appbox om opties te bekijken",
+        "upgradeThisAppbox": "Deze Appbox upgraden",
+        "alreadyInstalledDetail": "Deze app staat slechts een installatie per Appbox toe en is hier al geinstalleerd. Bestel een extra Appbox om nog een instantie te installeren.",
+        "noneEligible": "Geen van je Appboxes is momenteel geschikt. Selecteer er hierboven een om te zien waarom en hoe je dit kunt oplossen.",
+        "restrictedSingle": "{name} is niet geschikt — deze app is beperkt op het huidige pakket.",
+        "restrictedMultiple": "{count} Appboxes zijn niet geschikt — deze app is beperkt op hun huidige pakket.",
+        "upgradeName": "{name} upgraden",
+        "noSlotsSingle": "{name} heeft niet genoeg vrije appslots.",
+        "noSlotsMultiple": "{count} Appboxes hebben niet genoeg vrije appslots.",
+        "installedSingle": "{name} heeft deze app al geinstalleerd.",
+        "installedMultiple": "{count} Appboxes hebben deze app al geinstalleerd.",
+        "onePerAppbox": "Deze app staat slechts een installatie per Appbox toe.",
+        "slotsFree": "{count} slots vrij",
+        "migrating": "Appbox wordt momenteel gemigreerd",
+        "restrictedOnPackageMinPlan": "Beperkt op huidig pakket (minimaal plan: {plan})",
+        "migratingSingle": "{name} wordt momenteel gemigreerd en is tijdelijk niet beschikbaar voor installaties.",
+        "migratingMultiple": "{count} Appboxes worden momenteel gemigreerd en zijn tijdelijk niet beschikbaar voor installaties."
+      },
+      "dialog": {
+        "loadingVersions": "Versies laden...",
+        "defaultVersion": "(standaard)",
+        "versionsAvailable": "{count, plural, one {# versie beschikbaar} other {# versies beschikbaar}}",
+        "cancel": "Annuleren",
+        "installFailed": "Installatie mislukt. Probeer het opnieuw."
+      },
+      "boost": {
+        "loading": "Boost-opties laden...",
+        "title": "Boost-slots",
+        "resourcePreview": "Resourcepreview",
+        "multiplier": "Multiplier",
+        "slotCost": "Slotkosten",
+        "ram": "RAM",
+        "cpus": "CPUs",
+        "cta": "Meer boost nodig? Upgrade je plan"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "Je Appboxes",
+      "description": "Monitor opslag, netwerk, boostgebruik en geinstalleerde apps op elke Appbox die je beheert.",
+      "empty": "Je hebt nog geen appboxes.",
+      "getCylo": "Een Appbox nemen",
+      "viewDetails": "Details bekijken",
+      "storage": "Opslag",
+      "appSlots": "App Slots",
+      "network": "Netwerk",
+      "upload": "Upload",
+      "download": "Download",
+      "multiplier": "Gebruikte boost-slots",
+      "pinnedApps": "Vastgezette apps",
+      "sortBy": "Sorteren op",
+      "filterByStatus": "Filteren op status",
+      "allStatuses": "Alle statussen",
+      "name": "Naam",
+      "server": "Server",
+      "status": "Status"
+    },
+    "cyloDetail": {
+      "summary": "Samenvatting",
+      "fileExplorer": "File Explorer",
+      "diskUsage": "Schijfgebruik",
+      "diskUtilization": "Schijfbelasting (IO)",
+      "networkTraffic": "Netwerkverkeer",
+      "installedApps": "Geinstalleerde apps",
+      "alerts": "Meldingen",
+      "migrationProgress": "Migratie bezig",
+      "migrationLive": "De meeste apps blijven normaal werken tijdens de live migratie. Apps die niet live gemigreerd kunnen worden, zijn niet beschikbaar totdat de migratie is voltooid.",
+      "migrationOffline": "Je apps zijn niet beschikbaar totdat de migratie is voltooid.",
+      "migrationTransferred": "Overgezet: {sent} GiB van {total} GiB",
+      "migrationPhase1": "Migratie initialiseren",
+      "migrationPhase2": "Versleutelingssleutels overzetten",
+      "migrationPhase3": "SSL-certificaten overzetten",
+      "migrationPhase4": "Appbox instellen op nieuwe server",
+      "migrationPhase5": "Gegevens overzetten",
+      "migrationPhase6": "Apps installeren op nieuwe server",
+      "migrationPhase7": "Migratie afronden",
+      "migrationPhase8": "Migratie voltooien",
+      "lowQuota": "Weinig schijfruimte",
+      "lowQuotaMessage": "Je appbox blijft offline totdat je ruimte vrijmaakt. Je hebt momenteel {available} GiB over en hebt meer dan 5 GiB nodig om te functioneren.",
+      "lowQuotaMigratingMessage": "Je appbox wordt niet gemigreerd totdat je ruimte vrijmaakt. Je hebt momenteel {available} GiB over en hebt meer dan 5 GiB nodig om te migreren.",
+      "lowQuotaHint": "Gebruik de File Explorer om gegevens te verwijderen of upgrade naar een groter plan.",
+      "lowQuotaDeleteData": "Gegevens verwijderen",
+      "throttled": "Schijfdoorvoer gethrottled",
+      "throttledMessage": "Je appbox gebruikt al langere tijd meer dan {percent}% van de schijfsnelheid. Fair-use-throttling is toegepast.",
+      "throttledHint": "De limiet verloopt automatisch. Verminder gelijktijdige transfers, schakel wachtrijen in of plan intensieve taken buiten piekuren om toekomstige throttling te voorkomen.",
+      "throttleLevel": "Throttle-niveau",
+      "throttleRate": "Snelheid (MB/s)",
+      "throttleIops": "IOPS",
+      "throttleExpires": "Verloopt",
+      "throttleTopApp": "App met hoogste gebruik",
+      "throttleTopProcess": "Proces met hoogste gebruik",
+      "suspended": "Appbox opgeschort",
+      "suspendedMessage": "Je appbox is momenteel opgeschort. Neem contact op met support als je denkt dat dit een fout is.",
+      "offline": "Appbox offline",
+      "offlineMessage": "Je appbox is momenteel offline.",
+      "upgradePlan": "Plan upgraden",
+      "viewApp": "Bekijken",
+      "noAlerts": "Geen actieve meldingen",
+      "noApps": "Geen apps geinstalleerd op deze appbox.",
+      "backToAppboxes": "Appboxes",
+      "notFound": "Appbox niet gevonden",
+      "notFoundDescription": "De gevraagde appbox kon niet worden gevonden.",
+      "bandwidth": "Bandbreedte",
+      "uploadUsed": "Gebruikte upload",
+      "downloadUsed": "Gebruikte download",
+      "restart": "Opnieuw starten",
+      "restartTitle": "Appbox opnieuw starten",
+      "restartDescription": "Dit start je Appbox opnieuw. Alle geinstalleerde apps zijn offline totdat het opnieuw starten is voltooid.",
+      "cancel": "Annuleren"
+    },
+    "fileExplorer": {
+      "title": "File Explorer",
+      "upload": "Uploaden",
+      "newFolder": "Nieuwe map",
+      "rename": "Hernoemen",
+      "delete": "Verwijderen",
+      "download": "Downloaden",
+      "name": "Naam",
+      "size": "Grootte",
+      "modified": "Gewijzigd",
+      "type": "Type",
+      "emptyDirectory": "Deze map is leeg",
+      "emptyDirectoryDescription": "Upload bestanden of maak een nieuwe map om te beginnen.",
+      "newFolderTitle": "Nieuwe map",
+      "newFolderPlaceholder": "Mapnaam",
+      "newFolderDescription": "Voer een naam in voor de nieuwe map.",
+      "renameTitle": "Hernoemen",
+      "renamePlaceholder": "Nieuwe naam",
+      "renameDescription": "Voer een nieuwe naam in.",
+      "deleteTitle": "Verwijderen",
+      "deleteDescription": "Weet je zeker dat je \"{name}\" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+      "create": "Maken",
+      "cancel": "Annuleren",
+      "save": "Opslaan",
+      "confirm": "Bevestigen",
+      "uploading": "Uploaden...",
+      "uploadSuccess": "Bestanden succesvol geupload",
+      "uploadError": "Bestanden uploaden mislukt",
+      "createFolderSuccess": "Map gemaakt",
+      "createFolderError": "Map maken mislukt",
+      "renameSuccess": "Succesvol hernoemd",
+      "renameError": "Hernoemen mislukt",
+      "deleteSuccess": "Succesvol verwijderd",
+      "deleteError": "Verwijderen mislukt",
+      "dropFilesHere": "Sleep bestanden hierheen om te uploaden",
+      "root": "Home",
+      "listView": "Lijstweergave",
+      "gridView": "Rasterweergave"
+    },
+    "installedApps": {
+      "title": "Geinstalleerde apps",
+      "description": "Beheer apps die op je Appboxes zijn geinstalleerd.",
+      "searchPlaceholder": "Zoeken op naam, domein, appbox...",
+      "name": "Naam",
+      "domain": "Domein",
+      "version": "Versie",
+      "slots": "Slots",
+      "slot": "slot",
+      "status": "Status",
+      "cylo": "Appbox",
+      "installedDate": "Geinstalleerd",
+      "empty": "Geen geinstalleerde apps gevonden.",
+      "filterByStatus": "Status",
+      "filterByCylo": "Appbox",
+      "allCylos": "Alle Appboxes",
+      "bulkSelected": "{count} geselecteerd",
+      "bulkUnavailable": "{count, plural, one {# app niet beschikbaar} other {# apps niet beschikbaar}}"
+    },
+    "appDetail": {
+      "port": "Poort",
+      "installDate": "Installatiedatum",
+      "server": "Server",
+      "customFields": "Configuratie",
+      "actions": "Acties",
+      "start": "Starten",
+      "stop": "Stoppen",
+      "restart": "Opnieuw starten",
+      "update": "Bijwerken",
+      "uninstall": "Verwijderen",
+      "switchVersion": "Versie wisselen",
+      "boost": {
+        "title": "App Boost",
+        "description": "Boost je app om de resources te verhogen. Je kunt aanpassingen hieronder previewen.",
+        "current": "Huidige boost-slots:",
+        "multiplier": "Multiplier",
+        "preview": "Preview",
+        "resourcePreview": "Resourcepreview",
+        "slotCost": "Slotkosten",
+        "ram": "RAM",
+        "cpus": "CPUs",
+        "apply": "Boost toepassen",
+        "applying": "Toepassen...",
+        "dockerLive": "Docker-appresources worden live toegepast zonder herstart.",
+        "vmRestart": "VM-boosts vereisen een herstart om bijgewerkte resources toe te passen.",
+        "getMore": "Meer boost nodig? Upgrade je plan"
+      },
+      "freeze": "Freezen",
+      "unfreeze": "Unfreezen",
+      "confirmFreeze": "Deze app freezen stopt hem en maakt zijn appslots vrij. Je kunt hem later unfreezen om hem te herstellen.",
+      "confirmUnfreeze": "Deze app unfreezen gebruikt opnieuw appslots. Doorgaan?",
+      "confirmUninstall": "Weet je zeker dat je deze app wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+      "pinApp": "App vastzetten",
+      "unpinApp": "App losmaken",
+      "backToInstalledApps": "Geinstalleerde apps",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appboxes",
+      "backToDashboard": "Dashboard",
+      "notFound": "Geinstalleerde app niet gevonden",
+      "notFoundDescription": "De gevraagde geinstalleerde app kon niet worden gevonden.",
+      "version": "Versie",
+      "cylo": "Appbox",
+      "appNote": "Appnotitie",
+      "appInfo": "Appinformatie",
+      "running": "Actief",
+      "stopped": "Gestopt",
+      "configuringApp": "{appName} configureren...",
+      "sendingInstallPayload": "Installatiepayload naar je appbox verzenden...",
+      "sendingUpdatePayload": "Updatepayload naar je appbox verzenden...",
+      "tabOverview": "Overzicht",
+      "tabPorts": "Poorten",
+      "tabConsole": "Console",
+      "consoleTitle": "VM-console",
+      "consoleUnavailable": "De console is alleen beschikbaar wanneer deze VM draait en is ingeschakeld.",
+      "consoleLoading": "Consoleverbindingsgegevens laden...",
+      "consoleLoadError": "Consoleverbindingsgegevens laden mislukt.",
+      "consolePortsMissing": "Console WebSocket endpoint is niet beschikbaar voor deze VM.",
+      "consoleConnecting": "Verbinden...",
+      "consoleConnected": "Verbonden",
+      "consoleDisconnected": "Verbinding verbroken",
+      "consoleConnectionError": "Verbinding mislukt",
+      "consoleReconnect": "Opnieuw verbinden",
+      "consoleWebsocketEndpoint": "WebSocket endpoint",
+      "portAssignments": "Poorttoewijzingen",
+      "internalIp": "Intern IP",
+      "hostIp": "Host-IP",
+      "internalPort": "Interne poort",
+      "hostPort": "Hostpoort",
+      "protocol": "Protocol",
+      "noPortAssignments": "Geen poorttoewijzingen gevonden.",
+      "searchPorts": "Poorten zoeken…",
+      "customDomainsTitle": "Eigen domeinen",
+      "customDomainsDescription": "Eigen domeinen die voor deze app zijn geconfigureerd.",
+      "customDomainsAdd": "Domein toevoegen",
+      "customDomainsAddTitle": "Eigen domein toevoegen",
+      "customDomainsAddDescription": "Koppel een eigen domein aan deze geinstalleerde app.",
+      "customDomainsDomain": "Domein",
+      "customDomainsPrimary": "Primair",
+      "customDomainsPrimaryYes": "Ja",
+      "customDomainsPrimaryNo": "Nee",
+      "customDomainsAdded": "Toegevoegd",
+      "customDomainsConfig": "Config",
+      "customDomainsViewConfig": "Config bekijken",
+      "customDomainsActions": "Acties",
+      "customDomainsSearch": "Domeinen zoeken...",
+      "customDomainsEmpty": "Geen eigen domeinen gevonden.",
+      "customDomainsParentDomain": "Bovenliggend domein",
+      "customDomainsLoadingDomains": "Domeinen laden...",
+      "customDomainsSelectDomain": "Selecteer een domein",
+      "customDomainsSubdomain": "Subdomein",
+      "customDomainsDomainSuffix": ".example.com",
+      "customDomainsCancel": "Annuleren",
+      "customDomainsSave": "Domein toevoegen",
+      "customDomainsDelete": "Domein verwijderen",
+      "customDomainsDeleteTitle": "Domein verwijderen",
+      "customDomainsDeleteDescription": "Weet je zeker dat je dit domein wilt verwijderen?",
+      "customDomainsVmRestartWarning": "Als je een bovenliggend domein gebruikt dat niet je user.appboxes.co-domein is, wordt je VM opnieuw gestart.",
+      "customDomainsClose": "Sluiten",
+      "customDomainsConfigTitle": "SSL-configuratie voor {domain}",
+      "customDomainsConfigDescription": "Kopieer het juiste snippet naar je webserverconfiguratie.",
+      "customDomainsSslQueued": "HTTPS voor eigen domeinen wordt op de achtergrond uitgegeven en kan enkele minuten duren voordat het actief is nadat het domein is toegevoegd.",
+      "customDomainsWildcardSsl": "Dit domein gebruikt een bestaand wildcard SSL-certificaat.",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "Bestand",
+      "customDomainsConfigSnippet": "Configuratie",
+      "customDomainsReloadCommand": "Reload-commando",
+      "customDomainsNotes": "Notities",
+      "customDomainsCopy": "Kopieren",
+      "customDomainsCopied": "Gekopieerd!",
+      "customDomainsSubdomainRequired": "Subdomein is verplicht.",
+      "customDomainsParentDomainRequired": "Selecteer een bovenliggend domein.",
+      "customDomainsSubdomainInvalid": "Alleen letters, cijfers en koppeltekens zijn toegestaan (mag niet beginnen of eindigen met een koppelteken).",
+      "customDomainsSubdomainLength": "Subdomein moet tussen 2 en 30 tekens lang zijn.",
+      "customDomainsSubdomainInUse": "Dit subdomein is al in gebruik. Probeer een ander.",
+      "customDomainsSubdomainValidateFailed": "Kan het subdomein momenteel niet valideren.",
+      "customDomainsDnsNotVerified": "DNS wijst nog niet naar de juiste server.",
+      "customDomainsDnsNotVerifiedExpected": "DNS wijst niet naar de juiste server. Verwacht IP: {ip}",
+      "customDomainsDnsCheckFailed": "Kan DNS momenteel niet verifieren.",
+      "customDomainsAddFailed": "Eigen domein toevoegen mislukt.",
+      "customDomainsDeleteFailed": "Domein verwijderen mislukt.",
+      "customDomainsConfigNotAvailable": "Configuratiesnippets zijn niet beschikbaar voor dit domein.",
+      "customDomainsConfigFetchFailed": "Configuratiesnippets laden mislukt.",
+      "customTablesTitle": "App-tabellen",
+      "customTablesLoading": "Custom tabellen laden...",
+      "customTablesRowsUsage": "{current} van {max} rijen in gebruik",
+      "customTablesAdd": "Rij toevoegen",
+      "customTablesAddTitle": "Rij toevoegen aan {label}",
+      "customTablesAddDescription": "Maak een nieuwe rij-entry.",
+      "customTablesEditTitle": "Rij bewerken in {label}",
+      "customTablesEditDescription": "Werk de geselecteerde rijwaarden bij.",
+      "customTablesDeleteTitle": "Rij verwijderen",
+      "customTablesDeleteDescription": "Weet je zeker dat je deze rij wilt verwijderen?",
+      "customTablesDelete": "Verwijderen",
+      "customTablesSave": "Opslaan",
+      "customTablesUpdate": "Bijwerken",
+      "customTablesCancel": "Annuleren",
+      "customTablesActions": "Acties",
+      "customTablesSearch": "{label} zoeken...",
+      "customTablesEmpty": "Geen rijen gevonden.",
+      "customTablesEnabled": "Ingeschakeld",
+      "customTablesDisabled": "Uitgeschakeld",
+      "customTablesValidationRequired": "Dit veld is verplicht.",
+      "customTablesValidationAlphanumeric": "Alleen letters en cijfers zijn toegestaan.",
+      "customTablesValidationComplexPassword": "Moet kleine letter, hoofdletter, cijfer en speciaal teken bevatten.",
+      "customButtonValidation": {
+        "required": "Dit veld is verplicht.",
+        "alphanumeric": "Alleen letters en cijfers zijn toegestaan.",
+        "notOnlyAlpha": "Voeg minimaal een cijfer of symbool toe.",
+        "lowercase": "Voeg minimaal een kleine letter toe.",
+        "uppercase": "Voeg minimaal een hoofdletter toe.",
+        "number": "Voeg minimaal een cijfer toe.",
+        "specialChar": "Voeg minimaal een speciaal teken toe.",
+        "invalidEmail": "Voer een geldig e-mailadres in.",
+        "invalidDate": "Voer een geldige datum in.",
+        "minLength": "Moet minimaal {count} tekens bevatten.",
+        "maxLength": "Mag maximaal {count} tekens bevatten.",
+        "invalidFormat": "Ongeldig formaat."
+      },
+      "customTablesAddSuccess": "Rij succesvol toegevoegd.",
+      "customTablesEditSuccess": "Rij succesvol bijgewerkt.",
+      "customTablesDeleteSuccess": "Rij succesvol verwijderd.",
+      "customTablesAddFailed": "Rij toevoegen mislukt.",
+      "customTablesEditFailed": "Rij bijwerken mislukt.",
+      "customTablesDeleteFailed": "Rij verwijderen mislukt."
+    },
+    "domains": {
+      "title": "Eigen domeinen",
+      "pageDescription": "Eigen domeinen die je aan je geinstalleerde apps hebt toegevoegd.",
+      "domain": "Domein",
+      "type": "Type",
+      "typeManaged": "Beheerd",
+      "typeCustom": "Eigen",
+      "typeBase": "Basis",
+      "app": "App",
+      "server": "Server",
+      "createdAt": "Gemaakt",
+      "cylo": "Appbox",
+      "confirmDelete": "Weet je zeker dat je dit domein wilt verwijderen?",
+      "deleteDomain": "Domein verwijderen",
+      "deleteBlockedHasChildren": "Kan niet verwijderen — dit domein heeft subdomeinen die het gebruiken. Verwijder die eerst.",
+      "reverifyDns": "DNS opnieuw verifieren",
+      "emptyTitle": "Nog geen eigen domeinen",
+      "emptyDescription": "Eigen domeinen kunnen worden toegevoegd bij het installeren van een app. Alleen die verschijnen hier; platformdomeinen worden automatisch beheerd.",
+      "goToAppStore": "Naar App Store",
+      "dnsVerified": "DNS wijst correct.",
+      "dnsNotVerified": "DNS wijst niet naar het juiste IP-adres.",
+      "expectedIp": "Verwacht: {ip}",
+      "cancel": "Annuleren",
+      "searchPlaceholder": "Domeinen zoeken..."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "profile": {
+      "title": "Profiel",
+      "description": "Beheer je weergavenaam, e-mailadres, avatar, wachtwoord en beveiligingsinstellingen voor je account.",
+      "email": "E-mail",
+      "alias": "Weergavenaam",
+      "aliasPlaceholder": "Voer weergavenaam in",
+      "save": "Wijzigingen opslaan",
+      "memberSince": "Lid sinds",
+      "twoFactorStatus": "Tweefactorauthenticatie",
+      "twoFactorEnabled": "Ingeschakeld",
+      "twoFactorDisabled": "Niet ingeschakeld",
+      "enable2FA": "2FA inschakelen",
+      "manage2FA": "2FA beheren"
+    },
+    "password": {
+      "title": "Wachtwoord wijzigen",
+      "current": "Huidig wachtwoord",
+      "new": "Nieuw wachtwoord",
+      "confirm": "Nieuw wachtwoord bevestigen",
+      "change": "Wachtwoord wijzigen",
+      "success": "Wachtwoord succesvol gewijzigd",
+      "successSigningOut": "Wachtwoord gewijzigd. Je wordt uit alle sessies uitgelogd…",
+      "sessionWarning": "Als je je wachtwoord wijzigt, word je onmiddellijk uitgelogd uit alle actieve sessies op alle apparaten.",
+      "mismatch": "Wachtwoorden komen niet overeen",
+      "minLength": "Wachtwoord moet minimaal 8 tekens bevatten"
+    },
+    "abuse": {
+      "title": "Abuse-meldingen",
+      "headerDescription": "Bekijk abuse-meldingen die aan je account zijn gekoppeld en volg hun huidige status.",
+      "id": "ID",
+      "subject": "Onderwerp",
+      "searchPlaceholder": "Meldingen zoeken...",
+      "status": "Status",
+      "date": "Datum",
+      "description": "Beschrijving",
+      "complainant": "Melder",
+      "adminResponse": "Reactie van admin",
+      "noReports": "Geen abuse-meldingen gevonden.",
+      "statusOpen": "Open",
+      "statusResolved": "Opgelost",
+      "statusClosed": "Gesloten",
+      "backToList": "Terug naar abuse-meldingen",
+      "detailDescription": "Volg de tijdlijn van de melding, gegevens van de melder en eventuele reactie van het Appbox-team.",
+      "reportDetails": "Meldingsdetails",
+      "conversation": "Gesprek"
+    },
+    "twoFactor": {
+      "title": "Tweefactorauthenticatie",
+      "description": "Bescherm je account met verificatie via een authenticator-app en herstelback-upcodes.",
+      "setup": "2FA instellen",
+      "scanQR": "Scan deze QR-code met je authenticator-app",
+      "secretKey": "Of voer deze geheime sleutel handmatig in:",
+      "enterCode": "Voer de 6-cijferige code uit je authenticator-app in",
+      "codePlaceholder": "000000",
+      "verify": "Verifiëren",
+      "backupCodes": "Back-upcodes",
+      "backupCodesDescription": "Bewaar deze back-upcodes op een veilige plek. Elke code kan slechts een keer worden gebruikt.",
+      "newRecoveryCodes": "Nieuwe herstelcodes",
+      "newRecoveryCodesDescription": "Bewaar deze vervangende codes nu. Je vorige herstelcodes werken niet meer.",
+      "copyAll": "Alles kopieren",
+      "copied": "Gekopieerd!",
+      "done": "Klaar",
+      "disable": "2FA uitschakelen",
+      "disableWarning": "Als je 2FA uitschakelt, wordt je account minder veilig.",
+      "disableConfirm": "Voer je wachtwoord in om 2FA uit te schakelen",
+      "disabled": "2FA is uitgeschakeld",
+      "generating": "Genereren...",
+      "verifying": "Verifiëren...",
+      "next": "Volgende",
+      "back": "Terug"
+    },
+    "apiKeys": {
+      "title": "API Keys",
+      "description": "Maak en beheer API keys op accountniveau. API keys authenticeren als jouw gebruiker en hebben dezelfde toegang als je account.",
+      "create": "API Key maken",
+      "createTitle": "API Key maken",
+      "createDescription": "Geef deze key een herkenbare naam. Het secret wordt slechts een keer getoond.",
+      "name": "Naam",
+      "namePlaceholder": "Automatiseringsscript",
+      "expiresAt": "Verloopt op",
+      "optional": "Optioneel",
+      "never": "Nooit",
+      "created": "Gemaakt",
+      "lastUsed": "Laatst gebruikt",
+      "status": "Status",
+      "active": "Actief",
+      "revoked": "Ingetrokken",
+      "expired": "Verlopen",
+      "prefix": "Prefix",
+      "actions": "Acties",
+      "rename": "Hernoemen",
+      "revoke": "Intrekken",
+      "revokeTitle": "API Key intrekken",
+      "revokeDescription": "Dit schakelt de API key onmiddellijk uit. Requests die hem gebruiken stoppen met werken.",
+      "secretTitle": "Bewaar je API Key",
+      "secretDescription": "Kopieer deze key nu. Je kunt hem later niet meer bekijken.",
+      "copy": "Kopieren",
+      "copied": "Gekopieerd!",
+      "close": "Sluiten",
+      "cancel": "Annuleren",
+      "save": "Opslaan",
+      "confirmRevoke": "Key intrekken",
+      "noKeys": "Nog geen API keys.",
+      "loadFailed": "API keys laden mislukt.",
+      "createSuccess": "API key gemaakt.",
+      "createFailed": "API key maken mislukt.",
+      "updateSuccess": "API key bijgewerkt.",
+      "updateFailed": "API key bijwerken mislukt.",
+      "revokeSuccess": "API key ingetrokken.",
+      "revokeFailed": "API key intrekken mislukt."
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "zojuist",
+      "minutesAgo": "{count}m geleden",
+      "hoursAgo": "{count}u geleden",
+      "daysAgo": "{count}d geleden"
+    },
+    "errors": {
+      "loadFailed": "Gegevens laden mislukt. Probeer het opnieuw.",
+      "loadServicesFailed": "Services laden mislukt. Probeer het opnieuw.",
+      "loadAppsFailed": "Apps laden mislukt.",
+      "loadNotificationsFailed": "Meldingen laden mislukt.",
+      "loadBlogFailed": "Blogberichten laden mislukt.",
+      "loadAppboxesFailed": "Appboxes laden mislukt. Probeer het opnieuw.",
+      "loadProfileFailed": "Profiel laden mislukt. Probeer het opnieuw."
+    },
+    "empty": {
+      "noServices": "Geen services gevonden. Ga naar het factureringsportaal om te beginnen.",
+      "noApps": "Geen nieuwe apps beschikbaar.",
+      "noRecentlyUpdated": "Geen recent bijgewerkte apps.",
+      "noBlogPosts": "Geen blogberichten beschikbaar.",
+      "noAppboxes": "Ga naar het factureringsportaal om te beginnen.",
+      "noMatchingAppboxes": "Geen appboxes komen overeen met je filters."
+    },
+    "toast": {
+      "displayNameUpdated": "Weergavenaam bijgewerkt",
+      "displayNameFailed": "Weergavenaam bijwerken mislukt"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Opnieuw starten",
+      "migrating": "Migreren",
+      "installing": "Installeren",
+      "suspended": "Opgeschort",
+      "frozen": "Bevroren",
+      "throttled": "Gethrottled",
+      "lowQuota": "Weinig quota"
+    }
+  }
+}

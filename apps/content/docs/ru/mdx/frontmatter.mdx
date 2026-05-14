@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: Узнайте, как использовать frontmatter в MDX-файлах.
+sort: 3
+---
+
+Frontmatter — важная часть MDX-файла.
+Он используется для описания содержимого файла,
+например заголовка, описания, автора, даты публикации и т. д.
+
+Заголовок метаданных задается в начале файла между `---` (тремя дефисами) в начале и конце.
+
+## Формат
+
+Заголовок метаданных задается в формате ключ-значение, где ключ — это имя метаданных, а значение — содержимое метаданных.
+
+**Пример:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+В зависимости от типа документа (документация, публикация блога и т. д.) можно использовать разные метаданные.
+
+## Метаданные для документации
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Пример:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Метаданные для публикаций блога
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Это идентификатор автора публикации.
+    Он должен совпадать с `id` автора, заданным в файле `src/config/blog.ts`,
+    где содержатся полные данные авторов.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Это изображение будет использоваться как главное изображение публикации при распространении в социальных сетях, если вы не хотите использовать автоматически сгенерированное изображение.
+    Изображения должны храниться в папке `public/blog-og`.
+    Используйте только имя файла изображения и расширение.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Пример:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

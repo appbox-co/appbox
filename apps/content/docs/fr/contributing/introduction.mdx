@@ -1,0 +1,99 @@
+---
+title: Introduction
+description: Bienvenue dans la documentation officielle du frontend Appbox open source.
+sort: 1
+---
+
+**Bienvenue dans la documentation Appbox**  
+Nous sommes ravis d'annoncer que le frontend de [Appbox](https://www.appbox.co/) est désormais open source sur [GitHub](https://github.com/appbox-co/appbox). Notre objectif est de favoriser une communauté collaborative qui contribue à la documentation, développe de nouvelles fonctionnalités frontend et aide à améliorer l'expérience Appbox dans son ensemble.
+
+Notre documentation en est encore à ses débuts, mais nous travaillons à créer une ressource complète, comparable aux autres plateformes de notre domaine. Pour l'instant, nos docs se concentrent principalement sur les consignes de contribution, mais nous prévoyons de les enrichir avec des informations détaillées pour toutes les apps disponibles sur Appbox.
+
+En attendant que notre documentation devienne plus complète, consultez notre [ancienne base de connaissances](https://billing.appbox.co/knowledgebase) pour les questions immédiates concernant des apps ou services précis. Si vous avez besoin d'une assistance technique, vous pouvez [ouvrir un ticket](https://billing.appbox.co/submitticket.php). Vous pouvez toujours accéder à ces nouvelles docs via le lien dans le pied de page de notre site afin de suivre nos progrès au fil de leur extension.
+
+## Projets à venir
+
+- **Guides d'apps approfondis**  
+  Couvrant l'installation, le dépannage et les astuces pour chacune des apps prises en charge sur notre plateforme.
+- **Ressources pour utilisateurs et développeurs**  
+  Fournissant aussi bien des tutoriels accessibles aux débutants que des références de code avancées pour personnaliser votre expérience Appbox.
+- **Contenu porté par la communauté**  
+  Encourageant les pull requests, retours et suggestions : tout est bienvenu et contribue à faire grandir ce projet pour tout le monde.
+
+## Bien démarrer
+
+Si vous voulez consulter ou contribuer au code frontend open source, clonez le dépôt [Appbox](https://github.com/appbox-co/appbox) :
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Puis entrez dans le projet et installez ses dépendances :
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Votre instance locale sera disponible sur `http://localhost:3000`. N'hésitez pas à explorer, apporter des changements et créer des pull requests. Nous apprécions chaque contribution !
+
+## Outils de développement
+
+### Linting
+
+Le projet inclut une configuration de linting complète avec ESLint, TypeScript et l'intégration Prettier. Cela garantit un style de code cohérent et aide à détecter les erreurs courantes tôt. Vous pouvez lancer les vérifications de linting manuellement :
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Notre configuration ESLint inclut :
+- Des règles spécifiques à TypeScript via `@typescript-eslint`
+- Le linting spécifique à Next.js avec `eslint-config-next`
+- Le formatage du code avec l'intégration Prettier
+
+### Hooks de pré-commit
+
+Nous utilisons Husky pour gérer les hooks Git, ce qui aide à garantir que seul du code de qualité est validé dans le dépôt. Les hooks suivants sont configurés :
+
+- **pre-commit** : exécute `lint:fix` avant chaque commit afin de garantir la qualité du code
+- **commit-msg** : utilise commitlint pour imposer le format conventionnel des messages de commit
+
+Cela signifie que vos commits seront automatiquement vérifiés pour la qualité du code et le bon formatage avant d'être acceptés, maintenant un niveau élevé dans tout le codebase.
+
+## Créer des pull requests
+
+Lorsque vous êtes prêt à proposer vos changements, suivez ces consignes pour augmenter les chances d'acceptation de votre Pull Request (PR) :
+
+### Avant de créer une PR
+
+1. **Rebasez depuis la dernière branche main** pour éviter les conflits de merge :
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Assurez-vous que tout le linting passe** :
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Vérifiez que votre code fonctionne localement** en testant la fonctionnalité concernée.
+
+### Consignes pour les PR
+
+1. **Gardez les PR ciblées** : traitez un seul problème ou une seule fonctionnalité par PR.
+2. **Rédigez des messages de commit clairs** : suivez le format de commit conventionnel.
+3. **Incluez des descriptions claires** : expliquez ce que fait votre PR et pourquoi elle est nécessaire.
+4. **Ajoutez des tests** : lorsque c'est pertinent, ajoutez des tests pour vérifier que vos changements fonctionnent correctement.
+5. **Documentez votre code** : utilisez des commentaires pour la logique complexe et assurez-vous que les noms de fonctions sont descriptifs.
+6. **Suivez les modèles existants** : votre code doit correspondre au style et aux modèles utilisés dans le reste du codebase.
+
+Pour les changements importants, envisagez d'ouvrir d'abord une issue afin de discuter de l'approche avant d'investir du temps dans le code. Cela aide à garantir que votre contribution correspond à la direction du projet et évite les efforts perdus.

@@ -1,0 +1,99 @@
+---
+title: Bevezetés
+description: Üdvözlünk a nyílt forráskódú Appbox frontend hivatalos dokumentációjában.
+sort: 1
+---
+
+**Üdvözlünk az Appbox dokumentációban**  
+Örömmel jelentjük be, hogy az [Appbox](https://www.appbox.co/) frontendje mostantól nyílt forráskódú a [GitHub](https://github.com/appbox-co/appbox) oldalon. Célunk egy együttműködő közösség építése, amely hozzájárul a dokumentációhoz, új frontend funkciókat fejleszt, és segít javítani az Appbox teljes élményét.
+
+Bár dokumentációnk még korai szakaszban van, azon dolgozunk, hogy a területünk más platformjaihoz hasonló, átfogó erőforrást hozzunk létre. Jelenleg a dokumentációnk elsősorban a hozzájárulási irányelvekre összpontosít, de terveink szerint részletes információkkal bővítjük az Appboxon elérhető összes alkalmazáshoz.
+
+Amíg a dokumentációnk nem válik teljesebbé, konkrét alkalmazásokkal vagy szolgáltatásokkal kapcsolatos azonnali kérdésekhez látogasd meg a [régi tudásbázisunkat](https://billing.appbox.co/knowledgebase). Ha technikai támogatásra van szükséged, [jegyet küldhetsz be](https://billing.appbox.co/submitticket.php) segítségért. Ezeket az új dokumentumokat mindig elérheted a webhelyünk láblécében található hivatkozáson keresztül, ahol nyomon követheted a bővítés folyamatát.
+
+## Jövőbeli tervek
+
+- **Részletes alkalmazásútmutatók**  
+  Telepítési, hibaelhárítási és tippanyagok minden, platformunkon támogatott alkalmazáshoz.
+- **Felhasználói és fejlesztői erőforrások**  
+  Kezdőbarát oktatóanyagoktól haladó kódreferenciákig mindent biztosítunk az Appbox élmény testreszabásához.
+- **Közösség által vezérelt tartalom**  
+  Ösztönözzük a pull requesteket, visszajelzéseket és javaslatokat. Mindegyiket szívesen fogadjuk, és segítik a projekt növekedését mindenki számára.
+
+## Első lépések
+
+Ha meg szeretnéd nézni vagy hozzá szeretnél járulni a nyílt forráskódú frontend kódunkhoz, klónozd az [Appbox](https://github.com/appbox-co/appbox) adattárat:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Ezután lépj be a projektbe, és telepítsd a függőségeit:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+A helyi példányod a `http://localhost:3000` címen lesz elérhető. Bátran fedezd fel, végezz módosításokat, és hozz létre pull requesteket. Minden hozzájárulást nagyra értékelünk!
+
+## Fejlesztői eszközök
+
+### Linting
+
+A projekt átfogó linting beállítással érkezik, amely ESLintet használ TypeScript és Prettier integrációval. Ez egységes kódstílust biztosít, és segít korán elkapni a gyakori hibákat. A linting ellenőrzéseket manuálisan is futtathatod:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Az ESLint konfigurációnk a következőket tartalmazza:
+- TypeScript-specifikus szabályok az `@typescript-eslint` segítségével
+- Next.js-specifikus linting az `eslint-config-next` használatával
+- Kódformázás Prettier integrációval
+
+### Pre-commit hookok
+
+Huskyt használunk a Git hookok kezelésére, ami segít biztosítani, hogy csak minőségi kód kerüljön az adattárba. A következő hookok vannak beállítva:
+
+- **pre-commit**: Minden commit előtt futtatja a `lint:fix` parancsot a kódminőség biztosításához
+- **commit-msg**: commitlintet használ a conventional commit üzenetformátum kikényszerítésére
+
+Ez azt jelenti, hogy a commitjaid automatikusan ellenőrzésre kerülnek kódminőség és megfelelő formázás szempontjából, mielőtt elfogadásra kerülnének, így az egész kódbázisban magas színvonal marad fenn.
+
+## Pull requestek készítése
+
+Amikor készen állsz a módosításaid beküldésére, kövesd ezeket az irányelveket, hogy nagyobb eséllyel fogadják el a Pull Requestedet (PR):
+
+### PR létrehozása előtt
+
+1. **Rebase-elj a legfrissebb main ágról**, hogy elkerüld a merge konfliktusokat:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Győződj meg róla, hogy minden linting sikeres**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Győződj meg róla, hogy a kódod helyben működik**, a releváns funkció tesztelésével.
+
+### PR irányelvek
+
+1. **Tartsd fókuszáltan a PR-eket** - Egy PR egy problémát vagy funkciót kezeljen.
+2. **Írj világos commit üzeneteket** - Kövesd a conventional commit formátumot.
+3. **Adj hozzá világos leírásokat** - Magyarázd el, mit csinál a PR-ed, és miért van rá szükség.
+4. **Adj hozzá teszteket** - Ahol alkalmazható, adj hozzá teszteket annak ellenőrzésére, hogy a módosításaid megfelelően működnek.
+5. **Dokumentáld a kódodat** - Összetett logikához használj megjegyzéseket, és gondoskodj róla, hogy a függvénynevek beszédesek legyenek.
+6. **Kövesd a meglévő mintákat** - A kódod illeszkedjen a kódbázis többi részében használt stílushoz és mintákhoz.
+
+Jelentősebb módosításoknál érdemes először issue-t nyitni a megközelítés megbeszélésére, mielőtt időt fektetnél a kódolásba. Ez segít biztosítani, hogy a hozzájárulásod illeszkedjen a projekt irányához, és elkerüld a felesleges munkát.

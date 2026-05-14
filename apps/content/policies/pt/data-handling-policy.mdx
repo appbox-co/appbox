@@ -1,0 +1,397 @@
+---
+title: Política de Tratamento de Dados
+description: Como gerenciamos e protegemos seus dados
+---
+
+Na Appbox, coletamos e armazenamos apenas as informações mínimas necessárias para manter nossos registros e entregar nossos serviços. A equipe da Appbox é treinada para tratar seus dados com o máximo foco em privacidade e segurança e segue protocolos rigorosos, incluindo o uso de credenciais fortes e autenticação multifator. Todo o processamento de pagamentos é feito integralmente por nossos processadores de pagamento, e nenhuma das suas informações financeiras é armazenada pela Appbox, exceto registros de pagamento e seus respectivos IDs de transação.
+
+## Email
+
+- **Usos**
+  - Serve como seu login para a Appbox Client Area e o Appbox Control Panel
+  - Ponto de contato para anúncios de serviço da Appbox
+  - Ponto de contato para consultas no Appbox Ticket System
+- **Coleta**
+  - Fornecido pelo usuário durante o cadastro
+- **Armazenamento**
+  - WHMCS = texto claro
+  - Appbox API = texto claro
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Equipe Appbox
+    - Usado para contatar o usuário para suporte ou anúncios de serviço
+- **Retenção**
+  - Indefinida
+- **Mais informações**
+  - Política de Remoção de Dados Sensíveis
+
+## Nome de usuário
+
+- **Usos**
+  - Identifica o usuário no Appbox Ticket System
+  - Serve como o nome do slot Appbox do usuário
+  - É registrado como usuário local no servidor onde o slot do usuário é implantado, mostrando quaisquer processos em execução do usuário
+  - Serve como nome de usuário do usuário para aplicações instaladas
+- **Coleta**
+  - Fornecido pelo usuário durante o cadastro
+- **Armazenamento**
+  - WHMCS = texto claro
+  - Appbox API = texto claro
+  - Aplicações instaladas = depende da aplicação
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Equipe Appbox
+    - Necessário para consultas de suporte
+    - Necessário para investigar problemas de servidor procurando aplicações com alto consumo de recursos, fontes de instabilidade do servidor ou quaisquer aplicações não autorizadas
+- **Retenção**
+  - Indefinida
+- **Mais informações**
+  - Política de Remoção de Dados Sensíveis
+
+## País
+
+- **Usos**
+  - Usado para calcular impostos aplicáveis com base no país selecionado pelo usuário
+- **Coleta**
+  - Fornecido pelo usuário durante o cadastro
+- **Armazenamento**
+  - WHMCS = texto claro
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Equipe Appbox
+- **Retenção**
+  - Indefinida
+- **Mais informações**
+  - Política de Remoção de Dados Sensíveis
+
+## Senha
+
+### Senha da Appbox Client Area
+
+- **Usos**
+  - Serve como senha do usuário para a Appbox Client Area
+- **Coleta**
+  - Fornecida pelo usuário durante o cadastro na Appbox Client Area
+- **Armazenamento**
+  - WHMCS = criptografada
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Acesso limitado pela equipe Appbox
+    - A equipe Appbox não consegue ver a senha do usuário, pois ela é hashed, mas pode redefinir sua senha após verificação
+- **Retenção**
+  - Indefinida
+- **Mais informações**
+  - Política de Remoção de Dados Sensíveis
+  - [Política de Senhas](/policies/password-policy)
+  - Recomendamos fortemente ativar a autenticação de dois fatores na sua [página de segurança da conta](https://billing.appbox.co/user/security)
+
+### Senha do Appbox Control Panel
+
+- **Usos**
+  - Serve como senha do usuário no Appbox Control Panel para acessar seu slot
+- **Coleta**
+  - Fornecida pelo usuário após a implantação do slot
+- **Armazenamento**
+  - Appbox API = criptografada
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Acesso limitado pela equipe Appbox
+    - A equipe Appbox não consegue ver a senha do usuário, pois ela é hashed, mas pode redefinir sua senha após verificação
+- **Retenção**
+  - Indefinida
+- **Mais informações**
+  - Política de Remoção de Dados Sensíveis
+  - [Política de Senhas](/policies/password-policy)
+  - Recomendamos fortemente ativar a autenticação de dois fatores na sua [página de segurança da conta](https://billing.appbox.co/user/security)
+
+### Senhas de aplicações
+
+- **Usos**
+  - Servem como senha para as aplicações instaladas do usuário
+- **Coleta**
+  - Fornecidas pelo usuário após a implantação do slot
+- **Armazenamento**
+  - Appbox API = texto claro
+  - Aplicações instaladas = depende da aplicação
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Equipe Appbox
+    - Necessário para consultas de suporte específicas da aplicação, com permissão do usuário
+- **Retenção**
+  - Até o usuário desinstalar a aplicação
+- **Mais informações**
+  - Política de Remoção de Dados Sensíveis
+  - [Política de Senhas](/policies/password-policy)
+  - Recomendamos fortemente ativar a autenticação de dois fatores na sua [página de segurança da conta](https://billing.appbox.co/user/security)
+
+## Processamento de pagamentos
+
+### PayPal
+
+- **Usos**
+  - Serve como um dos gateways de pagamento da Appbox
+- **Coleta**
+  - O processamento de pagamento é feito integralmente pelo PayPal. O único dado salvo no WHMCS na conta do usuário é o **PayPal Transaction ID**
+- **Armazenamento**
+  - WHMCS = texto claro (PayPal Transaction ID)
+- **Acesso e motivos para acesso**
+  - Equipe de vendas da Appbox
+    - A equipe de vendas da Appbox pode verificar as informações do usuário com o PayPal como parte do nosso processo de vendas
+- **Retenção**
+  - Indefinida
+
+### Stripe
+
+- **Usos**
+  - Serve como um dos gateways de pagamento da Appbox
+- **Coleta**
+  - O processamento de pagamento é feito integralmente pela Stripe. Os únicos dados salvos no WHMCS na conta do usuário são o **Stripe Payment ID, Hash, os últimos quatro dígitos do cartão e a validade**
+- **Armazenamento**
+  - WHMCS = texto claro (Stripe Payment ID)
+- **Acesso e motivos para acesso**
+  - Equipe de vendas da Appbox
+    - A equipe de vendas da Appbox pode verificar as informações do usuário com a Stripe como parte do nosso processo de vendas
+- **Retenção**
+  - Indefinida
+
+### CoinGate
+
+- **Usos**
+  - Serve como um dos gateways de pagamento da Appbox para transações com criptomoedas
+- **Coleta**
+  - O processamento de pagamento é feito integralmente pela CoinGate. O único dado salvo no WHMCS é o **CoinGate Transaction ID**
+- **Armazenamento**
+  - WHMCS = texto claro (Transaction ID)
+- **Acesso e motivos para acesso**
+  - Equipe de vendas da Appbox
+    - A equipe de vendas da Appbox pode verificar as informações do usuário com a CoinGate como parte do nosso processo de vendas
+- **Retenção**
+  - Indefinida
+
+*Observação: a própria CoinGate armazena o ID da transação em blockchain e o endereço blockchain do remetente como parte do serviço. Essas informações não são armazenadas pela Appbox.*
+
+## Logs e analytics
+
+### Métricas de servidor
+
+- **Usos**
+  - Usadas para monitorar a saúde e o uso de recursos dos servidores
+- **Coleta**
+  - Geradas após a implantação do slot do usuário
+- **Armazenamento**
+  - Servidores Appbox = texto claro
+  - Appbox API = texto claro
+  - Posthog = texto claro
+- **Acesso e motivos para acesso**
+  - Usuário
+    - Métricas de servidor podem ser visualizadas usando várias utilidades Linux instaladas no seu slot. As seguintes métricas principais podem ser vistas:
+      - Uso de CPU
+      - Uso de swap
+      - Uso de RAM
+      - Load average 1/5/15
+      - Seus processos em execução
+      - Processos executados por outros usuários no mesmo servidor não são acessíveis por você
+      - Métricas de entrada/saída
+      - Espaço em disco
+      - Espaço em disco de quota (seu espaço alocado)
+      - Espaço físico em disco
+  - Equipe Appbox
+    - Além das métricas acima, a equipe Appbox usa Posthog para agregar rapidamente todas as métricas de todos os servidores e alertar a equipe sobre quaisquer erros
+    - Métricas de servidor são usadas para consultas de suporte e para investigar abuso de recursos
+- **Retenção**
+  - Indefinida
+
+### Logs de autenticação
+
+#### Tentativas de login no Appbox Control Panel
+
+- **Usos**
+  - Quaisquer tentativas de acesso inválidas são registradas na Appbox API, que impede o usuário de entrar no Control Panel após certo número de tentativas por um período especificado. Isso inclui:
+    - Nome de usuário, conforme inserido pelo usuário
+    - Endereço IP
+    - Número de tentativas
+    - Última data da tentativa
+- **Coleta**
+  - Coletado quando um usuário insere credenciais incorretamente
+- **Armazenamento**
+  - Appbox API = texto claro
+- **Acesso e motivos para acesso**
+  - Equipe Appbox
+    - Usado para identificar tentativas de força bruta
+    - Usuários podem solicitar a remoção do bloqueio temporário e da tentativa de acesso mediante solicitação e verificação pelo sistema de tickets
+- **Retenção**
+  - 24 horas ou mediante solicitação do usuário
+
+#### Logs de login SSH
+
+- **Usos**
+  - Registram tentativas de login e logins bem-sucedidos em SSH em aplicações instaladas pelo usuário, como Ubuntu ou Debian
+- **Coleta**
+  - Gerados automaticamente pelo servidor SSH quando tentativas de login ocorrem
+- **Armazenamento**
+  - Container da aplicação = texto claro (normalmente em `/var/log/auth.log` ou similar)
+- **Acesso e motivos para acesso**
+  - Usuário
+    - Como esses logs são armazenados em aplicações onde os usuários têm acesso root (sudo), os usuários têm controle total e acesso a esses logs
+    - Usuários podem visualizar, modificar ou excluir esses logs conforme necessário
+  - Equipe Appbox
+    - Acesso disponível apenas com permissão do usuário durante solução de problemas de suporte
+- **Retenção**
+  - Gerenciada pelo usuário, pois ele tem acesso root ao container
+  - Políticas padrão de rotação de logs se aplicam, a menos que sejam modificadas pelo usuário
+
+### Logs gerados pelo sistema
+
+- **Usos**
+  - Logs gerados em todo o servidor, usados para identificar problemas nos servidores
+- **Coleta**
+  - Gerados pelo sistema operacional dos servidores
+- **Armazenamento**
+  - Servidores Appbox = texto claro
+  - Posthog = texto claro
+- **Acesso e motivos para acesso**
+  - Equipe Appbox com acesso limitado
+    - Usados para identificar problemas em servidores específicos
+    - Logs são agregados pelo Posthog, que alerta a equipe sobre quaisquer erros
+- **Retenção**
+  - Indefinida
+
+### Logs gerados por aplicações instaladas
+
+- **Usos**
+  - Logs gerados por aplicações instaladas, usados para identificar problemas no slot do usuário
+- **Coleta**
+  - Gerados pelas aplicações instaladas pelo usuário
+- **Armazenamento**
+  - Appbox API = texto claro
+  - Aplicações instaladas = texto claro
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Equipe Appbox
+    - Necessário para consultas de suporte específicas da aplicação, com permissão do usuário
+- **Retenção**
+  - Até o usuário desinstalar ou remover a aplicação
+
+### Histórico bash do usuário
+
+- **Usos**
+  - Registra todos os comandos inseridos pelo usuário no shell do slot, localizado em `$HOME/.bash_history`
+- **Coleta**
+  - Cada comando inserido no shell é registrado
+- **Armazenamento**
+  - Servidores Appbox = texto claro
+- **Acesso e motivos para acesso**
+  - Usuário
+    - Como o arquivo de histórico bash fica armazenado no diretório home do usuário, os usuários têm controle total sobre esse arquivo
+    - Usuários podem visualizar, modificar, limpar ou excluir esse arquivo conforme necessário (usando comandos como `history -c` ou editando/removendo o arquivo)
+  - Equipe Appbox
+    - Usado para consultas gerais ou específicas de aplicações, como verificar se os comandos inseridos pelo usuário estão corretos, mas apenas com permissão do usuário
+    - Usado para verificar possíveis invasões ou abuso de servidor, mas apenas quando necessário para investigações de segurança
+- **Retenção**
+  - Gerenciada pelo usuário, que pode limpar o histórico a qualquer momento
+  - Por padrão, o histórico bash é retido indefinidamente até que o usuário o remova
+
+### Dados hospedados
+
+#### Aplicações instaladas
+
+- **Usos**
+  - Arquivos essenciais para que aplicações instaladas funcionem corretamente
+- **Coleta**
+  - Instaladas pelo usuário em seu slot
+- **Armazenamento**
+  - Servidores Appbox = depende da aplicação
+- **Acesso e motivos para acesso**
+  - Usuário
+  - Equipe Appbox
+    - Usado para consultas de suporte específicas da aplicação, com permissão do usuário
+- **Retenção**
+  - Indefinida até o usuário remover
+
+#### Dados do usuário
+
+- **Usos**
+  - Dados criados pelo usuário e/ou pelas aplicações do usuário e armazenados no slot do usuário
+- **Coleta**
+  - Criados pelo usuário e/ou pelas aplicações do usuário
+- **Armazenamento**
+  - Servidores Appbox = texto claro
+- **Acesso e motivos para acesso**
+  - Usuário
+    - Os arquivos do usuário ficam armazenados em pastas home nos servidores Appbox e são isolados de outros usuários. Apenas o usuário pode acessá-los
+  - Equipe Appbox
+    - Podem ser acessados para consultas de suporte, com permissão do usuário
+- **Retenção**
+  - Indefinida até o usuário remover
+    - Para notificações legítimas de remoção DMCA, informaremos o usuário e pediremos que exclua o conteúdo em até 24 horas
+- **Mais informações**
+  - [Política de Abuso de Conteúdo](/policies/content-abuse-policy)
+  - [Política de Remoção de Dados Sensíveis](/policies/sensitive-data-removal-policy)
+
+## Conformidade com o UK Online Safety Act
+
+De acordo com o UK Online Safety Act 2023, a Appbox implementa práticas específicas de tratamento de dados para proteger usuários e cumprir requisitos regulatórios:
+
+### Monitoramento de segurança de conteúdo
+
+- **Usos**
+  - Avaliação e mitigação de riscos para conteúdo ilegal e prejudicial
+  - Moderação de conteúdo relatado
+  - Prevenção da distribuição de conteúdo ilegal
+- **Coleta**
+  - Gerado quando conteúdo é relatado ou sinalizado
+  - Valores de hash de conteúdo para material ilegal conhecido
+- **Armazenamento**
+  - Appbox API = criptografado
+  - Banco de dados de relatos = texto claro
+- **Acesso e motivos para acesso**
+  - Equipe de Conformidade da Appbox
+    - Para revisar conteúdo relatado e tomar as medidas adequadas
+    - Para coordenar com autoridades do Reino Unido quando legalmente exigido
+  - Autoridades regulatórias do Reino Unido (quando exigido por lei)
+    - Para monitorar conformidade com o Online Safety Act
+    - Para investigar conteúdo ilegal grave
+- **Retenção**
+  - Dados de relatos: 2 anos após a resolução
+  - Valores de hash de conteúdo: indefinida (para prevenção de redistribuição)
+
+### Dados de avaliação de risco
+
+- **Usos**
+  - Condução das avaliações de risco exigidas para conteúdo ilegal e conteúdo prejudicial a crianças
+  - Implementação de medidas de segurança proporcionais
+  - Demonstração de conformidade a autoridades regulatórias
+- **Coleta**
+  - Gerados por avaliações regulares de risco da plataforma
+  - Dados agregados de uso para identificar possíveis padrões de risco
+- **Armazenamento**
+  - Sistemas de Conformidade da Appbox = protegido
+- **Acesso e motivos para acesso**
+  - Equipe de Conformidade da Appbox
+    - Para conduzir e atualizar avaliações de risco
+    - Para implementar medidas de segurança
+  - Autoridades regulatórias do Reino Unido (quando exigido por lei)
+    - Para verificar conformidade com deveres de avaliação de risco
+- **Retenção**
+  - 3 anos (para demonstrar conformidade contínua)
+
+### Sistema de relato de conteúdo
+
+- **Usos**
+  - Permite que usuários relatem conteúdo ilegal ou prejudicial
+  - Acompanha o status dos relatos e ações tomadas
+- **Coleta**
+  - Detalhes do relato fornecidos pelos usuários que relatam
+  - Informações sobre o conteúdo relatado
+  - Ações tomadas sobre relatos
+- **Armazenamento**
+  - Appbox API = criptografado
+- **Acesso e motivos para acesso**
+  - Usuário relator (limitado aos próprios relatos)
+  - Usuário cujo conteúdo foi relatado (informações limitadas)
+  - Equipe de Conformidade da Appbox
+    - Para investigar e resolver relatos
+  - Autoridades regulatórias do Reino Unido (quando exigido por lei)
+    - Para investigar relatos de conteúdo ilegal grave
+- **Retenção**
+  - 2 anos após a resolução

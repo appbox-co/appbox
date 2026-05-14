@@ -1,0 +1,125 @@
+---
+title: OpenClaw - henkilökohtainen AI Assistant, joka keskustelee sovellustesi kanssa
+date: 2026-03-20 10:00:00
+excerpt: OpenClaw on nyt saatavilla Appboxissa. Se on avoimen lähdekoodin AI Assistant, joka toimii omassa infrastruktuurissasi, yhdistyy chat-sovelluksiisi ja voi oikeasti olla vuorovaikutuksessa muiden asentamiesi sovellusten kanssa.
+author_id: rid
+og_image: openclaw-og.jpg
+tags: [appbox, openclaw, ai, apps, integration, self-hosted]
+---
+
+# OpenClaw on nyt Appboxissa
+
+Lisäsimme juuri app storeen jotain, mistä olen henkilökohtaisesti ollut innoissani jo jonkin aikaa.
+
+[OpenClaw](https://openclaw.ai) on avoimen lähdekoodin AI Assistant, joka toimii kokonaan omassa infrastruktuurissasi. Ajattele sitä yksityisenä, itse hostattuna vaihtoehtona pilvipohjaisille AI Assistant -palveluille, paitsi että tämä elää Appboxissasi, muistaa keskustelusi ja voi oikeasti tehdä asioita puolestasi.
+
+Keskustelet sen kanssa niiden chat-sovellusten kautta, joita jo käytät. WhatsApp, Telegram, Discord, Slack, Signal, jopa iMessage. Se vastaa Anthropic-, OpenAI-, Google-, xAI-, Mistral- ja muiden mallien täydellä teholla. Tuot oman API-avaimesi, valitset mallisi, ja kaikki pysyy palvelimellasi.
+
+Jo se itsessään olisi hyödyllistä. Mutta syy, miksi kirjoitan siitä blogikirjoituksen sen sijaan, että lisäisin sen hiljaa kauppaan, on se, mitä tapahtuu, kun yhdistät sen muuhun Appboxiisi.
+
+<p align="center">
+  <img src="/blog-images/openclaw-dashboard-chat.png" alt="OpenClaw-chat-istunto verkkodashboardissa" width="860" className="mt-8 mb-10" />
+</p>
+
+## Se näkee muut sovelluksesi
+
+Tässä on se, mikä tekee OpenClawista Appboxissa erilaisen kuin sen ajamisesta missä tahansa muualla.
+
+Jokaisella Appboxilla on jaettu datakerros. Jokainen asennettu sovelluksesi saa hakemiston yhteisen liitospisteen alle, ja käytössä on jaettu tallennusalue, josta mikä tahansa sovellus voi lukea ja johon se voi kirjoittaa. OpenClawilla on pääsy samaan jaettuun tiedostojärjestelmään. Tämä tarkoittaa, että se näkee muiden asennettujen sovellustesi datan ja yleisen tallennustilasi, ei jonkin hauraan API-integraation kautta, vaan suoralla tiedostojärjestelmäpääsyllä.
+
+Käytännössä AI Assistantisi ei ole eristetty omaan konttiinsa ilman kontekstia. Se istuu aivan tiedostojesi, tietokantojesi, mediasi, koodisi ja määritystesi vieressä.
+
+## Se voi kirjautua muihin sovelluksiisi
+
+Jaetun tiedostojärjestelmän lisäksi OpenClawissa on täysi headless-selain (Chromium ja Puppeteer) sekä kaikki yleiset tietokanta-asiakkaat ja CLI-työkalut sisäänrakennettuina. Jos annat sille kirjautumistiedot johonkin muuhun sovellukseesi, se voi oikeasti kirjautua sisään ja käyttää sitä puolestasi.
+
+Haluatko päivittää tiimidokumentaatiota Docmostissa? Kerro OpenClawille, mitä kirjoittaa, ja anna sille URL ja tunnukset. Se kirjautuu sisään, siirtyy oikealle sivulle ja tekee muokkaukset. Tarvitsetko uuden landing page -sivun Nginx & PHP -stackiisi? Kuvaile, mitä haluat, ja OpenClaw voi kirjoittaa HTML:n, CSS:n ja JavaScriptin ja ottaa tiedostot käyttöön suoraan web-juureesi jaetun tiedostojärjestelmän kautta. Käytätkö WordPressiä? Pyydä sitä luonnostelemaan ja julkaisemaan blogikirjoitus, päivittämään lisäosan asetuksia tai uudistamaan sivun tyyli. Se voi käyttää admin-dashboardia aivan kuten sinä.
+
+Tämä ei rajoitu myöskään web-käyttöliittymiin. OpenClaw sisältää `mysql`-, `psql`-, `redis-cli`-, `mongosh`- ja SSH-tuen, joten se voi yhdistää tietokantoihisi ja palveluihisi suoraan millä tahansa antamillasi tunnuksilla. Olennaista on, ettei OpenClaw tarvitse erityisiä integraatioita tai lisäosia jokaista sovellusta varten. Jos sinä voit kirjautua siihen, myös assistantisi voi.
+
+## Miltä tämä oikeasti näyttää
+
+Käydään läpi muutamia tarkempia esimerkkejä siitä, mitä voit tehdä, kun AI Assistantilla on pääsy Appbox-ekosysteemiisi.
+
+### Mediakirjaston siistiminen
+
+Jos ajat Plexiä, Jellyfiniä tai Embyä, OpenClaw sisältää `ffmpeg`-, `mediainfo`- ja `exiftool`-työkalut. Ne ovat käteviä tiedostojen metadatan tarkistamiseen tai koodausongelmien löytämiseen ilman, että sinun tarvitsee kaivella hakemistoja käsin. Pyydä sitä listaamaan kansion sisältö, tarkistamaan formaatit tai auttamaan nimeämiskäytäntöjen siistimisessä, jotta mediapalvelimesi indeksoi asiat oikein.
+
+### Tietokantatyö ilman tuskaa
+
+OpenClawin kontissa on `mysql`, `psql`, `sqlite3`, `redis-cli` ja `mongosh` valmiiksi asennettuina. Jos ajat MariaDB:tä, voit pyytää OpenClawia kyselemään tietokantoja, tarkastamaan skeemoja, debuggaamaan hitaita kyselyitä tai auttamaan migraatioiden kirjoittamisessa. Kaikki chat-viestillä puhelimestasi.
+
+Käytätkö WordPressiä tai muuta MariaDB:n päälle rakennettua CMS:ää? Pyydä OpenClawia tarkistamaan tietokantasi kunto, etsimään orpoa julkaisumetadataa tai viemään tiettyä sisältöä. Sinun ei tarvitse SSH:ta mihinkään tai muistaa oikeita CLI-lippuja. Kuvaile vain tavallisella kielellä, mitä tarvitset.
+
+### GitLab ja koodityönkulut
+
+Jos sinulla on GitLab asennettuna, OpenClaw voi työskennellä suoraan repositorioidesi kanssa. Siinä on `git` sisäänrakennettuna sekä `ripgrep` ja `fd` nopeaa koodihakua varten. Pyydä sitä etsimään repoistasi tiettyä kuviota, tiivistämään viimeaikaisia committeja tai auttamaan tuntemattoman koodin ymmärtämisessä.
+
+Tiimeille, jotka käyttävät GitLabia sisäisiin projekteihin, AI Assistant, joka voi oikeasti lukea koodikantasi ja vastata sitä koskeviin kysymyksiin lähettämättä koodiasi kolmannen osapuolen pilvipalveluun, on merkittävä parannus kehitystyönkulkuun.
+
+### Tiedostojen järjestely ja synkronointi
+
+Käytätkö Nextcloudia, SFTPGo:ta tai File Browseria? OpenClaw voi auttaa hallitsemaan näiden palveluiden kautta kulkevia tiedostoja. Se voi etsiä asiakirjoista, järjestää hakemistorakenteita uudelleen, löytää duplikaatteja ja siirtää asioita jaetun tallennustilasi ja sovelluskohtaisten hakemistojen välillä.
+
+Siinä on myös `rclone` käytettävissä, joten jos sinun täytyy määrittää synkronointitöitä tai siirtää dataa pilvitallennuspalveluiden välillä, voit kuvailla haluamasi ja antaa OpenClawin hoitaa määrityksen.
+
+### Valvonta ja diagnostiikka
+
+Jos olet asentanut Uptime Kuman palveluidesi valvontaan, OpenClaw antaa sinulle keskustelukerroksen valvonta-asetuksesi päälle. Pelkkien hälytysten vastaanottamisen lisäksi voit pyytää OpenClawia ajamaan verkkodiagnostiikkaa. Se sisältää `ping`-, `dig`-, `nslookup`-, `traceroute`- ja `mtr`-työkalut sekä jopa `nmap`in ja `tcpdump`in syvempää tutkimista varten.
+
+Jokin menee alas? Lähetä viesti assistantillesi, pyydä sitä tarkistamaan mitä tapahtuu ja saat selkokielisen selityksen dashboardien tuijottamisen sijaan.
+
+### Musiikki- ja äänikirjakirjastot
+
+Navidrome- ja audiobookshelf-käyttäjät voivat hyötyä OpenClawin mediatyökaluista. Pyydä sitä skannaamaan musiikkikirjastosi tiedostoille, joista puuttuu metadatageja tai joissa ne ovat virheellisiä, tunnistamaan kappaleita, jotka saattavat tarvita uudelleenkoodausta, tai auttamaan äänikirjalukujen järjestämisessä, jos niitä ei jaettu oikein. `ffmpeg`- ja `exiftool`-yhdistelmä hoitaa suurimman osan tarvitsemastasi.
+
+### Jupyter ja datatyö
+
+Jos käytät Jupyter Notebookia data-analyysiin, OpenClaw täydentää sitä hyvin. Siinä on Python 3 sekä pip- ja venv-tuki, joten se voi auttaa kirjoittamaan skriptejä, käsittelemään jaetussa tallennustilassasi olevia datatiedostoja ja jopa ajamaan nopeita analyysejä suoraan. Ajattele sitä keskustelukäyttöliittymänä samaan dataan, jonka kanssa notebookisi työskentelevät.
+
+### Infrastructure as Code
+
+Teknisesti seikkailunhaluisemmille OpenClaw sisältää `docker`-, `kubectl`-, `terraform`- ja `ansible`-CLI:t. Jos ajat VPS:ää Appboxissa ja hallitset infrastruktuuria, voit käyttää OpenClawia keskusteleva ops-assistantina. Kuvaile, mitä haluat ottaa käyttöön, ja anna sen auttaa määritysten luomisessa ja soveltamisessa.
+
+## Pysyvä muisti
+
+Yksi asia, joka erottaa OpenClawin pelkästä AI-mallin chat-ikkunasta, on se, että se muistaa sinut. Se rakentaa kontekstia ajan myötä: mieltymyksesi, tapasi järjestää asioita, projektit joiden parissa työskentelet, käyttämäsi nimeämiskäytännöt. Mitä enemmän olet vuorovaikutuksessa sen kanssa, sitä hyödyllisemmäksi se muuttuu.
+
+Tämä on erityisen tehokasta Appboxissa, koska konteksti ei ole vain keskustelullista. Se perustuu oikeaan ympäristöösi. Tiedostoihisi, sovelluksiisi ja dataasi.
+
+## Valmiiksi ladatut taidot
+
+OpenClawissa on taitojärjestelmä, jossa on yli 50 yhteisön rakentamaa laajennusta saatavilla [ClawHubissa](https://clawhub.ai/skills). Taidot antavat agentille erikoistuneita kyvykkyyksiä tiettyjä sovelluksia, työkaluja tai työnkulkuja varten.
+
+Appboxissa emme anna sinulle pelkkää agenttia. Image toimitetaan kuratoidulla taitojoukolla valmiiksi asennettuna, jotta OpenClaw ymmärtää ympäristösi heti:
+
+- **Alustatietoisuus**: tuntee Appboxin jaetun datarakenteen, käytettävissä olevat CLI-työkalut ja osaa ohjata sinut tukeen tai VPS-päivityksiin tarvittaessa
+- **Sovelluskohtaiset taidot**: valmiiksi ladattu WordPressille, Nginxille, GitLabille, Nextcloudille, Embylle, MariaDB:lle, Tautullille, Mauticille, WireGuardille ja Rocket.Chatille, joten agentti tietää jo, miten työskennellä näiden sovellusten kanssa, kun ne on asennettu
+- **SSH-perusteet**: VPS:iin tai etäpalvelimiin yhdistämiseen suoraan agentista
+- **Selainautomaatio (Playwright MCP)**: mahdollistaa muihin sovelluksiisi kirjautumisen ja niiden web-käyttöliittymien ohjaamisen
+- **Verkkohaku ja dokumentaation haku**: monimoottorinen haku ja ClawDDocs viitemateriaalin hakemiseen lennossa
+- **Itsensä parantaminen**: taidot uusien taitojen löytämiseen ClawHubista ja niiden arviointiin ennen asennusta
+
+Voit asentaa lisää taitoja milloin tahansa. Etsi sellainen [ClawHubista](https://clawhub.ai/skills), kopioi linkki ja liitä se agentillesi. Se lataa ja asentaa taidon itse.
+
+## Alkuun pääseminen
+
+Asenna OpenClaw Appbox app storesta kuten mikä tahansa muu sovellus. Se vie kaksi slottia.
+
+Asennuksen jälkeen näet Gateway Tokenin sovelluksen yksityiskohtasivulla. Se on dashboard-kirjautumisesi. Avaa dashboardin URL, syötä token, ja olet sisällä.
+
+Sen jälkeen ainoa asia, joka sinun täytyy määrittää, on AI-mallipalveluntarjoajasi. Lisää API-avain haluamaltasi palveluntarjoajalta. OpenRouter on helpoin lähtökohta, koska yksi avain antaa pääsyn moniin malleihin. Olemme kirjoittaneet [täyden määritysoppaan](/docs/apps/openclaw-model-provider-setup), joka käy läpi API-avainten hankkimisen OpenRouterilta, OpenAI:lta, Anthropicilta, Googlelta, xAI:lta, Mistralilta ja muilta.
+
+Kun mallisi on määritetty, voit alkaa keskustella assistantisi kanssa suoraan dashboardista. Jos haluat puhua sille WhatsAppin, Telegramin, Discordin tai muiden kanavien kautta, nekin määritetään dashboardissa.
+
+## Miksi tällä on merkitystä
+
+AI-chat-käyttöliittymiä on paljon. Useimmat niistä ovat pilvipalveluita, joissa datasi poistuu hallinnastasi heti, kun lähetät viestin. OpenClaw on erilainen, koska kaikki pysyy Appboxissasi. Assistant, sen muisti, keskustelusi ja data, jonka kanssa se työskentelee.
+
+Ja koska se sijaitsee muiden sovellustesi rinnalla jaetulla tiedostojärjestelmäpääsyllä, se voi oikeasti tehdä asioita itse hostatussa stackissasi sen sijaan, että vain vastaisi sitä koskeviin kysymyksiin.
+
+Olemme aidosti uteliaita näkemään, mitä ihmiset rakentavat tämän kanssa. Jos luot kiinnostavan työnkulun tai löydät luovan tavan yhdistää OpenClaw muihin sovelluksiisi, kuulisimme siitä mielellämme.
+
+---
+
+*Onko kysyttävää OpenClawista tai tarvitsetko apua sen käyttöönotossa? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

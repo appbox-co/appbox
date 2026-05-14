@@ -1,0 +1,91 @@
+---
+title: Launch Week Day 5 - Windows 11 Pro VPS og App Freeze
+date: 2026-03-13 10:00:00
+excerpt: Dag 5 av Launch Week. Windows 11 Pro er nå tilgjengelig som VPS på Appbox. I tillegg lar en ny freeze-funksjon deg sette apper på pause og frigjøre slottene deres uten å miste data.
+author_id: rid
+og_image: day5-windows-hero.jpg
+tags: [appbox, launch-week, vps, windows, freeze, slots]
+---
+
+# Launch Week Day 5: Windows 11 Pro VPS og App Freeze
+
+Dag 5. Den siste dagen. Vi sa i går at du ikke ville se dette komme, og det mente vi.
+
+**Windows 11 Pro er nå tilgjengelig som VPS på Appbox.**
+
+<p align="center">
+  <img src="/blog-images/day5-windows-hero.jpg" alt="Windows 11" width="400" className="mt-8 mb-10" />
+</p>
+
+## Windows på Appbox
+
+Da vi lanserte VPS-er på dag 3 med fem Linux-distribusjoner, var det naturlige spørsmålet "hva med Windows?" Å få Windows til å kjøre riktig som en administrert VPS på Appbox var en betydelig teknisk utfordring. Linux-VM-er bruker virtiofs for nesten native fildeling mellom vert og gjest. Windows støtter ikke virtiofs. Så vi bygget en Samba-basert integrasjon som oppretter autentiserte SMB-delinger for hver VM, og gir Windows den samme sømløse tilgangen til Appbox-dataene dine som Linux-VPS-er får - bare gjennom en protokoll Windows forstår nativt.
+
+Resultatet er en full Windows 11 Pro-virtuell maskin som kjører på KVM med Appbox-dataene dine montert som `Z:`-stasjonen (`APPBOX_DATA`). Åpne File Explorer, gå til `Z:\`, så ser du mappene `apps/` og `storage/` der.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-appbox-data.png" alt="Windows 11 File Explorer som viser APPBOX_DATA som Z:-stasjonen med apps- og storage-mapper" width="860" className="mt-8 mb-10" />
+</p>
+
+## Hva dette åpner for
+
+Å ha en Windows VPS på Appbox åpner en helt ny kategori brukstilfeller:
+
+- **Programvare kun for Windows** - kjør applikasjoner som rett og slett ikke har Linux-versjoner
+- **.NET-utvikling** - bygg og test .NET-applikasjoner i et ekte Windows-miljø
+- **Office og produktivitet** - kjør Microsoft Office, Adobe-verktøy eller hvilken som helst skrivebordsprogramvare
+- **Spillservere** - host spillservere som kun kjører på Windows
+- **Eksternt skrivebord** - få tilgang til et fullverdig Windows-skrivebord fra hvilken som helst nettleser via den innebygde webkonsollen, eller koble til med Microsoft Remote Desktop for en native RDP-opplevelse
+- **Testing og CI** - test programvaren din på Windows uten å vedlikeholde egen maskinvare
+
+Dette er en full Windows 11 Pro-installasjon med administrator-tilgang. Hvis det kjører på Windows, kjører det her.
+
+## Plantilgjengelighet
+
+Windows 11 Pro har ganske høye ressurskrav og er tung på disk-I/O. For å sikre en god opplevelse for alle er Windows VPS for øyeblikket kun tilgjengelig på dedikerte Appbox-planer (NG-18000 og over). Vi kan utvide tilgjengeligheten til andre planer i fremtiden etter hvert som vi fortsetter å optimalisere.
+
+## Lisensiering
+
+Windows 11 Pro VPS inkluderer ikke en produktnøkkel. Windows vil kjøre uaktivert med et vedvarende vannmerke på skrivebordet, begrensede personaliseringsinnstillinger og periodiske aktiveringspåminnelser - men er ellers fullt funksjonelt. For å fjerne disse begrensningene, aktiver med en gyldig Windows 11 Pro-nøkkel. Vi anbefaler å kjøpe en fra [WinCDKey (~6 EUR)](https://wincdkey.com/product/microsoft-windows-11-professional-1-device-pc-software/).
+
+## Fungerer med App Boost
+
+Windows 11 Pro VPS støtter fullt ut **App Boost** fra dag 2. Hvis du trenger mer ytelse for tyngre arbeidslaster, skyver du boost-nivået opp for å tildele mer RAM og CPU til VM-en.
+
+## App Freeze
+
+Det leveres også en andre funksjon i dag som gjelder alle apper, ikke bare Windows.
+
+<p align="center">
+  <img src="/blog-images/day5-windows-detail-freeze.png" alt="Detaljside for Windows 11 Pro VPS som viser App Boost og den nye Freeze-knappen" width="560" className="mt-8 mb-10" />
+</p>
+
+**App Freeze** lar deg sette hvilken som helst installert app på pause og frigjøre appslottene dens uten å miste data. Appen stopper, dataene blir liggende akkurat der de er, og slottene den brukte blir tilgjengelige for andre apper.
+
+Dette løser et problem som har dukket opp konstant: du vil prøve en ny app, men du har brukt alle slottene dine. Før i dag måtte du avinstallere noe - og miste dataene - bare for å frigjøre nok slotter til å eksperimentere. Nå kan du fryse en app, bruke slottene til å installere og teste noe nytt, og deretter tine opp den opprinnelige appen når du er ferdig. Alt fortsetter akkurat der du slapp.
+
+Freeze-knappen ligger rett i Actions-seksjonen på detaljsiden til en hvilken som helst app, ved siden av Start, Stop og Restart. Frysing stopper appen, markerer den som frosset og returnerer slottene dens (inkludert eventuelle boost-slotter) til den tilgjengelige puljen din. Opptining gjenoppretter appen og bruker slottene på nytt.
+
+Noen ting det er verdt å merke seg:
+
+- Du kan ikke fryse en app mens den installeres, oppdateres eller slettes
+- Du kan ikke tine opp hvis Appboxen din ikke har nok ledige slotter til å dekke kostnaden
+- Frosne apper beholder alle data og all konfigurasjon intakt
+
+## Det var alt
+
+Fem dager. Fem lanseringer.
+
+- **Dag 1** - det nye dashbordet
+- **Dag 2** - App Boost
+- **Dag 3** - Linux VPS-er
+- **Dag 4** - flere domener for VPS-apper
+- **Dag 5** - Windows 11 Pro VPS og App Freeze
+
+Alt som ble lansert denne uken er live akkurat nå. Logg inn og prøv det.
+
+Launch Week er over, men vi stopper ikke. Det kommer mye mer i månedene fremover.
+
+---
+
+*Har du tilbakemeldinger eller funnet et problem? Ta kontakt på support@appbox.co eller åpne en sak på [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

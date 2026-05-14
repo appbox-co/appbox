@@ -1,0 +1,65 @@
+---
+title: Dodawanie nowych dokumentów
+description: Dodawaj nowe dokumenty do swojej strony dokumentacji i bloga.
+sort: 2
+---
+
+# Dla dokumentacji
+
+1. Utwórz nowy plik `.mdx` w folderze `apps/content/docs/[language]` z treścią swojego dokumentu.
+2. Dodaj dokument do menu nawigacyjnego strony.
+    Aby to zrobić, dodaj nowy element do pliku `src/config/docs.ts` we właściwości `sidebarNav`, podając odpowiednie informacje i trzymając się wzorca istniejących elementów. Dzięki temu dokument zostanie też dodany do palety poleceń wyszukiwania.
+
+## Ustawienia dokumentu MDX
+
+Dokumenty MDX są przechowywane w folderach `apps/content/docs/[language]` i `apps/content/blog/[language]`. Każdy dokument jest plikiem MDX zawierającym nagłówek z metadanymi, takimi jak tytuł i opis. Poniżej znajduje się przykład nagłówka dokumentu:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 1
+---
+```
+
+Obsługiwane są następujące pola metadanych:
+
+- `title` (wymagane): Tytuł dokumentu.
+- `description` (wymagane): Krótki opis dokumentu.
+- `sort` (opcjonalne): Liczba określająca kolejność dokumentu w nawigacji. Dokumenty z niższymi wartościami `sort` pojawiają się jako pierwsze. Jeśli nie zostanie podana, dokumenty są sortowane alfabetycznie według tytułu.
+- `links` (opcjonalne): Linki do powiązanych dokumentów, referencji API, kodu źródłowego itp.
+- `toc` (opcjonalne): Określa, czy wyświetlać spis treści. Domyślnie `true`.
+
+Aby dodać do dokumentu nowe metadane, możesz dodać nowe klucze do nagłówka. Na przykład możesz dodać klucz `author`, aby wskazać autora dokumentu:
+
+```mdx
+---
+title: Document Title
+description: Document Description.
+sort: 2
+author: Author Name
+---
+```
+
+Jednak przy dodawaniu niestandardowych metadanych musisz również zaktualizować plik `contentlayer.config.ts` znajdujący się w katalogu głównym projektu oraz właściwość `fields` w stałych `Doc` lub `Blog`.
+Następnie trzeba wyświetlić nowe informacje w szablonie dokumentu. Aby to zrobić, zaktualizuj plik `src/app/[locale]/docs/[[...slug]]/page.tsx`, plik `src/app/[locale]/blog/[[...slug]]/page.tsx` albo jeden z ich komponentów potomnych.
+
+## Przebudowywanie Contentlayer
+
+Gdy zmieniasz treść dokumentacji, dodajesz nowe dokumenty albo modyfikujesz plik `contentlayer.config.ts`, musisz przebudować pamięć podręczną Contentlayer, aby zmiany zaczęły działać podczas developmentu. Uruchom:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+To polecenie ponownie generuje typy treści i dane wymagane przez aplikację. Uruchom je za każdym razem, gdy:
+
+- Dodasz nowe pola metadanych do pliku `contentlayer.config.ts`
+- Dodasz lub zmodyfikujesz treści MDX, gdy serwer dev nie jest uruchomiony
+- Zmienisz strukturę organizacji treści
+
+Polecenie jest uruchamiane automatycznie podczas budowania projektu na produkcję, ale w trakcie developmentu trzeba uruchomić je ręcznie, jeśli wprowadzasz zmiany strukturalne w treści.
+
+
+

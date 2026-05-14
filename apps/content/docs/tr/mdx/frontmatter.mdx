@@ -1,0 +1,100 @@
+---
+title: Frontmatter
+description: MDX dosyalarında frontmatter kullanmayı öğrenin.
+sort: 3
+---
+
+Frontmatter, bir MDX dosyasının önemli bir parçasıdır.
+Dosyanın içeriğiyle ilgili başlık, açıklama, yazar, yayın tarihi vb. bilgileri tanımlamak için kullanılır.
+
+Metadata başlığı, dosyanın başında, başlangıç ve bitişte `---` (üç tire) arasında tanımlanır.
+
+## Format
+
+Metadata başlığı, anahtarın metadata adı ve değerin metadata içeriği olduğu key-value biçiminde tanımlanır.
+
+**Örnek:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+Belge türüne (dokümantasyon, blog yazısı vb.) bağlı olarak farklı metadata kullanılabilir.
+
+## Dokümantasyon için metadata
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Örnek:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Blog yazıları için metadata
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Bu, yazı yazarının tanımlayıcısıdır.
+    Yazarların eksiksiz verilerini içeren `src/config/blog.ts` dosyasında tanımlı yazar `id` değeriyle eşleşmelidir.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Otomatik oluşturulan görseli kullanmak istemiyorsanız bu, sosyal medyada paylaşıldığında yazının öne çıkan görseli olarak kullanılacak görseldir.
+    Görseller `public/blog-og` klasöründe saklanmalıdır.
+    Yalnızca görsel dosya adını ve uzantısını kullanın.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Örnek:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

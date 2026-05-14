@@ -12,6 +12,41 @@ import type { DocsConfig } from "@/lib/opendocs/types/docs"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
 
+const newLabels: Record<LocaleOptions, string> = {
+  ar: "جديد",
+  bn: "নতুন",
+  cs: "Nové",
+  da: "Ny",
+  de: "Neu",
+  el: "Νέο",
+  en: "New",
+  es: "Nuevo",
+  fi: "Uusi",
+  fr: "Nouveau",
+  hi: "नया",
+  hr: "Novo",
+  hu: "Új",
+  id: "Baru",
+  ja: "新着",
+  mr: "नवीन",
+  it: "Nuovo",
+  nl: "Nieuw",
+  no: "Ny",
+  pl: "Nowe",
+  pt: "Novo",
+  ro: "Nou",
+  ru: "Новое",
+  sl: "Novo",
+  sr: "Ново",
+  sv: "Ny",
+  te: "కొత్తది",
+  th: "ใหม่",
+  tr: "Yeni",
+  uk: "Нове",
+  ur: "نیا",
+  zh: "新"
+}
+
 // Items that should be labeled as "new"
 const newItems = [
   "/docs/mdx/frontmatter",
@@ -80,7 +115,7 @@ function generateSidebarNav(
 
     // Add a "label" to the section if it's marked as new
     if (newItems.includes(`/docs/${section}`)) {
-      sectionItem.label = { [locale]: "New" }
+      sectionItem.label = { [locale]: newLabels[locale] }
     }
 
     // Sort docs by sort field if available, otherwise by title
@@ -108,7 +143,9 @@ function generateSidebarNav(
         title: {
           [locale]: doc.title
         },
-        label: newItems.includes(doc.href) ? { [locale]: "New" } : undefined,
+        label: newItems.includes(doc.href)
+          ? { [locale]: newLabels[locale] }
+          : undefined,
         items: []
       })
     })

@@ -1,0 +1,258 @@
+---
+title: "Χρήση του mscp για γρήγορες μεταφορές αρχείων"
+description: "Μάθετε πώς να χρησιμοποιείτε το mscp (multi-threaded scp) για μεταφορές αρχείων υψηλής ταχύτητας προς τον Appbox server σας χρησιμοποιώντας πολλαπλές συνδέσεις SSH."
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+Το **mscp** είναι μια multi-threaded παραλλαγή του `scp` που αντιγράφει αρχεία ταυτόχρονα μέσω πολλαπλών συνδέσεων SSH (SFTP). Αυτό επιτρέπει σημαντικά ταχύτερες μεταφορές για μεγάλα αρχεία και φακέλους, αξιοποιώντας παράλληλες συνδέσεις.
+
+## Προαπαιτούμενα
+
+Πριν χρησιμοποιήσετε το mscp, πρέπει να εγκαταστήσετε το SFTPgo στον Appbox server σας για να λάβετε τα SFTP credentials σας.
+
+### Βήμα 1: Εγκατάσταση SFTPgo
+
+1. Επισκεφθείτε τη [σελίδα εφαρμογής SFTPgo](https://www.appbox.co/appstore/app/232) στο Appbox App Store
+2. Κάντε κλικ στο **Install** για να προσθέσετε το SFTPgo στον server σας
+3. Αφού εγκατασταθεί, θα λάβετε τα στοιχεία σύνδεσής σας:
+   - **Username**: Το SFTP username σας
+   - **Password**: Το SFTP password σας
+   - **Hostname**: π.χ. `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: π.χ. `25557`
+   - **FTP/FTPS Port**: π.χ. `25555`
+   - **WebDav URL**: Για πρόσβαση WebDAV
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">Σημείωση</AlertTitle>
+  <AlertDescription className="pl-2">
+    Κρατήστε ασφαλή τα SFTPgo credentials σας. Θα χρειαστείτε hostname, username, password και SFTP port για συνδέσεις mscp.
+  </AlertDescription>
+</Alert>
+
+## Εγκατάσταση του mscp
+
+Επιλέξτε τη μέθοδο εγκατάστασης για το λειτουργικό σας σύστημα:
+
+### macOS
+
+#### Με Homebrew (προτείνεται)
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### Με MacPorts
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+Το mscp δεν διαθέτει native Windows binaries, αλλά μπορείτε να το χρησιμοποιήσετε μέσω WSL (Windows Subsystem for Linux):
+
+#### Βήμα 1: Εγκατάσταση WSL
+
+Ανοίξτε το PowerShell ως Administrator και εκτελέστε:
+
+```powershell
+wsl --install
+```
+
+Επανεκκινήστε τον υπολογιστή σας όταν σας ζητηθεί.
+
+#### Βήμα 2: Εγκατάσταση mscp στο WSL
+
+Αφού ρυθμιστεί το WSL (το Ubuntu είναι η προεπιλογή), ανοίξτε το WSL terminal και εκτελέστε:
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Διαδρομές αρχείων Windows στο WSL</AlertTitle>
+  <AlertDescription className="pl-2">
+    Στο WSL, οι δίσκοι Windows είναι προσβάσιμοι κάτω από το `/mnt/`. Για παράδειγμα, το `C:\Users\YourName\Downloads` γίνεται `/mnt/c/Users/YourName/Downloads`.
+  </AlertDescription>
+</Alert>
+
+### Build από source
+
+Αν δεν υπάρχουν διαθέσιμα packages για το σύστημά σας, μπορείτε να κάνετε build το mscp από source:
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## Βασική χρήση
+
+Η σύνταξη του mscp είναι παρόμοια με του `scp`. Ακολουθούν συνηθισμένα μοτίβα χρήσης.
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Σημαντικό: χρησιμοποιήστε τη SFTP Port σας</AlertTitle>
+  <AlertDescription className="pl-2">
+    Στα παρακάτω παραδείγματα, το `25557` αντιπροσωπεύει το **SFTP Port** από τις ρυθμίσεις SFTPgo. Αντικαταστήστε το με το πραγματικό SFTP port που εμφανίζεται στο SFTPgo Options panel σας.
+  </AlertDescription>
+</Alert>
+
+### Ανέβασμα αρχείου στον server σας
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### Ανέβασμα φακέλου
+
+Σε αντίθεση με το `scp`, το mscp δεν απαιτεί το flag `-r` για φακέλους:
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### Κατέβασμα αρχείου από τον server σας
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### Κατέβασμα φακέλου
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## Προχωρημένες επιλογές
+
+### Χρήση πολλαπλών συνδέσεων
+
+Από προεπιλογή, το mscp χρησιμοποιεί πολλαπλές συνδέσεις. Μπορείτε να καθορίσετε τον αριθμό συνδέσεων με `-n`:
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Συνέχιση αποτυχημένων μεταφορών (checkpointing)
+
+Το mscp υποστηρίζει checkpointing για συνέχιση διακοπτόμενων μεταφορών:
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### Καθορισμός SSH Key Authentication
+
+Αν έχετε ρυθμίσει SSH key authentication με το SFTPgo:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### Περιορισμός bandwidth
+
+Για να περιορίσετε το bandwidth μεταφοράς (χρήσιμο σε κοινόχρηστες συνδέσεις):
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## Παράδειγμα: πλήρης ροή εργασίας
+
+Ακολουθεί ένα πλήρες παράδειγμα με χρήση των SFTPgo credentials από το Appbox:
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## Συμβουλές απόδοσης
+
+1. **Χρησιμοποιήστε περισσότερες συνδέσεις για μεγάλα αρχεία**: Αυξήστε την τιμή `-n` για μεταφορές μεγάλων αρχείων (π.χ. `-n 8` ή `-n 16`)
+2. **Χρησιμοποιήστε λιγότερες συνδέσεις για πολλά μικρά αρχεία**: Για φακέλους με πολλά μικρά αρχεία, λιγότερες συνδέσεις μπορεί να είναι πιο αποδοτικές
+3. **Ενεργοποιήστε συμπίεση για αρχεία κειμένου**: Το mscp κληρονομεί τη συμπίεση SSH· χρησιμοποιήστε `-C` για μεταφορές με πολύ κείμενο
+4. **Χρησιμοποιήστε checkpointing για πολύ μεγάλες μεταφορές**: Ενεργοποιείτε πάντα checkpointing για μεταφορές πολλών gigabyte, ώστε να επιτρέπεται η συνέχιση αν διακοπούν
+
+## Αντιμετώπιση προβλημάτων
+
+### Connection Refused
+
+Βεβαιωθείτε ότι χρησιμοποιείτε το σωστό SFTP port από τις ρυθμίσεις SFTPgo (όχι το FTP port):
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Permission Denied
+
+Επαληθεύστε ότι το username και το password σας είναι σωστά. Μπορείτε πρώτα να δοκιμάσετε με έναν τυπικό SFTP client:
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### Αργές μεταφορές
+
+Δοκιμάστε να προσαρμόσετε τον αριθμό παράλληλων συνδέσεων:
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## Πρόσθετοι πόροι
+
+- [mscp GitHub Repository](https://github.com/upa/mscp)
+- [Τεκμηρίωση mscp](https://github.com/upa/mscp#documentation)
+- [SFTPgo στο Appbox](https://www.appbox.co/appstore/app/232)

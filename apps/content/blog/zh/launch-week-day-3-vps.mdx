@@ -1,0 +1,108 @@
+---
+title: Launch Week 第 3 天 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: Launch Week 第 3 天。完整 KVM VPS 现已登陆 Appbox。可选择 Ubuntu、Debian、Arch Linux、Fedora、Rocky Linux 或 AlmaLinux，并获得真实 VM 的 root 访问权限。
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week 第 3 天：Virtual Private Servers
+
+第 3 天。这是大招。
+
+从一开始，Appbox 的目标就是让自托管应用变简单。安装一个应用，获得一个 URL，完成。这个模式对大多数事情都非常有效。但总有一类使用场景需要一整台机器：你自己的 kernel、你自己的 init system、你自己的规则。
+
+今天我们在 Appbox 上发布 **Virtual Private Servers**。
+
+## 真实 VM，而不是容器
+
+我们先说清楚这是什么。这些是运行在专用硬件上的完整 KVM 虚拟机，拥有自己的 kernel、自己的 systemd 和完整 root 访问权限。这不是伪装成 OS 的 Docker 容器。这是真东西。
+
+这种区别很重要，因为它解锁了容器做不到的一切：
+
+- **在 VPS 内运行 Docker** - 像在任何服务器上一样运行 `docker compose up`
+- **Snaps 和 Flatpaks** - 按桌面软件本来的方式安装它们
+- **Systemd services** - 完整服务管理、timers、journal，全部可用
+- **自定义 kernels 和 modules** - 你有 root，想怎么做就怎么做
+- **Nested virtualization** - 如果你需要，它就在那儿
+
+如果你曾经在我们基于 Docker 的 OS 或 webtops 中撞到墙，只因为容器限制导致某些东西无法工作，那么这堵墙现在没了。
+
+## 六种 Linux OS 可选
+
+现在你可以从六种 Linux 发行版中选择：
+
+| OS | Description |
+|---|---|
+| **Ubuntu VPS** | 完整 Ubuntu 24.04 LTS |
+| **Debian VPS** | 完整 Debian 12 和 13 |
+| **Arch Linux VPS** | Rolling release，始终保持最新 |
+| **Fedora VPS** | 带最新软件包的 Fedora 43 |
+| **Rocky Linux VPS** | 企业级 RHEL 兼容性 |
+| **AlmaLinux VPS** | 具备长期支持的 RHEL 兼容企业 Linux |
+
+选择你熟悉的，或选择你想学习的。它们在 Appbox 上都拥有同样的功能集。
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Appbox App Store 中的 VPS 分类" width="860" className="mt-8 mb-10" />
+</p>
+
+## 内置 Web Console
+
+每台 VPS 都带有直接内置在 Appbox 仪表板中的浏览器控制台。在任意 VPS 上点击 Console 标签页，就能在浏览器中获得实时终端会话。
+
+这意味着你永远不会被锁在服务器外面。SSH 配错了？网络配置弄坏了？没关系。Web console 会直接连接到 VM 的虚拟显示，完全独立于 guest 网络栈。你总有办法进去。
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Appbox 仪表板中的基于 Web 的 VM console" width="860" className="mt-8 mb-10" />
+</p>
+
+## 搭载 Selkies 的 Ubuntu Desktop
+
+有趣的部分来了。我们的 Ubuntu VPS 提供一个由 **Selkies** 驱动的桌面变体，让你能从浏览器访问完整图形化 Linux 桌面，并支持硬件加速串流、完整音频输出和麦克风输入。
+
+我们直接与 Selkies 团队合作，让它在 KVM 虚拟机中运行，并已在 [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop) 开源该集成。
+
+这在实践中意味着什么？你可以在浏览器中运行完整桌面环境和真实应用。VS Code、Discord、Spotify、Slack，全都同时运行，全都有声音，并且能从任何带浏览器的设备访问。
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="通过 Selkies 访问 Ubuntu 桌面，其中运行着 VS Code、Spotify 和 Discord" width="860" className="mt-8 mb-10" />
+</p>
+
+想象一下：你可以拥有一个始终在线的持久远程开发环境，在其中运行 VS Code 和项目所需的 Docker containers，同时打开 Discord 与团队聊天，Spotify 播放音乐。全部都在一个浏览器标签页中。从你的笔记本、平板，甚至别人的电脑都能访问。你的整个工作区只差一个 URL。
+
+## 你的数据跟着你
+
+每台 VPS 都会通过 `/APPBOX_DATA/` 目录自动访问你的 Appbox 存储。里面包含：
+
+- **`/APPBOX_DATA/apps/`** - 你其他已安装 Appbox 应用的数据
+- **`/APPBOX_DATA/storage/`** - 你的通用 Appbox 存储
+
+这通过 virtiofs 共享，它是一种高性能文件系统透传，能提供接近原生的文件访问速度。你的 VPS 可以读写其他应用也在使用的文件，因此你可以在 VPS 中处理流媒体应用里的媒体文件，或备份数据库。
+
+## 支持 App Boost
+
+VPS 使用我们第 2 天发布的同一个 App Boost 系统。想给 VM 更多 RAM 或 CPU？把 boost 等级向上拖动，并把套餐中更多 slots 分配给它。资源会在 hypervisor 层分配，因此你的 VM 真正获得更多计算资源，而不只是更高的 cgroup 限制。
+
+值得注意的是：VPS 的基础 slot 成本会比基于 Docker 的 OS 应用略高。这反映了完整虚拟机比共享 host kernel 的容器消耗更多真实资源这一事实。取舍很直接：你获得更多能力，而 slot 成本也诚实反映这一点。
+
+## VPS 接下来会有什么
+
+今天发布的 VPS 已具备完整功能，但路线图上还有更多内容。我们将在不久后为 VPS 实例添加资源使用图表，让你能像查看其他应用一样，直接在仪表板中随时间监控 CPU、RAM 和磁盘使用情况。
+
+## 为什么这很重要
+
+Appbox 上基于 Docker 的 OS 和 webtops 已经很好地服务了很多人，它们也不会消失。但在容器中运行确实存在限制。你不能运行 Docker。不能使用 snaps。不能加载 kernel modules。不能运行完整 init system。你始终受限于别人 namespace 的约束。
+
+VPS 完全移除了这些约束。你得到一台真实机器。如果你能在其他提供商租来的服务器上做到，在这里也能做到，只是你的数据已经挂载好，web console 已经准备好，而且资源还能通过滑块扩展。
+
+## 第 3 天现已上线
+
+VPS 现在已经在 App Store 可用。前往 VPS 分类，选择你的 OS，然后安装。配置完整 VM 比容器应用需要更久一些，因此请预期 VPS 最多需要 15 分钟准备就绪。
+
+明天是第 4 天。我们不会慢下来。
+
+---
+
+*有反馈或发现问题？请通过 support@appbox.co 联系我们，或在 [billing.appbox.co](https://billing.appbox.co/submitticket.php) 提交工单。*

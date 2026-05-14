@@ -5,18 +5,23 @@ import { queryKeys } from "@/constants/query-keys"
 import { useAuth } from "@/providers/auth-provider"
 import {
   changePassword,
+  createApiKey,
   disable2FA,
   generate2FASecret,
   get2FAStatus,
   getAbuseReport,
   getAbuseReportFiles,
   getAbuseReports,
+  getApiKeys,
   getProfile,
   regenerateRecoveryCodes,
   resolveAbuseReport,
+  revokeApiKey,
   updateProfile,
+  updateApiKey,
   verify2FA
 } from "../account"
+import type { CreateApiKeyInput, UpdateApiKeyInput } from "../account"
 
 /* -------------------------------------------------------------------------- */
 /*  Queries                                                                    */
@@ -58,6 +63,13 @@ export function useAbuseReportFiles(abuseId: number) {
     queryKey: [...queryKeys.abuseReports.detail(abuseId), "files"] as const,
     queryFn: () => getAbuseReportFiles(abuseId),
     enabled: abuseId > 0
+  })
+}
+
+export function useApiKeys() {
+  return useQuery({
+    queryKey: queryKeys.apiKeys.all,
+    queryFn: getApiKeys
   })
 }
 
@@ -133,6 +145,39 @@ export function useRegenerateRecoveryCodes() {
     mutationFn: regenerateRecoveryCodes,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["2fa-status"] })
+    }
+  })
+}
+
+export function useCreateApiKey() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: CreateApiKeyInput) => createApiKey(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
+    }
+  })
+}
+
+export function useUpdateApiKey(id: number) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: UpdateApiKeyInput) => updateApiKey(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
+    }
+  })
+}
+
+export function useRevokeApiKey() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (id: number) => revokeApiKey(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
     }
   })
 }

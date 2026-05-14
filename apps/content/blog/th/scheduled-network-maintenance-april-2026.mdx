@@ -1,0 +1,54 @@
+---
+title: "การบำรุงรักษา Network ตามกำหนด - April 15 & 20"
+date: 2026-04-14 16:00:00
+excerpt: "เรามี maintenance windows สั้น ๆ สองช่วงในวันที่ April 15 และ April 20 ขณะที่เราเตรียม network สำหรับ transit และ peering providers เพิ่มเติม"
+author_id: rid
+og_image: network-maintenance-april-2026-og.jpg
+tags: [appbox, infrastructure, networking, maintenance]
+---
+
+# การบำรุงรักษา Network ตามกำหนด
+
+เรามี maintenance windows ที่กำลังจะเกิดขึ้นสองช่วงบน network ของเรา และต้องการแจ้งให้คุณทราบล่วงหน้า ทั้งสองช่วงค่อนข้างสั้นและเราไม่คาดว่าจะมี downtime แต่เราต้องการโปร่งใสว่าเกิดอะไรขึ้นและทำไม
+
+## สิ่งที่กำลังเกิดขึ้น
+
+transit provider ของเรากำลังทำ maintenance กับ upstream carriers สองรายของเรา — Colt และ Fiberring — ในคนละวัน แต่ละ carrier จะถูกนำ offline ชั่วคราวขณะ apply updates และ traffic จะ reroute ผ่าน carriers อื่นของเราในแต่ละช่วง
+
+### ช่วงเวลาบำรุงรักษา 1 — April 15
+
+- **Date:** Tuesday, April 15, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Colt
+- **Expected downtime:** ไม่มี
+
+ระหว่างช่วงนี้ route ของ Colt จะไม่พร้อมใช้งาน และ traffic ทั้งหมดจะ reroute ผ่าน carriers อื่นของเรา
+
+### ช่วงเวลาบำรุงรักษา 2 — April 20
+
+- **Date:** Monday, April 20, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Fiberring
+- **Expected downtime:** ไม่มี
+
+maintenance นี้จะดำเนินการแบบ live และไม่ควรมี interruption หากเกิดปัญหาใด ๆ traffic จะถูก reroute ชั่วคราวผ่าน carriers อื่นของเรา
+
+## ฉันจะได้รับผลกระทบไหม?
+
+สำหรับผู้ใช้ส่วนใหญ่ คุณไม่ควรสังเกตเห็นอะไรเลย traffic จะ reroute ผ่าน carriers อื่นของเราโดยอัตโนมัติขณะที่ upstream แต่ละราย offline
+
+อย่างไรก็ตาม เนื่องจาก routes จะเปลี่ยนชั่วคราวระหว่างแต่ละ window traffic บางส่วนอาจใช้เส้นทางที่ต่างออกไปเล็กน้อยผ่าน network สิ่งนี้อาจทำให้ latency เปลี่ยนเล็กน้อยสำหรับบาง connections แต่ไม่มีอะไรใหญ่ เมื่อแต่ละ window เสร็จสิ้น ทุกอย่างจะกลับสู่ปกติ
+
+## ทำไมเราทำสิ่งนี้
+
+maintenance นี้เป็นส่วนหนึ่งของแผนที่ใหญ่กว่า เรากำลังเตรียม network เพื่อเพิ่ม transit และ peering providers เพิ่มเติม ซึ่งจะหมายถึง redundancy ที่ดีขึ้น, latency ต่ำลง และ capacity เพิ่มขึ้นสำหรับทุกคน
+
+เราจะมีรายละเอียดเพิ่มเติมเกี่ยวกับเรื่องนี้ใน May โปรดติดตาม
+
+## คำถาม?
+
+หากคุณมีข้อกังวลหรือสังเกตเห็นสิ่งผิดปกติระหว่าง maintenance window ใด ๆ โปรดติดต่อเราได้ทันที
+
+---
+
+*มีคำถามไหม? ติดต่อเราได้ที่ support@appbox.co.*

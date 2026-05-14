@@ -1,0 +1,1493 @@
+{
+  "_locale": "hu",
+  "site": {
+    "heading": "Alkalmazások telepítése <span>másodpercek alatt</span>",
+    "subheading": "Hosztolj {flipwords} egy kattintással",
+    "description": "Hagyd ki a bonyolult szerverbeállítást. Válassz több mint 60 telepítésre kész alkalmazás közül, kattints a telepítésre, és másodpercek alatt élesben vagy. Erős hoszting fejfájás nélkül.",
+    "meta_title": "Appbox - Alkalmazások telepítése másodpercek alatt | Egykattintásos apphoszting",
+    "flipwords": [
+      "weboldalakat",
+      "adatbázisokat",
+      "szervereket",
+      "átviteleket",
+      "eszközöket",
+      "csevegést",
+      "tárhelyet",
+      "analitikát",
+      "monitorozást",
+      "pipeline-okat",
+      "hálózatokat",
+      "biztonsági mentéseket",
+      "projekteket",
+      "dokumentációt",
+      "tesztelést"
+    ],
+    "announcement": "Olvasd el az összes Launch Week bejegyzést",
+    "announcement_tag": "Launch Week",
+    "changelog": "Változásnapló",
+    "buttons": {
+      "get_started": "Kezdés",
+      "browse_apps": "Alkalmazások böngészése",
+      "toggle_menu": "Menü megnyitása/zárása",
+      "toggle_language": "Nyelv váltása"
+    },
+    "words": {
+      "menu": "Menü",
+      "docs": "Dokumentáció",
+      "blog": "Blog",
+      "home": "Kezdőlap",
+      "legal": "Jogi információk",
+      "terms_of_service": "Szolgáltatási feltételek",
+      "service_level_agreement": "Szolgáltatási szint megállapodás",
+      "privacy_data_handling": "Adatvédelem és adatkezelés",
+      "global_privacy_practices": "Globális adatvédelmi gyakorlatok",
+      "incident_response_security": "Incidenskezelés és biztonság",
+      "view_all_policies": "Összes szabályzat megtekintése",
+      "documentation_new": "Dokumentáció (új)",
+      "documentation_old": "Dokumentáció (régi)",
+      "social": "Közösségi"
+    },
+    "featured_cards": {
+      "nextjs": {
+        "description": "Next.js alapokon, app router használatával."
+      },
+      "shadcn": {
+        "description": "Shadcn alapokra építve (site/components)."
+      },
+      "tailwind": {
+        "description": "Tailwind CSS-sel formázva."
+      },
+      "i18n": {
+        "description": "Nemzetköziesítési támogatás next-intl-lel."
+      },
+      "more": {
+        "title": "és még sok más!",
+        "description": "Sok további használható funkció, például MDX-alapú dokumentumok és blogbejegyzések, sötét és világos mód, kereshető parancspaletta, nemzetköziesített webhelytérkép és még sok más..."
+      }
+    },
+    "footer": {
+      "copyright": "Copyright © {year} Appbox. Minden jog fenntartva."
+    },
+    "search": {
+      "search": "Keresés",
+      "no_results_found": "Nincs találat",
+      "search_documentation": "Keresés a dokumentációban",
+      "type_command_or_search": "Írj be egy parancsot vagy keresést"
+    },
+    "themes": {
+      "theme": "Téma",
+      "dark": "Sötét",
+      "light": "Világos",
+      "system": "Rendszer"
+    },
+    "apps_section": {
+      "title": "Hatalmas, telepítésre kész alkalmazásgyűjtemény",
+      "headline_1": "Telepítésre kész alkalmazások.",
+      "headline_2": "Hatalmas gyűjtemény.",
+      "description": "Hosztolj mindent az adatbázisoktól és médiaszerverektől a fejlesztői eszközökig és kommunikációs platformokig. Telepíts vállalati szintű szoftvereket néhány kattintással."
+    },
+    "dashboard_promo": {
+      "headline_1": "Az új irányítópult.",
+      "headline_2": "Neked készült.",
+      "description": "Teljesen újratervezett vezérlőpult egységes irányítópulttal, integrált alkalmazás-áruházzal és beépített kétfaktoros hitelesítéssel. Gyorsabb navigáció, könnyebb áttekintés, és készen áll a következő lépésekre.",
+      "cta": "Olvasd el a teljes bejelentéseket",
+      "features": {
+        "dashboard": {
+          "title": "Vezérlőközpont.",
+          "description": "Blogfrissítések, szolgáltatáskártyák, értesítések és a legújabb alkalmazások egyetlen operatív nézetben."
+        },
+        "appstore": {
+          "title": "App Store.",
+          "description": "Átláthatóbb böngészés, jobb részletező oldalak és rövidebb út a felfedezéstől a telepítésig."
+        },
+        "boost": {
+          "title": "App Boost.",
+          "description": "Adj több CPU-t és RAM-ot egyes alkalmazásoknak a rendelkezésre álló slotjaidból. Nem szükséges csomagot váltani."
+        }
+      }
+    },
+    "vps_launch_promo": {
+      "headline_1": "Virtuális privát szerverek.",
+      "headline_2": "Linux és Windows.",
+      "description": "Teljes KVM virtuális gépek root hozzáféréssel, beépített webes konzollal, valamint választható Linuxszal vagy Windows 11 Próval. Futtass Docker konténereket, snapeket, flatpakokat vagy bármilyen szükséges Windows szoftvert.",
+      "cta": "Olvasd el a Launch Week bejegyzéseket",
+      "features": {
+        "console": {
+          "title": "Webes konzol.",
+          "description": "Böngészőalapú terminál az irányítópultba építve. Így sosem zárod ki magad."
+        },
+        "webtop": {
+          "title": "Selkies Desktop.",
+          "description": "Teljes Ubuntu asztal a böngésződben, hanggal, mikrofonnal és valódi alkalmazásokkal, például VS Code-dal és Discorddal."
+        },
+        "distros": {
+          "title": "Hat Linux disztribúció.",
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux és AlmaLinux. Válaszd azt, amelyiket ismered."
+        },
+        "windows": {
+          "title": "Windows 11 Pro.",
+          "description": "Teljes Windows VM RDP-vel, az Appbox adataiddal a Z: meghajtón és adminisztrátori hozzáféréssel."
+        }
+      }
+    },
+    "openclaw_promo": {
+      "eyebrow": "Már elérhető Appboxon",
+      "headline_1": "Az AI asszisztensed.",
+      "headline_2": "A szervereden él.",
+      "description": "Az OpenClaw egy nyílt forráskódú AI asszisztens, amely az Appboxodon fut, és minden csomagban elérhető. Az általad már használt csevegőalkalmazásokon keresztül kommunikál, látja a fájljaidat és adatbázisaidat, és be tud jelentkezni a többi alkalmazásodba, hogy elvégezze a feladatokat.",
+      "card_title": "Az OpenClaw az egész Appboxodon átívelően működik.",
+      "card_description": "Képes olvasni a megosztott alkalmazásadatokat, böngészőt és CLI-t használni, adatbázisokat lekérdezni, és válaszolni a már használt csevegőalkalmazásokon keresztül.",
+      "image_alt": "OpenClaw csevegési munkamenet a webes irányítópulton",
+      "cta": "Olvasd el a bejelentést",
+      "capabilities": {
+        "chat": {
+          "title": "Bármely csevegőalkalmazás.",
+          "description": "WhatsApp, Telegram, Discord, Slack, Signal, iMessage. Beszélj vele ott, ahol már most is vagy."
+        },
+        "filesystem": {
+          "title": "Megosztott fájlrendszer.",
+          "description": "Közvetlen hozzáférés a többi alkalmazásod adataihoz és az általános Appbox tárhelyedhez. Nincs szükség API-kra."
+        },
+        "browser": {
+          "title": "Böngésző és CLI.",
+          "description": "Beépített headless böngésző és minden gyakori adatbáziskliens. Be tud jelentkezni az alkalmazásaidba helyetted."
+        },
+        "tools": {
+          "title": "70+ képesség.",
+          "description": "Több mint 70 előre betöltött képességgel WordPresshez, GitLabhoz, Nextcloudhoz, MariaDB-hez és sok máshoz. Újakat a ClawHubról telepíthetsz."
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "Egyszerű, mint egy kattintás.",
+      "headline_2": "Nulla konfiguráció.",
+      "description": "Az Appbox a bonyolult nyílt forráskódú alkalmazástelepítéseket a lényegre egyszerűsíti: adj meg egy felhasználónevet és jelszót, kattints a telepítésre, és az alkalmazásod beállítva vár.",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "Telepítés másodpercek alatt",
+      "description": "Válaszd ki az Appboxodat, tölts ki néhány mezőt, és a(z) {appName} már éles is.",
+      "dialog_title": "{appName} telepítése",
+      "requires_slots": "{count, plural, one {# App Slot szükséges} other {# App Slot szükséges}}",
+      "preview_badge": "Előnézet",
+      "demo_note": "Ez a demó azt mutatja, hogyan néz ki a telepítő, miután már van Appboxod.",
+      "select_appbox": "Appbox kiválasztása",
+      "slots_free": "({count} szabad slot)",
+      "ready_note": "Készen állsz a telepítésre? Előbb aktív Appboxra lesz szükséged.",
+      "cancel": "Mégse",
+      "install": "Telepítés",
+      "footer_note": "Ez a telepítési űrlap előnézete. Válassz csomagot az Appboxod létrehozásához és a valódi telepítéshez.",
+      "domain": {
+        "recordType": "Típus",
+        "recordHost": "Host / Név",
+        "recordValue": "Érték (IP)",
+        "needHelp": "Segítségre van szükséged a rekord hozzáadásához?"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "1. lépés",
+          "title": "Válaszd ki az Appboxodat",
+          "body": "A telepítő automatikusan kiválasztja az Appboxodat, ha csak egy van, és csak azokat az Appboxokat mutatja, amelyeken van elég szabad slot."
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "Húzd a több erőforrásért",
+          "body": "Minden extra App Slot 10%-kal több CPU-t és RAM-ot ad ehhez az alkalmazáshoz, az előnézet pedig azonnal frissül.",
+          "link": "Hogyan működik az alkalmazásonkénti boost"
+        },
+        "resource_preview": {
+          "eyebrow": "Előnézet",
+          "title": "Ellenőrizd az erőforrásokat élőben",
+          "body": "Telepítés előtt lásd a végső szorzót, slotköltséget, RAM-ot és CPU-t. Minden hozzáadott boost slot 10%-kal növeli az erőforrásokat."
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "Domainek",
+            "title": "Kezelt vagy saját domainek",
+            "body": "Használj azonnal egy Appbox által kezelt domaint, vagy kattints az Egyéni domainre a sajátod használatához."
+          },
+          "custom": {
+            "eyebrow": "Egyéni DNS",
+            "title": "Hozd a saját domainedet",
+            "body": "Az Egyéni domain megjeleníti az alapdomain-választót, a rögzített aldomaint és a DNS ellenőrzőlistát telepítés előtt."
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "Beépített útmutatás",
+          "body": "Az előnézet a pontos A rekordot és az ellenőrzési állapotot mutatja a telepítés előtt."
+        },
+        "configuration": {
+          "eyebrow": "Nincsenek meglepetések",
+          "title": "A konfiguráció előre látható",
+          "body": "A kötelező mezőket a működő alkalmazás létrehozásához szükséges minimumra egyszerűsítjük, így nem kell további beállítások miatt aggódnod."
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "Szuverén felhő",
+      "headline_2": "A felhőd, a feltételeid.",
+      "description": "Az Appbox saját felügyeletű hardverre és hálózati infrastruktúrára épül, így megkapod a felhőalkalmazások kényelmét anélkül, hogy a platformot valaki más felhőjére bíznád.",
+      "eyebrow": "Saját infrastruktúra",
+      "card_title": "Valódi szerverek. Valódi hálózat. Valódi felelősségvállalás.",
+      "card_description": "Közvetlen irányítást tartunk fenn a fontos részek felett: számítás, tárhely, útválasztás, kapacitás és fizikai helyszín. Így az Appboxot valódi termékként építhetjük, nem csak egy vékony rétegként egy másik szolgáltató felett.",
+      "images": {
+        "rack_front": "Appbox szerverrackek telepített hardverrel",
+        "rack_network": "Appbox szerverrackek hálózati kábelezéssel",
+        "network_closeup": "Közeli kép az Appbox saját hálózati eszközeiről"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "Nincs bérelt fekete doboz",
+          "description": "Mi birtokoljuk és üzemeltetjük azokat a szervereket, amelyeken az alkalmazásaid futnak, így a teljesítmény és karbantartás nincs elrejtve egy hyperscale felhőabsztrakció mögé."
+        },
+        "network_control": {
+          "title": "Hálózati kontroll",
+          "description": "A routing stack birtoklása lehetővé teszi, hogy az útvonalakat, kapacitást, peeringet és hibakezelést az Appbox munkaterheléseihez hangoljuk, ne általános felhőalapértelmezésekhez."
+        },
+        "custom_ocp_hardware": {
+          "title": "Egyedi OCP hardver",
+          "description": "Egyedi Open Compute Project hardverünk hatékony légáramlásra, nagy sűrűségre és gyors szervizelhetőségre készült, így pazarló energia- vagy helyhasználat nélkül növelhetjük a kapacitást."
+        },
+        "clear_data_locality": {
+          "title": "Egyértelmű adat-lokalitás",
+          "description": "Az infrastruktúra dedikált rackekben található a Digital Realty AMS3 adatközpontban, Amszterdamban, így egyértelmű választ kapsz arra, hol vannak hosztolva az adataid."
+        },
+        "better_cost_discipline": {
+          "title": "Jobb költségfegyelem",
+          "description": "A platform birtoklása elkerüli az olyan kérésenkénti felhőköltség-csapdákat, mint a váratlan kimenő forgalom, IOPS vagy sávszélesség-szorzók, így a csomagok egyszerűek maradhatnak."
+        },
+        "built_for_appbox": {
+          "title": "Appboxra tervezve",
+          "description": "Mivel a hardver és a hálózat a miénk, az App Slotokat, boostot, tárhelyet, biztonsági mentéseket és egykattintásos alkalmazástelepítéseket az alapoktól az Appbox köré tervezhetjük."
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "Új",
+      "headline_1": "VPS hoszting.",
+      "headline_2": "Egy kattintással.",
+      "description": "Telepíts teljes Linux VPS-t az alkalmazásaid mellé. Root hozzáférés, dedikált erőforrások és boost lehetőség, mindez az Appbox elhagyása nélkül.",
+      "description_combined": "Telepíts Linux és Windows virtuális privát szervereket az alkalmazásaid mellé. Root hozzáférés, távoli asztal, dedikált erőforrások, mindez az Appbox elhagyása nélkül.",
+      "group_label": "Linux VPS",
+      "cta": "VPS böngészése",
+      "features": {
+        "f1": {
+          "title": "Teljes root hozzáférés",
+          "description": "Teljes irányítás SSH-n keresztül"
+        },
+        "f2": {
+          "title": "Skálázható erőforrások",
+          "description": "RAM és CPU boost alkalmazásonként"
+        },
+        "f3": {
+          "title": "Egykattintásos telepítés",
+          "description": "Ubuntu, Debian és továbbiak"
+        }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "Új",
+      "headline_1": "Windows VPS.",
+      "headline_2": "Bárhonnan.",
+      "group_label": "Windows VPS",
+      "description": "Futtass Windows Servert az Appboxodon teljes Remote Desktop hozzáféréssel. Tökéletes csak Windowson futó szoftverekhez, játékszerverekhez és távoli munkaállomásokhoz.",
+      "cta": "Windows alkalmazások böngészése",
+      "features": {
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "Teljes GUI bármely böngészőből"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "Futtass bármilyen Windows alkalmazást"
+        },
+        "f3": {
+          "title": "Erőforrás-boost",
+          "description": "Ossz ki több teljesítményt igény szerint"
+        }
+      }
+    },
+    "features": {
+      "section": {
+        "title": "Erőteljes funkciók mindenkinek",
+        "headline_1": "Erőteljes funkciók.",
+        "headline_2": "Mindenkinek.",
+        "description": "Tapasztald meg Appboxod teljes erejét kezdőknek és szakértőknek egyaránt tervezett funkciókkal."
+      },
+      "root_access": {
+        "title": "Teljes root hozzáférés",
+        "description": "Telepíts teljes operációs rendszerű alkalmazásokat, például Debiant és Ubuntut SSH hozzáféréssel, teljes kontrollt kapva a környezeted felett."
+      },
+      "remote_desktop": {
+        "title": "Távoli asztal",
+        "description": "Futtass felhasználói felülettel rendelkező alkalmazásokat szervereinken teljes távoli asztali hozzáféréssel az OS alkalmazásokhoz, így asztali élményt kapsz a felhőben."
+      },
+      "one_click": {
+        "title": "Valódi egykattintásos telepítések",
+        "description": "Áramvonalasított beállítóűrlapjainkkal mindent a telepítés során konfigurálhatsz - a telepítés után nincs szükség további beállításra."
+      },
+      "community": {
+        "title": "Gazdag közösség",
+        "description": "Csatlakozz virágzó ökoszisztémánkhoz közösségi alkalmazásbeküldésekkel, dokumentációs hozzájárulásokkal és nyílt forráskódú webes klienssel."
+      },
+      "security": {
+        "title": "Biztonság és adatvédelem",
+        "description": "Az Appboxnál komolyan vesszük a biztonságot és az adatvédelmet. Minden alkalmazás külön névtérben fut root hozzáférés nélkül, teljes izolációt biztosítva az alkalmazások között. Infrastruktúránkat biztonságközpontú szemlélettel terveztük - a megerősített kernelektől a rendszeres biztonsági auditokig. A fokozott adatvédelem érdekében VPN alkalmazásunk lehetővé teszi, hogy minden forgalmadat az Appboxodon keresztül irányítsd, így online tevékenységeid privátak és biztonságosak maradnak. Az Appboxszal vállalati szintű biztonsági funkciókat kapsz könnyen használható csomagban."
+      },
+      "deploy_fast": {
+        "title": "Telepítés másodpercek alatt",
+        "description": "Villámgyors, korszerű hardverünknek köszönhetően nem kell várakoznod, amíg az alkalmazásaid települnek."
+      },
+      "custom_hardware": {
+        "title": "Egyedi hardver",
+        "description": "Iparági szakértőkkel dolgoztunk saját hardverinfrastruktúránk létrehozásán, biztosítva az adatvédelmet, a biztonságot és az optimális teljesítményt."
+      },
+      "custom_network": {
+        "title": "Egyedi hálózat",
+        "description": "Minden hálózati eszközünk a sajátunk, így rugalmasan peeringelhetünk a választott hálózatokkal, ami sokkal gyorsabb kapcsolatot ad neked."
+      },
+      "support": {
+        "title": "Szakértői támogatás",
+        "description": "Jegyalapú támogatást kínálunk, amelyre kizárólag iparágvezető szakértők válaszolnak."
+      },
+      "documentation": {
+        "title": "Gyönyörű dokumentáció",
+        "description": "Nyílt forráskódú dokumentációs rendszerünk lehetővé teszi a felhasználói hozzájárulásokat, így egy folyamatosan bővülő, kiterjedt és értékes tudásbázis jön létre."
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "Gyakran ismételt kérdések",
+        "description": "Találd meg a válaszokat a leggyakoribb kérdéseinkre, és fedezd fel, hogyan lehet hasznodra az Appbox."
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "Milyen fizetési módokat fogadtok el?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Több fizetési lehetőséget kínálunk, hogy a vásárlásod a lehető leggördülékenyebb legyen:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Betéti/hitelkártyák<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (Including Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Kriptovaluták<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">Rugalmas számlázási ciklusokat is biztosítunk: havi, negyedéves, féléves vagy éves fizetést. Ha több opciót szeretnél látni, csak szólj nekünk.</p>"
+        },
+        "deployment_time": {
+          "title": "Milyen gyorsan kapom meg az Appboxomat?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Amint a fizetésed megerősítést nyer, automatizált rendszerünk azonnal telepíti az Appboxodat. A pénztárnál kiválasztott alkalmazások szintén azonnal beállításra kerülnek, így késedelem nélkül használhatod őket.</p>"
+        },
+        "server_location": {
+          "title": "Hol találhatók a szervereitek?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Szervereink dedikált rackekben találhatók a Digital Realty AMS3 adatközpontban, Amszterdamban, Hollandiában, csúcskategóriás teljesítményt és megbízhatóságot biztosítva.</p>"
+        },
+        "root_access": {
+          "title": "Kínáltok root hozzáférést?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Igen. A VPS alkalmazások teljes root hozzáférést adnak Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux és AlmaLinux rendszereken. A Windows 11 Pro VPS alkalmazások teljes Remote Desktop és adminisztrátori hozzáférést biztosítanak.</p><p class=\"mb-4 leading-relaxed\">Mivel ezek teljes KVM virtuális gépek, telepíthetsz egyedi szoftvereket, kezelhetsz szolgáltatásokat, használhatsz Dockert, snapeket, Flatpakokat, kernelmodulokat, és futtathatod a saját stackedet az Appbox alkalmazásaid mellett.</p>"
+        },
+        "docker": {
+          "title": "Használhatok Dockert?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Igen. A Docker elérhető a VPS alkalmazásokon, ahol teljes virtuális gépet kapsz root hozzáféréssel és kontrollal az operációs rendszer felett.</p><p class=\"mb-4 leading-relaxed\">A Docker nem érhető el a kezelt, egykattintásos alkalmazásokon belül, mert ezek az alkalmazások már eleve konténerizálva és Appbox által izolálva futnak. Ha Dockerre van szükséged, telepíts egy Linux VPS alkalmazást, és futtasd ott.</p>"
+        },
+        "security": {
+          "title": "Milyen biztonsági funkciókat kínáltok?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Komolyan vesszük a biztonságot, és több védelmi réteget alkalmazunk az adataid megóvására:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Minden Appbox saját sandboxban fut az adataid izolálásához</li><li>Minden kapcsolat HTTPS-t használ, titkosítva az átvitel alatt lévő adatokat</li><li>Korlátlan VPN fiókok (a jogosult csomagoknál), amelyekkel forgalmadat az Appboxon keresztül irányíthatod</li><li>Napi naplótörlés (FTP, SSH, HTTP, VPN stb.) a további adatvédelemért</li></ul>"
+        },
+        "data_access": {
+          "title": "Hogyan érhetem el az Appbox adataimat a számítógépemről?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Több kényelmes módot kínálunk az Appbox fájljaid és médiáid kezelésére:</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>Használj szinkronizáló alkalmazásokat, például Resiliót vagy Syncthinget, hogy a fájlok automatikusan naprakészek legyenek.</li><li>Streamelj médiát bárhonnan Plexszel, Navidrome-mal vagy hasonló alkalmazásokkal.</li><li>Tölts le fájlokat biztonságosan FTP over TLS, HTTPS vagy más protokollok használatával.</li></ul><p class=\"mb-4 leading-relaxed\">Az App Store különféle alkalmazásokat tartalmaz, amelyek segítenek úgy kapcsolódni az adataidhoz, ahogy neked a legjobban működik.</p>"
+        },
+        "additional_software": {
+          "title": "Telepíthetek olyan szoftvert, amely nincs az App Store-ban?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Természetesen. VPS alkalmazásainkkal root hozzáféréssel telepíthetsz egyedi szoftvereket, a Windows VPS alkalmazások pedig teljes Remote Desktop élményt tartalmaznak. Ez szabadságot ad a szükséges eszközök és alkalmazások futtatásához.</p>"
+        },
+        "fuse_rclone": {
+          "title": "Engedélyezitek a FuSE mountokat vagy az Rclone-t?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Igen. OS alkalmazásaink teljes mértékben támogatják a FuSE-t, és külön Rclone alkalmazást kínálunk az App Store-ban a gyors és egyszerű felhőtárhely-integrációhoz.</p>"
+        },
+        "refund_policy": {
+          "title": "Mi a visszatérítési szabályzatotok?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Új ügyfeleknek 7 napos, időarányos visszatérítési időszakot kínálunk. A meglévő ügyfelekre eltérő visszatérítési jogosultsági feltételek vonatkoznak. A kriptovalutával teljesített fizetések, dedikált IP-címek vásárlása és bizonyos egyéb tranzakciók nem visszatéríthetők. <a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">Tekintsd meg teljes visszatérítési szabályzatunkat</a> a részletekért.</p>"
+        },
+        "custom_domain": {
+          "title": "Használhatom a saját domainnevemet?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Igen. Hozzárendelheted a saját domainedet, és aldomainokat állíthatsz be minden alkalmazáshoz. Egyszerűen adj hozzá egy A rekordot a DNS-edben, amely az Appboxodra mutat, a többit pedig mi intézzük, hogy zökkenőmentesen elindulhass.</p><p class=\"mb-4 leading-relaxed\">A VPS alkalmazások több egyéni domaint és Appbox aldomaint is támogatnak automatikus SSL-lel, így több webhelyet vagy szolgáltatást hosztolhatsz ugyanarról a VPS-ről.</p>"
+        },
+        "upgrade_after_purchase": {
+          "title": "Válthatok nagyobb csomagra vásárlás után?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Igen, mindent automatikusan áthelyezünk a régi csomagodból az új csomagodba.</p><p class=\"mb-4 leading-relaxed\">Minden ugyanaz marad, észre sem fogod venni. Az egyetlen dolog, ami változhat, néhány konkrét portszám, ha egy alkalmazást közvetlenül portszám alapján érsz el, például FTP-n.</p>"
+        },
+        "app_slots": {
+          "title": "Mik azok az App Slotok?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Az App Slotok azok a kapacitásegységek, amelyeket az Appboxod alkalmazások telepítésére használ. Minden alkalmazás egy vagy több App Slotot használ az erőforrásigényétől függően, a nehezebb verziók pedig több slotot igényelhetnek.</p><p class=\"mb-4 leading-relaxed\">Az <a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">Alkalmazások oldal</a> megmutatja, hány App Slotot használ az egyes alkalmazás. Egy alkalmazás részletező oldalán görgess az alján lévő erőforrások szakaszhoz, hogy lásd az egyes verziókhoz rendelt RAM-ot és CPU-t.</p><p class=\"mb-4 leading-relaxed\">A szabad App Slotokat Per-App Boostra is elköltheted, hogy egy telepített alkalmazásnak több CPU-t és RAM-ot adj anélkül, hogy az egész csomagodat frissítenéd.</p>"
+        },
+        "resource_multipliers": {
+          "title": "Hogyan működik az alkalmazásonkénti boost?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Minden alkalmazás az adott verziója által meghatározott alap RAM- és CPU-erőforrásokkal indul. A Per-App Boost lehetővé teszi, hogy extra App Slotok elköltésével növeld ezeket az erőforrásokat egyes alkalmazásoknál.</p><p class=\"mb-4 leading-relaxed\">Minden boost slot +10% erőforrást ad az alkalmazáshoz. Te döntöd el, mely alkalmazások kapjanak több teljesítményt, és bármikor módosíthatod a boostot.</p><p class=\"mb-4 leading-relaxed\">A Per-App Boost minden csomagban benne van. Beállíthatod alkalmazástelepítéskor vagy a telepített alkalmazás oldalán az <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Managerben</a>.</p>"
+        },
+        "app_freeze": {
+          "title": "Szüneteltethetek egy alkalmazást adatvesztés nélkül?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Igen. Az App Freeze lehetővé teszi, hogy leállíts egy telepített alkalmazást és visszanyerd az App Slotjait, miközben az adatai és beállításai érintetlenek maradnak.</p><p class=\"mb-4 leading-relaxed\">Amikor feloldod a fagyasztást, az alkalmazás ugyanazokkal az adatokkal indul újra. Csak annyi szabad App Slotra van szükséged, amennyi fedezi az alkalmazást és az általa használt boost slotokat.</p>"
+        },
+        "excluded_app_categories": {
+          "title": "Mik azok a kizárt alkalmazáskategóriák?",
+          "content": "<p class=\"mb-4 leading-relaxed\">Egyes csomagok korlátozásokat tartalmaznak bizonyos alkalmazáskategóriákra, amelyek nem telepíthetők rájuk. Ezeket \"Excluded App Categories\" néven jelöljük.</p><p class=\"mb-4 leading-relaxed\">Árazási csomagjaink megtekintésekor a korlátozott csomagok alatt kattintható jelvényként látod a kizárt kategóriákat. Ez segít megérteni, mely típusú alkalmazások nem lesznek elérhetők az adott csomagban.</p><p class=\"mb-4 leading-relaxed\">Bármely kizárt kategória jelvényére kattintva megtekintheted az adott kategória összes alkalmazását, így pontosan tudni fogod, mely alkalmazások nem telepíthetők az adott csomagra.</p><p class=\"mb-4 leading-relaxed\">Ha egy kizárt kategóriába tartozó alkalmazásokhoz szeretnél hozzáférni, érdemes magasabb szintű csomagot választanod, amely nem tartalmazza ezeket a korlátozásokat.</p>"
+        },
+        "vps": {
+          "title": "Hogyan juthatok VPS-hez?",
+          "content": "<p class=\"mb-4 leading-relaxed\">A VPS alkalmazások az <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">App Store-ban</a> érhetők el, ugyanúgy, mint bármely más alkalmazás. Válassz Linux vagy Windows disztribúciót, telepítsd az Appboxodra, és a többi alkalmazásod mellett fog futni.</p><p class=\"mb-4 leading-relaxed\">A Per-App Boost segítségével extra erőforrásokat rendelhetsz a VPS-edhez, több RAM-ot és CPU-t adva neki további App Slotok elköltésével. Így a teljes csomagod frissítése nélkül méretezheted megfelelőre a VPS-edet.</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "Termék",
+      "resources": "Erőforrások",
+      "pricing": "Árak",
+      "features": "Funkciók",
+      "apps": "Alkalmazások",
+      "documentation": "Dokumentáció",
+      "blog": "Blog",
+      "faq": "GYIK",
+      "service_status": "Szolgáltatás állapota",
+      "overview": "Funkciók áttekintése",
+      "view_pricing": "Árcsomagjaink megtekintése",
+      "explore_apps": "Alkalmazásaink felfedezése",
+      "read_docs": "Dokumentáció olvasása",
+      "latest_articles": "Legújabb cikkek és hírek",
+      "faq_description": "Gyakran ismételt kérdések",
+      "check_status": "Szolgáltatásaink állapotának ellenőrzése",
+      "vps": "VPS",
+      "explore_vps": "VPS alkalmazások böngészése"
+    },
+    "external_links": {
+      "billing": "Számlázás",
+      "control_panel": "Vezérlőpult"
+    }
+  },
+  "docs": {
+    "on_this_page": "Ezen az oldalon",
+    "edit_page_on_github": "Oldal szerkesztése GitHubon",
+    "start_discussion_on_github": "Beszélgetés indítása GitHubon",
+    "api_reference": "API referencia",
+    "docs": "Dokumentáció",
+    "source": "Forrás",
+    "not_found": {
+      "description": "A keresett dokumentum nem létezik.",
+      "title": "A dokumentum nem található"
+    },
+    "index_description": "Találj dokumentációt az Appbox használatáról, a projekthez való hozzájárulásról és még sok másról.",
+    "index": {
+      "title": "Dokumentáció",
+      "section": "Szakasz",
+      "description": "Leírás",
+      "documents": "Dokumentumok",
+      "view": "Megtekintés"
+    },
+    "meta_description": "Ismerd meg az Appbox használatát átfogó dokumentációnkkal. Útmutatókat, oktatóanyagokat és API referenciákat találsz, hogy a legtöbbet hozhasd ki a hosztingodból."
+  },
+  "blog": {
+    "words": {
+      "posts": "Bejegyzések",
+      "by": "szerző:"
+    },
+    "cards": {
+      "min_read": "perc olvasás"
+    },
+    "buttons": {
+      "next": "Következő",
+      "previous": "Előző",
+      "rss_feed": "RSS Feed",
+      "read_more": "tovább olvasom",
+      "go_to_next_page": "Ugrás a következő oldalra",
+      "go_to_previous_page": "Ugrás az előző oldalra"
+    },
+    "meta_description": "Olvasd az Appbox csapat legfrissebb híreit, frissítéseit és oktatóanyagait. Maradj naprakész az új funkciókról, alkalmazásmegjelenésekről és hosztingtippekről."
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "Havi",
+      "quarterly": "Negyedéves",
+      "semiannually": "Féléves",
+      "annually": "Éves",
+      "billed_every": "Számlázás: [cycle]"
+    },
+    "card": {
+      "storage": "Tárhely",
+      "traffic": "Forgalom",
+      "app_slots": "App Slotok",
+      "connection_speed": "Kapcsolati sebesség",
+      "resource_multiplier": "Per-App Boost",
+      "included": "Tartalmazza",
+      "raid": "RAID",
+      "disks": "Lemezek",
+      "per_month": "/hó",
+      "order_now": "Megrendelés",
+      "billed_as": "Számlázva",
+      "excluded_app_categories": "Kizárt alkalmazáskategóriák",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "Támogatott",
+      "windows_vps_dedicated_only": "Csak dedikált csomagok (NG-18000+)"
+    }
+  },
+  "apps": {
+    "title": "Alkalmazáskönyvtár",
+    "description": "Fedezd fel hatalmas, telepítésre kész alkalmazásgyűjteményünket",
+    "meta_description": "Böngéssz 60+ telepítésre kész alkalmazás között, beleértve adatbázisokat, médiaszervereket, fejlesztői eszközöket és sok mást. Egykattintásos telepítés Appbox hosztinggal.",
+    "loading": "Alkalmazások betöltése...",
+    "error": "Nem sikerült betölteni az alkalmazásokat",
+    "no_results": "Nincs a keresési feltételeidnek megfelelő alkalmazás",
+    "back_to_apps": "Vissza az alkalmazásokhoz",
+    "app_not_found": "A kért alkalmazás nem található",
+    "search": {
+      "title": "Keresés",
+      "description": "Találd meg az igényeidhez tökéletes alkalmazást",
+      "name_search": "Keresés név alapján",
+      "name_placeholder": "Alkalmazásnév vagy kulcsszó",
+      "category": "Kategória",
+      "all_categories": "Minden kategória",
+      "app_slots": "App Slotok",
+      "app_slots_placeholder": "Bármennyi app slot",
+      "sort_by": "Rendezés",
+      "sort_popularity": "Népszerűség",
+      "sort_name": "Név (A-Z)",
+      "sort_date": "Nemrég hozzáadva",
+      "reset_filters": "Szűrők visszaállítása"
+    },
+    "card": {
+      "app_slots": "App Slotok",
+      "view_details": "Részletek megtekintése"
+    },
+    "detail": {
+      "by": "szerző:",
+      "description": "Leírás",
+      "app_info": "Alkalmazásinformáció",
+      "version": "Verzió",
+      "app_slots": "App Slotok",
+      "released": "Megjelent",
+      "developer_site": "Fejlesztői webhely",
+      "visit_site": "Webhely megnyitása",
+      "deploy_app": "Alkalmazás telepítése",
+      "community_ratings": "Közösségi értékelések",
+      "upvotes": "Pozitív szavazatok",
+      "downvotes": "Negatív szavazatok",
+      "no_ratings_yet": "Még nincs értékelés",
+      "deploy_dialog": {
+        "title": "Alkalmazások telepítése Appboxra",
+        "question": "Az alkalmazások futtatásához aktív Appbox szükséges. Válassz egy megfelelő csomagot a fiókod és Appboxod létrehozásához, vagy folytasd a telepítővel, ha már van Appboxod.",
+        "planLabel": "Ehhez az alkalmazáshoz megfelelő csomagok",
+        "planPlaceholder": "Válassz csomagot a folytatáshoz",
+        "planHelp": "Azok a csomagok, amelyek kizárják ezt az alkalmazáskategóriát, rejtve vannak. Csomag kiválasztásakor közvetlenül a pénztárhoz jutsz.",
+        "noEligiblePlans": "Ehhez az alkalmazáshoz nem találtunk megfelelő csomagot. Ettől még megtekintheted az összes csomagot.",
+        "viewAllPlans": "Összes csomag megtekintése",
+        "yes": "Folytatás a kiválasztott csomaggal",
+        "no": "Már van Appboxom"
+      }
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "Összekapcsolt alkalmazás-ökoszisztéma",
+      "headline_1": "Összekapcsolt alkalmazások.",
+      "headline_2": "Egy ökoszisztéma.",
+      "description": "Minden alkalmazás fájlrendszer-hozzáférést kap más alkalmazások megosztott részeihez, és mindegyik egy biztonságos helyi hálózati hídon keresztül kapcsolódik egymáshoz.",
+      "visual_title": "Az alkalmazásaid együtt tudnak működni anélkül, hogy elhagynák az Appboxodat.",
+      "visual_description": "Az alkalmazások saját tereikben futnak, de az Appbox ellenőrzött módokat ad nekik fájlok megosztására és helyi kommunikációra. Így az asszisztensek, irányítópultok, adatbázisok, médiaeszközök és szinkronizáló appok egyetlen összekapcsolt munkaterületté válhatnak.",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "Megosztott fájlrendszer",
+          "description": "Az alkalmazások közvetlenül hozzáférhetnek a megosztott tárhelyhez és a jóváhagyott alkalmazásadatokhoz."
+        },
+        "private_network": {
+          "title": "Biztonságos helyi híd",
+          "description": "A szolgáltatások privát helyi útvonalakon kommunikálnak a nyilvános internet helyett."
+        },
+        "cross_app_workflows": {
+          "title": "Alkalmazások közötti munkafolyamatok",
+          "description": "Építs olyan munkafolyamatokat, amelyekben az egyik alkalmazás adatokat olvashat, feldolgozhat és közzétehet egy másik számára."
+        }
+      }
+    }
+  },
+  "policies": {
+    "title": "Szabályzatok",
+    "meta_description": "Tekintsd át az Appbox szabályzatait, köztük a Szolgáltatási feltételeket, Adatvédelmi szabályzatot, Visszatérítési szabályzatot és még sok mást. Ismerd meg jogaidat és vállalásainkat.",
+    "index_description": "Ezek a szabályzatok irányítják az Appbox szolgáltatásainak használatát, és bemutatják feléd tett vállalásainkat. Fontos információkat tartalmaznak az adatvédelemről, biztonságról és felhasználói felelősségeidről.",
+    "policy": "Szabályzat",
+    "description": "Leírás",
+    "view": "Megtekintés"
+  },
+  "auth": {
+    "login": {
+      "title": "Üdv újra",
+      "description": "Jelentkezz be Appbox fiókodba",
+      "email_label": "Email",
+      "email_placeholder": "you@example.com",
+      "email_error": "Adj meg egy érvényes email címet",
+      "password_label": "Jelszó",
+      "password_placeholder": "Add meg a jelszavad",
+      "password_error": "A jelszó megadása kötelező",
+      "forgot_password": "Elfelejtetted a jelszavad?",
+      "submit": "Bejelentkezés",
+      "external_signup": "Új vagy az Appboxon? Válassz csomagot a fiókod és Appboxod létrehozásához.",
+      "external_signup_link": "Csomagok megtekintése",
+      "appbox_required_title": "Fiókra van szükséged?",
+      "appbox_required_description": "Az Appbox fiókok Appbox csomag vásárlásakor jönnek létre. Ha alkalmazást próbáltál telepíteni, előbb válassz csomagot, majd térj vissza alkalmazásokat telepíteni az Appboxodra.",
+      "appbox_required_link": "Csomagok megtekintése és regisztráció",
+      "error_invalid": "Érvénytelen email vagy jelszó",
+      "error_generic": "Valami hiba történt. Próbáld újra.",
+      "success": "Sikeres bejelentkezés",
+      "2fa_title": "Kétfaktoros hitelesítés",
+      "2fa_description": "Add meg a hitelesítő alkalmazásod 6 jegyű kódját",
+      "2fa_code_label": "Ellenőrző kód",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "A kódnak 6 számjegyből kell állnia",
+      "2fa_submit": "Ellenőrzés",
+      "2fa_back": "Vissza a bejelentkezéshez",
+      "error_2fa_invalid": "Érvénytelen ellenőrző kód"
+    },
+    "branding": {
+      "tagline": "A felhőd, a szabályaid",
+      "subtitle": "Telepíts és kezelj erőteljes alkalmazásokat saját tulajdonú és üzemeltetésű szuverén infrastruktúrán.",
+      "apps_count": "60+ telepítésre kész alkalmazás",
+      "one_click": "Egykattintásos telepítés",
+      "network_speed": "25Gbps hálózat",
+      "always_secure": "Mindig biztonságos",
+      "categories_label": "Alkalmazáskategóriák",
+      "category_cloud": "Felhő",
+      "category_cms": "CMS",
+      "category_databases": "Adatbázisok",
+      "category_music": "Zene",
+      "category_storage": "Tárhely",
+      "category_gaming": "Játék",
+      "category_development": "Fejlesztés",
+      "category_virtual_servers": "Virtuális szerverek"
+    },
+    "forgot": {
+      "title": "Elfelejtett jelszó",
+      "description": "Add meg az emailedet, és küldünk egy visszaállító linket",
+      "email_label": "Email",
+      "email_placeholder": "you@example.com",
+      "email_error": "Adj meg egy érvényes email címet",
+      "submit": "Visszaállító link küldése",
+      "back_to_login": "Vissza a bejelentkezéshez",
+      "error_generic": "Valami hiba történt. Próbáld újra.",
+      "success": "A visszaállító link elküldve! Ellenőrizd az emailedet."
+    },
+    "reset": {
+      "title": "Jelszó visszaállítása",
+      "description": "Add meg az új jelszavad",
+      "password_label": "Új jelszó",
+      "password_placeholder": "Add meg az új jelszót",
+      "password_error": "A jelszónak legalább 8 karakterből kell állnia",
+      "confirm_password_label": "Jelszó megerősítése",
+      "confirm_password_placeholder": "Erősítsd meg az új jelszót",
+      "confirm_password_error": "A jelszavak nem egyeznek",
+      "submit": "Jelszó visszaállítása",
+      "error_generic": "Valami hiba történt. Próbáld újra.",
+      "success": "A jelszó sikeresen visszaállítva!"
+    },
+    "email_sent": {
+      "title": "Ellenőrizd az emailedet",
+      "description": "Emailt küldtünk neked a további utasításokkal",
+      "check_inbox": "Ha nem látod az emailt, ellenőrizd a spam mappát. A link 24 óra múlva lejár.",
+      "back_to_login": "Vissza a bejelentkezéshez"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "Irányítópult",
+      "appstore": "App Store",
+      "appboxes": "Appboxok",
+      "installed_apps": "Telepített alkalmazások",
+      "domains": "Egyéni domainek",
+      "account": "Fiók",
+      "profile": "Profil",
+      "abuse_reports": "Visszaélési bejelentések",
+      "two_factor": "Kétfaktoros hitelesítés",
+      "api_keys": "API kulcsok",
+      "service_status": "Szolgáltatás állapota",
+      "support_billing": "Támogatás és számlázás",
+      "add_appbox": "Appbox hozzáadása",
+      "admin": "Admin",
+      "knowledgebase": "Tudásbázis"
+    },
+    "header": {
+      "toggle_language": "Nyelv váltása",
+      "theme_dark": "Sötét",
+      "theme_light": "Világos",
+      "theme_system": "Rendszer",
+      "profile": "Profil",
+      "security": "Biztonság",
+      "sign_out": "Kijelentkezés",
+      "switch_to_admin": "Váltás admin nézetre",
+      "switch_to_user": "Váltás felhasználói nézetre"
+    },
+    "overview": {
+      "title": "Irányítópult",
+      "services": "Szolgáltatásaid",
+      "servicesDescription": "Aktív szolgáltatásaid és erőforrásaid",
+      "storage": "Tárhely",
+      "appSlots": "App Slotok",
+      "network": "Hálózat",
+      "upload": "Feltöltés",
+      "download": "Letöltés",
+      "multiplier": "Felhasznált boost slotok",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30n",
+      "downloadShort": "↓ 30n",
+      "pinnedApps": "Rögzített alkalmazások",
+      "viewCylo": "Részletek megtekintése"
+    },
+    "twoFactor": {
+      "title": "Tedd biztonságossá a fiókodat",
+      "description": "Kapcsold be a kétfaktoros hitelesítést, hogy extra védelmi réteget adj a fiókodhoz.",
+      "enable": "2FA bekapcsolása",
+      "dismiss": "Elvetés"
+    },
+    "notifications": {
+      "title": "Legutóbbi értesítések",
+      "viewAll": "Összes megtekintése",
+      "empty": "Nincs új értesítés",
+      "dropdown_title": "Értesítések",
+      "mark_all_read": "Összes megjelölése olvasottként",
+      "no_notifications": "Nincs új értesítés",
+      "all_caught_up": "Minden naprakész",
+      "ui_update_title": "Új Appbox verzió érhető el",
+      "ui_update_description": "Frissítettük az Appbox felületét. Kérjük, frissítsd ezt az oldalt a legújabb verzióhoz.",
+      "refresh_later": "Frissítés később",
+      "refresh_now": "Frissítés most",
+      "subtext": {
+        "instance_add": "Az alkalmazásod telepítve van, nézd meg lent!",
+        "instance_removed": "Az alkalmazás eltávolítva.",
+        "instance_removing": "Az alkalmazás eltávolítása folyamatban van.",
+        "instance_restart": "Az alkalmazás újraindult.",
+        "instance_updating": "Az alkalmazás frissül, és ideiglenesen offline lesz.",
+        "instance_updated": "Az alkalmazás frissítve lett, és használatra kész.",
+        "instance_stop": "Az alkalmazás most leállt; az eléréséhez újra el kell indítanod.",
+        "instance_start": "Az alkalmazás most elindult, és hamarosan elérhető lesz.",
+        "user_updated": "A felhasználói profiladataid frissítve lettek.",
+        "cylo_add": "Az Appboxod beállítása befejeződött, kattints lent a megtekintéshez.",
+        "cylo_remove": "Az Appboxod eltávolítva.",
+        "cylo_migrating": "Az Appboxod másik lemezre/szerverre migrál; értesítünk és emailt küldünk, amint elkészült.",
+        "cylo_migrated": "Az Appboxod sikeresen migrálva lett, most már minden alkalmazásnak újra működnie kell.",
+        "cylo_userdecreasingquota": "Az Appboxodon fogy a lemezterület. Rövidesen törölnöd kell néhány adatot az Appbox irányítópult File Explorer lapján, hogy online maradhasson.",
+        "cylo_userlowquota": "Az Appboxodon elfogyott a lemezterület, ezért ideiglenesen leállítottuk. Törölnöd kell néhány adatot az Appbox irányítópult File Explorer lapján, hogy újra online legyen.",
+        "cylo_adminlowquota": "Egy Appboxon kevés a rendelkezésre álló tárhely.",
+        "cylo_brokenmount": "Az Appboxodon csatolási hiba történt. További információért ellenőrizd az emailedet.",
+        "cylo_usernormalquota": "Az Appboxodon már elegendő szabad hely van a normál működéshez.",
+        "cylo_adminnormalquota": "Az Appboxon már nincs kevés hely, és normálisan működhet.",
+        "cylo_restarting": "Az Appboxod most újraindul, az alkalmazásaid ideiglenesen offline lesznek.",
+        "cylo_restarted": "Az Appboxod újraindítása befejeződött, az alkalmazásaid hamarosan online lesznek.",
+        "blog": "Új blogbejegyzést tettünk közzé, kattints lent az olvasáshoz!",
+        "hwfailure_newfailure": "Egy szerveren probléma van, kérjük, nézz utána mielőbb!",
+        "criticalalert_newalert": "Új kritikus riasztás, kérjük, nézz utána mielőbb!",
+        "abuse_unresolvable": "Új, nem megoldható visszaélési bejelentés érkezett.",
+        "abuse_reply": "Új üzenet érkezett a visszaélési bejelentéshez.",
+        "abuse_user_new": "Visszaélési bejelentést kaptunk az Appboxoddal kapcsolatban.",
+        "abuse_user_closed": "Lezártunk egy visszaélési bejelentést az Appboxoddal kapcsolatban.",
+        "throttledcylo_throttled": "Egy Appbox korlátozás alatt áll.",
+        "throttledcylo_unthrottled": "Egy Appbox már nincs korlátozás alatt.",
+        "throttled_throttled": "Az Appboxod korlátozás alatt áll.",
+        "throttled_warning": "Az Appboxod a szokásosnál több erőforrást használ.",
+        "throttled_unthrottled": "Az Appboxod már nincs korlátozás alatt."
+      }
+    },
+    "newestApps": {
+      "title": "Legújabb alkalmazások",
+      "viewAll": "App Store böngészése"
+    },
+    "recentlyUpdated": {
+      "title": "Nemrég frissítve"
+    },
+    "yourUpdates": {
+      "title": "Frissítéseid",
+      "description": "Legutóbbi aktivitás és új alkalmazások"
+    },
+    "blogPosts": {
+      "title": "Legfrissebb a blogból",
+      "description": "Hírek és frissítések az Appboxtól",
+      "readMore": "Tovább olvasom"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Újraindítás",
+      "migrating": "Migrálás",
+      "installing": "Telepítés",
+      "suspended": "Felfüggesztve",
+      "frozen": "Fagyasztva",
+      "throttled": "Korlátozva",
+      "lowQuota": "Kevés tárhely"
+    }
+  },
+  "appstore": {
+    "title": "App Store",
+    "subtitle": "Minden szükséges szerveralkalmazás egy helyen.",
+    "search": {
+      "placeholder": "Alkalmazások keresése...",
+      "results": "Keresési eredmények",
+      "noResults": "Nem található a keresésednek megfelelő alkalmazás.",
+      "noResultsDescription": "Próbáld módosítani a keresést vagy a szűrőt, hogy megtaláld, amit keresel.",
+      "showing": "{count} találat megjelenítése"
+    },
+    "featured": {
+      "title": "Kiemelt alkalmazások",
+      "description": "Kézzel válogatott ajánlott alkalmazások"
+    },
+    "top": {
+      "title": "Top alkalmazások",
+      "description": "A felhasználóink körében legnépszerűbbek"
+    },
+    "new": {
+      "title": "Új alkalmazások",
+      "description": "Nemrég kerültek az áruházba"
+    },
+    "categories": {
+      "title": "Kategóriák",
+      "all": "Minden kategória"
+    },
+    "app": {
+      "getApp": "Beszerzés",
+      "installed": "Telepítve",
+      "restricted": "Korlátozott",
+      "disabled": "Letiltva",
+      "install": "Telepítés",
+      "installing": "Telepítés...",
+      "versions": "Verziók",
+      "version": "Verzió",
+      "appSlots": "App Slotok",
+      "baseMemory": "Alap memória (GB)",
+      "baseCpus": "Alap CPU-k",
+      "added": "Hozzáadva",
+      "changes": "Változások",
+      "changelog": "Változásnapló",
+      "releasedOn": "Megjelenés dátuma",
+      "description": "Leírás",
+      "comments": "Hozzászólások",
+      "selectCylo": "Appbox kiválasztása",
+      "selectVersion": "Verzió kiválasztása",
+      "noSlots": "Nincs elérhető szabad app slot",
+      "rating": "{count} szavazat",
+      "screenshots": "Képernyőképek",
+      "by": "szerző:",
+      "requiresSlots": "{count} app slot szükséges",
+      "visitDeveloper": "Fejlesztői webhely megnyitása",
+      "helpSupport": "Segítség és támogatás",
+      "resourceNote": "Az alkalmazások alap memóriával és CPU-val indulnak. Egyes alkalmazásokat extra app slotok elköltésével boostolhatsz (+10% boost slotonként). A 0 érték korlátlant jelent.",
+      "upvote": "Pozitív szavazat",
+      "downvote": "Negatív szavazat",
+      "installTitle": "{name} telepítése",
+      "installSuccess": "Az alkalmazás telepítése elindult",
+      "minimumPlanShort": "Elérhető innen: {plan}",
+      "minimumPlanLabel": "Minimum csomag"
+    },
+    "sort": {
+      "newest": "Legújabb",
+      "popular": "Legnépszerűbb",
+      "updated": "Nemrég frissítve",
+      "rating": "Legjobbra értékelt",
+      "slots_asc": "Slotok: növekvő",
+      "slots_desc": "Slotok: csökkenő"
+    },
+    "slots": {
+      "label": "Slotok",
+      "all": "Minden slot",
+      "slot": "{count} slot",
+      "slots": "{count} slot"
+    },
+    "showAll": "Összes megjelenítése",
+    "install": {
+      "validation": {
+        "required": "A mező kitöltése kötelező",
+        "alphanumeric": "Csak betűk és számok engedélyezettek",
+        "notOnlyAlpha": "Legalább egy számot vagy speciális karaktert tartalmaznia kell",
+        "lowercase": "Tartalmaznia kell egy kisbetűt",
+        "uppercase": "Tartalmaznia kell egy nagybetűt",
+        "number": "Tartalmaznia kell egy számot",
+        "specialChar": "Tartalmaznia kell egy speciális karaktert",
+        "invalidEmail": "Érvénytelen email cím",
+        "invalidDate": "Érvénytelen dátum",
+        "invalidFormat": "Érvénytelen formátum",
+        "minLength": "Minimum {count} karakter",
+        "maxLength": "Maximum {count} karakter",
+        "invalidSubdomain": "Csak kisbetűk, számok és kötőjelek engedélyezettek.",
+        "subdomainInUse": "Ez az aldomain már használatban van, próbálj másikat.",
+        "domainIpMismatch": "A domain IP-címe nem egyezik a szerverrel.",
+        "selectDomain": "Válassz domaint",
+        "validating": "Ellenőrzés..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "Előbb válassz Appboxot",
+        "selectPlaceholder": "{label} kiválasztása...",
+        "searchPlaceholder": "{label} keresése...",
+        "noResults": "Nincs találat."
+      },
+      "domain": {
+        "domainType": "Domain típusa",
+        "typeAppbox": "Appbox domain",
+        "typeCustom": "Egyéni domain",
+        "subdomain": "Aldomain",
+        "domain": "Domain",
+        "baseDomain": "Alapdomain",
+        "selectAppboxFirst": "Előbb válassz Appboxot",
+        "selectDomain": "Domain kiválasztása...",
+        "selectOrAddDomain": "Válassz vagy adj hozzá domaint...",
+        "searchDomains": "Domainek keresése...",
+        "noDomainsMatch": "Nincs a keresésednek megfelelő domain.",
+        "noDomainsAvailable": "Nincs elérhető domain.",
+        "noCustomDomains": "Még nincsenek egyéni domainek.",
+        "yourDomains": "Saját domainek",
+        "addNewDomain": "Új domain hozzáadása",
+        "add": "Hozzáadás",
+        "domainSuffix": "válassz domaint",
+        "appboxDomain": "Appbox domain",
+        "customDomains": "Egyéni domainek",
+        "loadingDomains": "Domainek betöltése...",
+        "blockedDomain": "Ez a domain fenntartott, és nem használható.",
+        "invalidDomain": "Adj meg egy érvényes domaint (pl. mydomain.com).",
+        "addDomainFailed": "Nem sikerült hozzáadni a domaint. Próbáld újra.",
+        "dnsSetupTitle": "DNS beállítás",
+        "dnsInstruction": "Hozz létre egy A rekordot, amely az Appbox szerveredre mutat:",
+        "copyIp": "IP-cím másolása",
+        "copied": "Másolva!",
+        "dnsNotPointing": "A DNS még nem a megfelelő IP-re mutat.",
+        "dnsResolvedTo": "Jelenleg ide oldódik fel: {ip}",
+        "verifyDns": "DNS ellenőrzése",
+        "verifying": "Ellenőrzés...",
+        "retryVerify": "Ellenőrzés újra",
+        "dnsVerified": "✓ DNS ellenőrizve ehhez: {domain}"
+      },
+      "field": {
+        "enabled": "Engedélyezve",
+        "disabled": "Letiltva",
+        "selectPlaceholder": "{label} kiválasztása"
+      },
+      "guard": {
+        "appDisabled": "Ez az alkalmazás karbantartás miatt ideiglenesen le van tiltva.",
+        "noCylos": "Alkalmazások telepítéséhez előbb Appboxra van szükséged. Rendelj egyet a kezdéshez.",
+        "getAppbox": "Appbox beszerzése",
+        "restricted": "Ez az alkalmazás nem érhető el a jelenlegi csomagoddal. Kattints lent a csomagod frissítéséhez és a hozzáférés feloldásához.",
+        "restrictedMinPlan": "Ez az alkalmazás nem érhető el a jelenlegi csomagoddal. Minimum szükséges csomag: {plan}. Frissítsd a csomagod a hozzáférés feloldásához.",
+        "upgradePackage": "Csomag frissítése",
+        "getAnotherAppbox": "Másik Appbox beszerzése",
+        "noSlots": "Ehhez az alkalmazáshoz {count} app slot szükséges, de egyik Appboxodon sincs elég szabad slot. Frissítsd a csomagod több slotért.",
+        "getMoreSlots": "Több app slot beszerzése",
+        "noMulti": "Ez az alkalmazás Appboxonként csak egy telepítést engedélyez, és már telepítve van minden jogosult Appboxodon. Egy másik példány telepítéséhez rendelhetsz egy további Appboxot.",
+        "checkingAvailability": "Elérhetőség ellenőrzése..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "Korlátozott a jelenlegi csomagban",
+        "noFreeSlots": "Nincs szabad slot ({used}/{total})",
+        "alreadyInstalled": "Már telepítve",
+        "notEligible": "Nem jogosult",
+        "selectToSeeOptions": "Válassz Appboxot a lehetőségek megtekintéséhez",
+        "upgradeThisAppbox": "Appbox frissítése",
+        "alreadyInstalledDetail": "Ez az alkalmazás Appboxonként csak egy telepítést engedélyez, és itt már telepítve van. Egy másik példány telepítéséhez rendelj további Appboxot.",
+        "noneEligible": "Jelenleg egyik Appboxod sem jogosult. Válassz egyet fent, hogy lásd az okát és a megoldási lehetőségeket.",
+        "restrictedSingle": "{name} nem jogosult — ez az alkalmazás korlátozott a jelenlegi csomagján.",
+        "restrictedMultiple": "{count} Appbox nem jogosult — ez az alkalmazás korlátozott a jelenlegi csomagjukon.",
+        "upgradeName": "{name} frissítése",
+        "noSlotsSingle": "{name} nem rendelkezik elég szabad app slottal.",
+        "noSlotsMultiple": "{count} Appbox nem rendelkezik elég szabad app slottal.",
+        "installedSingle": "{name} Appboxon már telepítve van ez az alkalmazás.",
+        "installedMultiple": "{count} Appboxon már telepítve van ez az alkalmazás.",
+        "onePerAppbox": "Ez az alkalmazás Appboxonként csak egy telepítést engedélyez.",
+        "slotsFree": "{count} szabad slot",
+        "migrating": "Az Appbox jelenleg migrál",
+        "restrictedOnPackageMinPlan": "Korlátozott a jelenlegi csomagban (minimum csomag: {plan})",
+        "migratingSingle": "{name} jelenleg migrál, és ideiglenesen nem érhető el telepítésekhez.",
+        "migratingMultiple": "{count} Appbox jelenleg migrál, és ideiglenesen nem érhető el telepítésekhez."
+      },
+      "dialog": {
+        "loadingVersions": "Verziók betöltése...",
+        "defaultVersion": "(alapértelmezett)",
+        "versionsAvailable": "{count, plural, one {# verzió érhető el} other {# verzió érhető el}}",
+        "cancel": "Mégse",
+        "installFailed": "A telepítés sikertelen. Próbáld újra."
+      },
+      "boost": {
+        "loading": "Boost lehetőségek betöltése...",
+        "title": "Boost slotok",
+        "resourcePreview": "Erőforrás-előnézet",
+        "multiplier": "Szorzó",
+        "slotCost": "Slotköltség",
+        "ram": "RAM",
+        "cpus": "CPU-k",
+        "cta": "Több boostot szeretnél? Frissítsd a csomagod"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "Appboxaid",
+      "description": "Kövesd a tárhelyet, hálózatot, boost használatot és telepített alkalmazásokat minden általad kezelt Appboxon.",
+      "empty": "Még nincs appboxod.",
+      "getCylo": "Appbox beszerzése",
+      "viewDetails": "Részletek megtekintése",
+      "storage": "Tárhely",
+      "appSlots": "App Slotok",
+      "network": "Hálózat",
+      "upload": "Feltöltés",
+      "download": "Letöltés",
+      "multiplier": "Felhasznált boost slotok",
+      "pinnedApps": "Rögzített alkalmazások",
+      "sortBy": "Rendezés",
+      "filterByStatus": "Szűrés állapot szerint",
+      "allStatuses": "Minden állapot",
+      "name": "Név",
+      "server": "Szerver",
+      "status": "Állapot"
+    },
+    "cyloDetail": {
+      "summary": "Összegzés",
+      "fileExplorer": "File Explorer",
+      "diskUsage": "Lemezhasználat",
+      "diskUtilization": "Lemezterhelés (IO)",
+      "networkTraffic": "Hálózati forgalom",
+      "installedApps": "Telepített alkalmazások",
+      "alerts": "Riasztások",
+      "migrationProgress": "Migráció folyamatban",
+      "migrationLive": "A legtöbb alkalmazás normálisan működik tovább az élő migráció alatt. Azok az alkalmazások, amelyek nem migrálhatók élőben, a befejezésig nem lesznek elérhetők.",
+      "migrationOffline": "Az alkalmazásaid nem lesznek elérhetők, amíg a migráció be nem fejeződik.",
+      "migrationTransferred": "Átvitel: {sent} GiB / {total} GiB",
+      "migrationPhase1": "Migráció inicializálása",
+      "migrationPhase2": "Titkosítási kulcsok átvitele",
+      "migrationPhase3": "SSL tanúsítványok átvitele",
+      "migrationPhase4": "Appbox beállítása az új szerveren",
+      "migrationPhase5": "Adatok átvitele",
+      "migrationPhase6": "Alkalmazások telepítése az új szerveren",
+      "migrationPhase7": "Migráció véglegesítése",
+      "migrationPhase8": "Migráció befejezése",
+      "lowQuota": "Kevés lemezterület",
+      "lowQuotaMessage": "Az appboxod offline marad, amíg fel nem szabadítasz némi helyet. Jelenleg {available} GiB maradt, és több mint 5 GiB szükséges a működéshez.",
+      "lowQuotaMigratingMessage": "Az appboxod nem lesz migrálva, amíg fel nem szabadítasz némi helyet. Jelenleg {available} GiB maradt, és több mint 5 GiB szükséges a migrációhoz.",
+      "lowQuotaHint": "Használd a File Explorert adatok törlésére, vagy válts nagyobb csomagra.",
+      "lowQuotaDeleteData": "Adatok törlése",
+      "throttled": "Lemezátvitel korlátozva",
+      "throttledMessage": "Az appboxod hosszabb ideig a lemezsebesség több mint {percent}%-át használta. Fair-use korlátozás lépett életbe.",
+      "throttledHint": "A korlát automatikusan lejár. A jövőbeni korlátozás megelőzéséhez csökkentsd az egyidejű átviteleket, kapcsold be a sorba állítást, vagy ütemezd az intenzív feladatokat csúcsidőn kívülre.",
+      "throttleLevel": "Korlátozási szint",
+      "throttleRate": "Sebesség (MB/s)",
+      "throttleIops": "IOPS",
+      "throttleExpires": "Lejár",
+      "throttleTopApp": "Legnagyobb használatú alkalmazás",
+      "throttleTopProcess": "Legnagyobb használatú folyamat",
+      "suspended": "Appbox felfüggesztve",
+      "suspendedMessage": "Az appboxod jelenleg fel van függesztve. Kérjük, lépj kapcsolatba az ügyfélszolgálattal, ha szerinted ez hiba.",
+      "offline": "Appbox offline",
+      "offlineMessage": "Az appboxod jelenleg offline.",
+      "upgradePlan": "Csomag frissítése",
+      "viewApp": "Megtekintés",
+      "noAlerts": "Nincs aktív riasztás",
+      "noApps": "Nincs telepített alkalmazás ezen az appboxon.",
+      "backToAppboxes": "Appboxok",
+      "notFound": "Appbox nem található",
+      "notFoundDescription": "A kért appbox nem található.",
+      "bandwidth": "Sávszélesség",
+      "uploadUsed": "Felhasznált feltöltés",
+      "downloadUsed": "Felhasznált letöltés",
+      "restart": "Újraindítás",
+      "restartTitle": "Appbox újraindítása",
+      "restartDescription": "Ez újraindítja az Appboxodat. Minden telepített alkalmazás offline lesz, amíg az újraindítás be nem fejeződik.",
+      "cancel": "Mégse"
+    },
+    "fileExplorer": {
+      "title": "File Explorer",
+      "upload": "Feltöltés",
+      "newFolder": "Új mappa",
+      "rename": "Átnevezés",
+      "delete": "Törlés",
+      "download": "Letöltés",
+      "name": "Név",
+      "size": "Méret",
+      "modified": "Módosítva",
+      "type": "Típus",
+      "emptyDirectory": "Ez a mappa üres",
+      "emptyDirectoryDescription": "Tölts fel fájlokat vagy hozz létre új mappát a kezdéshez.",
+      "newFolderTitle": "Új mappa",
+      "newFolderPlaceholder": "Mappa neve",
+      "newFolderDescription": "Add meg az új mappa nevét.",
+      "renameTitle": "Átnevezés",
+      "renamePlaceholder": "Új név",
+      "renameDescription": "Adj meg egy új nevet.",
+      "deleteTitle": "Törlés",
+      "deleteDescription": "Biztosan törölni szeretnéd ezt: \"{name}\"? Ez a művelet nem vonható vissza.",
+      "create": "Létrehozás",
+      "cancel": "Mégse",
+      "save": "Mentés",
+      "confirm": "Megerősítés",
+      "uploading": "Feltöltés...",
+      "uploadSuccess": "A fájlok sikeresen feltöltve",
+      "uploadError": "Nem sikerült feltölteni a fájlokat",
+      "createFolderSuccess": "Mappa létrehozva",
+      "createFolderError": "Nem sikerült létrehozni a mappát",
+      "renameSuccess": "Sikeresen átnevezve",
+      "renameError": "Nem sikerült átnevezni",
+      "deleteSuccess": "Sikeresen törölve",
+      "deleteError": "Nem sikerült törölni",
+      "dropFilesHere": "Húzd ide a fájlokat a feltöltéshez",
+      "root": "Kezdőlap",
+      "listView": "Lista nézet",
+      "gridView": "Rács nézet"
+    },
+    "installedApps": {
+      "title": "Telepített alkalmazások",
+      "description": "Kezeld az Appboxaidra telepített alkalmazásokat.",
+      "searchPlaceholder": "Keresés név, domain, appbox alapján...",
+      "name": "Név",
+      "domain": "Domain",
+      "version": "Verzió",
+      "slots": "Slotok",
+      "slot": "slot",
+      "status": "Állapot",
+      "cylo": "Appbox",
+      "installedDate": "Telepítve",
+      "empty": "Nem található telepített alkalmazás.",
+      "filterByStatus": "Állapot",
+      "filterByCylo": "Appbox",
+      "allCylos": "Minden Appbox",
+      "bulkSelected": "{count} kiválasztva",
+      "bulkUnavailable": "{count, plural, one {# alkalmazás nem érhető el} other {# alkalmazás nem érhető el}}"
+    },
+    "appDetail": {
+      "port": "Port",
+      "installDate": "Telepítés dátuma",
+      "server": "Szerver",
+      "customFields": "Konfiguráció",
+      "actions": "Műveletek",
+      "start": "Indítás",
+      "stop": "Leállítás",
+      "restart": "Újraindítás",
+      "update": "Frissítés",
+      "uninstall": "Eltávolítás",
+      "switchVersion": "Verzióváltás",
+      "boost": {
+        "title": "App Boost",
+        "description": "Boostold az alkalmazásodat az erőforrásai növeléséhez. A módosításokat lent előnézetben láthatod.",
+        "current": "Jelenlegi boost slotok:",
+        "multiplier": "Szorzó",
+        "preview": "Előnézet",
+        "resourcePreview": "Erőforrás-előnézet",
+        "slotCost": "Slotköltség",
+        "ram": "RAM",
+        "cpus": "CPU-k",
+        "apply": "Boost alkalmazása",
+        "applying": "Alkalmazás...",
+        "dockerLive": "A Docker alkalmazások erőforrásai újraindítás nélkül, élőben alkalmazódnak.",
+        "vmRestart": "A VM boostok az új erőforrások alkalmazásához újraindítást igényelnek.",
+        "getMore": "Több boostot szeretnél? Frissítsd a csomagod"
+      },
+      "freeze": "Fagyasztás",
+      "unfreeze": "Fagyasztás feloldása",
+      "confirmFreeze": "Az alkalmazás fagyasztása leállítja azt, és felszabadítja az app slotjait. Később feloldhatod a visszaállításához.",
+      "confirmUnfreeze": "Az alkalmazás fagyasztásának feloldása újra app slotokat fog használni. Folytatod?",
+      "confirmUninstall": "Biztosan eltávolítod ezt az alkalmazást? Ez a művelet nem vonható vissza.",
+      "pinApp": "Alkalmazás rögzítése",
+      "unpinApp": "Rögzítés feloldása",
+      "backToInstalledApps": "Telepített alkalmazások",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appboxok",
+      "backToDashboard": "Irányítópult",
+      "notFound": "A telepített alkalmazás nem található",
+      "notFoundDescription": "A kért telepített alkalmazás nem található.",
+      "version": "Verzió",
+      "cylo": "Appbox",
+      "appNote": "Alkalmazásmegjegyzés",
+      "appInfo": "Alkalmazásinformáció",
+      "running": "Fut",
+      "stopped": "Leállítva",
+      "configuringApp": "{appName} konfigurálása...",
+      "sendingInstallPayload": "Telepítési payload küldése az appboxodra...",
+      "sendingUpdatePayload": "Frissítési payload küldése az appboxodra...",
+      "tabOverview": "Áttekintés",
+      "tabPorts": "Portok",
+      "tabConsole": "Konzol",
+      "consoleTitle": "VM konzol",
+      "consoleUnavailable": "A konzol csak akkor érhető el, ha ez a VM fut és engedélyezve van.",
+      "consoleLoading": "Konzolkapcsolat részleteinek betöltése...",
+      "consoleLoadError": "Nem sikerült betölteni a konzolkapcsolat részleteit.",
+      "consolePortsMissing": "A konzol WebSocket végpontja nem érhető el ehhez a VM-hez.",
+      "consoleConnecting": "Csatlakozás...",
+      "consoleConnected": "Csatlakoztatva",
+      "consoleDisconnected": "Kapcsolat bontva",
+      "consoleConnectionError": "A csatlakozás sikertelen",
+      "consoleReconnect": "Újracsatlakozás",
+      "consoleWebsocketEndpoint": "WebSocket végpont",
+      "portAssignments": "Port-hozzárendelések",
+      "internalIp": "Belső IP",
+      "hostIp": "Host IP",
+      "internalPort": "Belső port",
+      "hostPort": "Host port",
+      "protocol": "Protokoll",
+      "noPortAssignments": "Nem találhatók port-hozzárendelések.",
+      "searchPorts": "Portok keresése…",
+      "customDomainsTitle": "Egyéni domainek",
+      "customDomainsDescription": "Ehhez az alkalmazáshoz beállított egyéni domainek.",
+      "customDomainsAdd": "Domain hozzáadása",
+      "customDomainsAddTitle": "Egyéni domain hozzáadása",
+      "customDomainsAddDescription": "Csatlakoztass egy egyéni domaint ehhez a telepített alkalmazáshoz.",
+      "customDomainsDomain": "Domain",
+      "customDomainsPrimary": "Elsődleges",
+      "customDomainsPrimaryYes": "Igen",
+      "customDomainsPrimaryNo": "Nem",
+      "customDomainsAdded": "Hozzáadva",
+      "customDomainsConfig": "Konfiguráció",
+      "customDomainsViewConfig": "Konfiguráció megtekintése",
+      "customDomainsActions": "Műveletek",
+      "customDomainsSearch": "Domainek keresése...",
+      "customDomainsEmpty": "Nem találhatók egyéni domainek.",
+      "customDomainsParentDomain": "Szülődomain",
+      "customDomainsLoadingDomains": "Domainek betöltése...",
+      "customDomainsSelectDomain": "Válassz domaint",
+      "customDomainsSubdomain": "Aldomain",
+      "customDomainsDomainSuffix": ".example.com",
+      "customDomainsCancel": "Mégse",
+      "customDomainsSave": "Domain hozzáadása",
+      "customDomainsDelete": "Domain törlése",
+      "customDomainsDeleteTitle": "Domain törlése",
+      "customDomainsDeleteDescription": "Biztosan törölni szeretnéd ezt a domaint?",
+      "customDomainsVmRestartWarning": "A user.appboxes.co domaintől eltérő szülődomain használata újraindítja a VM-edet.",
+      "customDomainsClose": "Bezárás",
+      "customDomainsConfigTitle": "SSL konfiguráció ehhez: {domain}",
+      "customDomainsConfigDescription": "Másold a megfelelő részletet a webszerver-konfigurációdba.",
+      "customDomainsSslQueued": "Az egyéni domainek HTTPS tanúsítványa a háttérben készül, és a domain hozzáadása után néhány percbe telhet, amíg aktívvá válik.",
+      "customDomainsWildcardSsl": "Ez a domain meglévő wildcard SSL tanúsítványt használ.",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "Fájl",
+      "customDomainsConfigSnippet": "Konfiguráció",
+      "customDomainsReloadCommand": "Újratöltési parancs",
+      "customDomainsNotes": "Megjegyzések",
+      "customDomainsCopy": "Másolás",
+      "customDomainsCopied": "Másolva!",
+      "customDomainsSubdomainRequired": "Az aldomain megadása kötelező.",
+      "customDomainsParentDomainRequired": "Válassz szülődomaint.",
+      "customDomainsSubdomainInvalid": "Csak betűk, számok és kötőjelek engedélyezettek (nem kezdődhet és nem végződhet kötőjellel).",
+      "customDomainsSubdomainLength": "Az aldomainnek 2 és 30 karakter között kell lennie.",
+      "customDomainsSubdomainInUse": "Ez az aldomain már használatban van. Próbálj másikat.",
+      "customDomainsSubdomainValidateFailed": "Jelenleg nem lehet ellenőrizni az aldomaint.",
+      "customDomainsDnsNotVerified": "A DNS még nem a megfelelő szerverre mutat.",
+      "customDomainsDnsNotVerifiedExpected": "A DNS nem a megfelelő szerverre mutat. Várt IP: {ip}",
+      "customDomainsDnsCheckFailed": "Jelenleg nem lehet ellenőrizni a DNS-t.",
+      "customDomainsAddFailed": "Nem sikerült hozzáadni az egyéni domaint.",
+      "customDomainsDeleteFailed": "Nem sikerült törölni a domaint.",
+      "customDomainsConfigNotAvailable": "Ehhez a domainhez nem érhetők el konfigurációs részletek.",
+      "customDomainsConfigFetchFailed": "Nem sikerült betölteni a konfigurációs részleteket.",
+      "customTablesTitle": "Alkalmazástáblák",
+      "customTablesLoading": "Egyéni táblák betöltése...",
+      "customTablesRowsUsage": "{current} / {max} sor használatban",
+      "customTablesAdd": "Sor hozzáadása",
+      "customTablesAddTitle": "Sor hozzáadása ehhez: {label}",
+      "customTablesAddDescription": "Hozz létre egy új sorbejegyzést.",
+      "customTablesEditTitle": "Sor szerkesztése ebben: {label}",
+      "customTablesEditDescription": "Frissítsd a kiválasztott sor értékeit.",
+      "customTablesDeleteTitle": "Sor törlése",
+      "customTablesDeleteDescription": "Biztosan törölni szeretnéd ezt a sort?",
+      "customTablesDelete": "Törlés",
+      "customTablesSave": "Mentés",
+      "customTablesUpdate": "Frissítés",
+      "customTablesCancel": "Mégse",
+      "customTablesActions": "Műveletek",
+      "customTablesSearch": "{label} keresése...",
+      "customTablesEmpty": "Nem találhatók sorok.",
+      "customTablesEnabled": "Engedélyezve",
+      "customTablesDisabled": "Letiltva",
+      "customTablesValidationRequired": "A mező kitöltése kötelező.",
+      "customTablesValidationAlphanumeric": "Csak betűk és számok engedélyezettek.",
+      "customTablesValidationComplexPassword": "Kisbetűt, nagybetűt, számot és speciális karaktert is tartalmaznia kell.",
+      "customButtonValidation": {
+        "required": "A mező kitöltése kötelező.",
+        "alphanumeric": "Csak betűk és számok engedélyezettek.",
+        "notOnlyAlpha": "Adj meg legalább egy számot vagy szimbólumot.",
+        "lowercase": "Adj meg legalább egy kisbetűt.",
+        "uppercase": "Adj meg legalább egy nagybetűt.",
+        "number": "Adj meg legalább egy számot.",
+        "specialChar": "Adj meg legalább egy speciális karaktert.",
+        "invalidEmail": "Adj meg egy érvényes email címet.",
+        "invalidDate": "Adj meg egy érvényes dátumot.",
+        "minLength": "Legalább {count} karakterből kell állnia.",
+        "maxLength": "Legfeljebb {count} karakterből állhat.",
+        "invalidFormat": "Érvénytelen formátum."
+      },
+      "customTablesAddSuccess": "Sor sikeresen hozzáadva.",
+      "customTablesEditSuccess": "Sor sikeresen frissítve.",
+      "customTablesDeleteSuccess": "Sor sikeresen törölve.",
+      "customTablesAddFailed": "Nem sikerült hozzáadni a sort.",
+      "customTablesEditFailed": "Nem sikerült frissíteni a sort.",
+      "customTablesDeleteFailed": "Nem sikerült törölni a sort."
+    },
+    "domains": {
+      "title": "Egyéni domainek",
+      "pageDescription": "A telepített alkalmazásaidhoz hozzáadott egyéni domainek.",
+      "domain": "Domain",
+      "type": "Típus",
+      "typeManaged": "Kezelt",
+      "typeCustom": "Egyéni",
+      "typeBase": "Alap",
+      "app": "Alkalmazás",
+      "server": "Szerver",
+      "createdAt": "Létrehozva",
+      "cylo": "Appbox",
+      "confirmDelete": "Biztosan törölni szeretnéd ezt a domaint?",
+      "deleteDomain": "Domain törlése",
+      "deleteBlockedHasChildren": "Nem törölhető — ezt a domaint aldomainek használják. Előbb távolítsd el azokat.",
+      "reverifyDns": "DNS újraellenőrzése",
+      "emptyTitle": "Még nincsenek egyéni domainek",
+      "emptyDescription": "Egyéni domainek alkalmazás telepítésekor adhatók hozzá. Itt csak ezek jelennek meg; a platformdomaineket automatikusan kezeljük.",
+      "goToAppStore": "Ugrás az App Store-ba",
+      "dnsVerified": "A DNS helyesen mutat.",
+      "dnsNotVerified": "A DNS nem a megfelelő IP-re mutat.",
+      "expectedIp": "Várt: {ip}",
+      "cancel": "Mégse",
+      "searchPlaceholder": "Domainek keresése..."
+    }
+  },
+  "account": {
+    "title": "Fiók",
+    "profile": {
+      "title": "Profil",
+      "description": "Kezeld a megjelenített nevedet, emailedet, avatarodat, jelszavadat és fiókbiztonsági beállításaidat.",
+      "email": "Email",
+      "alias": "Megjelenített név",
+      "aliasPlaceholder": "Add meg a megjelenített nevet",
+      "save": "Módosítások mentése",
+      "memberSince": "Tagság kezdete",
+      "twoFactorStatus": "Kétfaktoros hitelesítés",
+      "twoFactorEnabled": "Engedélyezve",
+      "twoFactorDisabled": "Nincs engedélyezve",
+      "enable2FA": "2FA bekapcsolása",
+      "manage2FA": "2FA kezelése"
+    },
+    "password": {
+      "title": "Jelszó módosítása",
+      "current": "Jelenlegi jelszó",
+      "new": "Új jelszó",
+      "confirm": "Új jelszó megerősítése",
+      "change": "Jelszó módosítása",
+      "success": "A jelszó sikeresen módosítva",
+      "successSigningOut": "A jelszó módosítva. Kijelentkeztetünk minden munkamenetből…",
+      "sessionWarning": "A jelszó módosítása azonnal kijelentkeztet minden aktív munkamenetből minden eszközön.",
+      "mismatch": "A jelszavak nem egyeznek",
+      "minLength": "A jelszónak legalább 8 karakterből kell állnia"
+    },
+    "abuse": {
+      "title": "Visszaélési bejelentések",
+      "headerDescription": "Tekintsd át a fiókodhoz kapcsolódó visszaélési bejelentéseket és azok aktuális állapotát.",
+      "id": "ID",
+      "subject": "Tárgy",
+      "searchPlaceholder": "Bejelentések keresése...",
+      "status": "Állapot",
+      "date": "Dátum",
+      "description": "Leírás",
+      "complainant": "Bejelentő",
+      "adminResponse": "Admin válasza",
+      "noReports": "Nem találhatók visszaélési bejelentések.",
+      "statusOpen": "Nyitott",
+      "statusResolved": "Megoldva",
+      "statusClosed": "Lezárva",
+      "backToList": "Vissza a visszaélési bejelentésekhez",
+      "detailDescription": "Kövesd a bejelentés idővonalát, a bejelentő adatait és az Appbox csapat esetleges válaszait.",
+      "reportDetails": "Bejelentés részletei",
+      "conversation": "Beszélgetés"
+    },
+    "twoFactor": {
+      "title": "Kétfaktoros hitelesítés",
+      "description": "Védd a fiókodat hitelesítőalkalmazásos ellenőrzéssel és helyreállító biztonsági kódokkal.",
+      "setup": "2FA beállítása",
+      "scanQR": "Olvasd be ezt a QR-kódot a hitelesítő alkalmazásoddal",
+      "secretKey": "Vagy add meg kézzel ezt a titkos kulcsot:",
+      "enterCode": "Add meg a hitelesítő alkalmazásod 6 jegyű kódját",
+      "codePlaceholder": "000000",
+      "verify": "Ellenőrzés",
+      "backupCodes": "Biztonsági kódok",
+      "backupCodesDescription": "Mentsd el ezeket a biztonsági kódokat biztonságos helyre. Minden kód csak egyszer használható.",
+      "newRecoveryCodes": "Új helyreállítási kódok",
+      "newRecoveryCodesDescription": "Mentsd el most ezeket a cserekódokat. A korábbi helyreállítási kódjaid többé nem működnek.",
+      "copyAll": "Összes másolása",
+      "copied": "Másolva!",
+      "done": "Kész",
+      "disable": "2FA kikapcsolása",
+      "disableWarning": "A 2FA kikapcsolása kevésbé biztonságossá teszi a fiókodat.",
+      "disableConfirm": "Add meg a jelszavad a 2FA kikapcsolásához",
+      "disabled": "A 2FA ki lett kapcsolva",
+      "generating": "Generálás...",
+      "verifying": "Ellenőrzés...",
+      "next": "Következő",
+      "back": "Vissza"
+    },
+    "apiKeys": {
+      "title": "API kulcsok",
+      "description": "Hozz létre és kezelj fiókszintű API kulcsokat. Az API kulcsok a felhasználódként hitelesítenek, és ugyanazokkal a hozzáférésekkel rendelkeznek, mint a fiókod.",
+      "create": "API kulcs létrehozása",
+      "createTitle": "API kulcs létrehozása",
+      "createDescription": "Adj ennek a kulcsnak felismerhető nevet. A titok csak egyszer lesz megjelenítve.",
+      "name": "Név",
+      "namePlaceholder": "Automatizálási script",
+      "expiresAt": "Lejárat",
+      "optional": "Opcionális",
+      "never": "Soha",
+      "created": "Létrehozva",
+      "lastUsed": "Utoljára használva",
+      "status": "Állapot",
+      "active": "Aktív",
+      "revoked": "Visszavonva",
+      "expired": "Lejárt",
+      "prefix": "Előtag",
+      "actions": "Műveletek",
+      "rename": "Átnevezés",
+      "revoke": "Visszavonás",
+      "revokeTitle": "API kulcs visszavonása",
+      "revokeDescription": "Ez azonnal letiltja az API kulcsot. Az azt használó kérések nem fognak működni.",
+      "secretTitle": "Mentsd el az API kulcsodat",
+      "secretDescription": "Másold ki most ezt a kulcsot. Később nem fogod tudni újra megtekinteni.",
+      "copy": "Másolás",
+      "copied": "Másolva!",
+      "close": "Bezárás",
+      "cancel": "Mégse",
+      "save": "Mentés",
+      "confirmRevoke": "Kulcs visszavonása",
+      "noKeys": "Még nincsenek API kulcsok.",
+      "loadFailed": "Nem sikerült betölteni az API kulcsokat.",
+      "createSuccess": "API kulcs létrehozva.",
+      "createFailed": "Nem sikerült létrehozni az API kulcsot.",
+      "updateSuccess": "API kulcs frissítve.",
+      "updateFailed": "Nem sikerült frissíteni az API kulcsot.",
+      "revokeSuccess": "API kulcs visszavonva.",
+      "revokeFailed": "Nem sikerült visszavonni az API kulcsot."
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "épp most",
+      "minutesAgo": "{count}p ezelőtt",
+      "hoursAgo": "{count}ó ezelőtt",
+      "daysAgo": "{count}n ezelőtt"
+    },
+    "errors": {
+      "loadFailed": "Nem sikerült betölteni az adatokat. Próbáld újra.",
+      "loadServicesFailed": "Nem sikerült betölteni a szolgáltatásokat. Próbáld újra.",
+      "loadAppsFailed": "Nem sikerült betölteni az alkalmazásokat.",
+      "loadNotificationsFailed": "Nem sikerült betölteni az értesítéseket.",
+      "loadBlogFailed": "Nem sikerült betölteni a blogbejegyzéseket.",
+      "loadAppboxesFailed": "Nem sikerült betölteni az appboxokat. Próbáld újra.",
+      "loadProfileFailed": "Nem sikerült betölteni a profilt. Próbáld újra."
+    },
+    "empty": {
+      "noServices": "Nem találhatók szolgáltatások. Látogasd meg a számlázási portált a kezdéshez.",
+      "noApps": "Nincsenek új alkalmazások.",
+      "noRecentlyUpdated": "Nincsenek nemrég frissített alkalmazások.",
+      "noBlogPosts": "Nincsenek elérhető blogbejegyzések.",
+      "noAppboxes": "Látogasd meg a számlázási portált a kezdéshez.",
+      "noMatchingAppboxes": "Egyetlen appbox sem felel meg a szűrőidnek."
+    },
+    "toast": {
+      "displayNameUpdated": "Megjelenített név frissítve",
+      "displayNameFailed": "Nem sikerült frissíteni a megjelenített nevet"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "restarting": "Újraindítás",
+      "migrating": "Migrálás",
+      "installing": "Telepítés",
+      "suspended": "Felfüggesztve",
+      "frozen": "Fagyasztva",
+      "throttled": "Korlátozva",
+      "lowQuota": "Kevés tárhely"
+    }
+  }
+}

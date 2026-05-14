@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: Pelajari cara menggunakan frontmatter dalam file MDX.
+sort: 3
+---
+
+Frontmatter adalah bagian penting dari file MDX.
+Bagian ini digunakan untuk mendefinisikan informasi tentang isi file,
+seperti judul, deskripsi, penulis, tanggal publikasi, dan sebagainya.
+
+Header metadata didefinisikan di awal file, di antara `---` (tiga tanda hubung) pada awal dan akhir.
+
+## Format
+
+Header metadata didefinisikan dalam format key-value, dengan key sebagai nama metadata dan value sebagai isi metadata.
+
+**Contoh:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+Tergantung jenis dokumen (dokumentasi, posting blog, dan sebagainya), metadata yang digunakan dapat berbeda.
+
+## Metadata untuk dokumentasi
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Contoh:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Metadata untuk posting blog
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Ini adalah identifier penulis posting.
+    Nilainya harus cocok dengan `id` penulis yang didefinisikan di file `src/config/blog.ts`,
+    yaitu file yang memuat data lengkap para penulis.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Ini adalah gambar yang akan digunakan sebagai gambar unggulan posting saat dibagikan di media sosial jika Anda tidak ingin menggunakan gambar yang dibuat otomatis.
+    Gambar harus disimpan di folder `public/blog-og`.
+    Gunakan hanya nama file gambar dan ekstensinya.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Contoh:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

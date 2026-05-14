@@ -1,0 +1,108 @@
+---
+title: "Launch Week Day 3 - Virtual Private Servers"
+date: 2026-03-11 10:00:00
+excerpt: "Day 3 του Launch Week. Πλήρεις KVM virtual private servers είναι πλέον διαθέσιμοι στο Appbox. Επιλέξτε Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux ή AlmaLinux και αποκτήστε root access σε πραγματική VM."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Day 3: Virtual Private Servers
+
+Day 3. Αυτό είναι το μεγάλο.
+
+Από την αρχή, το Appbox είχε στόχο να κάνει τις self-hosted εφαρμογές εύκολες. Εγκαταστήστε μια εφαρμογή, πάρτε ένα URL, τελειώσατε. Αυτό το μοντέλο λειτουργεί απίστευτα καλά για τα περισσότερα πράγματα. Αλλά πάντα υπήρχε μια κατηγορία χρήσεων όπου χρειάζεστε απλώς ένα πλήρες μηχάνημα. Τον δικό σας kernel, το δικό σας init system, τους δικούς σας κανόνες.
+
+Σήμερα λανσάρουμε **Virtual Private Servers** στο Appbox.
+
+## Πραγματικές VMs, όχι containers
+
+Ας είμαστε ξεκάθαροι για το τι είναι αυτό. Πρόκειται για πλήρεις KVM virtual machines που εκτελούνται σε dedicated hardware με δικό τους kernel, δικό τους systemd και πλήρες root access. Δεν είναι ένα Docker container που παριστάνει το OS. Είναι το πραγματικό.
+
+Αυτή η διάκριση έχει σημασία επειδή ξεκλειδώνει όλα όσα δεν μπορούν να κάνουν τα containers:
+
+- **Docker μέσα στο VPS σας** - εκτελέστε `docker compose up` όπως θα κάνατε σε οποιονδήποτε server
+- **Snaps και Flatpaks** - εγκαταστήστε desktop software όπως προορίζεται να εγκαθίσταται
+- **Systemd services** - πλήρης διαχείριση services, timers, journal, τα πάντα
+- **Custom kernels και modules** - έχετε root, κάντε ό,τι θέλετε
+- **Nested virtualization** - αν τη χρειάζεστε, υπάρχει
+
+Αν έχετε ποτέ φτάσει σε αδιέξοδο με τα Docker-based OSes ή webtops μας, όπου κάτι απλώς δεν λειτουργούσε λόγω περιορισμών container, αυτό το τείχος έφυγε.
+
+## Διαθέσιμα έξι Linux OSes
+
+Μπορείτε πλέον να επιλέξετε ανάμεσα σε έξι διανομές Linux:
+
+| OS | Περιγραφή |
+|---|---|
+| **Ubuntu VPS** | Πλήρες Ubuntu 24.04 LTS |
+| **Debian VPS** | Πλήρες Debian 12 και 13 |
+| **Arch Linux VPS** | Rolling release, πάντα ενημερωμένο |
+| **Fedora VPS** | Fedora 43 με τα πιο πρόσφατα packages |
+| **Rocky Linux VPS** | Enterprise-grade συμβατότητα RHEL |
+| **AlmaLinux VPS** | RHEL-compatible enterprise Linux με long-term support |
+
+Επιλέξτε αυτό που γνωρίζετε ή αυτό που θέλετε να μάθετε. Όλα έχουν το ίδιο σύνολο λειτουργιών στο Appbox.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="Κατηγορία VPS στο Appbox App Store" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ενσωματωμένη web console
+
+Κάθε VPS συνοδεύεται από browser-based console ενσωματωμένη απευθείας στο Appbox dashboard. Κάντε κλικ στην καρτέλα Console σε οποιοδήποτε VPS και αποκτάτε ζωντανή συνεδρία terminal απευθείας στον browser σας.
+
+Αυτό σημαίνει ότι δεν μπορείτε ποτέ να κλειδωθείτε έξω από τον server σας. Λάθος ρυθμισμένο SSH; Χαλασμένο network config; Δεν έχει σημασία. Η web console συνδέεται απευθείας στο virtual display της VM, πλήρως ανεξάρτητα από το guest network stack. Έχετε πάντα τρόπο να μπείτε.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Web-based VM console στο Appbox dashboard" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop με Selkies
+
+Εδώ γίνεται ενδιαφέρον. Το Ubuntu VPS μας έχει desktop variant powered by **Selkies**, που σας δίνει ένα πλήρες γραφικό Linux desktop προσβάσιμο από τον browser σας με hardware-accelerated streaming, πλήρη έξοδο ήχου και είσοδο μικροφώνου.
+
+Συνεργαστήκαμε απευθείας με την ομάδα του Selkies για να το κάνουμε να τρέχει μέσα σε KVM virtual machines, και έχουμε κάνει open-source την ενσωμάτωση στο [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Τι σημαίνει αυτό στην πράξη; Μπορείτε να τρέχετε ένα πλήρες desktop environment στον browser σας με πραγματικές εφαρμογές. VS Code, Discord, Spotify, Slack - όλα να τρέχουν ταυτόχρονα, όλα με ήχο, όλα προσβάσιμα από οποιαδήποτε συσκευή με web browser.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu desktop μέσω Selkies με VS Code, Spotify και Discord σε λειτουργία" width="860" className="mt-8 mb-10" />
+</p>
+
+Σκεφτείτε το για ένα δευτερόλεπτο. Μπορείτε να έχετε ένα μόνιμο απομακρυσμένο περιβάλλον ανάπτυξης που είναι πάντα ενεργό, να τρέχετε VS Code με Docker containers για τα projects σας, ενώ έχετε ανοιχτό Discord για ομαδική συνομιλία και Spotify να παίζει μουσική. Όλα σε μια καρτέλα browser. Από το laptop σας, το tablet σας ή τον υπολογιστή κάποιου άλλου. Ολόκληρος ο χώρος εργασίας σας είναι μόνο ένα URL μακριά.
+
+## Τα δεδομένα σας σας ακολουθούν
+
+Κάθε VPS έχει αυτόματη πρόσβαση στο Appbox storage σας μέσω του καταλόγου `/APPBOX_DATA/`. Μέσα θα βρείτε:
+
+- **`/APPBOX_DATA/apps/`** - δεδομένα από τις άλλες εγκατεστημένες Appbox εφαρμογές σας
+- **`/APPBOX_DATA/storage/`** - το γενικό Appbox storage σας
+
+Αυτό μοιράζεται με virtiofs, ένα high-performance filesystem passthrough που σας δίνει ταχύτητες πρόσβασης σε αρχεία σχεδόν native. Το VPS σας μπορεί να διαβάζει και να γράφει αρχεία που χρησιμοποιούν και οι άλλες εφαρμογές σας, ώστε, για παράδειγμα, να επεξεργάζεστε media files από τις streaming εφαρμογές σας ή να κάνετε backup βάσεων δεδομένων μέσα από το VPS σας.
+
+## Λειτουργεί με App Boost
+
+Τα VPSes χρησιμοποιούν το ίδιο σύστημα App Boost που λανσάραμε στη Day 2. Θέλετε περισσότερη RAM ή CPU για τη VM σας; Ανεβάστε το επίπεδο boost και αφιερώστε περισσότερα slots του πλάνου σας σε αυτή. Οι πόροι κατανέμονται σε επίπεδο hypervisor, οπότε η VM σας αποκτά πραγματικά περισσότερη υπολογιστική ισχύ, όχι απλώς υψηλότερο cgroup limit.
+
+Αξίζει να σημειωθεί: τα VPSes έχουν ελαφρώς υψηλότερο βασικό κόστος slots από τις Docker-based OS apps. Αυτό αντικατοπτρίζει το γεγονός ότι μια πλήρης virtual machine καταναλώνει περισσότερους πραγματικούς πόρους από ένα container που μοιράζεται τον host kernel. Ο συμβιβασμός είναι απλός: αποκτάτε περισσότερες δυνατότητες και το κόστος slot το αποτυπώνει με ειλικρίνεια.
+
+## Τι έρχεται στη συνέχεια για τα VPS
+
+Λανσάρουμε τα VPSes σήμερα με πλήρη λειτουργικότητα, αλλά υπάρχουν κι άλλα στον roadmap. Γραφήματα χρήσης πόρων για VPS instances θα προστεθούν στο κοντινό μέλλον, ώστε να μπορείτε να παρακολουθείτε CPU, RAM και χρήση δίσκου με την πάροδο του χρόνου απευθείας από το dashboard, όπως μπορείτε και με άλλες εφαρμογές.
+
+## Γιατί έχει σημασία
+
+Τα Docker-based OSes και webtops στο Appbox έχουν εξυπηρετήσει πολλούς ανθρώπους καλά και δεν φεύγουν. Αλλά υπάρχουν πραγματικοί περιορισμοί στο να τρέχεις μέσα σε container. Δεν μπορείτε να τρέξετε Docker. Δεν μπορείτε να χρησιμοποιήσετε snaps. Δεν μπορείτε να φορτώσετε kernel modules. Δεν μπορείτε να τρέξετε πλήρες init system. Πάντα λειτουργείτε μέσα στους περιορισμούς του namespace κάποιου άλλου.
+
+Τα VPSes αφαιρούν πλήρως αυτούς τους περιορισμούς. Παίρνετε ένα πραγματικό μηχάνημα. Αν μπορείτε να το κάνετε σε server που νοικιάσατε από οποιονδήποτε άλλο provider, μπορείτε να το κάνετε εδώ - με τη διαφορά ότι τα δεδομένα σας είναι ήδη mounted, η web console σας είναι ήδη εκεί και οι πόροι σας κλιμακώνονται με ένα slider.
+
+## Η Day 3 είναι live τώρα
+
+Τα VPSes είναι διαθέσιμα στο App Store αυτή τη στιγμή. Μεταβείτε στην κατηγορία VPS, επιλέξτε το OS σας και εγκαταστήστε. Η προετοιμασία μιας πλήρους VM παίρνει λίγο περισσότερο χρόνο από μια container app, οπότε αναμένετε έως 15 λεπτά μέχρι να είναι έτοιμο το VPS σας.
+
+Αύριο είναι η Day 4. Δεν επιβραδύνουμε.
+
+---
+
+*Έχετε σχόλια ή βρήκατε κάποιο πρόβλημα; Επικοινωνήστε στο support@appbox.co ή ανοίξτε ticket στο [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

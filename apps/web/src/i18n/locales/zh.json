@@ -1,0 +1,1493 @@
+{
+  "_locale": "zh",
+  "site": {
+    "heading": "几秒钟内部署<span>应用</span>",
+    "subheading": "一键托管 {flipwords}",
+    "description": "跳过复杂的服务器配置。从 60 多个可直接部署的应用中选择，点击安装，几秒钟即可上线。强大的托管体验，没有繁琐步骤。",
+    "meta_title": "Appbox - 几秒钟内部署应用 | 一键应用托管",
+    "flipwords": [
+      "网站",
+      "数据库",
+      "服务器",
+      "传输任务",
+      "工具",
+      "聊天",
+      "存储",
+      "分析",
+      "监控",
+      "流水线",
+      "网络",
+      "备份",
+      "项目",
+      "文档",
+      "测试"
+    ],
+    "announcement": "阅读所有 Launch Week 文章",
+    "announcement_tag": "Launch Week",
+    "changelog": "更新日志",
+    "buttons": {
+      "get_started": "开始使用",
+      "browse_apps": "浏览应用",
+      "toggle_menu": "切换菜单",
+      "toggle_language": "切换语言"
+    },
+    "words": {
+      "menu": "菜单",
+      "docs": "文档",
+      "blog": "博客",
+      "home": "首页",
+      "legal": "法律信息",
+      "terms_of_service": "服务条款",
+      "service_level_agreement": "服务级别协议",
+      "privacy_data_handling": "隐私与数据处理",
+      "global_privacy_practices": "全球隐私实践",
+      "incident_response_security": "事件响应与安全",
+      "view_all_policies": "查看所有政策",
+      "documentation_new": "文档（新版）",
+      "documentation_old": "文档（旧版）",
+      "social": "社交"
+    },
+    "featured_cards": {
+      "nextjs": {
+        "description": "使用 Next.js 和 app router 构建。"
+      },
+      "shadcn": {
+        "description": "基于 Shadcn（site/components）构建。"
+      },
+      "tailwind": {
+        "description": "使用 Tailwind CSS 进行样式设计。"
+      },
+      "i18n": {
+        "description": "通过 next-intl 提供国际化支持。"
+      },
+      "more": {
+        "title": "还有更多！",
+        "description": "还有许多可用功能，例如使用 MDX 的文档和博客文章、深色与浅色模式、搜索命令面板、国际化站点地图等等……"
+      }
+    },
+    "footer": {
+      "copyright": "Copyright © {year} Appbox. 保留所有权利。"
+    },
+    "search": {
+      "search": "搜索",
+      "no_results_found": "未找到结果",
+      "search_documentation": "搜索文档",
+      "type_command_or_search": "输入命令或搜索内容"
+    },
+    "themes": {
+      "theme": "主题",
+      "dark": "深色",
+      "light": "浅色",
+      "system": "跟随系统"
+    },
+    "apps_section": {
+      "title": "海量可直接部署的应用集合",
+      "headline_1": "可直接部署的应用。",
+      "headline_2": "海量集合。",
+      "description": "从数据库和媒体服务器，到开发工具和通信平台，几乎都能托管。只需几次点击，就能部署企业级软件。"
+    },
+    "dashboard_promo": {
+      "headline_1": "全新 Dashboard。",
+      "headline_2": "为你而建。",
+      "description": "完全重新设计的控制面板，包含统一 Dashboard、集成 App Store 和内置双因素认证。导航更快、理解更轻松，也为未来的新功能做好准备。",
+      "cta": "阅读完整公告",
+      "features": {
+        "dashboard": {
+          "title": "控制中心。",
+          "description": "博客更新、服务卡片、通知和最新应用，全都集中在一个运维视图中。"
+        },
+        "appstore": {
+          "title": "App Store。",
+          "description": "更清晰的浏览体验、更好的详情页，以及从发现到安装更短的路径。"
+        },
+        "boost": {
+          "title": "App Boost。",
+          "description": "使用可用 slot 为单个应用分配更多 CPU 和 RAM。无需升级套餐。"
+        }
+      }
+    },
+    "vps_launch_promo": {
+      "headline_1": "Virtual Private Servers。",
+      "headline_2": "Linux 与 Windows。",
+      "description": "完整 KVM 虚拟机，提供 root 访问、内置网页控制台，并可选择 Linux 或 Windows 11 Pro。运行 Docker、snaps、flatpaks，或任何你需要的 Windows 软件。",
+      "cta": "阅读 Launch Week 文章",
+      "features": {
+        "console": {
+          "title": "Web Console。",
+          "description": "内置在 Dashboard 中的浏览器终端。你永远不会被锁在外面。"
+        },
+        "webtop": {
+          "title": "Selkies Desktop。",
+          "description": "浏览器中的完整 Ubuntu 桌面，支持音频、麦克风，以及 VS Code、Discord 等真实应用。"
+        },
+        "distros": {
+          "title": "六种 Linux 发行版。",
+          "description": "Ubuntu、Debian、Arch Linux、Fedora、Rocky Linux 和 AlmaLinux。选择你熟悉的即可。"
+        },
+        "windows": {
+          "title": "Windows 11 Pro。",
+          "description": "完整 Windows VM，提供 RDP、Z: 盘中的 Appbox 数据和管理员访问权限。"
+        }
+      }
+    },
+    "openclaw_promo": {
+      "eyebrow": "现已登陆 Appbox",
+      "headline_1": "你的 AI 助手。",
+      "headline_2": "运行在你的服务器上。",
+      "description": "OpenClaw 是一个开源 AI 助手，可在你的 Appbox 上运行，并适用于所有套餐。它能通过你已经在用的聊天应用交流，查看你的文件和数据库，也能登录你的其他应用来完成任务。",
+      "card_title": "OpenClaw 可贯穿你的整个 Appbox 工作。",
+      "card_description": "它能读取共享应用数据，使用浏览器和 CLI，查询数据库，并通过你已在使用的聊天应用回应。",
+      "image_alt": "Web Dashboard 中的 OpenClaw 聊天会话",
+      "cta": "阅读公告",
+      "capabilities": {
+        "chat": {
+          "title": "任何聊天应用。",
+          "description": "WhatsApp、Telegram、Discord、Slack、Signal、iMessage。在哪里聊天，就在哪里使用它。"
+        },
+        "filesystem": {
+          "title": "共享文件系统。",
+          "description": "直接访问其他应用的数据和你的通用 Appbox 存储。无需 API。"
+        },
+        "browser": {
+          "title": "浏览器与 CLI。",
+          "description": "内置无头浏览器和常用数据库客户端。它可以替你登录应用。"
+        },
+        "tools": {
+          "title": "70+ 技能。",
+          "description": "预装 70 多项技能，覆盖 WordPress、GitLab、Nextcloud、MariaDB 等。也可以从 ClawHub 安装新技能。"
+        }
+      }
+    },
+    "simple_install_promo": {
+      "headline_1": "简单到只需点击。",
+      "headline_2": "零配置。",
+      "description": "Appbox 将复杂的开源应用安装流程压缩到最关键的步骤：输入用户名和密码，点击安装，应用就会为你配置好。",
+      "preview_app_name": "Nextcloud"
+    },
+    "install_preview": {
+      "headline": "几秒钟内安装",
+      "description": "选择你的 Appbox，填写几个字段，{appName} 就会上线。",
+      "dialog_title": "安装 {appName}",
+      "requires_slots": "{count, plural, one {需要 # 个 App Slot} other {需要 # 个 App Slots}}",
+      "preview_badge": "预览",
+      "demo_note": "这个演示展示的是你拥有 Appbox 后安装器的样子。",
+      "select_appbox": "选择 Appbox",
+      "slots_free": "（可用 {count} 个 slot）",
+      "ready_note": "准备安装了吗？你需要先有一个有效的 Appbox。",
+      "cancel": "取消",
+      "install": "安装",
+      "footer_note": "这是安装表单预览。选择套餐以创建你的 Appbox，并进行真实部署。",
+      "domain": {
+        "recordType": "类型",
+        "recordHost": "主机 / 名称",
+        "recordValue": "值（IP）",
+        "needHelp": "需要添加这条记录的帮助吗？"
+      },
+      "annotations": {
+        "select_appbox": {
+          "eyebrow": "第 1 步",
+          "title": "选择你的 Appbox",
+          "body": "如果你只有一个 Appbox，安装器会自动选择它，并且只显示有足够可用 slot 的 Appbox。"
+        },
+        "boost": {
+          "eyebrow": "Boost",
+          "title": "拖动以获得更多性能",
+          "body": "每增加一个 App Slot，都会为此应用增加 10% CPU 和 RAM，预览会立即更新。",
+          "link": "了解按应用 Boost 的工作方式"
+        },
+        "resource_preview": {
+          "eyebrow": "预览",
+          "title": "实时检查资源",
+          "body": "安装前查看最终倍数、slot 成本、RAM 和 CPU。每个新增 Boost slot 都会让资源增加 10%。"
+        },
+        "domains": {
+          "appbox": {
+            "eyebrow": "域名",
+            "title": "托管域名或自定义域名",
+            "body": "立即使用 Appbox 托管域名，或点击 Custom Domain 使用你自己的域名。"
+          },
+          "custom": {
+            "eyebrow": "自定义 DNS",
+            "title": "使用你自己的域名",
+            "body": "Custom Domain 会在安装前显示基础域名选择器、固定子域名和 DNS 检查清单。"
+          }
+        },
+        "dns": {
+          "eyebrow": "DNS",
+          "title": "内置指引",
+          "body": "预览会在安装前显示准确的 A 记录和验证状态。"
+        },
+        "configuration": {
+          "eyebrow": "没有意外",
+          "title": "配置 upfront 展示",
+          "body": "我们将必填字段压缩到创建完整可用应用所需的最低限度，因此你无需担心后续配置。"
+        }
+      }
+    },
+    "sovereign_cloud": {
+      "headline_1": "Sovereign Cloud",
+      "headline_2": "你的云，由你掌控。",
+      "description": "Appbox 建立在我们自己掌控的硬件和网络基础设施之上，让你享受云应用的便利，而不必把平台交给别人的云。",
+      "eyebrow": "自有基础设施",
+      "card_title": "真实服务器。真实网络。真实责任。",
+      "card_description": "我们更愿意直接掌控关键部分：计算、存储、路由、容量和物理位置。这让我们能把 Appbox 做成真正的产品，而不是套在其他供应商之上的薄薄一层。",
+      "images": {
+        "rack_front": "安装了硬件的 Appbox 服务器机架",
+        "rack_network": "带有网络布线的 Appbox 服务器机架",
+        "network_closeup": "Appbox 自有网络设备特写"
+      },
+      "benefits": {
+        "no_rented_black_box": {
+          "title": "不是租来的黑盒",
+          "description": "你的应用运行在我们拥有并运营的服务器上，因此性能和维护不会隐藏在超大规模云的抽象层之后。"
+        },
+        "network_control": {
+          "title": "网络控制权",
+          "description": "拥有路由栈让我们能围绕 Appbox 工作负载调整路径、容量、对等互联和故障响应，而不是接受通用云默认值。"
+        },
+        "custom_ocp_hardware": {
+          "title": "定制 OCP 硬件",
+          "description": "我们的定制 Open Compute Project 硬件面向高效气流、高密度和快速维护而设计，因此能在不浪费电力和空间的情况下扩展容量。"
+        },
+        "clear_data_locality": {
+          "title": "清晰的数据所在地",
+          "description": "基础设施位于阿姆斯特丹 Digital Realty AMS3 的专用机架中，让你清楚知道数据托管在哪里。"
+        },
+        "better_cost_discipline": {
+          "title": "更好的成本纪律",
+          "description": "拥有平台可避免按请求计费的云陷阱，例如意外出站流量、IOPS 或带宽倍数，从而让套餐保持简单。"
+        },
+        "built_for_appbox": {
+          "title": "为 Appbox 而建",
+          "description": "因为硬件和网络都属于我们，所以我们可以从底层围绕 App Slots、Boost、存储、备份和一键应用安装来设计。"
+        }
+      }
+    },
+    "vps_promo": {
+      "badge": "新品",
+      "headline_1": "VPS 托管。",
+      "headline_2": "一键完成。",
+      "description": "在应用旁边部署完整 Linux VPS。Root 访问、专用资源和 Boost 能力，全程无需离开 Appbox。",
+      "description_combined": "在应用旁边部署 Linux 和 Windows virtual private servers。Root 访问、远程桌面、专用资源，全程无需离开 Appbox。",
+      "group_label": "Linux VPS",
+      "cta": "浏览 VPS",
+      "features": {
+        "f1": {
+          "title": "完整 Root 访问",
+          "description": "通过 SSH 完全掌控"
+        },
+        "f2": {
+          "title": "可扩展资源",
+          "description": "按应用 Boost RAM 与 CPU"
+        },
+        "f3": {
+          "title": "一键部署",
+          "description": "Ubuntu、Debian 等"
+        }
+      }
+    },
+    "windows_vps_promo": {
+      "badge": "新品",
+      "headline_1": "Windows VPS。",
+      "headline_2": "随处可用。",
+      "group_label": "Windows VPS",
+      "description": "在你的 Appbox 上运行 Windows Server，并获得完整 Remote Desktop 访问。非常适合仅支持 Windows 的软件、游戏服务器和远程工作站。",
+      "cta": "浏览 Windows 应用",
+      "features": {
+        "f1": {
+          "title": "Remote Desktop",
+          "description": "从任何浏览器使用完整 GUI"
+        },
+        "f2": {
+          "title": "Windows Server",
+          "description": "运行任何 Windows 应用程序"
+        },
+        "f3": {
+          "title": "资源 Boost",
+          "description": "按需分配更多性能"
+        }
+      }
+    },
+    "features": {
+      "section": {
+        "title": "适合所有人的强大功能",
+        "headline_1": "强大功能。",
+        "headline_2": "人人可用。",
+        "description": "通过专为新手和专家设计的功能，充分释放你的 Appbox 能力。"
+      },
+      "root_access": {
+        "title": "完整 Root 访问",
+        "description": "部署 Debian、Ubuntu 等完整 OS 应用，并通过 SSH 访问，完全掌控你的环境。"
+      },
+      "remote_desktop": {
+        "title": "Remote Desktop",
+        "description": "在我们的服务器上运行 UI 应用，并通过 OS 应用获得完整远程桌面访问，把桌面体验带到云端。"
+      },
+      "one_click": {
+        "title": "真正的一键安装",
+        "description": "通过精简的安装表单在安装过程中完成所有配置，部署后无需额外设置。"
+      },
+      "community": {
+        "title": "活跃社区",
+        "description": "加入我们不断发展的生态系统，包括社区应用提交、文档贡献和开源 Web 客户端。"
+      },
+      "security": {
+        "title": "安全与隐私",
+        "description": "Appbox 非常重视安全和隐私。所有应用都在独立命名空间中运行且没有 root 访问权限，从而实现应用之间的完整隔离。我们的基础设施采用安全优先的设计，从加固内核到定期安全审计皆如此。为了增强隐私，我们的 VPN 应用可让你将所有流量通过 Appbox 路由，确保你的在线活动保持私密且安全。使用 Appbox，你能在易用的产品中获得企业级安全功能。"
+      },
+      "deploy_fast": {
+        "title": "几秒钟内部署",
+        "description": "凭借我们速度极快、先进的硬件，你不必苦等应用安装。"
+      },
+      "custom_hardware": {
+        "title": "定制硬件",
+        "description": "我们与行业专家合作打造自己的硬件基础设施，确保隐私、安全和最佳性能。"
+      },
+      "custom_network": {
+        "title": "定制网络",
+        "description": "我们拥有全部网络设备，因此可以灵活选择对等互联网络，让你的连接速度更快。"
+      },
+      "support": {
+        "title": "专家支持",
+        "description": "我们通过工单提供支持，且只由行业领先专家回复。"
+      },
+      "documentation": {
+        "title": "精美文档",
+        "description": "我们的开源文档系统允许用户贡献内容，形成不断增长、内容丰富且有价值的资源。"
+      }
+    },
+    "faq": {
+      "section": {
+        "title": "常见问题",
+        "description": "查找最常见问题的答案，并了解 Appbox 如何帮助你。"
+      },
+      "questions": {
+        "payment_methods": {
+          "title": "你们接受哪些付款方式？",
+          "content": "<p class=\"mb-4 leading-relaxed\">我们提供多种付款方式，让购买尽可能顺畅：</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>PayPal</li><li class=\"list-inside\">Debit/Credit Cards<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Discover</li><li>Maestro (Including Switch)</li><li>MasterCard</li><li>Visa</li><li>Visa Debit</li><li>Visa Electron</li></ul></li><li class=\"list-inside\">Cryptocurrencies<ul class=\"list-disc ml-6 pl-4 space-y-1\"><li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li><li>Dogecoin (DOGE)</li><li>Litecoin (LTC)</li><li>Bitcoin Cash (BCH)</li><li>Binance Coin (BNB)</li><li>USD Coin (USDC)</li><li>Shiba Inu (SHIB)</li><li>Polygon (MATIC)</li><li>Solana (SOL)</li><li>TRON (TRX)</li><li>Ripple (XRP)</li><li>DAI</li></ul></li></ul><p class=\"mb-4 leading-relaxed\">我们还提供灵活的计费周期：月付、季付、半年付或年付。如果你想看到更多选项，请告诉我们。</p>"
+        },
+        "deployment_time": {
+          "title": "我多久可以拿到 Appbox？",
+          "content": "<p class=\"mb-4 leading-relaxed\">付款确认后，我们的自动化系统会立即部署你的 Appbox。你在结账时选择的任何应用也会即时设置好，因此可以马上开始使用。</p>"
+        },
+        "server_location": {
+          "title": "你们的服务器位于哪里？",
+          "content": "<p class=\"mb-4 leading-relaxed\">我们的服务器位于荷兰阿姆斯特丹 Digital Realty AMS3 的专用机架中，确保顶级性能和可靠性。</p>"
+        },
+        "root_access": {
+          "title": "你们提供 root 访问吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">是的。VPS 应用在 Ubuntu、Debian、Arch Linux、Fedora、Rocky Linux 和 AlmaLinux 上提供完整 root 访问。Windows 11 Pro VPS 应用提供完整 Remote Desktop 和管理员访问。</p><p class=\"mb-4 leading-relaxed\">由于这些是完整 KVM 虚拟机，你可以安装自定义软件、管理服务、使用 Docker、snaps、Flatpaks、内核模块，并在 Appbox 应用旁边运行自己的技术栈。</p>"
+        },
+        "docker": {
+          "title": "我可以使用 Docker 吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">可以。Docker 可在 VPS 应用中使用，你将获得拥有 root 访问权限并可控制操作系统的完整虚拟机。</p><p class=\"mb-4 leading-relaxed\">Docker 不能在托管的一键应用内部使用，因为这些应用已经由 Appbox 容器化并隔离。如果你需要 Docker，请安装 Linux VPS 应用并在那里运行。</p>"
+        },
+        "security": {
+          "title": "你们提供哪些安全功能？",
+          "content": "<p class=\"mb-4 leading-relaxed\">我们非常重视安全，并通过多层保护来保障你的数据：</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>每个 Appbox 都在自己的沙箱中运行，以隔离你的数据</li><li>所有连接都使用 HTTPS，对传输中的数据加密</li><li>无限 VPN 账号（适用于符合条件的套餐）可让你通过 Appbox 路由流量</li><li>每日删除日志（FTP、SSH、HTTP、VPN 等），进一步保护隐私</li></ul>"
+        },
+        "data_access": {
+          "title": "如何从电脑访问我的 Appbox 数据？",
+          "content": "<p class=\"mb-4 leading-relaxed\">我们提供多种便捷方式来管理你的 Appbox 文件和媒体：</p><ul class=\"list-disc ml-8 pl-4 mb-4 space-y-2\"><li>使用 Resilio 或 Syncthing 等同步应用自动保持文件更新。</li><li>通过 Plex、Navidrome 或类似应用从任何地方流式播放媒体。</li><li>使用 FTP over TLS、HTTPS 或其他协议安全下载文件。</li></ul><p class=\"mb-4 leading-relaxed\">App Store 包含多种应用，可帮助你以最适合自己的方式连接数据。</p>"
+        },
+        "additional_software": {
+          "title": "我能安装 App Store 中没有的软件吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">当然。我们的 VPS 应用让你可以凭借 root 访问安装自定义软件，Windows VPS 应用还包含完整 Remote Desktop 体验。这让你可以自由运行所需工具和应用程序。</p>"
+        },
+        "fuse_rclone": {
+          "title": "你们允许 FuSE 挂载或 Rclone 吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">是的，允许。我们的 OS 应用完全支持 FuSE，并且 App Store 中提供专用 Rclone 应用，可快速轻松地集成云存储。</p>"
+        },
+        "refund_policy": {
+          "title": "你们的退款政策是什么？",
+          "content": "<p class=\"mb-4 leading-relaxed\">我们为新客户提供 7 天按比例退款窗口。现有客户适用不同的退款资格标准。使用 cryptocurrencies 支付、购买 dedicated IP addresses 以及某些其他交易不可退款。<a href=\"/policies/refund-policy\" class=\"text-primary underline hover:text-primary/90\">查看完整退款政策</a>了解全部细节。</p>"
+        },
+        "custom_domain": {
+          "title": "我可以使用自己的域名吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">可以。你可以映射自己的域名，并为每个应用设置子域名。只需在 DNS 中添加一条指向你 Appbox 的 A 记录，剩下的我们会处理，让你顺利上线。</p><p class=\"mb-4 leading-relaxed\">VPS 应用也支持多个自定义域名和 Appbox 子域名，并提供自动 SSL，因此你可以从同一 VPS 托管多个网站或服务。</p>"
+        },
+        "upgrade_after_purchase": {
+          "title": "购买后可以升级吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">可以，我们会自动将旧套餐中的所有内容转移到新套餐。</p><p class=\"mb-4 leading-relaxed\">一切都会保持相同，你甚至不会注意到变化。唯一可能变化的是特定端口号，例如你直接通过端口号访问某个应用（如 FTP）时。</p>"
+        },
+        "app_slots": {
+          "title": "什么是 App Slots？",
+          "content": "<p class=\"mb-4 leading-relaxed\">App Slots 是你的 Appbox 用于安装应用的容量单位。每个应用会根据资源需求使用一个或多个 App Slots，较重的版本可能需要更多 slots。</p><p class=\"mb-4 leading-relaxed\"><a href=\"/apps\" class=\"text-primary underline hover:text-primary/90\">Apps 页面</a>会显示每个应用使用多少 App Slots。在应用详情页中，滚动到底部附近的资源部分即可查看分配给各版本的 RAM 和 CPU。</p><p class=\"mb-4 leading-relaxed\">你也可以把空闲 App Slots 用于 Per-App Boost，在不升级整个套餐的情况下为已安装应用提供更多 CPU 和 RAM。</p>"
+        },
+        "resource_multipliers": {
+          "title": "按应用 Boost 如何工作？",
+          "content": "<p class=\"mb-4 leading-relaxed\">每个应用都会从由其版本决定的基础 RAM 和 CPU 资源开始。Per-App Boost 允许你通过消耗额外 App Slots 来增加单个应用的资源。</p><p class=\"mb-4 leading-relaxed\">每个 Boost slot 会为应用增加 +10% 资源。你可以决定哪些应用获得更多性能，并可随时调整 Boost。</p><p class=\"mb-4 leading-relaxed\">Per-App Boost 包含在所有套餐中。你可以在安装应用时配置，或在 <a href=\"https://www.appbox.co/appboxmanager/appboxes\" class=\"text-primary underline hover:text-primary/90\">Appbox Manager</a> 的已安装应用页面中配置。</p>"
+        },
+        "app_freeze": {
+          "title": "可以暂停应用且不丢失数据吗？",
+          "content": "<p class=\"mb-4 leading-relaxed\">可以。App Freeze 可让你停止已安装应用并回收其 App Slots，同时保留数据和配置。</p><p class=\"mb-4 leading-relaxed\">解冻应用时，它会带着相同数据重新启动。你只需要有足够的可用 App Slots 来覆盖该应用及其使用的任何 Boost slots。</p>"
+        },
+        "excluded_app_categories": {
+          "title": "什么是排除的应用类别？",
+          "content": "<p class=\"mb-4 leading-relaxed\">某些套餐会限制不能安装的特定应用类别。这些称为“Excluded App Categories”。</p><p class=\"mb-4 leading-relaxed\">查看价格套餐时，你会在有限制的套餐下看到以可点击徽章形式列出的排除类别。这有助于你了解该套餐无法使用哪些类型的应用。</p><p class=\"mb-4 leading-relaxed\">你可以点击任何排除类别徽章，查看该类别下的所有应用，从而确切知道哪些应用不能安装在该套餐上。</p><p class=\"mb-4 leading-relaxed\">如果你需要访问某个被排除类别中的应用，请考虑选择没有这些限制的更高阶套餐。</p>"
+        },
+        "vps": {
+          "title": "如何获得 VPS？",
+          "content": "<p class=\"mb-4 leading-relaxed\">VPS 应用和其他应用一样，可在 <a href=\"/apps?category=VPS\" class=\"text-primary underline hover:text-primary/90\">App Store</a> 中使用。选择 Linux 或 Windows 发行版，安装到你的 Appbox 上，它就会与你的其他应用并行运行。</p><p class=\"mb-4 leading-relaxed\">你可以使用 Per-App Boost 为 VPS 分配额外资源，通过消耗更多 App Slots 获得更多 RAM 和 CPU。这样无需升级整个套餐，也能让 VPS 资源恰到好处。</p>"
+        }
+      }
+    },
+    "navigation": {
+      "product": "产品",
+      "resources": "资源",
+      "pricing": "价格",
+      "features": "功能",
+      "apps": "应用",
+      "documentation": "文档",
+      "blog": "博客",
+      "faq": "FAQ",
+      "service_status": "服务状态",
+      "overview": "功能概览",
+      "view_pricing": "查看价格套餐",
+      "explore_apps": "探索我们的应用",
+      "read_docs": "阅读文档",
+      "latest_articles": "最新文章和新闻",
+      "faq_description": "常见问题",
+      "check_status": "检查服务状态",
+      "vps": "VPS",
+      "explore_vps": "浏览 VPS 应用"
+    },
+    "external_links": {
+      "billing": "账单",
+      "control_panel": "控制面板"
+    }
+  },
+  "docs": {
+    "on_this_page": "本页内容",
+    "edit_page_on_github": "在 GitHub 上编辑此页",
+    "start_discussion_on_github": "在 GitHub 上发起讨论",
+    "api_reference": "API 参考",
+    "docs": "文档",
+    "source": "来源",
+    "not_found": {
+      "description": "你要查找的文档不存在。",
+      "title": "未找到文档"
+    },
+    "index_description": "查找如何使用 Appbox、参与项目贡献等文档。",
+    "index": {
+      "title": "文档",
+      "section": "章节",
+      "description": "描述",
+      "documents": "文档",
+      "view": "查看"
+    },
+    "meta_description": "通过我们的完整文档学习如何使用 Appbox。查找指南、教程和 API 参考，充分利用你的托管服务。"
+  },
+  "blog": {
+    "words": {
+      "posts": "文章",
+      "by": "作者"
+    },
+    "cards": {
+      "min_read": "分钟阅读"
+    },
+    "buttons": {
+      "next": "下一页",
+      "previous": "上一页",
+      "rss_feed": "RSS Feed",
+      "read_more": "阅读更多",
+      "go_to_next_page": "前往下一页",
+      "go_to_previous_page": "前往上一页"
+    },
+    "meta_description": "阅读 Appbox 团队的最新新闻、更新和教程。及时了解新功能、应用发布和托管技巧。"
+  },
+  "plans": {
+    "billing_cycles": {
+      "monthly": "月付",
+      "quarterly": "季付",
+      "semiannually": "半年付",
+      "annually": "年付",
+      "billed_every": "按 [cycle] 计费"
+    },
+    "card": {
+      "storage": "存储",
+      "traffic": "流量",
+      "app_slots": "App Slots",
+      "connection_speed": "连接速度",
+      "resource_multiplier": "Per-App Boost",
+      "included": "已包含",
+      "raid": "RAID",
+      "disks": "磁盘",
+      "per_month": "/月",
+      "order_now": "立即订购",
+      "billed_as": "计费",
+      "excluded_app_categories": "排除的应用类别",
+      "windows_vps": "Windows VPS",
+      "windows_vps_supported": "支持",
+      "windows_vps_dedicated_only": "仅限 Dedicated 套餐（NG-18000+）"
+    }
+  },
+  "apps": {
+    "title": "应用库",
+    "description": "探索我们海量可直接部署的应用集合",
+    "meta_description": "浏览 60 多个可直接部署的应用，包括数据库、媒体服务器、开发工具等。通过 Appbox 托管实现一键安装。",
+    "loading": "正在加载应用...",
+    "error": "加载应用失败",
+    "no_results": "没有应用符合你的搜索条件",
+    "back_to_apps": "返回应用",
+    "app_not_found": "找不到请求的应用",
+    "search": {
+      "title": "搜索",
+      "description": "找到最适合你需求的应用",
+      "name_search": "按名称搜索",
+      "name_placeholder": "应用名称或关键词",
+      "category": "类别",
+      "all_categories": "所有类别",
+      "app_slots": "App Slots",
+      "app_slots_placeholder": "任意 App Slots",
+      "sort_by": "排序方式",
+      "sort_popularity": "受欢迎程度",
+      "sort_name": "名称（A-Z）",
+      "sort_date": "最近添加",
+      "reset_filters": "重置筛选"
+    },
+    "card": {
+      "app_slots": "App Slots",
+      "view_details": "查看详情"
+    },
+    "detail": {
+      "by": "作者",
+      "description": "描述",
+      "app_info": "应用信息",
+      "version": "版本",
+      "app_slots": "App Slots",
+      "released": "发布日期",
+      "developer_site": "开发者网站",
+      "visit_site": "访问网站",
+      "deploy_app": "部署此应用",
+      "community_ratings": "社区评分",
+      "upvotes": "赞成票",
+      "downvotes": "反对票",
+      "no_ratings_yet": "暂无评分",
+      "deploy_dialog": {
+        "title": "在 Appbox 上部署应用",
+        "question": "应用需要有效的 Appbox 才能运行。请选择符合条件的套餐来创建账号和 Appbox，或者如果你已有 Appbox，则继续进入安装器。",
+        "planLabel": "此应用可用的套餐",
+        "planPlaceholder": "选择套餐以继续",
+        "planHelp": "排除此应用类别的套餐会被隐藏。选择套餐后会直接进入结账。",
+        "noEligiblePlans": "未找到适用于此应用的套餐。你仍然可以查看所有套餐。",
+        "viewAllPlans": "查看所有套餐",
+        "yes": "使用所选套餐继续",
+        "no": "我已有 Appbox"
+      }
+    }
+  },
+  "home": {
+    "connections_section": {
+      "title": "互联应用生态系统",
+      "headline_1": "互联应用。",
+      "headline_2": "一个生态。",
+      "description": "每个应用都可以访问其他应用的共享文件系统部分，并通过安全的本地网络桥接彼此连接。",
+      "visual_title": "你的应用无需离开 Appbox 就能协同工作。",
+      "visual_description": "应用运行在各自空间中，但 Appbox 为它们提供受控方式来共享文件并进行本地通信。这意味着助手、Dashboard、数据库、媒体工具和同步应用可以组成一个互联工作区。",
+      "highlights": {
+        "shared_filesystem": {
+          "title": "共享文件系统",
+          "description": "应用可以直接访问共享存储和已授权的应用数据。"
+        },
+        "private_network": {
+          "title": "安全本地桥接",
+          "description": "服务通过私有本地路由通信，而不是通过公共互联网。"
+        },
+        "cross_app_workflows": {
+          "title": "跨应用工作流",
+          "description": "构建一个应用读取、处理并为另一个应用发布数据的工作流。"
+        }
+      }
+    }
+  },
+  "policies": {
+    "title": "政策",
+    "meta_description": "查看 Appbox 政策，包括服务条款、隐私政策、退款政策等。了解你的权利以及我们的承诺。",
+    "index_description": "这些政策管理你对 Appbox 服务的使用，并概述我们对你的承诺。其中包含关于隐私、安全以及你作为用户责任的重要信息。",
+    "policy": "政策",
+    "description": "描述",
+    "view": "查看"
+  },
+  "auth": {
+    "login": {
+      "title": "欢迎回来",
+      "description": "登录你的 Appbox 账号",
+      "email_label": "Email",
+      "email_placeholder": "you@example.com",
+      "email_error": "请输入有效的 email 地址",
+      "password_label": "密码",
+      "password_placeholder": "输入你的密码",
+      "password_error": "密码为必填项",
+      "forgot_password": "忘记密码？",
+      "submit": "登录",
+      "external_signup": "刚开始使用 Appbox？选择套餐来创建你的账号和 Appbox。",
+      "external_signup_link": "查看套餐",
+      "appbox_required_title": "需要账号？",
+      "appbox_required_description": "Appbox 账号会在你购买 Appbox 套餐时创建。如果你原本想部署应用，请先选择套餐，然后再回来把应用安装到你的 Appbox 上。",
+      "appbox_required_link": "查看套餐并注册",
+      "error_invalid": "Email 或密码无效",
+      "error_generic": "出了点问题。请重试。",
+      "success": "登录成功",
+      "2fa_title": "双因素认证",
+      "2fa_description": "输入认证器应用中的 6 位代码",
+      "2fa_code_label": "验证码",
+      "2fa_code_placeholder": "000000",
+      "2fa_code_error": "代码必须为 6 位数字",
+      "2fa_submit": "验证",
+      "2fa_back": "返回登录",
+      "error_2fa_invalid": "验证码无效"
+    },
+    "branding": {
+      "tagline": "你的云，你的规则",
+      "subtitle": "在我们拥有并运营的主权基础设施上部署和管理强大的应用。",
+      "apps_count": "60+ 可直接部署应用",
+      "one_click": "一键安装",
+      "network_speed": "25Gbps 网络",
+      "always_secure": "始终安全",
+      "categories_label": "应用类别",
+      "category_cloud": "云",
+      "category_cms": "CMS",
+      "category_databases": "数据库",
+      "category_music": "音乐",
+      "category_storage": "存储",
+      "category_gaming": "游戏",
+      "category_development": "开发",
+      "category_virtual_servers": "虚拟服务器"
+    },
+    "forgot": {
+      "title": "忘记密码",
+      "description": "输入你的 email，我们会发送重置链接",
+      "email_label": "Email",
+      "email_placeholder": "you@example.com",
+      "email_error": "请输入有效的 email 地址",
+      "submit": "发送重置链接",
+      "back_to_login": "返回登录",
+      "error_generic": "出了点问题。请重试。",
+      "success": "重置链接已发送！请检查你的 email。"
+    },
+    "reset": {
+      "title": "重置密码",
+      "description": "输入你的新密码",
+      "password_label": "新密码",
+      "password_placeholder": "输入新密码",
+      "password_error": "密码必须至少 8 个字符",
+      "confirm_password_label": "确认密码",
+      "confirm_password_placeholder": "确认新密码",
+      "confirm_password_error": "两次输入的密码不一致",
+      "submit": "重置密码",
+      "error_generic": "出了点问题。请重试。",
+      "success": "密码重置成功！"
+    },
+    "email_sent": {
+      "title": "检查你的 email",
+      "description": "我们已向你发送包含后续说明的 email",
+      "check_inbox": "如果没有看到 email，请检查垃圾邮件文件夹。链接将在 24 小时后过期。",
+      "back_to_login": "返回登录"
+    }
+  },
+  "dashboard": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "appstore": "App Store",
+      "appboxes": "Appboxes",
+      "installed_apps": "已安装应用",
+      "domains": "自定义域名",
+      "account": "账号",
+      "profile": "个人资料",
+      "abuse_reports": "滥用报告",
+      "two_factor": "双因素认证",
+      "api_keys": "API Keys",
+      "service_status": "服务状态",
+      "support_billing": "支持与账单",
+      "add_appbox": "添加 Appbox",
+      "admin": "管理员",
+      "knowledgebase": "知识库"
+    },
+    "header": {
+      "toggle_language": "切换语言",
+      "theme_dark": "深色",
+      "theme_light": "浅色",
+      "theme_system": "跟随系统",
+      "profile": "个人资料",
+      "security": "安全",
+      "sign_out": "退出登录",
+      "switch_to_admin": "切换到管理员",
+      "switch_to_user": "切换到用户"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "services": "你的服务",
+      "servicesDescription": "你的有效服务和资源",
+      "storage": "存储",
+      "appSlots": "App Slots",
+      "network": "网络",
+      "upload": "上传",
+      "download": "下载",
+      "multiplier": "已用 Boost Slots",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30d",
+      "downloadShort": "↓ 30d",
+      "pinnedApps": "已固定应用",
+      "viewCylo": "查看详情"
+    },
+    "twoFactor": {
+      "title": "保护你的账号",
+      "description": "启用双因素认证，为你的账号增加额外安全层。",
+      "enable": "启用 2FA",
+      "dismiss": "忽略"
+    },
+    "notifications": {
+      "title": "最近通知",
+      "viewAll": "查看全部",
+      "empty": "没有新通知",
+      "dropdown_title": "通知",
+      "mark_all_read": "全部标为已读",
+      "no_notifications": "没有新通知",
+      "all_caught_up": "已全部处理",
+      "ui_update_title": "Appbox 有新版本",
+      "ui_update_description": "我们刚刚更新了 Appbox UI。请刷新此页面以获取最新版本。",
+      "refresh_later": "稍后刷新",
+      "refresh_now": "立即刷新",
+      "subtext": {
+        "instance_add": "你的应用已安装，请在下方查看！",
+        "instance_removed": "应用已卸载。",
+        "instance_removing": "应用正在卸载。",
+        "instance_restart": "应用已重启。",
+        "instance_updating": "应用正在更新，将暂时离线。",
+        "instance_updated": "应用已更新，现在可以使用。",
+        "instance_stop": "应用现已停止，你需要再次启动才能访问。",
+        "instance_start": "应用现已启动，应该很快可以访问。",
+        "user_updated": "你的用户资料数据已更新。",
+        "cylo_add": "你的 Appbox 已完成设置，点击下方查看。",
+        "cylo_remove": "你的 Appbox 已卸载。",
+        "cylo_migrating": "你的 Appbox 正在迁移到另一块磁盘/服务器，完成后我们会通知你并发送 email。",
+        "cylo_migrated": "你的 Appbox 已成功迁移，所有应用现在应该可以再次正常工作。",
+        "cylo_userdecreasingquota": "你的 Appbox 磁盘空间即将用完。你很快需要通过 Appbox Dashboard 的 File Explorer 标签删除一些数据，以保持在线。",
+        "cylo_userlowquota": "你的 Appbox 已没有剩余磁盘空间，因此我们已暂时关闭它。你需要通过 Appbox Dashboard 的 File Explorer 标签删除一些数据，才能让它重新上线。",
+        "cylo_adminlowquota": "某个 Appbox 可用空间不足。",
+        "cylo_brokenmount": "你的 Appbox 发生挂载失败。请查看 email 了解更多信息。",
+        "cylo_usernormalquota": "你的 Appbox 现在有足够可用空间，可以正常运行。",
+        "cylo_adminnormalquota": "该 Appbox 不再空间不足，可以正常运行。",
+        "cylo_restarting": "你的 Appbox 正在重启，应用将暂时离线。",
+        "cylo_restarted": "你的 Appbox 已完成重启，应用应该很快上线。",
+        "blog": "我们刚发布了一篇新博客，点击下方阅读！",
+        "hwfailure_newfailure": "某台服务器出现问题，请尽快查看！",
+        "criticalalert_newalert": "新的严重警报，请尽快查看！",
+        "abuse_unresolvable": "收到新的无法解决的滥用报告。",
+        "abuse_reply": "滥用报告中有新消息。",
+        "abuse_user_new": "我们收到了与你的 Appbox 相关的滥用报告。",
+        "abuse_user_closed": "我们已关闭与你的 Appbox 相关的滥用报告。",
+        "throttledcylo_throttled": "某个 Appbox 正在被限速。",
+        "throttledcylo_unthrottled": "某个 Appbox 不再被限速。",
+        "throttled_throttled": "你的 Appbox 正在被限速。",
+        "throttled_warning": "你的 Appbox 使用的资源高于正常水平。",
+        "throttled_unthrottled": "你的 Appbox 不再被限速。"
+      }
+    },
+    "newestApps": {
+      "title": "最新应用",
+      "viewAll": "浏览 App Store"
+    },
+    "recentlyUpdated": {
+      "title": "最近更新"
+    },
+    "yourUpdates": {
+      "title": "你的更新",
+      "description": "近期活动和新应用"
+    },
+    "blogPosts": {
+      "title": "博客最新内容",
+      "description": "Appbox 新闻与更新",
+      "readMore": "阅读更多"
+    },
+    "status": {
+      "online": "在线",
+      "offline": "离线",
+      "restarting": "正在重启",
+      "migrating": "正在迁移",
+      "installing": "正在安装",
+      "suspended": "已暂停",
+      "frozen": "已冻结",
+      "throttled": "已限速",
+      "lowQuota": "空间不足"
+    }
+  },
+  "appstore": {
+    "title": "App Store",
+    "subtitle": "你需要的所有服务器应用，集中在一个地方。",
+    "search": {
+      "placeholder": "搜索应用...",
+      "results": "搜索结果",
+      "noResults": "未找到匹配搜索的应用。",
+      "noResultsDescription": "尝试调整搜索或筛选条件，找到你想要的内容。",
+      "showing": "显示 {count} 个结果"
+    },
+    "featured": {
+      "title": "精选应用",
+      "description": "我们推荐的精选应用"
+    },
+    "top": {
+      "title": "热门应用",
+      "description": "最受用户欢迎"
+    },
+    "new": {
+      "title": "新应用",
+      "description": "最近添加到商店"
+    },
+    "categories": {
+      "title": "类别",
+      "all": "所有类别"
+    },
+    "app": {
+      "getApp": "获取",
+      "installed": "已安装",
+      "restricted": "受限",
+      "disabled": "已禁用",
+      "install": "安装",
+      "installing": "正在安装...",
+      "versions": "版本",
+      "version": "版本",
+      "appSlots": "App Slots",
+      "baseMemory": "基础内存 (GB)",
+      "baseCpus": "基础 CPU",
+      "added": "添加时间",
+      "changes": "变更",
+      "changelog": "更新日志",
+      "releasedOn": "发布于",
+      "description": "描述",
+      "comments": "评论",
+      "selectCylo": "选择 Appbox",
+      "selectVersion": "选择版本",
+      "noSlots": "没有可用的 App Slots",
+      "rating": "{count} 票",
+      "screenshots": "截图",
+      "by": "作者",
+      "requiresSlots": "需要 {count} 个 App Slot(s)",
+      "visitDeveloper": "访问开发者网站",
+      "helpSupport": "帮助与支持",
+      "resourceNote": "应用会从基础 Memory 和 CPU 开始。你可以通过消耗额外 App Slots 为单个应用 Boost 资源（每个 Boost slot +10%）。值为 0 表示无限制。",
+      "upvote": "赞成",
+      "downvote": "反对",
+      "installTitle": "安装 {name}",
+      "installSuccess": "应用安装已开始",
+      "minimumPlanShort": "{plan} 起可用",
+      "minimumPlanLabel": "最低套餐"
+    },
+    "sort": {
+      "newest": "最新",
+      "popular": "最受欢迎",
+      "updated": "最近更新",
+      "rating": "评分最高",
+      "slots_asc": "Slots：从低到高",
+      "slots_desc": "Slots：从高到低"
+    },
+    "slots": {
+      "label": "Slots",
+      "all": "所有 Slots",
+      "slot": "{count} 个 Slot",
+      "slots": "{count} 个 Slots"
+    },
+    "showAll": "显示全部",
+    "install": {
+      "validation": {
+        "required": "此字段为必填项",
+        "alphanumeric": "只允许字母和数字",
+        "notOnlyAlpha": "必须至少包含一个数字或特殊字符",
+        "lowercase": "必须包含一个小写字母",
+        "uppercase": "必须包含一个大写字母",
+        "number": "必须包含一个数字",
+        "specialChar": "必须包含一个特殊字符",
+        "invalidEmail": "Email 地址无效",
+        "invalidDate": "日期无效",
+        "invalidFormat": "格式无效",
+        "minLength": "最少 {count} 个字符",
+        "maxLength": "最多 {count} 个字符",
+        "invalidSubdomain": "只允许小写字母、数字和连字符。",
+        "subdomainInUse": "此子域名已被使用，请尝试其他名称。",
+        "domainIpMismatch": "域名的 IP 与服务器不匹配。",
+        "selectDomain": "请选择一个域名",
+        "validating": "正在验证..."
+      },
+      "searchField": {
+        "selectAppboxFirst": "请先选择 Appbox",
+        "selectPlaceholder": "选择 {label}...",
+        "searchPlaceholder": "搜索 {label}...",
+        "noResults": "未找到结果。"
+      },
+      "domain": {
+        "domainType": "域名类型",
+        "typeAppbox": "Appbox 域名",
+        "typeCustom": "自定义域名",
+        "subdomain": "子域名",
+        "domain": "域名",
+        "baseDomain": "基础域名",
+        "selectAppboxFirst": "请先选择 Appbox",
+        "selectDomain": "选择域名...",
+        "selectOrAddDomain": "选择或添加域名...",
+        "searchDomains": "搜索域名...",
+        "noDomainsMatch": "没有域名匹配你的搜索。",
+        "noDomainsAvailable": "没有可用域名。",
+        "noCustomDomains": "还没有自定义域名。",
+        "yourDomains": "你的域名",
+        "addNewDomain": "添加新域名",
+        "add": "添加",
+        "domainSuffix": "选择域名",
+        "appboxDomain": "Appbox 域名",
+        "customDomains": "自定义域名",
+        "loadingDomains": "正在加载域名...",
+        "blockedDomain": "此域名为保留域名，不能使用。",
+        "invalidDomain": "请输入有效域名（例如 mydomain.com）。",
+        "addDomainFailed": "添加域名失败。请重试。",
+        "dnsSetupTitle": "DNS 设置",
+        "dnsInstruction": "创建一条指向你的 Appbox 服务器的 A 记录：",
+        "copyIp": "复制 IP 地址",
+        "copied": "已复制！",
+        "dnsNotPointing": "DNS 尚未指向正确的 IP。",
+        "dnsResolvedTo": "当前解析到：{ip}",
+        "verifyDns": "检查 DNS",
+        "verifying": "正在验证...",
+        "retryVerify": "再次验证",
+        "dnsVerified": "✓ {domain} 的 DNS 已验证"
+      },
+      "field": {
+        "enabled": "已启用",
+        "disabled": "已禁用",
+        "selectPlaceholder": "选择 {label}"
+      },
+      "guard": {
+        "appDisabled": "此应用因维护暂时禁用。",
+        "noCylos": "安装应用前你需要一个 Appbox。订购一个即可开始。",
+        "getAppbox": "获取 Appbox",
+        "restricted": "此应用不适用于你当前的套餐。点击下方升级套餐以解锁访问。",
+        "restrictedMinPlan": "此应用不适用于你当前的套餐。最低所需套餐：{plan}。升级套餐以解锁访问。",
+        "upgradePackage": "升级你的套餐",
+        "getAnotherAppbox": "获取另一个 Appbox",
+        "noSlots": "此应用需要 {count} 个 App Slot(s)，但你的任何 Appbox 都没有足够可用 slot。升级套餐以获得更多。",
+        "getMoreSlots": "获取更多 App Slots",
+        "noMulti": "此应用每个 Appbox 只允许安装一个实例，并且已安装在你所有符合条件的 Appbox 上。如需安装另一个实例，可以订购额外的 Appbox。",
+        "checkingAvailability": "正在检查可用性..."
+      },
+      "cyloSelector": {
+        "restrictedOnPackage": "当前套餐受限",
+        "noFreeSlots": "无可用 slots（{used}/{total}）",
+        "alreadyInstalled": "已安装",
+        "notEligible": "不符合条件",
+        "selectToSeeOptions": "选择 Appbox 查看选项",
+        "upgradeThisAppbox": "升级此 Appbox",
+        "alreadyInstalledDetail": "此应用每个 Appbox 只允许安装一个实例，并且这里已经安装。如需安装另一个实例，请订购额外的 Appbox。",
+        "noneEligible": "你的 Appbox 当前都不符合条件。请选择上方的一个 Appbox，查看原因和解决方法。",
+        "restrictedSingle": "{name} 不符合条件 — 此应用在其当前套餐中受限。",
+        "restrictedMultiple": "{count} 个 Appbox 不符合条件 — 此应用在它们当前的套餐中受限。",
+        "upgradeName": "升级 {name}",
+        "noSlotsSingle": "{name} 没有足够可用 App Slots。",
+        "noSlotsMultiple": "{count} 个 Appbox 没有足够可用 App Slots。",
+        "installedSingle": "{name} 已安装此应用。",
+        "installedMultiple": "{count} 个 Appbox 已安装此应用。",
+        "onePerAppbox": "此应用每个 Appbox 只允许安装一个实例。",
+        "slotsFree": "可用 {count} 个 slots",
+        "migrating": "Appbox 当前正在迁移",
+        "restrictedOnPackageMinPlan": "当前套餐受限（最低套餐：{plan}）",
+        "migratingSingle": "{name} 当前正在迁移，暂时无法安装。",
+        "migratingMultiple": "{count} 个 Appbox 当前正在迁移，暂时无法安装。"
+      },
+      "dialog": {
+        "loadingVersions": "正在加载版本...",
+        "defaultVersion": "（默认）",
+        "versionsAvailable": "{count, plural, one {# 个版本可用} other {# 个版本可用}}",
+        "cancel": "取消",
+        "installFailed": "安装失败。请重试。"
+      },
+      "boost": {
+        "loading": "正在加载 Boost 选项...",
+        "title": "Boost Slots",
+        "resourcePreview": "资源预览",
+        "multiplier": "倍数",
+        "slotCost": "Slot 成本",
+        "ram": "RAM",
+        "cpus": "CPU",
+        "cta": "想要更多 Boost？升级你的套餐"
+      }
+    }
+  },
+  "appboxmanager": {
+    "title": "Appbox Manager",
+    "cylos": {
+      "title": "你的 Appboxes",
+      "description": "监控你管理的每个 Appbox 的存储、网络、Boost 使用量和已安装应用。",
+      "empty": "你还没有任何 Appbox。",
+      "getCylo": "获取 Appbox",
+      "viewDetails": "查看详情",
+      "storage": "存储",
+      "appSlots": "App Slots",
+      "network": "网络",
+      "upload": "上传",
+      "download": "下载",
+      "multiplier": "已用 Boost Slots",
+      "pinnedApps": "已固定应用",
+      "sortBy": "排序方式",
+      "filterByStatus": "按状态筛选",
+      "allStatuses": "所有状态",
+      "name": "名称",
+      "server": "服务器",
+      "status": "状态"
+    },
+    "cyloDetail": {
+      "summary": "摘要",
+      "fileExplorer": "File Explorer",
+      "diskUsage": "磁盘使用量",
+      "diskUtilization": "磁盘利用率 (IO)",
+      "networkTraffic": "网络流量",
+      "installedApps": "已安装应用",
+      "alerts": "警报",
+      "migrationProgress": "迁移进行中",
+      "migrationLive": "实时迁移期间，大多数应用会继续正常工作。无法实时迁移的应用将在迁移完成前不可用。",
+      "migrationOffline": "迁移完成前，你的应用将不可用。",
+      "migrationTransferred": "已传输：{sent} GiB / {total} GiB",
+      "migrationPhase1": "正在初始化迁移",
+      "migrationPhase2": "正在传输加密密钥",
+      "migrationPhase3": "正在传输 SSL 证书",
+      "migrationPhase4": "正在新服务器上设置 Appbox",
+      "migrationPhase5": "正在传输数据",
+      "migrationPhase6": "正在新服务器上安装应用",
+      "migrationPhase7": "正在完成迁移准备",
+      "migrationPhase8": "正在完成迁移",
+      "lowQuota": "磁盘空间不足",
+      "lowQuotaMessage": "你的 Appbox 会保持离线，直到你释放一些空间。你当前剩余 {available} GiB，需要超过 5 GiB 才能运行。",
+      "lowQuotaMigratingMessage": "在你释放一些空间之前，你的 Appbox 不会迁移。你当前剩余 {available} GiB，需要超过 5 GiB 才能迁移。",
+      "lowQuotaHint": "使用 File Explorer 删除数据，或升级到更大的套餐。",
+      "lowQuotaDeleteData": "删除一些数据",
+      "throttled": "磁盘吞吐已限速",
+      "throttledMessage": "你的 Appbox 在较长时间内使用了超过 {percent}% 的磁盘速度。已应用公平使用限速。",
+      "throttledHint": "限制会自动过期。为避免未来限速，请减少同时传输、启用队列，或将密集任务安排在非高峰时段。",
+      "throttleLevel": "限速级别",
+      "throttleRate": "速率 (MB/s)",
+      "throttleIops": "IOPS",
+      "throttleExpires": "过期时间",
+      "throttleTopApp": "使用量最高的应用",
+      "throttleTopProcess": "使用量最高的进程",
+      "suspended": "Appbox 已暂停",
+      "suspendedMessage": "你的 Appbox 当前已暂停。如果你认为这是错误，请联系支持。",
+      "offline": "Appbox 离线",
+      "offlineMessage": "你的 Appbox 当前离线。",
+      "upgradePlan": "升级套餐",
+      "viewApp": "查看",
+      "noAlerts": "没有活动警报",
+      "noApps": "此 Appbox 上没有已安装应用。",
+      "backToAppboxes": "Appboxes",
+      "notFound": "未找到 Appbox",
+      "notFoundDescription": "找不到请求的 Appbox。",
+      "bandwidth": "带宽",
+      "uploadUsed": "已用上传",
+      "downloadUsed": "已用下载",
+      "restart": "重启",
+      "restartTitle": "重启 Appbox",
+      "restartDescription": "这将重启你的 Appbox。所有已安装应用都会离线，直到重启完成。",
+      "cancel": "取消"
+    },
+    "fileExplorer": {
+      "title": "File Explorer",
+      "upload": "上传",
+      "newFolder": "新建文件夹",
+      "rename": "重命名",
+      "delete": "删除",
+      "download": "下载",
+      "name": "名称",
+      "size": "大小",
+      "modified": "修改时间",
+      "type": "类型",
+      "emptyDirectory": "此文件夹为空",
+      "emptyDirectoryDescription": "上传文件或创建新文件夹即可开始。",
+      "newFolderTitle": "新建文件夹",
+      "newFolderPlaceholder": "文件夹名称",
+      "newFolderDescription": "输入新文件夹的名称。",
+      "renameTitle": "重命名",
+      "renamePlaceholder": "新名称",
+      "renameDescription": "输入新名称。",
+      "deleteTitle": "删除",
+      "deleteDescription": "确定要删除“{name}”吗？此操作无法撤销。",
+      "create": "创建",
+      "cancel": "取消",
+      "save": "保存",
+      "confirm": "确认",
+      "uploading": "正在上传...",
+      "uploadSuccess": "文件上传成功",
+      "uploadError": "上传文件失败",
+      "createFolderSuccess": "文件夹已创建",
+      "createFolderError": "创建文件夹失败",
+      "renameSuccess": "重命名成功",
+      "renameError": "重命名失败",
+      "deleteSuccess": "删除成功",
+      "deleteError": "删除失败",
+      "dropFilesHere": "将文件拖到这里上传",
+      "root": "首页",
+      "listView": "列表视图",
+      "gridView": "网格视图"
+    },
+    "installedApps": {
+      "title": "已安装应用",
+      "description": "管理安装在你的 Appbox 上的应用。",
+      "searchPlaceholder": "按名称、域名、Appbox 搜索...",
+      "name": "名称",
+      "domain": "域名",
+      "version": "版本",
+      "slots": "Slots",
+      "slot": "slot",
+      "status": "状态",
+      "cylo": "Appbox",
+      "installedDate": "安装时间",
+      "empty": "未找到已安装应用。",
+      "filterByStatus": "状态",
+      "filterByCylo": "Appbox",
+      "allCylos": "所有 Appboxes",
+      "bulkSelected": "已选择 {count} 项",
+      "bulkUnavailable": "{count, plural, one {# 个应用不可用} other {# 个应用不可用}}"
+    },
+    "appDetail": {
+      "port": "端口",
+      "installDate": "安装日期",
+      "server": "服务器",
+      "customFields": "配置",
+      "actions": "操作",
+      "start": "启动",
+      "stop": "停止",
+      "restart": "重启",
+      "update": "更新",
+      "uninstall": "卸载",
+      "switchVersion": "切换版本",
+      "boost": {
+        "title": "App Boost",
+        "description": "Boost 你的应用以增加资源。你可以在下方预览调整。",
+        "current": "当前 Boost slots：",
+        "multiplier": "倍数",
+        "preview": "预览",
+        "resourcePreview": "资源预览",
+        "slotCost": "Slot 成本",
+        "ram": "RAM",
+        "cpus": "CPU",
+        "apply": "应用 Boost",
+        "applying": "正在应用...",
+        "dockerLive": "Docker 应用资源会实时应用，无需重启。",
+        "vmRestart": "VM Boost 需要重启才能应用更新后的资源。",
+        "getMore": "想要更多 Boost？升级你的套餐"
+      },
+      "freeze": "冻结",
+      "unfreeze": "解冻",
+      "confirmFreeze": "冻结此应用会停止它并释放其 App Slots。你可以稍后解冻以恢复它。",
+      "confirmUnfreeze": "解冻此应用会再次消耗 App Slots。继续吗？",
+      "confirmUninstall": "确定要卸载此应用吗？此操作无法撤销。",
+      "pinApp": "固定应用",
+      "unpinApp": "取消固定应用",
+      "backToInstalledApps": "已安装应用",
+      "backToAppbox": "Appbox",
+      "backToAppboxes": "Appboxes",
+      "backToDashboard": "Dashboard",
+      "notFound": "未找到已安装应用",
+      "notFoundDescription": "找不到请求的已安装应用。",
+      "version": "版本",
+      "cylo": "Appbox",
+      "appNote": "应用备注",
+      "appInfo": "应用信息",
+      "running": "运行中",
+      "stopped": "已停止",
+      "configuringApp": "正在配置 {appName}...",
+      "sendingInstallPayload": "正在向你的 Appbox 发送安装 payload...",
+      "sendingUpdatePayload": "正在向你的 Appbox 发送更新 payload...",
+      "tabOverview": "概览",
+      "tabPorts": "端口",
+      "tabConsole": "控制台",
+      "consoleTitle": "VM 控制台",
+      "consoleUnavailable": "控制台仅在此 VM 正在运行并启用时可用。",
+      "consoleLoading": "正在加载控制台连接详情...",
+      "consoleLoadError": "加载控制台连接详情失败。",
+      "consolePortsMissing": "此 VM 的 Console WebSocket endpoint 不可用。",
+      "consoleConnecting": "正在连接...",
+      "consoleConnected": "已连接",
+      "consoleDisconnected": "已断开连接",
+      "consoleConnectionError": "连接失败",
+      "consoleReconnect": "重新连接",
+      "consoleWebsocketEndpoint": "WebSocket endpoint",
+      "portAssignments": "端口分配",
+      "internalIp": "内部 IP",
+      "hostIp": "主机 IP",
+      "internalPort": "内部端口",
+      "hostPort": "主机端口",
+      "protocol": "协议",
+      "noPortAssignments": "未找到端口分配。",
+      "searchPorts": "搜索端口…",
+      "customDomainsTitle": "自定义域名",
+      "customDomainsDescription": "为此应用配置的自定义域名。",
+      "customDomainsAdd": "添加域名",
+      "customDomainsAddTitle": "添加自定义域名",
+      "customDomainsAddDescription": "将自定义域名连接到此已安装应用。",
+      "customDomainsDomain": "域名",
+      "customDomainsPrimary": "主域名",
+      "customDomainsPrimaryYes": "是",
+      "customDomainsPrimaryNo": "否",
+      "customDomainsAdded": "添加时间",
+      "customDomainsConfig": "配置",
+      "customDomainsViewConfig": "查看配置",
+      "customDomainsActions": "操作",
+      "customDomainsSearch": "搜索域名...",
+      "customDomainsEmpty": "未找到自定义域名。",
+      "customDomainsParentDomain": "父域名",
+      "customDomainsLoadingDomains": "正在加载域名...",
+      "customDomainsSelectDomain": "选择域名",
+      "customDomainsSubdomain": "子域名",
+      "customDomainsDomainSuffix": ".example.com",
+      "customDomainsCancel": "取消",
+      "customDomainsSave": "添加域名",
+      "customDomainsDelete": "删除域名",
+      "customDomainsDeleteTitle": "删除域名",
+      "customDomainsDeleteDescription": "确定要删除此域名吗？",
+      "customDomainsVmRestartWarning": "使用不同于你的 user.appboxes.co 域名的父域名会重启你的 VM。",
+      "customDomainsClose": "关闭",
+      "customDomainsConfigTitle": "{domain} 的 SSL 配置",
+      "customDomainsConfigDescription": "将合适的 snippet 复制到你的 Web 服务器配置中。",
+      "customDomainsSslQueued": "自定义域名的 HTTPS 会在后台签发，添加域名后可能需要几分钟才会生效。",
+      "customDomainsWildcardSsl": "此域名使用现有 wildcard SSL 证书。",
+      "customDomainsNginx": "Nginx",
+      "customDomainsApache": "Apache",
+      "customDomainsFile": "文件",
+      "customDomainsConfigSnippet": "配置",
+      "customDomainsReloadCommand": "重新加载命令",
+      "customDomainsNotes": "说明",
+      "customDomainsCopy": "复制",
+      "customDomainsCopied": "已复制！",
+      "customDomainsSubdomainRequired": "子域名为必填项。",
+      "customDomainsParentDomainRequired": "请选择父域名。",
+      "customDomainsSubdomainInvalid": "只允许字母、数字和连字符（不能以连字符开头或结尾）。",
+      "customDomainsSubdomainLength": "子域名长度必须为 2 到 30 个字符。",
+      "customDomainsSubdomainInUse": "此子域名已被使用。请尝试其他名称。",
+      "customDomainsSubdomainValidateFailed": "暂时无法验证子域名。",
+      "customDomainsDnsNotVerified": "DNS 尚未指向正确服务器。",
+      "customDomainsDnsNotVerifiedExpected": "DNS 未指向正确服务器。预期 IP：{ip}",
+      "customDomainsDnsCheckFailed": "暂时无法验证 DNS。",
+      "customDomainsAddFailed": "添加自定义域名失败。",
+      "customDomainsDeleteFailed": "删除域名失败。",
+      "customDomainsConfigNotAvailable": "此域名没有可用的配置 snippets。",
+      "customDomainsConfigFetchFailed": "加载配置 snippets 失败。",
+      "customTablesTitle": "应用表格",
+      "customTablesLoading": "正在加载自定义表格...",
+      "customTablesRowsUsage": "已使用 {current} / {max} 行",
+      "customTablesAdd": "添加行",
+      "customTablesAddTitle": "向 {label} 添加行",
+      "customTablesAddDescription": "创建新的行条目。",
+      "customTablesEditTitle": "编辑 {label} 中的行",
+      "customTablesEditDescription": "更新所选行的值。",
+      "customTablesDeleteTitle": "删除行",
+      "customTablesDeleteDescription": "确定要删除此行吗？",
+      "customTablesDelete": "删除",
+      "customTablesSave": "保存",
+      "customTablesUpdate": "更新",
+      "customTablesCancel": "取消",
+      "customTablesActions": "操作",
+      "customTablesSearch": "搜索 {label}...",
+      "customTablesEmpty": "未找到行。",
+      "customTablesEnabled": "已启用",
+      "customTablesDisabled": "已禁用",
+      "customTablesValidationRequired": "此字段为必填项。",
+      "customTablesValidationAlphanumeric": "只允许字母和数字。",
+      "customTablesValidationComplexPassword": "必须包含小写字母、大写字母、数字和特殊字符。",
+      "customButtonValidation": {
+        "required": "此字段为必填项。",
+        "alphanumeric": "只允许字母和数字。",
+        "notOnlyAlpha": "请至少包含一个数字或符号。",
+        "lowercase": "请至少包含一个小写字母。",
+        "uppercase": "请至少包含一个大写字母。",
+        "number": "请至少包含一个数字。",
+        "specialChar": "请至少包含一个特殊字符。",
+        "invalidEmail": "请输入有效的 email 地址。",
+        "invalidDate": "请输入有效日期。",
+        "minLength": "必须至少 {count} 个字符。",
+        "maxLength": "必须最多 {count} 个字符。",
+        "invalidFormat": "格式无效。"
+      },
+      "customTablesAddSuccess": "行添加成功。",
+      "customTablesEditSuccess": "行更新成功。",
+      "customTablesDeleteSuccess": "行删除成功。",
+      "customTablesAddFailed": "添加行失败。",
+      "customTablesEditFailed": "更新行失败。",
+      "customTablesDeleteFailed": "删除行失败。"
+    },
+    "domains": {
+      "title": "自定义域名",
+      "pageDescription": "你添加到已安装应用的自定义域名。",
+      "domain": "域名",
+      "type": "类型",
+      "typeManaged": "托管",
+      "typeCustom": "自定义",
+      "typeBase": "基础",
+      "app": "应用",
+      "server": "服务器",
+      "createdAt": "创建时间",
+      "cylo": "Appbox",
+      "confirmDelete": "确定要删除此域名吗？",
+      "deleteDomain": "删除域名",
+      "deleteBlockedHasChildren": "无法删除 — 此域名有子域名正在使用。请先移除它们。",
+      "reverifyDns": "重新验证 DNS",
+      "emptyTitle": "还没有自定义域名",
+      "emptyDescription": "自定义域名可在安装应用时添加。这里只显示这些域名，平台域名会自动管理。",
+      "goToAppStore": "前往 App Store",
+      "dnsVerified": "DNS 已正确指向。",
+      "dnsNotVerified": "DNS 未指向正确 IP。",
+      "expectedIp": "预期：{ip}",
+      "cancel": "取消",
+      "searchPlaceholder": "搜索域名..."
+    }
+  },
+  "account": {
+    "title": "账号",
+    "profile": {
+      "title": "个人资料",
+      "description": "管理你的显示名称、email、头像、密码和账号安全设置。",
+      "email": "Email",
+      "alias": "显示名称",
+      "aliasPlaceholder": "输入显示名称",
+      "save": "保存更改",
+      "memberSince": "加入时间",
+      "twoFactorStatus": "双因素认证",
+      "twoFactorEnabled": "已启用",
+      "twoFactorDisabled": "未启用",
+      "enable2FA": "启用 2FA",
+      "manage2FA": "管理 2FA"
+    },
+    "password": {
+      "title": "修改密码",
+      "current": "当前密码",
+      "new": "新密码",
+      "confirm": "确认新密码",
+      "change": "修改密码",
+      "success": "密码修改成功",
+      "successSigningOut": "密码已修改。正在让你退出所有会话…",
+      "sessionWarning": "修改密码会立即让你在所有设备上的所有活动会话退出登录。",
+      "mismatch": "两次输入的密码不一致",
+      "minLength": "密码必须至少 8 个字符"
+    },
+    "abuse": {
+      "title": "滥用报告",
+      "headerDescription": "查看与你账号相关的滥用报告，并跟踪其当前状态。",
+      "id": "ID",
+      "subject": "主题",
+      "searchPlaceholder": "搜索报告...",
+      "status": "状态",
+      "date": "日期",
+      "description": "描述",
+      "complainant": "投诉方",
+      "adminResponse": "管理员回复",
+      "noReports": "未找到滥用报告。",
+      "statusOpen": "处理中",
+      "statusResolved": "已解决",
+      "statusClosed": "已关闭",
+      "backToList": "返回滥用报告",
+      "detailDescription": "跟踪报告时间线、投诉方详情以及 Appbox 团队的任何回复。",
+      "reportDetails": "报告详情",
+      "conversation": "对话"
+    },
+    "twoFactor": {
+      "title": "双因素认证",
+      "description": "使用认证器应用验证和恢复备用代码保护你的账号。",
+      "setup": "设置 2FA",
+      "scanQR": "使用认证器应用扫描此 QR code",
+      "secretKey": "或手动输入此 secret key：",
+      "enterCode": "输入认证器应用中的 6 位代码",
+      "codePlaceholder": "000000",
+      "verify": "验证",
+      "backupCodes": "备用代码",
+      "backupCodesDescription": "请将这些备用代码保存在安全位置。每个代码只能使用一次。",
+      "newRecoveryCodes": "新的恢复代码",
+      "newRecoveryCodesDescription": "请现在保存这些替换代码。你之前的恢复代码将不再可用。",
+      "copyAll": "全部复制",
+      "copied": "已复制！",
+      "done": "完成",
+      "disable": "禁用 2FA",
+      "disableWarning": "禁用 2FA 会降低你的账号安全性。",
+      "disableConfirm": "输入你的密码以禁用 2FA",
+      "disabled": "2FA 已禁用",
+      "generating": "正在生成...",
+      "verifying": "正在验证...",
+      "next": "下一步",
+      "back": "返回"
+    },
+    "apiKeys": {
+      "title": "API Keys",
+      "description": "创建和管理账号级 API keys。API keys 会以你的用户身份认证，并拥有与你账号相同的访问权限。",
+      "create": "创建 API Key",
+      "createTitle": "创建 API Key",
+      "createDescription": "为此 key 设置一个易识别的名称。secret 只会显示一次。",
+      "name": "名称",
+      "namePlaceholder": "自动化脚本",
+      "expiresAt": "过期时间",
+      "optional": "可选",
+      "never": "永不过期",
+      "created": "创建时间",
+      "lastUsed": "上次使用",
+      "status": "状态",
+      "active": "有效",
+      "revoked": "已撤销",
+      "expired": "已过期",
+      "prefix": "前缀",
+      "actions": "操作",
+      "rename": "重命名",
+      "revoke": "撤销",
+      "revokeTitle": "撤销 API Key",
+      "revokeDescription": "这会立即禁用此 API key。使用它的请求将停止工作。",
+      "secretTitle": "保存你的 API Key",
+      "secretDescription": "请现在复制此 key。之后你将无法再次查看。",
+      "copy": "复制",
+      "copied": "已复制！",
+      "close": "关闭",
+      "cancel": "取消",
+      "save": "保存",
+      "confirmRevoke": "撤销 Key",
+      "noKeys": "还没有 API keys。",
+      "loadFailed": "加载 API keys 失败。",
+      "createSuccess": "API key 已创建。",
+      "createFailed": "创建 API key 失败。",
+      "updateSuccess": "API key 已更新。",
+      "updateFailed": "更新 API key 失败。",
+      "revokeSuccess": "API key 已撤销。",
+      "revokeFailed": "撤销 API key 失败。"
+    }
+  },
+  "common": {
+    "timeAgo": {
+      "justNow": "刚刚",
+      "minutesAgo": "{count} 分钟前",
+      "hoursAgo": "{count} 小时前",
+      "daysAgo": "{count} 天前"
+    },
+    "errors": {
+      "loadFailed": "加载数据失败。请重试。",
+      "loadServicesFailed": "加载服务失败。请重试。",
+      "loadAppsFailed": "加载应用失败。",
+      "loadNotificationsFailed": "加载通知失败。",
+      "loadBlogFailed": "加载博客文章失败。",
+      "loadAppboxesFailed": "加载 Appbox 失败。请重试。",
+      "loadProfileFailed": "加载个人资料失败。请重试。"
+    },
+    "empty": {
+      "noServices": "未找到服务。请访问账单门户开始使用。",
+      "noApps": "没有新应用可用。",
+      "noRecentlyUpdated": "没有最近更新的应用。",
+      "noBlogPosts": "没有可用博客文章。",
+      "noAppboxes": "请访问账单门户开始使用。",
+      "noMatchingAppboxes": "没有 Appbox 符合你的筛选条件。"
+    },
+    "toast": {
+      "displayNameUpdated": "显示名称已更新",
+      "displayNameFailed": "更新显示名称失败"
+    },
+    "status": {
+      "online": "在线",
+      "offline": "离线",
+      "restarting": "正在重启",
+      "migrating": "正在迁移",
+      "installing": "正在安装",
+      "suspended": "已暂停",
+      "frozen": "已冻结",
+      "throttled": "已限速",
+      "lowQuota": "空间不足"
+    }
+  }
+}

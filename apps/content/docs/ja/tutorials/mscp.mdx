@@ -1,0 +1,258 @@
+---
+title: 高速ファイル転送に mscp を使う
+description: 複数の SSH 接続を使って Appbox サーバーへ高速にファイルを転送するための mscp（multi-threaded scp）の使い方を学びます。
+sort: 1
+links:
+  source: https://github.com/upa/mscp
+---
+
+**mscp** は `scp` のマルチスレッド版で、複数の SSH（SFTP）接続を同時に使ってファイルをコピーします。並列接続を利用することで、大きなファイルやディレクトリを大幅に高速に転送できます。
+
+## 前提条件
+
+mscp を使う前に、SFTP 認証情報を取得するため、Appbox サーバーに SFTPgo をインストールする必要があります。
+
+### ステップ 1: SFTPgo をインストールする
+
+1. Appbox App Store の [SFTPgo app page](https://www.appbox.co/appstore/app/232) にアクセスします
+2. **Install** をクリックして SFTPgo をサーバーに追加します
+3. インストール後、接続情報を受け取ります:
+   - **Username**: SFTP ユーザー名
+   - **Password**: SFTP パスワード
+   - **Hostname**: 例: `sftpgo.yourserver.appboxes.co`
+   - **SFTP Port**: 例: `25557`
+   - **FTP/FTPS Port**: 例: `25555`
+   - **WebDav URL**: WebDAV アクセス用
+
+<Alert className="my-4" variant="info">
+  <AlertTitle className="font-bold">Note</AlertTitle>
+  <AlertDescription className="pl-2">
+    SFTPgo の認証情報は安全に保管してください。mscp 接続には、ホスト名、ユーザー名、パスワード、SFTP ポートが必要です。
+  </AlertDescription>
+</Alert>
+
+## mscp のインストール
+
+お使いの OS に合わせてインストール方法を選んでください。
+
+### macOS
+
+#### Homebrew を使う（推奨）
+
+```bash
+brew install upa/tap/mscp
+```
+
+#### MacPorts を使う
+
+```bash
+sudo port install mscp
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+### RHEL / Fedora / CentOS / Rocky Linux / AlmaLinux
+
+```bash
+sudo dnf copr enable upaaa/mscp
+sudo dnf install mscp
+```
+
+### Windows
+
+mscp にはネイティブの Windows バイナリはありませんが、WSL（Windows Subsystem for Linux）経由で使用できます。
+
+#### ステップ 1: WSL をインストールする
+
+PowerShell を管理者として開き、次を実行します。
+
+```powershell
+wsl --install
+```
+
+指示が表示されたらコンピューターを再起動してください。
+
+#### ステップ 2: WSL 内に mscp をインストールする
+
+WSL のセットアップ後（既定は Ubuntu）、WSL ターミナルを開いて次を実行します。
+
+```bash
+sudo add-apt-repository ppa:upaa/mscp
+sudo apt-get update
+sudo apt-get install mscp
+```
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">WSL での Windows ファイルパス</AlertTitle>
+  <AlertDescription className="pl-2">
+    WSL では、Windows ドライブは `/mnt/` 配下からアクセスできます。たとえば、`C:\Users\YourName\Downloads` は `/mnt/c/Users/YourName/Downloads` になります。
+  </AlertDescription>
+</Alert>
+
+### ソースからビルドする
+
+お使いのシステム向けパッケージがない場合は、ソースから mscp をビルドできます。
+
+```bash
+# Clone the repository
+git clone https://github.com/upa/mscp.git
+cd mscp
+
+# Prepare patched libssh
+git submodule update --init
+patch -d libssh -p1 < patch/$(git -C libssh describe).patch
+
+# Install build dependencies
+bash ./scripts/install-build-deps.sh
+
+# Build
+mkdir build && cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+## 基本的な使い方
+
+mscp の構文は `scp` と似ています。よく使うパターンを以下に示します。
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">重要: SFTP ポートを使用してください</AlertTitle>
+  <AlertDescription className="pl-2">
+    以下の例では、`25557` は SFTPgo 設定の **SFTP Port** を表します。SFTPgo Options パネルに表示される実際の SFTP ポートに置き換えてください。
+  </AlertDescription>
+</Alert>
+
+### サーバーへファイルをアップロードする
+
+```bash
+# -P specifies the SFTP port (use your SFTP port from SFTPgo settings)
+mscp -P 25557 localfile.zip username@sftpgo.yourserver.appboxes.co:/path/to/destination/
+```
+
+### ディレクトリをアップロードする
+
+`scp` とは異なり、mscp ではディレクトリに `-r` フラグは不要です。
+
+```bash
+# -P 25557 is the SFTP port from your SFTPgo Options
+mscp -P 25557 /local/directory username@sftpgo.yourserver.appboxes.co:/remote/path/
+```
+
+### サーバーからファイルをダウンロードする
+
+```bash
+# Replace 25557 with your actual SFTP port
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/file.zip /local/destination/
+```
+
+### ディレクトリをダウンロードする
+
+```bash
+mscp -P 25557 username@sftpgo.yourserver.appboxes.co:/remote/directory/ /local/path/
+```
+
+## 高度なオプション
+
+### 複数接続を使う
+
+既定では、mscp は複数接続を使用します。`-n` で接続数を指定できます。
+
+```bash
+mscp -P 25557 -n 8 largefile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### 失敗した転送を再開する（チェックポイント）
+
+mscp は、中断された転送を再開するためのチェックポイントに対応しています。
+
+```bash
+# Enable checkpointing
+mscp -P 25557 -C /path/to/checkpoint.json largefile.zip username@server:/destination/
+
+# Resume a failed transfer
+mscp -P 25557 -C /path/to/checkpoint.json -r
+```
+
+### SSH キー認証を指定する
+
+SFTPgo で SSH キー認証を設定している場合:
+
+```bash
+mscp -P 25557 -i ~/.ssh/your_key localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+### 帯域幅を制限する
+
+転送帯域幅を制限するには（共有接続で有用です）:
+
+```bash
+mscp -P 25557 -l 10M localfile.zip username@sftpgo.yourserver.appboxes.co:/destination/
+```
+
+## 例: 完全なワークフロー
+
+Appbox から取得した SFTPgo 認証情報を使う完全な例です。
+
+```bash
+# Set your credentials (replace with your actual values from SFTPgo Options)
+HOST="sftpgo.yourserver.appboxes.co"  # Your Hostname
+PORT="25557"                           # Your SFTP Port (not FTP port!)
+USER="your_username"                   # Your Username
+
+# Upload a large file using 4 connections
+mscp -P $PORT -n 4 ~/Downloads/large-backup.tar.gz $USER@$HOST:/backups/
+
+# Upload an entire directory
+mscp -P $PORT ~/Projects/my-website/ $USER@$HOST:/www/
+
+# Download files from server
+mscp -P $PORT $USER@$HOST:/media/movies/ ~/Downloads/movies/
+```
+
+## パフォーマンスのヒント
+
+1. **大きなファイルでは接続数を増やす**: 大容量ファイル転送では `-n` の値を増やします（例: `-n 8` や `-n 16`）
+2. **小さなファイルが多い場合は接続数を減らす**: 小さなファイルが多いディレクトリでは、接続数が少ない方が効率的な場合があります
+3. **テキストファイルでは圧縮を有効にする**: mscp は SSH 圧縮を継承します。テキスト中心の転送では `-C` を使用してください
+4. **非常に大きな転送ではチェックポイントを使う**: 複数 GiB の転送では、中断時に再開できるよう常にチェックポイントを有効にしてください
+
+## トラブルシューティング
+
+### Connection Refused
+
+SFTPgo 設定の正しい SFTP ポート（FTP ポートではありません）を使用していることを確認してください。
+
+```bash
+mscp -P 25557 ...  # Use your actual SFTP port
+```
+
+### Permission Denied
+
+ユーザー名とパスワードが正しいことを確認してください。まず標準の SFTP クライアントでテストできます。
+
+```bash
+sftp -P 25557 username@sftpgo.yourserver.appboxes.co
+```
+
+### 転送が遅い
+
+並列接続数を調整してみてください。
+
+```bash
+mscp -P 25557 -n 16 ...  # Increase connections
+```
+
+## 追加リソース
+
+- [mscp GitHub Repository](https://github.com/upa/mscp)
+- [mscp Documentation](https://github.com/upa/mscp#documentation)
+- [SFTPgo on Appbox](https://www.appbox.co/appstore/app/232)

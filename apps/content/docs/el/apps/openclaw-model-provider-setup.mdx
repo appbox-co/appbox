@@ -1,0 +1,516 @@
+---
+title: "Ρύθμιση παρόχου μοντέλων OpenClaw"
+description: "Ρυθμίστε το OpenClaw με οποιοδήποτε API key παρόχου μοντέλων μετά την εγκατάσταση."
+sort: 1
+---
+
+Το OpenClaw εγκαθίσταται στο Appbox χωρίς να απαιτείται model API key.
+
+Ο προτεινόμενος τρόπος για να ολοκληρώσετε τη ρύθμιση είναι να συνδεθείτε στην εφαρμογή OpenClaw μέσω SSH και να εκτελέσετε τον ενσωματωμένο οδηγό `openclaw onboard`. Ο οδηγός είναι ασφαλέστερος από τη χειροκίνητη επεξεργασία ολόκληρου του config, επειδή διατηρεί τις ρυθμίσεις gateway του Appbox ενώ σας καθοδηγεί στους παρόχους μοντέλων, τα API keys, τα κανάλια, τους health checks και τα skills.
+
+Αν δεν μπορείτε ή δεν θέλετε να χρησιμοποιήσετε SSH, χρησιμοποιήστε αντί γι' αυτό τη [μέθοδο εφεδρείας μέσω dashboard](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Προτεινόμενη μέθοδος: σύνδεση στο OpenClaw μέσω SSH και εκτέλεση onboarding
+
+Χρησιμοποιήστε αυτήν τη μέθοδο για νέες εγκαταστάσεις και για υπάρχουσες εγκαταστάσεις που χρειάζονται προσθήκη ή αλλαγή διαπιστευτηρίων παρόχου μοντέλων.
+
+### Τι χρειάζεστε πρώτα
+
+- Τη σελίδα λεπτομερειών της εφαρμογής OpenClaw στο Appbox.
+- Την **SSH Command** που εμφανίζεται στην ενότητα Configuration.
+- Το **Gateway Token / SSH Password**. Είναι το ίδιο δημιουργημένο μυστικό που χρησιμοποιείται για τη σύνδεση στο dashboard του OpenClaw.
+- Έναν λογαριασμό παρόχου μοντέλων ή API key. Αν δεν έχετε ακόμη, δείτε την ενότητα [Λήψη API keys](#getting-api-keys-with-dashboard-links).
+
+Η σελίδα λεπτομερειών της εφαρμογής εμφανίζει την έτοιμη για αντιγραφή SSH command:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Σελίδα λεπτομερειών εφαρμογής Appbox OpenClaw με επισημασμένη την SSH command"
+  width="860"
+/>
+
+### Σύνδεση από macOS
+
+1. Ανοίξτε το **Terminal** ή το **iTerm2**.
+2. Αντιγράψτε την **SSH Command** από τη σελίδα λεπτομερειών της εφαρμογής OpenClaw.
+3. Επικολλήστε την και εκτελέστε την. Θα μοιάζει με αυτό:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Αν το macOS ρωτήσει αν εμπιστεύεστε τον host, πληκτρολογήστε `yes` και πατήστε Enter.
+5. Όταν σας ζητηθεί password, επικολλήστε το **Gateway Token / SSH Password** και πατήστε Enter. Το Terminal δεν θα εμφανίσει χαρακτήρες όσο πληκτρολογείτε ή επικολλάτε το password.
+
+### Σύνδεση από Windows
+
+Τα Windows 10 και Windows 11 περιλαμβάνουν από προεπιλογή τον OpenSSH client.
+
+1. Ανοίξτε το **Windows Terminal** ή το **PowerShell**.
+2. Αντιγράψτε την **SSH Command** από τη σελίδα λεπτομερειών της εφαρμογής OpenClaw.
+3. Επικολλήστε την και εκτελέστε την:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Αν τα Windows ρωτήσουν αν εμπιστεύεστε τον host, πληκτρολογήστε `yes` και πατήστε Enter.
+5. Όταν σας ζητηθεί password, επικολλήστε το **Gateway Token / SSH Password** και πατήστε Enter. Το PowerShell δεν θα εμφανίσει το επικολλημένο password.
+
+Αν τα Windows αναφέρουν ότι το `ssh` δεν αναγνωρίζεται, εγκαταστήστε το **OpenSSH Client** από **Settings > System > Optional features**, έπειτα ανοίξτε ξανά το Windows Terminal και δοκιμάστε πάλι.
+
+### Εκτέλεση του οδηγού onboarding του OpenClaw
+
+Αφού συνδεθεί το SSH, εκτελέστε:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 σε macOS συνδεδεμένο στο OpenClaw μέσω SSH και εκτέλεση της εντολής openclaw onboard"
+  width="860"
+/>
+
+Ο οδηγός είναι διαδραστικός. Χρησιμοποιήστε αυτές τις επιλογές που αφορούν το Appbox:
+
+1. **Existing config:** επιλέξτε την επιλογή για έλεγχο ή τροποποίηση του τρέχοντος config. **Μην** επιλέξετε πλήρες reset, εκτός αν θέλετε σκόπιμα να ξαναφτιάξετε τη ρύθμιση του OpenClaw από την αρχή.
+2. **Model and auth:** επιλέξτε τον πάροχό σας, όπως OpenRouter, OpenAI, Anthropic, Google, xAI ή έναν προσαρμοσμένο πάροχο συμβατό με OpenAI. Επικολλήστε το API key όταν το ζητήσει ο οδηγός. Το OpenRouter είναι η πιο εύκολη προεπιλογή για τους περισσότερους χρήστες, επειδή ένα key μπορεί να δρομολογεί σε πολλά μοντέλα. Αν έχετε συνδρομή OpenAI Codex, επιλέξτε **OpenAI Codex** στη λίστα παρόχων, όχι μια επιλογή που ονομάζεται μόνο `codex`.
+3. **Default model:** επιλέξτε το μοντέλο που προτείνει ο οδηγός για αυτόν τον πάροχο ή εισαγάγετε χειροκίνητα μια τιμή `provider/model`, όπως `openrouter/auto`.
+4. **Workspace:** κρατήστε το προεπιλεγμένο workspace, εκτός αν έχετε συγκεκριμένο λόγο να το αλλάξετε.
+5. **Gateway settings:** κρατήστε τις υπάρχουσες ρυθμίσεις gateway του Appbox. Συγκεκριμένα, κρατήστε ενεργό το token auth και διατηρήστε τις υπάρχουσες ρυθμίσεις gateway port/bind.
+6. **Channels:** ρυθμίστε τώρα WhatsApp, Telegram, Discord, Signal, iMessage ή άλλα κανάλια, ή παραλείψτε τα και προσθέστε τα αργότερα με `openclaw configure`.
+7. **Web search:** επιλέξτε έναν πάροχο αναζήτησης αν έχετε, ή παραλείψτε το προς το παρόν.
+8. **Daemon/service install:** το Appbox ήδη επιβλέπει το OpenClaw μέσα στο container, οπότε παραλείψτε την εγκατάσταση daemon αν την προτείνει ο οδηγός.
+9. **Health check:** αφήστε τον οδηγό να εκτελέσει τον health check.
+10. **Skills:** επιτρέψτε στον οδηγό να ελέγξει τα bundled skills. Όταν ρωτήσει **Preferred node manager for skill installs**, επιλέξτε `npm`.
+
+Όταν ολοκληρωθεί το onboarding, επιστρέψτε στο dashboard του OpenClaw. Αν το dashboard ήταν ήδη ανοιχτό, ανανεώστε το και δοκιμάστε ένα σύντομο chat prompt.
+
+Χρήσιμες επόμενες εντολές μέσω SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Λήψη API keys (με συνδέσμους dashboard)
+
+Χρησιμοποιήστε αυτές τις κονσόλες παρόχων για να δημιουργήσετε keys. Με την προτεινόμενη μέθοδο SSH, επικολλήστε το key όταν το ζητήσει το `openclaw onboard`. Με τη μέθοδο εφεδρείας μέσω dashboard, συγχωνεύστε το key στο `Config > Secrets > Raw`.
+
+### Πρώτη πρόταση: OpenRouter (η καλύτερη προεπιλογή για τους περισσότερους χρήστες)
+
+Γιατί το προτείνουμε:
+
+- Δίνει ένα key για πολλούς προμηθευτές μοντέλων.
+- Μπορείτε να χρησιμοποιήσετε `openrouter/auto`, που μπορεί να αλλάζει μοντέλα ανάλογα με τη δυσκολία της εργασίας.
+- Το `auto` μπορεί να μειώσει το κόστος δρομολογώντας απλούστερες εργασίες σε φθηνότερα μοντέλα.
+
+Πώς να αποκτήσετε key:
+
+1. Μεταβείτε στο [OpenRouter](https://openrouter.ai/) και συνδεθείτε.
+2. Ανοίξτε τις [ρυθμίσεις API Keys](https://openrouter.ai/settings/keys).
+3. Κάντε κλικ στο **Create** και αντιγράψτε το key (εμφανίζεται μία φορά).
+4. Χρησιμοποιήστε το όταν ο οδηγός OpenClaw ζητήσει το OpenRouter API key σας. Για τη μέθοδο εφεδρείας μέσω dashboard, το config key είναι `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Στιγμιότυπο της σελίδας API keys του OpenRouter από δημόσιο tutorial"
+  width="860"
+/>
+Πηγαίο tutorial: [Πώς να αποκτήσετε OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Πώς να αποκτήσετε key:
+
+1. Συνδεθείτε στο [OpenAI Platform](https://platform.openai.com/).
+2. Ανοίξτε τα [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Κάντε κλικ στο **Create new secret key**.
+4. Αντιγράψτε το αμέσως (το OpenAI εμφανίζει την πλήρη τιμή μόνο μία φορά).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Στιγμιότυπο ρυθμίσεων OpenAI API key από δημόσιο tutorial"
+  width="860"
+/>
+Πηγαίο tutorial: [Πώς να αποκτήσετε OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Πώς να αποκτήσετε key:
+
+1. Συνδεθείτε στο [Anthropic Console](https://console.anthropic.com/).
+2. Ανοίξτε τα [API Keys](https://console.anthropic.com/settings/keys).
+3. Κάντε κλικ στο **Create Key**.
+4. Αντιγράψτε το key αμέσως (εμφανίζεται μία φορά).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Στιγμιότυπο δημιουργίας Anthropic API key από δημόσιο tutorial"
+  width="860"
+/>
+Πηγαίο tutorial: [Πώς να αποκτήσετε το Claude API
+key σας](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini μέσω AI Studio)
+
+Πώς να αποκτήσετε key:
+
+1. Ανοίξτε το [Google AI Studio](https://aistudio.google.com/).
+2. Μεταβείτε στα [API Keys](https://aistudio.google.com/app/apikey).
+3. Κάντε κλικ στο **Create API key** (νέο ή υπάρχον project).
+4. Αντιγράψτε και αποθηκεύστε το key.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Στιγμιότυπο δημιουργίας Google AI Studio API key από δημόσιο tutorial"
+  width="860"
+/>
+Πηγαίο tutorial: [Λήψη Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Σημείωση: τα dashboard των παρόχων μπορούν να αλλάζουν συχνά και μπορεί να εμφανίζουν μήνυμα σύνδεσης ανάλογα με την κατάσταση της συνεδρίας σας.
+
+## Μέθοδος εφεδρείας: ρύθμιση provider auth στο dashboard
+
+Χρησιμοποιήστε αυτήν τη μέθοδο μόνο αν το SSH δεν είναι διαθέσιμο ή αν προτιμάτε χειροκίνητη ρύθμιση. Ο Raw editor του dashboard λειτουργεί, αλλά επεξεργάζεται ολόκληρο το config object του OpenClaw ταυτόχρονα. Προσέξτε να συγχωνεύσετε τις ρυθμίσεις παρόχου στο υπάρχον αρχείο αντί να αντικαταστήσετε τις προεπιλογές gateway και skills του Appbox.
+
+1. Ανοίξτε το URL του dashboard του OpenClaw από τη σελίδα λεπτομερειών της εγκατεστημένης εφαρμογής.
+2. Μεταβείτε στο **Config > Secrets**.
+3. Επιλέξτε **Raw** αντί για Form.
+4. Κάντε κλικ στο κουμπί Reveal sensitive values (μοιάζει με μάτι με διαγράμμιση).
+5. **Συγχωνεύστε** τις ρυθμίσεις παρόχου από τα παρακάτω παραδείγματα στο υπάρχον config σας (δείτε [Πώς η χειροκίνητη ρύθμιση παρόχου εντάσσεται στο πλήρες αρχείο](#how-manual-provider-config-fits-in-the-full-file)) — μην αντικαταστήσετε ολόκληρο το αρχείο, εκτός αν σκοπεύετε να κάνετε reset στο gateway, τα skills και άλλες προεπιλογές του Appbox.
+6. Αποθηκεύστε και εφαρμόστε τις αλλαγές configuration.
+
+### Πώς η χειροκίνητη ρύθμιση παρόχου εντάσσεται στο πλήρες αρχείο
+
+Το **Config > Secrets > Raw** επεξεργάζεται **ολόκληρο** το config του OpenClaw σε ένα object. Στο Appbox, αυτό το αρχείο περιλαμβάνει ήδη στοιχεία όπως `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (bundled skills), `commands` και μερικές φορές `meta`. Τα snippets στην ενότητα [Παραδείγματα βασικών παρόχων](#major-provider-examples) δείχνουν μόνο τα κομμάτια που χρειάζεστε για τα μοντέλα: το δέντρο `models` και το `agents.defaults.model.primary`.
+
+**Τι να κάνετε:** κρατήστε τα υπάρχοντα top-level keys (`gateway`, `skills`, `commands` κ.λπ.) και **προσθέστε ή ενημερώστε** αυτές τις δύο ενότητες:
+
+- **`models.providers`** — προσθέστε τον πάροχό σας (π.χ. `openrouter`) και το `apiKey` του, το `baseUrl` όπου απαιτείται, και τη λίστα `models`.
+- **`agents.defaults.model.primary`** — ορίστε το default model string (π.χ. `openrouter/auto`) ώστε ο agent να χρησιμοποιεί αυτόν τον πάροχο.
+
+Αν τα `models` ή `agents` υπάρχουν ήδη, συγχωνεύστε τα νέα keys μέσα σε αυτά τα objects αντί να τα διπλασιάσετε.
+
+Παρακάτω υπάρχει ένα παράδειγμα σχήματος **ενός** πλήρους Raw αρχείου ως **JSON** (ο editor μπορεί επίσης στην πράξη να δέχεται εισαγωγικά τύπου JSON5). Το πραγματικό αρχείο σας μπορεί να περιλαμβάνει περισσότερα πεδία (π.χ. πλουσιότερα metadata μοντέλων, `meta`). Τα **provider blocks** στα παραδείγματα παρακάτω είναι τα μέρη που ευθυγραμμίζετε εδώ με `models` και `agents`.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token έναντι provider API key:** το `gateway.auth.token` χρησιμοποιείται μόνο για σύνδεση στο OpenClaw Control UI / gateway. Το `models.providers.*.apiKey` είναι το key του LLM vendor σας (OpenRouter, OpenAI κ.λπ.) — είναι διαφορετικά.
+
+## Παραδείγματα βασικών παρόχων
+
+Χρησιμοποιήστε αρχικά ένα provider block κάθε φορά, επιβεβαιώστε ότι λειτουργεί και μετά προσθέστε περισσότερους παρόχους. Κάθε παρακάτω παράδειγμα είναι ένα **merge fragment**: το `...` είναι config που έχει παραλειφθεί (γραμμές πάνω ή κάτω), και το `},` πριν από το `"models"` είναι το κλείσιμο οποιουδήποτε key βρίσκεται πάνω από το `models` στο αρχείο σας (για παράδειγμα `skills` ή `commands`). Τα snippets δεν είναι έγκυρο JSON από μόνα τους — συγχωνεύστε τις ενότητες `models` και `agents` στο root object σας.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Σημείωση Bedrock (χωρίς API key)
+
+Το Amazon Bedrock χρησιμοποιεί AWS credentials (για παράδειγμα `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) αντί για API key. Μια ελάχιστη καταχώριση παρόχου μοιάζει με:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Σημειώσεις
+
+- Το Gateway auth token και τα API keys παρόχων μοντέλων είναι διαφορετικές ρυθμίσεις.
+- Αν λάβετε σφάλμα παρόχου (για παράδειγμα λείπει Anthropic key), ενημερώστε το default model σε έναν πάροχο που έχετε ρυθμίσει.
+- Αν ένας πάροχος αποτύχει στο validation, πρώτα βεβαιωθείτε ότι υπάρχουν τα απαιτούμενα πεδία παρόχου (`baseUrl`, `models` και `apiKey` όπου ισχύει).
+
+## Επίσημα docs παρόχων
+
+- [Κατάλογος παρόχων OpenClaw](https://docs.openclaw.ai/providers/index)
+- [Πάροχος OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [Πάροχος OpenAI](https://docs.openclaw.ai/providers/openai)
+- [Πάροχος Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [Πάροχος Google](https://docs.openclaw.ai/providers/google)
+- [Πάροχος xAI](https://docs.openclaw.ai/providers/xai)
+- [Πάροχος Mistral](https://docs.openclaw.ai/providers/mistral)
+- [Πάροχος Together AI](https://docs.openclaw.ai/providers/together)
+- [Πάροχος Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

@@ -1,0 +1,516 @@
+---
+title: Configurarea furnizorului de modele OpenClaw
+description: Configurează OpenClaw cu orice cheie API de la un furnizor de modele după instalare.
+sort: 1
+---
+
+OpenClaw este instalat în Appbox fără a necesita o cheie API de model.
+
+Metoda recomandată pentru a finaliza configurarea este să te conectezi la aplicația OpenClaw prin SSH și să rulezi wizard-ul integrat `openclaw onboard`. Wizard-ul este mai sigur decât editarea manuală a configurației complete, deoarece păstrează setările gateway-ului Appbox în timp ce te ghidează prin furnizorii de modele, cheile API, canale, verificări de sănătate și skills.
+
+Dacă nu poți sau nu vrei să folosești SSH, folosește în schimb [metoda de rezervă din dashboard](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Metoda recomandată: conectează-te prin SSH în OpenClaw și rulează onboarding
+
+Folosește această metodă pentru instalări noi și pentru instalări existente care au nevoie de adăugarea sau modificarea credențialelor furnizorului de modele.
+
+### De ce ai nevoie mai întâi
+
+- Pagina cu detaliile aplicației OpenClaw din Appbox.
+- **SSH Command** afișată în secțiunea Configuration.
+- **Gateway Token / SSH Password**. Acesta este același secret generat folosit pentru autentificarea în dashboard-ul OpenClaw.
+- Un cont sau o cheie API de la un furnizor de modele. Dacă încă nu ai una, consultă [Obținerea cheilor API](#getting-api-keys-with-dashboard-links).
+
+Pagina cu detaliile aplicației afișează comanda SSH gata de copiat:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Pagina cu detaliile aplicației Appbox OpenClaw, cu comanda SSH evidențiată"
+  width="860"
+/>
+
+### Conectare de pe macOS
+
+1. Deschide **Terminal** sau **iTerm2**.
+2. Copiază **SSH Command** din pagina cu detaliile aplicației OpenClaw.
+3. Lipește-o și ruleaz-o. Va arăta similar cu aceasta:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Dacă macOS întreabă dacă ai încredere în host, tastează `yes` și apasă Enter.
+5. Când ți se cere parola, lipește **Gateway Token / SSH Password** și apasă Enter. Terminal nu va afișa niciun caracter în timp ce tastezi sau lipești parola.
+
+### Conectare de pe Windows
+
+Windows 10 și Windows 11 includ implicit clientul OpenSSH.
+
+1. Deschide **Windows Terminal** sau **PowerShell**.
+2. Copiază **SSH Command** din pagina cu detaliile aplicației OpenClaw.
+3. Lipește-o și ruleaz-o:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Dacă Windows întreabă dacă ai încredere în host, tastează `yes` și apasă Enter.
+5. Când ți se cere parola, lipește **Gateway Token / SSH Password** și apasă Enter. PowerShell nu va afișa parola lipită.
+
+Dacă Windows spune că `ssh` nu este recunoscut, instalează **OpenSSH Client** din **Settings > System > Optional features**, apoi redeschide Windows Terminal și încearcă din nou.
+
+### Rulează wizard-ul de onboarding OpenClaw
+
+După ce SSH se conectează, rulează:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 pe macOS conectat la OpenClaw prin SSH și rulând comanda openclaw onboard"
+  width="860"
+/>
+
+Wizard-ul este interactiv. Folosește aceste alegeri specifice Appbox:
+
+1. **Existing config:** alege opțiunea de a revizui sau modifica configurația curentă. **Nu** alege o resetare completă decât dacă vrei intenționat să reconstruiești configurarea OpenClaw de la zero.
+2. **Model and auth:** alege furnizorul, cum ar fi OpenRouter, OpenAI, Anthropic, Google, xAI sau un furnizor personalizat compatibil OpenAI. Lipește cheia API când wizard-ul o cere. OpenRouter este opțiunea implicită cea mai simplă pentru majoritatea utilizatorilor, deoarece o singură cheie poate direcționa către multe modele. Dacă ai un abonament OpenAI Codex, alege **OpenAI Codex** în lista de furnizori, nu o opțiune numită doar `codex`.
+3. **Default model:** alege modelul recomandat de wizard pentru acel furnizor sau introdu manual o valoare `provider/model`, cum ar fi `openrouter/auto`.
+4. **Workspace:** păstrează workspace-ul implicit, cu excepția cazului în care ai un motiv specific să îl schimbi.
+5. **Gateway settings:** păstrează setările existente ale gateway-ului Appbox. În special, păstrează autentificarea cu token activată și păstrează setările existente pentru gateway port/bind.
+6. **Channels:** configurează acum WhatsApp, Telegram, Discord, Signal, iMessage sau alte canale, ori sari peste ele și adaugă-le mai târziu cu `openclaw configure`.
+7. **Web search:** alege un furnizor de căutare dacă ai unul sau sari peste acest pas pentru moment.
+8. **Daemon/service install:** Appbox supraveghează deja OpenClaw în container, deci sari peste instalarea daemon-ului dacă wizard-ul o oferă.
+9. **Health check:** lasă wizard-ul să ruleze verificarea de sănătate.
+10. **Skills:** permite wizard-ului să verifice skills incluse. Când întreabă **Preferred node manager for skill installs**, alege `npm`.
+
+Când onboarding-ul se termină, revino la dashboard-ul OpenClaw. Dacă dashboard-ul era deja deschis, reîmprospătează-l și testează un prompt scurt de chat.
+
+Comenzi utile de follow-up prin SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## Obținerea cheilor API (cu linkuri către dashboard-uri)
+
+Folosește aceste console ale furnizorilor pentru a genera chei. Cu metoda SSH recomandată, lipește cheia când `openclaw onboard` o cere. Cu metoda de rezervă din dashboard, îmbină cheia în `Config > Secrets > Raw`.
+
+### Recomandat mai întâi: OpenRouter (cea mai bună opțiune implicită pentru majoritatea utilizatorilor)
+
+De ce îl recomandăm:
+
+- Oferă o singură cheie pentru mulți furnizori de modele.
+- Poți folosi `openrouter/auto`, care poate schimba modelele în funcție de dificultatea sarcinii.
+- `auto` poate reduce costul prin direcționarea sarcinilor mai simple către modele mai ieftine.
+
+Cum obții o cheie:
+
+1. Mergi la [OpenRouter](https://openrouter.ai/) și autentifică-te.
+2. Deschide [setările API Keys](https://openrouter.ai/settings/keys).
+3. Click pe **Create** și copiază cheia (afișată o singură dată).
+4. Folosește-o când wizard-ul OpenClaw cere cheia API OpenRouter. Pentru metoda de rezervă din dashboard, cheia de configurare este `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Captură de ecran a paginii de chei API OpenRouter dintr-un tutorial public"
+  width="860"
+/>
+Tutorial sursă: [Cum să obții o cheie API
+OpenRouter](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Cum obții o cheie:
+
+1. Autentifică-te în [OpenAI Platform](https://platform.openai.com/).
+2. Deschide [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Click pe **Create new secret key**.
+4. Copiaz-o imediat (OpenAI afișează valoarea completă o singură dată).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Captură de ecran a setărilor cheii API OpenAI dintr-un tutorial public"
+  width="860"
+/>
+Tutorial sursă: [Cum să obții o cheie API
+OpenAI](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Cum obții o cheie:
+
+1. Autentifică-te în [Anthropic Console](https://console.anthropic.com/).
+2. Deschide [API Keys](https://console.anthropic.com/settings/keys).
+3. Click pe **Create Key**.
+4. Copiază cheia imediat (afișată o singură dată).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Captură de ecran a creării cheii API Anthropic dintr-un tutorial public"
+  width="860"
+/>
+Tutorial sursă: [Cum să obții cheia ta API
+Claude](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini prin AI Studio)
+
+Cum obții o cheie:
+
+1. Deschide [Google AI Studio](https://aistudio.google.com/).
+2. Mergi la [API Keys](https://aistudio.google.com/app/apikey).
+3. Click pe **Create API key** (proiect nou sau existent).
+4. Copiază și salvează cheia.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Captură de ecran a creării cheii API Google AI Studio dintr-un tutorial public"
+  width="860"
+/>
+Tutorial sursă: [Obține cheia API Google AI
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Notă: dashboard-urile furnizorilor se pot schimba frecvent și pot afișa o solicitare de autentificare în funcție de starea sesiunii tale.
+
+## Metoda de rezervă: configurează autentificarea furnizorului în dashboard
+
+Folosește această metodă doar dacă SSH nu este disponibil sau preferi configurarea manuală. Editorul Raw din dashboard funcționează, dar editează întregul obiect de configurare OpenClaw dintr-o singură dată. Ai grijă să îmbini setările furnizorului în fișierul existent, în loc să înlocuiești setările implicite Appbox pentru gateway și skills.
+
+1. Deschide URL-ul dashboard-ului OpenClaw din pagina cu detaliile aplicației instalate.
+2. Mergi la **Config > Secrets**.
+3. Selectează **Raw** în loc de Form.
+4. Click pe butonul Reveal sensitive values (care arată ca un ochi tăiat).
+5. **Îmbină** setările furnizorului din exemplele de mai jos în configurația existentă (vezi [Cum se potrivește configurarea manuală a furnizorului în fișierul complet](#how-manual-provider-config-fits-in-the-full-file)) - nu înlocui întregul fișier decât dacă intenționezi să resetezi gateway-ul, skills și alte setări implicite Appbox.
+6. Salvează și aplică modificările de configurare.
+
+### Cum se potrivește configurarea manuală a furnizorului în fișierul complet
+
+**Config > Secrets > Raw** editează **întreaga** configurație OpenClaw într-un singur obiect. Pe Appbox, acel fișier include deja elemente precum `gateway` (bind, autentificare cu token, Control UI), `skills.load.extraDirs` (skills incluse), `commands` și uneori `meta`. Fragmentele din secțiunea [Exemple pentru furnizori majori](#major-provider-examples) arată doar părțile de care ai nevoie pentru modele: arborele `models` și `agents.defaults.model.primary`.
+
+**Ce trebuie să faci:** păstrează cheile existente de nivel superior (`gateway`, `skills`, `commands` etc.) și **adaugă sau actualizează** aceste două secțiuni:
+
+- **`models.providers`** - adaugă furnizorul tău (de ex. `openrouter`) și `apiKey`, `baseUrl` unde este necesar, și lista `models`.
+- **`agents.defaults.model.primary`** - setează șirul modelului implicit (de ex. `openrouter/auto`) astfel încât agentul să folosească acel furnizor.
+
+Dacă `models` sau `agents` există deja, îmbină cheile noi în acele obiecte în loc să le duplici.
+
+Mai jos este un exemplu de formă completă a unui fișier Raw ca **JSON** (în practică, editorul poate accepta și ghilimele în stil JSON5). Fișierul tău real poate include mai multe câmpuri (de ex. metadate mai bogate pentru modele, `meta`). **Blocurile de furnizor** din exemplele de mai jos sunt părțile pe care le aliniezi aici cu `models` și `agents`.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Tokenul gateway vs cheia API a furnizorului:** `gateway.auth.token` este doar pentru autentificarea în OpenClaw Control UI / gateway. `models.providers.*.apiKey` este cheia ta de la furnizorul LLM (OpenRouter, OpenAI etc.) - sunt diferite.
+
+## Exemple pentru furnizori majori
+
+Folosește mai întâi câte un bloc de furnizor, confirmă că funcționează, apoi adaugă mai mulți furnizori. Fiecare exemplu de mai jos este un **fragment de îmbinare**: `...` este configurație omisă (linii de deasupra sau dedesubt), iar `},` dinainte de `"models"` este închiderea oricărei chei aflate deasupra lui `models` în fișierul tău (de exemplu `skills` sau `commands`). Fragmentele nu sunt JSON valid de sine stătător - îmbină secțiunile `models` și `agents` în obiectul rădăcină.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Notă despre Bedrock (fără cheie API)
+
+Amazon Bedrock folosește credențiale AWS (de exemplu `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) în locul unei chei API. O intrare minimă de furnizor arată astfel:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Note
+
+- Tokenul de autentificare gateway și cheile API ale furnizorilor de modele sunt setări diferite.
+- Dacă primești o eroare de furnizor (de exemplu, cheia Anthropic lipsește), actualizează modelul implicit la un furnizor pe care l-ai configurat.
+- Dacă validarea unui furnizor eșuează, asigură-te mai întâi că sunt prezente câmpurile obligatorii ale furnizorului (`baseUrl`, `models` și `apiKey` unde se aplică).
+
+## Documentație oficială pentru furnizori
+
+- [Directorul furnizorilor OpenClaw](https://docs.openclaw.ai/providers/index)
+- [Furnizorul OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [Furnizorul OpenAI](https://docs.openclaw.ai/providers/openai)
+- [Furnizorul Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [Furnizorul Google](https://docs.openclaw.ai/providers/google)
+- [Furnizorul xAI](https://docs.openclaw.ai/providers/xai)
+- [Furnizorul Mistral](https://docs.openclaw.ai/providers/mistral)
+- [Furnizorul Together AI](https://docs.openclaw.ai/providers/together)
+- [Furnizorul Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

@@ -1,0 +1,99 @@
+---
+title: تعارف
+description: open-sourced Appbox frontend کی official documentation میں خوش آمدید۔
+sort: 1
+---
+
+**Appbox documentation میں خوش آمدید**  
+ہمیں یہ اعلان کرتے ہوئے خوشی ہے کہ [Appbox](https://www.appbox.co/) کا frontend اب [GitHub](https://github.com/appbox-co/appbox) پر open-sourced ہے۔ ہمارا مقصد ایسی collaborative community کو فروغ دینا ہے جو documentation میں contribute کرے، نئی frontend features develop کرے، اور مجموعی Appbox experience کو بہتر بنانے میں مدد دے۔
+
+اگرچہ ہماری documentation ابھی ابتدائی مراحل میں ہے، ہم اپنی space کے دیگر platforms جیسا جامع resource بنانے پر کام کر رہے ہیں۔ فی الحال ہماری docs بنیادی طور پر contribution guidelines پر focus کرتی ہیں، لیکن ہم Appbox پر دستیاب تمام apps کے لیے detailed information شامل کر کے اسے expand کرنے کا plan رکھتے ہیں۔
+
+جب تک ہماری documentation مزید robust نہیں ہو جاتی، specific apps یا services سے متعلق فوری questions کے لیے براہ کرم ہماری [legacy knowledge base](https://billing.appbox.co/knowledgebase) دیکھیں۔ اگر آپ کو technical support چاہیے تو assistance کے لیے [ticket submit](https://billing.appbox.co/submitticket.php) کر سکتے ہیں۔ جیسے جیسے ہم اسے expand کریں، progress check کرنے کے لیے آپ ہماری site کے footer میں موجود link سے ہمیشہ ان نئی docs تک access کر سکتے ہیں۔
+
+## مستقبل کے منصوبے
+
+- **تفصیلی app guides**  
+  ہمارے platform پر supported ہر app کے لیے installation، troubleshooting، اور tips cover کریں گے۔
+- **User اور developer resources**  
+  beginner-friendly tutorials سے advanced code references تک، آپ کے Appbox experience کو customize کرنے کے لیے ہر ضروری چیز فراہم کریں گے۔
+- **Community-driven content**  
+  ہم pull requests، feedback، اور suggestions کی حوصلہ افزائی کرتے ہیں؛ سب welcome ہیں اور اس project کو سب کے لیے grow کرنے میں مدد دیتے ہیں۔
+
+## شروع کرنا
+
+اگر آپ ہمارے open-sourced frontend code کو دیکھنا یا contribute کرنا چاہتے ہیں تو [Appbox](https://github.com/appbox-co/appbox) repository clone کریں:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+پھر project میں جائیں اور dependencies install کریں:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+آپ کی local instance `http://localhost:3000` پر دستیاب ہوگی۔ آزادانہ explore کریں، changes کریں، اور pull requests بنائیں۔ ہم ہر contribution کو قدر کی نگاہ سے دیکھتے ہیں!
+
+## Development tools
+
+### Linting
+
+Project TypeScript اور Prettier integration کے ساتھ ESLint استعمال کرتے ہوئے comprehensive linting setup کے ساتھ آتا ہے۔ یہ consistent code style یقینی بناتا ہے اور common errors جلد catch کرنے میں مدد دیتا ہے۔ آپ linting checks manually چلا سکتے ہیں:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+ہماری ESLint configuration میں شامل ہے:
+- `@typescript-eslint` کے ذریعے TypeScript-specific rules
+- `eslint-config-next` کے ساتھ Next.js specific linting
+- Prettier integration کے ساتھ code formatting
+
+### Pre-commit hooks
+
+ہم Git hooks manage کرنے کے لیے Husky استعمال کرتے ہیں، جو یہ یقینی بنانے میں مدد دیتا ہے کہ repository میں صرف quality code commit ہو۔ درج ذیل hooks setup ہیں:
+
+- **pre-commit**: ہر commit سے پہلے code quality یقینی بنانے کے لیے `lint:fix` چلاتا ہے
+- **commit-msg**: conventional commit message formatting enforce کرنے کے لیے commitlint استعمال کرتا ہے
+
+اس کا مطلب ہے کہ آپ کے commits accept ہونے سے پہلے automatically code quality اور proper formatting کے لیے check ہوں گے، جس سے codebase میں high standard برقرار رہے گا۔
+
+## Pull Requests بنانا
+
+جب آپ اپنی changes contribute کرنے کے لیے ready ہوں، تو اپنی Pull Request (PR) کے accept ہونے کے chances بڑھانے کے لیے ان guidelines کو follow کریں:
+
+### PR بنانے سے پہلے
+
+1. **latest main branch سے rebase کریں** تاکہ merge conflicts سے بچ سکیں:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **یقینی بنائیں کہ تمام linting pass ہو**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **یقینی بنائیں کہ آپ کا code locally کام کرتا ہے**، relevant functionality test کر کے۔
+
+### PR guidelines
+
+1. **PRs focused رکھیں** - ہر PR میں ایک issue یا feature address کریں۔
+2. **clear commit messages لکھیں** - conventional commit format follow کریں۔
+3. **clear descriptions شامل کریں** - explain کریں کہ PR کیا کرتی ہے اور کیوں needed ہے۔
+4. **tests add کریں** - جہاں applicable ہو، changes correctly work کرنے کی verify کے لیے tests add کریں۔
+5. **اپنے code کو document کریں** - complex logic کے لیے comments استعمال کریں اور function names descriptive رکھیں۔
+6. **existing patterns follow کریں** - آپ کا code باقی codebase کے style اور patterns سے match ہونا چاہیے۔
+
+Significant changes کے لیے coding میں وقت لگانے سے پہلے approach discuss کرنے کے لیے issue open کرنے پر غور کریں۔ اس سے یہ ensure ہوتا ہے کہ آپ کی contribution project کی direction سے align ہے اور wasted effort سے بچتی ہے۔

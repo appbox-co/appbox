@@ -1,0 +1,150 @@
+---
+title: "Launch Week dag 1 - Ny dashboard"
+date: 2026-03-09 10:00:00
+excerpt: "Dag 1 av Launch Week är här. Den nya Appbox-dashboarden är nu live."
+author_id: rid
+og_image: day1-dashboard-overview.png
+tags: [appbox, launch-week, dashboard, security, app-store, i18n, file-explorer]
+---
+
+# Launch Week dag 1: Den nya dashboarden är live
+
+Vi sa att Launch Week börjar på måndag. Och dag 1 är nu live.
+
+Idag lanserar vi den nya Appbox-dashboardupplevelsen. Det här är en stor uppgradering av gränssnitt och arbetsflöden i hela kontrollpanelen, och den har ett enkelt mål: göra det snabbare, tydligare och mindre irriterande att köra dina appboxes i vardagen.
+
+Den här uppdateringen har varit på gång länge, och jag är väldigt glad att vi äntligen kan lägga den i dina händer.
+
+## Ett nytt kontrollcenter
+
+Före idag låg den här informationen utspridd över separata sidor och flöden. Idag introducerar vi en dedikerad dashboard som samlar allt i en operativ vy:
+
+- senaste blogg- och plattformsuppdateringarna
+- dina serviceöversiktskort
+- dina notiser
+- de nyaste och nyligen uppdaterade apparna
+
+Istället för att hoppa mellan flikar kan du alltså öppna en sida och direkt se det som är viktigt.
+
+<p align="center">
+  <img src="/blog-images/day1-dashboard-overview.png" alt="Översikt över Appbox-dashboarden" width="860" className="mt-8 mb-10" />
+</p>
+
+## Omdesignad Appbox-hantering
+
+Appboxes-området har byggts om med en renare kortlayout och bättre snabböversikt. Du kan snabbt se status, lagring, trafik, slot-användning och hoppa direkt in i detaljer.
+
+<p align="center">
+  <img src="/blog-images/day1-appboxes-grid.png" alt="Dina appboxes i den nya layouten" width="860" className="mt-8 mb-10" />
+</p>
+
+Inuti varje appbox är sammanfattningsvyn nu mer operativ: resurskort, grafer och centrala åtgärder är enklare att nå och förstå vid första anblick.
+
+<p align="center">
+  <img src="/blog-images/day1-appbox-summary.png" alt="Appbox-sammanfattning med livestatistik" width="860" className="mt-8 mb-10" />
+</p>
+
+Det här är en sådan sida du har öppen när du faktiskt använder din miljö, inte bara en statisk informationsskärm.
+
+## App Store är bättre integrerad
+
+Vi har också förbättrat appupptäckt och appdetaljflöden så att de känns som en del av ett system istället för separata verktyg.
+
+Butiksvyn är renare, kategorierna är enklare att bläddra i och vägen från upptäckt till installation är kortare.
+
+<p align="center">
+  <img src="/blog-images/day1-app-store.png" alt="Integrerad appbutiksupplevelse" width="860" className="mt-8 mb-10" />
+</p>
+
+Appdetaljsidor gör nu versions- och resursdetaljer tydligare, så att du kan fatta beslut snabbare och med färre överraskningar innan du installerar eller uppgraderar.
+
+<p align="center">
+  <img src="/blog-images/day1-app-details.png" alt="Förbättrad vy för appdetaljer och versioner" width="860" className="mt-8 mb-10" />
+</p>
+
+Från och med idag kan appar dessutom exponera och stödja **flera installerbara versioner** direkt i flödet, så att du kan välja den version du vill ha och byta till en annan version när som helst.
+
+<p align="center">
+  <img src="/blog-images/day1-multi-version-selector.png" alt="Versionsväljare för appar med flera utgåvor" width="304" className="mt-8 mb-10" />
+</p>
+
+## Anpassade domäner är nu förstklassiga
+
+Anpassade domäner är nu en central del av installationsupplevelsen, inte ett krångligt extra steg.
+
+När en app kräver en domän sker konfigureringen nu direkt i installationsdialogen med ett tydligt guidat flöde:
+
+1. Välj din Appbox.
+2. Välj **Domain Type**:
+   - **Appbox Domain** för att använda din Appbox-standarddomän.
+   - **Custom Domain** för att använda en av dina egna domäner.
+3. Välj **Base Domain**.
+4. Ange den **Subdomain** du vill använda.
+5. Om du valde en anpassad domän visar Appbox exakt vilken DNS-post som ska läggas till (host/namn och mål-IP), och låter dig sedan verifiera den direkt.
+
+Istället för att manuellt gissa poster, kopiera dokumentation och försöka installera igen får du inbyggd DNS-konfiguration och verifiering på samma plats där du installerar appen.
+
+<p align="center">
+  <img src="/blog-images/day1-custom-domains-install.png" alt="Konfiguration av anpassad domän under appinstallation med DNS-verifiering" width="560" className="mt-8 mb-10" />
+</p>
+
+## Ny filutforskare (byggd från grunden)
+
+Filutforskaren har tänkts om från grunden. I den tidigare upplevelsen var filhantering begränsad till att ta bort filer. Nu är den en riktig filhanterare med:
+
+- uppladdningar
+- skapande av nya mappar
+- namnbyte
+- borttagning
+- nedladdning
+- växling mellan list- och rutnätsvy
+- brödsmulenavigering och kontextuella åtgärder
+
+Så du kan faktiskt hantera dina appbox-filer direkt, utan att installera en extra app.
+
+<p align="center">
+  <img src="/blog-images/day1-file-explorer.png" alt="Ny filutforskare med utökade filåtgärder" width="560" className="mt-8 mb-10" />
+</p>
+
+## Tvåfaktorsautentisering
+
+Säkerhet ska inte vara valfritt 2026. Från och med idag stödjer Appbox-konton inbyggd tvåfaktorsautentisering.
+
+Du kan aktivera och hantera 2FA direkt från ditt kontoområde, inklusive hantering av återställningskoder för kontoåterställning.
+
+<p align="center">
+  <img src="/blog-images/day1-2fa-security.png" alt="Hantering av tvåfaktorsautentisering" width="860" className="mt-8 mb-10" />
+</p>
+
+Det här är en viktig säkerhetsmilstolpe för plattformen och en av de funktioner användare har efterfrågat mest konsekvent.
+
+## Nytt designspråk i hela dashboarden
+
+Det visuella systemet har uppdaterats i navigation, avstånd, kort, typografi och interaktionstillstånd. Målet var konsekvens och fokus: mindre visuellt brus, starkare hierarki, bättre läsbarhet och en modernare produktkänsla i både mörkt och ljust tema.
+
+Du slipper alltså en bländande vit skärm när du installerar appar vid midnatt!
+
+## Bättre daglig UX: tema, språk och snabbare genvägar
+
+Den här releasen innehåller också förbättringar som gör dashboarden trevligare att använda varje dag:
+
+- **Inbyggt språkbyte** direkt i gränssnittet (med fler språk som läggs till över tid).
+- **Fästa appgenvägar** som visas som små snabbåtkomstikoner på dina servicekort, så att du snabbare kan hoppa in i dina mest använda appar.
+
+<div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto place-items-center">
+  <img src="/blog-images/day1-language-switcher.png" alt="Inbyggd språkväxlare i den nya dashboarden" width="380" className="mx-auto" />
+  <img src="/blog-images/day1-pinned-app-shortcuts.png" alt="Fästa appgenvägar på servicekort" width="250" className="mx-auto" />
+</div>
+<p className="text-center text-muted-foreground text-sm -mt-2 max-w-2xl mx-auto">
+  Språkbyte och fästa genvägar placerar vardagskontrollerna precis där du behöver dem.
+</p>
+
+## Dag 1 är live nu
+
+Om du redan är Appbox-användare kan du logga in och börja använda den nya dashboarden direkt.
+
+Som alltid är feedback välkommen. Det snabbaste sättet för oss att förbättra Appbox är att leverera, lyssna och iterera med verklig användning.
+
+---
+
+*Har du feedback eller hittat ett problem? Hör av dig på support@appbox.co eller öppna ett ärende på [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: 了解如何在 MDX 文件中使用 frontmatter。
+sort: 3
+---
+
+frontmatter 是 MDX 文件的重要组成部分。
+它用于定义文件内容的信息，
+例如标题、描述、作者、发布日期等。
+
+元数据头定义在文件开头，位于开头和结尾的 `---`（三个连字符）之间。
+
+## 格式
+
+元数据头以键值格式定义，其中键是元数据名称，值是该元数据的内容。
+
+**示例：**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+根据文档类型（文档、博客文章等），可以使用不同的元数据。
+
+## 文档元数据
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**示例：**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## 博客文章元数据
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    它是文章作者的标识符。
+    它必须与 `src/config/blog.ts` 文件中定义的作者 `id` 匹配，
+    该文件包含作者的完整数据。
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    如果你不想使用自动生成的图片，这就是文章在社交媒体分享时使用的特色图片。
+    图片必须存储在 `public/blog-og` 文件夹中。
+    只需使用图片文件名和扩展名。
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**示例：**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

@@ -1,0 +1,54 @@
+---
+title: 定期ネットワークメンテナンス - April 15 & 20
+date: 2026-04-14 16:00:00
+excerpt: 追加の transit and peering providers に向けてネットワークを準備するため、April 15 と April 20 に2つの短いメンテナンス枠があります。
+author_id: rid
+og_image: network-maintenance-april-2026-og.jpg
+tags: [appbox, インフラ, ネットワーク, メンテナンス]
+---
+
+# 定期ネットワークメンテナンス
+
+近日中に、当社ネットワークで2つのメンテナンス枠がありますので、事前にお知らせします。どちらも比較的短く、ダウンタイムは予想していませんが、何が起きるのか、なぜ行うのかを透明にお伝えしたいと考えています。
+
+## 何が起きるのか
+
+当社の transit provider が、2つの upstream carriers、Colt と Fiberring に対して別日程でメンテナンスを実施します。各 carrier は更新適用中に短時間 offline となり、その間のトラフィックは他の carriers 経由へ reroute されます。
+
+### Maintenance Window 1 — April 15
+
+- **Date:** Tuesday, April 15, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Colt
+- **Expected downtime:** None
+
+この時間帯は Colt route が利用できなくなり、すべてのトラフィックは他の carriers 経由へ reroute されます。
+
+### Maintenance Window 2 — April 20
+
+- **Date:** Monday, April 20, 2026
+- **Time:** 11:00 – 14:00 CET
+- **Upstream:** Fiberring
+- **Expected downtime:** None
+
+このメンテナンスは live で実施され、 interruption は発生しない見込みです。問題が発生した場合、トラフィックは一時的に他の carriers 経由へ reroute されます。
+
+## 影響はありますか？
+
+ほとんどのユーザーは、何も気づかないはずです。各 upstream が offline になっている間、トラフィックは自動的に他の carriers 経由へ reroute されます。
+
+ただし、各メンテナンス枠中は route が一時的に変わるため、一部のトラフィックはネットワーク上で少し異なる経路を取る場合があります。その結果、特定の接続でわずかな latency 変化が起きる可能性はありますが、大きな影響は想定していません。各枠が完了すれば、すべて通常に戻ります。
+
+## なぜ行うのか
+
+このメンテナンスは、より大きな計画の一部です。追加の transit and peering providers を迎え入れるためにネットワークを準備しており、これにより全員にとって、より良い冗長性、低 latency、そしてより多くの capacity が実現します。
+
+この件については5月にさらにお伝えできる予定ですので、続報をお待ちください。
+
+## ご質問
+
+どちらかのメンテナンス枠中に懸念点や通常と違う挙動に気づいた場合は、遠慮なくお問い合わせください。
+
+---
+
+*ご質問がありますか？support@appbox.co までご連絡ください。*

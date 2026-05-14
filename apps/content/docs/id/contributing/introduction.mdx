@@ -1,0 +1,99 @@
+---
+title: Pengantar
+description: Selamat datang di dokumentasi resmi untuk frontend Appbox yang open-source.
+sort: 1
+---
+
+**Selamat datang di Dokumentasi Appbox**  
+Kami senang mengumumkan bahwa frontend untuk [Appbox](https://www.appbox.co/) sekarang sudah open-source di [GitHub](https://github.com/appbox-co/appbox). Tujuan kami adalah membangun komunitas kolaboratif yang berkontribusi pada dokumentasi, mengembangkan fitur frontend baru, dan membantu meningkatkan pengalaman Appbox secara keseluruhan.
+
+Meskipun dokumentasi kami masih berada pada tahap awal, kami sedang membangun resource lengkap yang sebanding dengan platform lain di bidang kami. Saat ini, dokumentasi kami terutama berfokus pada panduan kontribusi, tetapi kami berencana memperluasnya dengan informasi terperinci untuk semua aplikasi yang tersedia di Appbox.
+
+Sampai dokumentasi kami menjadi lebih lengkap, silakan kunjungi [basis pengetahuan lama](https://billing.appbox.co/knowledgebase) untuk pertanyaan langsung tentang aplikasi atau layanan tertentu. Jika Anda membutuhkan dukungan teknis, Anda dapat [mengirim tiket](https://billing.appbox.co/submitticket.php) untuk mendapatkan bantuan. Anda selalu dapat mengakses dokumentasi baru ini melalui link di footer situs kami untuk melihat perkembangan saat kami memperluasnya.
+
+## Rencana ke Depan
+
+- **Panduan Aplikasi Mendalam**  
+  Mencakup instalasi, pemecahan masalah, dan tips untuk setiap aplikasi yang didukung di platform kami.
+- **Resource untuk Pengguna & Developer**  
+  Menyediakan semuanya, mulai dari tutorial ramah pemula hingga referensi kode lanjutan untuk menyesuaikan pengalaman Appbox Anda.
+- **Konten Berbasis Komunitas**  
+  Mendorong pull request, masukan, dan saran. Semuanya diterima dan membantu proyek ini berkembang untuk semua orang.
+
+## Mulai
+
+Jika Anda ingin melihat atau berkontribusi ke kode frontend open-source kami, clone repository [Appbox](https://github.com/appbox-co/appbox):
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+Lalu masuk ke project dan instal dependensinya:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+Instance lokal Anda akan tersedia di `http://localhost:3000`. Silakan jelajahi, buat perubahan, dan kirim pull request. Kami menghargai setiap kontribusi!
+
+## Alat Pengembangan
+
+### Linting
+
+Project ini dilengkapi setup linting lengkap menggunakan ESLint dengan TypeScript dan integrasi Prettier. Ini memastikan gaya kode yang konsisten dan membantu menangkap kesalahan umum lebih awal. Anda dapat menjalankan pemeriksaan linting secara manual:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+Konfigurasi ESLint kami mencakup:
+- Aturan khusus TypeScript melalui `@typescript-eslint`
+- Linting khusus Next.js dengan `eslint-config-next`
+- Pemformatan kode dengan integrasi Prettier
+
+### Hook Pre-commit
+
+Kami menggunakan Husky untuk mengelola Git hooks, yang membantu memastikan hanya kode berkualitas yang di-commit ke repository. Hook berikut sudah disiapkan:
+
+- **pre-commit**: Menjalankan `lint:fix` sebelum setiap commit untuk memastikan kualitas kode
+- **commit-msg**: Menggunakan commitlint untuk menegakkan format pesan commit konvensional
+
+Artinya, commit Anda akan diperiksa otomatis untuk kualitas kode dan format yang tepat sebelum diterima, menjaga standar tinggi di seluruh codebase.
+
+## Membuat Pull Request
+
+Saat Anda siap berkontribusi dengan perubahan Anda, ikuti panduan berikut agar Pull Request (PR) Anda lebih mungkin diterima:
+
+### Sebelum Membuat PR
+
+1. **Rebase dari branch main terbaru** untuk menghindari konflik merge:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **Pastikan semua linting lolos**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **Pastikan kode Anda berjalan secara lokal** dengan menguji fungsi yang relevan.
+
+### Panduan PR
+
+1. **Jaga PR tetap fokus** - Tangani satu issue atau fitur per PR.
+2. **Tulis pesan commit yang jelas** - Ikuti format commit konvensional.
+3. **Sertakan deskripsi yang jelas** - Jelaskan apa yang dilakukan PR Anda dan mengapa dibutuhkan.
+4. **Tambahkan test** - Jika relevan, tambahkan test untuk memverifikasi perubahan Anda bekerja dengan benar.
+5. **Dokumentasikan kode Anda** - Gunakan komentar untuk logika kompleks dan pastikan nama fungsi deskriptif.
+6. **Ikuti pola yang ada** - Kode Anda harus cocok dengan gaya dan pola yang digunakan di bagian lain codebase.
+
+Untuk perubahan besar, pertimbangkan membuka issue terlebih dahulu untuk mendiskusikan pendekatannya sebelum menginvestasikan waktu untuk coding. Ini membantu memastikan kontribusi Anda selaras dengan arah project dan menghindari pekerjaan yang sia-sia.

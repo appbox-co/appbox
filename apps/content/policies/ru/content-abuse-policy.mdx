@@ -1,0 +1,113 @@
+---
+title: Политика жалоб на контент
+description: Наша политика обработки жалоб на злоупотребление контентом
+---
+
+Appbox поддерживает высокий уровень ответственного поведения при использовании своих сервисов и уважает права других, требуя того же от пользователей сервисов Appbox. Чтобы правообладатели могли эффективно защищать свои права, а также чтобы любое misuse сервисов Appbox устранялось, Appbox принял abuse and illegal content handling policy.
+
+## Соблюдение законодательства UK
+
+Как hosting provider, базирующийся в UK, Appbox соблюдает все применимые законы UK, связанные с content moderation и abuse reporting, включая, но не ограничиваясь:
+
+- Copyright, Designs and Patents Act 1988
+- Defamation Act 2013
+- Computer Misuse Act 1990
+- Digital Economy Act 2017
+- Online Safety Act 2023
+- Counter-Terrorism and Border Security Act 2019
+
+Мы обязуемся оперативно обрабатывать reports об illegal content и сотрудничать с UK authorities, когда это требуется законом.
+
+## Понимание abuse reports
+
+Appbox не может полностью контролировать то, как его сервисы используются клиентом или конечным пользователем. Если вы обнаружили, что сервисы Appbox используются в нарушение Appbox Policies или любого применимого закона, либо считаете, что ваш контент был использован способом, нарушающим ваши права, вы можете отправить abuse или illegal content notification в Appbox.
+
+Compliance department Appbox оперативно обрабатывает все полученные notifications. Все notifications оцениваются автоматическим Appbox Abuse Prevention Tool, который активен 24/7 и обрабатывает notifications в течение всего года.
+
+## Priority Response для серьезного illegal content
+
+В соответствии с законодательством UK мы приоритизируем reports, связанные с:
+
+1. Child sexual abuse material (CSAM)
+2. Terrorist content
+3. Контентом, создающим imminent threat to public safety
+
+Такие reports будут обрабатываться срочно и, когда это уместно, передаваться соответствующим UK authorities, таким как Internet Watch Foundation (IWF) или Counter Terrorism Internet Referral Unit (CTIRU).
+
+## Требования и процесс отправки reports
+
+Пожалуйста, соблюдайте эти требования при отправке любого notification о content, размещенном и/или передаваемом Appbox. Соблюдение этих правил важно для оперативной обработки.
+
+### Общие требования ко всем abuse reports
+
+* Отправляйте notifications в plain text format
+* Используйте только English language
+* Отправляйте abuse notification на назначенный адрес: abusebox (at) appbox (dot) co
+* Не отправляйте notifications с NO-REPLY email address
+* Укажите полное имя, адрес, номер телефона и email address
+* Укажите static URL, где расположен reported content (этот URL должен разрешаться в IP address, назначенный Appbox)
+* Указывайте только один IP address на notification
+* Включайте только URLs или domains, по которым вы запрашиваете resolution
+* Предоставьте подробное описание content, о котором сообщаете, и объясните, почему он нарушает applicable law
+* Включите одно из следующих keywords в subject line: [Child abuse] [Live streaming] [Copyright] [Trademark] [VoIP/SIP] [Phishing] [DDoS] [Spam] [Hack] [Malware] [Gambling] [Zoophilia] [Defamation] [Personal data] [Photos of persons]
+
+### Дополнительные требования для reports о copyright infringement
+
+Если вы правообладатель и отправляете DMCA complaint, вы также должны включить:
+
+1. Конкретную идентификацию copyrighted content, который, как утверждается, нарушен, включая URLs и подробную информацию о claim
+2. Statement of good faith belief, конкретно: "I hereby state that I have a good faith belief that the disputed use of the copyrighted material is not authorized by the copyright owner, its agent, or the law (e.g., as a fair use)."
+3. Statement under penalty of perjury: "I hereby state that the information in this notice is accurate and, under penalty of perjury, that I am the owner, or authorized to act on behalf of the owner of the copyright or of an exclusive right under the copyright that is allegedly infringed."
+4. Ваше legal name и digital signature
+
+### Особые требования для других типов reports
+
+* **Trademark Infringement**: укажите registration details, включая registration number
+* **Hacking, Scanning, DDoS, or Malware Reports**: предоставьте описание activities, включая date, timestamp, involved IP addresses, port information и relevant log files
+
+После отправки notification вы получите email со ссылкой на Appbox Abuse Prevention Tool. Этот инструмент предоставляет interface для notifier и клиента Appbox, чтобы отслеживать статус notification и напрямую общаться с нашим Compliance department.
+
+## Процесс review abuse notification
+
+Когда мы получаем abuse или illegal content notification, применяется следующий процесс:
+
+### Initial Submission
+1. Complainant отправляет abuse notification на наш monitored email address: abusebox (at) appbox (dot) co
+2. Для более эффективной обработки мы рекомендуем complainants следовать стандартной XML structure для abuse notifications (details available upon request)
+
+### Automated Processing
+1. Наша автоматизированная система пытается извлечь abuse details из notification
+2. Система ищет specific information, например file names, IP addresses и port numbers
+
+### Content Verification & Action
+1. Если specific details успешно извлечены, система ищет infringing content в нашем physical storage
+2. Когда identified content найден:
+   - Данные немедленно перемещаются в quarantine и больше не доступны пользователю
+   - Content остается в quarantine 7 дней до permanent deletion
+   - Если customer принимает notification, данные удаляются немедленно без ожидания 7-дневного периода
+
+### Communication Process
+1. Complainant получает automatic updates на каждом этапе по email
+2. Additional status information доступна через наш abuse notification web portal
+3. И complainant, и customer могут связаться с нами в любое время через abuse system
+
+### Special Case Handling
+1. Если указанный content не найден в наших системах, complaint будет закрыта автоматически с appropriate notification
+2. Если наша автоматизированная система не может извлечь specific details (file name, IP, port number и т. д.), notification помечается для manual review
+3. Участник compliance team лично изучит и обработает manually flagged notifications
+
+Этот процесс обеспечивает эффективную обработку abuse notifications при сохранении fairness для всех сторон.
+
+## Client Counter-Notice
+
+Если client считает, что имеет надлежащие права на reported content, он может legally dispute report напрямую с complainant, но должен сначала сообщить нам достаточную информацию. В этом legal matter Appbox не будет выступать intermediary.
+
+## Termination Policy для repeat infringers
+
+Appbox оставляет за собой право terminate service любого client, определенного как "Repeat Infringer", или клиента, который не удалил reported content после указанного периода. Appbox по собственному усмотрению определяет criteria для того, когда user считается "repeat infringer."
+
+Перед termination будет предоставлен период 24 часа, чтобы client мог backup любые данные на своем Appbox service.
+
+## Disclaimer
+
+С этой Content Abuse Policy complainants и наши clients соглашаются, что Appbox не несет ответственности за любые legal actions против content любого client на наших services. Appbox действует только как common carrier, как объяснено в [Terms of Service](/policies/terms-of-service). 

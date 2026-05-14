@@ -1,0 +1,397 @@
+---
+title: Политика обработки данных
+description: Как мы управляем вашими данными и защищаем их
+---
+
+В Appbox мы собираем и храним только минимальный объем информации, необходимый для ведения записей и предоставления наших сервисов. Команда Appbox обучена обращаться с вашими данными с максимальным учетом конфиденциальности и безопасности и следует строгим протоколам, включая использование надежных учетных данных и multi-factor authentication. Вся обработка платежей полностью выполняется нашими payment processors, и никакая ваша финансовая информация не хранится Appbox, кроме payment records и соответствующих transaction IDs.
+
+## Email
+
+- **Uses**
+  - Используется как login для вашего Appbox Client Area и Appbox Control Panel
+  - Контактный адрес для Appbox service announcements
+  - Контактный адрес для inquiries в Appbox Ticket System
+- **Collection**
+  - Предоставляется пользователем при signup
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Используется для связи с пользователем по вопросам support или service announcements
+- **Retention**
+  - Indefinite
+- **More information**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Uses**
+  - Идентифицирует пользователя в Appbox Ticket System
+  - Используется как name пользовательского Appbox slot
+  - Регистрируется как local user на server, где развернут slot пользователя, показывая любые running processes пользователя
+  - Используется как username пользователя для installed applications
+- **Collection**
+  - Предоставляется пользователем при signup
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Требуется для support inquiries
+    - Требуется для investigation server issues путем поиска applications с высоким resource consumption, источников server instability или любых unauthorized applications
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Uses**
+  - Используется для расчета applicable taxes на основе выбранной пользователем страны
+- **Collection**
+  - Предоставляется пользователем при signup
+- **Storage**
+  - WHMCS = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Uses**
+  - Используется как password пользователя для Appbox Client Area
+- **Collection**
+  - Предоставляется пользователем при signup в Appbox Client Area
+- **Storage**
+  - WHMCS = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Limited access by the Appbox team
+    - Команда Appbox не может видеть password пользователя, поскольку он hashed, но может reset password после verification
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Мы настоятельно рекомендуем включить two-factor authentication на вашей [account security page](https://billing.appbox.co/user/security)
+
+### Appbox Control Panel Password
+
+- **Uses**
+  - Используется как password пользователя в Appbox Control Panel для доступа к его slot
+- **Collection**
+  - Предоставляется пользователем после deployment его slot
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Limited access by the Appbox team
+    - Команда Appbox не может видеть password пользователя, поскольку он hashed, но может reset password после verification
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Мы настоятельно рекомендуем включить two-factor authentication на вашей [account security page](https://billing.appbox.co/user/security)
+
+### Application Passwords
+
+- **Uses**
+  - Используются как password для installed applications пользователя
+- **Collection**
+  - Предоставляется пользователем после deployment его slot
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Требуется для application-specific support inquiries, с разрешения пользователя
+- **Retention**
+  - Until the user uninstalls the application
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - Мы настоятельно рекомендуем включить two-factor authentication на вашей [account security page](https://billing.appbox.co/user/security)
+
+## Payment Processing
+
+### PayPal
+
+- **Uses**
+  - Используется как один из payment gateways Appbox
+- **Collection**
+  - Payment processing полностью выполняется PayPal. Единственные данные, сохраняемые в WHMCS под account пользователя, — это **PayPal Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - Appbox Sales Team может проверять информацию пользователя через PayPal как часть sales process
+- **Retention**
+  - Indefinite
+
+### Stripe
+
+- **Uses**
+  - Используется как один из payment gateways Appbox
+- **Collection**
+  - Payment processing полностью выполняется Stripe. Единственные данные, сохраняемые в WHMCS под account пользователя, — это **Stripe Payment ID, Hash, последние четыре цифры карты и expiry**
+- **Storage**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - Appbox Sales Team может проверять информацию пользователя через Stripe как часть sales process
+- **Retention**
+  - Indefinite
+
+### CoinGate
+
+- **Uses**
+  - Используется как один из payment gateways Appbox для cryptocurrency transactions
+- **Collection**
+  - Payment processing полностью выполняется CoinGate. Единственные данные, сохраняемые в WHMCS, — это **CoinGate Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - Appbox Sales Team может проверять информацию пользователя через CoinGate как часть sales process
+- **Retention**
+  - Indefinite
+
+*Примечание: CoinGate сам хранит blockchain transaction ID и blockchain address отправителя как часть своего сервиса. Эта информация не хранится Appbox.*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Uses**
+  - Используются для monitoring health и resource usage серверов
+- **Collection**
+  - Генерируются после deployment пользовательского slot
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - Server metrics можно просматривать с помощью разных Linux utilities, установленных на вашем slot. Видны следующие основные metrics:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Ваши running processes
+      - Processes других users на том же server вам недоступны
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (your allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - Помимо metrics выше, команда Appbox использует Posthog, чтобы быстро агрегировать metrics со всех servers и alert team о любых errors
+    - Server metrics используются для support inquiries и investigation resource abuse
+- **Retention**
+  - Indefinite
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Uses**
+  - Любые invalid access attempts записываются в Appbox API, который ограничивает user от входа в Control Panel после определенного числа attempts на заданный период. Это включает:
+    - Username, введенный user
+    - IP address
+    - Number of attempts
+    - Last date of attempt
+- **Collection**
+  - Собирается, когда user неправильно вводит credentials
+- **Storage**
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Team
+    - Используется для выявления brute-force attempts
+    - Users могут запросить снятие timeout и удаление access attempt после request и verification через Ticket system
+- **Retention**
+  - 24 hours or upon user request
+
+#### SSH Login Logs
+
+- **Uses**
+  - Записывает login attempts и successful logins в SSH на user-installed applications вроде Ubuntu или Debian
+- **Collection**
+  - Генерируется автоматически SSH server при login attempts
+- **Storage**
+  - Application container = Cleartext (обычно в `/var/log/auth.log` или аналогичном файле)
+- **Access and Reasons for Access**
+  - User
+    - Поскольку эти logs хранятся внутри applications, где users имеют root (sudo) access, users полностью контролируют эти logs и имеют к ним доступ
+    - Users могут просматривать, изменять или удалять эти logs по необходимости
+  - Appbox team
+    - Access доступен только с разрешения user во время support troubleshooting
+- **Retention**
+  - Managed by the user, as they have root access to the container
+  - Default log rotation policies apply unless modified by the user
+
+### System Generated Logs
+
+- **Uses**
+  - Server-wide generated logs, используемые для выявления issues на servers
+- **Collection**
+  - Генерируются operating system серверов
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - Limited Access Appbox team
+    - Используются для выявления issues на конкретных servers
+    - Logs агрегируются Posthog, который alerts team о любых errors
+- **Retention**
+  - Indefinite
+
+### Logs Generated by Installed Applications
+
+- **Uses**
+  - Logs, генерируемые installed applications, используются для выявления issues внутри пользовательского slot
+- **Collection**
+  - Генерируются installed applications пользователя
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Требуется для application-specific support inquiries, с разрешения пользователя
+- **Retention**
+  - Until the user uninstalls the application or removes it
+
+### User's bash History
+
+- **Uses**
+  - Записывает все commands, введенные user в shell slot, расположено в `$HOME/.bash_history`
+- **Collection**
+  - Каждая command, введенная в shell, записывается
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - Поскольку bash history file хранится в home directory user, users полностью контролируют этот file
+    - Users могут просматривать, изменять, очищать или удалять этот file по необходимости (используя commands вроде `history -c` или редактируя/удаляя file)
+  - Appbox team
+    - Используется для general или application-specific inquiries, например чтобы проверить, корректны ли commands, введенные user, но только с разрешения user
+    - Используется для проверки possible intrusions или server abuse, но только когда это необходимо для security investigations
+- **Retention**
+  - Managed by the user, who can clear the history at any time
+  - By default, bash history is retained indefinitely until the user removes it
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Uses**
+  - Essential files для корректной работы installed applications
+- **Collection**
+  - Installed by the user on their slot
+- **Storage**
+  - Appbox Servers = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Используется для application-specific support inquiries, с разрешения пользователя
+- **Retention**
+  - Indefinite until the user removes it
+
+#### User Data
+
+- **Uses**
+  - Data, созданные user и/или applications пользователя и сохраненные на user's slot
+- **Collection**
+  - Created by the user and/or the user's applications
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - Файлы user хранятся в home folders на Appbox servers и изолированы от других users. Только user может получить к ним доступ
+  - Appbox team
+    - Может быть accessed для support inquiries, с разрешения пользователя
+- **Retention**
+  - Indefinite until the user removes it
+    - For legitimate DMCA takedown notices, мы уведомим user и попросим удалить content в течение 24 часов
+- **More Information**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Compliance
+
+В соответствии с UK Online Safety Act 2023 Appbox внедряет specific data handling practices для защиты users и соблюдения regulatory requirements:
+
+### Content Safety Monitoring
+
+- **Uses**
+  - Risk assessment и mitigation для illegal и harmful content
+  - Moderation reported content
+  - Prevention of distribution of illegal content
+- **Collection**
+  - Generated when content is reported or flagged
+  - Content hash values для known illegal material
+- **Storage**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Compliance Team
+    - Для review reported content и принятия appropriate action
+    - Для coordination с UK authorities, когда это legally required
+  - UK regulatory authorities (when required by law)
+    - Для monitoring compliance с Online Safety Act
+    - Для investigation serious illegal content
+- **Retention**
+  - Report data: 2 years after resolution
+  - Content hash values: Indefinite (for prevention of redistribution)
+
+### Risk Assessment Data
+
+- **Uses**
+  - Conducting required risk assessments для illegal content и content harmful to children
+  - Implementing proportionate safety measures
+  - Demonstrating compliance to regulatory authorities
+- **Collection**
+  - Generated through regular platform risk assessments
+  - Aggregated usage data to identify potential risk patterns
+- **Storage**
+  - Appbox Compliance Systems = Protected
+- **Access and Reasons for Access**
+  - Appbox Compliance Team
+    - Для conducting и updating risk assessments
+    - Для implementing safety measures
+  - UK regulatory authorities (when required by law)
+    - Для verifying compliance with risk assessment duties
+- **Retention**
+  - 3 years (to demonstrate ongoing compliance)
+
+### Content Reporting System
+
+- **Uses**
+  - Позволяет users report illegal или harmful content
+  - Tracks status of reports и actions taken
+- **Collection**
+  - Report details provided by reporting users
+  - Information about reported content
+  - Actions taken on reports
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - Reporting user (limited to their own reports)
+  - User whose content was reported (limited information)
+  - Appbox Compliance Team
+    - Для investigating и resolving reports
+  - UK regulatory authorities (when required by law)
+    - Для investigating serious illegal content reports
+- **Retention**
+  - 2 years after resolution

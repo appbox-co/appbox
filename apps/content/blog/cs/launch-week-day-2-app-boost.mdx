@@ -1,0 +1,77 @@
+---
+title: Launch Week Den 2 - App Boost
+date: 2026-03-10 10:00:00
+excerpt: Den 2 Launch Week. Představujeme App Boost, nový způsob, jak dát aplikacím více zdrojů bez upgradu tarifu.
+author_id: rid
+og_image: day2-boost-app-detail.png
+tags: [appbox, launch-week, boost, performance, resources]
+---
+
+# Launch Week Den 2: Představujeme App Boost
+
+Den 2. Pojďme mluvit o zdrojích.
+
+Jedna z nejčastějších otázek, které dostáváme, je nějaká variace na "jak téhle aplikaci dám víc RAM?" nebo "můžu zrychlit jen tuhle jednu aplikaci bez upgradu celého tarifu?" Až do dneška odpověď vždy zněla: upgradujte tarif, nebo se smiřte s tím, co máte.
+
+To se teď mění. Dnes spouštíme **App Boost**.
+
+## Co je App Boost?
+
+App Boost vám umožňuje přidělit jednotlivým aplikacím více zdrojů pomocí dostupných app slotů. Místo toho, aby každá aplikace dostala pevný podíl zdrojů vašeho Appboxu, můžete teď u libovolné aplikace posunout úroveň boostu a zvýšit její alokaci CPU a RAM.
+
+Myšlenka je jednoduchá: pravděpodobně máte aplikace, které potřebují více výkonu, a aplikace, kterým minimum úplně stačí. Boost vám umožní vzít nevyužitou kapacitu vašeho tarifu a nasměrovat ji tam, kde na ní skutečně záleží.
+
+<p align="center">
+  <img src="/blog-images/day2-boost-app-detail.png" alt="Ovládání App Boost na stránce detailu aplikace" width="860" className="mt-8 mb-10" />
+</p>
+
+## Jak to funguje
+
+Každý tarif Appbox obsahuje určitý počet app slotů. Každá nainstalovaná aplikace část těchto slotů používá. S App Boost můžete aplikaci přiřadit další sloty a zvýšit její násobitel zdrojů.
+
+Ve skutečnosti ovládáte toto:
+
+- **Boost Slots**: počet extra slotů, které této aplikaci vyhrazujete. Každý slot zvýší násobitel zdrojů o pevný přírůstek (typicky 0.1x na slot).
+- **Multiplier**: výsledný faktor škálování zdrojů. Při 0 boost slotech jste na 1.0x (základ). Posuňte ho výš a můžete aplikaci dostat na 1.3x, 2x nebo podle tarifu ještě výš.
+- **RAM and CPUs**: tyto hodnoty se aktualizují v reálném čase při tažení slideru, takže přesně vidíte, kolik paměti a CPU aplikace dostane, než změnu potvrdíte.
+- **Slot Cost**: ukazuje, kolik celkových slotů aplikace spotřebuje (základní cena plus boost sloty), takže vždy znáte kompromis.
+
+Slider ukazuje milníkové značky na celých hodnotách násobitele (2x, 3x atd.) a dokonce spustí malé konfety, když na ně narazíte. Neodolali jsme.
+
+## Boost při instalaci
+
+Nemusíte čekat, až bude aplikace nainstalovaná, abyste ji mohli boostnout. Boost slider je vestavěný přímo v instalačním dialogu, takže si můžete zvolit úroveň zdrojů ještě před spuštěním aplikace.
+
+To je obzvlášť užitečné u náročnějších aplikací, jako jsou OSes nebo media servery, u kterých dopředu víte, že z extra zdrojů budou těžit.
+
+<p align="center">
+  <img src="/blog-images/day2-boost-install-dialog.png" alt="Boost slider v dialogu instalace aplikace" width="560" className="mt-8 mb-10" />
+</p>
+
+## Boost po instalaci
+
+Už máte aplikace spuštěné? Otevřete stránku detailu libovolné aplikace a kartu App Boost najdete přímo tam. Posuňte slider, zobrazte náhled zdrojů a klikněte na Apply Boost.
+
+Změny zdrojů se aplikují živě bez restartu.
+
+## Co stávající aplikace?
+
+Pokud máte aplikace nainstalované už před dneškem, budou dál používat předchozí systém násobitelů zdrojů přesně jako dřív. App Boost je odteď zapnutý pro nově instalované aplikace. Chtěli jsme to nasadit čistě, bez narušení čehokoli, co už běží.
+
+## Chcete více boostu?
+
+Maximální boost, který můžete použít, závisí na dostupných slotech vašeho tarifu. Pokud vám dochází prostor a chcete jít ještě dál, upgrade tarifu vám dá více slotů k využití. Přímo v boost UI je odkaz na upgrade, který vás zavede do fakturační oblasti.
+
+## Náhled zdrojů
+
+Jedním z detailů, ze kterých mám největší radost, je panel Resource Preview pod sliderem. Ukazuje násobitel, cenu ve slotech, RAM a CPU, vše aktualizované v reálném čase při tažení. Žádné hádání, žádná překvapení. Přesně víte, co vaše aplikace dostane, ještě než cokoli aplikujete.
+
+## Den 2 je teď živě
+
+App Boost je teď dostupný pro všechny nově instalované aplikace. Přihlaste se, nainstalujte aplikaci a vyzkoušejte slider.
+
+Zítra je Den 3 a máme pro vás něco velkého. Uvidíme se tehdy.
+
+---
+
+*Máte zpětnou vazbu nebo jste našli problém? Ozvěte se na support@appbox.co nebo otevřete ticket na [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

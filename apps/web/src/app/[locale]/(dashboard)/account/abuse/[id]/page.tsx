@@ -9,6 +9,7 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
+  FileWarning,
   MessageSquare,
   User
 } from "lucide-react"
@@ -22,6 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
+import { AccountPageHeader } from "../../_components/account-page-header"
 
 const TIMELINE_MESSAGES: Record<number, string> = {
   [-1]: "The case has been created and is awaiting investigation.",
@@ -105,9 +107,16 @@ function AbuseStatusBadge({
 function DetailSkeleton() {
   return (
     <div className="space-y-6">
-      <div className="h-8 w-48 animate-pulse rounded bg-muted" />
-      <div className="h-[300px] animate-pulse rounded-xl border bg-muted" />
-      <div className="h-[200px] animate-pulse rounded-xl border bg-muted" />
+      <div className="h-8 w-28 animate-pulse rounded bg-muted" />
+      <div className="flex items-center gap-3">
+        <div className="size-10 animate-pulse rounded-[10px] bg-muted" />
+        <div className="space-y-2">
+          <div className="h-6 w-64 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-36 animate-pulse rounded bg-muted/70" />
+        </div>
+      </div>
+      <div className="card-glow h-[300px] animate-pulse rounded-xl border bg-card" />
+      <div className="card-glow h-[200px] animate-pulse rounded-xl border bg-card" />
     </div>
   )
 }
@@ -164,17 +173,21 @@ export default function AbuseReportDetailPage({
         className="gap-1.5"
       />
 
-      {/* Header */}
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold tracking-tight">{report.subject}</h1>
-        <AbuseStatusBadge
-          status={report.status}
-          statusCode={report.statusCode}
-        />
-      </div>
+      <AccountPageHeader
+        title={report.subject}
+        description={t("abuse.detailDescription")}
+        icon={<FileWarning className="size-[18px]" />}
+        gradient="from-[#f59e0b] to-[#d97706]"
+        action={
+          <AbuseStatusBadge
+            status={report.status}
+            statusCode={report.statusCode}
+          />
+        }
+      />
 
-      <Card>
-        <CardHeader>
+      <Card className="card-glow overflow-hidden">
+        <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <Clock className="size-4 text-muted-foreground" />
             Timeline
@@ -186,9 +199,10 @@ export default function AbuseReportDetailPage({
       </Card>
 
       {/* Report info card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">
+      <Card className="card-glow overflow-hidden">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <FileWarning className="size-4 text-muted-foreground" />
             {t("abuse.reportDetails")}
           </CardTitle>
         </CardHeader>
@@ -249,8 +263,8 @@ export default function AbuseReportDetailPage({
 
       {/* Admin response card */}
       {report.admin_response && (
-        <Card>
-          <CardHeader>
+        <Card className="card-glow overflow-hidden">
+          <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base">
               <MessageSquare className="size-4 text-muted-foreground" />
               {t("abuse.adminResponse")}

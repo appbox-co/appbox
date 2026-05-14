@@ -1,0 +1,397 @@
+---
+title: डेटा हैंडलिंग नीति
+description: हम आपके डेटा का प्रबंधन और संरक्षण कैसे करते हैं
+---
+
+Appbox में हम केवल वही न्यूनतम जानकारी एकत्र और संग्रहीत करते हैं जो हमारे रिकॉर्ड बनाए रखने और अपनी सेवाएँ देने के लिए आवश्यक है। Appbox टीम को आपकी गोपनीयता और सुरक्षा को सर्वोच्च प्राथमिकता देते हुए डेटा संभालने के लिए प्रशिक्षित किया गया है, और वह मजबूत credentials तथा multi-factor authentication सहित सख्त protocols का पालन करती है। सभी payment processing पूरी तरह हमारे payment processors द्वारा संभाली जाती है; payment records और उनके संबंधित transaction IDs के अलावा आपकी कोई भी वित्तीय जानकारी Appbox में संग्रहीत नहीं की जाती।
+
+## ईमेल
+
+- **उपयोग**
+  - Appbox Client Area और Appbox Control Panel में login के रूप में काम करता है
+  - Appbox service announcements के लिए संपर्क माध्यम
+  - Appbox Ticket System inquiries के लिए संपर्क माध्यम
+- **संग्रह**
+  - signup के दौरान user द्वारा प्रदान किया जाता है
+- **संग्रहण**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम
+    - support या किसी service announcement के लिए user से संपर्क करने हेतु
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+- **अधिक जानकारी**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **उपयोग**
+  - Appbox Ticket System पर user की पहचान करता है
+  - user के Appbox slot के नाम के रूप में काम करता है
+  - जिस server पर user का slot deployed है, वहाँ local user के रूप में registered होता है और user की running processes दिखा सकता है
+  - installed applications के लिए user के username के रूप में काम करता है
+- **संग्रह**
+  - signup के दौरान user द्वारा प्रदान किया जाता है
+- **संग्रहण**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Application पर निर्भर
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम
+    - support inquiries के लिए आवश्यक
+    - high resource consumption, server instability के स्रोत, या unauthorized applications की जाँच के लिए applications खोजने में आवश्यक
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+- **अधिक जानकारी**
+  - Sensitive Data Removal Policy
+
+## देश
+
+- **उपयोग**
+  - user द्वारा चुने गए देश के आधार पर लागू taxes की गणना के लिए
+- **संग्रह**
+  - signup के दौरान user द्वारा प्रदान किया जाता है
+- **संग्रहण**
+  - WHMCS = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+- **अधिक जानकारी**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area password
+
+- **उपयोग**
+  - Appbox Client Area के लिए user के password के रूप में काम करता है
+- **संग्रह**
+  - Appbox Client Area पर signup के दौरान user द्वारा प्रदान किया जाता है
+- **संग्रहण**
+  - WHMCS = Encrypted
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम की सीमित पहुँच
+    - Appbox टीम user का password नहीं देख सकती क्योंकि वह hashed होता है, लेकिन verification के बाद आपका password reset कर सकती है
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+- **अधिक जानकारी**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - हम आपके [account security page](https://billing.appbox.co/user/security) पर two-factor authentication enable करने की जोरदार सलाह देते हैं
+
+### Appbox Control Panel password
+
+- **उपयोग**
+  - अपने slot तक पहुँचने के लिए Appbox Control Panel पर user के password के रूप में काम करता है
+- **संग्रह**
+  - slot deploy होने के बाद user द्वारा प्रदान किया जाता है
+- **संग्रहण**
+  - Appbox API = Encrypted
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम की सीमित पहुँच
+    - Appbox टीम user का password नहीं देख सकती क्योंकि वह hashed होता है, लेकिन verification के बाद आपका password reset कर सकती है
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+- **अधिक जानकारी**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - हम आपके [account security page](https://billing.appbox.co/user/security) पर two-factor authentication enable करने की जोरदार सलाह देते हैं
+
+### Application passwords
+
+- **उपयोग**
+  - user के installed applications के password के रूप में काम करता है
+- **संग्रह**
+  - slot deploy होने के बाद user द्वारा प्रदान किया जाता है
+- **संग्रहण**
+  - Appbox API = Cleartext
+  - Installed Applications = Application पर निर्भर
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम
+    - user की अनुमति से, application-specific support inquiries के लिए आवश्यक
+- **रखरखाव अवधि**
+  - जब तक user application uninstall नहीं करता
+- **अधिक जानकारी**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - हम आपके [account security page](https://billing.appbox.co/user/security) पर two-factor authentication enable करने की जोरदार सलाह देते हैं
+
+## Payment processing
+
+### PayPal
+
+- **उपयोग**
+  - Appbox के payment gateways में से एक के रूप में काम करता है
+- **संग्रह**
+  - Payment processing पूरी तरह PayPal द्वारा की जाती है। user के account के अंतर्गत WHMCS में केवल **PayPal Transaction ID** save होता है
+- **संग्रहण**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **पहुँच और पहुँच के कारण**
+  - Appbox Sales Team
+    - Appbox Sales Team हमारी sales process के हिस्से के रूप में PayPal के साथ user की जानकारी verify कर सकती है
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+
+### Stripe
+
+- **उपयोग**
+  - Appbox के payment gateways में से एक के रूप में काम करता है
+- **संग्रह**
+  - Payment processing पूरी तरह Stripe द्वारा की जाती है। user के account के अंतर्गत WHMCS में केवल **Stripe Payment ID, Hash, Card's last four digits and expiry** save होते हैं
+- **संग्रहण**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **पहुँच और पहुँच के कारण**
+  - Appbox Sales Team
+    - Appbox Sales Team हमारी sales process के हिस्से के रूप में Stripe के साथ user की जानकारी verify कर सकती है
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+
+### CoinGate
+
+- **उपयोग**
+  - cryptocurrency transactions के लिए Appbox के payment gateways में से एक के रूप में काम करता है
+- **संग्रह**
+  - Payment processing पूरी तरह CoinGate द्वारा की जाती है। WHMCS में केवल **CoinGate Transaction ID** save होता है
+- **संग्रहण**
+  - WHMCS = Cleartext (Transaction ID)
+- **पहुँच और पहुँच के कारण**
+  - Appbox Sales Team
+    - Appbox Sales Team हमारी sales process के हिस्से के रूप में CoinGate के साथ user की जानकारी verify कर सकती है
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+
+*ध्यान दें: CoinGate अपनी service के हिस्से के रूप में blockchain transaction ID और sender का blockchain address संग्रहीत करता है। यह जानकारी Appbox द्वारा संग्रहीत नहीं की जाती।*
+
+## Logs और analytics
+
+### Server metrics
+
+- **उपयोग**
+  - servers की health और resource usage monitor करने के लिए
+- **संग्रह**
+  - user का slot deploy होने के बाद generated
+- **संग्रहण**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - User
+    - Server metrics आपके slot पर installed विभिन्न Linux utilities से देखे जा सकते हैं। ये प्रमुख metrics देखे जा सकते हैं:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - आपकी running processes
+      - उसी server पर अन्य users द्वारा चलाए गए processes आपको accessible नहीं हैं
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (आपको allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - ऊपर दिए गए metrics के अलावा, Appbox टीम सभी servers से metrics जल्दी aggregate करने और errors पर alert पाने के लिए Posthog का उपयोग करती है
+    - Server metrics support inquiries और resource abuse की जाँच के लिए उपयोग किए जाते हैं
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+
+### Authentication logs
+
+#### Appbox Control Panel login attempts
+
+- **उपयोग**
+  - कोई भी invalid access attempts Appbox API में log होते हैं, जो निर्धारित attempts की संख्या के बाद user को निश्चित अवधि तक Control Panel में login करने से रोकता है। इसमें शामिल हैं:
+    - Username, जैसा user ने दर्ज किया
+    - IP address
+    - attempts की संख्या
+    - अंतिम attempt की date
+- **संग्रह**
+  - जब user credentials गलत दर्ज करता है
+- **संग्रहण**
+  - Appbox API = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - Appbox Team
+    - किसी brute-force attempt की पहचान के लिए
+    - request और Ticket system के माध्यम से verification के बाद, users अपना timeout हटाने और access attempt remove करने का अनुरोध कर सकते हैं
+- **रखरखाव अवधि**
+  - 24 घंटे या user request पर
+
+#### SSH Login Logs
+
+- **उपयोग**
+  - Ubuntu या Debian जैसे user-installed applications पर SSH login attempts और successful logins record करता है
+- **संग्रह**
+  - login attempts होने पर SSH server द्वारा automatically generated
+- **संग्रहण**
+  - Application container = Cleartext (आमतौर पर `/var/log/auth.log` या समान)
+- **पहुँच और पहुँच के कारण**
+  - User
+    - चूँकि ये logs उन applications में संग्रहीत होते हैं जहाँ users के पास root (sudo) access होता है, users के पास इन logs पर पूर्ण control और access होता है
+    - Users आवश्यकता अनुसार इन logs को view, modify, या delete कर सकते हैं
+  - Appbox टीम
+    - support troubleshooting के दौरान केवल user की अनुमति से access उपलब्ध होता है
+- **रखरखाव अवधि**
+  - user द्वारा managed, क्योंकि उनके पास container का root access होता है
+  - user द्वारा बदले जाने तक default log rotation policies लागू रहती हैं
+
+### System generated logs
+
+- **उपयोग**
+  - Server-wide generated logs, servers पर issues identify करने के लिए
+- **संग्रह**
+  - servers के operating system द्वारा generated
+- **संग्रहण**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - Appbox टीम की सीमित पहुँच
+    - specific servers में issues identify करने के लिए
+    - logs Posthog द्वारा aggregate होते हैं, जो errors पर team को alert करता है
+- **रखरखाव अवधि**
+  - अनिश्चित अवधि
+
+### Installed applications द्वारा generated logs
+
+- **उपयोग**
+  - installed applications द्वारा generated logs, user के slot के भीतर issues identify करने के लिए
+- **संग्रह**
+  - user के installed applications द्वारा generated
+- **संग्रहण**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम
+    - user की अनुमति से, application-specific support inquiries के लिए आवश्यक
+- **रखरखाव अवधि**
+  - जब तक user application uninstall या remove नहीं करता
+
+### User's bash history
+
+- **उपयोग**
+  - slot के shell पर user द्वारा दर्ज किए गए सभी commands record करता है, जो `$HOME/.bash_history` में स्थित होता है
+- **संग्रह**
+  - shell पर दर्ज हर command record होती है
+- **संग्रहण**
+  - Appbox Servers = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - User
+    - bash history file user की home directory में होती है, इसलिए users के पास इस file पर पूर्ण control होता है
+    - Users इसे आवश्यकतानुसार view, modify, clear, या delete कर सकते हैं (जैसे `history -c` commands से या file edit/remove करके)
+  - Appbox टीम
+    - user द्वारा दर्ज commands सही हैं या नहीं, यह verify करने जैसे general या application-specific inquiries के लिए, लेकिन केवल user की अनुमति से
+    - possible intrusions या server abuse की जाँच के लिए, लेकिन केवल security investigations में आवश्यक होने पर
+- **रखरखाव अवधि**
+  - user द्वारा managed, जो history को कभी भी clear कर सकता है
+  - default रूप से bash history user द्वारा हटाए जाने तक अनिश्चित अवधि तक रहती है
+
+### Hosted data
+
+#### Installed applications
+
+- **उपयोग**
+  - installed applications को ठीक से चलाने के लिए essential files
+- **संग्रह**
+  - user द्वारा अपने slot पर installed
+- **संग्रहण**
+  - Appbox Servers = Application पर निर्भर
+- **पहुँच और पहुँच के कारण**
+  - User
+  - Appbox टीम
+    - user की अनुमति से, application-specific support inquiries के लिए
+- **रखरखाव अवधि**
+  - user द्वारा remove किए जाने तक अनिश्चित अवधि
+
+#### User data
+
+- **उपयोग**
+  - user और/या user के applications द्वारा बनाया गया और user के slot पर संग्रहीत data
+- **संग्रह**
+  - user और/या user के applications द्वारा बनाया गया
+- **संग्रहण**
+  - Appbox Servers = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - User
+    - user की files Appbox servers पर home folders में stored होती हैं और अन्य users से isolated रहती हैं। केवल user इन्हें access कर सकता है
+  - Appbox टीम
+    - user की अनुमति से support inquiries के लिए access किया जा सकता है
+- **रखरखाव अवधि**
+  - user द्वारा remove किए जाने तक अनिश्चित अवधि
+    - वैध DMCA takedown notices के लिए, हम user को सूचित करेंगे और 24 घंटे के भीतर content delete करने के लिए कहेंगे
+- **अधिक जानकारी**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act compliance
+
+UK Online Safety Act 2023 के अनुसार, Appbox users की सुरक्षा और regulatory requirements का compliance करने के लिए specific data handling practices लागू करता है:
+
+### Content safety monitoring
+
+- **उपयोग**
+  - illegal और harmful content के लिए risk assessment और mitigation
+  - reported content की moderation
+  - illegal content के distribution की prevention
+- **संग्रह**
+  - content report या flag होने पर generated
+  - known illegal material के content hash values
+- **संग्रहण**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **पहुँच और पहुँच के कारण**
+  - Appbox Compliance Team
+    - reported content review करने और appropriate action लेने के लिए
+    - legally required होने पर UK authorities के साथ coordinate करने के लिए
+  - UK regulatory authorities (कानून द्वारा required होने पर)
+    - Online Safety Act के compliance की monitoring के लिए
+    - गंभीर illegal content की investigation के लिए
+- **रखरखाव अवधि**
+  - Report data: resolution के 2 years बाद तक
+  - Content hash values: अनिश्चित अवधि (redistribution रोकने के लिए)
+
+### Risk assessment data
+
+- **उपयोग**
+  - illegal content और children के लिए harmful content के लिए required risk assessments करना
+  - proportionate safety measures implement करना
+  - regulatory authorities को compliance demonstrate करना
+- **संग्रह**
+  - नियमित platform risk assessments के माध्यम से generated
+  - potential risk patterns identify करने के लिए aggregated usage data
+- **संग्रहण**
+  - Appbox Compliance Systems = Protected
+- **पहुँच और पहुँच के कारण**
+  - Appbox Compliance Team
+    - risk assessments करने और update करने के लिए
+    - safety measures implement करने के लिए
+  - UK regulatory authorities (कानून द्वारा required होने पर)
+    - risk assessment duties के compliance को verify करने के लिए
+- **रखरखाव अवधि**
+  - 3 years (ongoing compliance demonstrate करने के लिए)
+
+### Content reporting system
+
+- **उपयोग**
+  - users को illegal या harmful content report करने की सुविधा देता है
+  - reports की स्थिति और लिए गए actions track करता है
+- **संग्रह**
+  - reporting users द्वारा provided report details
+  - reported content के बारे में information
+  - reports पर लिए गए actions
+- **संग्रहण**
+  - Appbox API = Encrypted
+- **पहुँच और पहुँच के कारण**
+  - Reporting user (केवल अपनी reports तक सीमित)
+  - वह user जिसका content report किया गया (सीमित जानकारी)
+  - Appbox Compliance Team
+    - reports investigate और resolve करने के लिए
+  - UK regulatory authorities (कानून द्वारा required होने पर)
+    - गंभीर illegal content reports की investigation के लिए
+- **रखरखाव अवधि**
+  - resolution के 2 years बाद तक

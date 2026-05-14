@@ -1,0 +1,108 @@
+---
+title: Launch Week Day 3 - Virtual Private Servers
+date: 2026-03-11 10:00:00
+excerpt: "Launch Weekin kolmas päivä. Täydet KVM Virtual Private Servers ovat nyt saatavilla Appboxissa. Valitse Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux tai AlmaLinux ja saat root-pääsyn oikeaan VM:ään."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, launch-week, vps, linux, kvm, selkies, webtop]
+---
+
+# Launch Week Day 3: Virtual Private Servers
+
+Päivä 3. Tämä on se iso julkaisu.
+
+Alusta asti Appboxissa on ollut kyse siitä, että itse hostatuista sovelluksista tehdään helppoja. Asenna sovellus, saat URL-osoitteen, valmista. Se malli toimii uskomattoman hyvin useimpiin asioihin. Mutta aina on ollut käyttötapausten luokka, jossa tarvitset vain kokonaisen koneen. Oman ytimen, oman init-järjestelmän, omat sääntösi.
+
+Tänään julkaisemme **Virtual Private Servers** Appboxissa.
+
+## Oikeita VM:iä, ei kontteja
+
+Tehdään selväksi, mistä on kyse. Nämä ovat täydellisiä KVM-virtuaalikoneita, jotka ajavat dedikoidulla laitteistolla omalla ytimellään, omalla systemd:llään ja täydellä root-pääsyllä. Tämä ei ole Docker-kontti, joka teeskentelee olevansa käyttöjärjestelmä. Tämä on oikea asia.
+
+Tällä erolla on merkitystä, koska se avaa kaiken, mihin kontit eivät pysty:
+
+- **Docker VPS:si sisällä** - aja `docker compose up` kuten millä tahansa palvelimella
+- **Snaps ja Flatpaks** - asenna työpöytäohjelmistoja niin kuin ne on tarkoitettu asennettaviksi
+- **Systemd-palvelut** - täydellinen palveluiden hallinta, ajastimet, journal, kaikki
+- **Mukautetut ytimet ja moduulit** - sinulla on root, tee mitä haluat
+- **Sisäkkäinen virtualisointi** - jos tarvitset sitä, se on käytettävissä
+
+Jos olet joskus törmännyt seinään Docker-pohjaisten käyttöjärjestelmiemme tai webtopiemme kanssa, koska jokin ei vain toiminut konttirajoitusten vuoksi, se seinä on poissa.
+
+## Saatavilla kuusi Linux-käyttöjärjestelmää
+
+Voit nyt valita kuudesta Linux-jakelusta:
+
+| OS | Kuvaus |
+|---|---|
+| **Ubuntu VPS** | Täysi Ubuntu 24.04 LTS |
+| **Debian VPS** | Täysi Debian 12 ja 13 |
+| **Arch Linux VPS** | Rolling release, aina ajan tasalla |
+| **Fedora VPS** | Fedora 43 uusimmilla paketeilla |
+| **Rocky Linux VPS** | Yritystason RHEL-yhteensopivuus |
+| **AlmaLinux VPS** | RHEL-yhteensopiva yritys-Linux pitkän aikavälin tuella |
+
+Valitse se, jonka tunnet, tai se, jonka haluat oppia. Kaikilla on sama ominaisuusjoukko Appboxissa.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-store.png" alt="VPS-kategoria Appbox App Storessa" width="860" className="mt-8 mb-10" />
+</p>
+
+## Sisäänrakennettu verkkokonsoli
+
+Jokaisessa VPS:ssä on selainpohjainen konsoli suoraan Appbox-dashboardissa. Klikkaa minkä tahansa VPS:n Console-välilehteä, ja saat live-pääteistunnon suoraan selaimeesi.
+
+Tämä tarkoittaa, ettet voi koskaan lukita itseäsi ulos palvelimeltasi. Väärin määritetty SSH? Rikkoontunut verkkoasetuksesi? Ei väliä. Verkkokonsoli yhdistyy suoraan VM:n virtuaalinäyttöön, täysin riippumatta vierasjärjestelmän verkkopinosta. Sinulla on aina tie sisään.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-console.png" alt="Selainpohjainen VM-konsoli Appbox-dashboardissa" width="860" className="mt-8 mb-10" />
+</p>
+
+## Ubuntu Desktop Selkiesillä
+
+Tästä tulee kiinnostavaa. Ubuntu VPS:llämme on työpöytäversio, jonka voimanlähteenä on **Selkies**. Se antaa täydellisen graafisen Linux-työpöydän selaimessasi laitteistokiihdytetyllä suoratoistolla, täydellä äänilähdöllä ja mikrofonisisääntulolla.
+
+Teimme suoraan yhteistyötä Selkies-tiimin kanssa saadaksemme tämän toimimaan KVM-virtuaalikoneissa, ja olemme julkaisseet integraation avoimena lähdekoodina osoitteessa [github.com/appbox-co/vm-webtop](https://github.com/appbox-co/vm-webtop).
+
+Mitä tämä käytännössä tarkoittaa? Voit ajaa täyttä työpöytäympäristöä selaimessasi oikeilla sovelluksilla. VS Code, Discord, Spotify, Slack - kaikki käynnissä samanaikaisesti, kaikki äänellä, kaikki käytettävissä miltä tahansa laitteelta, jossa on verkkoselain.
+
+<p align="center">
+  <img src="/blog-images/day3-vps-webtop.png" alt="Ubuntu-työpöytä Selkiesin kautta, VS Code, Spotify ja Discord käynnissä" width="860" className="mt-8 mb-10" />
+</p>
+
+Mieti sitä hetki. Sinulla voi olla pysyvä etäkehitysympäristö, joka on aina päällä, ajaa VS Codea ja Docker-kontteja projekteillesi, samalla kun Discord on auki tiimikeskustelua varten ja Spotify soittaa musiikkia. Kaikki yhdessä selainvälilehdessä. Omalta läppäriltäsi, tabletistasi tai jonkun muun tietokoneelta. Koko työtilasi on vain URL-osoitteen päässä.
+
+## Datasi seuraa mukana
+
+Jokaisella VPS:llä on automaattinen pääsy Appbox-tallennustilaasi `/APPBOX_DATA/`-hakemiston kautta. Sen sisältä löydät:
+
+- **`/APPBOX_DATA/apps/`** - muiden asennettujen Appbox-sovellustesi data
+- **`/APPBOX_DATA/storage/`** - yleinen Appbox-tallennustilasi
+
+Tämä jaetaan virtiofs:n avulla, joka on suorituskykyinen tiedostojärjestelmän läpivienti ja tarjoaa lähes natiivin tiedostojen käyttönopeuden. VPS:si voi lukea ja kirjoittaa tiedostoja, joita muut sovelluksesikin käyttävät, joten voit esimerkiksi käsitellä mediatiedostoja suoratoistosovelluksistasi tai varmuuskopioida tietokantoja VPS:si sisältä.
+
+## Toimii App Boostin kanssa
+
+VPS:t käyttävät samaa App Boost -järjestelmää, jonka julkaisimme päivänä 2. Haluatko lisää RAM-muistia tai CPU:ta VM:llesi? Nosta boost-tasoa ja omista sille enemmän pakettisi sloteista. Resurssit allokoidaan hypervisor-tasolla, joten VM saa aidosti enemmän laskentatehoa, ei vain korkeampaa cgroup-rajaa.
+
+Kannattaa huomata: VPS:illä on hieman korkeampi perusslottikustannus kuin Docker-pohjaisilla OS-sovelluksilla. Tämä kuvastaa sitä, että täysi virtuaalikone kuluttaa enemmän todellisia resursseja kuin host-ydintä jakava kontti. Kompromissi on suoraviivainen: saat enemmän kyvykkyyksiä, ja slottikustannus kertoo sen rehellisesti.
+
+## Mitä VPS:ille on tulossa seuraavaksi
+
+Julkaisemme VPS:t tänään täydellä toiminnallisuudella, mutta tiekartalla on lisää. VPS-instanssien resurssienkäyttökaaviot lisätään lähitulevaisuudessa, jotta voit seurata CPU:n, RAM-muistin ja levyn käyttöä ajan mittaan suoraan dashboardista, aivan kuten muissakin sovelluksissa.
+
+## Miksi tällä on merkitystä
+
+Docker-pohjaiset käyttöjärjestelmät ja webtopit Appboxissa ovat palvelleet monia hyvin, eivätkä ne ole katoamassa mihinkään. Mutta kontin sisällä ajamisessa on todellisia rajoituksia. Et voi ajaa Dockeria. Et voi käyttää snapseja. Et voi ladata ydinmoduuleja. Et voi ajaa täyttä init-järjestelmää. Työskentelet aina jonkun toisen nimiavaruuden rajoissa.
+
+VPS:t poistavat nuo rajoitukset kokonaan. Saat oikean koneen. Jos voit tehdä sen miltä tahansa muulta palveluntarjoajalta vuokraamallasi palvelimella, voit tehdä sen täällä - paitsi että datasi on jo liitetty, verkkokonsolisi on jo siellä ja resurssisi skaalautuvat liukusäätimellä.
+
+## Päivä 3 on nyt julkaistu
+
+VPS:t ovat saatavilla App Storessa juuri nyt. Siirry VPS-kategoriaan, valitse OS ja asenna. Täyden VM:n provisiointi kestää hieman kauemmin kuin konttisovelluksen, joten odota enintään 15 minuuttia, että VPS on valmis.
+
+Huomenna on päivä 4. Emme hidasta.
+
+---
+
+*Onko sinulla palautetta tai löysitkö ongelman? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,397 @@
+---
+title: Politique de traitement des données
+description: Comment nous gérons et protégeons vos données
+---
+
+Chez Appbox, nous collectons et stockons uniquement les informations minimales nécessaires pour maintenir nos dossiers et fournir nos services. L'équipe Appbox est formée pour traiter vos données avec le plus haut niveau de confidentialité et de sécurité, et suit des protocoles stricts, notamment l'utilisation d'identifiants robustes et de l'authentification multifacteur. Tout le traitement des paiements est géré entièrement par nos processeurs de paiement, et aucune de vos informations financières n'est stockée par Appbox, à l'exception des enregistrements de paiement et de leurs identifiants de transaction respectifs.
+
+## Email
+
+- **Utilisations**
+  - Sert d'identifiant de connexion à votre Appbox Client Area et au Appbox Control Panel
+  - Point de contact pour les annonces de service Appbox
+  - Point de contact pour les demandes dans l'Appbox Ticket System
+- **Collecte**
+  - Fourni par l'utilisateur lors de l'inscription
+- **Stockage**
+  - WHMCS = Texte clair
+  - Appbox API = Texte clair
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Équipe Appbox
+    - Sert à contacter l'utilisateur pour le support ou toute annonce de service
+- **Conservation**
+  - Indéfinie
+- **Plus d'informations**
+  - Politique de suppression des données sensibles
+
+## Nom d'utilisateur
+
+- **Utilisations**
+  - Identifie l'utilisateur dans l'Appbox Ticket System
+  - Sert de nom au slot Appbox de l'utilisateur
+  - Est enregistré comme utilisateur local sur le serveur où le slot de l'utilisateur est déployé, affichant les éventuels processus en cours de l'utilisateur
+  - Sert de nom d'utilisateur de l'utilisateur pour les applications installées
+- **Collecte**
+  - Fourni par l'utilisateur lors de l'inscription
+- **Stockage**
+  - WHMCS = Texte clair
+  - Appbox API = Texte clair
+  - Applications installées = dépend de l'application
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Équipe Appbox
+    - Requis pour les demandes de support
+    - Requis pour enquêter sur les problèmes serveur en recherchant les applications à forte consommation de ressources, les sources d'instabilité serveur ou toute application non autorisée
+- **Conservation**
+  - Indéfinie
+- **Plus d'informations**
+  - Politique de suppression des données sensibles
+
+## Pays
+
+- **Utilisations**
+  - Utilisé pour calculer les taxes applicables selon le pays sélectionné par l'utilisateur
+- **Collecte**
+  - Fourni par l'utilisateur lors de l'inscription
+- **Stockage**
+  - WHMCS = Texte clair
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Équipe Appbox
+- **Conservation**
+  - Indéfinie
+- **Plus d'informations**
+  - Politique de suppression des données sensibles
+
+## Mot de passe
+
+### Mot de passe Appbox Client Area
+
+- **Utilisations**
+  - Sert de mot de passe utilisateur pour l'Appbox Client Area
+- **Collecte**
+  - Fourni par l'utilisateur lors de l'inscription dans l'Appbox Client Area
+- **Stockage**
+  - WHMCS = Chiffré
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Accès limité par l'équipe Appbox
+    - L'équipe Appbox ne peut pas voir le mot de passe de l'utilisateur car il est haché, mais elle peut réinitialiser votre mot de passe après vérification
+- **Conservation**
+  - Indéfinie
+- **Plus d'informations**
+  - Politique de suppression des données sensibles
+  - [Politique de mot de passe](/policies/password-policy)
+  - Nous recommandons fortement d'activer l'authentification à deux facteurs sur votre [page de sécurité du compte](https://billing.appbox.co/user/security)
+
+### Mot de passe Appbox Control Panel
+
+- **Utilisations**
+  - Sert de mot de passe utilisateur sur l'Appbox Control Panel pour accéder à son slot
+- **Collecte**
+  - Fourni par l'utilisateur après le déploiement de son slot
+- **Stockage**
+  - Appbox API = Chiffré
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Accès limité par l'équipe Appbox
+    - L'équipe Appbox ne peut pas voir le mot de passe de l'utilisateur car il est haché, mais elle peut réinitialiser votre mot de passe après vérification
+- **Conservation**
+  - Indéfinie
+- **Plus d'informations**
+  - Politique de suppression des données sensibles
+  - [Politique de mot de passe](/policies/password-policy)
+  - Nous recommandons fortement d'activer l'authentification à deux facteurs sur votre [page de sécurité du compte](https://billing.appbox.co/user/security)
+
+### Mots de passe des applications
+
+- **Utilisations**
+  - Sert de mot de passe pour les applications installées de l'utilisateur
+- **Collecte**
+  - Fourni par l'utilisateur après le déploiement de son slot
+- **Stockage**
+  - Appbox API = Texte clair
+  - Applications installées = dépend de l'application
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Équipe Appbox
+    - Requis pour les demandes de support propres à une application, avec l'autorisation de l'utilisateur
+- **Conservation**
+  - Jusqu'à ce que l'utilisateur désinstalle l'application
+- **Plus d'informations**
+  - Politique de suppression des données sensibles
+  - [Politique de mot de passe](/policies/password-policy)
+  - Nous recommandons fortement d'activer l'authentification à deux facteurs sur votre [page de sécurité du compte](https://billing.appbox.co/user/security)
+
+## Traitement des paiements
+
+### PayPal
+
+- **Utilisations**
+  - Sert de l'une des passerelles de paiement d'Appbox
+- **Collecte**
+  - Le traitement des paiements est effectué entièrement par PayPal. La seule donnée enregistrée dans WHMCS sous le compte de l'utilisateur est le **PayPal Transaction ID**
+- **Stockage**
+  - WHMCS = Texte clair (PayPal Transaction ID)
+- **Accès et raisons de l'accès**
+  - Équipe commerciale Appbox
+    - L'équipe commerciale Appbox peut vérifier les informations de l'utilisateur auprès de PayPal dans le cadre de notre processus de vente
+- **Conservation**
+  - Indéfinie
+
+### Stripe
+
+- **Utilisations**
+  - Sert de l'une des passerelles de paiement d'Appbox
+- **Collecte**
+  - Le traitement des paiements est effectué entièrement par Stripe. Les seules données enregistrées dans WHMCS sous le compte de l'utilisateur sont le **Stripe Payment ID, le hash, les quatre derniers chiffres de la carte et l'expiration**
+- **Stockage**
+  - WHMCS = Texte clair (Stripe Payment ID)
+- **Accès et raisons de l'accès**
+  - Équipe commerciale Appbox
+    - L'équipe commerciale Appbox peut vérifier les informations de l'utilisateur auprès de Stripe dans le cadre de notre processus de vente
+- **Conservation**
+  - Indéfinie
+
+### CoinGate
+
+- **Utilisations**
+  - Sert de l'une des passerelles de paiement Appbox pour les transactions en cryptomonnaie
+- **Collecte**
+  - Le traitement des paiements est effectué entièrement par CoinGate. La seule donnée enregistrée dans WHMCS est le **CoinGate Transaction ID**
+- **Stockage**
+  - WHMCS = Texte clair (Transaction ID)
+- **Accès et raisons de l'accès**
+  - Équipe commerciale Appbox
+    - L'équipe commerciale Appbox peut vérifier les informations de l'utilisateur auprès de CoinGate dans le cadre de notre processus de vente
+- **Conservation**
+  - Indéfinie
+
+*Remarque : CoinGate stocke lui-même l'ID de transaction blockchain et l'adresse blockchain de l'expéditeur dans le cadre de son service. Ces informations ne sont pas stockées par Appbox.*
+
+## Journaux et analytics
+
+### Métriques serveur
+
+- **Utilisations**
+  - Utilisées pour surveiller la santé et l'utilisation des ressources des serveurs
+- **Collecte**
+  - Générées après le déploiement du slot de l'utilisateur
+- **Stockage**
+  - Serveurs Appbox = Texte clair
+  - Appbox API = Texte clair
+  - Posthog = Texte clair
+- **Accès et raisons de l'accès**
+  - Utilisateur
+    - Les métriques serveur peuvent être consultées avec divers utilitaires Linux installés sur votre slot. Les principales métriques suivantes peuvent être visibles :
+      - Utilisation CPU
+      - Utilisation du swap
+      - Utilisation RAM
+      - Load Average 1/5/15
+      - Vos processus en cours
+      - Les processus exécutés par d'autres utilisateurs sur le même serveur ne vous sont pas accessibles
+      - Métriques d'entrée/sortie
+      - Espace disque
+      - Quota d'espace disque (votre espace disque alloué)
+      - Espace disque physique
+  - Équipe Appbox
+    - En plus des métriques ci-dessus, l'équipe Appbox utilise Posthog pour agréger rapidement toutes les métriques de tous les serveurs et alerter l'équipe en cas d'erreur
+    - Les métriques serveur sont utilisées pour les demandes de support et pour enquêter sur tout abus de ressources
+- **Conservation**
+  - Indéfinie
+
+### Journaux d'authentification
+
+#### Tentatives de connexion Appbox Control Panel
+
+- **Utilisations**
+  - Toute tentative d'accès invalide est enregistrée dans Appbox API, qui empêche l'utilisateur de se connecter au Control Panel après un certain nombre de tentatives pendant une période donnée. Cela inclut :
+    - Nom d'utilisateur, tel que saisi par l'utilisateur
+    - Adresse IP
+    - Nombre de tentatives
+    - Dernière date de tentative
+- **Collecte**
+  - Collecté lorsqu'un utilisateur saisit des identifiants incorrects
+- **Stockage**
+  - Appbox API = Texte clair
+- **Accès et raisons de l'accès**
+  - Équipe Appbox
+    - Utilisé pour identifier les tentatives de brute force
+    - Les utilisateurs peuvent demander la levée de leur timeout et la suppression de la tentative d'accès, sur demande et après vérification via le système de tickets
+- **Conservation**
+  - 24 heures ou sur demande de l'utilisateur
+
+#### Journaux de connexion SSH
+
+- **Utilisations**
+  - Enregistrent les tentatives de connexion et les connexions réussies à SSH sur les applications installées par l'utilisateur, comme Ubuntu ou Debian
+- **Collecte**
+  - Générés automatiquement par le serveur SSH lorsque des tentatives de connexion se produisent
+- **Stockage**
+  - Conteneur d'application = Texte clair (généralement dans `/var/log/auth.log` ou similaire)
+- **Accès et raisons de l'accès**
+  - Utilisateur
+    - Comme ces journaux sont stockés dans des applications où les utilisateurs disposent d'un accès root (sudo), les utilisateurs ont un contrôle et un accès complets à ces journaux
+    - Les utilisateurs peuvent consulter, modifier ou supprimer ces journaux selon leurs besoins
+  - Équipe Appbox
+    - L'accès n'est disponible qu'avec l'autorisation de l'utilisateur pendant le dépannage de support
+- **Conservation**
+  - Gérée par l'utilisateur, puisqu'il dispose d'un accès root au conteneur
+  - Les politiques de rotation de journaux par défaut s'appliquent sauf modification par l'utilisateur
+
+### Journaux générés par le système
+
+- **Utilisations**
+  - Journaux générés à l'échelle du serveur, utilisés pour identifier les problèmes sur les serveurs
+- **Collecte**
+  - Générés par le système d'exploitation des serveurs
+- **Stockage**
+  - Serveurs Appbox = Texte clair
+  - Posthog = Texte clair
+- **Accès et raisons de l'accès**
+  - Accès limité de l'équipe Appbox
+    - Utilisés pour identifier les problèmes sur des serveurs spécifiques
+    - Les journaux sont agrégés par Posthog, qui alerte l'équipe en cas d'erreur
+- **Conservation**
+  - Indéfinie
+
+### Journaux générés par les applications installées
+
+- **Utilisations**
+  - Journaux générés par les applications installées, utilisés pour identifier les problèmes dans le slot de l'utilisateur
+- **Collecte**
+  - Générés par les applications installées de l'utilisateur
+- **Stockage**
+  - Appbox API = Texte clair
+  - Applications installées = Texte clair
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Équipe Appbox
+    - Requis pour les demandes de support propres à une application, avec l'autorisation de l'utilisateur
+- **Conservation**
+  - Jusqu'à ce que l'utilisateur désinstalle l'application ou la supprime
+
+### Historique bash de l'utilisateur
+
+- **Utilisations**
+  - Enregistre toutes les commandes saisies par l'utilisateur dans le shell du slot, situé dans `$HOME/.bash_history`
+- **Collecte**
+  - Chaque commande saisie dans le shell est enregistrée
+- **Stockage**
+  - Serveurs Appbox = Texte clair
+- **Accès et raisons de l'accès**
+  - Utilisateur
+    - Comme le fichier d'historique bash est stocké dans le répertoire personnel de l'utilisateur, celui-ci a un contrôle complet sur ce fichier
+    - Les utilisateurs peuvent consulter, modifier, vider ou supprimer ce fichier selon leurs besoins (avec des commandes comme `history -c` ou en modifiant/supprimant le fichier)
+  - Équipe Appbox
+    - Utilisé pour des demandes générales ou propres à une application, par exemple vérifier si les commandes saisies par l'utilisateur sont correctes, mais uniquement avec l'autorisation de l'utilisateur
+    - Utilisé pour vérifier d'éventuelles intrusions ou abus serveur, mais uniquement lorsque cela est nécessaire pour des enquêtes de sécurité
+- **Conservation**
+  - Gérée par l'utilisateur, qui peut vider l'historique à tout moment
+  - Par défaut, l'historique bash est conservé indéfiniment jusqu'à ce que l'utilisateur le supprime
+
+### Données hébergées
+
+#### Applications installées
+
+- **Utilisations**
+  - Fichiers essentiels au bon fonctionnement des applications installées
+- **Collecte**
+  - Installées par l'utilisateur sur son slot
+- **Stockage**
+  - Serveurs Appbox = dépend de l'application
+- **Accès et raisons de l'accès**
+  - Utilisateur
+  - Équipe Appbox
+    - Utilisés pour les demandes de support propres à une application, avec l'autorisation de l'utilisateur
+- **Conservation**
+  - Indéfinie jusqu'à suppression par l'utilisateur
+
+#### Données utilisateur
+
+- **Utilisations**
+  - Données créées par l'utilisateur et/ou ses applications et stockées sur son slot
+- **Collecte**
+  - Créées par l'utilisateur et/ou ses applications
+- **Stockage**
+  - Serveurs Appbox = Texte clair
+- **Accès et raisons de l'accès**
+  - Utilisateur
+    - Les fichiers de l'utilisateur sont stockés dans des dossiers personnels sur les serveurs Appbox et isolés des autres utilisateurs. Seul l'utilisateur peut y accéder
+  - Équipe Appbox
+    - Peut y accéder pour des demandes de support, avec l'autorisation de l'utilisateur
+- **Conservation**
+  - Indéfinie jusqu'à suppression par l'utilisateur
+    - Pour les notifications DMCA légitimes, nous informerons l'utilisateur et lui demanderons de supprimer le contenu dans les 24 heures
+- **Plus d'informations**
+  - [Politique relative aux abus de contenu](/policies/content-abuse-policy)
+  - [Politique de suppression des données sensibles](/policies/sensitive-data-removal-policy)
+
+## Conformité au UK Online Safety Act
+
+Conformément à l'UK Online Safety Act 2023, Appbox met en œuvre des pratiques spécifiques de traitement des données afin de protéger les utilisateurs et respecter les exigences réglementaires :
+
+### Surveillance de la sécurité des contenus
+
+- **Utilisations**
+  - Évaluation et atténuation des risques liés aux contenus illégaux et nuisibles
+  - Modération du contenu signalé
+  - Prévention de la distribution de contenu illégal
+- **Collecte**
+  - Générée lorsqu'un contenu est signalé ou marqué
+  - Valeurs de hash de contenu pour les contenus illégaux connus
+- **Stockage**
+  - Appbox API = Chiffré
+  - Base de données des signalements = Texte clair
+- **Accès et raisons de l'accès**
+  - Équipe Conformité Appbox
+    - Pour examiner le contenu signalé et prendre les mesures appropriées
+    - Pour coordonner avec les autorités britanniques lorsque la loi l'exige
+  - Autorités réglementaires britanniques (lorsque la loi l'exige)
+    - Pour surveiller la conformité à l'Online Safety Act
+    - Pour enquêter sur les contenus illégaux graves
+- **Conservation**
+  - Données de signalement : 2 ans après résolution
+  - Valeurs de hash de contenu : indéfinie (pour prévenir la redistribution)
+
+### Données d'évaluation des risques
+
+- **Utilisations**
+  - Réalisation des évaluations de risques requises pour les contenus illégaux et les contenus nuisibles aux enfants
+  - Mise en œuvre de mesures de sécurité proportionnées
+  - Démonstration de conformité auprès des autorités réglementaires
+- **Collecte**
+  - Générées par les évaluations régulières des risques de la plateforme
+  - Données d'utilisation agrégées pour identifier des schémas de risque potentiels
+- **Stockage**
+  - Systèmes de conformité Appbox = Protégé
+- **Accès et raisons de l'accès**
+  - Équipe Conformité Appbox
+    - Pour réaliser et mettre à jour les évaluations de risques
+    - Pour mettre en œuvre les mesures de sécurité
+  - Autorités réglementaires britanniques (lorsque la loi l'exige)
+    - Pour vérifier la conformité aux obligations d'évaluation des risques
+- **Conservation**
+  - 3 ans (pour démontrer la conformité continue)
+
+### Système de signalement de contenu
+
+- **Utilisations**
+  - Permet aux utilisateurs de signaler du contenu illégal ou nuisible
+  - Suit l'état des signalements et les actions entreprises
+- **Collecte**
+  - Détails du signalement fournis par les utilisateurs signalants
+  - Informations sur le contenu signalé
+  - Actions entreprises sur les signalements
+- **Stockage**
+  - Appbox API = Chiffré
+- **Accès et raisons de l'accès**
+  - Utilisateur signalant (limité à ses propres signalements)
+  - Utilisateur dont le contenu a été signalé (informations limitées)
+  - Équipe Conformité Appbox
+    - Pour enquêter sur les signalements et les résoudre
+  - Autorités réglementaires britanniques (lorsque la loi l'exige)
+    - Pour enquêter sur les signalements de contenus illégaux graves
+- **Conservation**
+  - 2 ans après résolution

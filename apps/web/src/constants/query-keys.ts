@@ -62,6 +62,9 @@ export const queryKeys = {
   profile: {
     me: ["profile", "me"] as const
   },
+  apiKeys: {
+    all: ["apiKeys"] as const
+  },
   abuseReports: {
     all: ["abuseReports"] as const,
     detail: (id: number) => ["abuseReports", id] as const

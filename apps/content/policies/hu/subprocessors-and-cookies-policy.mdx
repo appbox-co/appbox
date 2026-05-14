@@ -1,0 +1,90 @@
+---
+title: Subprocesszorok és cookie-k szabályzata
+description: "Információk subprocesszorainkról és cookie-használatunkról"
+---
+
+Az Appbox elkötelezett az átláthatóság mellett abban, hogyan gyűjtjük, tároljuk, kezeljük és osztjuk meg adataidat. Ez az oldal részletezi subprocesszorainkat, cookie-használatunkat és a szolgáltatásaink fejlesztésére alkalmazott követési módszereket.
+
+Amikor információidat harmadik fél subprocesszorokkal osztjuk meg, továbbra is felelősek maradunk érte. Gondosan választjuk ki beszállítóinkat, és megköveteljük tőlük adatvédelmi megállapodások megkötését, amelyek korlátozzák a felhasználók személyes információinak (ahogyan azt [Adatkezelési szabályzatunk](/policies/data-handling-policy) meghatározza) kezelését.
+
+| Vállalat              | Leírás                                            |
+| --------------------- | ------------------------------------------------- |
+| Google Workspace      | Ügyféljegy-kezelési e-mail szolgáltató            |
+| Posthog               | Alkalmazásmonitoring szolgáltató                  |
+| Gitlab                | Csapatmunka- és projektmenedzsment platform       |
+| PayPal                | Fizetési szolgáltató                              |
+| CoinGate              | Kriptovaluta-fizetési szolgáltató                 |
+| Stripe                | Fizetési szolgáltató                              |
+| Google Analytics      | Analitikai szolgáltató                            |
+| Elastic Email         | E-mail szolgáltató                                |
+| Mautic                | E-mail kampánykezelés                             |
+
+Amikor új subprocesszort vonunk be, aki felhasználóink személyes információit kezeli, eltávolítunk egy subprocesszort, vagy megváltoztatjuk egy subprocesszor használatának módját, frissítjük ezt az oldalt.
+
+## Cookie-k szabályzata
+
+Ez a szakasz ismerteti azokat a cookie-kat, amelyeket szolgáltatásainkon használunk a következetes és hatékony felhasználói élmény, valamint biztonságos környezet biztosítása érdekében.
+
+### Megfelelés az Egyesült Királyság adatvédelmi előírásainak
+
+Cookie-szabályzatunk megfelel az UK Privacy and Electronic Communications Regulations (PECR) és az UK GDPR követelményeinek. Ezen előírásokkal összhangban:
+
+1. Hozzájárulásodat kérjük, mielőtt nem alapvető cookie-kat helyezünk el eszközödön
+2. Világos és átfogó információt adunk minden általunk használt cookie-ról
+3. Könnyűvé tesszük számodra hozzájárulásod visszavonását vagy módosítását bármikor
+4. Weboldalunkhoz való hozzáférést nem tesszük függővé a nem alapvető cookie-k elfogadásától
+
+Mind munkamenet-, mind tartós cookie-kat használunk:
+
+* **Munkamenet-cookie-k** csak a böngészési munkamenet ideje alatt maradnak a böngésződben, vagyis amíg el nem hagyod a weboldalt.
+* **Tartós cookie-k** az aktuális munkameneten túl is megmaradnak, és számos célra használhatók, például meglévő felhasználóként való felismerésedre; a beállított lejárati dátumukig érvényesek maradnak, hacsak a felhasználó a lejárati dátum előtt nem törli őket.
+
+Ezek a cookie-k továbbá az alábbi kategóriákba sorolhatók:
+
+* **Szigorúan szükséges és biztonsági**  
+   * Ezek a cookie-k elengedhetetlenek ahhoz, hogy platformjainkon lévő weboldalak alapvető funkcióikat ellássák, és nem szabad letiltani őket. Arra is használjuk őket, hogy a Szolgáltatásainkkal való interakcióid gyorsabbak, megbízhatóbbak legyenek, és megelőzzük az olyan támadásokat, mint a cross-site scripting.
+* **Teljesítmény és analitika**  
+   * Ezek a cookie-k lehetővé teszik számunkra a látogatók és forgalmi források számlálását oldalunk teljesítményének értékelése és javítása érdekében. Segítenek megérteni, mely oldalak a legnépszerűbbek és legkevésbé népszerűek, valamint hogyan mozognak a látogatók a weboldalon. Az ezekkel a cookie-kkal szerzett minden információ aggregált, ezért anonim.
+* **Célzás**
+   * Ezeket a cookie-kat arra használjuk, hogy számodra és érdeklődési köreidhez relevánsabb hirdetéseket jelenítsünk meg.
+* **Funkcionalitás**
+   * Ezek a cookie-k segítik a weboldalt fejlettebb funkcionalitás és személyre szabás biztosításában.
+
+### Szigorúan szükséges és biztonsági cookie-k
+
+* `PHPSESSID`  
+   * PHP nyelven alapuló alkalmazások által generált cookie. Ez egy általános célú azonosító a felhasználói munkamenet-változók fenntartására. Általában véletlenszerűen generált szám; használata oldalspecifikus lehet, de jó példa a bejelentkezett állapot fenntartása oldalak között.
+* `psp_session`  
+   * Ezt a cookie-t szerverünk anonimizált felhasználói munkamenet fenntartására használja status oldalunkon.
+* `_GRECAPTCHA`  
+   * A Google reCAPTCHA egy szükséges cookie-t (_GRECAPTCHA) állít be futtatáskor a kockázatelemzés biztosításának céljából.
+* `authorization_token`
+   * Dashboardba bejelentkezve JWT-t (JSON Web Token) tárolunk hitelesítési célból. Ez a token elengedhetetlen a biztonságos, hitelesített munkamenet fenntartásához.
+
+### Teljesítmény és analitika cookie-k
+
+* `_ga`, `_ga_LXBTWJ4Y7B`  
+   * Ezek a cookie-k a Google Analyticshez kapcsolódnak. Segítenek megkülönböztetni az egyedi felhasználókat véletlenszerűen generált szám kliensazonosítóként való hozzárendelésével. Minden oldalkérésben szerepelnek a webhelyen, és látogatói, munkamenet- és kampányadatok kiszámítására szolgálnak a webhely analitikai jelentéseihez.
+* `mtc_id`  
+   * Ez a cookie a felhasználói viselkedés és interakciók követésére szolgál a weboldal teljesítményének és felhasználói élményének javítása érdekében.
+
+### Célzó cookie-k
+
+* `mautic_focus_1`  
+   * Ezt a cookie-t a Mautic Marketing Automation szoftver használja a látogatói elköteleződés és weboldali felugró tartalmakkal, valamint űrlapokkal való interakció követésére a felhasználói élmény és a weboldal hatékonyságának javítása érdekében.
+
+### Funkcionalitási cookie-k
+
+* `mautic_device_id`  
+   * Ez a cookie a látogató eszközének és viselkedésének azonosítására szolgál. Követi a felhasználói interakciókat és preferenciákat az oldalon a felhasználói élmény javítása és követési célok érdekében.
+
+### További cookie-k
+
+* `ph_phc_*_posthog` 
+   * A Posthog használja analitikára és felhasználókövetésre.
+* Véletlenszerű karakterlánc
+   * Status oldalunkon használatos.
+* `__cookie_consent`
+   * Status rendszerünk használja cookie-hozzájárulás kezelésére.
+* `WHMCS*`
+   * Számlázási rendszerünk használja munkamenet-kezelésre.

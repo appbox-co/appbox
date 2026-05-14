@@ -1,0 +1,108 @@
+---
+title: "Grandi aggiornamenti all'orizzonte per Appbox! 🚀"
+date: 2025-04-08 11:58:00
+excerpt: "Nuovo sito web, iniziativa open-source, app containerizzate, la nostra infrastruttura di rete e altri sviluppi entusiasmanti in arrivo su Appbox!"
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Una nuova era inizia in Appbox
+
+Dopo mesi di lavoro dietro le quinte, notti lunghe e decisamente troppo caffè, sono entusiasta di mostrarti finalmente ciò che abbiamo costruito. Non è solo un altro aggiornamento. È il nostro modo di ricostruire Appbox dalle fondamenta.
+
+## Benvenuto nella nostra nuova casa digitale
+
+Stai guardando il nostro sito web completamente nuovo! Abbiamo finalmente detto addio alla vecchia configurazione WordPress. È stato tutto ricostruito con tecnologia moderna, più veloce, più sicura e capace di scalare davvero.
+
+Questo nuovo sito diventerà la casa di una documentazione vera, post regolari sul blog (come questo) e, in futuro, il frontend della nostra nuova piattaforma. Il design non è solo più pulito: è davvero funzionale e rende molto più facile trovare le cose.
+
+Usiamo Next.js con ContentLayer sotto il cofano, il che ci dà prestazioni molto rapide e un'esperienza di sviluppo molto migliore. Il sito supporta più lingue, gestisce automaticamente la SEO, ha feed RSS sia in XML sia in JSON e include la modalità scura perché nessuno dovrebbe avere a che fare con schermi bianchi accecanti alle 2 di notte.
+
+## Diventiamo open source!
+
+Stiamo anche diventando open source! Il sito che stai leggendo? Il codice è pubblico e chiunque può contribuire.
+
+Per noi è enorme. Abbiamo sempre cercato di essere trasparenti, ma questo significa mettere davvero in pratica ciò che diciamo e costruire con la community invece che solo per la community. Se sei uno sviluppatore e hai mai voluto aiutare a plasmare gli strumenti che usi, ora puoi farlo. Dai un'occhiata al nostro repository GitHub per le linee guida di contribuzione e tutto ciò che serve per iniziare.
+
+## Presentazione di Appbox v2
+
+Il nuovo sito è solo l'inizio. Stiamo lavorando ad Appbox v2, che è l'aggiornamento più grande che abbiamo mai realizzato.
+
+Il deployment di container è sempre stato il nostro punto forte, ma v2 lo porta oltre con ciò che tutti chiedevano: pieno supporto VPS. Le app VPS ti daranno accesso root completo senza restrizioni. Se ti serve controllo totale sul tuo ambiente, questo è ciò che stavi aspettando.
+
+Lo abbiamo già in funzione su un server e funziona davvero bene. Potrai installare app VPS come qualsiasi altra app dallo store. Questo ti permetterà di installare app che oggi non sono possibili, come Docker, Snap e Tailscale. Richiede un aggiornamento OS sui nostri server a Debian 13, perché stiamo usando alcune nuove funzionalità di virtualizzazione per renderlo più sicuro e migliorare le prestazioni. Dovremo distribuire quell'aggiornamento prima di poter lanciare la funzionalità, ma ci saranno altri aggiornamenti presto.
+
+Questo combina la nostra collaudata infrastruttura container con la vera flessibilità VPS, dandoti il meglio di entrambi i mondi.
+
+## Costruire la nostra infrastruttura di rete
+
+Ecco la notizia davvero grande: stiamo costruendo la nostra rete.
+
+Non stiamo solo aggiungendo server o aggiornando la banda. Abbiamo il nostro Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) e il nostro blocco IP (79.140.195.0/24) per costruire una rete interamente nostra. In pratica, stiamo diventando il nostro ISP con una nostra identità Internet ufficiale e spazio di indirizzi, così possiamo controllare come i tuoi dati viaggiano su Internet [1].
+
+Cosa significa per te? Possiamo controllare tutto, ottimizzarlo specificamente per gli utenti Appbox e offrire affidabilità e prestazioni che prima non erano possibili.
+
+## Peering con AMS-IX
+
+Insieme allo sviluppo della nostra rete, una volta completata la configurazione inizieremo il peering con AMS-IX per 100G di connettività. Questo ci dà accesso diretto a uno dei più grandi Internet exchange al mondo, il che significa latenza più bassa e velocità migliori per tutti. Pensalo come avere un'autostrada diretta verso i principali provider Internet invece di prendere strade secondarie [2].
+
+Questo tipo di connettività di solito è disponibile solo per aziende molto più grandi, ma vogliamo fornire prestazioni di livello enterprise indipendentemente dal piano che hai.
+
+Ora abbiamo chiuso l'accordo per l'acquisto dell'hardware, quindi siamo pronti a partire. Riceveremo il nuovo hardware al più tardi entro ottobre, forse già a settembre. Questo significa che dovremmo essere operativi sulla nuova rete poco dopo.
+
+## Adeguamenti dei prezzi
+
+Questa è la parte che non volevamo davvero dover scrivere. Costruire un'infrastruttura come questa è costoso e, anche se ci stiamo facendo carico della maggior parte dei costi, purtroppo dobbiamo apportare un piccolo adeguamento ai prezzi sia per i nuovi clienti sia per quelli esistenti.
+
+Voglio essere trasparente su questo. I nuovi prezzi sono già live sul sito e contatteremo presto i clienti esistenti con i dettagli su come li riguarderà.
+
+Sappiamo quanto tutti siano sotto pressione in questo momento, e questa è stata onestamente una delle decisioni più difficili che abbiamo dovuto prendere. Abbiamo mantenuto gli aumenti il più piccoli possibile: stiamo praticamente coprendo tutto tranne il minimo assoluto necessario per far funzionare tutto.
+
+Faremo però in modo che questo aumento di prezzo valga più di quanto costa. Noterai davvero la differenza in prestazioni e affidabilità. Inoltre, questo significa che possiamo continuare a espandere la nostra rete e aggiungere più peering in futuro, quindi le cose continueranno solo a migliorare.
+
+Abbiamo lanciato questi prezzi aggiornati per i nuovi clienti 3 mesi fa e il feedback è stato positivo, quindi riteniamo di aver trovato un buon equilibrio tra mantenere le cose accessibili e finanziare i miglioramenti che meritate; siamo ancora molto competitivi. Ad esempio, il nostro popolare piano NG-4500 aumenta solo di €2.08 al mese, che è ancora molto meno rispetto a piani comparabili dei concorrenti.
+
+Per i clienti esistenti, pagherai solo la differenza tra il vecchio e il nuovo prezzo. Se hai sconti promozionali, restano applicati sopra il nuovo prezzo base. Apprezziamo la tua fedeltà, soprattutto in momenti come questi.
+
+La nostra struttura sconti resta la stessa:
+- 5% di sconto per pagamenti trimestrali
+- 10% di sconto per pagamenti semestrali
+- 15% di sconto per pagamenti annuali
+
+Se hai pagamenti automatici configurati, l'adeguamento avverrà con il prossimo ciclo di fatturazione dopo che avrai ricevuto l'email. Non devi fare nulla.
+
+## Più storage!
+
+Non si tratta solo di pagare di più, però. Stiamo anche aumentando lo storage del nostro piano più basso da 3TB a 3.5TB. È un aumento del 16%, che rende il nostro piano entry-level un affare ancora migliore nonostante il cambio di prezzo.
+
+## Cosa arriva dopo?
+
+Questo è solo l'inizio di ciò che sta arrivando per Appbox. Nelle prossime settimane e mesi vedrai aggiornamenti regolari mentre distribuiamo nuove funzionalità, miglioriamo quelle esistenti e continuiamo a costruire l'infrastruttura per la prossima generazione di hosting app.
+
+Stiamo pianificando di iniziare a testare la nostra nuova infrastruttura di rete a settembre/ottobre e ti terremo aggiornato sui progressi.
+
+La nostra roadmap include:
+- app VPS senza restrizioni (come Docker, Snap e Tailscale)
+- documentazione migliore che copra davvero tutto
+- una vetrina community per le cose interessanti che le persone costruiscono con Appbox
+- post tecnici regolari sul blog sulla nostra infrastruttura
+- nuove app containerizzate per casi d'uso specifici
+- strumenti migliori di monitoraggio e analytics
+- funzionalità di sicurezza avanzate su tutti i piani
+
+Grazie per essere rimasto con noi. Senza la nostra community, niente di tutto questo sarebbe possibile.
+
+Altri aggiornamenti in arrivo presto.
+
+---
+
+*Quali funzionalità o miglioramenti vorresti vedere nel nuovo Appbox? Scrivici a support@appbox.co.*
+
+---
+
+**Riferimenti:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

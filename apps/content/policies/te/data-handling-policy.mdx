@@ -1,0 +1,397 @@
+---
+title: Data Handling విధానం
+description: మీ data ను మేము ఎలా manage చేసి protect చేస్తాము
+---
+
+Appbox లో, మా records maintain చేయడానికి మరియు మా services deliver చేయడానికి అవసరమైన minimum information మాత్రమే collect చేసి store చేస్తాము. Appbox team మీ data ను utmost privacy మరియు security దృష్టిలో ఉంచుకుని handle చేయడానికి trained అవుతుంది మరియు strong credentials, multi-factor authentication ఉపయోగించడం సహా strict protocols పాటిస్తుంది. అన్ని payment processing పూర్తిగా మా payment processors ద్వారా handle చేయబడుతుంది, మరియు payment records మరియు వాటి respective transaction IDs తప్ప మీ financial information ఏదీ Appbox store చేయదు.
+
+## Email
+
+- **Uses**
+  - మీ Appbox Client Area మరియు Appbox Control Panel కోసం login గా పనిచేస్తుంది
+  - Appbox service announcements కోసం point of contact
+  - Appbox Ticket System inquiries కోసం point of contact
+- **Collection**
+  - Signup సమయంలో user అందిస్తుంది
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Support లేదా ఏ service announcements కోసం user ను contact చేయడానికి ఇది అవసరం
+- **Retention**
+  - Indefinite
+- **More information**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Uses**
+  - Appbox Ticket System లో user ను identify చేస్తుంది
+  - User యొక్క Appbox slot name గా పనిచేస్తుంది
+  - User slot deployed అయిన server పై local user గా registered అవుతుంది, user కు ఉన్న running processes చూపిస్తుంది
+  - Installed applications కోసం user's username గా పనిచేస్తుంది
+- **Collection**
+  - Signup సమయంలో user అందిస్తుంది
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Application పై ఆధారపడి ఉంటుంది
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Support inquiries కోసం required
+    - High resource consumption ఉన్న applications, server instability sources, లేదా unauthorized applications కోసం search చేసి server issues investigate చేయడానికి required
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Uses**
+  - User selected country ఆధారంగా applicable taxes compute చేయడానికి ఉపయోగించబడుతుంది
+- **Collection**
+  - Signup సమయంలో user అందిస్తుంది
+- **Storage**
+  - WHMCS = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Uses**
+  - Appbox Client Area కోసం user's password గా పనిచేస్తుంది
+- **Collection**
+  - Appbox Client Area లో signup సమయంలో user అందిస్తుంది
+- **Storage**
+  - WHMCS = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Appbox team ద్వారా limited access
+    - User password hashed గా ఉండటం వల్ల Appbox team చూడలేరు, కానీ verification తర్వాత మీ password reset చేయవచ్చు
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - మీ [account security page](https://billing.appbox.co/user/security) లో two-factor authentication enable చేయాలని మేము బలంగా recommend చేస్తాము
+
+### Appbox Control Panel Password
+
+- **Uses**
+  - Slot access చేయడానికి Appbox Control Panel లో user's password గా పనిచేస్తుంది
+- **Collection**
+  - Slot deployment తర్వాత user అందిస్తుంది
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Appbox team ద్వారా limited access
+    - User password hashed గా ఉండటం వల్ల Appbox team చూడలేరు, కానీ verification తర్వాత మీ password reset చేయవచ్చు
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - మీ [account security page](https://billing.appbox.co/user/security) లో two-factor authentication enable చేయాలని మేము బలంగా recommend చేస్తాము
+
+### Application Passwords
+
+- **Uses**
+  - User installed applications కోసం password గా పనిచేస్తుంది
+- **Collection**
+  - Slot deployment తర్వాత user అందిస్తుంది
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Application పై ఆధారపడి ఉంటుంది
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - User permission తో application-specific support inquiries కోసం required
+- **Retention**
+  - User application uninstall చేసే వరకు
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - మీ [account security page](https://billing.appbox.co/user/security) లో two-factor authentication enable చేయాలని మేము బలంగా recommend చేస్తాము
+
+## Payment processing
+
+### PayPal
+
+- **Uses**
+  - Appbox payment gateways లో ఒకటిగా పనిచేస్తుంది
+- **Collection**
+  - Payment processing పూర్తిగా PayPal ద్వారా జరుగుతుంది. User account కింద WHMCS లో save అయ్యే ఏకైక data **PayPal Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - మా sales process భాగంగా Appbox Sales Team PayPal తో user's information verify చేయవచ్చు
+- **Retention**
+  - Indefinite
+
+### Stripe
+
+- **Uses**
+  - Appbox payment gateways లో ఒకటిగా పనిచేస్తుంది
+- **Collection**
+  - Payment processing పూర్తిగా Stripe ద్వారా జరుగుతుంది. User account కింద WHMCS లో save అయ్యే ఏకైక data **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Storage**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - మా sales process భాగంగా Appbox Sales Team Stripe తో user's information verify చేయవచ్చు
+- **Retention**
+  - Indefinite
+
+### CoinGate
+
+- **Uses**
+  - Cryptocurrency transactions కోసం Appbox payment gateways లో ఒకటిగా పనిచేస్తుంది
+- **Collection**
+  - Payment processing పూర్తిగా CoinGate ద్వారా జరుగుతుంది. WHMCS లో save అయ్యే ఏకైక data **CoinGate Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - మా sales process భాగంగా Appbox Sales Team CoinGate తో user's information verify చేయవచ్చు
+- **Retention**
+  - Indefinite
+
+*Note: CoinGate itself stores the blockchain transaction ID and the sender's blockchain address as part of their service. This information is not stored by Appbox.*
+
+## Logs మరియు analytics
+
+### Server metrics
+
+- **Uses**
+  - Servers health మరియు resource usage monitor చేయడానికి ఉపయోగించబడుతుంది
+- **Collection**
+  - User slot deployment తర్వాత generated
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - మీ slot పై installed వివిధ Linux utilities ఉపయోగించి server metrics చూడవచ్చు. క్రింది major metrics చూడవచ్చు:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - మీ running processes
+      - అదే server పై ఇతర users run చేసే processes మీకు accessible కాదు
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (మీ allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - పై metrics తో పాటు, Appbox team అన్ని servers నుండి metrics quickly aggregate చేయడానికి మరియు ఏ errors అయినా team కు alert చేయడానికి Posthog ఉపయోగిస్తుంది
+    - Server metrics support inquiries కోసం మరియు resource abuse investigate చేయడానికి ఉపయోగించబడతాయి
+- **Retention**
+  - Indefinite
+
+### Authentication logs
+
+#### Appbox Control Panel login attempts
+
+- **Uses**
+  - Invalid access attempts ఏవైనా Appbox API లో logged అవుతాయి; ఇది specified period కోసం certain number of attempts తర్వాత user ను Control Panel లో login కాకుండా restrict చేస్తుంది. ఇందులో ఇవి ఉంటాయి:
+    - Username, user input చేసినట్లుగా
+    - IP address
+    - Number of attempts
+    - Last date of attempt
+- **Collection**
+  - User credentials తప్పుగా enter చేసినప్పుడు collected
+- **Storage**
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Team
+    - Brute-force attempts identify చేయడానికి ఉపయోగించబడుతుంది
+    - Request మరియు Ticket system ద్వారా verification తర్వాత users timeout lift చేయమని మరియు access attempt remove చేయమని request చేయవచ్చు
+- **Retention**
+  - 24 hours లేదా user request పై
+
+#### SSH login logs
+
+- **Uses**
+  - Ubuntu లేదా Debian వంటి user-installed applications పై SSH login attempts మరియు successful logins record చేస్తుంది
+- **Collection**
+  - Login attempts జరిగేప్పుడు SSH server automatic గా generated
+- **Storage**
+  - Application container = Cleartext (సాధారణంగా `/var/log/auth.log` లేదా similar)
+- **Access and Reasons for Access**
+  - User
+    - ఈ logs root (sudo) access ఉన్న applications లో stored కాబట్టి, users కు ఈ logs పై full control మరియు access ఉంటుంది
+    - Users అవసరమైనట్లుగా ఈ logs view, modify, delete చేయవచ్చు
+  - Appbox team
+    - Support troubleshooting సమయంలో user permission తో మాత్రమే access available
+- **Retention**
+  - Container కు root access ఉన్న user ద్వారా managed
+  - User modify చేయకపోతే default log rotation policies apply అవుతాయి
+
+### System generated logs
+
+- **Uses**
+  - Server-wide generated logs, servers పై issues identify చేయడానికి ఉపయోగించబడతాయి
+- **Collection**
+  - Servers operating system ద్వారా generated
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - Limited Access Appbox team
+    - Specific servers లో issues identify చేయడానికి ఉపయోగించబడుతుంది
+    - Logs Posthog ద్వారా aggregated అవుతాయి, ఇది errors గురించి team కు alert చేస్తుంది
+- **Retention**
+  - Indefinite
+
+### Installed applications generated logs
+
+- **Uses**
+  - Installed applications generated logs, user's slot లో issues identify చేయడానికి ఉపయోగించబడతాయి
+- **Collection**
+  - User installed applications ద్వారా generated
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - User permission తో application-specific support inquiries కోసం required
+- **Retention**
+  - User application uninstall చేసే వరకు లేదా remove చేసే వరకు
+
+### User యొక్క bash history
+
+- **Uses**
+  - Slot shell పై user enter చేసిన అన్ని commands record చేస్తుంది, `$HOME/.bash_history` లో ఉంటుంది
+- **Collection**
+  - Shell పై enter చేసిన ప్రతి command recorded
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - Bash history file user's home directory లో stored కాబట్టి, users కు ఈ file పై full control ఉంటుంది
+    - Users అవసరమైనట్లుగా ఈ file view, modify, clear, delete చేయవచ్చు (`history -c` వంటి commands లేదా file edit/remove చేయడం)
+  - Appbox team
+    - User entered commands correct అవునా verify చేయడం వంటి general లేదా application-specific inquiries కోసం ఉపయోగించబడుతుంది, కానీ user permission తో మాత్రమే
+    - Possible intrusions లేదా server abuse check చేయడానికి ఉపయోగించబడుతుంది, కానీ security investigations కు necessary అయినప్పుడు మాత్రమే
+- **Retention**
+  - User ద్వారా managed, user ఎప్పుడైనా history clear చేయవచ్చు
+  - Default గా, user remove చేసే వరకు bash history indefinitely retained
+
+### Hosted data
+
+#### Installed applications
+
+- **Uses**
+  - Installed applications properly run కావడానికి essential files
+- **Collection**
+  - User తన slot పై installed చేస్తాడు
+- **Storage**
+  - Appbox Servers = Application పై ఆధారపడి ఉంటుంది
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - User permission తో application-specific support inquiries కోసం ఉపయోగించబడుతుంది
+- **Retention**
+  - User remove చేసే వరకు indefinite
+
+#### User data
+
+- **Uses**
+  - User మరియు/లేదా user's applications create చేసి user's slot పై store చేసిన data
+- **Collection**
+  - User మరియు/లేదా user's applications ద్వారా created
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - User files Appbox servers పై home folders లో stored అవుతాయి మరియు ఇతర users నుండి isolated. User మాత్రమే వాటిని access చేయగలడు
+  - Appbox team
+    - User permission తో support inquiries కోసం accessed చేయవచ్చు
+- **Retention**
+  - User remove చేసే వరకు indefinite
+    - Legitimate DMCA takedown notices కోసం, మేము user కు inform చేసి 24 గంటల్లో content delete చేయమని అడుగుతాము
+- **More Information**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act compliance
+
+UK Online Safety Act 2023 ప్రకారం, users ను protect చేయడానికి మరియు regulatory requirements పాటించడానికి Appbox specific data handling practices అమలు చేస్తుంది:
+
+### Content safety monitoring
+
+- **Uses**
+  - Illegal మరియు harmful content కోసం risk assessment మరియు mitigation
+  - Reported content moderation
+  - Illegal content distribution prevention
+- **Collection**
+  - Content reported లేదా flagged అయినప్పుడు generated
+  - Known illegal material కోసం content hash values
+- **Storage**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Compliance Team
+    - Reported content review చేసి appropriate action తీసుకోవడానికి
+    - Legally required అయితే UK authorities తో coordinate చేయడానికి
+  - UK regulatory authorities (law ద్వారా required అయితే)
+    - Online Safety Act compliance monitor చేయడానికి
+    - Serious illegal content investigate చేయడానికి
+- **Retention**
+  - Report data: resolution తర్వాత 2 years
+  - Content hash values: Indefinite (redistribution prevention కోసం)
+
+### Risk assessment data
+
+- **Uses**
+  - Illegal content మరియు children కు harmful content కోసం required risk assessments conduct చేయడం
+  - Proportionate safety measures implement చేయడం
+  - Regulatory authorities కు compliance demonstrate చేయడం
+- **Collection**
+  - Regular platform risk assessments ద్వారా generated
+  - Potential risk patterns identify చేయడానికి aggregated usage data
+- **Storage**
+  - Appbox Compliance Systems = Protected
+- **Access and Reasons for Access**
+  - Appbox Compliance Team
+    - Risk assessments conduct చేసి update చేయడానికి
+    - Safety measures implement చేయడానికి
+  - UK regulatory authorities (law ద్వారా required అయితే)
+    - Risk assessment duties compliance verify చేయడానికి
+- **Retention**
+  - 3 years (ongoing compliance demonstrate చేయడానికి)
+
+### Content reporting system
+
+- **Uses**
+  - Users illegal లేదా harmful content report చేయడానికి అనుమతిస్తుంది
+  - Reports status మరియు actions taken track చేస్తుంది
+- **Collection**
+  - Reporting users అందించిన report details
+  - Reported content గురించి information
+  - Reports పై తీసుకున్న actions
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - Reporting user (తమ reports కు మాత్రమే limited)
+  - Content reported అయిన user (limited information)
+  - Appbox Compliance Team
+    - Reports investigate చేసి resolve చేయడానికి
+  - UK regulatory authorities (law ద్వారా required అయితే)
+    - Serious illegal content reports investigate చేయడానికి
+- **Retention**
+  - Resolution తర్వాత 2 years

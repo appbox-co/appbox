@@ -1,0 +1,183 @@
+---
+title: "Program Bug Bounty"
+description: "Programul nostru de raportare a vulnerabilităților de securitate și recompense"
+---
+
+La Appbox, securitatea este o prioritate fundamentală. Încurajăm activ cercetătorii în securitate să contribuie la consolidarea platformei noastre prin identificarea și raportarea potențialelor vulnerabilități. Acest program descrie abordarea noastră privind cercetarea responsabilă de securitate, modul în care gestionăm rapoartele de vulnerabilitate și recompensele pe care le oferim cercetătorilor care ne ajută să îmbunătățim postura de securitate.
+
+## Angajamentul nostru
+
+Când participi la programul nostru bug bounty, promitem să:
+
+* Confirmăm și evaluăm raportul tău în timp util
+* Abordăm vulnerabilitățile confirmate cu urgența corespunzătoare
+* Te recunoaștem și recompensăm pentru vulnerabilități unice, neraportate anterior, care duc la îmbunătățiri de securitate
+
+## Acoperirea programului
+
+Acest program bug bounty se aplică următoarelor platforme Appbox:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Doar infrastructura, nu aplicațiile clienților**
+
+**Notă:** Deși infrastructura noastră de hosting (username.appboxes.co) este în scope, vulnerabilitățile din aplicațiile terțe implementate de clienți nu sunt. Consultați excluderile de mai jos.
+
+## Ce se califică drept vulnerabilitate validă
+
+Pentru a se califica pentru programul nostru bug bounty, o trimitere trebuie să îndeplinească TOATE criteriile următoare:
+
+### 1. Demonstrează exploatare reală
+* Include un proof of concept funcțional care demonstrează că vulnerabilitatea poate fi exploatată
+* Arată impact de securitate clar; vulnerabilitățile teoretice fără prejudiciu demonstrat nu se califică
+* Dovedește că un atacator ar putea compromite efectiv datele utilizatorilor, conturile sau integritatea sistemului
+
+### 2. Afectează sisteme în scope
+* Vulnerabilitatea trebuie să existe în codul proprietar sau infrastructura Appbox
+* Trebuie să afecteze sisteme enumerate explicit în "Acoperirea programului" de mai sus
+* Trebuie să fie reproductibilă în mediile noastre de producție sau staging
+
+### 3. Este neraportată anterior
+* Vulnerabilitatea trebuie să fie descoperită recent și să nu fie deja cunoscută de noi
+* Rapoartele duplicate sau variațiile unor probleme cunoscute nu se califică
+
+## Zone și probleme excluse
+
+Următoarele sunt considerate **în afara scope-ului** programului nostru bug bounty:
+
+### Sisteme și integrări terțe
+* WHMCS Client Area [https://billing.appbox.co] - Raportați către [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Widgetul de chat Chatwoot - Raportați către [Chatwoot Security](https://www.chatwoot.com/security)
+* **Aplicații implementate de clienți** [app.username.appboxes.co] - Vulnerabilitățile din aplicații terțe (WordPress, Nextcloud etc.) găzduite pe infrastructura noastră trebuie raportate furnizorilor aplicațiilor respective
+* Orice alte servicii, pluginuri sau integrări terțe pe care le folosim
+* Adrese IP sau domenii care nu sunt controlate direct de Appbox
+* Sisteme legacy sau depreciate care nu mai sunt în utilizare activă
+
+**În afara scope-ului pentru infrastructura de hosting:**
+* Vulnerabilități în codul aplicațiilor implementate de clienți (WordPress, Nextcloud etc.)
+* Configurațiile implicite ale aplicațiilor terțe
+* Probleme de securitate specifice unei anumite versiuni de aplicație
+
+### Headere de securitate și hardening
+* Headere de securitate lipsă (X-Frame-Options, COOP, COEP, MTA-STS etc.) **cu excepția cazului** în care demonstrezi exploatare reală care duce la compromiterea datelor
+* Atribute `rel="noopener"` sau `rel="noreferrer"` lipsă
+* Dezvăluirea versiunii serverului sau scurgeri de informații prin headere HTTP
+* Atribute cookie pe cookie-uri nesensibile (analytics, preferințe etc.)
+
+### Dezvăluiri de informații cu impact redus
+* Mesaje de eroare verbose care nu expun date sensibile (parole, tokenuri, PII)
+* Dezvăluirea căilor fără path traversal sau acces la fișiere demonstrat
+* Identificarea stackului tehnologic (versiune PHP, detectare framework etc.)
+* Răspunsuri sau comportamente generice ale aplicației
+
+### Decizii de design și probleme teoretice
+* Login CSRF (nu oferă atacatorului acces la conturile victimei)
+* Enumerarea utilizatorilor prin atacuri de timing sau răspunsuri diferențiale (cu excepția cazului în care face parte dintr-un lanț de atac mai mare)
+* Clickjacking fără exploatare demonstrată a unei funcționalități sensibile
+* Configurații CORS pe endpointuri nesensibile
+* Rate limiting lipsă **cu excepția cazului** în care demonstrezi abuz real (DoS rămâne exclus)
+
+### Cerințe preliminare de atac
+* Probleme de securitate care nu afectează configurațiile implicite ale aplicațiilor noastre
+* Vulnerabilități care necesită configurații non-standard
+* Vulnerabilități în containerele noastre care necesită configurări personalizate sau modificate
+* Probleme care necesită compromitere la nivel de rețea (MITM, DNS poisoning, ARP spoofing)
+
+### Metode de testare interzise
+* Atacuri de dezvăluire a informațiilor bazate pe timing
+* Tehnici de enumerare a proceselor
+* Orice formă de denial of service sau atacuri cu volum mare
+* Tehnici de inginerie socială și phishing
+* Scanare de securitate automatizată care generează trafic sau încărcare excesivă
+* Testarea funcțiilor sau paginilor nefuncționale (de exemplu, pagini de signup care nu sunt încă în producție)
+
+### Tipuri de rapoarte invalide
+* Rapoarte bazate exclusiv pe outputul scannerelor automate, fără validare manuală
+* Recomandări generice fără demonstrarea unor vulnerabilități reale
+* Sugestii de bune practici fără impact de securitate
+* Observații de conformitate (PCI-DSS, GDPR etc.) fără demonstrarea exploatabilității
+
+## Structura recompenselor
+
+### Site principal și Control Panel
+
+| **Tip de vulnerabilitate**                         | **Recompensă PayPal** | **Credit de serviciu** |
+| -------------------------------------------------- | --------------------- | ---------------------- |
+| XSS                                                | EUR 100               | EUR 200                |
+| XSS (CSP Bypass)                                   | EUR 200               | EUR 300                |
+| CSRF                                               | EUR 300               | EUR 450                |
+| Authentication Bypass                              | EUR 500               | EUR 750                |
+| SQL Injection                                      | EUR 1000              | EUR 1500               |
+| Execuție arbitrară de cod                          | EUR 1000              | EUR 1500               |
+| Execuție arbitrară de cod (cu escaladare privilegii) | EUR 2000            | EUR 3000               |
+| Modificare persistentă de cod                      | EUR 1000              | EUR 1500               |
+
+### Infrastructura de hosting
+
+| Tip de vulnerabilitate                         | Recompensă PayPal | Credit de serviciu |
+| ---------------------------------------------- | ----------------- | ------------------ |
+| Authentication Bypass (SSH, FTP, VPN etc.)     | EUR 500           | EUR 750            |
+| Authentication Bypass pentru aplicații acceptate | EUR 100         | EUR 200            |
+| Escaladare locală a privilegiilor              | EUR 500           | EUR 750            |
+
+Contribuitorii care raportează vulnerabilități valide vor fi recunoscuți în Security Researchers Hall of Fame ca semn al aprecierii noastre.
+
+## Calitatea necesară a raportului
+
+Toate rapoartele de vulnerabilitate trebuie să includă:
+
+* **Descriere clară a vulnerabilității** - Explică ce este vulnerabilitatea și de ce contează
+* **Sistem/URL afectat** - Specifică exact unde există vulnerabilitatea
+* **Reproducere pas cu pas** - Pași detaliați care ne permit să reproducem problema
+* **Proof of concept funcțional** - Demonstrație funcțională a exploatării (cod, capturi de ecran, video)
+* **Impact de securitate real** - Demonstrează ce ar putea realiza un atacator, nu posibilități teoretice
+* **Testare proprie** - Validează manual constatările, nu trimite doar outputul unui scanner
+
+Rapoartele care nu conțin aceste elemente sau constau în recomandări generice de securitate nu se vor califica pentru recompense.
+
+## Revendicarea recompensei
+
+* Poți alege între două opțiuni de recompensă:  
+   * Plată directă prin PayPal (necesită un cont PayPal valid)
+   * Credite pentru servicii Appbox (aplicabile oricărui serviciu Appbox, netransferabile)
+
+## Ghiduri de participare
+
+* Respectă această politică, [Termenii de serviciu](/policies/terms-of-service) și toate legile aplicabile
+* Raportează vulnerabilitățile prompt după descoperire
+* Respectă confidențialitatea utilizatorilor și integritatea sistemului în timpul cercetării
+* Trimite toate rapoartele de vulnerabilitate exclusiv prin [contact us form](https://billing.appbox.co/contact.php)
+* Menține confidențialitatea vulnerabilităților descoperite până la remediere
+* Limitează testarea la sistemele incluse explicit în acest program
+* Dacă obții acces neașteptat la date sensibile: accesează doar cantitatea minimă necesară pentru a demonstra problema, oprește imediat testarea și raportează prompt vulnerabilitatea
+* Folosește doar propriile conturi de test pentru orice interacțiune cu sistemele noastre
+* Nu încerca niciodată să extorchezi Appbox pe baza constatărilor tale
+* **Verifică-ți constatările** - Testează că proof of concept-ul tău funcționează efectiv înainte de trimitere
+* **Concentrează-te pe impact** - Prioritizează vulnerabilitățile care ar putea cauza prejudicii reale față de probleme teoretice
+
+## Protecție legală
+
+Cercetătorii în securitate care respectă această politică se pot aștepta la:
+
+* Protecție împotriva acțiunilor legale pentru cercetare de securitate de bună-credință desfășurată în limitele acestor ghiduri
+* Excepție de la pretenții legale anti-circumvention atunci când este necesar pentru cercetare de securitate legitimă
+* Renunțarea la anumite restricții de politică ce altfel ar împiedica testarea de securitate
+* Recunoașterea faptului că cercetarea de securitate conformă este benefică și desfășurată cu bună-credință
+
+Rămâi responsabil pentru respectarea tuturor legilor aplicabile. Dacă te confrunți cu acțiuni legale din partea unui terț în timp ce respecți această politică, vom confirma că acțiunile tale au fost desfășurate în conformitate cu programul nostru. Dacă nu ești sigur dacă activitățile de cercetare planificate respectă această politică, te rugăm să ne contactezi prin [contact us form](https://billing.appbox.co/contact.php) înainte de a continua.
+
+## Procesul de raportare
+
+Pentru a raporta o vulnerabilitate, creează un tichet detaliat prin [contact us form](https://billing.appbox.co/contact.php).
+
+* Raportul tău trebuie să includă pași compleți pentru reproducerea vulnerabilității. Poți folosi acest șablon ca ghid: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Toate comunicările programului trebuie să treacă prin platforma noastră oficială Support Ticket Platform
+* Dezvăluirea publică a oricărei vulnerabilități fără permisiune scrisă explicită din partea Appbox încalcă termenii acestui program și te va descalifica de la primirea unei recompense
+
+## Ce se întâmplă după raportare
+
+* **Vulnerabilități valide**: Vom confirma raportul, vom lucra la o remediere și vom procesa recompensa
+* **Rapoarte invalide**: Vom explica de ce raportul nu se califică și putem oferi îndrumări pentru trimiteri viitoare
+* **Rapoarte în afara scope-ului**: Te vom redirecționa către furnizorul corespunzător sau vom explica de ce problema nu este acoperită
+
+Apreciem cercetarea de calitate și contribuțiile constructive la securitatea noastră. Mulțumim că ajuți la menținerea securității Appbox.

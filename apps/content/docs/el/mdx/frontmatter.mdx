@@ -1,0 +1,102 @@
+---
+title: "Frontmatter"
+description: "Μάθετε πώς να χρησιμοποιείτε frontmatter σε αρχεία MDX."
+sort: 3
+---
+
+Το frontmatter είναι σημαντικό μέρος ενός αρχείου MDX.
+Χρησιμοποιείται για να ορίσει πληροφορίες σχετικά με το περιεχόμενο του αρχείου,
+όπως τίτλο, περιγραφή, συγγραφέα, ημερομηνία δημοσίευσης κ.λπ.
+
+Η κεφαλίδα metadata ορίζεται στην αρχή του αρχείου, ανάμεσα σε `---` (τρεις παύλες) στην αρχή και στο τέλος.
+
+## Μορφή
+
+Η κεφαλίδα metadata ορίζεται σε μορφή key-value, όπου το key είναι το όνομα του metadata και η value είναι το περιεχόμενο του metadata.
+
+**Παράδειγμα:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+Ανάλογα με τον τύπο του εγγράφου (τεκμηρίωση, blog post κ.λπ.), μπορούν να χρησιμοποιηθούν διαφορετικά metadata.
+
+## Metadata για τεκμηρίωση
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Παράδειγμα:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Metadata για blog posts
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Είναι το αναγνωριστικό του συγγραφέα του post.
+    Πρέπει να αντιστοιχεί στο `id` συγγραφέα που ορίζεται στο αρχείο `src/config/blog.ts`,
+    το οποίο είναι το αρχείο που περιέχει τα πλήρη δεδομένα των συγγραφέων.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Αυτή είναι η εικόνα που θα χρησιμοποιηθεί ως featured image του post όταν κοινοποιείται στα social media, αν δεν θέλετε να χρησιμοποιήσετε την εικόνα που δημιουργείται αυτόματα.
+    Οι εικόνες πρέπει να αποθηκεύονται στον φάκελο `public/blog-og`.
+    Χρησιμοποιήστε μόνο το όνομα αρχείου της εικόνας και την επέκταση.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Παράδειγμα:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

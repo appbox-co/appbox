@@ -70,7 +70,7 @@ Das Ergebnis von `[1, 2, 3].join('-'){:js}` ist `'1-2-3'{:js}`.
 **Code:**
 
 ```mdx
-Das Ergebnis von `[1, 2, 3].join('-'){:js}` ist `'1-2-3'{:js}`.
+The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
 ```
 
 ## Kontextbewusste Inline-Code-Hervorhebung
@@ -90,10 +90,10 @@ es, Inline-Code semantisch mit dem nächstgelegenen Codeblock zu verknüpfen, au
 
 **Code:**
 ````mdx
-Wenn wir uns auf `getStringLength{:.entity.name.function}` als Funktion beziehen,
-können wir es entsprechend einfärben. Dasselbe gilt für `function{:.keyword}`, oder
-`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. Dies ermöglicht
-es, Inline-Code semantisch mit dem nächstgelegenen Codeblock zu verknüpfen, auf den er sich bezieht.
+When we refer to `getStringLength{:.entity.name.function}` as a function,
+we can color it as such. Same with `function{:.keyword}`, or
+`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
+semantically link inline code to the nearest block of code it refers to.
 ````
 
 ## Wort-Hervorhebung
@@ -205,33 +205,33 @@ const alertVariants = cva(
 **Beispiel:**
 
 ```ansi
-[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
 
-  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
-  > Network: [0;2muse `--host` to expose[0m
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
 
-  [0;36mready in 125ms.[0m
+  [0;36mready in 125ms.[0m
 
-[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
 ```
 
-Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
 
 **Code:**
 
 ````mdx
 ```ansi
-[0;36m  vite v5.0.0[0;32m dev server running at:[0m
+[0;36m  vite v5.0.0[0;32m dev server running at:[0m
 
-  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
-  > Network: [0;2muse `--host` to expose[0m
+  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
+  > Network: [0;2muse `--host` to expose[0m
 
-  [0;36mready in 125ms.[0m
+  [0;36mready in 125ms.[0m
 
-[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
+[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
 ```
 
-Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
+Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
 ````
 
 ## Wortgruppen-Hervorhebung nach ID

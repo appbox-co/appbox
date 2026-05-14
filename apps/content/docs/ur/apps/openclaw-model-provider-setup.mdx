@@ -1,0 +1,516 @@
+---
+title: OpenClaw model provider setup کرنا
+description: Installation کے بعد کسی بھی model provider API key کے ساتھ OpenClaw configure کریں۔
+sort: 1
+---
+
+OpenClaw Appbox میں model API key require کیے بغیر install ہوتا ہے۔
+
+Setup مکمل کرنے کا recommended طریقہ یہ ہے کہ SSH کے ذریعے اپنی OpenClaw app سے connect کریں اور built-in `openclaw onboard` wizard چلائیں۔ یہ wizard full config کو ہاتھ سے edit کرنے سے زیادہ محفوظ ہے کیونکہ یہ Appbox gateway settings کو برقرار رکھتے ہوئے آپ کو model providers، API keys، channels، health checks، اور skills کے مراحل سے گزارتا ہے۔
+
+اگر آپ SSH استعمال نہیں کر سکتے یا نہیں کرنا چاہتے، تو اس کے بجائے [backup dashboard method](#backup-method-configure-provider-auth-in-the-dashboard) استعمال کریں۔
+
+## تجویز کردہ طریقہ: OpenClaw میں SSH کریں اور onboarding چلائیں
+
+یہ method new installs اور existing installs کے لیے استعمال کریں جن میں model provider credentials add یا change کرنے کی ضرورت ہو۔
+
+### پہلے آپ کو کیا چاہیے
+
+- Appbox میں آپ کا OpenClaw app details page۔
+- Configuration section میں دکھائی گئی **SSH Command**۔
+- آپ کا **Gateway Token / SSH Password**۔ یہی generated secret OpenClaw dashboard login کے لیے استعمال ہوتا ہے۔
+- ایک model provider account یا API key۔ اگر آپ کے پاس ابھی نہیں ہے، تو [API keys حاصل کرنا](#getting-api-keys-with-dashboard-links) دیکھیں۔
+
+App details page ready-to-copy SSH command دکھاتا ہے:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw app details page with the SSH command highlighted"
+  width="860"
+/>
+
+### macOS سے connect کریں
+
+1. **Terminal** یا **iTerm2** open کریں۔
+2. OpenClaw app details page سے **SSH Command** copy کریں۔
+3. اسے paste کر کے run کریں۔ یہ کچھ ایسی نظر آئے گی:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. اگر macOS host پر trust کرنے کے بارے میں پوچھے، تو `yes` type کریں اور Enter دبائیں۔
+5. password prompt آنے پر اپنا **Gateway Token / SSH Password** paste کریں اور Enter دبائیں۔ Terminal password type یا paste کرتے وقت کوئی characters نہیں دکھائے گا۔
+
+### Windows سے connect کریں
+
+Windows 10 اور Windows 11 میں OpenSSH client default طور پر شامل ہوتا ہے۔
+
+1. **Windows Terminal** یا **PowerShell** open کریں۔
+2. OpenClaw app details page سے **SSH Command** copy کریں۔
+3. اسے paste کر کے run کریں:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. اگر Windows host پر trust کرنے کے بارے میں پوچھے، تو `yes` type کریں اور Enter دبائیں۔
+5. password prompt آنے پر اپنا **Gateway Token / SSH Password** paste کریں اور Enter دبائیں۔ PowerShell pasted password نہیں دکھائے گا۔
+
+اگر Windows کہے کہ `ssh` recognized نہیں ہے، تو **Settings > System > Optional features** سے **OpenSSH Client** install کریں، پھر Windows Terminal دوبارہ open کر کے دوبارہ try کریں۔
+
+### OpenClaw onboarding wizard چلائیں
+
+SSH connect ہونے کے بعد چلائیں:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 on macOS connected to OpenClaw over SSH and running the openclaw onboard command"
+  width="860"
+/>
+
+Wizard interactive ہے۔ یہ Appbox-specific choices استعمال کریں:
+
+1. **Existing config:** current config review یا modify کرنے کا option choose کریں۔ full reset choose **نہ** کریں جب تک آپ جان بوجھ کر OpenClaw setup scratch سے rebuild نہ کرنا چاہتے ہوں۔
+2. **Model and auth:** اپنا provider choose کریں، جیسے OpenRouter، OpenAI، Anthropic، Google، xAI، یا custom OpenAI-compatible provider۔ wizard پوچھے تو API key paste کریں۔ OpenRouter زیادہ تر users کے لیے آسان default ہے کیونکہ ایک key بہت سے models تک route کر سکتی ہے۔ اگر آپ کے پاس OpenAI Codex subscription ہے تو provider list میں **OpenAI Codex** choose کریں، صرف `codex` named option نہیں۔
+3. **Default model:** اس provider کے لیے wizard کا recommended model pick کریں، یا manually `provider/model` value enter کریں، جیسے `openrouter/auto`۔
+4. **Workspace:** جب تک change کرنے کی specific reason نہ ہو default workspace رکھیں۔
+5. **Gateway settings:** existing Appbox gateway settings برقرار رکھیں۔ خاص طور پر token auth enabled رکھیں اور existing gateway port/bind settings retain کریں۔
+6. **Channels:** WhatsApp، Telegram، Discord، Signal، iMessage، یا دیگر channels ابھی configure کریں، یا skip کر کے بعد میں `openclaw configure` سے add کریں۔
+7. **Web search:** اگر search provider ہے تو choose کریں، ورنہ ابھی skip کریں۔
+8. **Daemon/service install:** Appbox container کے اندر OpenClaw کو پہلے ہی supervise کرتا ہے، اس لیے اگر wizard daemon installation offer کرے تو skip کریں۔
+9. **Health check:** wizard کو health check چلانے دیں۔
+10. **Skills:** wizard کو bundled skills check کرنے دیں۔ جب یہ **Preferred node manager for skill installs** پوچھے تو `npm` choose کریں۔
+
+Onboarding complete ہونے پر اپنے OpenClaw dashboard پر واپس جائیں۔ اگر dashboard پہلے سے open تھا تو اسے refresh کریں اور ایک مختصر chat prompt test کریں۔
+
+SSH پر useful follow-up commands:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## API keys حاصل کرنا (dashboard links کے ساتھ)
+
+Keys generate کرنے کے لیے یہ provider consoles استعمال کریں۔ recommended SSH method میں `openclaw onboard` جب key پوچھے تو اسے paste کریں۔ backup dashboard method میں key کو `Config > Secrets > Raw` میں merge کریں۔
+
+### پہلی recommendation: OpenRouter (زیادہ تر users کے لیے بہترین default)
+
+ہم اسے کیوں recommend کرتے ہیں:
+
+- یہ بہت سے model vendors کے لیے ایک key دیتا ہے۔
+- آپ `openrouter/auto` استعمال کر سکتے ہیں، جو task difficulty کی بنیاد پر models switch کر سکتا ہے۔
+- `auto` simpler tasks کو cheaper models پر route کر کے cost کم کر سکتا ہے۔
+
+Key حاصل کرنے کا طریقہ:
+
+1. [OpenRouter](https://openrouter.ai/) پر جائیں اور sign in کریں۔
+2. [API Keys settings](https://openrouter.ai/settings/keys) open کریں۔
+3. **Create** پر click کریں اور key copy کریں (صرف ایک بار دکھائی جاتی ہے)۔
+4. جب OpenClaw wizard آپ کی OpenRouter API key پوچھے تو اسے استعمال کریں۔ backup dashboard method کے لیے config key `models.providers.openrouter.apiKey` ہے۔
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="OpenRouter API keys page screenshot from a public tutorial"
+  width="860"
+/>
+ماخذ tutorial: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Key حاصل کرنے کا طریقہ:
+
+1. [OpenAI Platform](https://platform.openai.com/) میں sign in کریں۔
+2. [API Keys](https://platform.openai.com/settings/organization/api-keys) open کریں۔
+3. **Create new secret key** پر click کریں۔
+4. اسے فوراً copy کریں (OpenAI full value صرف ایک بار دکھاتا ہے)۔
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="OpenAI API key settings screenshot from a public tutorial"
+  width="860"
+/>
+ماخذ tutorial: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Key حاصل کرنے کا طریقہ:
+
+1. [Anthropic Console](https://console.anthropic.com/) میں sign in کریں۔
+2. [API Keys](https://console.anthropic.com/settings/keys) open کریں۔
+3. **Create Key** پر click کریں۔
+4. key فوراً copy کریں (ایک بار دکھائی جاتی ہے)۔
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Anthropic API key creation screenshot from a public tutorial"
+  width="860"
+/>
+ماخذ tutorial: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini via AI Studio)
+
+Key حاصل کرنے کا طریقہ:
+
+1. [Google AI Studio](https://aistudio.google.com/) open کریں۔
+2. [API Keys](https://aistudio.google.com/app/apikey) پر جائیں۔
+3. **Create API key** پر click کریں (new یا existing project)۔
+4. key copy کر کے save کریں۔
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Google AI Studio API key creation screenshot from a public tutorial"
+  width="860"
+/>
+ماخذ tutorial: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> نوٹ: provider dashboards frequently change ہو سکتے ہیں اور آپ کی session state کے مطابق login prompt دکھا سکتے ہیں۔
+
+## متبادل طریقہ: dashboard میں provider auth configure کریں
+
+یہ method صرف اس صورت میں استعمال کریں جب SSH unavailable ہو یا آپ manual configuration prefer کرتے ہوں۔ dashboard Raw editor کام کرتا ہے، مگر یہ پوری OpenClaw config object کو ایک ساتھ edit کرتا ہے۔ Appbox کے gateway اور skills defaults کو replace کرنے کے بجائے provider settings کو existing file میں merge کرنے میں احتیاط کریں۔
+
+1. installed app details page سے اپنا OpenClaw dashboard URL open کریں۔
+2. **Config > Secrets** پر جائیں۔
+3. Form کے بجائے **Raw** select کریں۔
+4. Reveal sensitive values button پر click کریں (جو strike-through والی آنکھ جیسا لگتا ہے)۔
+5. نیچے examples سے provider settings کو اپنی existing config میں **merge** کریں ([manual provider config full file میں کیسے fit ہوتی ہے](#how-manual-provider-config-fits-in-the-full-file) دیکھیں) — پوری file replace نہ کریں جب تک آپ gateway، skills، اور دیگر Appbox defaults reset کرنے کا ارادہ نہ رکھتے ہوں۔
+6. configuration changes save اور apply کریں۔
+
+### manual provider config full file میں کیسے fit ہوتی ہے
+
+**Config > Secrets > Raw** ایک object میں **پوری** OpenClaw config edit کرتا ہے۔ Appbox پر اس file میں پہلے ہی `gateway` (bind، token auth، Control UI)، `skills.load.extraDirs` (bundled skills)، `commands`، اور کبھی `meta` جیسی چیزیں شامل ہوتی ہیں۔ [major provider examples](#major-provider-examples) section کے snippets صرف وہ pieces دکھاتے ہیں جو models کے لیے needed ہیں: `models` tree اور `agents.defaults.model.primary`۔
+
+**کیا کرنا ہے:** اپنی existing top-level keys (`gateway`, `skills`, `commands`, etc.) برقرار رکھیں اور یہ دو sections **add یا update** کریں:
+
+- **`models.providers`** — اپنا provider (مثلاً `openrouter`) اور اس کا `apiKey`، required ہو تو `baseUrl`، اور `models` list add کریں۔
+- **`agents.defaults.model.primary`** — default model string set کریں (مثلاً `openrouter/auto`) تاکہ agent وہ provider استعمال کرے۔
+
+اگر `models` یا `agents` پہلے سے exist کرتے ہیں، تو new keys کو duplicate کرنے کے بجائے ان objects میں merge کریں۔
+
+نیچے **JSON** کے طور پر **ایک** full Raw file shape کی example ہے (editor عملی طور پر JSON5-style quotes بھی accept کر سکتا ہے)۔ آپ کی real file میں مزید fields شامل ہو سکتی ہیں (مثلاً richer model metadata، `meta`)۔ مزید نیچے examples میں **provider blocks** وہ parts ہیں جنہیں آپ یہاں `models` اور `agents` کے ساتھ align کرتے ہیں۔
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token vs provider API key:** `gateway.auth.token` صرف OpenClaw Control UI / gateway میں login کے لیے ہے۔ `models.providers.*.apiKey` آپ کی LLM vendor key ہے (OpenRouter، OpenAI، etc.) — یہ دونوں مختلف ہیں۔
+
+## اہم provider examples
+
+پہلے ایک وقت میں ایک provider block استعمال کریں، confirm کریں کہ یہ کام کرتا ہے، پھر مزید providers add کریں۔ نیچے ہر example ایک **merge fragment** ہے: `...` omitted config ہے (اوپر یا نیچے lines)، اور `"models"` سے پہلے `},` آپ کی file میں `models` کے اوپر موجود key کا close ہے (مثلاً `skills` یا `commands`)۔ snippets خود valid JSON نہیں ہیں — `models` اور `agents` sections کو اپنی root object میں merge کریں۔
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock note (API key نہیں)
+
+Amazon Bedrock API key کے بجائے AWS credentials استعمال کرتا ہے (مثلاً `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`)۔ minimal provider entry ایسی دکھتی ہے:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## نوٹس
+
+- Gateway auth token اور model provider API keys different settings ہیں۔
+- اگر provider error ملے (مثلاً missing Anthropic key)، تو default model کو ایسے provider پر update کریں جسے آپ نے configure کیا ہے۔
+- اگر provider validation fail کرے، تو پہلے ensure کریں کہ required provider fields موجود ہیں (`baseUrl`, `models`, اور جہاں applicable ہو `apiKey`)۔
+
+## official provider docs
+
+- [OpenClaw provider directory](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)

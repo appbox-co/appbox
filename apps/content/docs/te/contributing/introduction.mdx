@@ -1,0 +1,99 @@
+---
+title: పరిచయం
+description: ఓపెన్ సోర్స్ చేసిన Appbox frontend కోసం అధికారిక డాక్యుమెంటేషన్‌కు స్వాగతం.
+sort: 1
+---
+
+**Appbox డాక్యుమెంటేషన్‌కు స్వాగతం**  
+[Appbox](https://www.appbox.co/) frontend ఇప్పుడు [GitHub](https://github.com/appbox-co/appbox) లో open-source అయిందని తెలియజేయడం మాకు ఆనందంగా ఉంది. డాక్యుమెంటేషన్‌కు సహకరించే, కొత్త frontend ఫీచర్‌లను అభివృద్ధి చేసే, మొత్తం Appbox అనుభవాన్ని మెరుగుపరచడంలో సహాయపడే సహకార సముదాయాన్ని పెంపొందించడం మా లక్ష్యం.
+
+మా డాక్యుమెంటేషన్ ఇంకా ప్రారంభ దశలో ఉన్నప్పటికీ, మా రంగంలోని ఇతర ప్లాట్‌ఫారమ్‌ల మాదిరిగా సమగ్ర వనరును నిర్మించడానికి పని చేస్తున్నాము. ప్రస్తుతం మా డాక్స్ ప్రధానంగా contribution guidelines పై దృష్టి పెడుతున్నాయి, అయితే Appboxలో అందుబాటులో ఉన్న అన్ని apps కోసం వివరమైన సమాచారంతో విస్తరించాలనుకుంటున్నాము.
+
+మా డాక్యుమెంటేషన్ మరింత బలపడే వరకు, నిర్దిష్ట apps లేదా services గురించి తక్షణ ప్రశ్నల కోసం మా [legacy knowledge base](https://billing.appbox.co/knowledgebase) ను సందర్శించండి. మీకు technical support అవసరమైతే, సహాయం కోసం [ticket submit](https://billing.appbox.co/submitticket.php) చేయవచ్చు. మేము విస్తరిస్తున్నప్పుడు మా పురోగతిని చూడటానికి, మా సైట్ footerలోని లింక్ ద్వారా ఈ కొత్త డాక్స్‌ను ఎప్పుడైనా తెరవవచ్చు.
+
+## భవిష్యత్ ప్రణాళికలు
+
+- **లోతైన App గైడ్‌లు**  
+  మా ప్లాట్‌ఫారమ్‌లో మద్దతు ఉన్న ప్రతి app కోసం installation, troubleshooting, మరియు tips.
+- **యూజర్ మరియు డెవలపర్ వనరులు**  
+  మీ Appbox అనుభవాన్ని customize చేయడానికి beginner-friendly tutorials నుండి advanced code references వరకు అన్నీ అందించడం.
+- **Community-driven కంటెంట్**  
+  pull requests, feedback, మరియు suggestions ను ప్రోత్సహించడం. అన్నీ స్వాగతం; ఈ ప్రాజెక్ట్ అందరికీ పెరగడంలో అవి సహాయపడతాయి.
+
+## ప్రారంభించడం
+
+మా open-sourced frontend code చూడాలనుకుంటే లేదా దానికి సహకరించాలనుకుంటే, [Appbox](https://github.com/appbox-co/appbox) repository ని clone చేయండి:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+తర్వాత ప్రాజెక్ట్‌లోకి వెళ్లి దాని dependencies install చేయండి:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+మీ local instance `http://localhost:3000` వద్ద అందుబాటులో ఉంటుంది. అన్వేషించండి, మార్పులు చేయండి, pull requests సృష్టించండి. ప్రతి సహకారాన్ని మేము అభినందిస్తాము!
+
+## డెవలప్‌మెంట్ టూల్స్
+
+### Linting
+
+ఈ ప్రాజెక్ట్ TypeScript మరియు Prettier integration తో ESLint ఉపయోగించే సమగ్ర linting setup తో వస్తుంది. ఇది consistent code style నిర్ధారించి, సాధారణ తప్పులను ముందుగానే పట్టడంలో సహాయపడుతుంది. linting checks ను మాన్యువల్‌గా నడపవచ్చు:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+మా ESLint configuration లో ఇవి ఉన్నాయి:
+- `@typescript-eslint` ద్వారా TypeScript-specific rules
+- `eslint-config-next` తో Next.js specific linting
+- Prettier integration తో code formatting
+
+### Pre-commit Hooks
+
+Git hooks నిర్వహించడానికి మేము Husky ఉపయోగిస్తాము; repository కి quality code మాత్రమే commit అవుతుందని ఇది నిర్ధారించడంలో సహాయపడుతుంది. క్రింది hooks setup చేయబడ్డాయి:
+
+- **pre-commit**: ప్రతి commit ముందు code quality నిర్ధారించడానికి `lint:fix` నడుపుతుంది
+- **commit-msg**: conventional commit message formatting అమలు చేయడానికి commitlint ఉపయోగిస్తుంది
+
+దీని అర్థం, మీ commits అంగీకరించబడే ముందు code quality మరియు సరైన formatting కోసం స్వయంచాలకంగా తనిఖీ చేయబడతాయి; codebase అంతటా ఉన్నత ప్రమాణం కొనసాగుతుంది.
+
+## Pull Requests చేయడం
+
+మీ మార్పులను contribute చేయడానికి సిద్ధమైనప్పుడు, మీ Pull Request (PR) అంగీకరించబడే అవకాశాన్ని పెంచడానికి ఈ guidelines అనుసరించండి:
+
+### PR సృష్టించే ముందు
+
+1. merge conflicts నివారించడానికి **తాజా main branch నుండి rebase చేయండి**:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **అన్ని linting passes అయ్యేలా చూడండి**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. సంబంధిత functionality పరీక్షించడం ద్వారా **మీ code locally పనిచేస్తుందో చూసుకోండి**.
+
+### PR మార్గదర్శకాలు
+
+1. **PRలను focused గా ఉంచండి** - ప్రతి PRలో ఒక issue లేదా feature మాత్రమే address చేయండి.
+2. **స్పష్టమైన commit messages రాయండి** - conventional commit format అనుసరించండి.
+3. **స్పష్టమైన descriptions చేర్చండి** - మీ PR ఏమి చేస్తుంది, ఎందుకు అవసరం అనేది వివరించండి.
+4. **Tests జోడించండి** - వర్తించే చోట, మీ మార్పులు సరిగ్గా పనిచేస్తాయా అని verify చేయడానికి tests జోడించండి.
+5. **మీ code document చేయండి** - complex logic కోసం comments ఉపయోగించండి మరియు function names descriptive గా ఉండేలా చూడండి.
+6. **ఇప్పటికే ఉన్న patterns అనుసరించండి** - మీ code మిగతా codebase లో ఉపయోగించిన style మరియు patterns కి సరిపోవాలి.
+
+ముఖ్యమైన మార్పుల కోసం, coding లో సమయం పెట్టే ముందు approach గురించి చర్చించడానికి ముందుగా issue తెరవడాన్ని పరిగణించండి. ఇది మీ contribution ప్రాజెక్ట్ దిశతో సరిపోవడాన్ని నిర్ధారించడంలో, వృథా శ్రమను నివారించడంలో సహాయపడుతుంది.

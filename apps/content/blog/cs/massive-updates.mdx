@@ -1,0 +1,108 @@
+---
+title: Masivní aktualizace na obzoru pro Appbox! 🚀
+date: 2025-04-08 11:58:00
+excerpt: Nový web, open-source iniciativa, kontejnerizované aplikace, naše vlastní síťová infrastruktura a další vzrušující novinky přicházející do Appboxu!
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# V Appboxu začíná nová éra
+
+Po měsících práce v zákulisí, dlouhých nocích a až příliš velkém množství kávy vám konečně s nadšením ukazuji, co jsme stavěli. Není to jen další aktualizace. Je to přestavba Appboxu od základů.
+
+## Vítejte v našem novém digitálním domově
+
+Díváte se na náš zbrusu nový web! Konečně jsme se rozloučili se starým WordPress nastavením. Celé jsme to přestavěli moderní technologií, která je rychlejší, bezpečnější a opravdu správně škáluje.
+
+Tento nový web se stane domovem pořádné dokumentace, pravidelných blogových příspěvků (jako je tento) a nakonec i frontendu pro naši novou platformu. Design není jen čistší - je skutečně funkční a výrazně usnadňuje hledání věcí.
+
+Pod kapotou používáme Next.js s ContentLayer, což nám dává opravdu rychlý výkon a mnohem lepší vývojářský zážitek. Web podporuje více jazyků, automaticky řeší SEO, má RSS feedy v XML i JSON a zahrnuje tmavý režim, protože nikdo by ve 2 ráno neměl řešit jasně bílé obrazovky.
+
+## Jdeme open source!
+
+Jdeme také open source! Web, na kterém tohle čtete? Jeho kód je veřejný a kdokoli do něj může přispět.
+
+Je to pro nás velká věc. Vždy jsme se snažili být transparentní, ale teď dáváme svým slovům reálný význam a skutečně stavíme s komunitou, ne jen pro ni. Pokud jste vývojář a někdy jste chtěli pomoci formovat nástroje, které používáte, teď můžete. Podívejte se na náš GitHub repo, kde najdete pravidla pro přispívání a vše potřebné pro začátek.
+
+## Představujeme Appbox v2
+
+Nový web je jen začátek. Pracujeme na Appbox v2, což je největší aktualizace, jakou jsme kdy udělali.
+
+Nasazování kontejnerů bylo vždy naše věc, ale v2 jde dál s tím, o co všichni žádali: plnou podporou VPS. VPS aplikace vám dají kompletní root přístup bez omezení. Pokud potřebujete úplnou kontrolu nad svým prostředím, na tohle jste čekali.
+
+Už to máme spuštěné na jednom serveru a funguje to opravdu dobře. VPS aplikace budete moci instalovat stejně jako jakoukoli jinou aplikaci z app store. Umožní vám to instalovat aplikace, které dnes nejsou možné, jako Docker, Snap a Tailscale. Vyžaduje to OS update na našich serverech na Debian 13, protože používáme nové virtualizační funkce pro vyšší bezpečnost a výkon. Tento update budeme muset nasadit, než funkci spustíme, ale brzy k tomu budou další novinky.
+
+Spojuje to naši osvědčenou kontejnerovou infrastrukturu se skutečnou VPS flexibilitou a dává vám to to nejlepší z obou světů.
+
+## Budujeme vlastní síťovou infrastrukturu
+
+Tady je opravdu velká novinka: budujeme vlastní síť.
+
+Nejde jen o přidání dalších serverů nebo upgrade bandwidth. Máme vlastní Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) a vlastní IP blok (79.140.195.0/24), abychom vybudovali síť, která je celá naše. V podstatě se stáváme vlastním ISP s vlastní oficiální internetovou identitou a adresním prostorem, takže můžeme řídit, jak vaše data cestují internetem [1].
+
+Co to pro vás znamená? Můžeme řídit vše, optimalizovat to konkrétně pro uživatele Appboxu a dodávat spolehlivost a výkon, které dříve nebyly možné.
+
+## Peering s AMS-IX
+
+Spolu s rozvojem naší sítě začneme po nastavení sítě peerovat s AMS-IX pro 100G konektivitu. Dává nám to přímý přístup k jedné z největších internetových výměn na světě, což znamená nižší latenci a lepší rychlosti pro všechny. Berte to jako přímou dálnici k hlavním internetovým poskytovatelům místo jízdy po okreskách [2].
+
+Taková konektivita je obvykle dostupná jen mnohem větším firmám, ale my chceme poskytovat enterprise-grade výkon bez ohledu na to, jaký tarif máte.
+
+Máme už vyřešenou dohodu o nákupu hardwaru, takže jsme připraveni. Nový hardware dostaneme nejpozději v říjnu, možná už v září. To znamená, že krátce poté bychom měli běžet na nové síti.
+
+## Úpravy cen
+
+Tohle je část, kterou jsme opravdu nechtěli psát. Budování takové infrastruktury je drahé, a i když většinu nákladů neseme sami, bohužel potřebujeme udělat malou úpravu cen pro nové i stávající zákazníky.
+
+Chci být v tomhle otevřený. Nové ceny už jsou na webu živě a brzy budeme kontaktovat stávající zákazníky s detaily, jak se jich to dotkne.
+
+Víme, jak napjaté to teď pro všechny je, a upřímně to bylo jedno z nejtěžších rozhodnutí, která jsme museli udělat. Navýšení jsme drželi tak malé, jak jen to šlo - v podstatě pokrýváme vše kromě absolutního minima, které potřebujeme, aby to fungovalo.
+
+Tohle zdražení vám ale vrátíme ve více než odpovídající hodnotě. Rozdíl ve výkonu a spolehlivosti opravdu poznáte. Navíc nám to umožní dál rozšiřovat síť a přidávat další peering, takže odtud se věci budou jen zlepšovat.
+
+Tyto aktualizované ceny pro nové zákazníky jsme spustili před 3 měsíci a zpětná vazba byla dobrá, takže máme pocit, že jsme našli dobrou rovnováhu mezi dostupností a financováním zlepšení, která si zasloužíte. Stále jsme velmi konkurenceschopní. Například náš oblíbený tarif NG-4500 zdraží jen o €2.08 měsíčně, což je pořád mnohem méně než srovnatelné tarify konkurence.
+
+Stávající zákazníci zaplatí jen rozdíl mezi starou a novou cenou. Pokud máte jakékoli promo slevy, zůstávají navíc k nové základní ceně. Vážíme si vaší loajality, zvlášť v obdobích jako toto.
+
+Naše struktura slev zůstává stejná:
+- 5% sleva při čtvrtletních platbách
+- 10% sleva při 6měsíčních platbách
+- 15% sleva při ročních platbách
+
+Pokud máte nastavené automatické platby, úprava proběhne s dalším fakturačním cyklem poté, co dostanete e-mail. Nemusíte nic dělat.
+
+## Více úložiště!
+
+Nejde ale jen o to platit víc. Také navyšujeme úložiště u našeho nejnižšího tarifu z 3TB na 3.5TB. To je 16% navýšení, díky kterému je náš vstupní tarif i přes změnu ceny ještě výhodnější.
+
+## Co dál?
+
+Tohle je jen začátek toho, co pro Appbox přichází. Během příštích týdnů a měsíců uvidíte pravidelné aktualizace, jak budeme nasazovat nové funkce, zlepšovat ty stávající a dál budovat infrastrukturu pro další generaci app hostingu.
+
+Testování naší nové síťové infrastruktury plánujeme začít v září/říjnu a budeme vás průběžně informovat o pokroku.
+
+Naše roadmapa zahrnuje:
+- VPS aplikace bez omezení (jako Docker, Snap a Tailscale)
+- Lepší dokumentaci, která skutečně pokryje všechno
+- Komunitní showcase zajímavých věcí, které lidé s Appboxem staví
+- Pravidelné technické blogové příspěvky o naší infrastruktuře
+- Nové kontejnerizované aplikace pro konkrétní případy použití
+- Lepší monitoring a analytické nástroje
+- Rozšířené bezpečnostní funkce napříč všemi tarify
+
+Díky, že s námi zůstáváte. Bez naší komunity by nic z toho nebylo možné.
+
+Brzy přijdou další novinky.
+
+---
+
+*Jaké funkce nebo zlepšení byste chtěli vidět v novém Appboxu? Napište nám na support@appbox.co.*
+
+---
+
+**Reference:**
+
+[1] [What is an Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [What is Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

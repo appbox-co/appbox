@@ -1,0 +1,81 @@
+---
+title: "Launch Week Day 4 - Πολλαπλά Domains για VPS Apps"
+date: 2026-03-12 10:00:00
+excerpt: "Day 4 του Launch Week. Τα VPS apps υποστηρίζουν πλέον πολλαπλά domains - προσθέστε όσα custom domains και Appbox subdomains χρειάζεστε, όλα με αυτόματο SSL."
+author_id: rid
+og_image: day4-domains-table.png
+tags: [appbox, launch-week, vps, domains, ssl, custom-domains]
+---
+
+# Launch Week Day 4: Πολλαπλά Domains για VPS Apps
+
+Day 4. Χθες σας δώσαμε πλήρεις virtual machines. Σήμερα τους δίνουμε σωστή υποστήριξη domain.
+
+Όταν λανσάραμε τα VPSes στη Day 3, κάθε VM είχε ένα μόνο domain. Αυτό είναι αρκετό για πολλές περιπτώσεις χρήσης, αλλά αν τρέχετε έναν web server μέσα στο VPS σας - και πολλοί από εσάς το κάνετε - ένα μόνο domain δεν αρκεί. Χρειάζεστε πολλαπλά domains που δείχνουν στο ίδιο μηχάνημα, το καθένα με το δικό του SSL certificate και τη δική του διαμόρφωση web server.
+
+Σήμερα, τα VPS apps υποστηρίζουν **πολλαπλά domains**. Προσθέστε όσα `*.user.appboxes.co` subdomains θέλετε, φέρτε τα δικά σας custom domains ή συνδυάστε και τα δύο. Κάθε ένα αποκτά SSL και έτοιμη προς χρήση διαμόρφωση web server.
+
+## Πώς λειτουργεί
+
+Ανοίξτε οποιοδήποτε running VPS app και θα βρείτε μια κάρτα **Custom Domains** στη σελίδα λεπτομερειών. Εδώ βρίσκονται όλα τα domains σας - ένας searchable, sortable πίνακας που εμφανίζει κάθε domain που είναι συνδεδεμένο με αυτό το VPS, ποιο είναι primary και πότε προστέθηκε.
+
+<p align="center">
+  <img src="/blog-images/day4-domains-table.png" alt="Πίνακας Custom Domains σε σελίδα λεπτομερειών VPS app" width="860" className="mt-8 mb-10" />
+</p>
+
+Για να προσθέσετε ένα νέο domain, κάντε κλικ στο **Add Domain**. Θα επιλέξετε ένα parent domain και θα εισαγάγετε ένα subdomain, και το σύστημα θα αναλάβει τα υπόλοιπα.
+
+## Appbox subdomains
+
+Ο πιο γρήγορος τρόπος να προσθέσετε ένα domain είναι να χρησιμοποιήσετε το υπάρχον Appbox domain σας. Επιλέξτε το `user.appboxes.co` domain σας ως parent, πληκτρολογήστε ένα subdomain και τελειώσατε. Το DNS έχει ήδη διευθετηθεί για εσάς και το domain επαληθεύεται αμέσως.
+
+Αυτό είναι εξαιρετικό για γρήγορα project URLs, staging environments ή απλώς για να δώσετε σε διαφορετικές υπηρεσίες στο VPS σας τη δική τους διεύθυνση. Χρειάζεστε `api.user.appboxes.co` για το backend σας και `app.user.appboxes.co` για το frontend σας; Προσθέστε και τα δύο σε λιγότερο από ένα λεπτό.
+
+<p align="center">
+  <img src="/blog-images/day4-add-subdomain.png" alt="Προσθήκη Appbox subdomain σε VPS" width="560" className="mt-8 mb-10" />
+</p>
+
+Επειδή αυτά βρίσκονται κάτω από το υπάρχον Appbox wildcard certificate σας, το SSL είναι αυτόματο. Χωρίς αναμονή, χωρίς δημιουργία certificate, χωρίς διαμόρφωση.
+
+## Custom domains
+
+Μπορείτε επίσης να στρέψετε τα δικά σας domains στο VPS σας. Επιλέξτε το custom base domain σας (ή προσθέστε ένα νέο απευθείας από το παράθυρο), εισαγάγετε το subdomain και το UI σας καθοδηγεί στη ρύθμιση DNS.
+
+Το παράθυρο εμφανίζει την ακριβή A record που πρέπει να δημιουργήσετε - το hostname, τη διεύθυνση IP, τα πάντα. Έχει ακόμη και οδηγίες ανά provider για Cloudflare και άλλους δημοφιλείς DNS providers, ώστε να μη χρειάζεται να ψάχνετε πώς να προσθέσετε A record.
+
+<p align="center">
+  <img src="/blog-images/day4-add-custom-domain.png" alt="Προσθήκη custom domain με επαλήθευση DNS και οδηγίες ανά provider" width="560" className="mt-8 mb-10" />
+</p>
+
+Μόλις το DNS σας δείχνει στη σωστή IP, πατήστε **Verify Again** και το σύστημα επιβεβαιώνει ότι η εγγραφή είναι σωστή πριν προσθέσει το domain.
+
+## SSL και διαμόρφωση web server
+
+Κάθε domain που προσθέτετε αποκτά SSL. Για Appbox subdomains, αυτό χρησιμοποιεί το υπάρχον wildcard certificate. Για custom domains, ένα certificate εκδίδεται αυτόματα.
+
+Εδώ είναι το κομμάτι που το κάνει πραγματικά χρήσιμο για τους VPS χρήστες: κάθε domain συνοδεύεται από ένα κουμπί **View Config** που σας δίνει έτοιμα προς επικόλληση snippets διαμόρφωσης τόσο για Nginx όσο και για Apache. Η διαμόρφωση περιλαμβάνει το σωστό `server_name`, διαδρομές SSL certificate, cipher suites και ρυθμίσεις πρωτοκόλλων. Αντιγράψτε το snippet, βάλτε το στο web server config μέσα στη VM, κάντε reload και εξυπηρετείτε traffic σε αυτό το domain.
+
+<p align="center">
+  <img src="/blog-images/day4-ssl-config.png" alt="Snippets διαμόρφωσης SSL για Nginx και Apache" width="560" className="mt-8 mb-10" />
+</p>
+
+Χωρίς μαντεψιές για διαδρομές αρχείων. Χωρίς ψάξιμο για τοποθεσίες certificates. Χωρίς να προσπαθείτε να βρείτε cipher strings. Είναι όλα εκεί, έτοιμα για αντιγραφή.
+
+## Γιατί έχει σημασία για VPS χρήστες
+
+Ένα VPS χωρίς υποστήριξη πολλαπλών domains είναι απλώς ένας server με μία διεύθυνση. Αυτό περιορίζει με τρόπους που γίνονται γρήγορα προφανείς:
+
+- Τρέχετε web app με ξεχωριστό API; Χρειάζεστε τουλάχιστον δύο domains.
+- Φιλοξενείτε πολλαπλά sites στη VM σας; Κάθε ένα χρειάζεται το δικό του domain.
+- Θέλετε staging environment παράλληλα με production; Αυτό είναι ακόμη ένα domain.
+- Αναπτύσσετε τοπικά και θέλετε να δοκιμάσετε με πραγματικό domain; Άλλο ένα.
+
+## Η Day 4 είναι live τώρα
+
+Η υποστήριξη πολλαπλών domains είναι διαθέσιμη αυτή τη στιγμή για όλα τα VPS apps. Ανοίξτε το VPS σας, κάντε scroll στα Custom Domains και αρχίστε να προσθέτετε.
+
+Αύριο είναι η Day 5 και έχουμε μια έκπληξη. Δεν θα την περιμένετε.
+
+---
+
+*Έχετε σχόλια ή βρήκατε κάποιο πρόβλημα; Επικοινωνήστε στο support@appbox.co ή ανοίξτε ticket στο [billing.appbox.co](https://billing.appbox.co/submitticket.php).*

@@ -1,0 +1,397 @@
+---
+title: Data Handling Policy
+description: আমরা আপনার data কীভাবে manage এবং protect করি
+---
+
+Appbox-এ আমরা আমাদের records maintain এবং services deliver করার জন্য প্রয়োজনীয় minimum information-ই collect এবং store করি। Appbox team আপনার data utmost privacy এবং security মাথায় রেখে handle করতে trained এবং strong credentials ও multi-factor authentication ব্যবহারের মতো strict protocols follow করে। সব payment processing সম্পূর্ণভাবে আমাদের payment processors handle করে, এবং payment records ও তাদের respective transaction IDs ছাড়া আপনার কোনো financial information Appbox store করে না।
+
+## Email
+
+- **Uses**
+  - আপনার Appbox Client Area এবং Appbox Control Panel login হিসেবে কাজ করে
+  - Appbox service announcements-এর contact point
+  - Appbox Ticket System inquiries-এর contact point
+- **Collection**
+  - Signup-এর সময় user দ্বারা provided
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Support বা service announcements-এর জন্য user-এর সাথে contact করার উদ্দেশ্যে
+- **Retention**
+  - Indefinite
+- **More information**
+  - Sensitive Data Removal Policy
+
+## Username
+
+- **Uses**
+  - Appbox Ticket System-এ user identify করে
+  - User-এর Appbox slot-এর name হিসেবে কাজ করে
+  - User-এর slot deployed থাকা server-এ local user হিসেবে registered থাকে, user-এর running processes দেখায়
+  - Installed applications-এর জন্য user-এর username হিসেবে কাজ করে
+- **Collection**
+  - Signup-এর সময় user দ্বারা provided
+- **Storage**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - Support inquiries-এর জন্য required
+    - High resource consumption করা applications, server instability sources, বা unauthorized applications search করে server issues investigate করতে required
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Country
+
+- **Uses**
+  - User-এর selected country অনুযায়ী applicable taxes compute করতে used
+- **Collection**
+  - Signup-এর সময় user দ্বারা provided
+- **Storage**
+  - WHMCS = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+
+## Password
+
+### Appbox Client Area Password
+
+- **Uses**
+  - Appbox Client Area-এর জন্য user-এর password হিসেবে কাজ করে
+- **Collection**
+  - Appbox Client Area-তে signup-এর সময় user দ্বারা provided
+- **Storage**
+  - WHMCS = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Appbox team-এর limited access
+    - Appbox team user-এর password দেখতে পারে না কারণ এটি hashed, তবে verification-এর পর তারা আপনার password reset করতে পারে
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - আমরা আপনার [account security page](https://billing.appbox.co/user/security)-এ two-factor authentication enable করার দৃঢ় পরামর্শ দিই
+
+### Appbox Control Panel Password
+
+- **Uses**
+  - User-এর slot access করতে Appbox Control Panel-এ user-এর password হিসেবে কাজ করে
+- **Collection**
+  - User-এর slot deployment-এর পর user দ্বারা provided
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - User
+  - Appbox team-এর limited access
+    - Appbox team user-এর password দেখতে পারে না কারণ এটি hashed, তবে verification-এর পর তারা আপনার password reset করতে পারে
+- **Retention**
+  - Indefinite
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - আমরা আপনার [account security page](https://billing.appbox.co/user/security)-এ two-factor authentication enable করার দৃঢ় পরামর্শ দিই
+
+### Application Passwords
+
+- **Uses**
+  - User-এর installed applications-এর password হিসেবে কাজ করে
+- **Collection**
+  - User-এর slot deployment-এর পর user দ্বারা provided
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - User-এর permission নিয়ে application-specific support inquiries-এর জন্য required
+- **Retention**
+  - User application uninstall করা পর্যন্ত
+- **More Information**
+  - Sensitive Data Removal Policy
+  - [Password Policy](/policies/password-policy)
+  - আমরা আপনার [account security page](https://billing.appbox.co/user/security)-এ two-factor authentication enable করার দৃঢ় পরামর্শ দিই
+
+## Payment Processing
+
+### PayPal
+
+- **Uses**
+  - Appbox-এর payment gateways-এর একটি হিসেবে কাজ করে
+- **Collection**
+  - Payment processing সম্পূর্ণভাবে PayPal করে। User-এর account-এর অধীনে WHMCS-এ saved একমাত্র data হলো **PayPal Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - আমাদের sales process-এর অংশ হিসেবে Appbox Sales Team PayPal-এর সাথে user-এর information verify করতে পারে
+- **Retention**
+  - Indefinite
+
+### Stripe
+
+- **Uses**
+  - Appbox-এর payment gateways-এর একটি হিসেবে কাজ করে
+- **Collection**
+  - Payment processing সম্পূর্ণভাবে Stripe করে। User-এর account-এর অধীনে WHMCS-এ saved একমাত্র data হলো **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Storage**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - আমাদের sales process-এর অংশ হিসেবে Appbox Sales Team Stripe-এর সাথে user-এর information verify করতে পারে
+- **Retention**
+  - Indefinite
+
+### CoinGate
+
+- **Uses**
+  - Cryptocurrency transactions-এর জন্য Appbox-এর payment gateways-এর একটি হিসেবে কাজ করে
+- **Collection**
+  - Payment processing সম্পূর্ণভাবে CoinGate করে। WHMCS-এ saved একমাত্র data হলো **CoinGate Transaction ID**
+- **Storage**
+  - WHMCS = Cleartext (Transaction ID)
+- **Access and Reasons for Access**
+  - Appbox Sales Team
+    - আমাদের sales process-এর অংশ হিসেবে Appbox Sales Team CoinGate-এর সাথে user-এর information verify করতে পারে
+- **Retention**
+  - Indefinite
+
+*Note: CoinGate নিজে তাদের service-এর অংশ হিসেবে blockchain transaction ID এবং sender's blockchain address store করে। এই information Appbox store করে না।*
+
+## Logs and Analytics
+
+### Server Metrics
+
+- **Uses**
+  - Servers-এর health এবং resource usage monitor করতে used
+- **Collection**
+  - User-এর slot deployment-এর পর generated
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - আপনার slot-এ installed বিভিন্ন Linux utilities ব্যবহার করে server metrics দেখা যায়। নিম্নলিখিত major metrics দেখা যেতে পারে:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Your running processes
+      - একই server-এ অন্য users দ্বারা run করা processes আপনার accessযোগ্য নয়
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (আপনার allocated disk space)
+      - Physical disk space
+  - Appbox Team
+    - উপরের metrics ছাড়াও, Appbox team সব servers থেকে দ্রুত metrics aggregate করতে এবং কোনো errors সম্পর্কে team-কে alert করতে Posthog ব্যবহার করে
+    - Server metrics support inquiries এবং resource abuse investigate করতে used
+- **Retention**
+  - Indefinite
+
+### Authentication Logs
+
+#### Appbox Control Panel Login Attempts
+
+- **Uses**
+  - কোনো invalid access attempts Appbox API-তে logged হয়, যা নির্দিষ্ট সংখ্যক attempts-এর পর user-কে নির্দিষ্ট সময়ের জন্য Control Panel-এ login করা থেকে restrict করে। এর মধ্যে থাকে:
+    - Username, user যেভাবে input করেছেন
+    - IP address
+    - Number of attempts
+    - Last date of attempt
+- **Collection**
+  - User credentials ভুলভাবে enter করলে collected
+- **Storage**
+  - Appbox API = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Team
+    - কোনো brute-force attempts identify করতে used
+    - Users request এবং Ticket system-এর মাধ্যমে verification-এর পর তাদের timeout lift এবং access attempt remove করতে বলতে পারেন
+- **Retention**
+  - 24 hours বা user request অনুযায়ী
+
+#### SSH Login Logs
+
+- **Uses**
+  - Ubuntu বা Debian-এর মতো user-installed applications-এ SSH login attempts এবং successful logins record করে
+- **Collection**
+  - Login attempts ঘটলে SSH server দ্বারা automatically generated
+- **Storage**
+  - Application container = Cleartext (সাধারণত `/var/log/auth.log` বা similar)
+- **Access and Reasons for Access**
+  - User
+    - এই logs এমন applications-এর মধ্যে stored যেখানে users-এর root (sudo) access আছে, তাই users এই logs-এর ওপর full control এবং access রাখেন
+    - Users প্রয়োজন অনুযায়ী এই logs view, modify, বা delete করতে পারেন
+  - Appbox team
+    - Support troubleshooting চলাকালীন user permission সহই access available
+- **Retention**
+  - User দ্বারা managed, কারণ তাদের container-এ root access আছে
+  - User modify না করলে default log rotation policies apply হয়
+
+### System Generated Logs
+
+- **Uses**
+  - Server-wide generated logs, servers-এর issues identify করতে used
+- **Collection**
+  - Servers-এর operating system দ্বারা generated
+- **Storage**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Access and Reasons for Access**
+  - Limited Access Appbox team
+    - Specific servers-এর issues identify করতে used
+    - Logs Posthog দ্বারা aggregated হয়, যা errors সম্পর্কে team-কে alert করে
+- **Retention**
+  - Indefinite
+
+### Logs Generated by Installed Applications
+
+- **Uses**
+  - Installed applications দ্বারা generated logs, user-এর slot-এর ভিতরের issues identify করতে used
+- **Collection**
+  - User-এর installed applications দ্বারা generated
+- **Storage**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - User-এর permission নিয়ে application-specific support inquiries-এর জন্য required
+- **Retention**
+  - User application uninstall বা remove করা পর্যন্ত
+
+### User's bash History
+
+- **Uses**
+  - Slot-এর shell-এ user entered সব commands record করে, `$HOME/.bash_history`-এ located
+- **Collection**
+  - Shell-এ entered প্রতিটি command recorded হয়
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - Bash history file user-এর home directory-তে stored, তাই users এই file-এর ওপর full control রাখেন
+    - Users প্রয়োজন অনুযায়ী এই file view, modify, clear, বা delete করতে পারেন (`history -c` command ব্যবহার করে বা file edit/remove করে)
+  - Appbox team
+    - User entered commands সঠিক কি না verify করার মতো general বা application-specific inquiries-এর জন্য used, তবে শুধু user permission সহ
+    - Possible intrusions বা server abuse check করতে used, তবে শুধু security investigations-এর জন্য necessary হলে
+- **Retention**
+  - User দ্বারা managed, যিনি যেকোনো সময় history clear করতে পারেন
+  - By default, user remove না করা পর্যন্ত bash history indefinitely retained থাকে
+
+### Hosted Data
+
+#### Installed Applications
+
+- **Uses**
+  - Installed applications properly run করার জন্য essential files
+- **Collection**
+  - User দ্বারা তাদের slot-এ installed
+- **Storage**
+  - Appbox Servers = Depends on the Application
+- **Access and Reasons for Access**
+  - User
+  - Appbox team
+    - User-এর permission নিয়ে application-specific support inquiries-এর জন্য used
+- **Retention**
+  - User remove না করা পর্যন্ত indefinite
+
+#### User Data
+
+- **Uses**
+  - User এবং/অথবা user-এর applications দ্বারা created এবং user-এর slot-এ stored data
+- **Collection**
+  - User এবং/অথবা user-এর applications দ্বারা created
+- **Storage**
+  - Appbox Servers = Cleartext
+- **Access and Reasons for Access**
+  - User
+    - User-এর files Appbox servers-এর home folders-এ stored এবং অন্য users থেকে isolated। শুধু user এগুলো access করতে পারেন
+  - Appbox team
+    - User-এর permission নিয়ে support inquiries-এর জন্য accessed হতে পারে
+- **Retention**
+  - User remove না করা পর্যন্ত indefinite
+    - Legitimate DMCA takedown notices-এর ক্ষেত্রে, আমরা user-কে inform করব এবং 24 hours-এর মধ্যে content delete করতে বলব
+- **More Information**
+  - [Content Abuse Policy](/policies/content-abuse-policy)
+  - [Sensitive Data Removal Policy](/policies/sensitive-data-removal-policy)
+
+## UK Online Safety Act Compliance
+
+UK Online Safety Act 2023 অনুযায়ী, Appbox users protect করতে এবং regulatory requirements মেনে চলতে specific data handling practices implement করে:
+
+### Content Safety Monitoring
+
+- **Uses**
+  - Illegal এবং harmful content-এর জন্য risk assessment এবং mitigation
+  - Reported content-এর moderation
+  - Illegal content distribution prevention
+- **Collection**
+  - Content reported বা flagged হলে generated
+  - Known illegal material-এর জন্য content hash values
+- **Storage**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Access and Reasons for Access**
+  - Appbox Compliance Team
+    - Reported content review এবং appropriate action নেওয়ার জন্য
+    - আইনগতভাবে required হলে UK authorities-এর সাথে coordinating করার জন্য
+  - UK regulatory authorities (আইন অনুযায়ী required হলে)
+    - Online Safety Act compliance monitor করার জন্য
+    - Serious illegal content investigate করার জন্য
+- **Retention**
+  - Report data: resolution-এর পর 2 years
+  - Content hash values: Indefinite (redistribution prevention-এর জন্য)
+
+### Risk Assessment Data
+
+- **Uses**
+  - Illegal content এবং children-এর জন্য harmful content নিয়ে required risk assessments conduct করা
+  - Proportionate safety measures implement করা
+  - Regulatory authorities-এর কাছে compliance demonstrate করা
+- **Collection**
+  - Regular platform risk assessments-এর মাধ্যমে generated
+  - Potential risk patterns identify করতে aggregated usage data
+- **Storage**
+  - Appbox Compliance Systems = Protected
+- **Access and Reasons for Access**
+  - Appbox Compliance Team
+    - Risk assessments conduct এবং update করার জন্য
+    - Safety measures implement করার জন্য
+  - UK regulatory authorities (আইন অনুযায়ী required হলে)
+    - Risk assessment duties-এর compliance verify করার জন্য
+- **Retention**
+  - 3 years (ongoing compliance demonstrate করার জন্য)
+
+### Content Reporting System
+
+- **Uses**
+  - Users-কে illegal বা harmful content report করতে দেয়
+  - Reports-এর status এবং taken actions track করে
+- **Collection**
+  - Reporting users দ্বারা provided report details
+  - Reported content সম্পর্কে information
+  - Reports-এ নেওয়া actions
+- **Storage**
+  - Appbox API = Encrypted
+- **Access and Reasons for Access**
+  - Reporting user (শুধু নিজের reports-এ limited)
+  - যার content reported হয়েছে সেই user (limited information)
+  - Appbox Compliance Team
+    - Reports investigate এবং resolve করার জন্য
+  - UK regulatory authorities (আইন অনুযায়ী required হলে)
+    - Serious illegal content reports investigate করার জন্য
+- **Retention**
+  - Resolution-এর পর 2 years

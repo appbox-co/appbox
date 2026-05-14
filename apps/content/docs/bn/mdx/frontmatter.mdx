@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: MDX ফাইলে frontmatter কীভাবে ব্যবহার করতে হয় শিখুন।
+sort: 3
+---
+
+frontmatter একটি MDX ফাইলের গুরুত্বপূর্ণ অংশ।
+এটি ফাইলের content সম্পর্কে তথ্য define করতে ব্যবহৃত হয়,
+যেমন title, description, author, publication date ইত্যাদি।
+
+metadata header ফাইলের শুরুতে থাকে এবং শুরু ও শেষে `---` (তিনটি hyphen)-এর মধ্যে লেখা হয়।
+
+## Format
+
+metadata header key-value format-এ define করা হয়, যেখানে key হলো metadata-এর নাম এবং value হলো metadata-এর content।
+
+**উদাহরণ:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+ডকুমেন্টের ধরন অনুযায়ী (documentation, blog post ইত্যাদি) ভিন্ন metadata ব্যবহার করা যায়।
+
+## Documentation-এর metadata
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**উদাহরণ:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Blog post-এর metadata
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    এটি post author-এর identifier।
+    এটি `src/config/blog.ts` ফাইলে defined author `id`-এর সঙ্গে match করতে হবে,
+    কারণ ওই ফাইলেই authorদের complete data থাকে।
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    automatically generated image ব্যবহার করতে না চাইলে social media-তে share করার সময় post-এর featured image হিসেবে এই image ব্যবহার হবে।
+    image `public/blog-og` folder-এ সংরক্ষণ করতে হবে।
+    শুধু image file name এবং extension ব্যবহার করুন।
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**উদাহরণ:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

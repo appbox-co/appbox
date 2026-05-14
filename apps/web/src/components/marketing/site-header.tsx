@@ -74,10 +74,12 @@ export async function SiteHeader() {
               target="_blank"
               rel="noreferrer"
             >
-              <Button variant="outline">Billing</Button>
+              <Button variant="outline">{t("external_links.billing")}</Button>
             </Link>
             <Link href="/dashboard">
-              <Button variant="defaultsm">Control Panel</Button>
+              <Button variant="defaultsm">
+                {t("external_links.control_panel")}
+              </Button>
             </Link>
           </div>
 
@@ -85,6 +87,7 @@ export async function SiteHeader() {
             {/* Only show language and theme toggles on lg screens and up */}
             <div className="hidden items-center gap-2 lg:flex">
               <I18nToggle
+                labelMode="name"
                 messages={{
                   toggleLanguage: t("buttons.toggle_language")
                 }}

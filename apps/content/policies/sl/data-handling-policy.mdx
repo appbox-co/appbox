@@ -1,0 +1,397 @@
+---
+title: Politika ravnanja s podatki
+description: "Kako upravljamo in varujemo vaše podatke"
+---
+
+V Appbox zbiramo in hranimo samo minimalne informacije, potrebne za vzdrževanje naših evidenc in zagotavljanje storitev. Ekipa Appbox je usposobljena za ravnanje z vašimi podatki z najvišjo stopnjo zasebnosti in varnosti ter sledi strogim protokolom, vključno z uporabo močnih poverilnic in večfaktorske avtentikacije. Vsa obdelava plačil v celoti poteka prek naših obdelovalcev plačil, Appbox pa ne hrani nobenih vaših finančnih podatkov, razen evidenc plačil in njihovih ustreznih ID-jev transakcij.
+
+## E-pošta
+
+- **Uporabe**
+  - Služi kot vaša prijava za Appbox Client Area in Appbox Control Panel
+  - Kontaktna točka za obvestila o storitvah Appbox
+  - Kontaktna točka za poizvedbe v Appbox Ticket System
+- **Zbiranje**
+  - Posreduje jo uporabnik med registracijo
+- **Shranjevanje**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Ekipa Appbox
+    - Namenjeno kontaktiranju uporabnika za podporo ali obvestila o storitvah
+- **Hramba**
+  - Nedoločeno
+- **Več informacij**
+  - Politika odstranitve občutljivih podatkov
+
+## Uporabniško ime
+
+- **Uporabe**
+  - Identificira uporabnika v Appbox Ticket System
+  - Služi kot ime uporabnikovega Appbox slota
+  - Registrirano je kot lokalni uporabnik na strežniku, kjer je uporabnikov slot nameščen, in prikazuje vse procese, ki jih uporabnik izvaja
+  - Služi kot uporabniško ime uporabnika za nameščene aplikacije
+- **Zbiranje**
+  - Posreduje ga uporabnik med registracijo
+- **Shranjevanje**
+  - WHMCS = Cleartext
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Ekipa Appbox
+    - Potrebno za poizvedbe podpore
+    - Potrebno za preiskovanje težav s strežnikom z iskanjem aplikacij z visoko porabo virov, virov nestabilnosti strežnika ali kakršnih koli nepooblaščenih aplikacij
+- **Hramba**
+  - Nedoločeno
+- **Več informacij**
+  - Politika odstranitve občutljivih podatkov
+
+## Država
+
+- **Uporabe**
+  - Uporablja se za izračun veljavnih davkov na podlagi države, ki jo izbere uporabnik
+- **Zbiranje**
+  - Posreduje jo uporabnik med registracijo
+- **Shranjevanje**
+  - WHMCS = Cleartext
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Ekipa Appbox
+- **Hramba**
+  - Nedoločeno
+- **Več informacij**
+  - Politika odstranitve občutljivih podatkov
+
+## Geslo
+
+### Geslo Appbox Client Area
+
+- **Uporabe**
+  - Služi kot uporabnikovo geslo za Appbox Client Area
+- **Zbiranje**
+  - Posreduje ga uporabnik med registracijo v Appbox Client Area
+- **Shranjevanje**
+  - WHMCS = Encrypted
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Omejen dostop ekipe Appbox
+    - Ekipa Appbox ne more videti uporabnikovega gesla, saj je zgoščeno, lahko pa po preverjanju ponastavi vaše geslo
+- **Hramba**
+  - Nedoločeno
+- **Več informacij**
+  - Politika odstranitve občutljivih podatkov
+  - [Politika gesel](/policies/password-policy)
+  - Močno priporočamo, da na svoji [strani za varnost računa](https://billing.appbox.co/user/security) omogočite dvofaktorsko avtentikacijo
+
+### Geslo Appbox Control Panel
+
+- **Uporabe**
+  - Služi kot uporabnikovo geslo v Appbox Control Panel za dostop do njegovega slota
+- **Zbiranje**
+  - Posreduje ga uporabnik po namestitvi njegovega slota
+- **Shranjevanje**
+  - Appbox API = Encrypted
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Omejen dostop ekipe Appbox
+    - Ekipa Appbox ne more videti uporabnikovega gesla, saj je zgoščeno, lahko pa po preverjanju ponastavi vaše geslo
+- **Hramba**
+  - Nedoločeno
+- **Več informacij**
+  - Politika odstranitve občutljivih podatkov
+  - [Politika gesel](/policies/password-policy)
+  - Močno priporočamo, da na svoji [strani za varnost računa](https://billing.appbox.co/user/security) omogočite dvofaktorsko avtentikacijo
+
+### Gesla aplikacij
+
+- **Uporabe**
+  - Služijo kot gesla za uporabnikove nameščene aplikacije
+- **Zbiranje**
+  - Posreduje jih uporabnik po namestitvi njegovega slota
+- **Shranjevanje**
+  - Appbox API = Cleartext
+  - Installed Applications = Depends on the Application
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Ekipa Appbox
+    - Potrebno za poizvedbe podpore, specifične za aplikacijo, z dovoljenjem uporabnika
+- **Hramba**
+  - Dokler uporabnik ne odstrani aplikacije
+- **Več informacij**
+  - Politika odstranitve občutljivih podatkov
+  - [Politika gesel](/policies/password-policy)
+  - Močno priporočamo, da na svoji [strani za varnost računa](https://billing.appbox.co/user/security) omogočite dvofaktorsko avtentikacijo
+
+## Obdelava plačil
+
+### PayPal
+
+- **Uporabe**
+  - Služi kot eden od plačilnih prehodov Appbox
+- **Zbiranje**
+  - Obdelava plačil v celoti poteka prek PayPal. Edini podatek, shranjen v WHMCS pod uporabnikovim računom, je **PayPal Transaction ID**
+- **Shranjevanje**
+  - WHMCS = Cleartext (PayPal Transaction ID)
+- **Dostop in razlogi za dostop**
+  - Appbox Sales Team
+    - Appbox Sales Team lahko preveri uporabnikove informacije pri PayPal kot del našega prodajnega postopka
+- **Hramba**
+  - Nedoločeno
+
+### Stripe
+
+- **Uporabe**
+  - Služi kot eden od plačilnih prehodov Appbox
+- **Zbiranje**
+  - Obdelava plačil v celoti poteka prek Stripe. Edini podatki, shranjeni v WHMCS pod uporabnikovim računom, so **Stripe Payment ID, Hash, Card's last four digits and expiry**
+- **Shranjevanje**
+  - WHMCS = Cleartext (Stripe Payment ID)
+- **Dostop in razlogi za dostop**
+  - Appbox Sales Team
+    - Appbox Sales Team lahko preveri uporabnikove informacije pri Stripe kot del našega prodajnega postopka
+- **Hramba**
+  - Nedoločeno
+
+### CoinGate
+
+- **Uporabe**
+  - Služi kot eden od plačilnih prehodov Appbox za transakcije s kriptovalutami
+- **Zbiranje**
+  - Obdelava plačil v celoti poteka prek CoinGate. Edini podatek, shranjen v WHMCS, je **CoinGate Transaction ID**
+- **Shranjevanje**
+  - WHMCS = Cleartext (Transaction ID)
+- **Dostop in razlogi za dostop**
+  - Appbox Sales Team
+    - Appbox Sales Team lahko preveri uporabnikove informacije pri CoinGate kot del našega prodajnega postopka
+- **Hramba**
+  - Nedoločeno
+
+*Opomba: CoinGate sam hrani blockchain transaction ID in blockchain naslov pošiljatelja kot del svoje storitve. Te informacije Appbox ne hrani.*
+
+## Dnevniki in analitika
+
+### Strežniške metrike
+
+- **Uporabe**
+  - Uporabljajo se za spremljanje zdravja in porabe virov strežnikov
+- **Zbiranje**
+  - Ustvarijo se po namestitvi uporabnikovega slota
+- **Shranjevanje**
+  - Appbox Servers = Cleartext
+  - Appbox API = Cleartext
+  - Posthog = Cleartext
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+    - Strežniške metrike si je mogoče ogledati z različnimi Linux pripomočki, nameščenimi na vašem slotu. Vidne so naslednje glavne metrike:
+      - CPU Usage
+      - Swap Usage
+      - RAM Usage
+      - 1/5/15 Load Average
+      - Vaši tekoči procesi
+      - Procesi, ki jih izvajajo drugi uporabniki na istem strežniku, vam niso dostopni
+      - Input/Output metrics
+      - Disk space
+      - Quota disk space (vaš dodeljeni diskovni prostor)
+      - Physical disk space
+  - Appbox Team
+    - Poleg zgornjih metrik ekipa Appbox uporablja Posthog za hitro agregacijo vseh metrik z vseh strežnikov in opozarjanje ekipe na morebitne napake
+    - Strežniške metrike se uporabljajo za poizvedbe podpore in preiskovanje morebitne zlorabe virov
+- **Hramba**
+  - Nedoločeno
+
+### Dnevniki avtentikacije
+
+#### Poskusi prijave v Appbox Control Panel
+
+- **Uporabe**
+  - Vsak neveljaven poskus dostopa se zabeleži v Appbox API, ki uporabniku po določenem številu poskusov za določen čas omeji prijavo v Control Panel. To vključuje:
+    - Uporabniško ime, kot ga vnese uporabnik
+    - IP naslov
+    - Število poskusov
+    - Zadnji datum poskusa
+- **Zbiranje**
+  - Zbere se, ko uporabnik napačno vnese poverilnice
+- **Shranjevanje**
+  - Appbox API = Cleartext
+- **Dostop in razlogi za dostop**
+  - Appbox Team
+    - Uporablja se za prepoznavanje poskusov brute-force
+    - Uporabniki lahko zahtevajo odpravo časovne omejitve in odstranitev poskusa dostopa, na zahtevo in po preverjanju prek Ticket sistema
+- **Hramba**
+  - 24 ur ali na zahtevo uporabnika
+
+#### Dnevniki prijav SSH
+
+- **Uporabe**
+  - Beležijo poskuse prijave in uspešne prijave v SSH v aplikacijah, ki jih namesti uporabnik, kot sta Ubuntu ali Debian
+- **Zbiranje**
+  - Samodejno jih ustvari strežnik SSH, ko pride do poskusov prijave
+- **Shranjevanje**
+  - Application container = Cleartext (običajno v `/var/log/auth.log` ali podobno)
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+    - Ker so ti dnevniki shranjeni znotraj aplikacij, kjer imajo uporabniki root (sudo) dostop, imajo uporabniki popoln nadzor nad temi dnevniki in dostop do njih
+    - Uporabniki si lahko te dnevnike po potrebi ogledajo, jih spremenijo ali izbrišejo
+  - Ekipa Appbox
+    - Dostop je na voljo samo z dovoljenjem uporabnika med odpravljanjem težav podpore
+- **Hramba**
+  - Upravlja jo uporabnik, saj ima root dostop do kontejnerja
+  - Privzete politike rotacije dnevnikov veljajo, razen če jih uporabnik spremeni
+
+### Sistemsko ustvarjeni dnevniki
+
+- **Uporabe**
+  - Dnevniki, ustvarjeni na ravni strežnika, uporabljeni za prepoznavanje težav na strežnikih
+- **Zbiranje**
+  - Ustvari jih operacijski sistem strežnikov
+- **Shranjevanje**
+  - Appbox Servers = Cleartext
+  - Posthog = Cleartext
+- **Dostop in razlogi za dostop**
+  - Ekipa Appbox z omejenim dostopom
+    - Uporablja se za prepoznavanje težav na posameznih strežnikih
+    - Dnevniki se agregirajo v Posthog, ki ekipo opozarja na morebitne napake
+- **Hramba**
+  - Nedoločeno
+
+### Dnevniki, ki jih ustvarijo nameščene aplikacije
+
+- **Uporabe**
+  - Dnevniki, ki jih ustvarijo nameščene aplikacije, uporabljeni za prepoznavanje težav znotraj uporabnikovega slota
+- **Zbiranje**
+  - Ustvarijo jih uporabnikove nameščene aplikacije
+- **Shranjevanje**
+  - Appbox API = Cleartext
+  - Installed Applications = Cleartext
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Ekipa Appbox
+    - Potrebno za poizvedbe podpore, specifične za aplikacijo, z dovoljenjem uporabnika
+- **Hramba**
+  - Dokler uporabnik aplikacije ne odstrani ali izbriše
+
+### Uporabnikova bash zgodovina
+
+- **Uporabe**
+  - Beleži vse ukaze, ki jih uporabnik vnese v lupini slota, in se nahaja v `$HOME/.bash_history`
+- **Zbiranje**
+  - Vsak ukaz, vnesen v lupini, se zabeleži
+- **Shranjevanje**
+  - Appbox Servers = Cleartext
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+    - Ker je datoteka bash zgodovine shranjena v uporabnikovem domačem imeniku, imajo uporabniki popoln nadzor nad to datoteko
+    - Uporabniki si lahko to datoteko po potrebi ogledajo, jo spremenijo, počistijo ali izbrišejo (z ukazi, kot je `history -c`, ali z urejanjem/odstranitvijo datoteke)
+  - Ekipa Appbox
+    - Uporablja se za splošne ali aplikacijsko specifične poizvedbe, kot je preverjanje, ali so ukazi, ki jih je vnesel uporabnik, pravilni, vendar samo z dovoljenjem uporabnika
+    - Uporablja se za preverjanje morebitnih vdorov ali zlorabe strežnika, vendar samo kadar je to potrebno za varnostne preiskave
+- **Hramba**
+  - Upravlja jo uporabnik, ki lahko zgodovino kadar koli počisti
+  - Privzeto se bash zgodovina hrani nedoločeno, dokler je uporabnik ne odstrani
+
+### Gostovani podatki
+
+#### Nameščene aplikacije
+
+- **Uporabe**
+  - Bistvene datoteke, da nameščene aplikacije pravilno delujejo
+- **Zbiranje**
+  - Namesti jih uporabnik na svoj slot
+- **Shranjevanje**
+  - Appbox Servers = Depends on the Application
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+  - Ekipa Appbox
+    - Uporablja se za poizvedbe podpore, specifične za aplikacijo, z dovoljenjem uporabnika
+- **Hramba**
+  - Nedoločeno, dokler uporabnik tega ne odstrani
+
+#### Uporabniški podatki
+
+- **Uporabe**
+  - Podatki, ki jih ustvari uporabnik in/ali uporabnikove aplikacije ter so shranjeni na uporabnikovem slotu
+- **Zbiranje**
+  - Ustvari jih uporabnik in/ali uporabnikove aplikacije
+- **Shranjevanje**
+  - Appbox Servers = Cleartext
+- **Dostop in razlogi za dostop**
+  - Uporabnik
+    - Uporabnikove datoteke so shranjene v domačih mapah na strežnikih Appbox in so izolirane od drugih uporabnikov. Dostopa lahko samo uporabnik
+  - Ekipa Appbox
+    - Dostop je mogoč za poizvedbe podpore, z dovoljenjem uporabnika
+- **Hramba**
+  - Nedoločeno, dokler uporabnik tega ne odstrani
+    - Pri zakonitih obvestilih DMCA takedown bomo uporabnika obvestili in ga prosili, naj vsebino izbriše v 24 urah
+- **Več informacij**
+  - [Politika zlorabe vsebine](/policies/content-abuse-policy)
+  - [Politika odstranitve občutljivih podatkov](/policies/sensitive-data-removal-policy)
+
+## Skladnost z UK Online Safety Act
+
+V skladu z UK Online Safety Act 2023 Appbox izvaja posebne prakse ravnanja s podatki za zaščito uporabnikov in skladnost z regulativnimi zahtevami:
+
+### Spremljanje varnosti vsebine
+
+- **Uporabe**
+  - Ocena tveganja in zmanjševanje tveganj za nezakonito in škodljivo vsebino
+  - Moderiranje prijavljene vsebine
+  - Preprečevanje distribucije nezakonite vsebine
+- **Zbiranje**
+  - Ustvari se, ko je vsebina prijavljena ali označena
+  - Hash vrednosti vsebine za znano nezakonito gradivo
+- **Shranjevanje**
+  - Appbox API = Encrypted
+  - Reports database = Cleartext
+- **Dostop in razlogi za dostop**
+  - Appbox Compliance Team
+    - Za pregled prijavljene vsebine in sprejem ustreznih ukrepov
+    - Za usklajevanje z organi Združenega kraljestva, kadar to zahteva zakon
+  - Regulativni organi Združenega kraljestva (kadar to zahteva zakon)
+    - Za spremljanje skladnosti z Online Safety Act
+    - Za preiskovanje resne nezakonite vsebine
+- **Hramba**
+  - Podatki prijave: 2 leti po rešitvi
+  - Hash vrednosti vsebine: Nedoločeno (za preprečevanje ponovne distribucije)
+
+### Podatki za oceno tveganja
+
+- **Uporabe**
+  - Izvajanje zahtevanih ocen tveganja za nezakonito vsebino in vsebino, škodljivo za otroke
+  - Izvajanje sorazmernih varnostnih ukrepov
+  - Dokazovanje skladnosti regulativnim organom
+- **Zbiranje**
+  - Ustvari se z rednimi ocenami tveganja platforme
+  - Agregirani podatki o uporabi za prepoznavanje morebitnih vzorcev tveganja
+- **Shranjevanje**
+  - Appbox Compliance Systems = Protected
+- **Dostop in razlogi za dostop**
+  - Appbox Compliance Team
+    - Za izvajanje in posodabljanje ocen tveganja
+    - Za izvajanje varnostnih ukrepov
+  - Regulativni organi Združenega kraljestva (kadar to zahteva zakon)
+    - Za preverjanje skladnosti z dolžnostmi ocene tveganja
+- **Hramba**
+  - 3 leta (za dokazovanje stalne skladnosti)
+
+### Sistem prijavljanja vsebine
+
+- **Uporabe**
+  - Uporabnikom omogoča prijavo nezakonite ali škodljive vsebine
+  - Spremlja status prijav in sprejetih ukrepov
+- **Zbiranje**
+  - Podrobnosti prijave, ki jih zagotovijo prijavitelji
+  - Informacije o prijavljeni vsebini
+  - Ukrepi, sprejeti glede prijav
+- **Shranjevanje**
+  - Appbox API = Encrypted
+- **Dostop in razlogi za dostop**
+  - Prijavitelj (omejeno na lastne prijave)
+  - Uporabnik, katerega vsebina je bila prijavljena (omejene informacije)
+  - Appbox Compliance Team
+    - Za preiskovanje in reševanje prijav
+  - Regulativni organi Združenega kraljestva (kadar to zahteva zakon)
+    - Za preiskovanje prijav resne nezakonite vsebine
+- **Hramba**
+  - 2 leti po rešitvi

@@ -1,0 +1,108 @@
+---
+title: "Velike posodobitve so na obzorju za Appbox! 🚀"
+date: 2025-04-08 11:58:00
+excerpt: "Novo spletno mesto, odprtokodna pobuda, kontejnerske aplikacije, naša lastna omrežna infrastruktura in še več zanimivih novosti, ki prihajajo v Appbox!"
+author_id: rid
+og_image: appbox-updates-og.jpg
+tags: [appbox, hosting, infrastructure, open-source, networking]
+---
+
+# Pri Appbox se začenja novo obdobje
+
+Po mesecih dela v ozadju, dolgih nočeh in veliko preveč kave sem navdušen, da vam lahko končno pokažem, kaj gradimo. To ni samo še ena posodobitev. To je obnova Appbox od temeljev navzgor.
+
+## Dobrodošli v našem novem digitalnem domu
+
+Gledate naše povsem novo spletno mesto! Končno smo se poslovili od stare namestitve WordPress. Celotna stvar je bila na novo zgrajena s sodobno tehnologijo, ki je hitrejša, varnejša in se dejansko pravilno skalira.
+
+To novo spletno mesto bo postalo dom za pravo dokumentacijo, redne blog objave (kot je ta) in sčasoma frontend za našo novo platformo. Oblika ni samo čistejša - dejansko je funkcionalna in bistveno olajša iskanje stvari.
+
+Pod pokrovom uporabljamo Next.js s ContentLayer, kar nam daje zelo hitro delovanje in veliko boljšo razvojno izkušnjo. Spletno mesto podpira več jezikov, samodejno obravnava SEO, ima RSS vire v XML in JSON ter vključuje temni način, ker se nihče ne bi smel ukvarjati s svetlo belimi zasloni ob 2h zjutraj.
+
+## Postajamo odprtokodni!
+
+Postajamo tudi odprtokodni! Spletno mesto, na katerem to berete? Koda je javna in k njej lahko prispeva vsak.
+
+To je za nas ogromno. Vedno smo poskušali biti pregledni, toda to je trenutek, ko svoje besede podkrepimo z dejanji in dejansko gradimo s skupnostjo, ne samo zanjo. Če ste razvijalec in ste kdaj želeli pomagati oblikovati orodja, ki jih uporabljate, zdaj lahko. Oglejte si naš GitHub repo za smernice za prispevanje in vse, kar potrebujete za začetek.
+
+## Predstavljamo Appbox v2
+
+Novo spletno mesto je šele začetek. Delamo na Appbox v2, največji posodobitvi, kar smo jih kdaj naredili.
+
+Uvajanje kontejnerjev je bilo vedno naša stvar, vendar v2 gre dlje s tem, kar vsi že dolgo zahtevajo: polno podporo za VPS. Aplikacije VPS vam bodo dale popoln root dostop brez omejitev. Če potrebujete popoln nadzor nad svojim okoljem, je to tisto, kar ste čakali.
+
+Zadevo že imamo delujočo na enem strežniku in deluje zelo dobro. Aplikacije VPS boste lahko namestili tako kot katero koli drugo aplikacijo iz trgovine z aplikacijami. To vam bo omogočilo namestitev aplikacij, ki trenutno niso mogoče, kot so Docker, Snap in Tailscale. Na naših strežnikih zahteva posodobitev OS na Debian 13, saj uporabljamo nekaj novih virtualizacijskih funkcij, da bo bolj varno in zmogljivejše. To posodobitev bomo morali uvesti, preden lahko funkcijo zaženemo, vendar bo o tem kmalu več novic.
+
+To združuje našo preizkušeno kontejnersko infrastrukturo z resnično prilagodljivostjo VPS in vam daje najboljše iz obeh svetov.
+
+## Gradimo lastno omrežno infrastrukturo
+
+Tukaj je res velika novica: gradimo lastno omrežje.
+
+Ne samo dodajanje več strežnikov ali nadgradnja pasovne širine. Imamo lastno Autonomous System Number ([AS209870](https://apps.db.ripe.net/db-web-ui/lookup?source=RIPE&type=aut-num&key=AS209870)) in lasten IP blok (79.140.195.0/24), da zgradimo omrežje, ki je v celoti naše. V bistvu postajamo svoj ISP z lastno uradno internetno identiteto in naslovnim prostorom, zato lahko nadzorujemo, kako vaši podatki potujejo po internetu [1].
+
+Kaj to pomeni za vas? Nadzorujemo lahko vse, optimiziramo posebej za uporabnike Appbox ter zagotovimo zanesljivost in zmogljivost, ki prej nista bili mogoči.
+
+## Peering z AMS-IX
+
+Skupaj z razvojem našega omrežja bomo, ko bo omrežje pripravljeno, začeli peering z AMS-IX za 100G povezljivosti. To nam daje neposreden dostop do ene največjih internetnih izmenjav na svetu, kar pomeni nižjo zakasnitev in boljše hitrosti za vse. Predstavljajte si to kot neposredno avtocesto do velikih internetnih ponudnikov namesto vožnje po stranskih cestah [2].
+
+Takšna povezljivost je običajno na voljo samo veliko večjim podjetjem, vendar želimo zagotoviti zmogljivost na ravni podjetij ne glede na to, kateri paket uporabljate.
+
+Zdaj imamo dogovor za nakup strojne opreme urejen, zato smo pripravljeni. Novo strojno opremo bomo prejeli najpozneje do oktobra, morda že septembra. To pomeni, da bi morali biti na novem omrežju zagnani kmalu zatem.
+
+## Prilagoditve cen
+
+To je del, ki ga res nismo želeli pisati. Gradnja takšne infrastrukture je draga, in čeprav večino stroškov nosimo sami, moramo žal narediti majhno prilagoditev cen za nove in obstoječe stranke.
+
+Glede tega želim biti odkrit. Nove cene so že v živo na spletnem mestu, obstoječe stranke pa bomo kmalu kontaktirali s podrobnostmi o tem, kako to vpliva nanje.
+
+Vemo, kako obremenjeni so trenutno vsi, in to je bila iskreno ena najtežjih odločitev, ki smo jih morali sprejeti. Povečanja smo ohranili tako majhna, kot smo jih lahko - v bistvu pokrivamo vse razen absolutnega minimuma, ki ga potrebujemo, da to deluje.
+
+Vendar bomo poskrbeli, da bo to zvišanje cene več kot vredno. Razliko v zmogljivosti in zanesljivosti boste res opazili. Poleg tega to pomeni, da lahko še naprej širimo omrežje in dodajamo več peeringa, zato se bodo stvari od tu naprej samo še izboljševale.
+
+Te posodobljene cene smo za nove stranke uvedli pred 3 meseci in odzivi so bili dobri, zato menimo, da smo našli dobro ravnovesje med dostopnostjo in financiranjem izboljšav, ki si jih zaslužite; še vedno smo zelo konkurenčni. Na primer, naš priljubljeni paket NG-4500 se zvišuje samo za €2.08 na mesec, kar je še vedno precej manj od primerljivih paketov konkurentov.
+
+Za obstoječe stranke boste plačali samo razliko med staro in novo ceno. Če imate kakršne koli promocijske popuste, ti ostanejo nad novo osnovno ceno. Cenimo vašo zvestobo, še posebej v takšnih časih.
+
+Naša struktura popustov ostaja enaka:
+- 5% popusta za četrtletna plačila
+- 10% popusta za 6-mesečna plačila
+- 15% popusta za letna plačila
+
+Če imate nastavljena samodejna plačila, se bo prilagoditev zgodila z naslednjim obračunskim ciklom po prejemu e-pošte. Ni vam treba narediti ničesar.
+
+## Več prostora za shranjevanje!
+
+Vseeno pa ne gre samo za plačevanje več. Naš najnižji paket tudi povečujemo s 3TB na 3.5TB. To je 16% povečanje, zaradi česar je naš začetni paket kljub spremembi cene še boljša ponudba.
+
+## Kaj sledi?
+
+To je šele začetek tega, kar prihaja za Appbox. V naslednjih tednih in mesecih boste videli redne posodobitve, ko bomo uvajali nove funkcije, izboljševali obstoječe in še naprej gradili infrastrukturo za naslednjo generacijo gostovanja aplikacij.
+
+Testiranje naše nove omrežne infrastrukture nameravamo začeti septembra/oktobra, o napredku pa vas bomo sproti obveščali.
+
+Naš načrt vključuje:
+- aplikacije VPS, ki ne bodo imele omejitev (kot Docker, Snap in Tailscale)
+- boljšo dokumentacijo, ki dejansko pokrije vse
+- skupnostno predstavitev zanimivih stvari, ki jih ljudje gradijo z Appbox
+- redne tehnične blog objave o naši infrastrukturi
+- nove kontejnerske aplikacije za specifične primere uporabe
+- boljša orodja za spremljanje in analitiko
+- izboljšane varnostne funkcije v vseh paketih
+
+Hvala, ker ostajate z nami. Brez naše skupnosti nič od tega ne bi bilo mogoče.
+
+Kmalu prihaja več posodobitev.
+
+---
+
+*Katere funkcije ali izboljšave bi radi videli v novem Appbox? Pišite nam na support@appbox.co.*
+
+---
+
+**Viri:**
+
+[1] [Kaj je Autonomous System Number?](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+
+[2] [Kaj je Internet Peering?](https://en.wikipedia.org/wiki/Internet_exchange_point)

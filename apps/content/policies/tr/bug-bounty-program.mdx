@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Programı
+description: Güvenlik açığı bildirim programımız ve ödüller
+---
+
+Appbox'ta güvenlik temel bir önceliktir. Güvenlik araştırmacılarını, potansiyel güvenlik açıklarını tespit edip bildirerek platformumuzu güçlendirmeye aktif olarak teşvik ediyoruz. Bu program, sorumlu güvenlik araştırmasına yaklaşımımızı, güvenlik açığı raporlarını nasıl ele aldığımızı ve güvenlik duruşumuzu iyileştirmeye yardımcı olan araştırmacılara sunduğumuz ödülleri açıklar.
+
+## Taahhüdümüz
+
+Bug bounty programımıza katıldığınızda şunları taahhüt ederiz:
+
+* Raporunuzu zamanında kabul etmek ve değerlendirmek
+* Doğrulanan güvenlik açıklarını uygun aciliyetle ele almak
+* Güvenlik iyileştirmelerine yol açan benzersiz, daha önce bildirilmemiş güvenlik açıkları için sizi tanımak ve ödüllendirmek
+
+## Program Kapsamı
+
+Bu bug bounty programı aşağıdaki Appbox platformları için geçerlidir:
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **Yalnızca altyapı, müşteri uygulamaları değil**
+
+**Not:** Hosting altyapımız (username.appboxes.co) kapsam dahilinde olsa da müşteriler tarafından deploy edilen üçüncü taraf uygulamalardaki güvenlik açıkları kapsam dışıdır. Aşağıdaki istisnalara bakın.
+
+## Geçerli Güvenlik Açığı Olarak Ne Kabul Edilir?
+
+Bug bounty programımıza hak kazanmak için bir başvuru aşağıdaki kriterlerin TÜMÜNÜ karşılamalıdır:
+
+### 1. Gerçek Exploit Edilebilirliği Göstermek
+* Güvenlik açığının exploit edilebildiğini gösteren çalışan bir proof of concept içermelidir
+* Açık güvenlik etkisi göstermelidir; gösterilmiş zarar olmadan teorik güvenlik açıkları hak kazanmaz
+* Bir saldırganın kullanıcı verilerini, hesapları veya sistem bütünlüğünü gerçekten tehlikeye atabileceğini kanıtlamalıdır
+
+### 2. Kapsam Dahilindeki Sistemleri Etkilemek
+* Güvenlik açığı Appbox'ın özel kodunda veya altyapısında mevcut olmalıdır
+* Yukarıdaki "Program Kapsamı" bölümünde açıkça listelenen sistemleri etkilemelidir
+* Production veya staging ortamlarımızda yeniden üretilebilir olmalıdır
+
+### 3. Daha Önce Bildirilmemiş Olmak
+* Güvenlik açığı yeni keşfedilmiş olmalı ve bizim tarafımızdan zaten biliniyor olmamalıdır
+* Yinelenen raporlar veya bilinen sorunların varyasyonları hak kazanmaz
+
+## Kapsam Dışı Alanlar ve Sorunlar
+
+Aşağıdakiler bug bounty programımızın **kapsamı dışında** kabul edilir:
+
+### Üçüncü Taraf Sistemler ve Entegrasyonlar
+* WHMCS Client Area [https://billing.appbox.co] - [WHMCS Security](https://www.whmcs.com/security-bounty-program/) adresine bildirin
+* Chatwoot chat widget - [Chatwoot Security](https://www.chatwoot.com/security) adresine bildirin
+* **Müşteri tarafından deploy edilen uygulamalar** [app.username.appboxes.co] - Altyapımızda barındırılan üçüncü taraf uygulamalardaki (WordPress, Nextcloud vb.) güvenlik açıkları ilgili uygulama sağlayıcılarına bildirilmelidir
+* Kullandığımız diğer tüm üçüncü taraf servisler, plugin'ler veya entegrasyonlar
+* Appbox tarafından doğrudan kontrol edilmeyen IP adresleri veya domainler
+* Artık aktif kullanımda olmayan legacy veya deprecated sistemler
+
+**Hosting Altyapısı için Kapsam Dışı:**
+* Müşteri tarafından deploy edilen uygulama kodu içindeki güvenlik açıkları (WordPress, Nextcloud vb.)
+* Üçüncü taraf uygulamaların varsayılan yapılandırmaları
+* Belirli bir uygulama sürümüne özgü güvenlik sorunları
+
+### Security Headers ve Hardening
+* Veri ihlaline yol açan gerçek exploit göstermediğiniz **sürece** eksik security headers (X-Frame-Options, COOP, COEP, MTA-STS vb.)
+* Eksik `rel="noopener"` veya `rel="noreferrer"` nitelikleri
+* Sunucu sürümü ifşası veya HTTP header bilgi sızıntısı
+* Hassas olmayan cookie'lerdeki cookie nitelikleri (analytics, tercihler vb.)
+
+### Düşük Etkili Bilgi İfşası
+* Hassas veri (parolalar, token'lar, PII) ifşa etmeyen ayrıntılı hata mesajları
+* Gösterilmiş path traversal veya dosya erişimi olmadan path ifşası
+* Teknoloji stack'i tanımlaması (PHP sürümü, framework tespiti vb.)
+* Genel uygulama yanıtları veya davranışı
+
+### Tasarım Kararları ve Teorik Sorunlar
+* Login CSRF (saldırgana kurban hesaplarına erişim sağlamaz)
+* Timing attack veya farklı yanıtlar yoluyla kullanıcı sayımı (daha büyük bir attack chain'in parçası olmadıkça)
+* Hassas işlevin exploit edildiği gösterilmeden clickjacking
+* Hassas olmayan endpoint'lerde CORS yapılandırmaları
+* Gerçek kötüye kullanım göstermediğiniz **sürece** eksik rate limiting (DoS yine de kapsam dışıdır)
+
+### Saldırı Ön Koşulları
+* Varsayılan uygulama yapılandırmalarımızı etkilemeyen güvenlik sorunları
+* Standart dışı yapılandırmalar gerektiren güvenlik açıkları
+* Özel veya değiştirilmiş kurulumlar gerektiren container güvenlik açıklarımız
+* Ağ düzeyinde ihlal gerektiren sorunlar (MITM, DNS poisoning, ARP spoofing)
+
+### Yasaklı Test Yöntemleri
+* Timing-based bilgi ifşası saldırıları
+* Process enumeration teknikleri
+* Her türlü denial of service veya yüksek hacimli saldırı
+* Social engineering ve phishing teknikleri
+* Aşırı trafik veya yük oluşturan otomatik güvenlik taraması
+* İşlevsel olmayan özelliklerin veya sayfaların test edilmesi (ör. henüz production'da olmayan signup sayfaları)
+
+### Geçersiz Rapor Türleri
+* Manuel doğrulama olmadan yalnızca otomatik tarayıcı çıktısına dayanan raporlar
+* Gerçek güvenlik açığı göstermeyen genel öneriler
+* Güvenlik etkisi olmayan best practice önerileri
+* Exploit edilebilirliği göstermeyen uyumluluk gözlemleri (PCI-DSS, GDPR vb.)
+
+## Ödül Yapısı
+
+### Ana Web Sitesi ve Kontrol Paneli
+
+| **Güvenlik Açığı Türü**                         | **PayPal Ödülü** | **Hizmet Kredisi** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting Altyapısı
+
+| Güvenlik Açığı Türü                         | PayPal Ödülü | Hizmet Kredisi |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+Geçerli güvenlik açıkları bildiren katkıda bulunanlar, takdirimizin bir göstergesi olarak Security Researchers Hall of Fame bölümümüzde tanınacaktır.
+
+## Gerekli Rapor Kalitesi
+
+Tüm güvenlik açığı raporları şunları içermelidir:
+
+* **Açık güvenlik açığı açıklaması** - Güvenlik açığının ne olduğunu ve neden önemli olduğunu açıklayın
+* **Etkilenen sistem/URL** - Güvenlik açığının tam olarak nerede bulunduğunu belirtin
+* **Adım adım yeniden üretim** - Sorunu yeniden üretmemize olanak tanıyan ayrıntılı adımlar
+* **Çalışan proof of concept** - Exploit'in işlevsel gösterimi (kod, ekran görüntüleri, video)
+* **Gerçek güvenlik etkisi** - Teorik olasılıkları değil, bir saldırganın ne başarabileceğini gösterin
+* **Kendi testiniz** - Bulguları manuel olarak doğrulayın, yalnızca tarayıcı çıktısı iletmeyin
+
+Bu unsurları içermeyen veya genel güvenlik önerilerinden oluşan raporlar ödül almaya hak kazanmaz.
+
+## Ödülünüzü Talep Etme
+
+* İki ödül seçeneği arasından seçim yapabilirsiniz:  
+   * Doğrudan PayPal ödemesi (geçerli bir PayPal hesabı gerektirir)
+   * Appbox hizmet kredileri (herhangi bir Appbox hizmeti için geçerlidir, devredilemez)
+
+## Katılım Yönergeleri
+
+* Bu politikaya, [Terms of Service](/policies/terms-of-service) belgemize ve geçerli tüm yasalara uyun
+* Güvenlik açıklarını keşiften sonra derhal bildirin
+* Araştırmanız sırasında kullanıcı gizliliğine ve sistem bütünlüğüne saygı gösterin
+* Tüm güvenlik açığı raporlarını yalnızca [contact us form](https://billing.appbox.co/contact.php) üzerinden gönderin
+* Keşfedilen güvenlik açıkları çözülene kadar bunlar hakkında gizliliği koruyun
+* Testlerinizi yalnızca bu programa açıkça dahil edilen sistemlerle sınırlayın
+* Hassas verilere beklenmedik erişim elde ederseniz: sorunu göstermek için gereken minimum miktara erişin, testi derhal durdurun ve güvenlik açığını hızla bildirin
+* Sistemlerimizle herhangi bir etkileşim için yalnızca kendi test hesaplarınızı kullanın
+* Bulgularınıza dayanarak Appbox'a asla şantaj yapmaya çalışmayın
+* **Bulgularınızı doğrulayın** - Göndermeden önce proof of concept'inizin gerçekten çalıştığını test edin
+* **Etkiye odaklanın** - Teorik sorunlar yerine gerçek zarara neden olabilecek güvenlik açıklarına öncelik verin
+
+## Yasal Koruma
+
+Bu politikaya uyan güvenlik araştırmacıları şunları bekleyebilir:
+
+* Bu yönergeler kapsamında iyi niyetli güvenlik araştırması için yasal işlemden korunma
+* Meşru güvenlik araştırması için gerekli olduğunda anti-circumvention yasal taleplerinden muafiyet
+* Aksi halde güvenlik testini engelleyecek belirli politika kısıtlamalarından feragat
+* Uyumlu güvenlik araştırmasının faydalı olduğunun ve iyi niyetle yürütüldüğünün kabulü
+
+Geçerli tüm yasalara uymaktan siz sorumlu olmaya devam edersiniz. Bu politikaya uyarken üçüncü bir taraftan yasal işlemle karşılaşırsanız, eylemlerinizin programımıza uygun yürütüldüğünü teyit ederiz. Planladığınız araştırma faaliyetlerinin bu politikaya uygun olup olmadığından emin değilseniz, devam etmeden önce lütfen [contact us form](https://billing.appbox.co/contact.php) üzerinden bizimle iletişime geçin.
+
+## Raporlama Süreci
+
+Bir güvenlik açığını bildirmek için [contact us form](https://billing.appbox.co/contact.php) üzerinden ayrıntılı bir ticket oluşturun.
+
+* Raporunuz güvenlik açığını yeniden üretmek için kapsamlı adımlar içermelidir. Bu şablonu rehber olarak kullanabilirsiniz: [https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* Tüm program iletişimleri resmi Support Ticket Platform üzerinden yürütülmelidir
+* Appbox'tan açık yazılı izin olmadan herhangi bir güvenlik açığının kamuya açıklanması bu programın şartlarını ihlal eder ve ödül almaktan diskalifiye olmanıza neden olur
+
+## Rapor Ettikten Sonra Ne Olur?
+
+* **Geçerli güvenlik açıkları**: Raporunuzu kabul eder, düzeltme üzerinde çalışır ve ödülünüzü işleriz
+* **Geçersiz raporlar**: Raporun neden hak kazanmadığını açıklar ve gelecekteki başvurular için yönlendirme sağlayabiliriz
+* **Kapsam dışı raporlar**: Sizi uygun sağlayıcıya yönlendirir veya sorunun neden kapsanmadığını açıklarız
+
+Kaliteli araştırmayı ve güvenliğimize yapıcı katkıları takdir ediyoruz. Appbox'ı güvenli tutmaya yardımcı olduğunuz için teşekkür ederiz.

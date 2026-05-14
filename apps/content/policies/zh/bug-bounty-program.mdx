@@ -1,0 +1,183 @@
+---
+title: Bug Bounty Program
+description: 我们的安全漏洞报告计划和奖励
+---
+
+在 Appbox，安全是根本优先事项。我们积极鼓励安全研究人员通过发现并报告潜在漏洞来帮助加强我们的平台。本计划概述了我们对负责任安全研究的处理方式、我们如何处理漏洞报告，以及我们为帮助提升安全态势的研究人员提供的奖励。
+
+## 我们的承诺
+
+当你参与我们的 bug bounty program 时，我们承诺：
+
+* 及时确认并评估你的报告
+* 以适当的紧急程度处理已确认漏洞
+* 对能带来安全改进、独特且此前未报告的漏洞给予认可和奖励
+
+## 计划范围
+
+本 bug bounty program 适用于以下 Appbox 平台：
+
+* Appbox Primary Website [https://www.appbox.co]
+* Appbox Control Panel [https://www.appbox.co/login]
+* Appbox Hosting Infrastructure [username.appboxes.co] - **仅限基础设施，不包括客户应用**
+
+**说明：** 尽管我们的托管基础设施（username.appboxes.co）在范围内，客户部署的第三方应用中的漏洞不在范围内。请参见下方排除项。
+
+## 什么算作有效漏洞
+
+要符合我们的 bug bounty program，提交必须满足以下**所有**标准：
+
+### 1. 展示实际利用
+* 包含可工作的 proof of concept，证明漏洞可以被利用
+* 展示明确的安全影响；没有展示危害的理论漏洞不符合条件
+* 证明攻击者确实可以危害用户数据、账号或系统完整性
+
+### 2. 影响范围内系统
+* 漏洞必须存在于 Appbox 的专有代码或基础设施中
+* 必须影响上方 "Program Coverage" 中明确列出的系统
+* 必须能在我们的 production 或 staging 环境中复现
+
+### 3. 此前未报告
+* 漏洞必须是新发现的，且并非我们已知
+* 重复报告或已知问题的变体不符合条件
+
+## 排除的领域和问题
+
+以下内容被视为在我们的 bug bounty program **范围之外**：
+
+### 第三方系统和集成
+* WHMCS Client Area [https://billing.appbox.co] - 请报告给 [WHMCS Security](https://www.whmcs.com/security-bounty-program/)
+* Chatwoot chat widget - 请报告给 [Chatwoot Security](https://www.chatwoot.com/security)
+* **客户部署的应用** [app.username.appboxes.co] - 托管在我们基础设施上的第三方应用（WordPress、Nextcloud 等）中的漏洞应报告给相应应用供应商
+* 我们使用的任何其他第三方服务、插件或集成
+* 不由 Appbox 直接控制的 IP addresses 或 domains
+* 不再活跃使用的 legacy 或 deprecated 系统
+
+**托管基础设施的范围外事项：**
+* 客户部署的应用代码（WordPress、Nextcloud 等）中的漏洞
+* 第三方应用的默认配置
+* 特定应用版本专有的安全问题
+
+### Security Headers 和加固
+* 缺失 security headers（X-Frame-Options、COOP、COEP、MTA-STS 等），**除非**你展示导致数据泄露的实际利用
+* 缺失 `rel="noopener"` 或 `rel="noreferrer"` attributes
+* 服务器版本披露或 HTTP header 信息泄露
+* 非敏感 cookie（analytics、preferences 等）的 cookie attributes
+
+### 低影响信息披露
+* 未暴露敏感数据（passwords、tokens、PII）的详细错误消息
+* 未展示 path traversal 或文件访问的路径披露
+* 技术栈识别（PHP version、framework detection 等）
+* 通用应用响应或行为
+
+### 设计决策和理论问题
+* Login CSRF（不会让攻击者访问受害者账号）
+* 通过 timing attacks 或差异响应进行 user enumeration（除非属于更大攻击链的一部分）
+* 未展示敏感功能实际利用的 clickjacking
+* 非敏感 endpoints 上的 CORS 配置
+* 缺失 rate limiting，**除非**你展示实际滥用（DoS 仍被排除）
+
+### 攻击前提条件
+* 不影响我们默认应用配置的安全问题
+* 需要非标准配置的漏洞
+* 需要自定义或修改 setup 才能利用的 container 漏洞
+* 需要网络级 compromise 的问题（MITM、DNS poisoning、ARP spoofing）
+
+### 禁止的测试方法
+* 基于 timing 的信息披露攻击
+* 进程枚举技术
+* 任何形式的 denial of service 或高流量攻击
+* Social engineering 和 phishing 技术
+* 产生过量流量或负载的自动化安全扫描
+* 测试非功能性功能或页面（例如尚未进入 production 的 signup 页面）
+
+### 无效报告类型
+* 仅基于自动化 scanner 输出且缺少人工验证的报告
+* 未展示实际漏洞的通用建议
+* 没有安全影响的最佳实践建议
+* 未展示可利用性的合规观察（PCI-DSS、GDPR 等）
+
+## 奖励结构
+
+### Main Website and Control Panel
+
+| **Vulnerability Type**                               | **PayPal Reward** | **Service Credit** |
+| ---------------------------------------------------- | ----------------- | ------------------ |
+| XSS                                                  | EUR 100           | EUR 200            |
+| XSS (CSP Bypass)                                     | EUR 200           | EUR 300            |
+| CSRF                                                 | EUR 300           | EUR 450            |
+| Authentication Bypass                                | EUR 500           | EUR 750            |
+| SQL Injection                                        | EUR 1000          | EUR 1500           |
+| Arbitrary code execution                             | EUR 1000          | EUR 1500           |
+| Arbitrary code execution (with privilege escalation) | EUR 2000          | EUR 3000           |
+| Persistent code change                               | EUR 1000          | EUR 1500           |
+
+### Hosting Infrastructure
+
+| Vulnerability Type                           | PayPal Reward | Service Credit |
+| -------------------------------------------- | ------------- | -------------- |
+| Authentication Bypass (SSH, FTP, VPN, etc.)  | EUR 500       | EUR 750        |
+| Authentication Bypass for Supported Apps     | EUR 100       | EUR 200        |
+| Local privilege escalation                   | EUR 500       | EUR 750        |
+
+报告有效漏洞的贡献者将被列入我们的 Security Researchers Hall of Fame，以表达感谢。
+
+## 必需的报告质量
+
+所有漏洞报告必须包含：
+
+* **清晰的漏洞描述** - 解释漏洞是什么以及为什么重要
+* **受影响系统/URL** - 明确指出漏洞存在的位置
+* **逐步复现步骤** - 让我们能够复现问题的详细步骤
+* **可工作的 proof of concept** - 可运行的利用展示（代码、截图、视频）
+* **实际安全影响** - 展示攻击者能够完成什么，而不是理论可能性
+* **你自己的测试** - 手动验证发现，不要只转发 scanner 输出
+
+缺少这些要素，或只包含通用安全建议的报告，将不符合奖励条件。
+
+## 领取奖励
+
+* 你可以在两种奖励选项中选择：  
+   * 直接 PayPal 付款（需要有效 PayPal 账号）
+   * Appbox 服务额度（适用于任何 Appbox 服务，不可转让）
+
+## 参与指南
+
+* 遵守本政策、我们的 [Terms of Service](/policies/terms-of-service) 以及所有适用法律
+* 发现漏洞后及时报告
+* 在研究期间尊重用户隐私和系统完整性
+* 仅通过我们的 [contact us form](https://billing.appbox.co/contact.php) 提交所有漏洞报告
+* 在漏洞解决前，对发现的漏洞保持保密
+* 将测试限制在本计划明确包含的系统内
+* 如果你意外访问到敏感数据：只访问展示问题所需的最少数据，立即停止测试，并及时报告漏洞
+* 与我们系统的任何交互只使用你自己的测试账号
+* 绝不要基于你的发现勒索 Appbox
+* **验证你的发现** - 提交前测试你的 proof of concept 是否真正有效
+* **关注影响** - 优先处理可能造成真实伤害的漏洞，而不是理论问题
+
+## 法律保护
+
+遵循本政策的安全研究人员可以期待：
+
+* 对在这些指南范围内善意进行的安全研究免于法律行动
+* 在正当安全研究需要时，免于反规避法律主张
+* 豁免某些原本会阻止安全测试的政策限制
+* 承认合规的安全研究是有益且善意进行的
+
+你仍需负责遵守所有适用法律。如果你在遵守本政策时面临第三方的法律行动，我们将确认你的行为符合我们的计划。如果你不确定计划进行的研究活动是否符合本政策，请在继续前通过 [contact us form](https://billing.appbox.co/contact.php) 联系我们。
+
+## 报告流程
+
+要报告漏洞，请通过我们的 [contact us form](https://billing.appbox.co/contact.php) 创建详细 ticket。
+
+* 你的报告应包含复现漏洞的完整步骤。你可以使用此模板作为参考：[https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md](https://github.com/ZephrFish/BugBountyTemplates/blob/master/Example.md)
+* 所有计划通信必须通过我们的官方 Support Ticket Platform
+* 未经 Appbox 明确书面许可公开披露任何漏洞，都会违反本计划条款，并使你失去获得奖励的资格
+
+## 报告后会发生什么
+
+* **有效漏洞**：我们会确认你的报告，开展修复，并处理你的奖励
+* **无效报告**：我们会解释报告不符合条件的原因，并可能为未来提交提供指导
+* **范围外报告**：我们会将你引导至合适的供应商，或解释该问题为何不在覆盖范围内
+
+我们感谢高质量研究以及对我们安全性的建设性贡献。感谢你帮助保护 Appbox 的安全。

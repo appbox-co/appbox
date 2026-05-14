@@ -1,0 +1,65 @@
+---
+title: Service Level Agreement
+description: "Elkötelezettségünk a szolgáltatás következetessége és megbízhatósága iránt"
+---
+
+Ez a Service Level Agreement ("SLA") az Appbox által nyújtott Szolgáltatások feltételeit és használatát szabályozó dokumentum. Szolgáltatásaink használatával elismered és elfogadod az alábbi feltételeket.
+
+Mivel megosztott környezetben működünk, és sajátos jellegű szolgáltatásokat nyújtunk, bizonyos szintű leállás időnként elkerülhetetlen lehet. Ez a megállapodás tisztázza, hogyan kezeljük a leállási eseményeket előfizetési időszakod alatt, és ismerteti viták rendezésére és kompenzáció nyújtására vonatkozó vállalásainkat.
+
+## Szerverleállások, szerverkarbantartás és kompenzáció
+
+Az Appbox minden erőfeszítést megtesz annak érdekében, hogy szervereink a számlázási időszak alatt minden felhasználó számára működőképesek és hozzáférhetők maradjanak.
+
+Ha a szerverkarbantartást előre ütemezzük, a felhasználókat több csatornán értesítjük - például e-mail frissítéseken, az Appbox Status Page felületen és Client Area Announcements útján. A tervezett karbantartás által érintett felhasználók nem jogosultak kompenzációra.
+
+Az előre nem ütemezett vagy sürgősségi karbantartási eljárásokat a lehető leghamarabb kommunikáljuk, és az ilyen események által érintett felhasználók az alábbiak szerint jogosultak lehetnek kreditekre:
+
+| Leállás időtartama  | Kompenzáció                                                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Legfeljebb 6 óra    | A csapat mérlegelése szerint                                                                                                                |
+| Legfeljebb 12 óra   | 1 nap szolgáltatási kreditnek megfelelő                                                                                                     |
+| Legfeljebb 24 óra   | 2 nap szolgáltatási kreditnek megfelelő                                                                                                     |
+| 48 órán túl         | A leállás időtartamának kétszeresével jóváírva (például egy 3 napos kiesés 6 nap szolgáltatási kreditet eredményez)                         |
+
+Ez a szabályzat **nem vonatkozik az általad telepített alkalmazásokhoz kapcsolódó leállásokra.**
+
+## Meghajtóhiba és adatvesztés
+
+Az Appbox platformja megosztott infrastruktúrán alapul, amelyet igazságos erőforrás-elosztás és átfogó lemezhasználat biztosítására terveztünk. Legjobb erőfeszítéseink ellenére hardverhibák, például meghajtóhibák időnként előfordulhatnak.
+
+Ha meghajtóhiba miatt elveszíted hozzáférésedet adataidhoz, és azok nem állíthatók helyre, **egy teljes hónap szolgáltatásra díjmentesen** leszel jogosult.
+
+Erősen javasoljuk, hogy minden, szolgáltatásodon tárolt fontos adatról tarts biztonsági mentést.
+
+Kérjük, vedd figyelembe, hogy ha az adatvesztés felhasználó által kezdeményezett műveletek miatt történik (pl. véletlen törlés), és rendszerrel kapcsolatos hiba nem észlelhető, kompenzációt nem biztosítunk.
+
+## Szervererőforrások méltányos használata
+
+Szolgáltatásaink megosztott erőforrásokon működnek, ezért minden ügyfél számára kulcsfontosságú, hogy tevékenységei ne zavarják más felhasználók teljesítményét, és elfogadható erőforrás-korlátokon belül maradjanak.
+
+Az Appbox előzetes értesítés nélkül leállíthat bármely olyan alkalmazást vagy folyamatot, amely negatívan befolyásolja más ügyfelek élményét. Súlyos erőforrás-visszaélés esetén az ügyfél szolgáltatása felfüggeszthető vagy teljesen megszüntethető.
+
+### Disk I/O méltányos használati szabályzat
+
+Ez a szabályzat kizárólag az NG-8000 és kisebb csomagokra vonatkozik (nem dedikált lemezes csomagok).
+
+Az optimális teljesítmény biztosítása érdekében minden felhasználó számára az Appbox automatizált Disk I/O monitoring rendszert alkalmaz, amely:
+
+1. Folyamatosan figyeli a lemezhasználatot minden megosztott erőforráson
+2. Azonosítja azokat az alkalmazásokat, amelyek hosszabb ideig túlzott Disk I/O erőforrásokat fogyasztanak
+3. Szükség esetén automatikusan throttling intézkedéseket alkalmaz
+
+Ha alkalmazásodat túlzott Disk I/O fogyasztásként érzékeli a rendszer:
+- Figyelmeztető értesítést kaphatsz
+- A tartósan magas használat a Disk I/O sebességed automatikus throttlingját eredményezi
+- Az ismételt megsértések egyre szigorúbb throttling limitekhez vezetnek
+- A throttling ideiglenes, és automatikusan megszűnik, amint a használat visszatér a normál szintre
+
+Kérjük, vedd figyelembe, hogy az erőforrás-igényes alkalmazások kiválthatják ezeket az intézkedéseket, ha más felhasználók figyelembevétele nélkül futnak.
+
+Ezt a szabályzatot azért érvényesítjük, hogy minden felhasználónak kielégítő élménye legyen platformunkon.
+
+## Support válaszidők
+
+Nincs minimális support válasz- vagy megoldási időnk, ugyanakkor célunk, hogy minden support megkeresésre 24 órán belül válaszoljunk.

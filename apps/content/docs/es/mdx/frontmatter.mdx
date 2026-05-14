@@ -1,0 +1,102 @@
+---
+title: Frontmatter
+description: Aprende a usar frontmatter en archivos MDX.
+sort: 3
+---
+
+El frontmatter es una parte importante de un archivo MDX.
+Se usa para definir información sobre el contenido del archivo,
+como el título, la descripción, el autor, la fecha de publicación, etc.
+
+El encabezado de metadatos se define al principio del archivo, entre `---` (tres guiones) al inicio y al final.
+
+## Formato
+
+El encabezado de metadatos se define en formato clave-valor, donde la clave es el nombre del metadato y el valor es el contenido del metadato.
+
+**Ejemplo:**
+
+```mdx
+---
+title: Document title
+description: Document description
+---
+```
+
+Según el tipo de documento (documentación, publicación de blog, etc.), se pueden usar metadatos diferentes.
+
+## Metadatos para documentación
+
+- `title`
+- `description`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Ejemplo:**
+
+```mdx
+---
+title: Document title
+description: Document description
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+---
+```
+
+## Metadatos para publicaciones de blog
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`author_id`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Es el identificador del autor de la publicación.
+    Debe coincidir con el `id` del autor definido en el archivo `src/config/blog.ts`,
+    que es el archivo que contiene los datos completos de los autores.
+  </AlertDescription>
+</Alert>
+
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">`og_image`</AlertTitle>
+
+  <AlertDescription className="pl-2">
+    Esta es la imagen que se usará como imagen destacada de la publicación al compartirla en redes sociales si no quieres usar la imagen generada automáticamente.
+    Las imágenes deben almacenarse en la carpeta `public/blog-og`.
+    Usa únicamente el nombre del archivo de imagen y su extensión.
+  </AlertDescription>
+</Alert>
+
+- `title`
+- `excerpt`
+- `date`
+- `author_id`
+- `og_image`
+- `tags`
+- `links`
+  - `source`
+  - `docs`
+  - `blog`
+  - `api`
+
+**Ejemplo:**
+
+```mdx
+---
+title: Post title
+date: 2024-08-07 22:33:00
+excerpt: Post excerpt
+author_id: daltonmenezes
+og_image: introducing-blogs-og.jpg
+links:
+  source: https://google.com
+  docs: /docs
+  blog: /blog
+  api: https://google.com
+tags: [next.js, open-graph, blog]
+---
+```

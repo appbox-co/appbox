@@ -1,0 +1,516 @@
+---
+title: إعداد موفر النماذج في OpenClaw
+description: اضبط OpenClaw باستخدام مفتاح API لأي موفر نماذج بعد التثبيت.
+sort: 1
+---
+
+يُثبَّت OpenClaw في Appbox من دون الحاجة إلى مفتاح API للنماذج.
+
+الطريقة الموصى بها لإكمال الإعداد هي الاتصال بتطبيق OpenClaw عبر SSH وتشغيل معالج `openclaw onboard` المدمج. هذا المعالج أكثر أماناً من تعديل ملف الإعداد الكامل يدوياً، لأنه يحافظ على إعدادات بوابة Appbox أثناء إرشادك خلال موفري النماذج ومفاتيح API والقنوات وفحوصات الصحة والمهارات.
+
+إذا لم تكن تستطيع استخدام SSH أو لا ترغب في ذلك، فاستخدم [طريقة لوحة التحكم الاحتياطية](#طريقة-احتياطية-ضبط-مصادقة-الموفر-في-لوحة-التحكم) بدلاً من ذلك.
+
+## الطريقة الموصى بها: الدخول إلى OpenClaw عبر SSH وتشغيل الإعداد الأولي
+
+استخدم هذه الطريقة للتثبيتات الجديدة، وللتثبيتات الحالية التي تحتاج إلى إضافة بيانات اعتماد موفر النماذج أو تغييرها.
+
+### ما تحتاجه أولاً
+
+- صفحة تفاصيل تطبيق OpenClaw في Appbox.
+- **SSH Command** المعروض في قسم Configuration.
+- **Gateway Token / SSH Password**. هذا هو السر نفسه المُولَّد لتسجيل الدخول إلى لوحة OpenClaw.
+- حساب لدى موفر نماذج أو مفتاح API. إذا لم يكن لديك واحد بعد، فراجع [الحصول على مفاتيح API](#الحصول-على-مفاتيح-api-مع-روابط-لوحات-التحكم).
+
+تعرض صفحة تفاصيل التطبيق أمر SSH جاهزاً للنسخ:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw app details page with the SSH command highlighted"
+  width="860"
+/>
+
+### الاتصال من macOS
+
+1. افتح **Terminal** أو **iTerm2**.
+2. انسخ **SSH Command** من صفحة تفاصيل تطبيق OpenClaw.
+3. الصقه وشغّله. سيبدو مشابهاً لما يلي:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. إذا سألك macOS هل تثق بالمضيف، فاكتب `yes` واضغط Enter.
+5. عند طلب كلمة المرور، الصق **Gateway Token / SSH Password** واضغط Enter. لن يعرض Terminal أي أحرف أثناء كتابة كلمة المرور أو لصقها.
+
+### الاتصال من Windows
+
+يتضمن Windows 10 وWindows 11 عميل OpenSSH افتراضياً.
+
+1. افتح **Windows Terminal** أو **PowerShell**.
+2. انسخ **SSH Command** من صفحة تفاصيل تطبيق OpenClaw.
+3. الصقه وشغّله:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. إذا سألك Windows هل تثق بالمضيف، فاكتب `yes` واضغط Enter.
+5. عند طلب كلمة المرور، الصق **Gateway Token / SSH Password** واضغط Enter. لن يعرض PowerShell كلمة المرور الملصقة.
+
+إذا أبلغ Windows بأن `ssh` غير معروف، فثبّت **OpenSSH Client** من **Settings > System > Optional features**، ثم أعد فتح Windows Terminal وحاول مرة أخرى.
+
+### تشغيل معالج إعداد OpenClaw الأولي
+
+بعد نجاح اتصال SSH، شغّل:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 on macOS connected to OpenClaw over SSH and running the openclaw onboard command"
+  width="860"
+/>
+
+المعالج تفاعلي. استخدم هذه الخيارات الخاصة بـ Appbox:
+
+1. **Existing config:** اختر خيار مراجعة الإعداد الحالي أو تعديله. لا تختر إعادة ضبط كاملة إلا إذا كنت تقصد عمداً إعادة بناء إعداد OpenClaw من الصفر.
+2. **Model and auth:** اختر موفرك، مثل OpenRouter أو OpenAI أو Anthropic أو Google أو xAI أو موفر مخصص متوافق مع OpenAI. الصق مفتاح API عندما يطلبه المعالج. يُعد OpenRouter الخيار الافتراضي الأسهل لمعظم المستخدمين، لأن مفتاحاً واحداً يمكنه التوجيه إلى نماذج كثيرة. إذا كانت لديك اشتراك OpenAI Codex، فاختر **OpenAI Codex** في قائمة الموفرين، وليس خياراً اسمه `codex` فقط.
+3. **Default model:** اختر النموذج الذي يوصي به المعالج لذلك الموفر، أو أدخل قيمة `provider/model` يدوياً، مثل `openrouter/auto`.
+4. **Workspace:** أبقِ مساحة العمل الافتراضية ما لم يكن لديك سبب محدد لتغييرها.
+5. **Gateway settings:** أبقِ إعدادات بوابة Appbox الحالية. وبوجه خاص، أبقِ مصادقة الرمز مفعّلة، وأبقِ إعدادات منفذ/ربط البوابة الحالية.
+6. **Channels:** اضبط WhatsApp أو Telegram أو Discord أو Signal أو iMessage أو القنوات الأخرى الآن، أو تخطَّها وأضفها لاحقاً باستخدام `openclaw configure`.
+7. **Web search:** اختر موفر بحث إذا كان لديك واحد، أو تخطَّ هذه الخطوة حالياً.
+8. **Daemon/service install:** يشرف Appbox بالفعل على OpenClaw داخل الحاوية، لذلك تخطَّ تثبيت daemon إذا عرضه المعالج.
+9. **Health check:** اسمح للمعالج بتشغيل فحص الصحة.
+10. **Skills:** اسمح للمعالج بفحص المهارات المضمّنة. عندما يسألك عن **Preferred node manager for skill installs**، اختر `npm`.
+
+عند انتهاء الإعداد الأولي، عُد إلى لوحة OpenClaw. إذا كانت اللوحة مفتوحة بالفعل، فحدّثها واختبر مطالبة دردشة قصيرة.
+
+أوامر متابعة مفيدة عبر SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## الحصول على مفاتيح API (مع روابط لوحات التحكم)
+
+استخدم لوحات الموفرين هذه لإنشاء المفاتيح. مع طريقة SSH الموصى بها، الصق المفتاح عندما يطلبه `openclaw onboard`. ومع طريقة لوحة التحكم الاحتياطية، ادمج المفتاح في `Config > Secrets > Raw`.
+
+### الموصى به أولاً: OpenRouter (أفضل خيار افتراضي لمعظم المستخدمين)
+
+لماذا نوصي به:
+
+- يمنحك مفتاحاً واحداً للعديد من مورّدي النماذج.
+- يمكنك استخدام `openrouter/auto`، الذي يستطيع تبديل النماذج بناءً على صعوبة المهمة.
+- يمكن أن يقلل `auto` التكلفة عبر توجيه المهام الأبسط إلى نماذج أرخص.
+
+كيفية الحصول على مفتاح:
+
+1. انتقل إلى [OpenRouter](https://openrouter.ai/) وسجّل الدخول.
+2. افتح [إعدادات API Keys](https://openrouter.ai/settings/keys).
+3. انقر **Create** وانسخ المفتاح (يظهر مرة واحدة).
+4. استخدمه عندما يطلب معالج OpenClaw مفتاح OpenRouter API. أما في طريقة لوحة التحكم الاحتياطية، فمفتاح الإعداد هو `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="OpenRouter API keys page screenshot from a public tutorial"
+  width="860"
+/>
+الدليل المصدر: [How to Get an OpenRouter API
+Key](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+كيفية الحصول على مفتاح:
+
+1. سجّل الدخول إلى [OpenAI Platform](https://platform.openai.com/).
+2. افتح [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. انقر **Create new secret key**.
+4. انسخه فوراً (تعرض OpenAI القيمة الكاملة مرة واحدة فقط).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="OpenAI API key settings screenshot from a public tutorial"
+  width="860"
+/>
+الدليل المصدر: [How to Get an OpenAI API
+Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+كيفية الحصول على مفتاح:
+
+1. سجّل الدخول إلى [Anthropic Console](https://console.anthropic.com/).
+2. افتح [API Keys](https://console.anthropic.com/settings/keys).
+3. انقر **Create Key**.
+4. انسخ المفتاح فوراً (يظهر مرة واحدة).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Anthropic API key creation screenshot from a public tutorial"
+  width="860"
+/>
+الدليل المصدر: [How to get your Claude API
+key](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini عبر AI Studio)
+
+كيفية الحصول على مفتاح:
+
+1. افتح [Google AI Studio](https://aistudio.google.com/).
+2. انتقل إلى [API Keys](https://aistudio.google.com/app/apikey).
+3. انقر **Create API key** (لمشروع جديد أو موجود).
+4. انسخ المفتاح واحفظه.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Google AI Studio API key creation screenshot from a public tutorial"
+  width="860"
+/>
+الدليل المصدر: [Get Google AI API
+Key](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> ملاحظة: يمكن أن تتغير لوحات الموفرين كثيراً وقد تعرض مطالبة تسجيل دخول بحسب حالة جلستك.
+
+## طريقة احتياطية: ضبط مصادقة الموفر في لوحة التحكم
+
+استخدم هذه الطريقة فقط إذا لم يكن SSH متاحاً أو كنت تفضّل الإعداد اليدوي. يعمل محرر Raw في لوحة التحكم، لكنه يحرر كائن إعداد OpenClaw بالكامل مرة واحدة. احرص على دمج إعدادات الموفر داخل الملف الحالي بدلاً من استبدال إعدادات البوابة والمهارات الافتراضية الخاصة بـ Appbox.
+
+1. افتح رابط لوحة OpenClaw من صفحة تفاصيل التطبيق المثبت.
+2. انتقل إلى **Config > Secrets**.
+3. اختر **Raw** بدلاً من Form.
+4. انقر زر إظهار القيم الحساسة (الذي يبدو كعين مشطوبة).
+5. **ادمج** إعدادات الموفر من الأمثلة أدناه داخل إعدادك الحالي (راجع [كيف يتناسب إعداد الموفر اليدوي مع الملف الكامل](#كيف-يتناسب-إعداد-الموفر-اليدوي-مع-الملف-الكامل)) — لا تستبدل الملف كله إلا إذا كنت تقصد إعادة ضبط البوابة والمهارات وإعدادات Appbox الافتراضية الأخرى.
+6. احفظ وطبّق تغييرات الإعداد.
+
+### كيف يتناسب إعداد الموفر اليدوي مع الملف الكامل
+
+يقوم **Config > Secrets > Raw** بتحرير إعداد OpenClaw **بالكامل** في كائن واحد. على Appbox، يتضمن هذا الملف مسبقاً أشياء مثل `gateway` (bind ومصادقة token وControl UI)، و`skills.load.extraDirs` (المهارات المضمّنة)، و`commands`، وأحياناً `meta`. لا تعرض المقتطفات في قسم [أمثلة الموفرين الرئيسيين](#أمثلة-الموفرين-الرئيسيين) إلا الأجزاء التي تحتاجها للنماذج: شجرة `models` و`agents.defaults.model.primary`.
+
+**ما الذي يجب فعله:** أبقِ مفاتيح المستوى الأعلى الحالية (`gateway` و`skills` و`commands` وغيرها) و**أضف أو حدّث** هذين القسمين:
+
+- **`models.providers`** — أضف الموفر (مثل `openrouter`) و`apiKey` الخاص به و`baseUrl` عند الحاجة وقائمة `models`.
+- **`agents.defaults.model.primary`** — اضبط سلسلة النموذج الافتراضي (مثل `openrouter/auto`) حتى يستخدم الوكيل ذلك الموفر.
+
+إذا كان `models` أو `agents` موجودين بالفعل، فادمج المفاتيح الجديدة داخل تلك الكائنات بدلاً من تكرارها.
+
+فيما يلي مثال على شكل ملف Raw كامل واحد بصيغة **JSON** (قد يقبل المحرر عملياً علامات اقتباس بنمط JSON5 أيضاً). قد يتضمن ملفك الحقيقي حقولاً أكثر (مثل بيانات وصفية أغنى للنماذج أو `meta`). **كتل الموفرين** في الأمثلة التالية هي الأجزاء التي توائمها مع `models` و`agents` هنا.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **رمز البوابة مقابل مفتاح API للموفر:** يُستخدم `gateway.auth.token` فقط لتسجيل الدخول إلى OpenClaw Control UI / gateway. أما `models.providers.*.apiKey` فهو مفتاح مورّد LLM لديك (OpenRouter أو OpenAI أو غيرهما) — وهما إعدادان مختلفان.
+
+## أمثلة الموفرين الرئيسيين
+
+استخدم كتلة موفر واحدة في البداية، وتأكد أنها تعمل، ثم أضف موفرين آخرين. كل مثال أدناه هو **مقتطف دمج**: تم حذف `...` من الإعداد (أسطر أعلى أو أسفل)، و`},` قبل `"models"` هو إغلاق أي مفتاح يقع فوق `models` في ملفك (مثل `skills` أو `commands`). المقتطفات ليست JSON صالحاً بذاتها — ادمج قسمي `models` و`agents` داخل كائن الجذر.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## ملاحظة Bedrock (بلا مفتاح API)
+
+يستخدم Amazon Bedrock بيانات اعتماد AWS (مثل `AWS_ACCESS_KEY_ID` و`AWS_SECRET_ACCESS_KEY` و`AWS_REGION`) بدلاً من مفتاح API. يبدو إدخال موفر بسيط كما يلي:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## ملاحظات
+
+- رمز مصادقة البوابة ومفاتيح API لموفري النماذج إعدادات مختلفة.
+- إذا حصلت على خطأ من موفر (مثل نقص مفتاح Anthropic)، فحدّث النموذج الافتراضي إلى موفر أعددته بالفعل.
+- إذا فشل تحقق موفر، فتأكد أولاً من وجود حقول الموفر المطلوبة (`baseUrl` و`models` و`apiKey` عند الحاجة).
+
+## وثائق الموفرين الرسمية
+
+- [دليل موفري OpenClaw](https://docs.openclaw.ai/providers/index)
+- [موفر OpenRouter](https://docs.openclaw.ai/providers/openrouter)
+- [موفر OpenAI](https://docs.openclaw.ai/providers/openai)
+- [موفر Anthropic](https://docs.openclaw.ai/providers/anthropic)
+- [موفر Google](https://docs.openclaw.ai/providers/google)
+- [موفر xAI](https://docs.openclaw.ai/providers/xai)
+- [موفر Mistral](https://docs.openclaw.ai/providers/mistral)
+- [موفر Together AI](https://docs.openclaw.ai/providers/together)
+- [موفر Amazon Bedrock](https://docs.openclaw.ai/providers/bedrock)

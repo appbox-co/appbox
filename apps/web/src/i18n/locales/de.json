@@ -22,7 +22,7 @@
       "Dokumentation",
       "Tests"
     ],
-    "announcement": "Alle Launch-Week-Beitraege lesen",
+    "announcement": "Alle Launch-Week-Beiträge lesen",
     "announcement_tag": "Launch Week",
     "changelog": "Änderungsprotokoll",
     "buttons": {
@@ -34,7 +34,18 @@
     "words": {
       "menu": "Menü",
       "docs": "Dokumentation",
-      "blog": "Blog"
+      "blog": "Blog",
+      "home": "Startseite",
+      "legal": "Rechtliches",
+      "terms_of_service": "Nutzungsbedingungen",
+      "service_level_agreement": "Service-Level-Vereinbarung",
+      "privacy_data_handling": "Datenschutz & Datenverarbeitung",
+      "global_privacy_practices": "Globale Datenschutzpraktiken",
+      "incident_response_security": "Incident Response & Sicherheit",
+      "view_all_policies": "Alle Richtlinien anzeigen",
+      "documentation_new": "Neue Dokumentation",
+      "documentation_old": "Alte Dokumentation",
+      "social": "Soziales"
     },
     "featured_cards": {
       "nextjs": {
@@ -78,11 +89,11 @@
     "dashboard_promo": {
       "headline_1": "Das neue Dashboard.",
       "headline_2": "Für euch gebaut.",
-      "description": "Ein komplett überarbeitetes Control Panel mit einheitlichem Dashboard, integriertem App Store und integrierter Zwei-Faktor-Authentifizierung. Schneller navigieren, leichter verstehen, bereit für alles, was kommt.",
+      "description": "Ein komplett überarbeitetes Kontrollzentrum mit einheitlichem Dashboard, integriertem App Store und integrierter Zwei-Faktor-Authentifizierung. Schneller navigieren, leichter verstehen, bereit für alles, was kommt.",
       "cta": "Alle Ankündigungen lesen",
       "features": {
         "dashboard": {
-          "title": "Control Center.",
+          "title": "Kontrollzentrum.",
           "description": "Blog-Updates, Service-Karten, Benachrichtigungen und neueste Apps, alles in einer operativen Ansicht."
         },
         "appstore": {
@@ -98,12 +109,12 @@
     "vps_launch_promo": {
       "headline_1": "Virtuelle Private Server.",
       "headline_2": "Linux und Windows.",
-      "description": "Vollstaendige KVM-VMs mit Root-Zugriff, integrierter Web-Konsole und der Wahl zwischen Linux oder Windows 11 Pro. Docker, Snaps, Flatpaks oder jede Windows-Software.",
-      "cta": "Launch-Week-Beitraege lesen",
+      "description": "Vollständige KVM-VMs mit Root-Zugriff, integrierter Web-Konsole und der Wahl zwischen Linux oder Windows 11 Pro. Nutze Docker, Snaps, Flatpaks oder jede Windows-Software, die du brauchst.",
+      "cta": "Launch-Week-Beiträge lesen",
       "features": {
         "console": {
           "title": "Web-Konsole.",
-          "description": "Ein browserbasiertes Terminal direkt im Dashboard. Ausgesperrt werden ist unmoeglich."
+          "description": "Ein browserbasiertes Terminal direkt im Dashboard. Du kannst dich nie aussperren."
         },
         "webtop": {
           "title": "Selkies Desktop.",
@@ -111,7 +122,7 @@
         },
         "distros": {
           "title": "Sechs Linux-Distros.",
-          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux und AlmaLinux. Waehle die Distribution, die du kennst."
+          "description": "Ubuntu, Debian, Arch Linux, Fedora, Rocky Linux und AlmaLinux. Wähle die Distribution, die du kennst."
         },
         "windows": {
           "title": "Windows 11 Pro.",
@@ -120,14 +131,14 @@
       }
     },
     "openclaw_promo": {
-      "eyebrow": "Jetzt auf Appbox verfuegbar",
+      "eyebrow": "Jetzt auf Appbox verfügbar",
       "headline_1": "Dein KI-Assistent.",
-      "headline_2": "Laeuft auf deinem Server.",
-      "description": "OpenClaw ist ein Open-Source-KI-Assistent auf deiner Appbox, verfuegbar in allen Tarifen. Er spricht ueber die Chat-Apps, die du bereits nutzt, sieht deine Dateien und Datenbanken und kann sich in deine anderen Apps einloggen.",
+      "headline_2": "Läuft auf deinem Server.",
+      "description": "OpenClaw ist ein Open-Source-KI-Assistent, der auf deiner Appbox läuft und in allen Tarifen verfügbar ist. Er spricht über die Chat-Apps, die du bereits nutzt, sieht deine Dateien und Datenbanken und kann sich in deine anderen Apps einloggen, um Aufgaben zu erledigen.",
       "card_title": "OpenClaw arbeitet in deiner Appbox.",
-      "card_description": "Es kann gemeinsame App-Daten lesen, Browser und CLI nutzen, Datenbanken abfragen und ueber deine Chat-Apps antworten.",
+      "card_description": "Es kann gemeinsame App-Daten lesen, Browser und CLI nutzen, Datenbanken abfragen und über deine vorhandenen Chat-Apps antworten.",
       "image_alt": "OpenClaw-Chat im Web-Dashboard",
-      "cta": "Ankuendigung lesen",
+      "cta": "Ankündigung lesen",
       "capabilities": {
         "chat": {
           "title": "Jede Chat-App.",
@@ -135,15 +146,15 @@
         },
         "filesystem": {
           "title": "Gemeinsames Dateisystem.",
-          "description": "Direkter Zugriff auf die Daten deiner anderen Apps und deinen Appbox-Speicher. Keine APIs noetig."
+          "description": "Direkter Zugriff auf die Daten deiner anderen Apps und deinen allgemeinen Appbox-Speicher. Keine APIs nötig."
         },
         "browser": {
           "title": "Browser & CLI.",
-          "description": "Headless-Browser und gaengige Datenbank-Clients integriert. Kann sich in deine Apps einloggen."
+          "description": "Headless-Browser und gängige Datenbank-Clients sind integriert. Es kann sich für dich in deine Apps einloggen."
         },
         "tools": {
           "title": "70+ Skills.",
-          "description": "Ueber 70 vorinstallierte Skills fuer WordPress, GitLab, Nextcloud, MariaDB und mehr. Neue Skills von ClawHub installieren."
+          "description": "Mehr als 70 Skills für WordPress, GitLab, Nextcloud, MariaDB und mehr sind vorinstalliert. Neue Skills kannst du aus ClawHub installieren."
         }
       }
     },
@@ -155,9 +166,9 @@
     },
     "install_preview": {
       "headline": "In Sekunden installieren",
-      "description": "Waehle deine Appbox, fuelle ein paar Felder aus, und {appName} ist live.",
+      "description": "Wähle deine Appbox, fülle ein paar Felder aus, und {appName} ist live.",
       "dialog_title": "{appName} installieren",
-      "requires_slots": "{count, plural, one {Benoetigt # App Slot} other {Benoetigt # App Slots}}",
+      "requires_slots": "{count, plural, one {Benötigt # App-Slot} other {Benötigt # App-Slots}}",
       "preview_badge": "Vorschau",
       "demo_note": "Diese Demo zeigt, wie der Installer aussieht, nachdem du eine Appbox hast.",
       "select_appbox": "Appbox auswaehlen",
@@ -165,12 +176,12 @@
       "ready_note": "Bereit zur Installation? Du brauchst zuerst eine aktive Appbox.",
       "cancel": "Abbrechen",
       "install": "Installieren",
-      "footer_note": "Dies ist eine Vorschau des Installationsformulars. Waehle einen Tarif, um deine Appbox zu erstellen und wirklich zu deployen.",
+      "footer_note": "Dies ist eine Vorschau des Installationsformulars. Wähle einen Tarif, um deine Appbox zu erstellen und wirklich zu deployen.",
       "domain": {
         "recordType": "Typ",
         "recordHost": "Host / Name",
         "recordValue": "Wert (IP)",
-        "needHelp": "Brauchst du Hilfe beim Hinzufuegen dieses Records?"
+        "needHelp": "Brauchst du Hilfe beim Hinzufügen dieses Records?"
       },
       "annotations": {
         "select_appbox": {
@@ -181,24 +192,24 @@
         "boost": {
           "eyebrow": "Boost",
           "title": "Ziehe fuer mehr Leistung",
-          "body": "Jeder zusaetzliche App Slot gibt dieser App 10% mehr CPU und RAM, und die Vorschau aktualisiert sich sofort.",
+          "body": "Jeder zusätzliche App-Slot gibt dieser App 10 % mehr CPU und RAM, und die Vorschau aktualisiert sich sofort.",
           "link": "So funktioniert Per-App-Boost"
         },
         "resource_preview": {
           "eyebrow": "Vorschau",
           "title": "Ressourcen live pruefen",
-          "body": "Sieh finalen Multiplikator, Slot-Kosten, RAM und CPU vor der Installation. Jeder Boost-Slot erhoeht Ressourcen um 10%."
+          "body": "Sieh den finalen Multiplikator, die Slot-Kosten, RAM und CPU vor der Installation. Jeder zusätzliche Boost-Slot erhöht die Ressourcen um 10 %."
         },
         "domains": {
           "appbox": {
             "eyebrow": "Domains",
             "title": "Verwaltete oder eigene Domains",
-            "body": "Nutze sofort eine Appbox-verwaltete Domain oder klicke auf Custom Domain, um deine eigene zu verwenden."
+            "body": "Nutze sofort eine Appbox-verwaltete Domain oder klicke auf Eigene Domain, um deine eigene zu verwenden."
           },
           "custom": {
-            "eyebrow": "Custom DNS",
+            "eyebrow": "Eigenes DNS",
             "title": "Bring deine eigene Domain mit",
-            "body": "Custom Domain zeigt Domain-Auswahl, feste Subdomain und DNS-Checkliste vor der Installation."
+            "body": "Eigene Domain zeigt Domain-Auswahl, feste Subdomain und DNS-Checkliste vor der Installation."
           }
         },
         "dns": {
@@ -207,19 +218,19 @@
           "body": "Die Vorschau zeigt den genauen A-Record und den Verifizierungsstatus vor der Installation."
         },
         "configuration": {
-          "eyebrow": "Keine Ueberraschungen",
+          "eyebrow": "Keine Überraschungen",
           "title": "Konfiguration direkt am Anfang",
-          "body": "Wir reduzieren die erforderlichen Felder auf das absolute Minimum, um eine voll funktionsfaehige App zu erstellen, damit du dich nicht um weitere Konfiguration kuemmern musst."
+          "body": "Wir reduzieren die erforderlichen Felder auf das absolute Minimum, um eine voll funktionsfähige App zu erstellen, damit du dich nicht um weitere Konfiguration kümmern musst."
         }
       }
     },
     "sovereign_cloud": {
-      "headline_1": "Souveraene Cloud",
+      "headline_1": "Souveräne Cloud",
       "headline_2": "Deine Cloud, deine Regeln.",
       "description": "Appbox basiert auf Hardware- und Netzwerk-Infrastruktur, die wir kontrollieren. So bekommst du den Komfort von Cloud-Apps, ohne die Plattform an die Cloud eines anderen abzugeben.",
       "eyebrow": "Eigene Infrastruktur",
       "card_title": "Echte Server. Echtes Netzwerk. Echte Verantwortung.",
-      "card_description": "Wir bevorzugen direkte Kontrolle ueber die Teile, die zaehlen: Compute, Storage, Routing, Kapazitaet und physischer Standort. So bauen wir Appbox als Produkt, nicht als duenne Schicht ueber einem anderen Anbieter.",
+      "card_description": "Wir bevorzugen direkte Kontrolle über die Teile, die zählen: Compute, Storage, Routing, Kapazität und physischer Standort. So bauen wir Appbox als Produkt, nicht als dünne Schicht über einem anderen Anbieter.",
       "images": {
         "rack_front": "Appbox-Serverracks mit installierter Hardware",
         "rack_network": "Appbox-Serverracks mit Netzwerkverkabelung",
@@ -235,7 +246,7 @@
           "description": "Mit eigener Routing-Infrastruktur koennen wir Pfade, Kapazitaet, Peering und Stoerungsreaktion fuer Appbox-Workloads optimieren."
         },
         "custom_ocp_hardware": {
-          "title": "Custom OCP-Hardware",
+          "title": "Eigene OCP-Hardware",
           "description": "Unsere eigene Open-Compute-Project-Hardware ist auf effiziente Luftfuehrung, hohe Dichte und schnelle Wartung ausgelegt, damit wir Kapazitaet ohne verschwendete Energie oder Flaeche skalieren koennen."
         },
         "clear_data_locality": {
@@ -357,7 +368,7 @@
         },
         "deployment_time": {
           "title": "Wie schnell erhalte ich meine Appbox?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Sobald deine Zahlung bestätigt wurde, stellt unser automatisiertes System deine Appbox sofort bereit. Alle Apps, die du beim Checkout ausgewählt hast, werden ebenfalls sofort eingerichtet, sodass du sie ohne Verzögerung nutzen kannst.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Sobald deine Zahlung bestätigt wurde, stellt unser automatisiertes System deine Appbox sofort bereit. Alle Apps, die du beim Bestellvorgang ausgewählt hast, werden ebenfalls sofort eingerichtet, sodass du sie ohne Verzögerung nutzen kannst.</p>"
         },
         "server_location": {
           "title": "Wo befinden sich eure Server?",
@@ -397,7 +408,7 @@
         },
         "upgrade_after_purchase": {
           "title": "Kann ich nach dem Kauf upgraden?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Ja, wir übertragen automatisch alles von deinem alten Plan auf deinen neuen Plan.</p><p class=\"mb-4 leading-relaxed\">Alles bleibt gleich, du wirst es kaum bemerken. Das Einzige, was sich ändern kann, sind bestimmte Portnummern, wenn du direkt über eine Portnummer auf eine App zugreifst, z. B. FTP.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Ja, wir übertragen automatisch alles von deinem alten Tarif auf deinen neuen Tarif.</p><p class=\"mb-4 leading-relaxed\">Alles bleibt gleich, du wirst es kaum bemerken. Das Einzige, was sich ändern kann, sind bestimmte Portnummern, wenn du direkt über eine Portnummer auf eine App zugreifst, z. B. FTP.</p>"
         },
         "app_slots": {
           "title": "Was sind App Slots?",
@@ -413,7 +424,7 @@
         },
         "excluded_app_categories": {
           "title": "Was sind ausgeschlossene App-Kategorien?",
-          "content": "<p class=\"mb-4 leading-relaxed\">Einige Pläne haben Einschränkungen für bestimmte App-Kategorien, die nicht auf ihnen installiert werden können. Diese werden als \"Ausgeschlossene App-Kategorien\" bezeichnet.</p><p class=\"mb-4 leading-relaxed\">Wenn du unsere Preispläne ansiehst, siehst du ausgeschlossene Kategorien als anklickbare Badges unter Plänen mit Einschränkungen aufgelistet. Dies hilft dir zu verstehen, welche App-Typen für diesen bestimmten Plan nicht verfügbar sind.</p><p class=\"mb-4 leading-relaxed\">Du kannst auf einen beliebigen ausgeschlossenen Kategorie-Badge klicken, um alle Apps in dieser Kategorie anzuzeigen, sodass du genau weißt, welche Anwendungen auf diesem Plan nicht installierbar wären.</p><p class=\"mb-4 leading-relaxed\">Wenn du Zugang zu Apps in einer ausgeschlossenen Kategorie benötigst, erwäge einen höheren Plan zu wählen, der diese Einschränkungen nicht hat.</p>"
+          "content": "<p class=\"mb-4 leading-relaxed\">Einige Tarife haben Einschränkungen für bestimmte App-Kategorien, die nicht auf ihnen installiert werden können. Diese werden als \"Ausgeschlossene App-Kategorien\" bezeichnet.</p><p class=\"mb-4 leading-relaxed\">Wenn du unsere Preispläne ansiehst, siehst du ausgeschlossene Kategorien als anklickbare Kennzeichnungen unter Tarifen mit Einschränkungen aufgelistet. Dies hilft dir zu verstehen, welche App-Typen für diesen bestimmten Tarif nicht verfügbar sind.</p><p class=\"mb-4 leading-relaxed\">Du kannst auf eine beliebige ausgeschlossene Kategorie-Kennzeichnung klicken, um alle Apps in dieser Kategorie anzuzeigen, sodass du genau weißt, welche Anwendungen in diesem Tarif nicht installierbar wären.</p><p class=\"mb-4 leading-relaxed\">Wenn du Zugang zu Apps in einer ausgeschlossenen Kategorie benötigst, erwäge einen höheren Tarif zu wählen, der diese Einschränkungen nicht hat.</p>"
         },
         "vps": {
           "title": "Wie bekomme ich einen VPS?",
@@ -495,7 +506,7 @@
     },
     "card": {
       "storage": "Speicher",
-      "traffic": "Traffic",
+      "traffic": "Datenverkehr",
       "app_slots": "App Slots",
       "connection_speed": "Verbindungsgeschwindigkeit",
       "resource_multiplier": "Per-App Boost",
@@ -550,18 +561,18 @@
       "visit_site": "Seite besuchen",
       "deploy_app": "App deployen",
       "community_ratings": "Community-Bewertungen",
-      "upvotes": "Upvotes",
-      "downvotes": "Downvotes",
+      "upvotes": "Positive Stimmen",
+      "downvotes": "Negative Stimmen",
       "no_ratings_yet": "Noch keine Bewertungen",
       "deploy_dialog": {
         "title": "Apps auf einer Appbox deployen",
-        "question": "Apps benötigen eine aktive Appbox. Wähle einen passenden Plan, um dein Konto und deine Appbox zu erstellen, oder fahre mit dem Installer fort, wenn du bereits eine hast.",
+        "question": "Apps benötigen eine aktive Appbox. Wähle einen passenden Tarif, um dein Konto und deine Appbox zu erstellen, oder fahre mit dem Installer fort, wenn du bereits eine hast.",
         "planLabel": "Passende Pläne für diese App",
-        "planPlaceholder": "Plan auswählen und fortfahren",
-        "planHelp": "Pläne, die diese App-Kategorie ausschließen, werden ausgeblendet. Wenn du einen Plan auswählst, wirst du direkt zum Checkout weitergeleitet.",
+        "planPlaceholder": "Tarif auswählen und fortfahren",
+        "planHelp": "Tarife, die diese App-Kategorie ausschließen, werden ausgeblendet. Wenn du einen Tarif auswählst, wirst du direkt zum Bestellvorgang weitergeleitet.",
         "noEligiblePlans": "Für diese App wurden keine passenden Pläne gefunden. Du kannst trotzdem alle Pläne ansehen.",
         "viewAllPlans": "Alle Pläne anzeigen",
-        "yes": "Mit ausgewähltem Plan fortfahren",
+        "yes": "Mit ausgewähltem Tarif fortfahren",
         "no": "Ich habe bereits eine Appbox"
       }
     }
@@ -592,7 +603,11 @@
   },
   "policies": {
     "title": "Richtlinien",
-    "meta_description": "Lies die Appbox-Richtlinien, einschließlich Nutzungsbedingungen, Datenschutzrichtlinie, Rückerstattungsrichtlinie und mehr. Verstehe deine Rechte und unsere Verpflichtungen."
+    "meta_description": "Lies die Appbox-Richtlinien, einschließlich Nutzungsbedingungen, Datenschutzrichtlinie, Rückerstattungsrichtlinie und mehr. Verstehe deine Rechte und unsere Verpflichtungen.",
+    "index_description": "Diese Richtlinien regeln deine Nutzung der Appbox-Services und beschreiben unsere Verpflichtungen dir gegenüber. Sie enthalten wichtige Informationen zu Datenschutz, Sicherheit und deinen Verantwortlichkeiten als Nutzer.",
+    "policy": "Richtlinie",
+    "description": "Beschreibung",
+    "view": "Anzeigen"
   },
   "auth": {
     "login": {
@@ -606,10 +621,10 @@
       "password_error": "Passwort ist erforderlich",
       "forgot_password": "Passwort vergessen?",
       "submit": "Anmelden",
-      "external_signup": "Neu bei Appbox? Wähle einen Plan, um dein Konto und deine Appbox zu erstellen.",
+      "external_signup": "Neu bei Appbox? Wähle einen Tarif, um dein Konto und deine Appbox zu erstellen.",
       "external_signup_link": "Pläne anzeigen",
       "appbox_required_title": "Brauchst du ein Konto?",
-      "appbox_required_description": "Appbox-Konten werden erstellt, wenn du einen Appbox-Plan kaufst. Wenn du eine App deployen wolltest, wähle zuerst einen Plan aus und komme danach zurück, um Apps auf deiner Appbox zu installieren.",
+      "appbox_required_description": "Appbox-Konten werden erstellt, wenn du einen Appbox-Tarif kaufst. Wenn du eine App deployen wolltest, wähle zuerst einen Tarif aus und komme danach zurück, um Apps auf deiner Appbox zu installieren.",
       "appbox_required_link": "Pläne anzeigen und anmelden",
       "error_invalid": "Ungültige E-Mail oder Passwort",
       "error_generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
@@ -682,6 +697,7 @@
       "profile": "Profil",
       "abuse_reports": "Missbrauchsmeldungen",
       "two_factor": "Zwei-Faktor-Auth",
+      "api_keys": "API-Schlüssel",
       "service_status": "Dienststatus",
       "support_billing": "Support & Abrechnung",
       "add_appbox": "Appbox hinzufügen",
@@ -709,6 +725,10 @@
       "upload": "Upload",
       "download": "Download",
       "multiplier": "Boost-Slots verwendet",
+      "multiplierShort": "Boost",
+      "uploadShort": "↑ 30 T.",
+      "downloadShort": "↓ 30 T.",
+      "pinnedApps": "Angeheftete Apps",
       "viewCylo": "Details ansehen"
     },
     "twoFactor": {
@@ -769,12 +789,12 @@
       "title": "Neueste Apps",
       "viewAll": "App Store durchsuchen"
     },
+    "recentlyUpdated": {
+      "title": "Kürzlich aktualisiert"
+    },
     "yourUpdates": {
       "title": "Deine Updates",
       "description": "Neueste Aktivitäten und neue Apps"
-    },
-    "recentlyUpdated": {
-      "title": "Kürzlich aktualisiert"
     },
     "blogPosts": {
       "title": "Neueste Nachrichten",
@@ -808,7 +828,7 @@
       "description": "Handverlesene Apps, die wir empfehlen"
     },
     "top": {
-      "title": "Top Apps",
+      "title": "Top-Apps",
       "description": "Beliebteste bei unseren Nutzern"
     },
     "new": {
@@ -896,16 +916,39 @@
         "noResults": "Keine Ergebnisse gefunden."
       },
       "domain": {
+        "domainType": "Domain-Typ",
+        "typeAppbox": "Appbox-Domain",
+        "typeCustom": "Eigene Domain",
         "subdomain": "Subdomain",
         "domain": "Domain",
+        "baseDomain": "Basisdomain",
         "selectAppboxFirst": "Wähle zuerst eine Appbox aus",
         "selectDomain": "Domain auswählen...",
+        "selectOrAddDomain": "Domain auswählen oder hinzufügen...",
         "searchDomains": "Domains suchen...",
         "noDomainsMatch": "Keine Domains entsprechen deiner Suche.",
         "noDomainsAvailable": "Keine Domains verfügbar.",
+        "noCustomDomains": "Noch keine eigenen Domains.",
+        "yourDomains": "Deine Domains",
+        "addNewDomain": "Neue Domain hinzufügen",
+        "add": "Hinzufügen",
         "domainSuffix": "Domain auswählen",
         "appboxDomain": "Appbox-Domain",
-        "customDomains": "Eigene Domains"
+        "customDomains": "Eigene Domains",
+        "loadingDomains": "Domains werden geladen...",
+        "blockedDomain": "Diese Domain ist reserviert und kann nicht verwendet werden.",
+        "invalidDomain": "Bitte gib eine gültige Domain ein (z. B. meinedomain.de).",
+        "addDomainFailed": "Domain konnte nicht hinzugefügt werden. Bitte versuche es erneut.",
+        "dnsSetupTitle": "DNS-Einrichtung",
+        "dnsInstruction": "Erstelle einen A-Record, der auf deinen Appbox-Server zeigt:",
+        "copyIp": "IP-Adresse kopieren",
+        "copied": "Kopiert!",
+        "dnsNotPointing": "DNS zeigt noch nicht auf die richtige IP.",
+        "dnsResolvedTo": "Aktuelle Auflösung: {ip}",
+        "verifyDns": "DNS prüfen",
+        "verifying": "Wird geprüft...",
+        "retryVerify": "Erneut prüfen",
+        "dnsVerified": "✓ DNS für {domain} verifiziert"
       },
       "field": {
         "enabled": "Aktiviert",
@@ -916,11 +959,11 @@
         "appDisabled": "Diese App ist vorübergehend wegen Wartungsarbeiten deaktiviert.",
         "noCylos": "Du benötigst eine Appbox, bevor du Apps installieren kannst. Bestelle eine, um loszulegen.",
         "getAppbox": "Appbox holen",
-        "restricted": "Diese App ist mit deinem aktuellen Paket nicht verfügbar. Klicke unten, um deinen Plan upzugraden und Zugang zu erhalten.",
-        "restrictedMinPlan": "Diese App ist mit deinem aktuellen Paket nicht verfügbar. Erforderlicher Mindestplan: {plan}. Upgrade deinen Plan, um Zugriff zu erhalten.",
+        "restricted": "Diese App ist mit deinem aktuellen Paket nicht verfügbar. Klicke unten, um deinen Tarif upzugraden und Zugang zu erhalten.",
+        "restrictedMinPlan": "Diese App ist mit deinem aktuellen Paket nicht verfügbar. Erforderlicher Mindesttarif: {plan}. Upgrade deinen Tarif, um Zugriff zu erhalten.",
         "upgradePackage": "Paket upgraden",
         "getAnotherAppbox": "Weitere Appbox holen",
-        "noSlots": "Diese App benötigt {count} App Slot(s), aber keine deiner Appboxes hat genügend freie Slots. Upgrade deinen Plan für mehr.",
+        "noSlots": "Diese App benötigt {count} App Slot(s), aber keine deiner Appboxes hat genügend freie Slots. Upgrade deinen Tarif für mehr.",
         "getMoreSlots": "Mehr App Slots holen",
         "noMulti": "Diese App erlaubt nur eine Installation pro Appbox und ist bereits auf allen deinen berechtigten Appboxes installiert. Um eine weitere Instanz zu installieren, kannst du eine zusätzliche Appbox bestellen.",
         "checkingAvailability": "Verfügbarkeit wird geprüft..."
@@ -963,7 +1006,7 @@
         "slotCost": "Slot-Kosten",
         "ram": "RAM",
         "cpus": "CPUs",
-        "cta": "Mehr Boost? Plan upgraden"
+        "cta": "Mehr Boost? Tarif upgraden"
       }
     }
   },
@@ -971,6 +1014,7 @@
     "title": "Appbox Manager",
     "cylos": {
       "title": "Deine Appboxes",
+      "description": "Überwache Speicher, Netzwerk, Boost-Nutzung und installierte Apps für alle Appboxes, die du verwaltest.",
       "empty": "Du hast noch keine Appboxes.",
       "getCylo": "Appbox holen",
       "viewDetails": "Details ansehen",
@@ -980,6 +1024,7 @@
       "upload": "Upload",
       "download": "Download",
       "multiplier": "Boost-Slots verwendet",
+      "pinnedApps": "Angeheftete Apps",
       "sortBy": "Sortieren nach",
       "filterByStatus": "Nach Status filtern",
       "allStatuses": "Alle Status",
@@ -996,8 +1041,36 @@
       "installedApps": "Installierte Apps",
       "alerts": "Warnungen",
       "migrationProgress": "Migration läuft",
+      "migrationLive": "Die meisten Apps funktionieren während der Live-Migration normal weiter. Apps, die nicht live migriert werden können, bleiben bis zum Abschluss nicht verfügbar.",
+      "migrationOffline": "Deine Apps sind nicht verfügbar, bis die Migration abgeschlossen ist.",
+      "migrationTransferred": "Übertragen: {sent} GiB von {total} GiB",
+      "migrationPhase1": "Migration wird initialisiert",
+      "migrationPhase2": "Verschlüsselungsschlüssel werden übertragen",
+      "migrationPhase3": "SSL-Zertifikate werden übertragen",
+      "migrationPhase4": "Appbox wird auf dem neuen Server eingerichtet",
+      "migrationPhase5": "Daten werden übertragen",
+      "migrationPhase6": "Apps werden auf dem neuen Server installiert",
+      "migrationPhase7": "Migration wird finalisiert",
+      "migrationPhase8": "Migration wird abgeschlossen",
       "lowQuota": "Niedriges Kontingent",
+      "lowQuotaMessage": "Deine Appbox bleibt offline, bis du Speicherplatz freigibst. Aktuell hast du noch {available} GiB frei; für den Betrieb werden mehr als 5 GiB benötigt.",
+      "lowQuotaMigratingMessage": "Deine Appbox wird erst migriert, wenn du Speicherplatz freigibst. Aktuell hast du noch {available} GiB frei; für die Migration werden mehr als 5 GiB benötigt.",
+      "lowQuotaHint": "Nutze den Datei-Explorer, um Daten zu löschen, oder wechsle auf einen größeren Tarif.",
+      "lowQuotaDeleteData": "Daten löschen",
       "throttled": "Festplatte gedrosselt",
+      "throttledMessage": "Deine Appbox hat über längere Zeit mehr als {percent}% der Festplattengeschwindigkeit genutzt. Fair-Use-Drosselung wurde aktiviert.",
+      "throttledHint": "Das Limit läuft automatisch ab. Um künftige Drosselungen zu vermeiden, reduziere gleichzeitige Transfers, aktiviere Warteschlangen oder plane intensive Jobs für Nebenzeiten.",
+      "throttleLevel": "Drosselungsstufe",
+      "throttleRate": "Geschwindigkeit (MB/s)",
+      "throttleIops": "IOPS",
+      "throttleExpires": "Läuft ab",
+      "throttleTopApp": "App mit höchster Nutzung",
+      "throttleTopProcess": "Prozess mit höchster Nutzung",
+      "suspended": "Appbox gesperrt",
+      "suspendedMessage": "Deine Appbox ist derzeit gesperrt. Bitte kontaktiere den Support, wenn du glaubst, dass dies ein Fehler ist.",
+      "offline": "Appbox offline",
+      "offlineMessage": "Deine Appbox ist derzeit offline.",
+      "upgradePlan": "Tarif upgraden",
       "viewApp": "Ansehen",
       "noAlerts": "Keine aktiven Warnungen",
       "noApps": "Keine Apps auf dieser Appbox installiert.",
@@ -1053,13 +1126,18 @@
     },
     "installedApps": {
       "title": "Installierte Apps",
+      "description": "Verwalte Apps, die auf deinen Appboxes installiert sind.",
       "searchPlaceholder": "Installierte Apps suchen...",
       "name": "Name",
+      "domain": "Domain",
       "version": "Version",
+      "slots": "Slots",
+      "slot": "Slot",
       "status": "Status",
       "cylo": "Appbox",
       "installedDate": "Installiert",
       "empty": "Keine installierten Apps gefunden.",
+      "filterByStatus": "Status",
       "filterByCylo": "Nach Appbox filtern",
       "allCylos": "Alle Appboxes",
       "bulkSelected": "{count} ausgewählt",
@@ -1091,7 +1169,7 @@
         "applying": "Wird angewendet...",
         "dockerLive": "Docker-Ressourcen werden ohne Neustart live aktualisiert.",
         "vmRestart": "VM-Boosts erfordern einen Neustart, um die neuen Ressourcen anzuwenden.",
-        "getMore": "Mehr Boost? Plan upgraden"
+        "getMore": "Mehr Boost? Tarif upgraden"
       },
       "freeze": "Einfrieren",
       "unfreeze": "Auftauen",
@@ -1189,7 +1267,7 @@
       "customDomainsDeleteFailed": "Domain konnte nicht gelöscht werden.",
       "customDomainsConfigNotAvailable": "Konfigurations-Snippets sind für diese Domain nicht verfügbar.",
       "customDomainsConfigFetchFailed": "Konfigurations-Snippets konnten nicht geladen werden.",
-      "customTablesTitle": "App Tables",
+      "customTablesTitle": "App-Tabellen",
       "customTablesLoading": "Eigene Tabellen werden geladen...",
       "customTablesRowsUsage": "{current} von {max} Zeilen verwendet",
       "customTablesAdd": "Zeile hinzufügen",
@@ -1235,24 +1313,26 @@
     "domains": {
       "title": "Eigene Domains",
       "pageDescription": "Eigene Domains, die du deinen installierten Apps hinzugefügt hast.",
-      "addDomain": "Domain hinzufügen",
       "domain": "Domain",
+      "type": "Typ",
+      "typeManaged": "Verwaltet",
+      "typeCustom": "Eigene Domain",
+      "typeBase": "Basisdomain",
       "app": "App",
-      "ssl": "SSL",
-      "status": "Status",
+      "server": "Server",
       "createdAt": "Erstellt",
       "cylo": "Appbox",
       "confirmDelete": "Bist du sicher, dass du diese Domain entfernen möchtest? Dies trennt sie von deiner App.",
-      "domainPlaceholder": "beispiel.de",
-      "selectCylo": "Appbox auswählen",
-      "selectApp": "App auswählen",
-      "empty": "Noch keine Domains konfiguriert.",
+      "deleteDomain": "Domain löschen",
+      "deleteBlockedHasChildren": "Löschen nicht möglich: Diese Domain hat Subdomains, die sie verwenden. Entferne diese zuerst.",
+      "reverifyDns": "DNS erneut verifizieren",
       "emptyTitle": "Noch keine eigenen Domains",
       "emptyDescription": "Eigene Domains können beim Installieren einer App hinzugefügt werden. Nur diese erscheinen hier, Plattform-Domains werden automatisch verwaltet.",
       "goToAppStore": "Zum App Store",
-      "addDescription": "Weise eine Domain einer deiner installierten Apps zu.",
-      "deleteDomain": "Domain löschen",
-      "adding": "Wird hinzugefügt...",
+      "dnsVerified": "DNS zeigt korrekt auf den Server.",
+      "dnsNotVerified": "DNS zeigt nicht auf die richtige IP.",
+      "expectedIp": "Erwartet: {ip}",
+      "cancel": "Abbrechen",
       "searchPlaceholder": "Domains suchen..."
     }
   },
@@ -1260,6 +1340,7 @@
     "title": "Konto",
     "profile": {
       "title": "Profil",
+      "description": "Verwalte Anzeigenamen, E-Mail, Avatar, Passwort und Sicherheitseinstellungen deines Kontos.",
       "email": "E-Mail",
       "alias": "Anzeigename",
       "aliasPlaceholder": "Anzeigenamen eingeben",
@@ -1285,8 +1366,10 @@
     },
     "abuse": {
       "title": "Missbrauchsmeldungen",
+      "headerDescription": "Prüfe Missbrauchsmeldungen zu deinem Konto und verfolge ihren aktuellen Status.",
       "id": "ID",
       "subject": "Betreff",
+      "searchPlaceholder": "Meldungen suchen...",
       "status": "Status",
       "date": "Datum",
       "description": "Beschreibung",
@@ -1297,11 +1380,13 @@
       "statusResolved": "Gelöst",
       "statusClosed": "Geschlossen",
       "backToList": "Zurück zu Missbrauchsmeldungen",
+      "detailDescription": "Verfolge den Verlauf der Meldung, Beschwerdedetails und Antworten des Appbox-Teams.",
       "reportDetails": "Meldungsdetails",
       "conversation": "Unterhaltung"
     },
     "twoFactor": {
       "title": "Zwei-Faktor-Authentifizierung",
+      "description": "Schütze dein Konto mit Authentifikator-App-Prüfung und Wiederherstellungs-Backup-Codes.",
       "setup": "2FA einrichten",
       "scanQR": "Scanne diesen QR-Code mit deiner Authentifikator-App",
       "secretKey": "Oder gib diesen geheimen Schlüssel manuell ein:",
@@ -1310,6 +1395,8 @@
       "verify": "Bestätigen",
       "backupCodes": "Backup-Codes",
       "backupCodesDescription": "Bewahre diese Backup-Codes an einem sicheren Ort auf. Jeder Code kann nur einmal verwendet werden.",
+      "newRecoveryCodes": "Neue Wiederherstellungscodes",
+      "newRecoveryCodesDescription": "Speichere diese Ersatzcodes jetzt. Deine bisherigen Wiederherstellungscodes funktionieren danach nicht mehr.",
       "copyAll": "Alle kopieren",
       "copied": "Kopiert!",
       "done": "Fertig",
@@ -1321,6 +1408,46 @@
       "verifying": "Wird überprüft...",
       "next": "Weiter",
       "back": "Zurück"
+    },
+    "apiKeys": {
+      "title": "API-Schlüssel",
+      "description": "Erstelle und verwalte API-Schlüssel auf Kontoebene. API-Schlüssel authentifizieren sich als dein Benutzer und haben denselben Zugriff wie dein Konto.",
+      "create": "API-Schlüssel erstellen",
+      "createTitle": "API-Schlüssel erstellen",
+      "createDescription": "Gib diesem Schlüssel einen wiedererkennbaren Namen. Das Geheimnis wird nur einmal angezeigt.",
+      "name": "Name",
+      "namePlaceholder": "Automatisierungsskript",
+      "expiresAt": "Läuft ab am",
+      "optional": "Optional",
+      "never": "Nie",
+      "created": "Erstellt",
+      "lastUsed": "Zuletzt verwendet",
+      "status": "Status",
+      "active": "Aktiv",
+      "revoked": "Widerrufen",
+      "expired": "Abgelaufen",
+      "prefix": "Präfix",
+      "actions": "Aktionen",
+      "rename": "Umbenennen",
+      "revoke": "Widerrufen",
+      "revokeTitle": "API-Schlüssel widerrufen",
+      "revokeDescription": "Dadurch wird der API-Schlüssel sofort deaktiviert. Anfragen mit diesem Schlüssel funktionieren nicht mehr.",
+      "secretTitle": "API-Schlüssel speichern",
+      "secretDescription": "Kopiere diesen Schlüssel jetzt. Du kannst ihn später nicht erneut anzeigen.",
+      "copy": "Kopieren",
+      "copied": "Kopiert!",
+      "close": "Schließen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "confirmRevoke": "Schlüssel widerrufen",
+      "noKeys": "Noch keine API-Schlüssel.",
+      "loadFailed": "API-Schlüssel konnten nicht geladen werden.",
+      "createSuccess": "API-Schlüssel erstellt.",
+      "createFailed": "API-Schlüssel konnte nicht erstellt werden.",
+      "updateSuccess": "API-Schlüssel aktualisiert.",
+      "updateFailed": "API-Schlüssel konnte nicht aktualisiert werden.",
+      "revokeSuccess": "API-Schlüssel widerrufen.",
+      "revokeFailed": "API-Schlüssel konnte nicht widerrufen werden."
     }
   },
   "common": {

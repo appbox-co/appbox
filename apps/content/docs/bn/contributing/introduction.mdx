@@ -1,0 +1,99 @@
+---
+title: পরিচিতি
+description: ওপেন-সোর্স Appbox frontend-এর official documentation-এ স্বাগতম।
+sort: 1
+---
+
+**Appbox Documentation-এ স্বাগতম**  
+আমরা আনন্দের সঙ্গে জানাচ্ছি যে [Appbox](https://www.appbox.co/)-এর frontend এখন [GitHub](https://github.com/appbox-co/appbox)-এ ওপেন-সোর্স। আমাদের লক্ষ্য এমন একটি সহযোগিতামূলক community গড়ে তোলা, যারা documentation-এ contribute করবে, নতুন frontend feature তৈরি করবে এবং সামগ্রিক Appbox experience উন্নত করতে সাহায্য করবে।
+
+আমাদের documentation এখনও প্রাথমিক পর্যায়ে থাকলেও, আমরা আমাদের ক্ষেত্রের অন্যান্য platform-এর মতো একটি পূর্ণাঙ্গ resource তৈরি করতে কাজ করছি। বর্তমানে আমাদের docs মূলত contribution guideline-এ focus করে, তবে Appbox-এ থাকা সব app-এর জন্য বিস্তারিত তথ্য যোগ করে এটি expand করার পরিকল্পনা আছে।
+
+documentation আরও সমৃদ্ধ না হওয়া পর্যন্ত নির্দিষ্ট app বা service সম্পর্কে তাৎক্ষণিক প্রশ্নের জন্য অনুগ্রহ করে আমাদের [legacy knowledge base](https://billing.appbox.co/knowledgebase) দেখুন। technical support দরকার হলে সহায়তার জন্য [ticket submit](https://billing.appbox.co/submitticket.php) করতে পারেন। আমরা documentation বাড়ানোর সঙ্গে সঙ্গে অগ্রগতি দেখতে সাইটের footer-এর link থেকে যেকোনো সময় এই নতুন docs access করতে পারবেন।
+
+## ভবিষ্যৎ পরিকল্পনা
+
+- **বিস্তারিত App Guide**  
+  আমাদের platform-এ supported প্রতিটি app-এর installation, troubleshooting এবং tip অন্তর্ভুক্ত করা।
+- **User ও Developer Resource**  
+  আপনার Appbox experience customize করার জন্য beginner-friendly tutorial থেকে advanced code reference পর্যন্ত সবকিছু প্রদান করা।
+- **Community-Driven Content**  
+  pull request, feedback এবং suggestion উৎসাহিত করা; সবকিছুই স্বাগত এবং সবার জন্য এই project বড় করতে সাহায্য করে।
+
+## শুরু করা
+
+আপনি যদি আমাদের ওপেন-সোর্স frontend code দেখতে বা contribute করতে চান, [Appbox](https://github.com/appbox-co/appbox) repository clone করুন:
+
+```bash
+git clone https://github.com/appbox-co/appbox.git
+```
+
+তারপর project-এ যান এবং dependency install করুন:
+
+```bash
+cd appbox
+pnpm install
+pnpm dev
+```
+
+আপনার local instance `http://localhost:3000`-এ available হবে। explore করতে, change করতে এবং pull request তৈরি করতে স্বচ্ছন্দ বোধ করুন। আমরা প্রতিটি contribution-এর মূল্য দিই!
+
+## Development Tools
+
+### Linting
+
+project-এ TypeScript এবং Prettier integration সহ ESLint ব্যবহার করে পূর্ণাঙ্গ linting setup রয়েছে। এটি consistent code style নিশ্চিত করে এবং সাধারণ error আগেই ধরতে সাহায্য করে। আপনি linting check manually চালাতে পারেন:
+
+```bash
+# Run linting
+pnpm lint
+
+# Fix automatically fixable issues
+pnpm lint:fix
+```
+
+আমাদের ESLint configuration-এ রয়েছে:
+- `@typescript-eslint` দিয়ে TypeScript-specific rules
+- `eslint-config-next` দিয়ে Next.js specific linting
+- Prettier integration দিয়ে code formatting
+
+### Pre-commit Hooks
+
+আমরা Git hook manage করতে Husky ব্যবহার করি, যাতে repository-তে শুধু quality code commit হয়। নিচের hookগুলো setup করা আছে:
+
+- **pre-commit**: code quality নিশ্চিত করতে প্রতিটি commit-এর আগে `lint:fix` চালায়
+- **commit-msg**: conventional commit message formatting enforce করতে commitlint ব্যবহার করে
+
+এর ফলে commit accept হওয়ার আগে code quality এবং proper formatting automatically check হয়, যা পুরো codebase-এ উচ্চমান বজায় রাখে।
+
+## Pull Request তৈরি করা
+
+আপনার change contribute করতে প্রস্তুত হলে Pull Request (PR) accept হওয়ার সম্ভাবনা বাড়াতে এই guidelineগুলো অনুসরণ করুন:
+
+### PR তৈরি করার আগে
+
+1. **latest main branch থেকে rebase করুন** যাতে merge conflict এড়ানো যায়:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+
+2. **সব linting pass করছে কি না নিশ্চিত করুন**:
+   ```bash
+   pnpm lint:fix
+   ```
+
+3. **আপনার code local environment-এ কাজ করছে কি না নিশ্চিত করুন** প্রাসঙ্গিক functionality test করে।
+
+### PR Guidelines
+
+1. **PR focused রাখুন** - প্রতিটি PR-এ একটি issue বা feature address করুন।
+2. **পরিষ্কার commit message লিখুন** - conventional commit format অনুসরণ করুন।
+3. **পরিষ্কার description দিন** - আপনার PR কী করে এবং কেন দরকার তা ব্যাখ্যা করুন।
+4. **test যোগ করুন** - প্রযোজ্য ক্ষেত্রে আপনার change সঠিকভাবে কাজ করছে কি না যাচাই করতে test যোগ করুন।
+5. **code document করুন** - জটিল logic-এর জন্য comment ব্যবহার করুন এবং function name descriptive রাখুন।
+6. **existing pattern অনুসরণ করুন** - আপনার code যেন codebase-এর বাকি অংশে ব্যবহৃত style ও pattern-এর সঙ্গে মিলে যায়।
+
+উল্লেখযোগ্য change-এর ক্ষেত্রে coding-এ সময় দেওয়ার আগে approach নিয়ে আলোচনা করতে আগে একটি issue খোলার কথা বিবেচনা করুন। এতে আপনার contribution project-এর direction-এর সঙ্গে সামঞ্জস্যপূর্ণ থাকে এবং অপ্রয়োজনীয় effort এড়ানো যায়।

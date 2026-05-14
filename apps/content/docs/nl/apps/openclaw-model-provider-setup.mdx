@@ -1,0 +1,516 @@
+---
+title: OpenClaw model provider instellen
+description: Configureer OpenClaw na installatie met een API key van elke model provider.
+sort: 1
+---
+
+OpenClaw wordt in Appbox geinstalleerd zonder dat er een model API key nodig is.
+
+De aanbevolen manier om de installatie af te ronden is verbinding maken met je OpenClaw-app via SSH en de ingebouwde wizard `openclaw onboard` uitvoeren. De wizard is veiliger dan de volledige config handmatig bewerken, omdat hij de Appbox gateway-instellingen behoudt terwijl hij je door model providers, API keys, kanalen, health checks en skills leidt.
+
+Als je SSH niet kunt of wilt gebruiken, gebruik dan in plaats daarvan de [backupmethode via het dashboard](#backup-method-configure-provider-auth-in-the-dashboard).
+
+## Aanbevolen methode: via SSH naar OpenClaw en onboarding uitvoeren
+
+Gebruik deze methode voor nieuwe installaties en voor bestaande installaties waaraan model provider-inloggegevens moeten worden toegevoegd of gewijzigd.
+
+### Wat je eerst nodig hebt
+
+- De detailpagina van je OpenClaw-app in Appbox.
+- De **SSH Command** die in de sectie Configuration wordt getoond.
+- Je **Gateway Token / SSH Password**. Dit is hetzelfde gegenereerde geheim dat wordt gebruikt voor de login op het OpenClaw-dashboard.
+- Een account of API key van een model provider. Als je die nog niet hebt, zie [API keys verkrijgen](#getting-api-keys-with-dashboard-links).
+
+De app-detailpagina toont de SSH-opdracht die je direct kunt kopieren:
+
+<img
+  src="/blog-images/openclaw-ssh-command-highlight.png"
+  alt="Appbox OpenClaw app-detailpagina met de SSH-opdracht gemarkeerd"
+  width="860"
+/>
+
+### Verbinden vanaf macOS
+
+1. Open **Terminal** of **iTerm2**.
+2. Kopieer de **SSH Command** van de OpenClaw app-detailpagina.
+3. Plak en voer deze uit. Dit ziet er ongeveer zo uit:
+
+```bash
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Als macOS vraagt of je de host vertrouwt, typ `yes` en druk op Enter.
+5. Wanneer om een wachtwoord wordt gevraagd, plak je je **Gateway Token / SSH Password** en druk je op Enter. Terminal toont geen tekens terwijl je het wachtwoord typt of plakt.
+
+### Verbinden vanaf Windows
+
+Windows 10 en Windows 11 bevatten standaard de OpenSSH-client.
+
+1. Open **Windows Terminal** of **PowerShell**.
+2. Kopieer de **SSH Command** van de OpenClaw app-detailpagina.
+3. Plak en voer deze uit:
+
+```powershell
+ssh node@your-openclaw-domain.example -p 12345
+```
+
+4. Als Windows vraagt of je de host vertrouwt, typ `yes` en druk op Enter.
+5. Wanneer om een wachtwoord wordt gevraagd, plak je je **Gateway Token / SSH Password** en druk je op Enter. PowerShell toont het geplakte wachtwoord niet.
+
+Als Windows meldt dat `ssh` niet wordt herkend, installeer dan **OpenSSH Client** via **Settings > System > Optional features**, open Windows Terminal opnieuw en probeer het nogmaals.
+
+### De OpenClaw onboarding-wizard uitvoeren
+
+Voer na het verbinden via SSH uit:
+
+```bash
+openclaw onboard
+```
+
+<img
+  src="/blog-images/openclaw-onboard-ssh-macos.png"
+  alt="iTerm2 op macOS verbonden met OpenClaw via SSH en met de opdracht openclaw onboard"
+  width="860"
+/>
+
+De wizard is interactief. Gebruik deze Appbox-specifieke keuzes:
+
+1. **Bestaande config:** kies de optie om de huidige config te bekijken of te wijzigen. Kies **geen** volledige reset, tenzij je bewust je OpenClaw-installatie helemaal opnieuw wilt opbouwen.
+2. **Model en auth:** kies je provider, zoals OpenRouter, OpenAI, Anthropic, Google, xAI of een aangepaste OpenAI-compatibele provider. Plak de API key wanneer de wizard erom vraagt. OpenRouter is voor de meeste gebruikers de makkelijkste standaardkeuze, omdat een key naar veel modellen kan routeren. Als je een OpenAI Codex-abonnement hebt, kies dan **OpenAI Codex** in de providerlijst, niet een optie die alleen `codex` heet.
+3. **Standaardmodel:** kies het model dat de wizard voor die provider aanbeveelt, of voer handmatig een `provider/model`-waarde in, zoals `openrouter/auto`.
+4. **Workspace:** behoud de standaard workspace, tenzij je een specifieke reden hebt om die te wijzigen.
+5. **Gateway-instellingen:** behoud de bestaande Appbox gateway-instellingen. Houd met name token auth ingeschakeld en behoud de bestaande gateway port/bind-instellingen.
+6. **Kanalen:** configureer WhatsApp, Telegram, Discord, Signal, iMessage of andere kanalen nu, of sla ze over en voeg ze later toe met `openclaw configure`.
+7. **Web search:** kies een zoekprovider als je die hebt, of sla dit voorlopig over.
+8. **Daemon/service-installatie:** Appbox superviseert OpenClaw al binnen de container, dus sla daemon-installatie over als de wizard die aanbiedt.
+9. **Health check:** laat de wizard de health check uitvoeren.
+10. **Skills:** sta toe dat de wizard gebundelde skills controleert. Wanneer hij vraagt om **Preferred node manager for skill installs**, kies `npm`.
+
+Wanneer onboarding klaar is, keer je terug naar je OpenClaw-dashboard. Als het dashboard al open was, vernieuw het dan en test een korte chatprompt.
+
+Nuttige vervolgopdrachten via SSH:
+
+```bash
+openclaw configure
+openclaw status --deep
+openclaw health
+```
+
+## API keys verkrijgen (met dashboardlinks)
+
+Gebruik deze providerconsoles om keys te genereren. Met de aanbevolen SSH-methode plak je de key wanneer `openclaw onboard` erom vraagt. Met de backupmethode via het dashboard voeg je de key samen in `Config > Secrets > Raw`.
+
+### Eerst aanbevolen: OpenRouter (beste standaardkeuze voor de meeste gebruikers)
+
+Waarom we dit aanbevelen:
+
+- Je krijgt een key voor veel modelleveranciers.
+- Je kunt `openrouter/auto` gebruiken, dat van model kan wisselen op basis van de moeilijkheid van de taak.
+- `auto` kan kosten verlagen door eenvoudigere taken naar goedkopere modellen te routeren.
+
+Zo krijg je een key:
+
+1. Ga naar [OpenRouter](https://openrouter.ai/) en log in.
+2. Open [API Keys-instellingen](https://openrouter.ai/settings/keys).
+3. Klik op **Create** en kopieer de key (wordt eenmalig getoond).
+4. Gebruik deze wanneer de OpenClaw-wizard om je OpenRouter API key vraagt. Voor de backupmethode via het dashboard is de config key `models.providers.openrouter.apiKey`.
+
+<img
+  src="/blog-images/openclaw-openrouter-api-key-tutorial.webp"
+  alt="Screenshot van de OpenRouter API keys-pagina uit een openbare tutorial"
+  width="860"
+/>
+Bron-tutorial: [Een OpenRouter API
+Key verkrijgen](https://developer.puter.com/tutorials/how-to-get-openrouter-api-key/)
+
+### OpenAI
+
+Zo krijg je een key:
+
+1. Log in bij [OpenAI Platform](https://platform.openai.com/).
+2. Open [API Keys](https://platform.openai.com/settings/organization/api-keys).
+3. Klik op **Create new secret key**.
+4. Kopieer deze direct (OpenAI toont de volledige waarde maar een keer).
+
+<img
+  src="/blog-images/openclaw-openai-api-key-tutorial.jpg"
+  alt="Screenshot van OpenAI API key-instellingen uit een openbare tutorial"
+  width="860"
+/>
+Bron-tutorial: [Een OpenAI API
+Key verkrijgen](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/)
+
+### Anthropic
+
+Zo krijg je een key:
+
+1. Log in bij [Anthropic Console](https://console.anthropic.com/).
+2. Open [API Keys](https://console.anthropic.com/settings/keys).
+3. Klik op **Create Key**.
+4. Kopieer de key direct (wordt eenmalig getoond).
+
+<img
+  src="/blog-images/openclaw-anthropic-api-key-tutorial.png"
+  alt="Screenshot van het aanmaken van een Anthropic API key uit een openbare tutorial"
+  width="860"
+/>
+Bron-tutorial: [Je Claude API
+key verkrijgen](https://pickaxe.co/post/how-to-get-your-claude-api-key-a-step-by-step-guide)
+
+### Google (Gemini via AI Studio)
+
+Zo krijg je een key:
+
+1. Open [Google AI Studio](https://aistudio.google.com/).
+2. Ga naar [API Keys](https://aistudio.google.com/app/apikey).
+3. Klik op **Create API key** (nieuw of bestaand project).
+4. Kopieer en bewaar de key.
+
+<img
+  src="/blog-images/openclaw-google-api-key-tutorial.png"
+  alt="Screenshot van het aanmaken van een Google AI Studio API key uit een openbare tutorial"
+  width="860"
+/>
+Bron-tutorial: [Google AI API
+Key verkrijgen](https://www.testingdocs.com/get-google-ai-api-key/?amp=1)
+
+> Let op: providerdashboards kunnen vaak veranderen en afhankelijk van je sessiestatus een loginprompt tonen.
+
+## Backupmethode: provider-auth configureren in het dashboard
+
+Gebruik deze methode alleen als SSH niet beschikbaar is of als je de voorkeur geeft aan handmatige configuratie. De Raw-editor van het dashboard werkt, maar bewerkt het volledige OpenClaw config-object in een keer. Wees voorzichtig en voeg providerinstellingen samen met het bestaande bestand in plaats van Appbox's gateway- en skills-standaarden te vervangen.
+
+1. Open de URL van je OpenClaw-dashboard vanaf de detailpagina van de geinstalleerde app.
+2. Ga naar **Config > Secrets**.
+3. Selecteer **Raw** in plaats van Form.
+4. Klik op de knop Reveal sensitive values (die eruitziet als een oog met een streep erdoor).
+5. **Voeg** de providerinstellingen uit de voorbeelden hieronder samen met je bestaande config (zie [Hoe handmatige providerconfig in het volledige bestand past](#how-manual-provider-config-fits-in-the-full-file)); vervang niet het hele bestand, tenzij je gateway, skills en andere Appbox-standaarden wilt resetten.
+6. Sla de configuratiewijzigingen op en pas ze toe.
+
+### Hoe handmatige providerconfig in het volledige bestand past
+
+**Config > Secrets > Raw** bewerkt de **volledige** OpenClaw-config in een object. Op Appbox bevat dat bestand al onderdelen zoals `gateway` (bind, token auth, Control UI), `skills.load.extraDirs` (gebundelde skills), `commands` en soms `meta`. De snippets in de sectie [Voorbeelden van grote providers](#major-provider-examples) tonen alleen de onderdelen die je nodig hebt voor modellen: de `models`-structuur en `agents.defaults.model.primary`.
+
+**Wat je moet doen:** behoud je bestaande top-level keys (`gateway`, `skills`, `commands`, enz.) en **voeg deze twee secties toe of werk ze bij**:
+
+- **`models.providers`**: voeg je provider toe (bijv. `openrouter`) en de bijbehorende `apiKey`, `baseUrl` waar vereist, en `models`-lijst.
+- **`agents.defaults.model.primary`**: stel de standaardmodel-string in (bijv. `openrouter/auto`) zodat de agent die provider gebruikt.
+
+Als `models` of `agents` al bestaan, voeg nieuwe keys dan samen in die objecten in plaats van ze te dupliceren.
+
+Hieronder staat een voorbeeld van **een** volledige Raw-bestandsvorm als **JSON** (de editor accepteert in de praktijk mogelijk ook JSON5-achtige quotes). Je echte bestand kan meer velden bevatten (bijv. uitgebreidere modelmetadata, `meta`). De **providerblokken** in de voorbeelden verderop zijn de onderdelen die je hier afstemt op `models` en `agents`.
+
+```json
+{
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "YOUR_OPENROUTER_KEY",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/skills"]
+    }
+  }
+}
+```
+
+> **Gateway token versus provider API key:** `gateway.auth.token` is alleen bedoeld om in te loggen op de OpenClaw Control UI / gateway. `models.providers.*.apiKey` is je LLM-leverancierskey (OpenRouter, OpenAI, enz.); ze zijn verschillend.
+
+## Voorbeelden van grote providers
+
+Gebruik eerst een providerblok tegelijk, bevestig dat het werkt en voeg daarna meer providers toe. Elk voorbeeld hieronder is een **merge-fragment**: `...` is weggelaten config (regels erboven of eronder), en de `},` voor `"models"` is het afsluiten van de key die boven `models` in je bestand staat (bijvoorbeeld `skills` of `commands`). De snippets zijn op zichzelf geen geldige JSON; voeg de secties `models` en `agents` samen in je root-object.
+
+### OpenRouter
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "sk-or-...",
+        "models": [
+          {
+            "id": "auto",
+            "name": "Auto (OpenRouter)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      }
+    }
+  },
+...
+```
+
+### OpenAI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "GPT-5.4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-5.4"
+      }
+    }
+  },
+...
+```
+
+### Anthropic
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com/v1",
+        "apiKey": "sk-ant-...",
+        "models": [
+          {
+            "id": "claude-opus-4-6",
+            "name": "Claude Opus 4.6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      }
+    }
+  },
+...
+```
+
+### Google (Gemini)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "google": {
+        "apiKey": "AIza...",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "Gemini 3.1 Pro Preview"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3.1-pro-preview"
+      }
+    }
+  },
+...
+```
+
+### xAI (Grok)
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "xai": {
+        "apiKey": "xai-...",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4"
+      }
+    }
+  },
+...
+```
+
+### Mistral
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "mistral": {
+        "baseUrl": "https://api.mistral.ai/v1",
+        "apiKey": "sk-...",
+        "models": [
+          {
+            "id": "mistral-large-latest",
+            "name": "Mistral Large Latest"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "mistral/mistral-large-latest"
+      }
+    }
+  },
+...
+```
+
+### Together AI
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "together": {
+        "baseUrl": "https://api.together.xyz/v1",
+        "apiKey": "together-...",
+        "models": [
+          {
+            "id": "moonshotai/Kimi-K2.5",
+            "name": "Kimi K2.5"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "together/moonshotai/Kimi-K2.5"
+      }
+    }
+  },
+...
+```
+
+## Bedrock-opmerking (geen API key)
+
+Amazon Bedrock gebruikt AWS-inloggegevens (bijvoorbeeld `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) in plaats van een API key. Een minimale providervermelding ziet er zo uit:
+
+```json
+...
+  },
+  "models": {
+    "providers": {
+      "amazon-bedrock": {
+        "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+        "api": "bedrock-converse-stream",
+        "auth": "aws-sdk",
+        "models": [
+          {
+            "id": "us.anthropic.claude-opus-4-6-v1:0",
+            "name": "Claude Opus 4.6 (Bedrock)"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/us.anthropic.claude-opus-4-6-v1:0"
+      }
+    }
+  },
+...
+```
+
+## Opmerkingen
+
+- Gateway auth token en model provider API keys zijn verschillende instellingen.
+- Als je een providerfout krijgt (bijvoorbeeld een ontbrekende Anthropic-key), werk dan je standaardmodel bij naar een provider die je hebt geconfigureerd.
+- Als provider-validatie mislukt, controleer dan eerst of vereiste providervelden aanwezig zijn (`baseUrl`, `models` en `apiKey` waar van toepassing).
+
+## Officiele providerdocs
+
+- [OpenClaw provider-directory](https://docs.openclaw.ai/providers/index)
+- [OpenRouter provider](https://docs.openclaw.ai/providers/openrouter)
+- [OpenAI provider](https://docs.openclaw.ai/providers/openai)
+- [Anthropic provider](https://docs.openclaw.ai/providers/anthropic)
+- [Google provider](https://docs.openclaw.ai/providers/google)
+- [xAI provider](https://docs.openclaw.ai/providers/xai)
+- [Mistral provider](https://docs.openclaw.ai/providers/mistral)
+- [Together AI provider](https://docs.openclaw.ai/providers/together)
+- [Amazon Bedrock provider](https://docs.openclaw.ai/providers/bedrock)
