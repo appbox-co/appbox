@@ -47,7 +47,7 @@ export async function SiteHeader() {
           }}
         />
 
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <div className="flex flex-1 items-center justify-end space-x-2">
           <div className="hidden w-full flex-1 xl:block xl:w-auto xl:flex-none">
             <CommandMenu
               messages={{
@@ -84,7 +84,14 @@ export async function SiteHeader() {
           </div>
 
           <nav className="flex items-center gap-2">
-            {/* Only show language and theme toggles on lg screens and up */}
+            <div className="flex items-center lg:hidden">
+              <I18nToggle
+                messages={{
+                  toggleLanguage: t("buttons.toggle_language")
+                }}
+              />
+            </div>
+
             <div className="hidden items-center gap-2 lg:flex">
               <I18nToggle
                 labelMode="name"

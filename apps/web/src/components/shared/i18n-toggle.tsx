@@ -49,14 +49,17 @@ export function I18nToggle({
         >
           <LanguagesIcon className="size-[1.2rem] shrink-0" />
           {showLabel && (
-            <span className="hidden max-w-24 truncate text-xs font-medium sm:inline">
+            <span className="inline max-w-24 truncate text-xs font-medium">
               {visibleLabel}
             </span>
           )}
           <span className="sr-only">{messages.toggleLanguage}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        className="max-h-[min(var(--radix-dropdown-menu-content-available-height),24rem)] overflow-y-auto overscroll-contain"
+      >
         {supportedLocales.map((locale) => (
           <DropdownMenuItem
             key={locale}
