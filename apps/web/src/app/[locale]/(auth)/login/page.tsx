@@ -19,7 +19,7 @@ import {
   InputOTPSlot
 } from "@/components/ui/input-otp"
 import { Label } from "@/components/ui/label"
-import { Link } from "@/i18n/routing"
+import { Link, useRouter } from "@/i18n/routing"
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -30,6 +30,7 @@ type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
   const t = useTranslations("auth.login")
+  const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") || "/dashboard"
   const safeRedirect =
@@ -85,7 +86,7 @@ export default function LoginPage() {
       }
 
       toast.success(t("success"))
-      window.location.assign(safeRedirect)
+      router.replace(safeRedirect)
     } catch {
       toast.error(t("error_generic"))
     } finally {
@@ -122,9 +123,9 @@ export default function LoginPage() {
         // regenerate them before they get locked out. For low (but non-zero)
         // codes the dashboard banner will handle the nudge.
         if (data.recovery_codes_exhausted) {
-          window.location.assign("/account/2fa-setup")
+          router.replace("/account/2fa-setup")
         } else {
-          window.location.assign(safeRedirect)
+          router.replace(safeRedirect)
         }
       } catch {
         toast.error(t("error_generic"))
@@ -134,7 +135,7 @@ export default function LoginPage() {
         setIsLoading(false)
       }
     },
-    [safeRedirect, t, twoFactorToken]
+    [router, safeRedirect, t, twoFactorToken]
   )
 
   function handleOtpChange(value: string) {

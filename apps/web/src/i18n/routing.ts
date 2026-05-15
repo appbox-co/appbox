@@ -79,7 +79,12 @@ export const routing = defineRouting({
   // Used when no locale matches
   defaultLocale: "en",
 
-  localePrefix: "as-needed"
+  localePrefix: "as-needed",
+
+  localeCookie: {
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax"
+  }
 })
 
 export const dateLocales: LocalizedRecord = {

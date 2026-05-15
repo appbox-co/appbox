@@ -9,7 +9,7 @@ import {
   useSyncExternalStore,
   type ReactNode
 } from "react"
-import { usePathname } from "@/i18n/routing"
+import { usePathname, useRouter } from "@/i18n/routing"
 
 const STORAGE_KEY = "admin-mode-preferred"
 const ADMIN_PATH_PREFIX = "/dashboard/admin"
@@ -54,6 +54,7 @@ function writePreferredAdminMode(next: boolean) {
 
 export function AdminModeProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const isAdminRoute = pathname.startsWith(ADMIN_PATH_PREFIX)
 
   const preferAdmin = useSyncExternalStore(
@@ -74,11 +75,11 @@ export function AdminModeProvider({ children }: { children: ReactNode }) {
     const next = !preferAdmin
     writePreferredAdminMode(next)
     if (next) {
-      window.location.assign("/dashboard/admin")
+      router.push("/dashboard/admin")
     } else {
-      window.location.assign("/dashboard")
+      router.push("/dashboard")
     }
-  }, [preferAdmin])
+  }, [preferAdmin, router])
 
   const value = useMemo(
     () => ({ isAdminMode, toggleAdminMode }),

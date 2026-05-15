@@ -9,7 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import { localeNames, supportedLocales, usePathname, useRouter } from "@/i18n/routing"
+import {
+  localeNames,
+  supportedLocales,
+  usePathname,
+  useRouter
+} from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 
@@ -19,6 +24,12 @@ interface I18nToggleProps {
   }
   labelMode?: "code" | "name"
   showLabel?: boolean
+}
+
+function persistLocaleCookie(locale: LocaleOptions) {
+  if (typeof document === "undefined") return
+
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; samesite=lax`
 }
 
 export function I18nToggle({
@@ -34,6 +45,7 @@ export function I18nToggle({
     labelMode === "name" ? currentLabel : currentLocale.toUpperCase()
 
   function changeLocale(locale: LocaleOptions) {
+    persistLocaleCookie(locale)
     router.replace(pathname, {
       locale
     })

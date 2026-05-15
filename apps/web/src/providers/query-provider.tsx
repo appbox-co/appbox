@@ -9,6 +9,30 @@ import {
 } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { ApiError } from "@/api/client"
+import { routing } from "@/i18n/routing"
+
+function readCookie(name: string) {
+  return document.cookie
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .find((cookie) => cookie.startsWith(`${name}=`))
+    ?.split("=")[1]
+}
+
+function getLocaleAwarePath(path: string) {
+  const localeFromPath = routing.locales.find(
+    (locale) =>
+      window.location.pathname === `/${locale}` ||
+      window.location.pathname.startsWith(`/${locale}/`)
+  )
+  const locale = localeFromPath ?? readCookie("NEXT_LOCALE")
+
+  if (!locale || locale === routing.defaultLocale) {
+    return path
+  }
+
+  return `/${locale}${path}`
+}
 
 export function TanstackQueryProvider({
   children
@@ -24,9 +48,7 @@ export function TanstackQueryProvider({
     // Redirect after 2+ consecutive auth failures within a short window
     if (authFailCount.current >= 2 && !redirectTimer.current) {
       redirectTimer.current = setTimeout(() => {
-        if (typeof window !== "undefined") {
-          window.location.href = "/login"
-        }
+        window.location.assign(getLocaleAwarePath("/login"))
       }, 500)
     }
   }, [])

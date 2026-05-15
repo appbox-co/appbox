@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useCallback, useContext, type ReactNode } from "react"
+import { useRouter } from "@/i18n/routing"
 import type { Cylo, User } from "@/lib/auth/session"
 
 interface AuthContextValue {
@@ -31,6 +32,8 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
+  const router = useRouter()
+
   const logout = useCallback(async () => {
     let cleared = false
     for (let attempt = 0; attempt < 2 && !cleared; attempt++) {
@@ -48,8 +51,8 @@ export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
         // Network error — retry once.
       }
     }
-    window.location.assign("/login")
-  }, [])
+    router.replace("/login")
+  }, [router])
 
   const value: AuthContextValue = {
     user,
