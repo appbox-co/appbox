@@ -1083,7 +1083,12 @@
       "restart": "रीस्टार्ट",
       "restartTitle": "Appbox रीस्टार्ट करें",
       "restartDescription": "यह आपके Appbox को रीस्टार्ट करेगा। रीस्टार्ट पूरा होने तक सभी इंस्टॉल किए गए ऐप्स ऑफ़लाइन रहेंगे।",
-      "cancel": "रद्द करें"
+      "cancel": "रद्द करें",
+      "suspendedAppsMessage": "{appboxName} को निलंबित कर दिया गया है। इस appbox की सभी apps अभी उपलब्ध नहीं हैं। कृपया support से संपर्क करें या अपनी billing status जाँचें।",
+      "migrationInProgress": "Migration प्रगति पर है...",
+      "lowQuotaFallbackMessage": "Disk space गंभीर रूप से कम है।",
+      "lowQuotaAppsStoppedMessage": "Disk space गंभीर रूप से कम है। इस appbox की सभी apps रोक दी गई हैं।",
+      "throttledFallbackMessage": "Disk throughput throttling सक्रिय है।"
     },
     "fileExplorer": {
       "title": "फ़ाइल एक्सप्लोरर",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "पंक्ति सफलतापूर्वक मिटाई गई।",
       "customTablesAddFailed": "पंक्ति जोड़ी नहीं जा सकी।",
       "customTablesEditFailed": "पंक्ति अपडेट नहीं हो सकी।",
-      "customTablesDeleteFailed": "पंक्ति मिटाई नहीं जा सकी।"
+      "customTablesDeleteFailed": "पंक्ति मिटाई नहीं जा सकी।",
+      "actionsUnavailable": "जब यह ऐप निष्क्रिय, ऑफलाइन या संक्रमण स्थिति में हो, तब कार्रवाइयाँ उपलब्ध नहीं होतीं।",
+      "installing": "इंस्टॉल हो रहा है",
+      "updating": "अपडेट हो रहा है",
+      "removing": "हटाया जा रहा है",
+      "appInstallingDescription": "{appName} आपके appbox पर इंस्टॉल हो रहा है। इसमें आमतौर पर कुछ मिनट लगते हैं।",
+      "appUpdatingDescription": "{appName} को {version} पर अपडेट किया जा रहा है। कृपया प्रतीक्षा करें।",
+      "appRemovingDescription": "{appName} को आपके appbox से हटाया जा रहा है।",
+      "jobRunningDescription": "{appName} पर अभी एक job चल रही है।",
+      "latestVersion": "नवीनतम",
+      "customFieldEnabled": "सक्षम",
+      "customFieldDisabled": "अक्षम",
+      "openLink": "लिंक खोलें",
+      "show": "दिखाएँ",
+      "hide": "छिपाएँ",
+      "copy": "कॉपी"
     },
     "domains": {
       "title": "कस्टम डोमेन",

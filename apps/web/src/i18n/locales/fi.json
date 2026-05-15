@@ -1083,7 +1083,12 @@
       "restart": "Käynnistä uudelleen",
       "restartTitle": "Käynnistä Appbox uudelleen",
       "restartDescription": "Tämä käynnistää Appboxisi uudelleen. Kaikki asennetut sovellukset ovat offline-tilassa, kunnes uudelleenkäynnistys valmistuu.",
-      "cancel": "Peruuta"
+      "cancel": "Peruuta",
+      "suspendedAppsMessage": "{appboxName} on keskeytetty. Kaikki tämän appboxin sovellukset eivät ole tällä hetkellä käytettävissä. Ota yhteyttä tukeen tai tarkista laskutustilasi.",
+      "migrationInProgress": "Migraatio on käynnissä...",
+      "lowQuotaFallbackMessage": "Levytila on kriittisen vähissä.",
+      "lowQuotaAppsStoppedMessage": "Levytila on kriittisen vähissä. Kaikki tämän appboxin sovellukset on pysäytetty.",
+      "throttledFallbackMessage": "Levyn läpimenon rajoitus on aktiivinen."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Rivi poistettu onnistuneesti.",
       "customTablesAddFailed": "Rivin lisääminen epäonnistui.",
       "customTablesEditFailed": "Rivin päivittäminen epäonnistui.",
-      "customTablesDeleteFailed": "Rivin poistaminen epäonnistui."
+      "customTablesDeleteFailed": "Rivin poistaminen epäonnistui.",
+      "actionsUnavailable": "Toiminnot eivät ole käytettävissä, kun tämä sovellus on passiivinen, offline-tilassa tai siirtymätilassa.",
+      "installing": "Asennetaan",
+      "updating": "Päivitetään",
+      "removing": "Poistetaan",
+      "appInstallingDescription": "{appName} asennetaan appboxiisi. Tämä kestää yleensä muutaman minuutin.",
+      "appUpdatingDescription": "{appName} päivitetään versioon {version}. Odota hetki.",
+      "appRemovingDescription": "{appName} poistetaan appboxistasi.",
+      "jobRunningDescription": "Kohteessa {appName} on parhaillaan käynnissä työ.",
+      "latestVersion": "uusimpaan",
+      "customFieldEnabled": "Käytössä",
+      "customFieldDisabled": "Poissa käytöstä",
+      "openLink": "Avaa linkki",
+      "show": "Näytä",
+      "hide": "Piilota",
+      "copy": "Kopioi"
     },
     "domains": {
       "title": "Omat verkkotunnukset",

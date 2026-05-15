@@ -1,6 +1,7 @@
 "use client"
 
 import { useMutation, useQuery } from "@tanstack/react-query"
+import { toast } from "sonner"
 import { queryKeys } from "@/constants/query-keys"
 import {
   getCustomButtons,
@@ -25,6 +26,13 @@ export function useTriggerCustomButton() {
     }: {
       button: CustomButton
       payload?: Record<string, unknown>
-    }) => triggerCustomButton(button, payload)
+    }) => triggerCustomButton(button, payload),
+    onError: (error) => {
+      toast.error(
+        error instanceof Error && error.message.trim()
+          ? error.message
+          : "Failed to run custom action."
+      )
+    }
   })
 }

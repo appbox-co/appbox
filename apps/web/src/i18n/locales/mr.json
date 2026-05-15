@@ -1083,7 +1083,12 @@
       "restart": "रीस्टार्ट",
       "restartTitle": "Appbox रीस्टार्ट करा",
       "restartDescription": "यामुळे तुमचा Appbox रीस्टार्ट होईल. रीस्टार्ट पूर्ण होईपर्यंत सर्व इंस्टॉल केलेली अॅप्स ऑफलाइन असतील.",
-      "cancel": "रद्द करा"
+      "cancel": "रद्द करा",
+      "suspendedAppsMessage": "{appboxName} निलंबित केले गेले आहे. या appbox वरील सर्व apps सध्या उपलब्ध नाहीत. कृपया support शी संपर्क साधा किंवा तुमची billing status तपासा.",
+      "migrationInProgress": "Migration सुरू आहे...",
+      "lowQuotaFallbackMessage": "Disk space अत्यंत कमी आहे.",
+      "lowQuotaAppsStoppedMessage": "Disk space अत्यंत कमी आहे. या appbox वरील सर्व apps थांबवले गेले आहेत.",
+      "throttledFallbackMessage": "Disk throughput throttling सक्रिय आहे."
     },
     "fileExplorer": {
       "title": "फाइल एक्सप्लोरर",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Row यशस्वीरित्या हटवली.",
       "customTablesAddFailed": "Row जोडण्यात अयशस्वी.",
       "customTablesEditFailed": "Row अपडेट करण्यात अयशस्वी.",
-      "customTablesDeleteFailed": "Row हटवण्यात अयशस्वी."
+      "customTablesDeleteFailed": "Row हटवण्यात अयशस्वी.",
+      "actionsUnavailable": "हे अॅप निष्क्रिय, ऑफलाइन किंवा संक्रमण अवस्थेत असताना क्रिया उपलब्ध नसतात.",
+      "installing": "इंस्टॉल होत आहे",
+      "updating": "अपडेट होत आहे",
+      "removing": "काढले जात आहे",
+      "appInstallingDescription": "{appName} तुमच्या appbox वर इंस्टॉल होत आहे. यास साधारणतः काही मिनिटे लागतात.",
+      "appUpdatingDescription": "{appName} {version} वर अपडेट होत आहे. कृपया प्रतीक्षा करा.",
+      "appRemovingDescription": "{appName} तुमच्या appbox वरून काढले जात आहे.",
+      "jobRunningDescription": "{appName} वर सध्या एक job चालू आहे.",
+      "latestVersion": "नवीनतम",
+      "customFieldEnabled": "सक्षम",
+      "customFieldDisabled": "अक्षम",
+      "openLink": "लिंक उघडा",
+      "show": "दाखवा",
+      "hide": "लपवा",
+      "copy": "कॉपी"
     },
     "domains": {
       "title": "सानुकूल डोमेन",

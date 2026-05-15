@@ -1,5 +1,6 @@
 import type { CustomField } from "@/api/apps/app-store"
 import { apiDelete, apiGet, apiPost, apiPut, serverApiGet } from "@/api/client"
+import { idempotencyHeaders } from "@/api/idempotency"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -210,21 +211,27 @@ export async function getInstalledAppVncInfo(
  * (PUT, not POST; action before id)
  */
 export async function startApp(id: number): Promise<void> {
-  return apiPut(`apps/instances/start/${id}`)
+  return apiPut(`apps/instances/start/${id}`, undefined, {
+    headers: idempotencyHeaders("app_instance.start")
+  })
 }
 
 /**
  * Backend: PUT /v1/apps/instances/stop/{id}
  */
 export async function stopApp(id: number): Promise<void> {
-  return apiPut(`apps/instances/stop/${id}`)
+  return apiPut(`apps/instances/stop/${id}`, undefined, {
+    headers: idempotencyHeaders("app_instance.stop")
+  })
 }
 
 /**
  * Backend: PUT /v1/apps/instances/restart/{id}
  */
 export async function restartApp(id: number): Promise<void> {
-  return apiPut(`apps/instances/restart/${id}`)
+  return apiPut(`apps/instances/restart/${id}`, undefined, {
+    headers: idempotencyHeaders("app_instance.restart")
+  })
 }
 
 /**
@@ -251,9 +258,15 @@ export async function switchVersion(
   id: number,
   versionId: number
 ): Promise<{ job_id: number }> {
-  return apiPost<{ job_id: number }>(`apps/instances/switchversion/${id}`, {
-    version_id: versionId
-  })
+  return apiPost<{ job_id: number }>(
+    `apps/instances/switchversion/${id}`,
+    {
+      version_id: versionId
+    },
+    {
+      headers: idempotencyHeaders("app_instance.switch_version")
+    }
+  )
 }
 
 export async function freezeApp(id: number): Promise<void> {

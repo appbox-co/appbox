@@ -1083,7 +1083,12 @@
       "restart": "Ponovni zagon",
       "restartTitle": "Ponovni zagon Appbox",
       "restartDescription": "To bo ponovno zagnalo vaš Appbox. Vse nameščene aplikacije bodo brez povezave, dokler se ponovni zagon ne konča.",
-      "cancel": "Prekliči"
+      "cancel": "Prekliči",
+      "suspendedAppsMessage": "{appboxName} je bil suspendiran. Vse aplikacije na tem appboxu trenutno niso na voljo. Obrni se na podporo ali preveri stanje obračunavanja.",
+      "migrationInProgress": "Migracija poteka...",
+      "lowQuotaFallbackMessage": "Prostor na disku je kritično nizek.",
+      "lowQuotaAppsStoppedMessage": "Prostor na disku je kritično nizek. Vse aplikacije na tem appboxu so bile ustavljene.",
+      "throttledFallbackMessage": "Omejevanje prepustnosti diska je aktivno."
     },
     "fileExplorer": {
       "title": "Raziskovalec datotek",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Vrstica je bila uspešno izbrisana.",
       "customTablesAddFailed": "Vrstice ni bilo mogoče dodati.",
       "customTablesEditFailed": "Vrstice ni bilo mogoče posodobiti.",
-      "customTablesDeleteFailed": "Vrstice ni bilo mogoče izbrisati."
+      "customTablesDeleteFailed": "Vrstice ni bilo mogoče izbrisati.",
+      "actionsUnavailable": "Dejanja niso na voljo, dokler je ta aplikacija neaktivna, brez povezave ali v prehodnem stanju.",
+      "installing": "Nameščanje",
+      "updating": "Posodabljanje",
+      "removing": "Odstranjevanje",
+      "appInstallingDescription": "{appName} se namešča na tvoj appbox. To običajno traja nekaj minut.",
+      "appUpdatingDescription": "{appName} se posodablja na {version}. Prosimo, počakaj.",
+      "appRemovingDescription": "{appName} se odstranjuje iz tvojega appboxa.",
+      "jobRunningDescription": "Na {appName} se trenutno izvaja opravilo.",
+      "latestVersion": "najnovejšo",
+      "customFieldEnabled": "Omogočeno",
+      "customFieldDisabled": "Onemogočeno",
+      "openLink": "Odpri povezavo",
+      "show": "Prikaži",
+      "hide": "Skrij",
+      "copy": "Kopiraj"
     },
     "domains": {
       "title": "Lastne domene",

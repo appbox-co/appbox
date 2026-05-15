@@ -1083,7 +1083,12 @@
       "restart": "Repornește",
       "restartTitle": "Repornește Appbox",
       "restartDescription": "Aceasta va reporni Appbox-ul tău. Toate aplicațiile instalate vor fi offline până când repornirea se finalizează.",
-      "cancel": "Anulează"
+      "cancel": "Anulează",
+      "suspendedAppsMessage": "{appboxName} a fost suspendat. Toate aplicațiile de pe acest appbox sunt momentan indisponibile. Contactează suportul sau verifică starea facturării.",
+      "migrationInProgress": "Migrarea este în curs...",
+      "lowQuotaFallbackMessage": "Spațiul pe disc este critic de scăzut.",
+      "lowQuotaAppsStoppedMessage": "Spațiul pe disc este critic de scăzut. Toate aplicațiile de pe acest appbox au fost oprite.",
+      "throttledFallbackMessage": "Limitarea throughput-ului discului este activă."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Rând șters cu succes.",
       "customTablesAddFailed": "Nu s-a putut adăuga rândul.",
       "customTablesEditFailed": "Nu s-a putut actualiza rândul.",
-      "customTablesDeleteFailed": "Nu s-a putut șterge rândul."
+      "customTablesDeleteFailed": "Nu s-a putut șterge rândul.",
+      "actionsUnavailable": "Acțiunile nu sunt disponibile cât timp această aplicație este inactivă, offline sau într-o stare de tranziție.",
+      "installing": "Se instalează",
+      "updating": "Se actualizează",
+      "removing": "Se elimină",
+      "appInstallingDescription": "{appName} se instalează pe appboxul tău. De obicei durează câteva minute.",
+      "appUpdatingDescription": "{appName} se actualizează la {version}. Te rugăm să aștepți.",
+      "appRemovingDescription": "{appName} este eliminată de pe appboxul tău.",
+      "jobRunningDescription": "O sarcină rulează în prezent pe {appName}.",
+      "latestVersion": "cea mai recentă",
+      "customFieldEnabled": "Activat",
+      "customFieldDisabled": "Dezactivat",
+      "openLink": "Deschide linkul",
+      "show": "Afișează",
+      "hide": "Ascunde",
+      "copy": "Copiază"
     },
     "domains": {
       "title": "Domenii personalizate",

@@ -1083,7 +1083,12 @@
       "restart": "Ponovno pokreni",
       "restartTitle": "Ponovno pokreni Appbox",
       "restartDescription": "Ovo će ponovno pokrenuti vaš Appbox. Sve instalirane aplikacije bit će offline dok se ponovno pokretanje ne dovrši.",
-      "cancel": "Odustani"
+      "cancel": "Odustani",
+      "suspendedAppsMessage": "{appboxName} je suspendiran. Sve aplikacije na ovom appboxu trenutačno nisu dostupne. Obrati se podršci ili provjeri status naplate.",
+      "migrationInProgress": "Migracija je u tijeku...",
+      "lowQuotaFallbackMessage": "Prostor na disku kritično je nizak.",
+      "lowQuotaAppsStoppedMessage": "Prostor na disku kritično je nizak. Sve aplikacije na ovom appboxu su zaustavljene.",
+      "throttledFallbackMessage": "Ograničenje propusnosti diska je aktivno."
     },
     "fileExplorer": {
       "title": "Preglednik datoteka",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Redak je uspješno izbrisan.",
       "customTablesAddFailed": "Dodavanje retka nije uspjelo.",
       "customTablesEditFailed": "Ažuriranje retka nije uspjelo.",
-      "customTablesDeleteFailed": "Brisanje retka nije uspjelo."
+      "customTablesDeleteFailed": "Brisanje retka nije uspjelo.",
+      "actionsUnavailable": "Radnje nisu dostupne dok je ova aplikacija neaktivna, offline ili u prijelaznom stanju.",
+      "installing": "Instaliranje",
+      "updating": "Ažuriranje",
+      "removing": "Uklanjanje",
+      "appInstallingDescription": "{appName} se instalira na tvoj appbox. To obično traje nekoliko minuta.",
+      "appUpdatingDescription": "{appName} se ažurira na {version}. Pričekaj.",
+      "appRemovingDescription": "{appName} se uklanja s tvog appboxa.",
+      "jobRunningDescription": "Na {appName} se trenutačno izvršava zadatak.",
+      "latestVersion": "najnoviju",
+      "customFieldEnabled": "Omogućeno",
+      "customFieldDisabled": "Onemogućeno",
+      "openLink": "Otvori poveznicu",
+      "show": "Prikaži",
+      "hide": "Sakrij",
+      "copy": "Kopiraj"
     },
     "domains": {
       "title": "Prilagođene domene",

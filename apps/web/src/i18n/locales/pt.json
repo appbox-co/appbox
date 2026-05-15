@@ -1083,7 +1083,12 @@
       "restart": "Reiniciar",
       "restartTitle": "Reiniciar Appbox",
       "restartDescription": "Isso reiniciará sua Appbox. Todos os apps instalados ficarão offline até que a reinicialização seja concluída.",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "suspendedAppsMessage": "{appboxName} foi suspenso. Todos os apps neste appbox estão indisponíveis no momento. Entre em contato com o suporte ou verifique seu status de cobrança.",
+      "migrationInProgress": "Migração em andamento...",
+      "lowQuotaFallbackMessage": "O espaço em disco está criticamente baixo.",
+      "lowQuotaAppsStoppedMessage": "O espaço em disco está criticamente baixo. Todos os apps neste appbox foram interrompidos.",
+      "throttledFallbackMessage": "A limitação de throughput do disco está ativa."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Linha excluída com sucesso.",
       "customTablesAddFailed": "Falha ao adicionar linha.",
       "customTablesEditFailed": "Falha ao atualizar linha.",
-      "customTablesDeleteFailed": "Falha ao excluir linha."
+      "customTablesDeleteFailed": "Falha ao excluir linha.",
+      "actionsUnavailable": "As ações ficam indisponíveis enquanto este app estiver inativo, offline ou em um estado de transição.",
+      "installing": "Instalando",
+      "updating": "Atualizando",
+      "removing": "Removendo",
+      "appInstallingDescription": "{appName} está sendo instalado no seu appbox. Isso geralmente leva alguns minutos.",
+      "appUpdatingDescription": "{appName} está sendo atualizado para {version}. Aguarde.",
+      "appRemovingDescription": "{appName} está sendo removido do seu appbox.",
+      "jobRunningDescription": "Há uma tarefa em execução em {appName}.",
+      "latestVersion": "mais recente",
+      "customFieldEnabled": "Ativado",
+      "customFieldDisabled": "Desativado",
+      "openLink": "Abrir link",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "copy": "Copiar"
     },
     "domains": {
       "title": "Domínios personalizados",

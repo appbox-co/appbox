@@ -1083,7 +1083,12 @@
       "restart": "Start på nytt",
       "restartTitle": "Start Appbox på nytt",
       "restartDescription": "Dette starter Appboxen din på nytt. Alle installerte apper vil være offline til omstarten er fullført.",
-      "cancel": "Avbryt"
+      "cancel": "Avbryt",
+      "suspendedAppsMessage": "{appboxName} er suspendert. Alle apper på denne appboxen er for øyeblikket utilgjengelige. Kontakt support eller sjekk faktureringsstatusen din.",
+      "migrationInProgress": "Migrering pågår...",
+      "lowQuotaFallbackMessage": "Diskplassen er kritisk lav.",
+      "lowQuotaAppsStoppedMessage": "Diskplassen er kritisk lav. Alle apper på denne appboxen er stoppet.",
+      "throttledFallbackMessage": "Begrensning av diskgjennomstrømning er aktiv."
     },
     "fileExplorer": {
       "title": "Filutforsker",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Rad slettet.",
       "customTablesAddFailed": "Kunne ikke legge til rad.",
       "customTablesEditFailed": "Kunne ikke oppdatere rad.",
-      "customTablesDeleteFailed": "Kunne ikke slette rad."
+      "customTablesDeleteFailed": "Kunne ikke slette rad.",
+      "actionsUnavailable": "Handlinger er ikke tilgjengelige mens denne appen er inaktiv, offline eller i en overgangstilstand.",
+      "installing": "Installerer",
+      "updating": "Oppdaterer",
+      "removing": "Fjerner",
+      "appInstallingDescription": "{appName} installeres på appboxen din. Dette tar vanligvis noen minutter.",
+      "appUpdatingDescription": "{appName} oppdateres til {version}. Vennligst vent.",
+      "appRemovingDescription": "{appName} fjernes fra appboxen din.",
+      "jobRunningDescription": "En jobb kjører for øyeblikket på {appName}.",
+      "latestVersion": "nyeste",
+      "customFieldEnabled": "Aktivert",
+      "customFieldDisabled": "Deaktivert",
+      "openLink": "Åpne lenke",
+      "show": "Vis",
+      "hide": "Skjul",
+      "copy": "Kopier"
     },
     "domains": {
       "title": "Egendefinerte domener",

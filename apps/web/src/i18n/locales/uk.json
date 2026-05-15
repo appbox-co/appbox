@@ -1083,7 +1083,12 @@
       "restart": "Перезапустити",
       "restartTitle": "Перезапустити Appbox",
       "restartDescription": "Це перезапустить ваш Appbox. Усі встановлені застосунки будуть офлайн, доки перезапуск не завершиться.",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "suspendedAppsMessage": "{appboxName} призупинено. Усі застосунки на цьому appbox зараз недоступні. Зверніться до підтримки або перевірте стан оплати.",
+      "migrationInProgress": "Міграція триває...",
+      "lowQuotaFallbackMessage": "Місця на диску критично мало.",
+      "lowQuotaAppsStoppedMessage": "Місця на диску критично мало. Усі застосунки на цьому appbox зупинено.",
+      "throttledFallbackMessage": "Обмеження пропускної здатності диска активне."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Рядок успішно видалено.",
       "customTablesAddFailed": "Не вдалося додати рядок.",
       "customTablesEditFailed": "Не вдалося оновити рядок.",
-      "customTablesDeleteFailed": "Не вдалося видалити рядок."
+      "customTablesDeleteFailed": "Не вдалося видалити рядок.",
+      "actionsUnavailable": "Дії недоступні, поки цей застосунок неактивний, офлайн або перебуває у перехідному стані.",
+      "installing": "Встановлення",
+      "updating": "Оновлення",
+      "removing": "Видалення",
+      "appInstallingDescription": "{appName} встановлюється на ваш appbox. Зазвичай це займає кілька хвилин.",
+      "appUpdatingDescription": "{appName} оновлюється до {version}. Будь ласка, зачекайте.",
+      "appRemovingDescription": "{appName} видаляється з вашого appbox.",
+      "jobRunningDescription": "На {appName} зараз виконується завдання.",
+      "latestVersion": "найновішої",
+      "customFieldEnabled": "Увімкнено",
+      "customFieldDisabled": "Вимкнено",
+      "openLink": "Відкрити посилання",
+      "show": "Показати",
+      "hide": "Приховати",
+      "copy": "Копіювати"
     },
     "domains": {
       "title": "Власні домени",

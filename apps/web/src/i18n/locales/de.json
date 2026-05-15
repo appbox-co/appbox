@@ -1083,7 +1083,12 @@
       "restart": "Neustart",
       "restartTitle": "Appbox neustarten",
       "restartDescription": "Dies startet Ihre Appbox neu. Alle installierten Apps werden offline sein, bis der Neustart abgeschlossen ist.",
-      "cancel": "Abbrechen"
+      "cancel": "Abbrechen",
+      "suspendedAppsMessage": "{appboxName} wurde gesperrt. Alle Apps auf diesem Appbox sind derzeit nicht verfügbar. Bitte kontaktiere den Support oder prüfe deinen Zahlungsstatus.",
+      "migrationInProgress": "Migration läuft...",
+      "lowQuotaFallbackMessage": "Der Speicherplatz ist kritisch niedrig.",
+      "lowQuotaAppsStoppedMessage": "Der Speicherplatz ist kritisch niedrig. Alle Apps auf diesem Appbox wurden gestoppt.",
+      "throttledFallbackMessage": "Die Drosselung des Datenträgerdurchsatzes ist aktiv."
     },
     "fileExplorer": {
       "title": "Datei-Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Zeile erfolgreich gelöscht.",
       "customTablesAddFailed": "Zeile konnte nicht hinzugefügt werden.",
       "customTablesEditFailed": "Zeile konnte nicht aktualisiert werden.",
-      "customTablesDeleteFailed": "Zeile konnte nicht gelöscht werden."
+      "customTablesDeleteFailed": "Zeile konnte nicht gelöscht werden.",
+      "actionsUnavailable": "Aktionen sind nicht verfügbar, solange diese App inaktiv, offline oder in einem Übergangszustand ist.",
+      "installing": "Installieren",
+      "updating": "Aktualisieren",
+      "removing": "Entfernen",
+      "appInstallingDescription": "{appName} wird auf deinem Appbox installiert. Das dauert normalerweise ein paar Minuten.",
+      "appUpdatingDescription": "{appName} wird auf {version} aktualisiert. Bitte warte.",
+      "appRemovingDescription": "{appName} wird von deinem Appbox entfernt.",
+      "jobRunningDescription": "Auf {appName} läuft derzeit ein Job.",
+      "latestVersion": "neueste",
+      "customFieldEnabled": "Aktiviert",
+      "customFieldDisabled": "Deaktiviert",
+      "openLink": "Link öffnen",
+      "show": "Anzeigen",
+      "hide": "Ausblenden",
+      "copy": "Kopieren"
     },
     "domains": {
       "title": "Eigene Domains",

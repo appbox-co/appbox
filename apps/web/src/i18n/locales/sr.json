@@ -1083,7 +1083,12 @@
       "restart": "Поново покрени",
       "restartTitle": "Поново покрени Appbox",
       "restartDescription": "Ово ће поново покренути ваш Appbox. Све инсталиране апликације биће офлајн док се поновно покретање не заврши.",
-      "cancel": "Откажи"
+      "cancel": "Откажи",
+      "suspendedAppsMessage": "{appboxName} је суспендован. Све апликације на овом appbox-у тренутно нису доступне. Контактирајте подршку или проверите статус наплате.",
+      "migrationInProgress": "Миграција је у току...",
+      "lowQuotaFallbackMessage": "Простор на диску је критично низак.",
+      "lowQuotaAppsStoppedMessage": "Простор на диску је критично низак. Све апликације на овом appbox-у су заустављене.",
+      "throttledFallbackMessage": "Ограничавање пропусности диска је активно."
     },
     "fileExplorer": {
       "title": "Истраживач датотека",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Ред је успешно обрисан.",
       "customTablesAddFailed": "Није успело додавање реда.",
       "customTablesEditFailed": "Није успело ажурирање реда.",
-      "customTablesDeleteFailed": "Није успело брисање реда."
+      "customTablesDeleteFailed": "Није успело брисање реда.",
+      "actionsUnavailable": "Радње нису доступне док је ова апликација неактивна, ван мреже или у прелазном стању.",
+      "installing": "Инсталирање",
+      "updating": "Ажурирање",
+      "removing": "Уклањање",
+      "appInstallingDescription": "{appName} се инсталира на ваш appbox. То обично траје неколико минута.",
+      "appUpdatingDescription": "{appName} се ажурира на {version}. Сачекајте.",
+      "appRemovingDescription": "{appName} се уклања са вашег appbox-а.",
+      "jobRunningDescription": "На {appName} се тренутно извршава задатак.",
+      "latestVersion": "најновију",
+      "customFieldEnabled": "Омогућено",
+      "customFieldDisabled": "Онемогућено",
+      "openLink": "Отвори линк",
+      "show": "Прикажи",
+      "hide": "Сакриј",
+      "copy": "Копирај"
     },
     "domains": {
       "title": "Прилагођени домени",

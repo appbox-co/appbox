@@ -21,8 +21,8 @@ import type { JobProgressData } from "@/lib/websocket/types"
 /* -------------------------------------------------------------------------- */
 
 interface StateConfig {
-  label: string
-  description: (app: InstalledApp) => string
+  labelKey: string
+  descriptionKey: string
   color: string
   icon: LucideIcon
   showProgress: boolean
@@ -78,30 +78,22 @@ function getTransitionalDescription(
 
 const STATE_CONFIG: Record<string, StateConfig> = {
   installing: {
-    label: "Installing",
-    description: (app) =>
-      getTransitionalDescription(app) ??
-      `${app.display_name} is being installed on your appbox. This usually takes a few minutes.`,
+    labelKey: "installing",
+    descriptionKey: "appInstallingDescription",
     color: "#3b82f6",
     icon: Download,
     showProgress: true
   },
   updating: {
-    label: "Updating",
-    description: (app) => {
-      const message = getTransitionalDescription(app)
-      if (message) return message
-      const latest = app.available_versions?.[0]
-      return `${app.display_name} is being updated to ${latest?.version ?? "latest"}. Please wait.`
-    },
+    labelKey: "updating",
+    descriptionKey: "appUpdatingDescription",
     color: "#6366f1",
     icon: ArrowUpCircle,
     showProgress: true
   },
   deleting: {
-    label: "Removing",
-    description: (app) =>
-      `${app.display_name} is being removed from your appbox.`,
+    labelKey: "removing",
+    descriptionKey: "appRemovingDescription",
     color: "#ef4444",
     icon: Trash2,
     showProgress: true
@@ -3275,8 +3267,10 @@ export function AppAlerts({
       <AlertBanner
         icon={Ban}
         color="#f59e0b"
-        label="Appbox Suspended"
-        description={`${cylo.name} has been suspended. All apps on this appbox are currently unavailable. Please contact support or check your billing status.`}
+        label={cyloT("suspended")}
+        description={cyloT("suspendedAppsMessage", {
+          appboxName: cylo.name
+        })}
       />
     )
   }
@@ -3288,10 +3282,10 @@ export function AppAlerts({
     const transferPercent = Number(progress?.transferred_percent ?? 0)
     const transferComplete = progress?.phase === 5 && transferPercent >= 100
     const migrationStatusText = transferComplete
-      ? "Installing apps on new server"
+      ? cyloT("migrationPhase6")
       : progress
         ? cyloT(MIGRATION_PHASE_KEYS[progress.phase] ?? "migrationPhase5")
-        : "Migration is in progress..."
+        : cyloT("migrationInProgress")
 
     return (
       <MigrationAlert
@@ -3317,7 +3311,7 @@ export function AppAlerts({
         reason={formatMigrationReason(progress?.reason) ?? undefined}
         liveMessage={cyloT("migrationLive")}
         offlineMessage={cyloT("migrationOffline")}
-        fallbackMessage="Migration is in progress..."
+        fallbackMessage={cyloT("migrationInProgress")}
         scene={<JobProgress job={undefined} color="#3b82f6" />}
       />
     )
@@ -3338,7 +3332,7 @@ export function AppAlerts({
                 1024
               ).toFixed(2)
             })
-          : "Disk space is critically low. All apps on this appbox have been stopped."
+          : cyloT("lowQuotaAppsStoppedMessage")
       }
       details={
         cylo.low_quota_details ? (
@@ -3355,7 +3349,7 @@ export function AppAlerts({
     const config = STATE_CONFIG[app.status]
     const color = config?.color ?? "#8b5cf6"
     const Icon = config?.icon ?? Zap
-    const label = config?.label ?? "Running"
+    const label = config ? t(config.labelKey) : t("running")
     return (
       <>
         {lowQuotaBanner}
@@ -3366,7 +3360,7 @@ export function AppAlerts({
           description={
             getTransitionalDescription(app, job, showPayloadMessage, t) ??
             job.status ??
-            `A job is currently running on ${app.display_name}.`
+            t("jobRunningDescription", { appName: app.display_name })
           }
         >
           <JobProgress job={job} color={color} />
@@ -3379,17 +3373,18 @@ export function AppAlerts({
   const config = STATE_CONFIG[app.status]
 
   if (config) {
-    const { color, icon, label, description, showProgress } = config
+    const { color, icon, labelKey, descriptionKey, showProgress } = config
+    const version = app.available_versions?.[0]?.version ?? t("latestVersion")
     const descriptionText =
       getTransitionalDescription(app, undefined, showPayloadMessage, t) ??
-      description(app)
+      t(descriptionKey, { appName: app.display_name, version })
     return (
       <>
         {lowQuotaBanner}
         <AlertBanner
           icon={icon}
           color={color}
-          label={label}
+          label={t(labelKey)}
           description={descriptionText}
         >
           {showProgress && <JobProgress job={undefined} color={color} />}

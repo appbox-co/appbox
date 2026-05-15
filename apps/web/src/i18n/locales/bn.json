@@ -1083,7 +1083,12 @@
       "restart": "রিস্টার্ট",
       "restartTitle": "Appbox Restart করুন",
       "restartDescription": "এটি আপনার Appbox restart করবে। restart complete না হওয়া পর্যন্ত সব installed app offline থাকবে।",
-      "cancel": "বাতিল"
+      "cancel": "বাতিল",
+      "suspendedAppsMessage": "{appboxName} স্থগিত করা হয়েছে। এই appbox-এর সব app বর্তমানে অনুপলব্ধ। অনুগ্রহ করে support-এ যোগাযোগ করুন বা billing status দেখুন।",
+      "migrationInProgress": "Migration চলছে...",
+      "lowQuotaFallbackMessage": "Disk space অত্যন্ত কম।",
+      "lowQuotaAppsStoppedMessage": "Disk space অত্যন্ত কম। এই appbox-এর সব app বন্ধ করা হয়েছে।",
+      "throttledFallbackMessage": "Disk throughput throttling সক্রিয়।"
     },
     "fileExplorer": {
       "title": "ফাইল এক্সপ্লোরার",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "row সফলভাবে delete হয়েছে।",
       "customTablesAddFailed": "row add করা যায়নি।",
       "customTablesEditFailed": "row update করা যায়নি।",
-      "customTablesDeleteFailed": "row delete করা যায়নি।"
+      "customTablesDeleteFailed": "row delete করা যায়নি।",
+      "actionsUnavailable": "এই অ্যাপটি নিষ্ক্রিয়, অফলাইন বা একটি পরিবর্তনশীল অবস্থায় থাকলে অ্যাকশনগুলো উপলব্ধ নয়।",
+      "installing": "ইনস্টল হচ্ছে",
+      "updating": "আপডেট হচ্ছে",
+      "removing": "সরানো হচ্ছে",
+      "appInstallingDescription": "{appName} আপনার appbox-এ ইনস্টল হচ্ছে। এটি সাধারণত কয়েক মিনিট সময় নেয়।",
+      "appUpdatingDescription": "{appName} {version}-এ আপডেট হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন।",
+      "appRemovingDescription": "{appName} আপনার appbox থেকে সরানো হচ্ছে।",
+      "jobRunningDescription": "{appName}-এ বর্তমানে একটি কাজ চলছে।",
+      "latestVersion": "সর্বশেষ",
+      "customFieldEnabled": "সক্রিয়",
+      "customFieldDisabled": "নিষ্ক্রিয়",
+      "openLink": "লিংক খুলুন",
+      "show": "দেখান",
+      "hide": "লুকান",
+      "copy": "কপি"
     },
     "domains": {
       "title": "কাস্টম ডোমেইন",

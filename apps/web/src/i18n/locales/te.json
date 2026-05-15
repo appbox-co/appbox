@@ -1083,7 +1083,12 @@
       "restart": "పునఃప్రారంభించండి",
       "restartTitle": "Appbox పునఃప్రారంభించండి",
       "restartDescription": "ఇది మీ Appbox ను పునఃప్రారంభిస్తుంది. పునఃప్రారంభం పూర్తయ్యే వరకు ఇన్‌స్టాల్ చేసిన అన్ని యాప్‌లు offline లో ఉంటాయి.",
-      "cancel": "రద్దు చేయండి"
+      "cancel": "రద్దు చేయండి",
+      "suspendedAppsMessage": "{appboxName} సస్పెండ్ చేయబడింది. ఈ appbox లోని అన్ని apps ప్రస్తుతం అందుబాటులో లేవు. దయచేసి support ను సంప్రదించండి లేదా మీ billing status తనిఖీ చేయండి.",
+      "migrationInProgress": "Migration కొనసాగుతోంది...",
+      "lowQuotaFallbackMessage": "Disk space చాలా తక్కువగా ఉంది.",
+      "lowQuotaAppsStoppedMessage": "Disk space చాలా తక్కువగా ఉంది. ఈ appbox లోని అన్ని apps నిలిపివేయబడ్డాయి.",
+      "throttledFallbackMessage": "Disk throughput throttling సక్రియంగా ఉంది."
     },
     "fileExplorer": {
       "title": "ఫైల్ ఎక్స్‌ప్లోరర్",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Row విజయవంతంగా తొలగించబడింది.",
       "customTablesAddFailed": "Row జోడించడంలో విఫలమైంది.",
       "customTablesEditFailed": "Row update చేయడంలో విఫలమైంది.",
-      "customTablesDeleteFailed": "Row తొలగించడంలో విఫలమైంది."
+      "customTablesDeleteFailed": "Row తొలగించడంలో విఫలమైంది.",
+      "actionsUnavailable": "ఈ యాప్ క్రియాశీలంగా లేనప్పుడు, ఆఫ్‌లైన్‌లో ఉన్నప్పుడు లేదా మార్పు స్థితిలో ఉన్నప్పుడు చర్యలు అందుబాటులో ఉండవు.",
+      "installing": "ఇన్‌స్టాల్ అవుతోంది",
+      "updating": "అప్‌డేట్ అవుతోంది",
+      "removing": "తొలగిస్తోంది",
+      "appInstallingDescription": "{appName} మీ appbox లో ఇన్‌స్టాల్ అవుతోంది. దీనికి సాధారణంగా కొన్ని నిమిషాలు పడుతుంది.",
+      "appUpdatingDescription": "{appName} {version} కు అప్‌డేట్ అవుతోంది. దయచేసి వేచి ఉండండి.",
+      "appRemovingDescription": "{appName} మీ appbox నుండి తొలగించబడుతోంది.",
+      "jobRunningDescription": "{appName} లో ప్రస్తుతం ఒక job నడుస్తోంది.",
+      "latestVersion": "తాజా",
+      "customFieldEnabled": "ప్రారంభించబడింది",
+      "customFieldDisabled": "నిలిపివేయబడింది",
+      "openLink": "లింక్ తెరవండి",
+      "show": "చూపించు",
+      "hide": "దాచు",
+      "copy": "కాపీ"
     },
     "domains": {
       "title": "కస్టమ్ డొమైన్లు",

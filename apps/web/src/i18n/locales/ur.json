@@ -1011,7 +1011,7 @@
     }
   },
   "appboxmanager": {
-      "title": "Appbox Manager",
+    "title": "Appbox Manager",
     "cylos": {
       "title": "آپ کے Appboxes",
       "description": "ہر منظم Appbox میں اسٹوریج، نیٹ ورک، boost استعمال، اور انسٹال شدہ ایپس مانیٹر کریں۔",
@@ -1083,7 +1083,12 @@
       "restart": "دوبارہ شروع کریں",
       "restartTitle": "Appbox دوبارہ شروع کریں",
       "restartDescription": "یہ آپ کے Appbox کو دوبارہ شروع کرے گا۔ دوبارہ آغاز مکمل ہونے تک تمام انسٹال شدہ ایپس آف لائن رہیں گی۔",
-      "cancel": "منسوخ کریں"
+      "cancel": "منسوخ کریں",
+      "suspendedAppsMessage": "{appboxName} معطل کر دیا گیا ہے۔ اس appbox کی تمام apps اس وقت دستیاب نہیں ہیں۔ براہ کرم support سے رابطہ کریں یا اپنی billing status چیک کریں۔",
+      "migrationInProgress": "Migration جاری ہے...",
+      "lowQuotaFallbackMessage": "Disk space انتہائی کم ہے۔",
+      "lowQuotaAppsStoppedMessage": "Disk space انتہائی کم ہے۔ اس appbox کی تمام apps روک دی گئی ہیں۔",
+      "throttledFallbackMessage": "Disk throughput throttling فعال ہے۔"
     },
     "fileExplorer": {
       "title": "فائل ایکسپلورر",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "قطار کامیابی سے حذف ہو گئی۔",
       "customTablesAddFailed": "قطار شامل نہیں ہو سکی۔",
       "customTablesEditFailed": "قطار اپ ڈیٹ نہیں ہو سکی۔",
-      "customTablesDeleteFailed": "قطار حذف نہیں ہو سکی۔"
+      "customTablesDeleteFailed": "قطار حذف نہیں ہو سکی۔",
+      "actionsUnavailable": "جب یہ ایپ غیر فعال، آف لائن، یا عبوری حالت میں ہو تو کارروائیاں دستیاب نہیں ہوتیں۔",
+      "installing": "انسٹال ہو رہا ہے",
+      "updating": "اپ ڈیٹ ہو رہا ہے",
+      "removing": "ہٹایا جا رہا ہے",
+      "appInstallingDescription": "{appName} آپ کے appbox پر انسٹال ہو رہا ہے۔ عموماً اس میں چند منٹ لگتے ہیں۔",
+      "appUpdatingDescription": "{appName} کو {version} پر اپ ڈیٹ کیا جا رہا ہے۔ براہ کرم انتظار کریں۔",
+      "appRemovingDescription": "{appName} کو آپ کے appbox سے ہٹایا جا رہا ہے۔",
+      "jobRunningDescription": "{appName} پر اس وقت ایک job چل رہی ہے۔",
+      "latestVersion": "تازہ ترین",
+      "customFieldEnabled": "فعال",
+      "customFieldDisabled": "غیر فعال",
+      "openLink": "لنک کھولیں",
+      "show": "دکھائیں",
+      "hide": "چھپائیں",
+      "copy": "کاپی"
     },
     "domains": {
       "title": "کسٹم ڈومینز",

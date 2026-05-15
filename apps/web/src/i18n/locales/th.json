@@ -1083,7 +1083,12 @@
       "restart": "รีสตาร์ท",
       "restartTitle": "รีสตาร์ท Appbox",
       "restartDescription": "การดำเนินการนี้จะรีสตาร์ท Appbox ของคุณ แอปที่ติดตั้งทั้งหมดจะออฟไลน์จนกว่าการรีสตาร์ทจะเสร็จสมบูรณ์",
-      "cancel": "ยกเลิก"
+      "cancel": "ยกเลิก",
+      "suspendedAppsMessage": "{appboxName} ถูกระงับ แอปทั้งหมดบน appbox นี้ไม่พร้อมใช้งานในขณะนี้ โปรดติดต่อฝ่ายสนับสนุนหรือตรวจสอบสถานะการชำระเงินของคุณ",
+      "migrationInProgress": "กำลังย้ายข้อมูล...",
+      "lowQuotaFallbackMessage": "พื้นที่ดิสก์เหลือน้อยขั้นวิกฤต",
+      "lowQuotaAppsStoppedMessage": "พื้นที่ดิสก์เหลือน้อยขั้นวิกฤต แอปทั้งหมดบน appbox นี้ถูกหยุดแล้ว",
+      "throttledFallbackMessage": "การจำกัด throughput ของดิสก์กำลังทำงานอยู่"
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "ลบแถวสำเร็จ",
       "customTablesAddFailed": "เพิ่มแถวไม่สำเร็จ",
       "customTablesEditFailed": "อัปเดตแถวไม่สำเร็จ",
-      "customTablesDeleteFailed": "ลบแถวไม่สำเร็จ"
+      "customTablesDeleteFailed": "ลบแถวไม่สำเร็จ",
+      "actionsUnavailable": "การดำเนินการไม่พร้อมใช้งานขณะที่แอปนี้ไม่ทำงาน ออฟไลน์ หรืออยู่ในสถานะเปลี่ยนผ่าน",
+      "installing": "กำลังติดตั้ง",
+      "updating": "กำลังอัปเดต",
+      "removing": "กำลังลบ",
+      "appInstallingDescription": "กำลังติดตั้ง {appName} บน appbox ของคุณ โดยปกติจะใช้เวลาสักครู่",
+      "appUpdatingDescription": "กำลังอัปเดต {appName} เป็น {version} โปรดรอ",
+      "appRemovingDescription": "กำลังลบ {appName} ออกจาก appbox ของคุณ",
+      "jobRunningDescription": "มีงานกำลังทำงานอยู่บน {appName}",
+      "latestVersion": "ล่าสุด",
+      "customFieldEnabled": "เปิดใช้งาน",
+      "customFieldDisabled": "ปิดใช้งาน",
+      "openLink": "เปิดลิงก์",
+      "show": "แสดง",
+      "hide": "ซ่อน",
+      "copy": "คัดลอก"
     },
     "domains": {
       "title": "โดเมนกำหนดเอง",

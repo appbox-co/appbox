@@ -1083,7 +1083,12 @@
       "restart": "Επανεκκίνηση",
       "restartTitle": "Επανεκκίνηση Appbox",
       "restartDescription": "Αυτό θα επανεκκινήσει το Appbox σας. Όλες οι εγκατεστημένες εφαρμογές θα είναι offline μέχρι να ολοκληρωθεί η επανεκκίνηση.",
-      "cancel": "Ακύρωση"
+      "cancel": "Ακύρωση",
+      "suspendedAppsMessage": "Το {appboxName} έχει ανασταλεί. Όλες οι εφαρμογές σε αυτό το appbox δεν είναι διαθέσιμες αυτήν τη στιγμή. Επικοινωνήστε με την υποστήριξη ή ελέγξτε την κατάσταση χρέωσης.",
+      "migrationInProgress": "Η μετεγκατάσταση βρίσκεται σε εξέλιξη...",
+      "lowQuotaFallbackMessage": "Ο χώρος στον δίσκο είναι κρίσιμα χαμηλός.",
+      "lowQuotaAppsStoppedMessage": "Ο χώρος στον δίσκο είναι κρίσιμα χαμηλός. Όλες οι εφαρμογές σε αυτό το appbox έχουν σταματήσει.",
+      "throttledFallbackMessage": "Ο περιορισμός της απόδοσης δίσκου είναι ενεργός."
     },
     "fileExplorer": {
       "title": "Εξερεύνηση αρχείων",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Η γραμμή διαγράφηκε με επιτυχία.",
       "customTablesAddFailed": "Αποτυχία προσθήκης γραμμής.",
       "customTablesEditFailed": "Αποτυχία ενημέρωσης γραμμής.",
-      "customTablesDeleteFailed": "Αποτυχία διαγραφής γραμμής."
+      "customTablesDeleteFailed": "Αποτυχία διαγραφής γραμμής.",
+      "actionsUnavailable": "Οι ενέργειες δεν είναι διαθέσιμες όσο αυτή η εφαρμογή είναι ανενεργή, εκτός σύνδεσης ή σε μεταβατική κατάσταση.",
+      "installing": "Εγκατάσταση",
+      "updating": "Ενημέρωση",
+      "removing": "Αφαίρεση",
+      "appInstallingDescription": "Το {appName} εγκαθίσταται στο appbox σας. Συνήθως χρειάζονται λίγα λεπτά.",
+      "appUpdatingDescription": "Το {appName} ενημερώνεται στην έκδοση {version}. Παρακαλούμε περιμένετε.",
+      "appRemovingDescription": "Το {appName} αφαιρείται από το appbox σας.",
+      "jobRunningDescription": "Μια εργασία εκτελείται αυτήν τη στιγμή στο {appName}.",
+      "latestVersion": "τελευταία",
+      "customFieldEnabled": "Ενεργό",
+      "customFieldDisabled": "Ανενεργό",
+      "openLink": "Άνοιγμα συνδέσμου",
+      "show": "Εμφάνιση",
+      "hide": "Απόκρυψη",
+      "copy": "Αντιγραφή"
     },
     "domains": {
       "title": "Custom Domains",

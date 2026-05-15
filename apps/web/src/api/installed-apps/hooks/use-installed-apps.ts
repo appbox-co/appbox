@@ -1,6 +1,7 @@
 "use client"
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
 import { queryKeys } from "@/constants/query-keys"
 import type { JobProgressData } from "@/lib/websocket/types"
 import { useAuth } from "@/providers/auth-provider"
@@ -68,10 +69,21 @@ export function useAppJob(instanceId: number) {
 /*  Mutations                                                                  */
 /* -------------------------------------------------------------------------- */
 
+function getMutationErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error && error.message.trim()) {
+    return error.message
+  }
+
+  return fallback
+}
+
 export function useStartApp() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: number) => startApp(id),
+    onError: (error) => {
+      toast.error(getMutationErrorMessage(error, "Failed to start app."))
+    },
     onSuccess: (_data, id) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.installedApps.detail(id)
@@ -87,6 +99,9 @@ export function useStopApp() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: number) => stopApp(id),
+    onError: (error) => {
+      toast.error(getMutationErrorMessage(error, "Failed to stop app."))
+    },
     onSuccess: (_data, id) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.installedApps.detail(id)
@@ -102,6 +117,9 @@ export function useRestartApp() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: number) => restartApp(id),
+    onError: (error) => {
+      toast.error(getMutationErrorMessage(error, "Failed to restart app."))
+    },
     onSuccess: (_data, id) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.installedApps.detail(id)

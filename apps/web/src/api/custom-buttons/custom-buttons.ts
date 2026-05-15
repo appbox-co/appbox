@@ -1,4 +1,5 @@
 import { apiGet, apiPost, apiPut } from "@/api/client"
+import { idempotencyHeaders } from "@/api/idempotency"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -64,11 +65,15 @@ export async function triggerCustomButton(
 ): Promise<void> {
   const route = button.APIRoute
   const hasPayload = !!payload && Object.keys(payload).length > 0
+  const options = {
+    headers: idempotencyHeaders("custom_button.execute")
+  }
+
   switch (button.APIMethod?.toLowerCase()) {
     case "put":
-      await apiPut(route, hasPayload ? payload : undefined)
+      await apiPut(route, hasPayload ? payload : undefined, options)
       break
     default:
-      await apiPost(route, hasPayload ? payload : undefined)
+      await apiPost(route, hasPayload ? payload : undefined, options)
   }
 }

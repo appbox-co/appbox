@@ -36,20 +36,6 @@ function isProtectedRoute(pathname: string): boolean {
   )
 }
 
-function isLoginRoute(pathname: string): boolean {
-  const path = normalizeAuthPath(pathname)
-  return path === "/login"
-}
-
-function sanitizeRedirectTarget(target: string | null): string {
-  if (!target) return "/dashboard"
-  if (!target.startsWith("/") || target.startsWith("//")) return "/dashboard"
-  if (normalizeAuthPath(target.split(/[?#]/, 1)[0]) === "/login") {
-    return "/dashboard"
-  }
-  return target
-}
-
 function getLocaleFromPath(pathname: string): string | null {
   const locales = routing.locales as readonly string[]
   for (const locale of locales) {
@@ -63,14 +49,6 @@ function getLocaleFromPath(pathname: string): string | null {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get("authorization_token")?.value
-
-  // If a user is already authenticated, don't let them stay on the login page.
-  if (isLoginRoute(pathname) && token) {
-    const redirectTarget = sanitizeRedirectTarget(
-      request.nextUrl.searchParams.get("redirect")
-    )
-    return NextResponse.redirect(new URL(redirectTarget, request.url))
-  }
 
   // Check if this is a protected route
   if (isProtectedRoute(pathname)) {

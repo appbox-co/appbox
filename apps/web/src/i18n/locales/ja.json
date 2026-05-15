@@ -1083,7 +1083,12 @@
       "restart": "再起動",
       "restartTitle": "Appbox を再起動",
       "restartDescription": "Appbox を再起動します。再起動が完了するまで、すべてのインストール済みアプリはオフラインになります。",
-      "cancel": "キャンセル"
+      "cancel": "キャンセル",
+      "suspendedAppsMessage": "{appboxName} は停止されています。この appbox 上のすべてのアプリは現在利用できません。サポートに連絡するか、請求状況を確認してください。",
+      "migrationInProgress": "移行中です...",
+      "lowQuotaFallbackMessage": "ディスク容量が非常に少なくなっています。",
+      "lowQuotaAppsStoppedMessage": "ディスク容量が非常に少なくなっています。この appbox 上のすべてのアプリは停止されました。",
+      "throttledFallbackMessage": "ディスクスループットの制限が有効です。"
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "行を削除しました。",
       "customTablesAddFailed": "行の追加に失敗しました。",
       "customTablesEditFailed": "行の更新に失敗しました。",
-      "customTablesDeleteFailed": "行の削除に失敗しました。"
+      "customTablesDeleteFailed": "行の削除に失敗しました。",
+      "actionsUnavailable": "このアプリが非アクティブ、オフライン、または移行状態の間は、操作を利用できません。",
+      "installing": "インストール中",
+      "updating": "更新中",
+      "removing": "削除中",
+      "appInstallingDescription": "{appName} を appbox にインストールしています。通常は数分で完了します。",
+      "appUpdatingDescription": "{appName} を {version} に更新しています。しばらくお待ちください。",
+      "appRemovingDescription": "{appName} を appbox から削除しています。",
+      "jobRunningDescription": "{appName} でジョブが実行中です。",
+      "latestVersion": "最新",
+      "customFieldEnabled": "有効",
+      "customFieldDisabled": "無効",
+      "openLink": "リンクを開く",
+      "show": "表示",
+      "hide": "非表示",
+      "copy": "コピー"
     },
     "domains": {
       "title": "カスタムドメイン",

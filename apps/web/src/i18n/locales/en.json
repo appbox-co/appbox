@@ -1082,7 +1082,12 @@
       "restart": "Restart",
       "restartTitle": "Restart Appbox",
       "restartDescription": "This will restart your Appbox. All installed apps will be offline until the restart completes.",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "suspendedAppsMessage": "{appboxName} has been suspended. All apps on this appbox are currently unavailable. Please contact support or check your billing status.",
+      "migrationInProgress": "Migration is in progress...",
+      "lowQuotaFallbackMessage": "Disk space is critically low.",
+      "lowQuotaAppsStoppedMessage": "Disk space is critically low. All apps on this appbox have been stopped.",
+      "throttledFallbackMessage": "Disk throughput throttling is active."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1189,6 +1194,7 @@
       "appInfo": "App Information",
       "running": "Running",
       "stopped": "Stopped",
+      "actionsUnavailable": "Actions are unavailable while this app is inactive, offline, or in a transition state.",
       "configuringApp": "Configuring {appName}...",
       "sendingInstallPayload": "Sending install payload to your appbox...",
       "sendingUpdatePayload": "Sending update payload to your appbox...",
@@ -1307,7 +1313,21 @@
       "customTablesDeleteSuccess": "Row deleted successfully.",
       "customTablesAddFailed": "Failed to add row.",
       "customTablesEditFailed": "Failed to update row.",
-      "customTablesDeleteFailed": "Failed to delete row."
+      "customTablesDeleteFailed": "Failed to delete row.",
+      "installing": "Installing",
+      "updating": "Updating",
+      "removing": "Removing",
+      "appInstallingDescription": "{appName} is being installed on your appbox. This usually takes a few minutes.",
+      "appUpdatingDescription": "{appName} is being updated to {version}. Please wait.",
+      "appRemovingDescription": "{appName} is being removed from your appbox.",
+      "jobRunningDescription": "A job is currently running on {appName}.",
+      "latestVersion": "latest",
+      "customFieldEnabled": "Enabled",
+      "customFieldDisabled": "Disabled",
+      "openLink": "Open link",
+      "show": "Show",
+      "hide": "Hide",
+      "copy": "Copy"
     },
     "domains": {
       "title": "Custom Domains",

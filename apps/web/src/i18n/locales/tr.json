@@ -1083,7 +1083,12 @@
       "restart": "Yeniden Başlat",
       "restartTitle": "Appbox'ı Yeniden Başlat",
       "restartDescription": "Bu, Appbox'ınızı yeniden başlatır. Yeniden başlatma tamamlanana kadar tüm kurulu uygulamalar çevrimdışı olacaktır.",
-      "cancel": "İptal"
+      "cancel": "İptal",
+      "suspendedAppsMessage": "{appboxName} askıya alındı. Bu appbox’taki tüm uygulamalar şu anda kullanılamıyor. Lütfen destekle iletişime geçin veya faturalandırma durumunuzu kontrol edin.",
+      "migrationInProgress": "Migrasyon devam ediyor...",
+      "lowQuotaFallbackMessage": "Disk alanı kritik derecede düşük.",
+      "lowQuotaAppsStoppedMessage": "Disk alanı kritik derecede düşük. Bu appbox’taki tüm uygulamalar durduruldu.",
+      "throttledFallbackMessage": "Disk aktarım hızı kısıtlaması aktif."
     },
     "fileExplorer": {
       "title": "Dosya Gezgini",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Satır başarıyla silindi.",
       "customTablesAddFailed": "Satır eklenemedi.",
       "customTablesEditFailed": "Satır güncellenemedi.",
-      "customTablesDeleteFailed": "Satır silinemedi."
+      "customTablesDeleteFailed": "Satır silinemedi.",
+      "actionsUnavailable": "Bu uygulama etkin değilken, çevrimdışıyken veya geçiş durumundayken işlemler kullanılamaz.",
+      "installing": "Yükleniyor",
+      "updating": "Güncelleniyor",
+      "removing": "Kaldırılıyor",
+      "appInstallingDescription": "{appName} appbox’ına yükleniyor. Bu genellikle birkaç dakika sürer.",
+      "appUpdatingDescription": "{appName} {version} sürümüne güncelleniyor. Lütfen bekleyin.",
+      "appRemovingDescription": "{appName} appbox’ından kaldırılıyor.",
+      "jobRunningDescription": "{appName} üzerinde şu anda bir görev çalışıyor.",
+      "latestVersion": "en son",
+      "customFieldEnabled": "Etkin",
+      "customFieldDisabled": "Devre dışı",
+      "openLink": "Bağlantıyı aç",
+      "show": "Göster",
+      "hide": "Gizle",
+      "copy": "Kopyala"
     },
     "domains": {
       "title": "Özel Domainler",

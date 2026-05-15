@@ -1083,7 +1083,12 @@
       "restart": "Riavvia",
       "restartTitle": "Riavvia Appbox",
       "restartDescription": "Questo riavvierà la tua Appbox. Tutte le app installate resteranno offline finché il riavvio non sarà completato.",
-      "cancel": "Annulla"
+      "cancel": "Annulla",
+      "suspendedAppsMessage": "{appboxName} è stato sospeso. Tutte le app su questo appbox non sono attualmente disponibili. Contatta il supporto o controlla lo stato della fatturazione.",
+      "migrationInProgress": "Migrazione in corso...",
+      "lowQuotaFallbackMessage": "Lo spazio su disco è criticamente basso.",
+      "lowQuotaAppsStoppedMessage": "Lo spazio su disco è criticamente basso. Tutte le app su questo appbox sono state arrestate.",
+      "throttledFallbackMessage": "La limitazione del throughput del disco è attiva."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Riga eliminata con successo.",
       "customTablesAddFailed": "Impossibile aggiungere la riga.",
       "customTablesEditFailed": "Impossibile aggiornare la riga.",
-      "customTablesDeleteFailed": "Impossibile eliminare la riga."
+      "customTablesDeleteFailed": "Impossibile eliminare la riga.",
+      "actionsUnavailable": "Le azioni non sono disponibili mentre questa app è inattiva, offline o in uno stato di transizione.",
+      "installing": "Installazione",
+      "updating": "Aggiornamento",
+      "removing": "Rimozione",
+      "appInstallingDescription": "{appName} è in fase di installazione sul tuo appbox. Di solito richiede pochi minuti.",
+      "appUpdatingDescription": "{appName} viene aggiornato a {version}. Attendi.",
+      "appRemovingDescription": "{appName} viene rimosso dal tuo appbox.",
+      "jobRunningDescription": "Un job è attualmente in esecuzione su {appName}.",
+      "latestVersion": "ultima",
+      "customFieldEnabled": "Abilitato",
+      "customFieldDisabled": "Disabilitato",
+      "openLink": "Apri link",
+      "show": "Mostra",
+      "hide": "Nascondi",
+      "copy": "Copia"
     },
     "domains": {
       "title": "Domini personalizzati",

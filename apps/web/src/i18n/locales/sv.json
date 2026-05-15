@@ -1083,7 +1083,12 @@
       "restart": "Starta om",
       "restartTitle": "Starta om Appbox",
       "restartDescription": "Detta startar om din Appbox. Alla installerade appar kommer att vara offline tills omstarten är klar.",
-      "cancel": "Avbryt"
+      "cancel": "Avbryt",
+      "suspendedAppsMessage": "{appboxName} har stängts av. Alla appar på denna appbox är för närvarande otillgängliga. Kontakta supporten eller kontrollera din faktureringsstatus.",
+      "migrationInProgress": "Migrering pågår...",
+      "lowQuotaFallbackMessage": "Diskutrymmet är kritiskt lågt.",
+      "lowQuotaAppsStoppedMessage": "Diskutrymmet är kritiskt lågt. Alla appar på denna appbox har stoppats.",
+      "throttledFallbackMessage": "Begränsning av diskgenomströmning är aktiv."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Raden har tagits bort.",
       "customTablesAddFailed": "Det gick inte att lägga till rad.",
       "customTablesEditFailed": "Det gick inte att uppdatera rad.",
-      "customTablesDeleteFailed": "Det gick inte att ta bort rad."
+      "customTablesDeleteFailed": "Det gick inte att ta bort rad.",
+      "actionsUnavailable": "Åtgärder är inte tillgängliga medan den här appen är inaktiv, offline eller i ett övergångsläge.",
+      "installing": "Installerar",
+      "updating": "Uppdaterar",
+      "removing": "Tar bort",
+      "appInstallingDescription": "{appName} installeras på din appbox. Det tar vanligtvis några minuter.",
+      "appUpdatingDescription": "{appName} uppdateras till {version}. Vänta.",
+      "appRemovingDescription": "{appName} tas bort från din appbox.",
+      "jobRunningDescription": "Ett jobb körs just nu på {appName}.",
+      "latestVersion": "senaste",
+      "customFieldEnabled": "Aktiverat",
+      "customFieldDisabled": "Inaktiverat",
+      "openLink": "Öppna länk",
+      "show": "Visa",
+      "hide": "Dölj",
+      "copy": "Kopiera"
     },
     "domains": {
       "title": "Egna domäner",

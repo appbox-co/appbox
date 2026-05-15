@@ -1083,7 +1083,12 @@
       "restart": "Újraindítás",
       "restartTitle": "Appbox újraindítása",
       "restartDescription": "Ez újraindítja az Appboxodat. Minden telepített alkalmazás offline lesz, amíg az újraindítás be nem fejeződik.",
-      "cancel": "Mégse"
+      "cancel": "Mégse",
+      "suspendedAppsMessage": "{appboxName} fel lett függesztve. Az ezen az appboxon lévő összes alkalmazás jelenleg nem érhető el. Kérjük, lépj kapcsolatba az ügyfélszolgálattal, vagy ellenőrizd a számlázási állapotodat.",
+      "migrationInProgress": "Migráció folyamatban...",
+      "lowQuotaFallbackMessage": "Kritikusan kevés a lemezterület.",
+      "lowQuotaAppsStoppedMessage": "Kritikusan kevés a lemezterület. Az appboxon lévő összes alkalmazás le lett állítva.",
+      "throttledFallbackMessage": "A lemezátvitel korlátozása aktív."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1190,6 +1195,7 @@
       "appInfo": "Alkalmazásinformáció",
       "running": "Fut",
       "stopped": "Leállítva",
+      "actionsUnavailable": "A műveletek nem érhetők el, amíg ez az alkalmazás inaktív, offline vagy átmeneti állapotban van.",
       "configuringApp": "{appName} konfigurálása...",
       "sendingInstallPayload": "Telepítési payload küldése az appboxodra...",
       "sendingUpdatePayload": "Frissítési payload küldése az appboxodra...",
@@ -1308,7 +1314,21 @@
       "customTablesDeleteSuccess": "Sor sikeresen törölve.",
       "customTablesAddFailed": "Nem sikerült hozzáadni a sort.",
       "customTablesEditFailed": "Nem sikerült frissíteni a sort.",
-      "customTablesDeleteFailed": "Nem sikerült törölni a sort."
+      "customTablesDeleteFailed": "Nem sikerült törölni a sort.",
+      "installing": "Telepítés",
+      "updating": "Frissítés",
+      "removing": "Eltávolítás",
+      "appInstallingDescription": "{appName} telepítése folyamatban van az appboxodon. Ez általában néhány percet vesz igénybe.",
+      "appUpdatingDescription": "{appName} frissítése folyamatban van erre a verzióra: {version}. Kérjük, várj.",
+      "appRemovingDescription": "{appName} eltávolítása folyamatban van az appboxodról.",
+      "jobRunningDescription": "Jelenleg fut egy feladat ezen: {appName}.",
+      "latestVersion": "legújabb",
+      "customFieldEnabled": "Engedélyezve",
+      "customFieldDisabled": "Letiltva",
+      "openLink": "Hivatkozás megnyitása",
+      "show": "Megjelenítés",
+      "hide": "Elrejtés",
+      "copy": "Másolás"
     },
     "domains": {
       "title": "Egyéni domainek",

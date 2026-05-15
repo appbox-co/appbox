@@ -157,6 +157,7 @@ function CustomFieldItem({
 }) {
   const [revealed, setRevealed] = useState(false)
   const [copied, setCopied] = useState(false)
+  const t = useTranslations("appboxmanager.appDetail")
 
   const handleCopy = () => {
     navigator.clipboard.writeText(value)
@@ -166,7 +167,10 @@ function CustomFieldItem({
 
   let displayValue = value
   if (isSwitch) {
-    displayValue = value === "1" || value === "true" ? "Enabled" : "Disabled"
+    displayValue =
+      value === "1" || value === "true"
+        ? t("customFieldEnabled")
+        : t("customFieldDisabled")
   } else if (menuItems) {
     displayValue = menuItems[value] ?? value
   }
@@ -196,7 +200,7 @@ function CustomFieldItem({
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md p-1 text-muted-foreground hover:text-foreground transition-colors"
-              title="Open link"
+              title={t("openLink")}
             >
               <ExternalLink className="size-3.5" />
             </a>
@@ -206,7 +210,7 @@ function CustomFieldItem({
               type="button"
               onClick={() => setRevealed(!revealed)}
               className="rounded-md p-1 text-muted-foreground hover:text-foreground transition-colors"
-              title={revealed ? "Hide" : "Show"}
+              title={revealed ? t("hide") : t("show")}
             >
               {revealed ? (
                 <EyeOff className="size-3.5" />
@@ -219,7 +223,7 @@ function CustomFieldItem({
             type="button"
             onClick={handleCopy}
             className="rounded-md p-1 text-muted-foreground hover:text-foreground transition-colors"
-            title="Copy"
+            title={t("copy")}
           >
             {copied ? (
               <Check className="size-3.5 text-green-500" />
@@ -637,8 +641,7 @@ export default function InstalledAppDetailPage({
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Actions are unavailable while this app is inactive, offline, or in
-              a transition state.
+              {t("actionsUnavailable")}
             </p>
           </CardContent>
         </Card>

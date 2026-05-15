@@ -1083,7 +1083,12 @@
       "restart": "Genstart",
       "restartTitle": "Genstart Appbox",
       "restartDescription": "Dette vil genstarte din Appbox. Alle installerede apps vil være offline, indtil genstarten er færdig.",
-      "cancel": "Annuller"
+      "cancel": "Annuller",
+      "suspendedAppsMessage": "{appboxName} er blevet suspenderet. Alle apps på denne appbox er i øjeblikket utilgængelige. Kontakt support, eller tjek din betalingsstatus.",
+      "migrationInProgress": "Migrering er i gang...",
+      "lowQuotaFallbackMessage": "Diskpladsen er kritisk lav.",
+      "lowQuotaAppsStoppedMessage": "Diskpladsen er kritisk lav. Alle apps på denne appbox er blevet stoppet.",
+      "throttledFallbackMessage": "Begrænsning af diskgennemstrømning er aktiv."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Række slettet.",
       "customTablesAddFailed": "Kunne ikke tilføje række.",
       "customTablesEditFailed": "Kunne ikke opdatere række.",
-      "customTablesDeleteFailed": "Kunne ikke slette række."
+      "customTablesDeleteFailed": "Kunne ikke slette række.",
+      "actionsUnavailable": "Handlinger er ikke tilgængelige, mens denne app er inaktiv, offline eller i en overgangstilstand.",
+      "installing": "Installerer",
+      "updating": "Opdaterer",
+      "removing": "Fjerner",
+      "appInstallingDescription": "{appName} installeres på din appbox. Det tager normalt et par minutter.",
+      "appUpdatingDescription": "{appName} opdateres til {version}. Vent venligst.",
+      "appRemovingDescription": "{appName} fjernes fra din appbox.",
+      "jobRunningDescription": "Der kører i øjeblikket et job på {appName}.",
+      "latestVersion": "nyeste",
+      "customFieldEnabled": "Aktiveret",
+      "customFieldDisabled": "Deaktiveret",
+      "openLink": "Åbn link",
+      "show": "Vis",
+      "hide": "Skjul",
+      "copy": "Kopiér"
     },
     "domains": {
       "title": "Brugerdefinerede domæner",

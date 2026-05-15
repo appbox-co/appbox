@@ -1083,7 +1083,12 @@
       "restart": "Reiniciar",
       "restartTitle": "Reiniciar Appbox",
       "restartDescription": "Esto reiniciará tu Appbox. Todas las apps instaladas estarán sin conexión hasta que termine el reinicio.",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "suspendedAppsMessage": "{appboxName} ha sido suspendido. Todas las apps de este appbox no están disponibles actualmente. Contacta con soporte o revisa tu estado de facturación.",
+      "migrationInProgress": "La migración está en curso...",
+      "lowQuotaFallbackMessage": "El espacio en disco es críticamente bajo.",
+      "lowQuotaAppsStoppedMessage": "El espacio en disco es críticamente bajo. Todas las apps de este appbox se han detenido.",
+      "throttledFallbackMessage": "La limitación del rendimiento de disco está activa."
     },
     "fileExplorer": {
       "title": "Explorador de archivos",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Fila eliminada correctamente.",
       "customTablesAddFailed": "No se pudo añadir la fila.",
       "customTablesEditFailed": "No se pudo actualizar la fila.",
-      "customTablesDeleteFailed": "No se pudo eliminar la fila."
+      "customTablesDeleteFailed": "No se pudo eliminar la fila.",
+      "actionsUnavailable": "Las acciones no están disponibles mientras esta app esté inactiva, offline o en un estado de transición.",
+      "installing": "Instalando",
+      "updating": "Actualizando",
+      "removing": "Eliminando",
+      "appInstallingDescription": "{appName} se está instalando en tu appbox. Esto suele tardar unos minutos.",
+      "appUpdatingDescription": "{appName} se está actualizando a {version}. Espera un momento.",
+      "appRemovingDescription": "{appName} se está eliminando de tu appbox.",
+      "jobRunningDescription": "Actualmente hay una tarea ejecutándose en {appName}.",
+      "latestVersion": "última",
+      "customFieldEnabled": "Activado",
+      "customFieldDisabled": "Desactivado",
+      "openLink": "Abrir enlace",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "copy": "Copiar"
     },
     "domains": {
       "title": "Dominios personalizados",

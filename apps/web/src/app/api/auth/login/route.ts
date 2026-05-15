@@ -40,6 +40,25 @@ function extractTokenFromSetCookie(response: Response): string | null {
   return null
 }
 
+interface AuthResponseBody {
+  error?: {
+    message?: string
+  }
+  message?: string
+  requires_2fa?: boolean
+  two_factor_token?: string
+}
+
+async function parseJsonSafe(
+  response: Response
+): Promise<AuthResponseBody | null> {
+  try {
+    return await response.json()
+  } catch {
+    return null
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -66,7 +85,7 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    const data = await response.json()
+    const data = await parseJsonSafe(response)
 
     if (!response.ok) {
       const errorMsg =
@@ -79,10 +98,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if 2FA is required
-    if (data.requires_2fa) {
+    if (data?.requires_2fa) {
       return NextResponse.json({
         two_factor_required: true,
-        two_factor_token: data.two_factor_token || ""
+        two_factor_token: data.two_factor_token ?? ""
       })
     }
 

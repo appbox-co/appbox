@@ -1083,7 +1083,12 @@
       "restart": "重启",
       "restartTitle": "重启 Appbox",
       "restartDescription": "这将重启你的 Appbox。所有已安装应用都会离线，直到重启完成。",
-      "cancel": "取消"
+      "cancel": "取消",
+      "suspendedAppsMessage": "{appboxName} 已被暂停。此 appbox 上的所有应用当前不可用。请联系支持或检查你的账单状态。",
+      "migrationInProgress": "迁移正在进行中...",
+      "lowQuotaFallbackMessage": "磁盘空间严重不足。",
+      "lowQuotaAppsStoppedMessage": "磁盘空间严重不足。此 appbox 上的所有应用已停止。",
+      "throttledFallbackMessage": "磁盘吞吐量限制已启用。"
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "行删除成功。",
       "customTablesAddFailed": "添加行失败。",
       "customTablesEditFailed": "更新行失败。",
-      "customTablesDeleteFailed": "删除行失败。"
+      "customTablesDeleteFailed": "删除行失败。",
+      "actionsUnavailable": "当此应用处于非活动、离线或过渡状态时，操作不可用。",
+      "installing": "正在安装",
+      "updating": "正在更新",
+      "removing": "正在移除",
+      "appInstallingDescription": "{appName} 正在安装到你的 appbox。这通常需要几分钟。",
+      "appUpdatingDescription": "{appName} 正在更新到 {version}。请稍候。",
+      "appRemovingDescription": "{appName} 正在从你的 appbox 中移除。",
+      "jobRunningDescription": "{appName} 上当前有一个任务正在运行。",
+      "latestVersion": "最新",
+      "customFieldEnabled": "已启用",
+      "customFieldDisabled": "已禁用",
+      "openLink": "打开链接",
+      "show": "显示",
+      "hide": "隐藏",
+      "copy": "复制"
     },
     "domains": {
       "title": "自定义域名",

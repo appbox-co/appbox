@@ -543,7 +543,7 @@
       "sort_by": "Сортировать по",
       "sort_popularity": "Популярность",
       "sort_name": "Название (A-Z)",
-        "sort_date": "Недавно добавлено",
+      "sort_date": "Недавно добавлено",
       "reset_filters": "Сбросить фильтры"
     },
     "card": {
@@ -1083,7 +1083,12 @@
       "restart": "Перезапустить",
       "restartTitle": "Перезапустить Appbox",
       "restartDescription": "Это перезапустит ваш Appbox. Все установленные приложения будут офлайн до завершения перезапуска.",
-      "cancel": "Отмена"
+      "cancel": "Отмена",
+      "suspendedAppsMessage": "{appboxName} был приостановлен. Все приложения на этом appbox сейчас недоступны. Свяжитесь с поддержкой или проверьте статус оплаты.",
+      "migrationInProgress": "Миграция выполняется...",
+      "lowQuotaFallbackMessage": "Свободного места на диске критически мало.",
+      "lowQuotaAppsStoppedMessage": "Свободного места на диске критически мало. Все приложения на этом appbox были остановлены.",
+      "throttledFallbackMessage": "Ограничение пропускной способности диска активно."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Строка успешно удалена.",
       "customTablesAddFailed": "Не удалось добавить строку.",
       "customTablesEditFailed": "Не удалось обновить строку.",
-      "customTablesDeleteFailed": "Не удалось удалить строку."
+      "customTablesDeleteFailed": "Не удалось удалить строку.",
+      "actionsUnavailable": "Действия недоступны, пока это приложение неактивно, офлайн или находится в переходном состоянии.",
+      "installing": "Установка",
+      "updating": "Обновление",
+      "removing": "Удаление",
+      "appInstallingDescription": "{appName} устанавливается на ваш appbox. Обычно это занимает несколько минут.",
+      "appUpdatingDescription": "{appName} обновляется до {version}. Пожалуйста, подождите.",
+      "appRemovingDescription": "{appName} удаляется с вашего appbox.",
+      "jobRunningDescription": "На {appName} сейчас выполняется задание.",
+      "latestVersion": "последняя",
+      "customFieldEnabled": "Включено",
+      "customFieldDisabled": "Отключено",
+      "openLink": "Открыть ссылку",
+      "show": "Показать",
+      "hide": "Скрыть",
+      "copy": "Копировать"
     },
     "domains": {
       "title": "Пользовательские домены",

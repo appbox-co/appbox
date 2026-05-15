@@ -1083,7 +1083,12 @@
       "restart": "Opnieuw starten",
       "restartTitle": "Appbox opnieuw starten",
       "restartDescription": "Dit start je Appbox opnieuw. Alle geinstalleerde apps zijn offline totdat het opnieuw starten is voltooid.",
-      "cancel": "Annuleren"
+      "cancel": "Annuleren",
+      "suspendedAppsMessage": "{appboxName} is opgeschort. Alle apps op deze appbox zijn momenteel niet beschikbaar. Neem contact op met support of controleer je factureringsstatus.",
+      "migrationInProgress": "Migratie is bezig...",
+      "lowQuotaFallbackMessage": "De schijfruimte is kritiek laag.",
+      "lowQuotaAppsStoppedMessage": "De schijfruimte is kritiek laag. Alle apps op deze appbox zijn gestopt.",
+      "throttledFallbackMessage": "Schijfdoorvoerbeperking is actief."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Rij succesvol verwijderd.",
       "customTablesAddFailed": "Rij toevoegen mislukt.",
       "customTablesEditFailed": "Rij bijwerken mislukt.",
-      "customTablesDeleteFailed": "Rij verwijderen mislukt."
+      "customTablesDeleteFailed": "Rij verwijderen mislukt.",
+      "actionsUnavailable": "Acties zijn niet beschikbaar terwijl deze app inactief, offline of in een overgangsstatus is.",
+      "installing": "Installeren",
+      "updating": "Bijwerken",
+      "removing": "Verwijderen",
+      "appInstallingDescription": "{appName} wordt op je appbox geïnstalleerd. Dit duurt meestal een paar minuten.",
+      "appUpdatingDescription": "{appName} wordt bijgewerkt naar {version}. Even geduld.",
+      "appRemovingDescription": "{appName} wordt van je appbox verwijderd.",
+      "jobRunningDescription": "Er wordt momenteel een taak uitgevoerd op {appName}.",
+      "latestVersion": "nieuwste",
+      "customFieldEnabled": "Ingeschakeld",
+      "customFieldDisabled": "Uitgeschakeld",
+      "openLink": "Link openen",
+      "show": "Weergeven",
+      "hide": "Verbergen",
+      "copy": "Kopiëren"
     },
     "domains": {
       "title": "Eigen domeinen",

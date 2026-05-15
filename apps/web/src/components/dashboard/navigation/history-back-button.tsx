@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { ArrowLeft, Loader2 } from "lucide-react"
@@ -54,6 +55,50 @@ function getPathKey(href: string): string {
   return href.split("#")[0].split("?")[0]
 }
 
+function inferStoredLabel(
+  href: string,
+  storedLabel: string,
+  fallbackLabel: string,
+  labels: {
+    appStore: string
+    installedApps: string
+    appboxes: string
+    abuseReports: string
+    dashboard: string
+  }
+): string {
+  const path = getPathKey(href)
+  if (path.endsWith("/appstore")) return labels.appStore
+  if (path.endsWith("/appboxmanager/installedapps")) {
+    return labels.installedApps
+  }
+  if (path.endsWith("/appboxmanager/appboxes")) return labels.appboxes
+  if (path.endsWith("/account/abuse")) return labels.abuseReports
+  if (path.endsWith("/dashboard")) return labels.dashboard
+
+  if (
+    storedLabel &&
+    ![
+      "App Store",
+      "Installed Apps",
+      "Appboxes",
+      "Abuse Reports",
+      "Dashboard"
+    ].includes(storedLabel)
+  ) {
+    return storedLabel
+  }
+
+  if (path.includes("/appstore")) return labels.appStore
+  if (path.includes("/appboxmanager/installedapps")) {
+    return labels.installedApps
+  }
+  if (path.includes("/appboxmanager/appboxes")) return labels.appboxes
+  if (path.includes("/account/abuse")) return labels.abuseReports
+  if (path.includes("/dashboard")) return labels.dashboard
+  return fallbackLabel
+}
+
 export function HistoryBackButton({
   fallbackHref,
   fallbackLabel,
@@ -65,6 +110,8 @@ export function HistoryBackButton({
 }: HistoryBackButtonProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const sidebarT = useTranslations("dashboard.sidebar")
+  const appDetailT = useTranslations("appboxmanager.appDetail")
 
   const currentHref = useMemo(() => {
     const query = searchParams?.toString()
@@ -77,6 +124,17 @@ export function HistoryBackButton({
     label: fallbackLabel
   })
   const [isReady, setIsReady] = useState(false)
+
+  const knownRouteLabels = useMemo(
+    () => ({
+      appStore: sidebarT("appstore"),
+      installedApps: appDetailT("backToInstalledApps"),
+      appboxes: sidebarT("appboxes"),
+      abuseReports: sidebarT("abuse_reports"),
+      dashboard: sidebarT("dashboard")
+    }),
+    [appDetailT, sidebarT]
+  )
 
   useEffect(() => {
     if (!currentHref) {
@@ -118,14 +176,26 @@ export function HistoryBackButton({
       if (previous) {
         setTarget({
           href: previous.href,
-          label: previous.label || fallbackLabel
+          label: inferStoredLabel(
+            previous.href,
+            previous.label,
+            fallbackLabel,
+            knownRouteLabels
+          )
         })
       } else {
         setTarget({ href: fallbackHref, label: fallbackLabel })
       }
       setIsReady(true)
     })
-  }, [currentHref, currentPathKey, currentLabel, fallbackHref, fallbackLabel])
+  }, [
+    currentHref,
+    currentPathKey,
+    currentLabel,
+    fallbackHref,
+    fallbackLabel,
+    knownRouteLabels
+  ])
 
   const handleBackClick = () => {
     const history = readHistory()

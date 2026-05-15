@@ -224,7 +224,7 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
               ? t("throttledMessage", {
                   percent: cylo.throttle_details.disk_util_percent
                 })
-              : "Disk throughput throttling is active."
+              : t("throttledFallbackMessage")
           }
           actions={
             <Button size="sm" variant="outline" asChild>
@@ -312,7 +312,7 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
                       1024
                     ).toFixed(2)
                   })
-              : "Disk space is critically low."
+              : t("lowQuotaFallbackMessage")
           }
           actions={
             <>
@@ -357,7 +357,7 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
           const transferredBytes = Number(progress?.total_sent ?? 0)
           const migrationStatusText = progress
             ? t(PHASE_KEYS[progress.phase] ?? "migrationPhase5")
-            : "Migration is in progress…"
+            : t("migrationInProgress")
 
           return (
             <MigrationAlert
@@ -382,7 +382,7 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
               reason={formatMigrationReason(progress?.reason) ?? undefined}
               liveMessage={t("migrationLive")}
               offlineMessage={t("migrationOffline")}
-              fallbackMessage="Migration is in progress…"
+              fallbackMessage={t("migrationInProgress")}
               scene={<JobProgress job={undefined} color="#3b82f6" />}
             />
           )

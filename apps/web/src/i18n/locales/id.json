@@ -1083,7 +1083,12 @@
       "restart": "Mulai Ulang",
       "restartTitle": "Mulai Ulang Appbox",
       "restartDescription": "Ini akan memulai ulang Appbox Anda. Semua aplikasi terinstal akan offline sampai proses mulai ulang selesai.",
-      "cancel": "Batal"
+      "cancel": "Batal",
+      "suspendedAppsMessage": "{appboxName} telah ditangguhkan. Semua app di appbox ini saat ini tidak tersedia. Hubungi dukungan atau periksa status penagihan Anda.",
+      "migrationInProgress": "Migrasi sedang berlangsung...",
+      "lowQuotaFallbackMessage": "Ruang disk sangat rendah.",
+      "lowQuotaAppsStoppedMessage": "Ruang disk sangat rendah. Semua app di appbox ini telah dihentikan.",
+      "throttledFallbackMessage": "Pembatasan throughput disk sedang aktif."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Baris berhasil dihapus.",
       "customTablesAddFailed": "Gagal menambahkan baris.",
       "customTablesEditFailed": "Gagal memperbarui baris.",
-      "customTablesDeleteFailed": "Gagal menghapus baris."
+      "customTablesDeleteFailed": "Gagal menghapus baris.",
+      "actionsUnavailable": "Tindakan tidak tersedia saat aplikasi ini tidak aktif, offline, atau dalam status transisi.",
+      "installing": "Menginstal",
+      "updating": "Memperbarui",
+      "removing": "Menghapus",
+      "appInstallingDescription": "{appName} sedang diinstal di appbox Anda. Biasanya membutuhkan beberapa menit.",
+      "appUpdatingDescription": "{appName} sedang diperbarui ke {version}. Harap tunggu.",
+      "appRemovingDescription": "{appName} sedang dihapus dari appbox Anda.",
+      "jobRunningDescription": "Sebuah job sedang berjalan di {appName}.",
+      "latestVersion": "terbaru",
+      "customFieldEnabled": "Diaktifkan",
+      "customFieldDisabled": "Dinonaktifkan",
+      "openLink": "Buka tautan",
+      "show": "Tampilkan",
+      "hide": "Sembunyikan",
+      "copy": "Salin"
     },
     "domains": {
       "title": "Domain Custom",

@@ -1083,7 +1083,12 @@
       "restart": "إعادة تشغيل",
       "restartTitle": "إعادة تشغيل Appbox",
       "restartDescription": "سيؤدي ذلك إلى إعادة تشغيل Appbox الخاص بك. ستكون كل التطبيقات المثبتة غير متاحة حتى تكتمل إعادة التشغيل.",
-      "cancel": "إلغاء"
+      "cancel": "إلغاء",
+      "suspendedAppsMessage": "تم تعليق {appboxName}. كل التطبيقات على هذا appbox غير متاحة حاليًا. يرجى التواصل مع الدعم أو التحقق من حالة الفوترة.",
+      "migrationInProgress": "المهاجرة قيد التقدم...",
+      "lowQuotaFallbackMessage": "مساحة القرص منخفضة جدًا.",
+      "lowQuotaAppsStoppedMessage": "مساحة القرص منخفضة جدًا. تم إيقاف كل التطبيقات على هذا appbox.",
+      "throttledFallbackMessage": "تقييد معدل نقل القرص نشط."
     },
     "fileExplorer": {
       "title": "مستكشف الملفات",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "تم حذف الصف بنجاح.",
       "customTablesAddFailed": "تعذرت إضافة الصف.",
       "customTablesEditFailed": "تعذر تحديث الصف.",
-      "customTablesDeleteFailed": "تعذر حذف الصف."
+      "customTablesDeleteFailed": "تعذر حذف الصف.",
+      "actionsUnavailable": "لا تتوفر الإجراءات أثناء كون هذا التطبيق غير نشط أو غير متصل أو في حالة انتقالية.",
+      "installing": "جارٍ التثبيت",
+      "updating": "جارٍ التحديث",
+      "removing": "جارٍ الإزالة",
+      "appInstallingDescription": "يتم تثبيت {appName} على appbox الخاص بك. يستغرق ذلك عادة بضع دقائق.",
+      "appUpdatingDescription": "يتم تحديث {appName} إلى {version}. يرجى الانتظار.",
+      "appRemovingDescription": "تتم إزالة {appName} من appbox الخاص بك.",
+      "jobRunningDescription": "هناك مهمة قيد التشغيل حاليًا على {appName}.",
+      "latestVersion": "أحدث إصدار",
+      "customFieldEnabled": "مفعّل",
+      "customFieldDisabled": "معطّل",
+      "openLink": "فتح الرابط",
+      "show": "إظهار",
+      "hide": "إخفاء",
+      "copy": "نسخ"
     },
     "domains": {
       "title": "النطاقات المخصصة",

@@ -1083,7 +1083,12 @@
       "restart": "Restartovat",
       "restartTitle": "Restartovat Appbox",
       "restartDescription": "Tímto restartujete svůj Appbox. Všechny nainstalované aplikace budou offline, dokud restart neskončí.",
-      "cancel": "Zrušit"
+      "cancel": "Zrušit",
+      "suspendedAppsMessage": "{appboxName} byl pozastaven. Všechny aplikace na tomto appboxu jsou momentálně nedostupné. Kontaktujte podporu nebo zkontrolujte stav fakturace.",
+      "migrationInProgress": "Migrace probíhá...",
+      "lowQuotaFallbackMessage": "Místo na disku je kriticky nízké.",
+      "lowQuotaAppsStoppedMessage": "Místo na disku je kriticky nízké. Všechny aplikace na tomto appboxu byly zastaveny.",
+      "throttledFallbackMessage": "Omezování propustnosti disku je aktivní."
     },
     "fileExplorer": {
       "title": "Průzkumník souborů",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Řádek byl úspěšně smazán.",
       "customTablesAddFailed": "Řádek se nepodařilo přidat.",
       "customTablesEditFailed": "Řádek se nepodařilo aktualizovat.",
-      "customTablesDeleteFailed": "Řádek se nepodařilo smazat."
+      "customTablesDeleteFailed": "Řádek se nepodařilo smazat.",
+      "actionsUnavailable": "Akce nejsou dostupné, když je tato aplikace neaktivní, offline nebo v přechodovém stavu.",
+      "installing": "Instalace",
+      "updating": "Aktualizace",
+      "removing": "Odebírání",
+      "appInstallingDescription": "{appName} se instaluje na váš appbox. Obvykle to trvá několik minut.",
+      "appUpdatingDescription": "{appName} se aktualizuje na {version}. Počkejte prosím.",
+      "appRemovingDescription": "{appName} se odebírá z vašeho appboxu.",
+      "jobRunningDescription": "Na {appName} právě běží úloha.",
+      "latestVersion": "nejnovější",
+      "customFieldEnabled": "Povoleno",
+      "customFieldDisabled": "Zakázáno",
+      "openLink": "Otevřít odkaz",
+      "show": "Zobrazit",
+      "hide": "Skrýt",
+      "copy": "Kopírovat"
     },
     "domains": {
       "title": "Vlastní domény",

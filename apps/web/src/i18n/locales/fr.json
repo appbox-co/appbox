@@ -1083,7 +1083,12 @@
       "restart": "Redémarrer",
       "restartTitle": "Redémarrer l'Appbox",
       "restartDescription": "Cela redémarrera votre Appbox. Toutes les apps installées seront hors ligne jusqu'à la fin du redémarrage.",
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "suspendedAppsMessage": "{appboxName} a été suspendu. Toutes les apps de cet appbox sont actuellement indisponibles. Veuillez contacter le support ou vérifier votre statut de facturation.",
+      "migrationInProgress": "La migration est en cours...",
+      "lowQuotaFallbackMessage": "L’espace disque est extrêmement faible.",
+      "lowQuotaAppsStoppedMessage": "L’espace disque est extrêmement faible. Toutes les apps de cet appbox ont été arrêtées.",
+      "throttledFallbackMessage": "La limitation du débit disque est active."
     },
     "fileExplorer": {
       "title": "Explorateur de fichiers",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Ligne supprimée avec succès.",
       "customTablesAddFailed": "Échec de l'ajout de la ligne.",
       "customTablesEditFailed": "Échec de la mise à jour de la ligne.",
-      "customTablesDeleteFailed": "Échec de la suppression de la ligne."
+      "customTablesDeleteFailed": "Échec de la suppression de la ligne.",
+      "actionsUnavailable": "Les actions ne sont pas disponibles tant que cette app est inactive, hors ligne ou dans un état de transition.",
+      "installing": "Installation",
+      "updating": "Mise à jour",
+      "removing": "Suppression",
+      "appInstallingDescription": "{appName} est en cours d’installation sur votre appbox. Cela prend généralement quelques minutes.",
+      "appUpdatingDescription": "{appName} est en cours de mise à jour vers {version}. Veuillez patienter.",
+      "appRemovingDescription": "{appName} est en cours de suppression de votre appbox.",
+      "jobRunningDescription": "Une tâche est actuellement en cours sur {appName}.",
+      "latestVersion": "dernière",
+      "customFieldEnabled": "Activé",
+      "customFieldDisabled": "Désactivé",
+      "openLink": "Ouvrir le lien",
+      "show": "Afficher",
+      "hide": "Masquer",
+      "copy": "Copier"
     },
     "domains": {
       "title": "Domaines personnalisés",

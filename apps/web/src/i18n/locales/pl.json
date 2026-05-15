@@ -1083,7 +1083,12 @@
       "restart": "Restart",
       "restartTitle": "Zrestartuj Appbox",
       "restartDescription": "Spowoduje to restart Twojego Appbox. Wszystkie zainstalowane aplikacje będą offline do zakończenia restartu.",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "suspendedAppsMessage": "{appboxName} został zawieszony. Wszystkie aplikacje na tym appboxie są obecnie niedostępne. Skontaktuj się z pomocą techniczną lub sprawdź status płatności.",
+      "migrationInProgress": "Migracja jest w toku...",
+      "lowQuotaFallbackMessage": "Miejsce na dysku jest krytycznie niskie.",
+      "lowQuotaAppsStoppedMessage": "Miejsce na dysku jest krytycznie niskie. Wszystkie aplikacje na tym appboxie zostały zatrzymane.",
+      "throttledFallbackMessage": "Ograniczenie przepustowości dysku jest aktywne."
     },
     "fileExplorer": {
       "title": "Eksplorator plików",
@@ -1308,7 +1313,22 @@
       "customTablesDeleteSuccess": "Wiersz usunięty pomyślnie.",
       "customTablesAddFailed": "Nie udało się dodać wiersza.",
       "customTablesEditFailed": "Nie udało się zaktualizować wiersza.",
-      "customTablesDeleteFailed": "Nie udało się usunąć wiersza."
+      "customTablesDeleteFailed": "Nie udało się usunąć wiersza.",
+      "actionsUnavailable": "Akcje są niedostępne, gdy ta aplikacja jest nieaktywna, offline lub w stanie przejściowym.",
+      "installing": "Instalowanie",
+      "updating": "Aktualizowanie",
+      "removing": "Usuwanie",
+      "appInstallingDescription": "{appName} jest instalowana na twoim appboxie. Zwykle zajmuje to kilka minut.",
+      "appUpdatingDescription": "{appName} jest aktualizowana do {version}. Poczekaj.",
+      "appRemovingDescription": "{appName} jest usuwana z twojego appboxa.",
+      "jobRunningDescription": "Na {appName} aktualnie działa zadanie.",
+      "latestVersion": "najnowszej",
+      "customFieldEnabled": "Włączone",
+      "customFieldDisabled": "Wyłączone",
+      "openLink": "Otwórz link",
+      "show": "Pokaż",
+      "hide": "Ukryj",
+      "copy": "Kopiuj"
     },
     "domains": {
       "title": "Domeny niestandardowe",
