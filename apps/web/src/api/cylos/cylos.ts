@@ -1,4 +1,5 @@
 import { apiGet, apiPost } from "@/api/client"
+import { idempotencyHeaders } from "@/api/idempotency"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -223,5 +224,11 @@ export async function getCylo(id: number): Promise<CyloDetail> {
 }
 
 export async function restartCylo(id: number): Promise<void> {
-  await apiPost(`cylos/restart/${id}`, {})
+  await apiPost(
+    `cylos/restart/${id}`,
+    {},
+    {
+      headers: idempotencyHeaders("cylo.restart")
+    }
+  )
 }

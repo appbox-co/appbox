@@ -58,8 +58,42 @@ function serializeExpiredCookie(
   return parts.join("; ")
 }
 
+function isSameOriginLogoutRequest(request: NextRequest): boolean {
+  const origin = request.headers.get("origin")
+  const referer = request.headers.get("referer")
+  const secFetchSite = request.headers.get("sec-fetch-site")?.toLowerCase()
+  const expectedOrigin = request.nextUrl.origin
+
+  if (secFetchSite === "cross-site") {
+    return false
+  }
+
+  if (origin) {
+    try {
+      return new URL(origin).origin === expectedOrigin
+    } catch {
+      return false
+    }
+  }
+
+  if (referer) {
+    try {
+      return new URL(referer).origin === expectedOrigin
+    } catch {
+      return false
+    }
+  }
+
+  return secFetchSite === "same-origin"
+}
+
 export async function POST(request: NextRequest) {
   const incomingToken = request.cookies.get("authorization_token")?.value
+
+  if (!incomingToken || !isSameOriginLogoutRequest(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+  }
+
   const host = request.headers.get("host") ?? ""
   const domainsToClear = normalizedCookieDomainsForHost(host)
   const secureForRequest =
