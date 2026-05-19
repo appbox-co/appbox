@@ -18,7 +18,6 @@ import type {
   CustomField,
   CustomFieldValidation
 } from "@/api/apps/app-store"
-import type { CyloSummary } from "@/api/cylos/cylos"
 import {
   computeInstallGuards,
   fetchSearchFieldOptions,
@@ -33,6 +32,7 @@ import {
   useAppVersions,
   useInstallApp
 } from "@/api/apps/hooks/use-app-store"
+import type { CyloSummary } from "@/api/cylos/cylos"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import { BoostSlider } from "@/components/dashboard/boost-slider"
 import { FormFieldRenderer } from "@/components/dashboard/dynamic-form/form-field-renderer"
@@ -113,7 +113,10 @@ interface ParsedInstallError {
   title: string
   details: string[]
   fieldErrors: Record<string, string>
+  codes: number[]
 }
+
+const DNS_VERIFICATION_ERROR_CODE = 2080
 
 function mergeCyloWithSummary(
   summary: CyloSummary,
@@ -158,6 +161,21 @@ function splitErrorMessage(message: string): string[] {
     .filter(Boolean)
 }
 
+function getDomainConflictMessage(message: string): string | undefined {
+  const normalized = message.toLowerCase()
+  const isDomainConflict =
+    normalized.includes("domains_domain_uindex") ||
+    normalized.includes("key (domain)") ||
+    (normalized.includes("domain") &&
+      (normalized.includes("already in use") ||
+        normalized.includes("already exists") ||
+        normalized.includes("duplicate key")))
+
+  if (isDomainConflict) {
+    return "This domain is already in use. Choose another domain or remove it from the existing app first."
+  }
+}
+
 function parseInstallError(
   error: unknown,
   fallbackTitle: string,
@@ -169,11 +187,22 @@ function parseInstallError(
 
   const details: string[] = []
   const fieldErrors: Record<string, string> = {}
+  const codes: number[] = []
   let title = fallbackTitle
 
   const pushMessage = (raw: string) => {
     const cleaned = raw.trim()
     if (!cleaned) return
+
+    const domainConflictMessage = getDomainConflictMessage(cleaned)
+    if (domainConflictMessage) {
+      details.push(domainConflictMessage)
+      return
+    }
+
+    if (/\bsqlstate\b/i.test(cleaned) || /^detail:\s*key\s*\(/i.test(cleaned)) {
+      return
+    }
 
     const customFieldMatch = cleaned.match(
       /^Custom Field\s+([A-Za-z0-9_]+)\s+(.+)$/i
@@ -211,9 +240,9 @@ function parseInstallError(
     try {
       const parsed = JSON.parse(trimmed) as {
         error?: {
+          code?: number
           message?: string
           status?: number
-          developer?: { message?: string }
         }
         message?: string
       }
@@ -221,15 +250,15 @@ function parseInstallError(
       if (parsed?.error?.status != null) {
         title = `${fallbackTitle} (Error ${parsed.error.status})`
       }
+      if (parsed?.error?.code != null) {
+        codes.push(parsed.error.code)
+      }
 
       const apiMessage = parsed?.error?.message
-      const developerMessage = parsed?.error?.developer?.message
       const genericMessage = parsed?.message
 
       if (apiMessage) splitErrorMessage(apiMessage).forEach(pushMessage)
-      if (developerMessage)
-        splitErrorMessage(developerMessage).forEach(pushMessage)
-      if (!apiMessage && !developerMessage && genericMessage) {
+      if (!apiMessage && genericMessage) {
         splitErrorMessage(genericMessage).forEach(pushMessage)
       }
       return
@@ -251,8 +280,20 @@ function parseInstallError(
   return {
     title,
     details: [...new Set(details)],
-    fieldErrors
+    fieldErrors,
+    codes
   }
+}
+
+function findDnsInstallError(error: ParsedInstallError): string | undefined {
+  if (error.codes.includes(DNS_VERIFICATION_ERROR_CODE)) {
+    return (
+      error.details.find((detail) => /dns verification failed/i.test(detail)) ||
+      error.details[0]
+    )
+  }
+
+  return error.details.find((detail) => /dns verification failed/i.test(detail))
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1198,7 +1239,9 @@ export function InstallDialog({
       )
     )
     const summaryIds = new Set(cylosSummary.map((cylo) => cylo.id))
-    const sessionOnlyCylos = sessionCylos.filter((cylo) => !summaryIds.has(cylo.id))
+    const sessionOnlyCylos = sessionCylos.filter(
+      (cylo) => !summaryIds.has(cylo.id)
+    )
     return [...mergedCylos, ...sessionOnlyCylos]
   }, [targetCylos, sessionCylos, cylosSummary, effectiveUserId])
   const migratingCyloIds = useMemo(
@@ -1908,6 +1951,11 @@ export function InstallDialog({
       )
       if (Object.keys(parsed.fieldErrors).length > 0) {
         setFieldErrors((prev) => ({ ...prev, ...parsed.fieldErrors }))
+      }
+      const dnsError = findDnsInstallError(parsed)
+      if (dnsError) {
+        setDomainError(dnsError)
+        setDomainState((prev) => ({ ...prev, dnsVerified: false }))
       }
       // Error is handled by the mutation state
     }

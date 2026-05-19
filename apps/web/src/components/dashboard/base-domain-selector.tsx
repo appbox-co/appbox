@@ -32,6 +32,32 @@ function isBlockedDomain(domain: string): boolean {
   )
 }
 
+function getSafeAddDomainError(
+  error: unknown,
+  fallback: string,
+  domainConflictMessage: string
+): string {
+  const message = error instanceof Error ? error.message : ""
+  const normalized = message.toLowerCase()
+  const isDomainConflict =
+    normalized.includes("domains_domain_uindex") ||
+    normalized.includes("key (domain)") ||
+    (normalized.includes("domain") &&
+      (normalized.includes("already in use") ||
+        normalized.includes("already exists") ||
+        normalized.includes("duplicate key")))
+
+  if (isDomainConflict) {
+    return domainConflictMessage
+  }
+
+  if (message && !normalized.includes("sqlstate")) {
+    return message
+  }
+
+  return fallback
+}
+
 interface BaseDomainSelectorProps {
   value: string
   enabled?: boolean
@@ -170,9 +196,13 @@ export function BaseDomainSelector({
       setShowAddNew(false)
       setNewDomainInput("")
     } catch (e: unknown) {
-      const msg =
-        e instanceof Error ? e.message : t("install.domain.addDomainFailed")
-      setNewDomainError(msg)
+      setNewDomainError(
+        getSafeAddDomainError(
+          e,
+          t("install.domain.addDomainFailed"),
+          t("install.domain.domainAlreadyInUse")
+        )
+      )
     } finally {
       setAddingDomain(false)
     }
