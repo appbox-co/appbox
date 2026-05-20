@@ -14,6 +14,7 @@ import {
   EllipsisVertical,
   Loader2,
   MessageSquare,
+  Plus,
   Reply,
   Send,
   Shield,
@@ -114,6 +115,8 @@ const AVATAR_COLORS = [
   "bg-fuchsia-500/15 text-fuchsia-500",
   "bg-pink-500/15 text-pink-500"
 ]
+
+const COLLAPSE_REPLIES_AT_DEPTH = 2
 
 function UserAvatar({
   alias,
@@ -299,6 +302,7 @@ function CommentItem({
   const [isEditing, setIsEditing] = useState(false)
   const [editText, setEditText] = useState(comment.comment)
   const [isReplying, setIsReplying] = useState(false)
+  const [showDeepReplies, setShowDeepReplies] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   const updateByApp = useUpdateComment(ctx.mode === "app" ? ctx.appId : 0)
@@ -347,6 +351,8 @@ function CommentItem({
 
   const hasChildren = (comment.children?.length ?? 0) > 0
   const replyCount = comment.children?.length ?? 0
+  const shouldCollapseReplies = depth >= COLLAPSE_REPLIES_AT_DEPTH
+  const showChildReplies = !shouldCollapseReplies || showDeepReplies
   const displayAlias = resolveDisplayAlias(
     comment.alias,
     comment.user_id,
@@ -358,6 +364,7 @@ function CommentItem({
       if (!c) {
         setIsEditing(false)
         setIsReplying(false)
+        setShowDeepReplies(false)
         setShowDeleteConfirm(false)
       }
       return !c
@@ -523,7 +530,7 @@ function CommentItem({
                   </Button>
                 </>
               )}
-              {enableReplies && depth < 2 && (
+              {enableReplies && (
                 <Button
                   size="sm"
                   variant="ghost"
@@ -609,7 +616,24 @@ function CommentItem({
 
       {/* Children — outside the main flex row so the parent line
           only covers body/actions. Per-child segments handle threading. */}
-      {!isCollapsed && hasChildren && (
+      {!isCollapsed && hasChildren && !showChildReplies && (
+        <div className="pl-[15px]">
+          <button
+            type="button"
+            className="group relative flex h-8 items-center gap-2 pl-7 text-xs font-medium text-muted-foreground hover:text-foreground focus:outline-none"
+            onClick={() => setShowDeepReplies(true)}
+          >
+            <span className="absolute left-0 top-0 h-4 w-0.5 bg-border/50" />
+            <span className="absolute left-0 top-4 h-0.5 w-7 bg-border/50" />
+            <span className="relative z-10 flex size-5 items-center justify-center rounded border border-border bg-transparent transition-colors group-hover:border-border/80 group-hover:bg-muted/30">
+              <Plus className="size-4" />
+            </span>
+            <span>{`${replyCount} more ${replyCount === 1 ? "reply" : "replies"}`}</span>
+          </button>
+        </div>
+      )}
+
+      {!isCollapsed && hasChildren && showChildReplies && (
         <div className="pl-[15px]">
           {comment.children.map((child, i) => {
             const isLast = i === comment.children.length - 1
