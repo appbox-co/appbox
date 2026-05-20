@@ -181,11 +181,12 @@ function useColumns(
           const d = row.original
           const hasChildren = parentIds.has(d.id)
           const canDelete = !hasChildren
+          const canReverify = Boolean(!isManaged(d) && !isCustomBase(d) && d.cylo_id)
 
           return (
             <div className="flex items-center gap-1 justify-end">
               {/* Re-verify DNS for custom subdomains (not managed, not base) */}
-              {!isManaged(d) && !isCustomBase(d) && (
+              {canReverify && (
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -369,19 +370,14 @@ export default function DomainsPage() {
   }
 
   const handleReverify = async (domain: Domain) => {
-    if (!domain.parent || !domain.fqdn) return
+    if (!domain.parent || !domain.fqdn || !domain.cylo_id) return
     setReverifyingId(domain.id)
     setReverifyResult(null)
     try {
-      // fqdn is the subdomain part, parent is the base domain id
-      // We need cylo_id -- use ip_address as proxy (serverapi checks by cylo)
-      // The checkdns endpoint needs subdomain + domain_id + cylo_id.
-      // Since we don't have cylo_id here, we pass the domain's parent id
-      // and let the backend resolve the server.
       const result = await checkSubdomainDns(
         domain.fqdn,
         domain.parent,
-        0 // cylo_id=0 means backend resolves from domain record's server_id
+        domain.cylo_id
       )
       setReverifyResult({ domain, ...result })
     } catch {

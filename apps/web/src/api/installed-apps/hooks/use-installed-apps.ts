@@ -1,6 +1,11 @@
 "use client"
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import {
+  type QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient
+} from "@tanstack/react-query"
 import { toast } from "sonner"
 import { queryKeys } from "@/constants/query-keys"
 import type { JobProgressData } from "@/lib/websocket/types"
@@ -75,6 +80,36 @@ function getMutationErrorMessage(error: unknown, fallback: string): string {
   }
 
   return fallback
+}
+
+function invalidateInstalledAppLifecycleQueries(
+  queryClient: QueryClient,
+  id: number
+) {
+  const detailCached = queryClient.getQueryData<InstalledApp>(
+    queryKeys.installedApps.detail(id)
+  )
+  const allCached =
+    queryClient.getQueryData<InstalledApp[]>(queryKeys.installedApps.all) ?? []
+  const fromAll = allCached.find((app) => app.id === id)
+  const cyloId = detailCached?.cylo_id ?? fromAll?.cylo_id
+
+  queryClient.invalidateQueries({
+    queryKey: queryKeys.installedApps.detail(id)
+  })
+  queryClient.invalidateQueries({
+    queryKey: queryKeys.installedApps.all
+  })
+  queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
+
+  if (cyloId) {
+    queryClient.invalidateQueries({
+      queryKey: queryKeys.installedApps.byCylo(cyloId)
+    })
+    queryClient.invalidateQueries({
+      queryKey: queryKeys.cylos.detail(cyloId)
+    })
+  }
 }
 
 export function useStartApp() {
@@ -203,28 +238,8 @@ export function useFreezeApp() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: number) => freezeApp(id),
-    onSuccess: (_data, id) => {
-      const detailCached = queryClient.getQueryData<InstalledApp>(
-        queryKeys.installedApps.detail(id)
-      )
-      const cyloId = detailCached?.cylo_id
-
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.installedApps.detail(id)
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.installedApps.all
-      })
-      queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
-
-      if (cyloId) {
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.installedApps.byCylo(cyloId)
-        })
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.cylos.detail(cyloId)
-        })
-      }
+    onSettled: (_data, _error, id) => {
+      invalidateInstalledAppLifecycleQueries(queryClient, id)
     }
   })
 }
@@ -233,28 +248,8 @@ export function useUnfreezeApp() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: number) => unfreezeApp(id),
-    onSuccess: (_data, id) => {
-      const detailCached = queryClient.getQueryData<InstalledApp>(
-        queryKeys.installedApps.detail(id)
-      )
-      const cyloId = detailCached?.cylo_id
-
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.installedApps.detail(id)
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.installedApps.all
-      })
-      queryClient.invalidateQueries({ queryKey: queryKeys.cylos.all })
-
-      if (cyloId) {
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.installedApps.byCylo(cyloId)
-        })
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.cylos.detail(cyloId)
-        })
-      }
+    onSettled: (_data, _error, id) => {
+      invalidateInstalledAppLifecycleQueries(queryClient, id)
     }
   })
 }
@@ -269,16 +264,8 @@ export function useBoostApp() {
         sessionStorage.setItem(`appBoostMutation:${id}`, String(Date.now()))
       }
     },
-    onSuccess: (_data, { id }) => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.installedApps.detail(id)
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.installedApps.all
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.cylos.all
-      })
+    onSettled: (_data, _error, { id }) => {
+      invalidateInstalledAppLifecycleQueries(queryClient, id)
     }
   })
 }
