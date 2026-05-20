@@ -55,7 +55,8 @@ function isRecentAuthError(error: unknown) {
   const message = error.message.toLowerCase()
   return (
     message.includes("recent authentication is required") ||
-    message.includes("recent user authentication is required")
+    message.includes("recent user authentication is required") ||
+    message.includes("auth: recent authentication required")
   )
 }
 
