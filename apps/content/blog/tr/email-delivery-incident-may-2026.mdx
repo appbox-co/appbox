@@ -1,0 +1,58 @@
+---
+title: E-posta Teslimatı Olayı - Mayıs 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email hesabımızı uyarı vermeden duraklattı ve bu, 600'den fazla Appbox işlem e-postasının gecikmesine neden oldu. Ne olduğunu ve neleri değiştirdiğimizi burada anlatıyoruz.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incident, email, infrastructure, elastic-email, smtp2go]
+---
+
+# E-posta Teslimatı Olayı - Mayıs 2026
+
+Bu, yazmayı hiç istemediğimiz türden bir gönderi, ancak Appbox işlem e-postalarını etkileyen bir sorun hakkında açık olmamız gerekiyor.
+
+Kısa versiyon: Beş yıldan uzun süredir e-posta teslimat sağlayıcımız olan Elastic Email, hesabımızı hiçbir uyarı vermeden duraklattı. Gönderimin durdurulacağına dair ne bir uyarı e-postası ne de önceden bildirim aldık. Bunu ancak bir kullanıcı beklediği e-postayı almadığını söylemek için bize ulaştığında öğrendik.
+
+Bu yeterince iyi değil. Bunu daha erken yakalamalıydık, üzgünüz.
+
+## Ne Oldu?
+
+Yaklaşık 24 saat boyunca Appbox'tan gönderilen bazı işlem e-postaları gönderilemiyordu. Buna kayıt e-postaları ve fatura bildirimleri gibi mesajlar dahildi.
+
+Araştırdığımızda Elastic Email hesabımızı duraklatılmış olarak gösteriyor ve destekle iletişime geçmemizi söylüyordu. Hemen destekle iletişime geçtik. İşlem e-postası Appbox için temel altyapıdır ve bunun bozuk kalmasına izin veremezdik.
+
+Elastic Email'in hesabı manuel olarak inceleyip yeniden etkinleştirmesi yaklaşık üç saat sürdü. Açıklamaları, hesabın otomatik bir güvenlik kontrolü tarafından incelemeye alındığı yönündeydi. Ayrıca güvenlik nedeniyle bunu neyin tetiklediğine dair belirli ayrıntıları paylaşmayacaklarını söylediler.
+
+## Etki
+
+Bu nedenle 600'den fazla e-posta gecikti.
+
+Bu e-postalar artık gönderildi. Bu kalıcı bir e-posta kaybı değil, bir teslimat gecikmesiydi; ancak yine de insanların hemen alması gereken mesajları beklemesi anlamına geldi.
+
+## Ne Yaptık?
+
+Ne olduğunu doğrular doğrulamaz, giden postayı Elastic Email'den taşımaya başladık.
+
+Yeni sağlayıcı olarak SMTP2GO'yu ekledik ve teslimatın hemen devam edebilmesi için tüm postayı onlar üzerinden yönlendirdik. Elastic Email hesabı yeniden etkinleştirdiğinde, orada bekletilen gecikmiş postaların gönderimi de devam etti.
+
+## Elastic Email Hakkındaki Görüşümüz
+
+Elastic Email ile beş yıldan uzun süredir çalışıyoruz, ancak bir işlem e-postası hesabını önceden uyarı veya anında bildirim olmadan duraklatmak, temel altyapı sağlayıcısı için kabul edilebilir değil.
+
+Şimdi Elastic Email'den uzaklaşmanın kalıcı olup olmaması gerektiğini değerlendiriyoruz. Bu olaya dayanarak, zaman açısından kritik işlem e-postası teslimatına güvenen müşterilere artık Elastic Email'i öneremeyiz.
+
+## Neleri Değiştiriyoruz?
+
+Giden işlem e-postalarımızı artık SMTP2GO yönetiyor. Ayrıca hesap incelemelerinin nasıl yürütüldüğünü, hangi uyarıların gönderildiğini ve sistemleri bizi bir gün işaretlerse hangi eskalasyon yolunun bulunduğunu doğrudan onlara soruyoruz. Postanın uyarı olmadan sessizce durdurulmayacağına dair net güvenceye ihtiyacımız var.
+
+Kendi tarafımızda da ek kontroller devreye alıyoruz. Sağlayıcı tarafındaki bir sorun e-posta teslimatını tekrar etkilerse, bunu bir kullanıcıdan öğrenmek yerine hemen bilmek istiyoruz.
+
+## Özür Dileriz
+
+Bundan etkilenen herkesten özür dileriz. Appbox e-postaları beklediğiniz anda ulaşmalıydı ve bu kez ulaşmadı.
+
+Geciken mesajlar artık gönderildi, e-posta teslimatı yeniden başladı ve bunun tekrar yaşanmaması için değişiklikler yapıyoruz.
+
+---
+
+*Bu sorundan etkilendiyseniz veya herhangi bir sorunuz varsa lütfen support@appbox.co adresinden bizimle iletişime geçin.*

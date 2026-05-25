@@ -1,0 +1,58 @@
+---
+title: Incident s doručováním e-mailů - květen 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email bez varování pozastavil náš účet, což zpozdilo více než 600 transakčních e-mailů Appbox. Tady je, co se stalo a co měníme.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incident, email, infrastructure, elastic-email, smtp2go]
+---
+
+# Incident s doručováním e-mailů - květen 2026
+
+Tohle není typ příspěvku, který bychom kdy chtěli psát, ale musíme otevřeně popsat problém, který ovlivnil transakční e-maily Appbox.
+
+Krátká verze: Elastic Email, náš poskytovatel doručování e-mailů více než pět let, pozastavil náš účet bez varování. Nedostali jsme žádný výstražný e-mail ani předchozí upozornění, že odesílání bude zastaveno. Zjistili jsme to až ve chvíli, kdy nás kontaktoval uživatel, že nedostal očekávaný e-mail.
+
+To není dost dobré. Měli jsme to zachytit dřív a omlouváme se.
+
+## Co se stalo
+
+Zhruba 24 hodin se některé transakční e-maily z Appbox neodesílaly. Patřily mezi ně například registrační e-maily a oznámení o fakturách.
+
+Když jsme to prověřovali, Elastic Email ukazoval náš účet jako pozastavený a vyzval nás, abychom kontaktovali podporu. Podporu jsme kontaktovali okamžitě. Transakční e-mail je pro Appbox základní infrastruktura a nemohli jsme ho nechat nefunkční.
+
+Společnosti Elastic Email trvalo přibližně tři hodiny, než účet ručně zkontrolovala a znovu aktivovala. Jejich vysvětlení bylo, že účet zařadila do kontroly automatická bezpečnostní kontrola. Také uvedli, že z bezpečnostních důvodů neposkytnou konkrétní informace o tom, co ji spustilo.
+
+## Dopad
+
+Více než 600 e-mailů bylo kvůli tomu zpožděno.
+
+Tyto e-maily už byly odeslány. Šlo o zpoždění doručení, ne o trvalou ztrátu e-mailů, ale i tak to znamenalo, že lidé čekali na zprávy, které měli dostat hned.
+
+## Co jsme udělali
+
+Jakmile jsme potvrdili, co se děje, začali jsme přesouvat odchozí poštu pryč od Elastic Email.
+
+Přidali jsme SMTP2GO jako nového poskytovatele a přesměrovali přes něj veškerou poštu, aby se doručování mohlo okamžitě obnovit. Jakmile Elastic Email účet znovu aktivoval, obnovila se i zpožděná pošta, která tam byla zadržena.
+
+## Náš pohled na Elastic Email
+
+Se společností Elastic Email spolupracujeme přes pět let, ale pozastavení transakčního e-mailového účtu bez předchozího varování nebo okamžitého upozornění není pro poskytovatele základní infrastruktury přijatelné.
+
+Teď vyhodnocujeme, jestli má být odchod od Elastic Email trvalý. Na základě tohoto incidentu už nemůžeme Elastic Email doporučit zákazníkům, kteří se spoléhají na časově citlivé doručování transakčních e-mailů.
+
+## Co měníme
+
+SMTP2GO nyní zajišťuje naše odchozí transakční e-maily. Také se SMTP2GO přímo ptáme, jak probíhají kontroly účtů, jaká varování se posílají a jaká eskalační cesta existuje, pokud nás jejich systémy někdy označí. Potřebujeme jasné ujištění, že pošta nebude bez varování tiše zastavena.
+
+Zavádíme také další kontroly na naší straně. Pokud by problém na straně poskytovatele někdy znovu ovlivnil doručování e-mailů, chceme o tom vědět okamžitě, ne až od uživatele.
+
+## Omlouváme se
+
+Omlouváme se všem, kterých se to dotklo. E-maily Appbox mají dorazit ve chvíli, kdy je očekáváte, a v tomto případě se to nestalo.
+
+Zpožděné zprávy už byly odeslány, doručování e-mailů bylo obnoveno a děláme změny, aby se to neopakovalo.
+
+---
+
+*Pokud se vás tento problém dotkl nebo máte jakékoli otázky, kontaktujte nás prosím na support@appbox.co.*

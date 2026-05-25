@@ -1,0 +1,58 @@
+---
+title: Incident med e-postleverans - maj 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email pausade vårt konto utan förvarning, vilket försenade mer än 600 transaktionella Appbox-e-postmeddelanden. Här är vad som hände och vad vi ändrar.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incident, email, infrastructure, elastic-email, smtp2go]
+---
+
+# Incident med e-postleverans - maj 2026
+
+Det här är inte den typ av inlägg vi någonsin vill skriva, men vi behöver vara öppna med ett problem som påverkade transaktionella e-postmeddelanden från Appbox.
+
+Kortversionen: Elastic Email, vår leverantör för e-postleverans i mer än fem år, pausade vårt konto utan förvarning. Vi fick inget varningsmejl och ingen förhandsinformation om att utskick skulle stoppas. Vi upptäckte det först när en användare kontaktade oss och berättade att de inte hade fått ett väntat e-postmeddelande.
+
+Det är inte tillräckligt bra. Vi borde ha upptäckt det tidigare, och vi ber om ursäkt.
+
+## Vad som hände
+
+Under ungefär 24 timmar skickades inte vissa transaktionella e-postmeddelanden från Appbox. Det omfattade bland annat registreringsmejl och fakturaaviseringar.
+
+När vi undersökte saken visade Elastic Email vårt konto som pausat och bad oss kontakta supporten. Vi kontaktade supporten direkt. Transaktionell e-post är kärninfrastruktur för Appbox, och vi kunde inte lämna det trasigt.
+
+Det tog Elastic Email omkring tre timmar att manuellt granska och återaktivera kontot. Deras förklaring var att kontot hade lagts under granskning av en automatiserad säkerhetskontroll. De sa också att de av säkerhetsskäl inte skulle ge några specifika detaljer om vad som utlöste det.
+
+## Påverkan
+
+Mer än 600 e-postmeddelanden försenades på grund av detta.
+
+De e-postmeddelandena har nu skickats. Det var en leveransförsening, inte en permanent förlust av e-post, men det innebar ändå att människor fick vänta på meddelanden de skulle ha fått direkt.
+
+## Vad vi gjorde
+
+Så snart vi hade bekräftat vad som hände började vi flytta utgående e-post bort från Elastic Email.
+
+Vi lade till SMTP2GO som ny leverantör och dirigerade all e-post genom dem så att leveransen kunde återupptas omedelbart. När Elastic Email återaktiverade kontot återupptogs även den försenade e-post som hade hållits kvar där.
+
+## Vår syn på Elastic Email
+
+Vi har haft en relation med Elastic Email i över fem år, men att pausa ett konto för transaktionell e-post utan förhandsvarning eller omedelbar avisering är inte acceptabelt för en leverantör av kärninfrastruktur.
+
+Vi granskar nu om flytten bort från Elastic Email ska bli permanent. Utifrån den här incidenten kan vi inte längre rekommendera Elastic Email till kunder som är beroende av tidskänslig transaktionell e-postleverans.
+
+## Vad vi ändrar
+
+SMTP2GO hanterar nu vår utgående transaktionella e-post. Vi frågar dem också direkt hur kontogranskningar hanteras, vilka varningar som skickas och vilken eskaleringsväg som finns om deras system någon gång flaggar oss. Vi behöver tydliga garantier för att e-post inte stoppas tyst utan förvarning.
+
+Vi inför också ytterligare kontroller på vår sida. Om ett problem hos en leverantör någonsin påverkar e-postleveransen igen vill vi veta det omedelbart i stället för att få höra det från en användare.
+
+## Förlåt
+
+Vi ber om ursäkt till alla som påverkades av detta. Appbox-e-post ska komma fram när du förväntar dig det, och i det här fallet gjorde den inte det.
+
+De försenade meddelandena har nu skickats, e-postleveransen har återupptagits, och vi gör ändringar för att se till att detta inte händer igen.
+
+---
+
+*Om du påverkades av detta problem eller har några frågor, kontakta oss på support@appbox.co.*

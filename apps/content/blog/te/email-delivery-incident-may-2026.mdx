@@ -1,0 +1,58 @@
+---
+title: ఇమెయిల్ డెలివరీ ఘటన - మే 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email warning ఇవ్వకుండా మా account ను pause చేసింది, దాంతో Appbox యొక్క 600 కంటే ఎక్కువ transactional emails delay అయ్యాయి. ఏమి జరిగింది, మేము ఏమి మార్చుతున్నామో ఇక్కడ ఉంది.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incident, email, infrastructure, elastic-email, smtp2go]
+---
+
+# ఇమెయిల్ డెలివరీ ఘటన - మే 2026
+
+ఇలాంటి post మేము ఎప్పుడూ రాయాలనుకోము, కానీ Appbox transactional emails ను affect చేసిన issue గురించి మేము upfront గా చెప్పాలి.
+
+Short version: ఐదు సంవత్సరాలకు పైగా మా email delivery provider గా ఉన్న Elastic Email, warning ఇవ్వకుండా మా account ను pause చేసింది. మాకు alert email రాలేదు, sending ఆగిపోతుందని advance notice కూడా రాలేదు. ఒక user తాను expected email అందుకోలేదని contact చేసినప్పుడే మాకు విషయం తెలిసింది.
+
+ఇది సరిపోదు. మేము దీన్ని ఇంకా త్వరగా catch చేయాల్సింది, అందుకు మేము క్షమాపణలు కోరుతున్నాము.
+
+## ఏమి జరిగింది
+
+సుమారు 24 గంటల పాటు Appbox నుండి కొన్ని transactional emails send కాలేదు. ఇందులో signup emails మరియు invoice notifications వంటి విషయాలు ఉన్నాయి.
+
+మేము investigate చేసినప్పుడు, Elastic Email మా account paused గా చూపించింది మరియు support ను contact చేయమంది. మేము వెంటనే support ను contact చేశాము. Transactional email Appbox కు core infrastructure, కాబట్టి దాన్ని broken గా వదిలేయలేము.
+
+Elastic Email account ను manually review చేసి reactivate చేయడానికి సుమారు మూడు గంటలు తీసుకుంది. వారి explanation ప్రకారం automated security check వల్ల account review లోకి వెళ్లింది. Security reasons వల్ల దాన్ని trigger చేసింది ఏమిటో specific details ఇవ్వలేమని కూడా చెప్పారు.
+
+## ప్రభావం
+
+దీని వల్ల 600 కంటే ఎక్కువ emails delay అయ్యాయి.
+
+ఆ emails ఇప్పుడు send అయ్యాయి. ఇది delivery delay మాత్రమే, email శాశ్వతంగా పోయిన విషయం కాదు, అయినప్పటికీ వెంటనే అందాల్సిన messages కోసం ప్రజలు వేచి ఉండాల్సి వచ్చింది.
+
+## మేము చేసినది
+
+ఏమి జరుగుతోందో confirm చేసిన వెంటనే, outbound mail ను Elastic Email నుండి దూరంగా move చేయడం ప్రారంభించాము.
+
+మేము SMTP2GO ను new provider గా add చేసి, delivery వెంటనే resume కావడానికి అన్ని mail ను వారి ద్వారా route చేశాము. Elastic Email account ను reactivate చేసిన తర్వాత, అక్కడ held గా ఉన్న delayed mail కూడా resume అయింది.
+
+## Elastic Email పై మా అభిప్రాయం
+
+Elastic Email తో మాకు ఐదు సంవత్సరాలకు పైగా relationship ఉంది, కానీ advance warning లేదా immediate notification లేకుండా transactional email account ను pause చేయడం core infrastructure provider కు acceptable కాదు.
+
+Elastic Email నుండి దూరంగా మారడం permanent కావాలా అని మేము ఇప్పుడు review చేస్తున్నాము. ఈ incident ఆధారంగా, time-sensitive transactional email delivery పై rely చేసే customers కు Elastic Email ను ఇక recommend చేయలేము.
+
+## మేము మార్చుతున్నది
+
+SMTP2GO ఇప్పుడు మా outbound transactional email ను handle చేస్తోంది. Account reviews ఎలా handle చేస్తారు, ఏ warnings పంపిస్తారు, వారి systems ఎప్పుడైనా మమ్మల్ని flag చేస్తే escalation path ఏమిటి అని మేము వారిని directly అడుగుతున్నాము. Warning లేకుండా mail silently stop కాకూడదని మాకు clear assurance కావాలి.
+
+మా వైపు నుంచీ additional checks కూడా పెడుతున్నాము. Provider-side issue మళ్లీ email delivery ను affect చేస్తే, user ద్వారా తెలుసుకునే బదులు మాకు వెంటనే తెలియాలి.
+
+## క్షమించండి
+
+దీని వల్ల affected అయిన ప్రతి ఒక్కరికీ మేము క్షమాపణలు చెబుతున్నాము. Appbox emails మీరు ఆశించే సమయంలో arrive కావాలి, కానీ ఈ case లో అలా జరగలేదు.
+
+Delayed messages ఇప్పుడు send అయ్యాయి, email delivery resume అయింది, ఇది మళ్లీ జరగకుండా మేము changes చేస్తున్నాము.
+
+---
+
+*ఈ issue వల్ల మీరు affected అయ్యి ఉంటే లేదా ఏవైనా ప్రశ్నలుంటే, దయచేసి support@appbox.co వద్ద మమ్మల్ని సంప్రదించండి.*

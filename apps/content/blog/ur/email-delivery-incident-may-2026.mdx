@@ -1,0 +1,58 @@
+---
+title: ای میل ترسیل کا واقعہ - مئی 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email نے warning کے بغیر ہمارا account pause کر دیا، جس سے Appbox کی 600 سے زیادہ transactional emails delay ہوئیں۔ یہ ہے کہ کیا ہوا اور ہم کیا بدل رہے ہیں۔
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, واقعہ, email, انفراسٹرکچر, elastic-email, smtp2go]
+---
+
+# ای میل ترسیل کا واقعہ - مئی 2026
+
+یہ وہ post نہیں ہے جو ہم کبھی لکھنا چاہتے ہیں، لیکن Appbox transactional emails کو affect کرنے والے issue کے بارے میں ہمیں واضح اور upfront رہنا ضروری ہے۔
+
+Short version: Elastic Email، جو پانچ سال سے زیادہ عرصے سے ہمارا email delivery provider تھا، نے warning کے بغیر ہمارا account pause کر دیا۔ ہمیں کوئی alert email نہیں ملا اور نہ ہی پہلے سے کوئی notice ملا کہ sending روک دی جائے گی۔ ہمیں صرف اس وقت پتا چلا جب ایک user نے contact کر کے بتایا کہ انہیں expected email موصول نہیں ہوئی۔
+
+یہ کافی نہیں تھا۔ ہمیں اسے پہلے catch کرنا چاہیے تھا، اور ہمیں افسوس ہے۔
+
+## کیا ہوا
+
+تقریباً 24 گھنٹوں تک Appbox کی کچھ transactional emails send نہیں ہو رہی تھیں۔ اس میں signup emails اور invoice notifications جیسی چیزیں شامل تھیں۔
+
+جب ہم نے investigate کیا، Elastic Email نے ہمارا account paused دکھایا اور support سے contact کرنے کو کہا۔ ہم نے فوراً support سے contact کیا۔ Transactional email Appbox کے لیے core infrastructure ہے، اور ہم اسے broken نہیں چھوڑ سکتے تھے۔
+
+Elastic Email کو account manually review کر کے reactivate کرنے میں تقریباً تین گھنٹے لگے۔ ان کی explanation یہ تھی کہ account کو automated security check نے review کے تحت رکھا تھا۔ انہوں نے یہ بھی کہا کہ security reasons کی وجہ سے وہ trigger کے بارے میں specific details فراہم نہیں کریں گے۔
+
+## اثر
+
+اس وجہ سے 600 سے زیادہ emails delay ہوئیں۔
+
+وہ emails اب send ہو چکی ہیں۔ یہ delivery delay تھا، email کا permanent loss نہیں، لیکن پھر بھی اس کا مطلب یہ تھا کہ لوگوں کو ان messages کا انتظار کرنا پڑا جو انہیں فوراً ملنے چاہئیں تھے۔
+
+## ہم نے کیا کیا
+
+جیسے ہی ہمیں confirm ہوا کہ کیا ہو رہا ہے، ہم نے outbound mail کو Elastic Email سے away move کرنا شروع کیا۔
+
+ہم نے SMTP2GO کو new provider کے طور پر add کیا اور تمام mail کو ان کے ذریعے route کیا تاکہ delivery immediately resume ہو سکے۔ جب Elastic Email نے account reactivate کیا تو وہاں held delayed mail بھی resume ہو گئی۔
+
+## Elastic Email کے بارے میں ہمارا موقف
+
+Elastic Email کے ساتھ ہمارا relationship پانچ سال سے زیادہ کا رہا ہے، لیکن ایک transactional email account کو advance warning یا immediate notification کے بغیر pause کرنا core infrastructure provider کے لیے acceptable نہیں ہے۔
+
+ہم اب review کر رہے ہیں کہ Elastic Email سے away move permanent ہونا چاہیے یا نہیں۔ اس incident کی بنیاد پر، ہم اب Elastic Email کو ایسے customers کے لیے recommend نہیں کر سکتے جو time-sensitive transactional email delivery پر rely کرتے ہیں۔
+
+## ہم کیا بدل رہے ہیں
+
+SMTP2GO اب ہماری outbound transactional email handle کر رہا ہے۔ ہم ان سے directly یہ بھی پوچھ رہے ہیں کہ account reviews کیسے handle ہوتے ہیں، کون سی warnings بھیجی جاتی ہیں، اور اگر ان کے systems کبھی ہمیں flag کریں تو escalation path کیا ہے۔ ہمیں clear assurance چاہیے کہ mail warning کے بغیر silently stop نہیں ہوگی۔
+
+ہم اپنی طرف سے additional checks بھی لگا رہے ہیں۔ اگر provider-side issue دوبارہ email delivery کو affect کرے، تو ہم چاہتے ہیں کہ ہمیں user سے پتا چلنے کے بجائے immediately معلوم ہو۔
+
+## معذرت
+
+اس سے affect ہونے والے ہر شخص سے ہم معذرت کرتے ہیں۔ Appbox emails اسی وقت arrive ہونی چاہئیں جب آپ ان کی توقع کرتے ہیں، اور اس case میں ایسا نہیں ہوا۔
+
+Delayed messages اب send ہو چکے ہیں، email delivery resume ہو گئی ہے، اور ہم changes کر رہے ہیں تاکہ یہ دوبارہ نہ ہو۔
+
+---
+
+*اگر آپ اس issue سے affect ہوئے یا کوئی سوال ہے، تو support@appbox.co پر ہم سے رابطہ کریں۔*

@@ -1,0 +1,58 @@
+---
+title: Incident de livraison des emails - mai 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email a suspendu notre compte sans avertissement, ce qui a retardé plus de 600 emails transactionnels Appbox. Voici ce qui s'est passé et ce que nous changeons.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incident, email, infrastructure, elastic-email, smtp2go]
+---
+
+# Incident de livraison des emails - mai 2026
+
+Ce n'est pas le genre d'article que nous voulons avoir à écrire, mais nous devons être transparents sur un problème qui a affecté les emails transactionnels d'Appbox.
+
+Version courte : Elastic Email, notre fournisseur d'envoi d'emails depuis plus de cinq ans, a suspendu notre compte sans avertissement. Nous n'avons reçu ni email d'alerte ni préavis indiquant que l'envoi allait être arrêté. Nous ne l'avons découvert que lorsqu'un utilisateur nous a contactés pour nous dire qu'il n'avait pas reçu un email attendu.
+
+Ce n'est pas acceptable. Nous aurions dû le détecter plus tôt, et nous en sommes désolés.
+
+## Ce qui s'est passé
+
+Pendant environ 24 heures, certains emails transactionnels d'Appbox n'ont pas été envoyés. Cela incluait par exemple des emails d'inscription et des notifications de facture.
+
+Lorsque nous avons enquêté, Elastic Email affichait notre compte comme suspendu et nous demandait de contacter le support. Nous avons contacté le support immédiatement. L'email transactionnel est une infrastructure essentielle pour Appbox, et nous ne pouvions pas le laisser en panne.
+
+Il a fallu environ trois heures à Elastic Email pour examiner manuellement le compte et le réactiver. Leur explication était que le compte avait été placé en revue par un contrôle de sécurité automatisé. Ils ont également indiqué que, pour des raisons de sécurité, ils ne fourniraient pas de détails précis sur ce qui l'avait déclenché.
+
+## Impact
+
+Plus de 600 emails ont été retardés à cause de cela.
+
+Ces emails ont maintenant été envoyés. Il s'agissait d'un retard de livraison, pas d'une perte définitive d'emails, mais cela a tout de même laissé des personnes attendre des messages qu'elles auraient dû recevoir immédiatement.
+
+## Ce que nous avons fait
+
+Dès que nous avons confirmé ce qui se passait, nous avons commencé à déplacer l'envoi sortant hors d'Elastic Email.
+
+Nous avons ajouté SMTP2GO comme nouveau fournisseur et fait passer tout le courrier par eux afin que la livraison puisse reprendre immédiatement. Une fois qu'Elastic Email a réactivé le compte, le courrier retardé qui y était bloqué est également reparti.
+
+## Notre avis sur Elastic Email
+
+Nous avons une relation avec Elastic Email depuis plus de cinq ans, mais suspendre un compte d'email transactionnel sans avertissement préalable ni notification immédiate n'est pas acceptable pour un fournisseur d'infrastructure essentielle.
+
+Nous examinons maintenant si le départ d'Elastic Email doit devenir permanent. Sur la base de cet incident, nous ne pouvons plus recommander Elastic Email aux clients qui dépendent d'une livraison d'emails transactionnels sensible au temps.
+
+## Ce que nous changeons
+
+SMTP2GO gère maintenant nos emails transactionnels sortants. Nous leur demandons aussi directement comment les revues de compte sont traitées, quels avertissements sont envoyés et quel chemin d'escalade existe si leurs systèmes nous signalent un jour. Nous avons besoin d'une assurance claire que le courrier ne sera pas arrêté silencieusement et sans avertissement.
+
+Nous mettons également en place des contrôles supplémentaires de notre côté. Si un problème côté fournisseur affecte à nouveau la livraison des emails, nous voulons le savoir immédiatement plutôt que l'apprendre par un utilisateur.
+
+## Désolés
+
+Nous présentons nos excuses à toutes les personnes touchées par ce problème. Les emails Appbox devraient arriver quand vous les attendez, et dans ce cas ce n'est pas ce qui s'est produit.
+
+Les messages retardés ont maintenant été envoyés, la livraison des emails a repris, et nous apportons des changements pour que cela ne se reproduise pas.
+
+---
+
+*Si vous avez été affecté par ce problème ou si vous avez des questions, contactez-nous à support@appbox.co.*

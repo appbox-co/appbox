@@ -1,0 +1,58 @@
+---
+title: Incidente de entrega de emails - mayo de 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email pausó nuestra cuenta sin aviso, lo que retrasó más de 600 emails transaccionales de Appbox. Esto es lo que ocurrió y lo que estamos cambiando.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incidente, email, infraestructura, elastic-email, smtp2go]
+---
+
+# Incidente de entrega de emails - mayo de 2026
+
+Este no es el tipo de publicación que queremos escribir nunca, pero debemos ser claros sobre un problema que afectó a los emails transaccionales de Appbox.
+
+Versión breve: Elastic Email, nuestro proveedor de entrega de emails durante más de cinco años, pausó nuestra cuenta sin aviso. No recibimos ningún email de alerta ni ninguna notificación previa de que el envío se detendría. Solo nos enteramos cuando un usuario nos contactó para decirnos que no había recibido un email esperado.
+
+Eso no es aceptable. Deberíamos haberlo detectado antes, y lo sentimos.
+
+## Qué ocurrió
+
+Durante unas 24 horas, algunos emails transaccionales de Appbox no se enviaron. Esto incluía cosas como emails de registro y notificaciones de factura.
+
+Cuando investigamos, Elastic Email mostraba nuestra cuenta como pausada y nos indicaba que contactáramos con soporte. Contactamos con soporte de inmediato. El email transaccional es infraestructura central para Appbox, y no podíamos dejarlo roto.
+
+Elastic Email tardó alrededor de tres horas en revisar manualmente y reactivar la cuenta. Su explicación fue que la cuenta se había puesto en revisión por una comprobación de seguridad automatizada. También dijeron que, por motivos de seguridad, no proporcionarían detalles específicos sobre qué lo activó.
+
+## Impacto
+
+Más de 600 emails se retrasaron por esto.
+
+Esos emails ya se han enviado. Fue un retraso de entrega, no una pérdida permanente de emails, pero aun así significó que algunas personas quedaron esperando mensajes que deberían haber recibido de inmediato.
+
+## Qué hicimos
+
+En cuanto confirmamos lo que estaba pasando, empezamos a mover el correo saliente fuera de Elastic Email.
+
+Añadimos SMTP2GO como nuevo proveedor e hicimos pasar todo el correo a través de ellos para que la entrega pudiera reanudarse de inmediato. Una vez que Elastic Email reactivó la cuenta, también se reanudó el correo retrasado que había quedado retenido allí.
+
+## Nuestra opinión sobre Elastic Email
+
+Hemos mantenido una relación con Elastic Email durante más de cinco años, pero pausar una cuenta de email transaccional sin aviso previo ni notificación inmediata no es aceptable para un proveedor de infraestructura central.
+
+Ahora estamos revisando si el alejamiento de Elastic Email debe convertirse en permanente. Basándonos en este incidente, ya no podemos recomendar Elastic Email a clientes que dependen de la entrega de emails transaccionales sensibles al tiempo.
+
+## Qué estamos cambiando
+
+SMTP2GO gestiona ahora nuestro email transaccional saliente. También les estamos preguntando directamente cómo gestionan las revisiones de cuenta, qué avisos envían y qué ruta de escalado existe si sus sistemas llegan a marcarnos. Necesitamos una garantía clara de que el correo no se detendrá en silencio y sin aviso.
+
+También estamos implementando comprobaciones adicionales por nuestra parte. Si un problema del lado del proveedor vuelve a afectar a la entrega de emails, queremos saberlo de inmediato en lugar de enterarnos por un usuario.
+
+## Lo sentimos
+
+Pedimos disculpas a todas las personas afectadas por esto. Los emails de Appbox deberían llegar cuando los esperas, y en este caso no fue así.
+
+Los mensajes retrasados ya se han enviado, la entrega de emails se ha reanudado y estamos haciendo cambios para asegurarnos de que esto no vuelva a ocurrir.
+
+---
+
+*Si te viste afectado por este problema o tienes alguna pregunta, contáctanos en support@appbox.co.*

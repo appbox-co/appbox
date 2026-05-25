@@ -1,0 +1,58 @@
+---
+title: Incident s isporukom e-pošte - svibanj 2026
+date: 2026-05-25 21:45:00
+excerpt: Elastic Email pauzirao je naš račun bez upozorenja, što je odgodilo više od 600 Appbox transakcijskih e-mailova. Evo što se dogodilo i što mijenjamo.
+author_id: rid
+og_image: email-delivery-incident-og.jpg
+tags: [appbox, incident, email, infrastructure, elastic-email, smtp2go]
+---
+
+# Incident s isporukom e-pošte - svibanj 2026
+
+Ovo nije vrsta objave koju ikada želimo pisati, ali moramo otvoreno objasniti problem koji je utjecao na Appbox transakcijske e-mailove.
+
+Kratka verzija: Elastic Email, naš pružatelj usluge slanja e-pošte više od pet godina, pauzirao je naš račun bez upozorenja. Nismo dobili ni e-mail upozorenja ni prethodnu obavijest da će slanje biti zaustavljeno. Saznali smo tek kada nam se korisnik javio da nije primio očekivani e-mail.
+
+To nije dovoljno dobro. Trebali smo to primijetiti ranije i žao nam je.
+
+## Što se dogodilo
+
+Otprilike 24 sata dio transakcijskih e-mailova iz Appboxa nije se slao. To uključuje stvari poput e-mailova za registraciju i obavijesti o računima.
+
+Kada smo istražili problem, Elastic Email prikazivao je naš račun kao pauziran i uputio nas da kontaktiramo podršku. Odmah smo kontaktirali podršku. Transakcijska e-pošta temeljna je infrastruktura za Appbox i nismo mogli dopustiti da ostane neispravna.
+
+Elastic Emailu trebalo je oko tri sata da ručno pregleda i ponovno aktivira račun. Njihovo objašnjenje bilo je da je račun stavljen na pregled automatiziranom sigurnosnom provjerom. Rekli su i da nam, iz sigurnosnih razloga, ne mogu dati konkretne detalje o tome što ju je pokrenulo.
+
+## Utjecaj
+
+Zbog ovoga je odgođeno više od 600 e-mailova.
+
+Ti su e-mailovi sada poslani. Radilo se o kašnjenju isporuke, a ne o trajnom gubitku e-pošte, ali to je i dalje značilo da su ljudi čekali poruke koje su trebali dobiti odmah.
+
+## Što smo učinili
+
+Čim smo potvrdili što se događa, počeli smo premještati odlaznu poštu s Elastic Emaila.
+
+Dodali smo SMTP2GO kao novog pružatelja usluge i usmjerili svu poštu preko njih kako bi se isporuka mogla odmah nastaviti. Nakon što je Elastic Email ponovno aktivirao račun, nastavila se slati i odgođena pošta koja je ondje bila zadržana.
+
+## Naš stav o Elastic Emailu
+
+S Elastic Emailom surađujemo više od pet godina, ali pauziranje računa za transakcijsku e-poštu bez prethodnog upozorenja ili trenutne obavijesti nije prihvatljivo za pružatelja temeljne infrastrukture.
+
+Sada procjenjujemo treba li odlazak s Elastic Emaila postati trajan. Na temelju ovog incidenta više ne možemo preporučiti Elastic Email korisnicima koji ovise o vremenski osjetljivoj isporuci transakcijske e-pošte.
+
+## Što mijenjamo
+
+SMTP2GO sada obrađuje našu odlaznu transakcijsku e-poštu. Također ih izravno pitamo kako se provode pregledi računa, kakva se upozorenja šalju i koji put eskalacije postoji ako nas njihovi sustavi ikada označe. Trebamo jasna jamstva da se pošta neće tiho zaustaviti bez upozorenja.
+
+Uvodimo i dodatne provjere s naše strane. Ako problem kod pružatelja usluge ikada ponovno utječe na isporuku e-pošte, želimo to znati odmah, umjesto da saznamo od korisnika.
+
+## Žao nam je
+
+Ispričavamo se svima koje je ovo pogodilo. Appbox e-mailovi trebaju stići kada ih očekujete, a ovaj put nisu.
+
+Odgođene poruke sada su poslane, isporuka e-pošte je nastavljena i uvodimo promjene kako se ovo ne bi ponovilo.
+
+---
+
+*Ako vas je ovaj problem pogodio ili imate bilo kakvih pitanja, kontaktirajte nas na support@appbox.co.*
