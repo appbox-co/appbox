@@ -105,7 +105,9 @@ export async function generateMetadata({
       openGraph: {
         type: "website",
         title,
-        url: absoluteUrl(`/${locale}/apps/${appName}`),
+        url: absoluteUrl(
+          `/${locale}/apps/${encodeURIComponent(appDetails.display_name)}`
+        ),
         description,
         images: [
           {
