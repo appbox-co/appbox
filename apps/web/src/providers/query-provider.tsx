@@ -34,6 +34,37 @@ function getLocaleAwarePath(path: string) {
   return `/${locale}${path}`
 }
 
+function isAuthSessionError(error: unknown) {
+  if (!(error instanceof ApiError)) {
+    return false
+  }
+
+  if (error.status === 401) {
+    return true
+  }
+
+  return (
+    error.status === 403 &&
+    error.message.toLowerCase().includes("malformed auth token")
+  )
+}
+
+function isBlacklistedTokenError(error: unknown) {
+  return (
+    error instanceof ApiError &&
+    error.status === 403 &&
+    error.message.toLowerCase().includes("malformed auth token")
+  )
+}
+
+function clearLocalSession() {
+  return fetch("/api/auth/logout?local=1", {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store"
+  }).catch(() => {})
+}
+
 export function TanstackQueryProvider({
   children
 }: {
@@ -50,6 +81,15 @@ export function TanstackQueryProvider({
       redirectTimer.current = setTimeout(() => {
         window.location.assign(getLocaleAwarePath("/login"))
       }, 500)
+    }
+  }, [])
+
+  const handleDefinitiveAuthError = useCallback(() => {
+    authFailCount.current = 2
+    if (!redirectTimer.current) {
+      redirectTimer.current = setTimeout(() => {
+        window.location.assign(getLocaleAwarePath("/login"))
+      }, 0)
     }
   }, [])
 
@@ -75,8 +115,13 @@ export function TanstackQueryProvider({
       new QueryClient({
         queryCache: new QueryCache({
           onError: (error) => {
-            if (error instanceof ApiError && error.status === 401) {
-              handleAuthErrorRef.current()
+            if (isAuthSessionError(error)) {
+              void clearLocalSession()
+              if (isBlacklistedTokenError(error)) {
+                handleDefinitiveAuthError()
+              } else {
+                handleAuthErrorRef.current()
+              }
             }
           },
           onSuccess: () => {
@@ -85,8 +130,13 @@ export function TanstackQueryProvider({
         }),
         mutationCache: new MutationCache({
           onError: (error) => {
-            if (error instanceof ApiError && error.status === 401) {
-              handleAuthError()
+            if (isAuthSessionError(error)) {
+              void clearLocalSession()
+              if (isBlacklistedTokenError(error)) {
+                handleDefinitiveAuthError()
+              } else {
+                handleAuthError()
+              }
             }
           }
         }),
@@ -95,10 +145,10 @@ export function TanstackQueryProvider({
             staleTime: 60 * 1000, // 1 minute
             refetchOnWindowFocus: false,
             retry: (failureCount, error) => {
-              // Don't retry on 401 (auth) or 404 (not found)
+              // Don't retry on auth/session failures or 404 (not found)
               if (
-                error instanceof ApiError &&
-                (error.status === 401 || error.status === 404)
+                isAuthSessionError(error) ||
+                (error instanceof ApiError && error.status === 404)
               ) {
                 return false
               }

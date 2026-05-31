@@ -1870,6 +1870,8 @@ export function InstallDialog({
       } else if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(trimmedSub)) {
         setSubdomainError(t("install.validation.invalidSubdomain"))
         valid = false
+      } else if (subdomainError) {
+        valid = false
       } else {
         setSubdomainError(undefined)
       }
@@ -1885,6 +1887,7 @@ export function InstallDialog({
     fieldValues,
     requiresDomain,
     domainState,
+    subdomainError,
     selectedCyloData?.domain_id,
     t
   ])
@@ -2045,6 +2048,7 @@ export function InstallDialog({
     installMutation.isPending ||
     guardsLoading ||
     (selectedCyloId > 0 && boostInfoLoading) ||
+    (requiresDomain && Boolean(subdomainError)) ||
     (requiresDomain &&
       domainState.domainType === "custom" &&
       !domainState.dnsVerified)

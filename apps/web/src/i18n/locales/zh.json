@@ -4,6 +4,7 @@
     "heading": "几秒钟内部署<span>应用</span>",
     "subheading": "一键托管 {flipwords}",
     "description": "跳过复杂的服务器配置。从 60 多个可直接部署的应用中选择，点击安装，几秒钟即可上线。强大的托管体验，没有繁琐步骤。",
+    "tagline": "你的云，你的规则",
     "meta_title": "Appbox - 几秒钟内部署应用 | 一键应用托管",
     "flipwords": [
       "网站",
@@ -1423,12 +1424,15 @@
       "done": "完成",
       "disable": "禁用 2FA",
       "disableWarning": "禁用 2FA 会降低你的账号安全性。",
-      "disableConfirm": "输入你的密码以禁用 2FA",
+      "disableConfirm": "输入你的 6 位身份验证器代码以停用 2FA",
       "disabled": "2FA 已禁用",
       "generating": "正在生成...",
       "verifying": "正在验证...",
       "next": "下一步",
-      "back": "返回"
+      "back": "返回",
+      "reauthDescription": "停用 2FA 需要最近登录过。请输入密码以继续。",
+      "recoveryCodesReauthDescription": "重新生成恢复代码需要最近登录过。请输入密码以继续。",
+      "disableRecoveryConfirm": "输入恢复代码以停用 2FA"
     },
     "apiKeys": {
       "title": "API Keys",

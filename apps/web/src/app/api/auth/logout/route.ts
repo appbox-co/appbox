@@ -89,8 +89,9 @@ function isSameOriginLogoutRequest(request: NextRequest): boolean {
 
 export async function POST(request: NextRequest) {
   const incomingToken = request.cookies.get("authorization_token")?.value
+  const localOnly = request.nextUrl.searchParams.get("local") === "1"
 
-  if (!incomingToken || !isSameOriginLogoutRequest(request)) {
+  if (!isSameOriginLogoutRequest(request) || (!incomingToken && !localOnly)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
@@ -100,7 +101,7 @@ export async function POST(request: NextRequest) {
     COOKIE_SECURE || request.nextUrl.protocol === "https:"
 
   try {
-    if (incomingToken) {
+    if (incomingToken && !localOnly) {
       await fetch(`${API_BASE_URL}/users/signout`, {
         method: "DELETE",
         headers: {

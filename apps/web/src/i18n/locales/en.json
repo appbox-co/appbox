@@ -1422,12 +1422,15 @@
       "done": "Done",
       "disable": "Disable 2FA",
       "disableWarning": "Disabling 2FA will make your account less secure.",
-      "disableConfirm": "Enter your password to disable 2FA",
+      "disableConfirm": "Enter your 6-digit authenticator code to disable 2FA",
+      "reauthDescription": "Disabling 2FA requires a recent sign-in. Enter your password to continue.",
+      "recoveryCodesReauthDescription": "Regenerating recovery codes requires a recent sign-in. Enter your password to continue.",
       "disabled": "2FA has been disabled",
       "generating": "Generating...",
       "verifying": "Verifying...",
       "next": "Next",
-      "back": "Back"
+      "back": "Back",
+      "disableRecoveryConfirm": "Enter a recovery code to disable 2FA"
     },
     "apiKeys": {
       "title": "API Keys",

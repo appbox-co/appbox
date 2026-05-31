@@ -17,8 +17,8 @@ import {
   regenerateRecoveryCodes,
   resolveAbuseReport,
   revokeApiKey,
-  updateProfile,
   updateApiKey,
+  updateProfile,
   verify2FA
 } from "../account"
 import type { CreateApiKeyInput, UpdateApiKeyInput } from "../account"
@@ -35,10 +35,11 @@ export function useProfile(userId: number) {
   })
 }
 
-export function use2FAStatus() {
+export function use2FAStatus(enabled = true) {
   return useQuery({
     queryKey: ["2fa-status"],
-    queryFn: get2FAStatus
+    queryFn: get2FAStatus,
+    enabled
   })
 }
 
@@ -115,26 +116,14 @@ export function useGenerate2FA() {
 }
 
 export function useVerify2FA() {
-  const queryClient = useQueryClient()
-
   return useMutation({
-    mutationFn: verify2FA,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.profile.me })
-      queryClient.invalidateQueries({ queryKey: ["2fa-status"] })
-    }
+    mutationFn: verify2FA
   })
 }
 
 export function useDisable2FA() {
-  const queryClient = useQueryClient()
-
   return useMutation({
-    mutationFn: disable2FA,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.profile.me })
-      queryClient.invalidateQueries({ queryKey: ["2fa-status"] })
-    }
+    mutationFn: disable2FA
   })
 }
 

@@ -11,6 +11,9 @@ import { Label } from "@/components/ui/label"
 import type { Cylo } from "@/lib/auth/session"
 import { cn } from "@/lib/utils"
 
+const SUBDOMAIN_VALIDATION_FAILED =
+  "Unable to validate the subdomain right now."
+
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
 /* -------------------------------------------------------------------------- */
@@ -82,7 +85,8 @@ function AppboxDomainSection({
   subdomain,
   subdomainError,
   onDomainChange,
-  onSubdomainChange
+  onSubdomainChange,
+  onSubdomainError
 }: {
   selectedCyloId: string
   selectedCylo: Cylo | null
@@ -90,6 +94,7 @@ function AppboxDomainSection({
   subdomainError?: string
   onDomainChange: (id: string, domain: DomainOption | null) => void
   onSubdomainChange: (value: string) => void
+  onSubdomainError: (err: string | undefined) => void
 }) {
   const t = useTranslations("appstore")
   const [availabilityState, setAvailabilityState] = useState<
@@ -128,19 +133,28 @@ function AppboxDomainSection({
       return
     }
     if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
-    queueMicrotask(() => setAvailabilityState("checking"))
+    queueMicrotask(() => {
+      setAvailabilityState("checking")
+      onSubdomainError(undefined)
+    })
     availabilityTimer.current = setTimeout(async () => {
       try {
         const available = await validateSubdomain(subdomain, domainId)
         setAvailabilityState(available ? "available" : "taken")
-      } catch {
+        onSubdomainError(undefined)
+      } catch (error) {
         setAvailabilityState("idle")
+        onSubdomainError(
+          error instanceof Error && error.message
+            ? error.message
+            : SUBDOMAIN_VALIDATION_FAILED
+        )
       }
     }, 500)
     return () => {
       if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     }
-  }, [subdomain, domainId])
+  }, [subdomain, domainId, onSubdomainError])
 
   if (!selectedCyloId) {
     return (
@@ -226,6 +240,7 @@ function CustomDomainSection({
   subdomainError,
   onDomainChange,
   onSubdomainChange,
+  onSubdomainError,
   onDnsVerified
 }: {
   selectedCyloId: string
@@ -237,6 +252,7 @@ function CustomDomainSection({
   subdomainError?: string
   onDomainChange: (id: string, domain: DomainOption | null) => void
   onSubdomainChange: (value: string) => void
+  onSubdomainError: (err: string | undefined) => void
   onDnsVerified: (verified: boolean) => void
 }) {
   const t = useTranslations("appstore")
@@ -265,7 +281,10 @@ function CustomDomainSection({
       return
     }
     if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
-    queueMicrotask(() => setAvailabilityState("checking"))
+    queueMicrotask(() => {
+      setAvailabilityState("checking")
+      onSubdomainError(undefined)
+    })
     availabilityTimer.current = setTimeout(async () => {
       try {
         const available = await validateSubdomain(
@@ -273,14 +292,20 @@ function CustomDomainSection({
           Number(selectedDomainId)
         )
         setAvailabilityState(available ? "available" : "taken")
-      } catch {
+        onSubdomainError(undefined)
+      } catch (error) {
         setAvailabilityState("idle")
+        onSubdomainError(
+          error instanceof Error && error.message
+            ? error.message
+            : SUBDOMAIN_VALIDATION_FAILED
+        )
       }
     }, 500)
     return () => {
       if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     }
-  }, [subdomain, selectedDomainId])
+  }, [subdomain, selectedDomainId, onSubdomainError])
 
   const fullDomain =
     selectedDomain && subdomain ? `${subdomain}.${selectedDomain.domain}` : ""
@@ -450,6 +475,7 @@ export function DomainSection({
           subdomainError={subdomainError}
           onDomainChange={handleDomainChange}
           onSubdomainChange={handleSubdomainChange}
+          onSubdomainError={onSubdomainError}
         />
       ) : (
         <CustomDomainSection
@@ -462,6 +488,7 @@ export function DomainSection({
           subdomainError={subdomainError}
           onDomainChange={handleDomainChange}
           onSubdomainChange={handleSubdomainChange}
+          onSubdomainError={onSubdomainError}
           onDnsVerified={handleDnsVerified}
         />
       )}

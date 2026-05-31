@@ -1,8 +1,8 @@
 "use client"
 
 import { FormEvent, useState } from "react"
-import { useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   AlertTriangle,
   Check,
@@ -14,15 +14,19 @@ import {
   Trash2
 } from "lucide-react"
 import { toast } from "sonner"
-import type { ApiKey } from "@/api/account/account"
+import {
+  createApiKey as createApiKeyRequest,
+  revokeApiKey as revokeApiKeyRequest,
+  updateApiKey as updateApiKeyRequest,
+  type ApiKey,
+  type CreateApiKeyInput
+} from "@/api/account/account"
 import {
   useApiKeys,
   useCreateApiKey,
   useRevokeApiKey,
   useUpdateApiKey
 } from "@/api/account/hooks/use-account"
-import { ApiError } from "@/api/client"
-import { queryKeys } from "@/constants/query-keys"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -43,22 +47,18 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+import { queryKeys } from "@/constants/query-keys"
 import { AccountPageHeader } from "../_components/account-page-header"
+import {
+  isRecentAuthError,
+  RecentAuthDialog
+} from "../_components/recent-auth-dialog"
 
 type ApiKeyStatus = "active" | "expired" | "revoked"
-
-function isRecentAuthError(error: unknown) {
-  if (!(error instanceof ApiError) || error.status !== 403) {
-    return false
-  }
-
-  const message = error.message.toLowerCase()
-  return (
-    message.includes("recent authentication is required") ||
-    message.includes("recent user authentication is required") ||
-    message.includes("auth: recent authentication required")
-  )
-}
+type PendingApiKeyAction =
+  | { type: "create"; input: CreateApiKeyInput }
+  | { type: "rename"; id: number; name: string }
+  | { type: "revoke"; id: number }
 
 function getStatus(key: ApiKey): ApiKeyStatus {
   if (key.revoked_at) return "revoked"
@@ -134,166 +134,6 @@ function ApiKeySecretDialog({
   )
 }
 
-function RecentAuthDialog({
-  open,
-  onOpenChange,
-  onVerified
-}: {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onVerified: () => void
-}) {
-  const t = useTranslations("account.apiKeys")
-  const [password, setPassword] = useState("")
-  const [code, setCode] = useState("")
-  const [useRecovery, setUseRecovery] = useState(false)
-  const [twoFactorToken, setTwoFactorToken] = useState("")
-  const [isPending, setIsPending] = useState(false)
-  const [error, setError] = useState("")
-
-  function reset() {
-    setPassword("")
-    setCode("")
-    setUseRecovery(false)
-    setTwoFactorToken("")
-    setIsPending(false)
-    setError("")
-  }
-
-  async function submitReauth(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsPending(true)
-    setError("")
-
-    try {
-      const response = await fetch("/api/auth/reauth", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(
-          twoFactorToken
-            ? {
-                code: code.trim(),
-                two_factor_token: twoFactorToken,
-                use_recovery: useRecovery
-              }
-            : { password }
-        )
-      })
-
-      const data = await response.json().catch(() => ({}))
-
-      if (!response.ok) {
-        setError(
-          typeof data.error === "string" ? data.error : t("reauthFailed")
-        )
-        return
-      }
-
-      if (data.two_factor_required) {
-        setTwoFactorToken(data.two_factor_token ?? "")
-        setCode("")
-        return
-      }
-
-      reset()
-      onVerified()
-      onOpenChange(false)
-    } catch {
-      setError(t("reauthFailed"))
-    } finally {
-      setIsPending(false)
-    }
-  }
-
-  return (
-    <Dialog
-      open={open}
-      onOpenChange={(nextOpen) => {
-        if (!nextOpen) reset()
-        onOpenChange(nextOpen)
-      }}
-    >
-      <DialogContent>
-        <form onSubmit={submitReauth} className="space-y-4">
-          <DialogHeader>
-            <DialogTitle>{t("reauthTitle")}</DialogTitle>
-            <DialogDescription>
-              {twoFactorToken
-                ? t("reauthTwoFactorDescription")
-                : t("reauthDescription")}
-            </DialogDescription>
-          </DialogHeader>
-
-          {twoFactorToken ? (
-            <div className="space-y-2">
-              <Label htmlFor="api-key-reauth-code">
-                {useRecovery ? t("recoveryCode") : t("twoFactorCode")}
-              </Label>
-              <Input
-                id="api-key-reauth-code"
-                value={code}
-                onChange={(event) => setCode(event.target.value)}
-                autoComplete="one-time-code"
-                inputMode={useRecovery ? "text" : "numeric"}
-                maxLength={useRecovery ? 32 : 6}
-                required
-                autoFocus
-              />
-              <button
-                type="button"
-                className="text-sm font-medium text-primary hover:underline"
-                onClick={() => {
-                  setUseRecovery((current) => !current)
-                  setCode("")
-                }}
-              >
-                {useRecovery ? t("useAuthenticator") : t("useRecoveryCode")}
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <Label htmlFor="api-key-reauth-password">{t("password")}</Label>
-              <Input
-                id="api-key-reauth-password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                autoComplete="current-password"
-                required
-                autoFocus
-              />
-            </div>
-          )}
-
-          {error && (
-            <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-              {error}
-            </div>
-          )}
-
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              {t("cancel")}
-            </Button>
-            <Button type="submit" disabled={isPending}>
-              {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
-              {twoFactorToken ? t("verify") : t("reauthSubmit")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
 function CreateApiKeyDialog({
   open,
   onOpenChange,
@@ -303,7 +143,7 @@ function CreateApiKeyDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
   onCreated: (secret: string) => void
-  onRecentAuthRequired: () => void
+  onRecentAuthRequired: (action: PendingApiKeyAction) => void
 }) {
   const t = useTranslations("account.apiKeys")
   const createApiKey = useCreateApiKey()
@@ -312,11 +152,13 @@ function CreateApiKeyDialog({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    const input = {
+      name: name.trim(),
+      expires_at: expiresAt ? new Date(expiresAt).toISOString() : null
+    }
+
     try {
-      const result = await createApiKey.mutateAsync({
-        name: name.trim(),
-        expires_at: expiresAt ? new Date(expiresAt).toISOString() : null
-      })
+      const result = await createApiKey.mutateAsync(input)
       toast.success(t("createSuccess"))
       setName("")
       setExpiresAt("")
@@ -324,7 +166,7 @@ function CreateApiKeyDialog({
       onCreated(result.key)
     } catch (error) {
       if (isRecentAuthError(error)) {
-        onRecentAuthRequired()
+        onRecentAuthRequired({ type: "create", input })
         return
       }
       toast.error(t("createFailed"))
@@ -393,7 +235,7 @@ function RenameApiKeyDialog({
 }: {
   apiKey: ApiKey | null
   onOpenChange: (apiKey: ApiKey | null) => void
-  onRecentAuthRequired: () => void
+  onRecentAuthRequired: (action: PendingApiKeyAction) => void
 }) {
   const t = useTranslations("account.apiKeys")
   const updateApiKey = useUpdateApiKey(apiKey?.id ?? 0)
@@ -402,14 +244,20 @@ function RenameApiKeyDialog({
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!apiKey) return
+    const nextName = name.trim()
+
     try {
-      await updateApiKey.mutateAsync({ name: name.trim() })
+      await updateApiKey.mutateAsync({ name: nextName })
       toast.success(t("updateSuccess"))
       onOpenChange(null)
     } catch (error) {
       if (isRecentAuthError(error)) {
         onOpenChange(null)
-        onRecentAuthRequired()
+        onRecentAuthRequired({
+          type: "rename",
+          id: apiKey.id,
+          name: nextName
+        })
         return
       }
       toast.error(t("updateFailed"))
@@ -468,7 +316,7 @@ function RevokeApiKeyDialog({
 }: {
   apiKey: ApiKey | null
   onOpenChange: (apiKey: ApiKey | null) => void
-  onRecentAuthRequired: () => void
+  onRecentAuthRequired: (action: PendingApiKeyAction) => void
 }) {
   const t = useTranslations("account.apiKeys")
   const revokeApiKey = useRevokeApiKey()
@@ -482,7 +330,7 @@ function RevokeApiKeyDialog({
     } catch (error) {
       if (isRecentAuthError(error)) {
         onOpenChange(null)
-        onRecentAuthRequired()
+        onRecentAuthRequired({ type: "revoke", id: apiKey.id })
         return
       }
       toast.error(t("revokeFailed"))
@@ -546,17 +394,60 @@ export default function ApiKeysPage() {
   const [renameKey, setRenameKey] = useState<ApiKey | null>(null)
   const [revokeKey, setRevokeKey] = useState<ApiKey | null>(null)
   const [reauthOpen, setReauthOpen] = useState(false)
+  const [pendingAction, setPendingAction] =
+    useState<PendingApiKeyAction | null>(null)
 
   const recentAuthRequired = isRecentAuthError(error)
 
-  function handleRecentAuthRequired() {
+  function handleRecentAuthRequired(action: PendingApiKeyAction) {
+    setPendingAction(action)
     setCreateOpen(false)
     setRenameKey(null)
     setRevokeKey(null)
     setReauthOpen(true)
   }
 
-  function handleReauthVerified() {
+  function handleReauthOpenChange(open: boolean) {
+    if (!open) {
+      setPendingAction(null)
+    }
+    setReauthOpen(open)
+  }
+
+  async function replayPendingAction(action: PendingApiKeyAction) {
+    try {
+      if (action.type === "create") {
+        const result = await createApiKeyRequest(action.input)
+        toast.success(t("createSuccess"))
+        setCreatedSecret(result.key)
+      } else if (action.type === "rename") {
+        await updateApiKeyRequest(action.id, { name: action.name })
+        toast.success(t("updateSuccess"))
+      } else {
+        await revokeApiKeyRequest(action.id)
+        toast.success(t("revokeSuccess"))
+      }
+
+      await queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
+    } catch {
+      if (action.type === "create") {
+        toast.error(t("createFailed"))
+      } else if (action.type === "rename") {
+        toast.error(t("updateFailed"))
+      } else {
+        toast.error(t("revokeFailed"))
+      }
+    } finally {
+      setPendingAction(null)
+    }
+  }
+
+  async function handleReauthVerified() {
+    if (pendingAction) {
+      await replayPendingAction(pendingAction)
+      return
+    }
+
     toast.success(t("reauthSuccess"))
     queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
   }
@@ -728,7 +619,7 @@ export default function ApiKeysPage() {
       />
       <RecentAuthDialog
         open={reauthOpen}
-        onOpenChange={setReauthOpen}
+        onOpenChange={handleReauthOpenChange}
         onVerified={handleReauthVerified}
       />
       <ApiKeySecretDialog

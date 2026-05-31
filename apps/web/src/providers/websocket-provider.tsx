@@ -10,7 +10,6 @@ import {
   type ReactNode
 } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { queryKeys } from "@/constants/query-keys"
 import { WsClient, type WsEventHandler } from "@/lib/websocket/client"
 import type { WsMessage } from "@/lib/websocket/types"
 
@@ -93,17 +92,9 @@ export function WebSocketProvider({
       }
     })
 
-    // Invalidate 2FA-related queries when the backend pushes state changes.
-    // This keeps the profile page and 2FA setup page in sync without relying
-    // on mutation onSuccess callbacks, and works across tabs.
-    client.on("user.2fa_enabled", () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.profile.me })
-      queryClient.invalidateQueries({ queryKey: ["2fa-status"] })
-    })
-    client.on("user.2fa_disabled", () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.profile.me })
-      queryClient.invalidateQueries({ queryKey: ["2fa-status"] })
-    })
+    // Enabling/disabling 2FA invalidates the current auth token server-side.
+    // The initiating tab clears its session explicitly; other tabs should let
+    // their next authenticated request hit the global auth-expiry handler.
     client.on("user.2fa_recovery_codes_regenerated", () => {
       queryClient.invalidateQueries({ queryKey: ["2fa-status"] })
     })

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import {
   AlertCircle,
@@ -22,6 +22,7 @@ import {
   useRegenerateRecoveryCodes,
   useVerify2FA
 } from "@/api/account/hooks/use-account"
+import { ApiError } from "@/api/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -32,8 +33,13 @@ import {
 } from "@/components/ui/input-otp"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/lib/utils"
+import { useRouter } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
 import { AccountPageHeader } from "../_components/account-page-header"
+import {
+  isRecentAuthError,
+  RecentAuthDialog
+} from "../_components/recent-auth-dialog"
 import { BackupCodes } from "./_components/backup-codes"
 import { QRStep } from "./_components/qr-step"
 import { VerifyStep } from "./_components/verify-step"
@@ -43,6 +49,14 @@ import { VerifyStep } from "./_components/verify-step"
 /* -------------------------------------------------------------------------- */
 
 type SetupStep = "idle" | "generating" | "verifying" | "complete"
+
+function isMissingVerificationCodeError(error: unknown) {
+  return (
+    error instanceof ApiError &&
+    error.status === 404 &&
+    error.message.toLowerCase().includes("verification code is required")
+  )
+}
 
 /* -------------------------------------------------------------------------- */
 /*  Step Indicator                                                             */
@@ -100,11 +114,64 @@ function StepIndicator({ current }: { current: SetupStep }) {
 function Disable2FASection() {
   const t = useTranslations("account")
   const disable2FA = useDisable2FA()
+  const { logout } = useAuth()
   const [code, setCode] = useState("")
   const [showForm, setShowForm] = useState(false)
   const [useRecovery, setUseRecovery] = useState(false)
+  const [reauthOpen, setReauthOpen] = useState(false)
 
   const RECOVERY_LENGTH = 8
+
+  function resetForm() {
+    setShowForm(false)
+    setCode("")
+    setUseRecovery(false)
+  }
+
+  async function disableWithCode(value: string) {
+    try {
+      await disable2FA.mutateAsync({ code: value })
+      resetForm()
+      toast.success(t("twoFactor.disabled"))
+      await logout()
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthOpen(true)
+        setCode("")
+        return
+      }
+
+      toast.error("Failed to disable 2FA. Please check your code.")
+      setCode("")
+    }
+  }
+
+  async function handleDisableClick() {
+    if (showForm || disable2FA.isPending) return
+
+    try {
+      await disable2FA.mutateAsync({ code: "" })
+      resetForm()
+      toast.success(t("twoFactor.disabled"))
+      await logout()
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthOpen(true)
+        return
+      }
+
+      if (
+        (error instanceof ApiError && error.status === 401) ||
+        isMissingVerificationCodeError(error)
+      ) {
+        setShowForm(true)
+        return
+      }
+
+      toast.error("Failed to disable 2FA. Please check your code.")
+      setCode("")
+    }
+  }
 
   async function handleCode(value: string) {
     setCode(value)
@@ -112,16 +179,12 @@ function Disable2FASection() {
       ? value.length === RECOVERY_LENGTH
       : value.length === 6
     if (!ready) return
-    try {
-      await disable2FA.mutateAsync({ code: value })
-      toast.success(t("twoFactor.disabled"))
-      setShowForm(false)
-      setCode("")
-      setUseRecovery(false)
-    } catch {
-      toast.error("Failed to disable 2FA. Please check your code.")
-      setCode("")
-    }
+    await disableWithCode(value)
+  }
+
+  async function handleReauthVerified() {
+    setCode("")
+    setShowForm(true)
   }
 
   function toggleMode() {
@@ -130,9 +193,7 @@ function Disable2FASection() {
   }
 
   function handleCancel() {
-    setShowForm(false)
-    setCode("")
-    setUseRecovery(false)
+    resetForm()
   }
 
   if (!showForm) {
@@ -144,11 +205,19 @@ function Disable2FASection() {
         <Button
           variant="destructive"
           size="sm"
-          onClick={() => setShowForm(true)}
+          onClick={handleDisableClick}
+          disabled={disable2FA.isPending}
         >
           <ShieldOff className="mr-2 size-4" />
           {t("twoFactor.disable")}
         </Button>
+        <RecentAuthDialog
+          open={reauthOpen}
+          onOpenChange={setReauthOpen}
+          onVerified={handleReauthVerified}
+          description={t("twoFactor.reauthDescription")}
+          idPrefix="disable-2fa-reauth"
+        />
       </div>
     )
   }
@@ -156,7 +225,9 @@ function Disable2FASection() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        {t("twoFactor.disableConfirm")}
+        {useRecovery
+          ? t("twoFactor.disableRecoveryConfirm")
+          : t("twoFactor.disableConfirm")}
       </p>
 
       <div className="flex justify-center">
@@ -251,6 +322,14 @@ function Disable2FASection() {
           Cancel
         </Button>
       </div>
+
+      <RecentAuthDialog
+        open={reauthOpen}
+        onOpenChange={setReauthOpen}
+        onVerified={handleReauthVerified}
+        description={t("twoFactor.reauthDescription")}
+        idPrefix="disable-2fa-reauth"
+      />
     </div>
   )
 }
@@ -264,19 +343,29 @@ function RegenerateCodesSection({
 }: {
   onCodesRegenerated: (codes: string[]) => void
 }) {
+  const t = useTranslations("account")
   const regenerate = useRegenerateRecoveryCodes()
   const [code, setCode] = useState("")
   const [showForm, setShowForm] = useState(false)
+  const [reauthOpen, setReauthOpen] = useState(false)
 
-  async function handleCode(value: string) {
-    setCode(value)
-    if (value.length !== 6) return
+  function resetForm() {
+    setShowForm(false)
+    setCode("")
+  }
+
+  async function regenerateWithCode(value: string) {
     try {
       const result = await regenerate.mutateAsync({ code: value })
       onCodesRegenerated(result.recovery_codes)
-      setShowForm(false)
-      setCode("")
-    } catch {
+      resetForm()
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthOpen(true)
+        setCode("")
+        return
+      }
+
       toast.error(
         "Failed to regenerate recovery codes. Please check your code."
       )
@@ -284,12 +373,65 @@ function RegenerateCodesSection({
     }
   }
 
+  async function handleRegenerateClick() {
+    if (showForm || regenerate.isPending) return
+
+    try {
+      const result = await regenerate.mutateAsync({ code: "" })
+      onCodesRegenerated(result.recovery_codes)
+      resetForm()
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthOpen(true)
+        return
+      }
+
+      if (
+        (error instanceof ApiError && error.status === 401) ||
+        isMissingVerificationCodeError(error)
+      ) {
+        setShowForm(true)
+        return
+      }
+
+      toast.error(
+        "Failed to regenerate recovery codes. Please check your code."
+      )
+      setCode("")
+    }
+  }
+
+  async function handleCode(value: string) {
+    setCode(value)
+    if (value.length !== 6) return
+    await regenerateWithCode(value)
+  }
+
+  async function handleReauthVerified() {
+    setCode("")
+    setShowForm(true)
+  }
+
   if (!showForm) {
     return (
-      <Button variant="outline" size="sm" onClick={() => setShowForm(true)}>
-        <RefreshCw className="mr-2 size-4" />
-        Regenerate Recovery Codes
-      </Button>
+      <>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleRegenerateClick}
+          disabled={regenerate.isPending}
+        >
+          <RefreshCw className="mr-2 size-4" />
+          Regenerate Recovery Codes
+        </Button>
+        <RecentAuthDialog
+          open={reauthOpen}
+          onOpenChange={setReauthOpen}
+          onVerified={handleReauthVerified}
+          description={t("twoFactor.recoveryCodesReauthDescription")}
+          idPrefix="regenerate-recovery-codes-reauth"
+        />
+      </>
     )
   }
 
@@ -336,15 +478,20 @@ function RegenerateCodesSection({
           type="button"
           variant="outline"
           size="sm"
-          onClick={() => {
-            setShowForm(false)
-            setCode("")
-          }}
+          onClick={resetForm}
           disabled={regenerate.isPending}
         >
           Cancel
         </Button>
       </div>
+
+      <RecentAuthDialog
+        open={reauthOpen}
+        onOpenChange={setReauthOpen}
+        onVerified={handleReauthVerified}
+        description={t("twoFactor.recoveryCodesReauthDescription")}
+        idPrefix="regenerate-recovery-codes-reauth"
+      />
     </div>
   )
 }
@@ -356,9 +503,11 @@ function RegenerateCodesSection({
 export default function TwoFactorSetupPage() {
   const t = useTranslations("account")
   const router = useRouter()
+  const queryClient = useQueryClient()
   const { user } = useAuth()
-  const { data: profile } = useProfile(user.id)
-  const { data: twoFactorStatus } = use2FAStatus()
+  const [sessionCleared, setSessionCleared] = useState(false)
+  const { data: profile } = useProfile(sessionCleared ? 0 : user.id)
+  const { data: twoFactorStatus } = use2FAStatus(!sessionCleared)
 
   const generate2FA = useGenerate2FA()
   const verify2FA = useVerify2FA()
@@ -394,6 +543,14 @@ export default function TwoFactorSetupPage() {
   async function handleVerify(code: string) {
     try {
       const result = await verify2FA.mutateAsync({ code })
+      setSessionCleared(true)
+      await queryClient.cancelQueries()
+      queryClient.clear()
+      await fetch("/api/auth/logout?local=1", {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store"
+      }).catch(() => {})
       setRecoveryCodes(result.recovery_codes)
       setStep("complete")
     } catch {
@@ -401,8 +558,8 @@ export default function TwoFactorSetupPage() {
     }
   }
 
-  function handleDone() {
-    router.push(ROUTES.PROFILE)
+  async function handleDone() {
+    router.replace(ROUTES.LOGIN)
   }
 
   function handleCodesRegenerated(codes: string[]) {
