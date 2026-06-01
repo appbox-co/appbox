@@ -17,6 +17,7 @@ import {
   useCustomTableRows,
   useDeleteCustomTableRow,
   useInstanceCustomTables,
+  useRevealCustomTableRowField,
   useUpdateCustomTableRow
 } from "@/api/custom-tables/hooks/use-custom-tables"
 import {
@@ -36,6 +37,8 @@ import {
   DialogTitle
 } from "@/components/ui/dialog"
 import type { FormFieldConfig } from "@/types/dashboard"
+
+const REDACTED_SECRET_VALUE = "[REDACTED]"
 
 function isRequired(column: CustomTableColumn): boolean {
   const rules = column.inputField?.validate
@@ -120,11 +123,41 @@ function isExternalLinkColumn(column: CustomTableColumn): boolean {
   return fieldType === "externalURL" || fieldType === "clientURL"
 }
 
+function isPasswordLikeColumn(column: CustomTableColumn): boolean {
+  const fieldType = column.type ?? column.inputField?.type
+  return (
+    fieldType === "password" ||
+    fieldType === "passwordAlphaNumeric" ||
+    fieldType === "complexPassword"
+  )
+}
+
+function isSensitiveColumn(column: CustomTableColumn): boolean {
+  return column.sensitive === true || isPasswordLikeColumn(column)
+}
+
+function isRevealableColumn(column: CustomTableColumn): boolean {
+  return column.revealable === true || isPasswordLikeColumn(column)
+}
+
 function isDataColumn(column: CustomTableColumn): boolean {
   return (
     column.name.endsWith(":value") &&
     column.type !== "buttonAction" &&
     column.type !== "action"
+  )
+}
+
+function shouldPreserveRedactedSensitiveValue(
+  column: CustomTableColumn,
+  row: CustomTableRow | null,
+  value: string
+): boolean {
+  return (
+    row !== null &&
+    isSensitiveColumn(column) &&
+    value === "" &&
+    toTextValue(row[column.name]) === REDACTED_SECRET_VALUE
   )
 }
 
@@ -136,6 +169,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const addMutation = useAddCustomTableRow(tableId, instanceId)
   const updateMutation = useUpdateCustomTableRow(tableId, instanceId)
   const deleteMutation = useDeleteCustomTableRow(tableId, instanceId)
+  const revealMutation = useRevealCustomTableRowField(tableId, instanceId)
 
   const [addOpen, setAddOpen] = useState(false)
   const [editTarget, setEditTarget] = useState<CustomTableRow | null>(null)
@@ -143,6 +177,12 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const [revealedPasswords, setRevealedPasswords] = useState<
     Record<string, boolean>
   >({})
+  const [revealedPasswordValues, setRevealedPasswordValues] = useState<
+    Record<string, string>
+  >({})
+  const [revealingPasswordKey, setRevealingPasswordKey] = useState<
+    string | null
+  >(null)
   const [formValues, setFormValues] = useState<Record<string, string>>({})
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
 
@@ -169,7 +209,10 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   )
 
   const editableColumnsForEdit = useMemo(() => {
-    const base = editableFieldSet.size === 0 ? dataColumns : dataColumns.filter((col) => editableFieldSet.has(col.name))
+    const base =
+      editableFieldSet.size === 0
+        ? dataColumns
+        : dataColumns.filter((col) => editableFieldSet.has(col.name))
     return base.filter((col) => !isExternalLinkColumn(col))
   }, [dataColumns, editableFieldSet])
 
@@ -180,12 +223,22 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const addDisabled = Boolean(maxRows && rows.length >= maxRows)
 
   const initializeForm = useCallback(
-    (columns: CustomTableColumn[], row?: CustomTableRow | null) => {
+    (
+      columns: CustomTableColumn[],
+      row?: CustomTableRow | null,
+      options: { preserveRedactedSecrets?: boolean } = {}
+    ) => {
       const next: Record<string, string> = {}
       for (const col of columns) {
         const value =
           row?.[col.name] ?? col.inputField?.defaultValue ?? col.defaultValue
-        next[col.name] = toTextValue(value)
+        const textValue = toTextValue(value)
+        next[col.name] =
+          options.preserveRedactedSecrets &&
+          isSensitiveColumn(col) &&
+          textValue === REDACTED_SECRET_VALUE
+            ? ""
+            : textValue
       }
       setFormValues(next)
       setFormErrors({})
@@ -200,16 +253,24 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
 
   const openEdit = useCallback(
     (row: CustomTableRow) => {
-      initializeForm(editableColumnsForEdit, row)
+      initializeForm(editableColumnsForEdit, row, {
+        preserveRedactedSecrets: true
+      })
       setEditTarget(row)
     },
     [editableColumnsForEdit, initializeForm, setEditTarget]
   )
 
-  const validateForm = (columns: CustomTableColumn[]): boolean => {
+  const validateForm = (
+    columns: CustomTableColumn[],
+    row: CustomTableRow | null = null
+  ): boolean => {
     const nextErrors: Record<string, string> = {}
     for (const col of columns) {
-      const code = validateValue(col, formValues[col.name] ?? "")
+      const value = formValues[col.name] ?? ""
+      if (shouldPreserveRedactedSensitiveValue(col, row, value)) continue
+
+      const code = validateValue(col, value)
       if (!code) continue
 
       if (code === "required")
@@ -235,13 +296,25 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     }
   }
 
+  const buildEditPayload = (): Record<string, string> => {
+    const payload: Record<string, string> = {}
+    for (const col of editableColumnsForEdit) {
+      const value = formValues[col.name] ?? ""
+      if (shouldPreserveRedactedSensitiveValue(col, editTarget, value)) {
+        continue
+      }
+      payload[col.name] = value
+    }
+    return payload
+  }
+
   const handleEdit = async () => {
     if (!editTarget) return
-    if (!validateForm(editableColumnsForEdit)) return
+    if (!validateForm(editableColumnsForEdit, editTarget)) return
     try {
       await updateMutation.mutateAsync({
         rowId: editTarget.id,
-        payload: formValues
+        payload: buildEditPayload()
       })
       setEditTarget(null)
       toast.success(t("customTablesEditSuccess"))
@@ -261,16 +334,42 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     }
   }
 
-  const togglePasswordVisibility = (
-    rowId: number | string,
-    columnName: string
-  ) => {
-    const key = `${rowId}:${columnName}`
-    setRevealedPasswords((prev) => ({
-      ...prev,
-      [key]: !prev[key]
-    }))
-  }
+  const toggleSensitiveVisibility = useCallback(
+    async (rowId: number | string, column: CustomTableColumn) => {
+      const key = `${rowId}:${column.name}`
+      if (revealedPasswords[key]) {
+        setRevealedPasswords((prev) => ({ ...prev, [key]: false }))
+        return
+      }
+
+      if (typeof column.fieldId !== "number") {
+        toast.error(t("customTablesRevealFailed"))
+        return
+      }
+
+      if (revealedPasswordValues[key] === undefined) {
+        try {
+          setRevealingPasswordKey(key)
+          const value = await revealMutation.mutateAsync({
+            rowId,
+            fieldId: column.fieldId
+          })
+          setRevealedPasswordValues((prev) => ({ ...prev, [key]: value }))
+        } catch {
+          toast.error(t("customTablesRevealFailed"))
+          return
+        } finally {
+          setRevealingPasswordKey(null)
+        }
+      }
+
+      setRevealedPasswords((prev) => ({
+        ...prev,
+        [key]: true
+      }))
+    },
+    [revealedPasswords, revealedPasswordValues, revealMutation, t]
+  )
 
   const tableColumns = useMemo<ColumnDef<CustomTableRow>[]>(() => {
     const cols: ColumnDef<CustomTableRow>[] = orderedColumns
@@ -298,29 +397,31 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
             )
           }
 
-          if (
-            fieldType === "password" ||
-            fieldType === "passwordAlphaNumeric" ||
-            fieldType === "complexPassword"
-          ) {
+          if (isSensitiveColumn(column)) {
             const passwordKey = `${row.original.id}:${column.name}`
             const isRevealed = Boolean(revealedPasswords[passwordKey])
+            const displayValue = revealedPasswordValues[passwordKey] ?? value
+            const canReveal = isRevealableColumn(column) && value !== ""
+            const isRevealing = revealingPasswordKey === passwordKey
             return (
               <div className="flex items-center gap-2">
                 <span className="font-mono text-sm">
-                  {isRevealed ? value || "—" : "••••••••"}
+                  {isRevealed ? displayValue || "—" : "••••••••"}
                 </span>
-                {value ? (
+                {canReveal ? (
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
                     className="h-7 px-2"
+                    disabled={isRevealing}
                     onClick={() =>
-                      togglePasswordVisibility(row.original.id, column.name)
+                      void toggleSensitiveVisibility(row.original.id, column)
                     }
                   >
-                    {isRevealed ? (
+                    {isRevealing ? (
+                      <Loader2 className="size-3.5 animate-spin" />
+                    ) : isRevealed ? (
                       <EyeOff className="size-3.5" />
                     ) : (
                       <Eye className="size-3.5" />
@@ -392,6 +493,9 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     canDelete,
     t,
     revealedPasswords,
+    revealedPasswordValues,
+    revealingPasswordKey,
+    toggleSensitiveVisibility,
     openEdit,
     setDeleteTarget
   ])
@@ -506,7 +610,9 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
               {t("customTablesAddDescription")}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 py-2">{renderFormFields(inputDataColumns)}</div>
+          <div className="space-y-4 py-2">
+            {renderFormFields(inputDataColumns)}
+          </div>
           <DialogFooter>
             <Button
               variant="outline"

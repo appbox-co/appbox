@@ -7,6 +7,7 @@ import {
   deleteCustomTableRow,
   getCustomTableRows,
   getInstanceCustomTables,
+  revealCustomTableRowField,
   updateCustomTableRow
 } from "../custom-tables"
 
@@ -67,5 +68,20 @@ export function useDeleteCustomTableRow(tableId: number, instanceId: number) {
         queryKey: queryKeys.customTables.rows(instanceId, tableId)
       })
     }
+  })
+}
+
+export function useRevealCustomTableRowField(
+  tableId: number,
+  instanceId: number
+) {
+  return useMutation({
+    mutationFn: ({
+      rowId,
+      fieldId
+    }: {
+      rowId: number | string
+      fieldId: number
+    }) => revealCustomTableRowField(tableId, instanceId, rowId, fieldId)
   })
 }

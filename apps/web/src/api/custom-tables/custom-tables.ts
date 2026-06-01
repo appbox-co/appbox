@@ -2,8 +2,11 @@ import { apiDelete, apiGet, apiPost, apiPut } from "@/api/client"
 
 export interface CustomTableColumn {
   name: string
+  fieldId?: number
   title: string
   type?: string
+  sensitive?: boolean
+  revealable?: boolean
   inputField?: {
     type?: string
 
@@ -95,6 +98,19 @@ export async function deleteCustomTableRow(
   rowId: number | string
 ): Promise<void> {
   return apiDelete(`tables/${tableId}/data/${instanceId}/${rowId}`)
+}
+
+export async function revealCustomTableRowField(
+  tableId: number,
+  instanceId: number,
+  rowId: number | string,
+  fieldId: number
+): Promise<string> {
+  const res = await apiGet<{ value?: unknown }>(
+    `tables/${tableId}/data/${instanceId}/${rowId}/field/${fieldId}/reveal`
+  )
+
+  return typeof res?.value === "string" ? res.value : ""
 }
 
 export { parseTableRef }
