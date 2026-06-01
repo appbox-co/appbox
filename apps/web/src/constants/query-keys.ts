@@ -33,6 +33,7 @@ export const queryKeys = {
   },
   notifications: {
     all: ["notifications"] as const,
+    infinite: (limit: number) => ["notifications", "infinite", limit] as const,
     unread: ["notifications", "unread"] as const
   },
   domains: {

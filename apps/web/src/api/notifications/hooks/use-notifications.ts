@@ -1,7 +1,9 @@
 "use client"
 
 import {
+  type InfiniteData,
   keepPreviousData,
+  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient
@@ -19,6 +21,10 @@ interface NotificationsPage {
   totalCount: number
 }
 
+const MAX_NOTIFICATION_PAGE = 100
+
+export type NotificationsInfiniteData = InfiniteData<NotificationsPage>
+
 function patchPage(
   data: unknown,
   patch: (items: Notification[]) => Notification[]
@@ -30,11 +36,34 @@ function patchPage(
   return data
 }
 
+function patchNotificationData(
+  data: unknown,
+  patch: (items: Notification[]) => Notification[]
+): unknown {
+  if (
+    data &&
+    typeof data === "object" &&
+    "pages" in data &&
+    "pageParams" in data
+  ) {
+    const infinite = data as NotificationsInfiniteData
+    return {
+      ...infinite,
+      pages: infinite.pages.map((page) => ({
+        ...page,
+        items: patch(page.items)
+      }))
+    }
+  }
+
+  return patchPage(data, patch)
+}
+
 export function useNotifications(limit: number = 20) {
   return useQuery({
     queryKey: [...queryKeys.notifications.all, limit],
     queryFn: async () => {
-      const res = await getNotifications({ limit })
+      const res = await getNotifications({ limit, page: 1 })
       return {
         items: res.items,
         totalCount: res.totalCount
@@ -42,6 +71,46 @@ export function useNotifications(limit: number = 20) {
     },
     placeholderData: keepPreviousData
   })
+}
+
+export function useInfiniteNotifications(limit: number = 20) {
+  return useInfiniteQuery({
+    queryKey: queryKeys.notifications.infinite(limit),
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await getNotifications({ limit, page: pageParam as number })
+      return {
+        items: res.items,
+        totalCount: res.totalCount
+      } satisfies NotificationsPage
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if ((lastPageParam as number) >= MAX_NOTIFICATION_PAGE) {
+        return undefined
+      }
+
+      const loadedCount = allPages.reduce(
+        (count, page) => count + page.items.length,
+        0
+      )
+
+      return loadedCount < lastPage.totalCount
+        ? (lastPageParam as number) + 1
+        : undefined
+    }
+  })
+}
+
+export function flattenNotifications(
+  data: NotificationsInfiniteData | undefined
+): Notification[] {
+  return data?.pages.flatMap((page) => page.items) ?? []
+}
+
+export function totalNotificationCount(
+  data: NotificationsInfiniteData | undefined
+): number {
+  return data?.pages[0]?.totalCount ?? 0
 }
 
 /**
@@ -52,7 +121,7 @@ export function useUnreadCount() {
   return useQuery({
     queryKey: queryKeys.notifications.unread,
     queryFn: async () => {
-      const res = await getNotifications({ limit: 1 })
+      const res = await getNotifications({ limit: 1, page: 1 })
       return { count: res.unread }
     }
   })
@@ -73,7 +142,7 @@ export function useMarkRead() {
       for (const [key, data] of allQueries) {
         queryClient.setQueryData(
           key,
-          patchPage(data, (items) =>
+          patchNotificationData(data, (items) =>
             items.map((n) => (n.id === id ? { ...n, is_read: true } : n))
           )
         )
@@ -124,7 +193,7 @@ export function useMarkAllRead() {
       for (const [key, data] of allQueries) {
         queryClient.setQueryData(
           key,
-          patchPage(data, (items) =>
+          patchNotificationData(data, (items) =>
             items.map((n) => ({ ...n, is_read: true }))
           )
         )

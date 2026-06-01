@@ -45,12 +45,12 @@ interface NotificationsRawResponse {
 
 export async function getNotifications(params?: {
   limit?: number
-  offset?: number
+  page?: number
   since?: string
 }): Promise<{ items: Notification[]; unread: number; totalCount: number }> {
   const queryParams: Record<string, string> = { orderby: "-id" }
   if (params?.limit) queryParams.limit = String(params.limit)
-  if (params?.offset) queryParams.offset = String(params.offset)
+  if (params?.page) queryParams.page = String(params.page)
   if (params?.since) queryParams.since = params.since
   const res = await apiGet<NotificationsRawResponse>("notifications", {
     params: queryParams

@@ -6,9 +6,11 @@ import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { Bell, Check, CheckCheck, Loader2 } from "lucide-react"
 import {
+  flattenNotifications,
+  totalNotificationCount,
   useMarkAllRead,
   useMarkRead,
-  useNotifications,
+  useInfiniteNotifications,
   useUnreadCount
 } from "@/api/notifications/hooks/use-notifications"
 import type { Notification } from "@/api/notifications/notifications"
@@ -157,13 +159,19 @@ export function NotificationDropdown() {
   const ws = useWebSocket()
   const router = useRouter()
 
-  const [limit, setLimit] = useState(PAGE_SIZE)
   const [open, setOpen] = useState(false)
   const loadingMoreRef = useRef(false)
 
-  const { data, isLoading, isFetching } = useNotifications(limit)
-  const notifications = data?.items
-  const totalCount = data?.totalCount ?? 0
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage
+  } = useInfiniteNotifications(PAGE_SIZE)
+  const notifications = flattenNotifications(data)
+  const totalCount = totalNotificationCount(data)
   const hasMore = (notifications?.length ?? 0) < totalCount
 
   const { data: unreadData } = useUnreadCount()
@@ -221,18 +229,26 @@ export function NotificationDropdown() {
 
   const handleScroll = useCallback(
     (e: React.UIEvent<HTMLDivElement>) => {
-      if (loadingMoreRef.current || isFetching || !hasMore) return
+      if (
+        loadingMoreRef.current ||
+        isFetchingNextPage ||
+        !hasNextPage ||
+        !hasMore
+      ) {
+        return
+      }
+
       const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
       if (scrollHeight - scrollTop - clientHeight < 80) {
         loadingMoreRef.current = true
-        setLimit((prev) => prev + PAGE_SIZE)
+        void fetchNextPage()
         // Reset after short delay so next scroll can trigger again
         setTimeout(() => {
           loadingMoreRef.current = false
         }, 500)
       }
     },
-    [isFetching, hasMore]
+    [fetchNextPage, hasNextPage, hasMore, isFetchingNextPage]
   )
 
   return (
@@ -284,7 +300,7 @@ export function NotificationDropdown() {
           <div className="flex items-center justify-center py-8">
             <Loader2 className="size-5 animate-spin text-muted-foreground" />
           </div>
-        ) : !notifications || notifications.length === 0 ? (
+        ) : notifications.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-8">
             <Check className="size-8 text-muted-foreground/40" />
             <p className="text-sm text-muted-foreground">
@@ -306,7 +322,7 @@ export function NotificationDropdown() {
             ))}
 
             {/* Infinite scroll loading indicator */}
-            {isFetching && !isLoading && (
+            {(isFetchingNextPage || (isFetching && !isLoading)) && (
               <div className="flex items-center justify-center py-4">
                 <Loader2 className="size-4 animate-spin text-muted-foreground" />
               </div>
