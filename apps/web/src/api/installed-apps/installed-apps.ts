@@ -187,6 +187,17 @@ export async function getInstalledApp(id: number): Promise<InstalledApp> {
   return mapInstalledApp(raw)
 }
 
+export async function revealInstalledAppCustomField(
+  id: number,
+  fieldId: number
+): Promise<string> {
+  const res = await apiGet<{ value?: unknown }>(
+    `apps/instances/${id}/fields/${fieldId}/reveal`
+  )
+
+  return typeof res?.value === "string" ? res.value : ""
+}
+
 export async function getInstalledAppVncInfo(
   serverName: string,
   id: number

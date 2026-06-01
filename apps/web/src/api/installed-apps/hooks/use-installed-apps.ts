@@ -1,10 +1,10 @@
 "use client"
 
 import {
-  type QueryClient,
   useMutation,
   useQuery,
-  useQueryClient
+  useQueryClient,
+  type QueryClient
 } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { queryKeys } from "@/constants/query-keys"
@@ -17,6 +17,7 @@ import {
   getInstalledApps,
   getInstalledAppVncInfo,
   restartApp,
+  revealInstalledAppCustomField,
   startApp,
   stopApp,
   switchVersion,
@@ -58,6 +59,13 @@ export function useInstalledAppVncInfo(
     queryKey: queryKeys.installedApps.vnc(id),
     queryFn: () => getInstalledAppVncInfo(serverName, id),
     enabled: enabled && !!serverName && id > 0
+  })
+}
+
+export function useRevealInstalledAppCustomField(id: number) {
+  return useMutation({
+    mutationFn: ({ fieldId }: { fieldId: number }) =>
+      revealInstalledAppCustomField(id, fieldId)
   })
 }
 

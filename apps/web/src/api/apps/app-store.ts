@@ -14,10 +14,13 @@ export interface CustomFieldValidation {
 }
 
 export interface CustomField {
+  fieldId?: number
   label: string
   type: string // dynamicText | password | switch | email | date | search | selector | staticText | hidden | spacer | number
   width: number
   defaultValue?: string | number
+  sensitive?: boolean
+  revealable?: boolean
   validate?: (string | CustomFieldValidation)[]
   params?: {
     autoFill?: string

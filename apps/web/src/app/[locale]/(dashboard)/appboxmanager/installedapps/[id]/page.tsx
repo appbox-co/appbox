@@ -21,10 +21,14 @@ import {
   Server,
   Star
 } from "lucide-react"
+import { toast } from "sonner"
 import type { CustomField } from "@/api/apps/app-store"
 import { useAppVersions } from "@/api/apps/hooks/use-app-store"
 import { useCylo } from "@/api/cylos/hooks/use-cylos"
-import { useInstalledApp } from "@/api/installed-apps/hooks/use-installed-apps"
+import {
+  useInstalledApp,
+  useRevealInstalledAppCustomField
+} from "@/api/installed-apps/hooks/use-installed-apps"
 import {
   usePinApp,
   usePinnedApps,
@@ -140,29 +144,73 @@ const PASSWORD_TYPES = new Set([
 ])
 const URL_TYPES = new Set(["externalURL", "clientURL"])
 
+function isPasswordLikeCustomField(
+  key: string,
+  label: string,
+  fieldType: string
+): boolean {
+  return (
+    PASSWORD_TYPES.has(fieldType) ||
+    key.toLowerCase().includes("password") ||
+    label.toLowerCase().includes("password")
+  )
+}
+
 function CustomFieldItem({
   label,
   value,
-  isPassword,
+  isSensitive,
+  isRevealable,
   isUrl,
   isSwitch,
-  menuItems
+  menuItems,
+  revealedValue,
+  isRevealing,
+  onReveal
 }: {
   label: string
   value: string
-  isPassword: boolean
+  isSensitive: boolean
+  isRevealable: boolean
   isUrl?: boolean
   isSwitch?: boolean
   menuItems?: Record<string, string>
+  revealedValue?: string
+  isRevealing?: boolean
+  onReveal?: () => Promise<string | undefined>
 }) {
   const [revealed, setRevealed] = useState(false)
   const [copied, setCopied] = useState(false)
   const t = useTranslations("appboxmanager.appDetail")
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(value)
+  const getSensitiveValue = async (): Promise<string | undefined> => {
+    if (!isSensitive) return value
+    if (!isRevealable) return undefined
+    if (revealedValue !== undefined) return revealedValue
+    return onReveal?.()
+  }
+
+  const handleCopy = async () => {
+    const copyValue = await getSensitiveValue()
+    if (copyValue === undefined) {
+      return
+    }
+
+    navigator.clipboard.writeText(copyValue)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const handleToggleReveal = async () => {
+    if (revealed) {
+      setRevealed(false)
+      return
+    }
+
+    const nextValue = await getSensitiveValue()
+    if (nextValue !== undefined) {
+      setRevealed(true)
+    }
   }
 
   let displayValue = value
@@ -190,7 +238,11 @@ function CustomFieldItem({
           </a>
         ) : (
           <p className="min-w-0 flex-1 break-all text-sm font-medium">
-            {isPassword && !revealed ? "••••••••••" : displayValue}
+            {isSensitive && !revealed
+              ? "••••••••••"
+              : isSensitive && revealedValue !== undefined
+                ? revealedValue
+                : displayValue}
           </p>
         )}
         <div className="flex shrink-0 items-center gap-1">
@@ -205,14 +257,17 @@ function CustomFieldItem({
               <ExternalLink className="size-3.5" />
             </a>
           )}
-          {isPassword && (
+          {isSensitive && isRevealable && (
             <button
               type="button"
-              onClick={() => setRevealed(!revealed)}
+              onClick={() => void handleToggleReveal()}
+              disabled={isRevealing}
               className="rounded-md p-1 text-muted-foreground hover:text-foreground transition-colors"
               title={revealed ? t("hide") : t("show")}
             >
-              {revealed ? (
+              {isRevealing ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : revealed ? (
                 <EyeOff className="size-3.5" />
               ) : (
                 <Eye className="size-3.5" />
@@ -221,7 +276,8 @@ function CustomFieldItem({
           )}
           <button
             type="button"
-            onClick={handleCopy}
+            onClick={() => void handleCopy()}
+            disabled={isSensitive && isRevealable && isRevealing}
             className="rounded-md p-1 text-muted-foreground hover:text-foreground transition-colors"
             title={t("copy")}
           >
@@ -302,6 +358,13 @@ export default function InstalledAppDetailPage({
   const { data: app, isLoading, error } = useInstalledApp(appId)
   const { data: cylo, isLoading: cyloLoading } = useCylo(app?.cylo_id ?? 0)
   const { data: appVersions } = useAppVersions(app?.app_id ?? 0)
+  const revealCustomFieldMutation = useRevealInstalledAppCustomField(appId)
+  const [revealedCustomFieldValues, setRevealedCustomFieldValues] = useState<
+    Record<string, string>
+  >({})
+  const [revealingCustomFieldKey, setRevealingCustomFieldKey] = useState<
+    string | null
+  >(null)
 
   const { data: pinnedApps } = usePinnedApps(app?.cylo_id)
   const pinMutation = usePinApp()
@@ -309,6 +372,42 @@ export default function InstalledAppDetailPage({
 
   const isPinned = pinnedApps?.some((p) => p.app_instance_id === appId)
   const isPinPending = pinMutation.isPending || unpinMutation.isPending
+
+  const getCustomFieldRevealKey = useCallback(
+    (fieldId: number) => `${appId}:${fieldId}`,
+    [appId]
+  )
+
+  const revealCustomField = useCallback(
+    async (fieldId: number) => {
+      const revealKey = getCustomFieldRevealKey(fieldId)
+      if (revealedCustomFieldValues[revealKey] !== undefined) {
+        return revealedCustomFieldValues[revealKey]
+      }
+
+      setRevealingCustomFieldKey(revealKey)
+      try {
+        const value = await revealCustomFieldMutation.mutateAsync({ fieldId })
+        setRevealedCustomFieldValues((prev) => ({
+          ...prev,
+          [revealKey]: value
+        }))
+
+        return value
+      } catch {
+        toast.error(t("customTablesRevealFailed"))
+        return undefined
+      } finally {
+        setRevealingCustomFieldKey(null)
+      }
+    },
+    [
+      getCustomFieldRevealKey,
+      revealCustomFieldMutation,
+      revealedCustomFieldValues,
+      t
+    ]
+  )
 
   /* ── Live job state — managed directly from WS events and dev panel ── */
   const [job, setJob] = useState<JobProgressData | undefined>(undefined)
@@ -747,12 +846,18 @@ export default function InstalledAppDetailPage({
                         let displayValue = ""
                         let fieldType = "text"
                         let menuItems: Record<string, string> | undefined
+                        let fieldId: number | undefined
+                        let isSensitive = false
+                        let isRevealable = false
 
                         if (value && typeof value === "object") {
                           const field = value as CustomField
                           label = field.label ?? key
                           displayValue = String(field.defaultValue ?? "")
                           fieldType = field.type ?? "text"
+                          fieldId = field.fieldId
+                          isSensitive = Boolean(field.sensitive)
+                          isRevealable = Boolean(field.revealable)
                           if (
                             field.params?.menuItems &&
                             typeof field.params.menuItems === "object"
@@ -770,22 +875,45 @@ export default function InstalledAppDetailPage({
                         if (!displayValue && !URL_TYPES.has(fieldType))
                           return null
 
-                        const isPassword =
-                          PASSWORD_TYPES.has(fieldType) ||
-                          key.toLowerCase().includes("password") ||
-                          label.toLowerCase().includes("password")
+                        const isPassword = isPasswordLikeCustomField(
+                          key,
+                          label,
+                          fieldType
+                        )
+                        isSensitive = isSensitive || isPassword
+                        isRevealable =
+                          isRevealable ||
+                          (isPassword && typeof fieldId === "number")
                         const isUrl = URL_TYPES.has(fieldType)
                         const isSwitch = fieldType === "switch"
+                        const revealKey =
+                          typeof fieldId === "number"
+                            ? getCustomFieldRevealKey(fieldId)
+                            : null
 
                         return (
                           <CustomFieldItem
                             key={key}
                             label={label}
                             value={displayValue}
-                            isPassword={isPassword}
+                            isSensitive={isSensitive}
+                            isRevealable={
+                              isRevealable && typeof fieldId === "number"
+                            }
                             isUrl={isUrl}
                             isSwitch={isSwitch}
                             menuItems={menuItems}
+                            revealedValue={
+                              revealKey
+                                ? revealedCustomFieldValues[revealKey]
+                                : undefined
+                            }
+                            isRevealing={revealingCustomFieldKey === revealKey}
+                            onReveal={
+                              typeof fieldId === "number"
+                                ? () => revealCustomField(fieldId)
+                                : undefined
+                            }
                           />
                         )
                       })}
