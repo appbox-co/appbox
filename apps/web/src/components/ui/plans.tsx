@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { SparklesText } from "@/components/ui/sparkles-text"
 import { CURRENT_PROMO_THEME } from "@/config/promo-theme"
+import { withAttributionParams } from "@/lib/marketing-attribution"
 
 // Define types for billing cycle and pricing details
 type BillingCycle =
@@ -443,7 +444,7 @@ const Plans = ({
                                 }`
                           const openBillingUrl = () => {
                             window.open(
-                              billingUrl,
+                              withAttributionParams(billingUrl),
                               "_blank",
                               "noopener,noreferrer"
                             )
@@ -779,7 +780,13 @@ const Plans = ({
                                 <Button variant="outline" asChild>
                                   <a
                                     href="https://billing.appbox.co/contact.php"
-                                    onClick={(event) => event.stopPropagation()}
+                                    onClick={(event) => {
+                                      event.stopPropagation()
+                                      event.currentTarget.href =
+                                        withAttributionParams(
+                                          "https://billing.appbox.co/contact.php"
+                                        )
+                                    }}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
@@ -790,7 +797,11 @@ const Plans = ({
                                 <Button variant="pulse" asChild>
                                   <a
                                     href={billingUrl}
-                                    onClick={(event) => event.stopPropagation()}
+                                    onClick={(event) => {
+                                      event.stopPropagation()
+                                      event.currentTarget.href =
+                                        withAttributionParams(billingUrl)
+                                    }}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >

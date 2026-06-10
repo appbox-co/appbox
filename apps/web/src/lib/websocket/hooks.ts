@@ -224,7 +224,8 @@ function mergeOptimisticComment(
 ): Comment {
   return {
     ...incoming,
-    children: optimistic.children.length > 0 ? optimistic.children : incoming.children,
+    children:
+      optimistic.children.length > 0 ? optimistic.children : incoming.children,
     uservote: optimistic.uservote
   }
 }

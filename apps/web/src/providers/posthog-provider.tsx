@@ -3,6 +3,10 @@
 import { useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
+import {
+  attachAttributionToBillingLinks,
+  persistAttributionParams
+} from "@/lib/marketing-attribution"
 
 // Cloudflare proxy domain for PostHog
 const POSTHOG_PROXY_HOST = "piggy.appbox.co"
@@ -19,18 +23,29 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         ui_host: "https://eu.posthog.com", // EU region UI host
         capture_pageview: false // We'll capture pageviews manually
       })
+      posthog.register(persistAttributionParams())
     }
   }, [])
 
   useEffect(() => {
+    return attachAttributionToBillingLinks()
+  }, [])
+
+  useEffect(() => {
     if (pathname) {
+      const attributionParams = persistAttributionParams(
+        searchParams.toString()
+      )
+      posthog.register(attributionParams)
+
       // Track pageviews
       let url = window.origin + pathname
       if (searchParams.toString()) {
         url = `${url}?${searchParams.toString()}`
       }
       posthog.capture("$pageview", {
-        $current_url: url
+        $current_url: url,
+        ...attributionParams
       })
     }
   }, [pathname, searchParams])

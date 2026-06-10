@@ -59,11 +59,7 @@ export function MigrationAlert({
   scene
 }: MigrationAlertProps) {
   const hasProgress =
-    typeof progress === "number" &&
-    typeof live === "boolean" &&
-    !!from &&
-    !!to &&
-    !!phase
+    typeof progress === "number" && typeof live === "boolean" && !!phase
   const pct = Math.max(0, Math.min(100, Math.round(progress ?? 0)))
   const phaseIsDuplicateDescription =
     typeof phase === "string" &&
@@ -123,11 +119,15 @@ export function MigrationAlert({
                     }}
                   >
                     <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
-                      <span className={hostChipClass}>{from}</span>
-                      <ArrowRightLeft
-                        className={`size-3 shrink-0 ${mutedTextClass}`}
-                      />
-                      <span className={hostChipClass}>{to}</span>
+                      {from && to && (
+                        <>
+                          <span className={hostChipClass}>{from}</span>
+                          <ArrowRightLeft
+                            className={`size-3 shrink-0 ${mutedTextClass}`}
+                          />
+                          <span className={hostChipClass}>{to}</span>
+                        </>
+                      )}
                       <span
                         className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold"
                         style={{ background: "#3b82f620", color: "#2563eb" }}

@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import { withAttributionParams } from "@/lib/marketing-attribution"
 import { cn } from "@/lib/utils"
 
 export interface EligiblePlanOption {
@@ -115,7 +116,11 @@ export function DeployDialog({
     )
     if (plan) {
       setLoadingPlanId(productId)
-      window.open(getPlanOrderUrl(plan), "_blank", "noopener,noreferrer")
+      window.open(
+        withAttributionParams(getPlanOrderUrl(plan)),
+        "_blank",
+        "noopener,noreferrer"
+      )
       closeDialog()
     }
   }
