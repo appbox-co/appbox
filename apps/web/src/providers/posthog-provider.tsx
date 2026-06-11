@@ -9,6 +9,7 @@ import {
 } from "@/lib/marketing-attribution"
 import { captureBeginCheckoutEvent } from "@/lib/posthog"
 import {
+  allowRedditTracking,
   allowRedditTrackingWithoutPreference,
   trackRedditPageVisit
 } from "@/lib/reddit-pixel"
@@ -70,7 +71,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 
       const handleConsentGiven = () => {
         syncPostHogConsent()
-        trackRedditPageVisit()
+        allowRedditTracking()
       }
       const optInPostHog = () => posthog.opt_in_capturing()
       const handlePreferenceNotNeeded = () => {
@@ -85,7 +86,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       )
       window.addEventListener(
         "iubenda_consent_given_purpose_5",
-        trackRedditPageVisit
+        allowRedditTracking
       )
       window.addEventListener(
         "iubenda_preference_not_needed",
@@ -106,7 +107,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         )
         window.removeEventListener(
           "iubenda_consent_given_purpose_5",
-          trackRedditPageVisit
+          allowRedditTracking
         )
         window.removeEventListener(
           "iubenda_preference_not_needed",
