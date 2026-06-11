@@ -334,10 +334,6 @@ export default async function IndexPage() {
 
       {launchWeekFlags.day_1 && <DashboardPromoSection />}
 
-      {launchWeekFlags.day_3 && <VpsLaunchPromoSection />}
-
-      <OpenClawPromoSection />
-
       <section id="plans-section" className="scroll-mt-4 pt-4">
         <Plans
           data={plansData.data}
@@ -372,6 +368,10 @@ export default async function IndexPage() {
           }}
         />
       </section>
+
+      {launchWeekFlags.day_3 && <VpsLaunchPromoSection />}
+
+      <OpenClawPromoSection />
 
       <SovereignCloudSection />
 
