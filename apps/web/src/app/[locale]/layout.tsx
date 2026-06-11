@@ -163,6 +163,20 @@ export default async function RootLayout(props: AppLayoutProps) {
             (function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"97191021", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");
           `}
         </Script>
+        <Script
+          type="text/plain"
+          className="_iub_cs_activate"
+          data-iub-purposes="5"
+          strategy="afterInteractive"
+          id="reddit-pixel"
+        >
+          {`
+            !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_hofzgodvh6np";t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
+            rdt('init','a2_hofzgodvh6np');
+            rdt('track','PageVisit');
+            window.__appboxRedditLastPageVisit = window.location.href;
+          `}
+        </Script>
       </head>
 
       <body

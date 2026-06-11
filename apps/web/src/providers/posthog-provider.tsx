@@ -8,6 +8,10 @@ import {
   persistAttributionParams
 } from "@/lib/marketing-attribution"
 import { captureBeginCheckoutEvent } from "@/lib/posthog"
+import {
+  allowRedditTrackingWithoutPreference,
+  trackRedditPageVisit
+} from "@/lib/reddit-pixel"
 
 // Cloudflare proxy domain for PostHog
 const POSTHOG_PROXY_HOST = "piggy.appbox.co"
@@ -64,34 +68,56 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       posthog.register(persistAttributionParams())
       syncPostHogConsent()
 
+      const handleConsentGiven = () => {
+        syncPostHogConsent()
+        trackRedditPageVisit()
+      }
       const optInPostHog = () => posthog.opt_in_capturing()
+      const handlePreferenceNotNeeded = () => {
+        optInPostHog()
+        allowRedditTrackingWithoutPreference()
+      }
 
-      window.addEventListener("iubenda_consent_given", syncPostHogConsent)
+      window.addEventListener("iubenda_consent_given", handleConsentGiven)
       window.addEventListener(
         "iubenda_consent_given_purpose_4",
         syncPostHogConsent
       )
-      window.addEventListener("iubenda_preference_not_needed", optInPostHog)
+      window.addEventListener(
+        "iubenda_consent_given_purpose_5",
+        trackRedditPageVisit
+      )
+      window.addEventListener(
+        "iubenda_preference_not_needed",
+        handlePreferenceNotNeeded
+      )
       window.addEventListener("iubenda_consent_rejected", syncPostHogConsent)
 
       const consentPoll = window.setInterval(syncPostHogConsent, 1000)
+      const redditPixelPoll = window.setInterval(trackRedditPageVisit, 1000)
       window.setTimeout(() => window.clearInterval(consentPoll), 30000)
+      window.setTimeout(() => window.clearInterval(redditPixelPoll), 30000)
 
       return () => {
-        window.removeEventListener("iubenda_consent_given", syncPostHogConsent)
+        window.removeEventListener("iubenda_consent_given", handleConsentGiven)
         window.removeEventListener(
           "iubenda_consent_given_purpose_4",
           syncPostHogConsent
         )
         window.removeEventListener(
+          "iubenda_consent_given_purpose_5",
+          trackRedditPageVisit
+        )
+        window.removeEventListener(
           "iubenda_preference_not_needed",
-          optInPostHog
+          handlePreferenceNotNeeded
         )
         window.removeEventListener(
           "iubenda_consent_rejected",
           syncPostHogConsent
         )
         window.clearInterval(consentPoll)
+        window.clearInterval(redditPixelPoll)
       }
     }
   }, [])
@@ -108,6 +134,8 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       posthog.register(attributionParams)
 
       syncPostHogConsent()
+      trackRedditPageVisit()
+
       if (posthog.has_opted_out_capturing()) {
         return
       }
