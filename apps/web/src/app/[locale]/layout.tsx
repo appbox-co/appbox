@@ -154,6 +154,8 @@ export default async function RootLayout(props: AppLayoutProps) {
         />
         <Script
           type="text/javascript"
+          className="_iub_cs_activate"
+          data-iub-purposes="5"
           strategy="afterInteractive"
           id="bing-analytics"
         >
