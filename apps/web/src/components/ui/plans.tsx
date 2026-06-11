@@ -11,6 +11,7 @@ import { CardLinkHint } from "@/components/ui/card-link-hint"
 import { SparklesText } from "@/components/ui/sparkles-text"
 import { CURRENT_PROMO_THEME } from "@/config/promo-theme"
 import { withAttributionParams } from "@/lib/marketing-attribution"
+import { trackBeginCheckout } from "@/lib/posthog"
 
 // Define types for billing cycle and pricing details
 type BillingCycle =
@@ -444,7 +445,17 @@ const Plans = ({
                                 }`
                           const openBillingUrl = () => {
                             window.open(
-                              withAttributionParams(billingUrl),
+                              trackBeginCheckout(
+                                billingUrl,
+                                "plan_card_click",
+                                {
+                                  billing_product_id: plan.product_id,
+                                  billing_cycle: billingCycle[0],
+                                  plan_title: plan.title,
+                                  plan_short_title: plan.short_title,
+                                  plan_group: group.title
+                                }
+                              ),
                               "_blank",
                               "noopener,noreferrer"
                             )

@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
-import { withAttributionParams } from "@/lib/marketing-attribution"
+import { trackBeginCheckout } from "@/lib/posthog"
 import { cn } from "@/lib/utils"
 
 export interface EligiblePlanOption {
@@ -117,7 +117,13 @@ export function DeployDialog({
     if (plan) {
       setLoadingPlanId(productId)
       window.open(
-        withAttributionParams(getPlanOrderUrl(plan)),
+        trackBeginCheckout(getPlanOrderUrl(plan), "deploy_plan_select", {
+          app_id: appId,
+          billing_product_id: plan.productId,
+          billing_cycle: "monthly",
+          plan_title: plan.title,
+          plan_app_slots: plan.appSlots
+        }),
         "_blank",
         "noopener,noreferrer"
       )

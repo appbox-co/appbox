@@ -7,6 +7,7 @@ import {
   attachAttributionToBillingLinks,
   persistAttributionParams
 } from "@/lib/marketing-attribution"
+import { captureBeginCheckoutEvent } from "@/lib/posthog"
 
 // Cloudflare proxy domain for PostHog
 const POSTHOG_PROXY_HOST = "piggy.appbox.co"
@@ -28,7 +29,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    return attachAttributionToBillingLinks()
+    return attachAttributionToBillingLinks(captureBeginCheckoutEvent)
   }, [])
 
   useEffect(() => {

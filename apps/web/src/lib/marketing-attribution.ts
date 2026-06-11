@@ -16,6 +16,13 @@ const ATTRIBUTION_PARAM_NAMES = [
 
 type AttributionParamName = (typeof ATTRIBUTION_PARAM_NAMES)[number]
 type AttributionParams = Partial<Record<AttributionParamName, string>>
+export type BillingCheckoutTrigger =
+  | "billing_link_click"
+  | "plan_card_click"
+  | "deploy_plan_select"
+  | (string & {})
+
+export type BillingCheckoutProperties = Record<string, unknown>
 
 function readStoredAttributionParams(): AttributionParams {
   if (typeof window === "undefined") return {}
@@ -107,7 +114,78 @@ export function withAttributionParams(url: string): string {
   }
 }
 
-export function attachAttributionToBillingLinks(): () => void {
+function withoutEmptyValues(
+  properties: BillingCheckoutProperties
+): BillingCheckoutProperties {
+  return Object.fromEntries(
+    Object.entries(properties).filter(([, value]) => {
+      if (value === undefined || value === null || value === "") {
+        return false
+      }
+
+      if (Array.isArray(value) && value.length === 0) {
+        return false
+      }
+
+      return true
+    })
+  )
+}
+
+function orderPackageSlug(pathname: string): string | undefined {
+  const match = pathname.match(/^\/order\/appbox-packages\/([^/?#]+)/)
+  return match ? decodeURIComponent(match[1]) : undefined
+}
+
+export function buildBillingCheckoutProperties(
+  url: string,
+  trigger: BillingCheckoutTrigger,
+  properties: BillingCheckoutProperties = {}
+): BillingCheckoutProperties {
+  if (typeof window === "undefined") {
+    return properties
+  }
+
+  const attributionParams = getAttributionParams()
+  const attributionParamNames = Object.keys(attributionParams)
+
+  try {
+    const targetUrl = new URL(url, window.location.href)
+
+    return withoutEmptyValues({
+      checkout_trigger: trigger,
+      source_host: window.location.host,
+      source_pathname: window.location.pathname,
+      source_url: `${window.location.origin}${window.location.pathname}`,
+      destination_host: targetUrl.host,
+      destination_pathname: targetUrl.pathname,
+      destination_url: `${targetUrl.origin}${targetUrl.pathname}`,
+      billing_spage: targetUrl.searchParams.get("spage"),
+      billing_action: targetUrl.searchParams.get("a"),
+      billing_product_id: targetUrl.searchParams.get("pid"),
+      billing_cycle: targetUrl.searchParams.get("billingcycle"),
+      order_package_slug: orderPackageSlug(targetUrl.pathname),
+      attribution_present: attributionParamNames.length > 0,
+      attribution_param_names: attributionParamNames,
+      ...properties
+    })
+  } catch {
+    return withoutEmptyValues({
+      checkout_trigger: trigger,
+      source_host: window.location.host,
+      source_pathname: window.location.pathname,
+      source_url: `${window.location.origin}${window.location.pathname}`,
+      destination_url: url,
+      attribution_present: attributionParamNames.length > 0,
+      attribution_param_names: attributionParamNames,
+      ...properties
+    })
+  }
+}
+
+export function attachAttributionToBillingLinks(
+  onBillingLinkClick?: (properties: BillingCheckoutProperties) => void
+): () => void {
   if (typeof document === "undefined") return () => {}
 
   const handleClick = (event: MouseEvent) => {
@@ -119,7 +197,15 @@ export function attachAttributionToBillingLinks(): () => void {
     )
     if (!anchor) return
 
-    anchor.href = withAttributionParams(anchor.href)
+    const attributedHref = withAttributionParams(anchor.href)
+    anchor.href = attributedHref
+
+    onBillingLinkClick?.(
+      buildBillingCheckoutProperties(attributedHref, "billing_link_click", {
+        link_text: anchor.innerText.trim().slice(0, 120),
+        opens_new_tab: anchor.target === "_blank"
+      })
+    )
   }
 
   document.addEventListener("click", handleClick, true)

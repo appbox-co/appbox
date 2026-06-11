@@ -1,6 +1,12 @@
 "use client"
 
 import posthog from "posthog-js"
+import {
+  buildBillingCheckoutProperties,
+  withAttributionParams,
+  type BillingCheckoutProperties,
+  type BillingCheckoutTrigger
+} from "@/lib/marketing-attribution"
 
 // Capture a custom event
 export const captureEvent = (
@@ -8,6 +14,30 @@ export const captureEvent = (
   properties?: Record<string, unknown>
 ) => {
   posthog.capture(eventName, properties)
+}
+
+export const captureBeginCheckoutEvent = (
+  properties: BillingCheckoutProperties
+) => {
+  try {
+    posthog.capture("appbox_begin_checkout", properties)
+  } catch {
+    // Checkout should never be blocked by analytics failures.
+  }
+}
+
+export const trackBeginCheckout = (
+  url: string,
+  trigger: BillingCheckoutTrigger,
+  properties: BillingCheckoutProperties = {}
+) => {
+  const attributedUrl = withAttributionParams(url)
+
+  captureBeginCheckoutEvent(
+    buildBillingCheckoutProperties(attributedUrl, trigger, properties)
+  )
+
+  return attributedUrl
 }
 
 // Identify a user
