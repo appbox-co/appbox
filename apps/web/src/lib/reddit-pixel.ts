@@ -26,6 +26,7 @@ type WindowWithTracking = Window & {
   __appboxRedditAdvertisingConsentGranted?: boolean
   __appboxRedditAdvertisingConsentNotNeeded?: boolean
   __appboxRedditPixelInitialized?: boolean
+  appboxAllowRedditTracking?: () => void
   _iub?: {
     cs?: {
       api?: {
@@ -77,6 +78,8 @@ function loadRedditPixel() {
     script.id = REDDIT_PIXEL_SCRIPT_ID
     script.src = REDDIT_PIXEL_SCRIPT_SRC
     script.async = true
+    script.className = "_iub_cs_activate"
+    script.setAttribute("data-iub-purposes", IUBENDA_ADVERTISING_PURPOSE)
     document.head.appendChild(script)
   }
 

@@ -24,6 +24,8 @@ type IubendaPreferences = {
 }
 
 type WindowWithIubenda = Window & {
+  __appboxRedditAdvertisingConsentGranted?: boolean
+  appboxAllowRedditTracking?: () => void
   _iub?: {
     cs?: {
       api?: {
@@ -68,6 +70,12 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       })
       posthog.register(persistAttributionParams())
       syncPostHogConsent()
+
+      const trackingWindow = window as WindowWithIubenda
+      trackingWindow.appboxAllowRedditTracking = allowRedditTracking
+      if (trackingWindow.__appboxRedditAdvertisingConsentGranted) {
+        allowRedditTracking()
+      }
 
       const handleConsentGiven = () => {
         syncPostHogConsent()
@@ -119,6 +127,9 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         )
         window.clearInterval(consentPoll)
         window.clearInterval(redditPixelPoll)
+        if (trackingWindow.appboxAllowRedditTracking === allowRedditTracking) {
+          delete trackingWindow.appboxAllowRedditTracking
+        }
       }
     }
   }, [])
