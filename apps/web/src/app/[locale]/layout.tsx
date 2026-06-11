@@ -142,14 +142,16 @@ export default async function RootLayout(props: AppLayoutProps) {
   // setRequestLocale(params.locale)
 
   return (
-    <html
-      lang={locale}
-      dir={dir}
-      suppressHydrationWarning
-    >
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#181423" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
+        <Script
+          type="text/javascript"
+          src="https://embeds.iubenda.com/widgets/03e26262-624c-4f5b-8687-f85ec29afd9f.js"
+          strategy="beforeInteractive"
+          id="iubenda-cookie-solution"
+        />
         <Script
           type="text/javascript"
           strategy="afterInteractive"
@@ -173,17 +175,18 @@ export default async function RootLayout(props: AppLayoutProps) {
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              analytics_storage: 'denied',
+              ad_storage: 'denied',
+              functionality_storage: 'granted',
+              personalization_storage: 'denied',
+              security_storage: 'granted',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              wait_for_update: 500
+            });
             gtag('js', new Date());
             gtag('config', 'GT-T53F3CT6');
-            gtag('consent', 'update', {
-              analytics_storage: 'granted',
-              ad_storage: 'granted',
-              functionality_storage: 'granted',
-              personalization_storage: 'granted',
-              security_storage: 'granted',
-              ad_user_data: 'granted',
-              ad_personalization: 'granted'
-            })
           `}
         </Script>
 
