@@ -31,7 +31,7 @@ export async function SimpleInstallPromoSection({
   )
 
   return (
-    <section className="py-20 sm:py-28">
+    <section className="hidden py-20 sm:py-28 md:block">
       <div className="mx-auto max-w-[980px] text-center">
         <h2 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           {t("headline_1")}
