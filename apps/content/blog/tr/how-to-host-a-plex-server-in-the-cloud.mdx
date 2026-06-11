@@ -1,0 +1,127 @@
+---
+title: Bulutta Plex Sunucusu Nasıl Barındırılır
+date: 2026-06-11 10:00:00
+excerpt: Bulutta özel bir Plex sunucusu çalıştırmaya, barındırılan bir kurulumda nelere bakmanız gerektiğine ve Appbox'ın medya uygulaması barındırmayı bir VPS'yi elle yönetmekten nasıl daha kolay hale getirdiğine dair pratik bir rehber.
+author_id: rid
+og_image: appbox-plex-library-app-page.webp
+tags: [appbox, plex, medya-sunucusu, bulut-barındırma, uygulamalar]
+---
+
+# Bulutta Plex Sunucusu Nasıl Barındırılır
+
+Plex'i evde çalıştırmak, bir noktaya kadar iyi işler. Yükleme hızı, depolama sınırları, donanım arızaları, gürültülü diskler ve uzaktan erişim ayarları, medya kitaplığınızı açıp oynat tuşuna basmanın önüne geçebilir.
+
+Bulutta çalışan bir Plex sunucusu farklı bir sorunu çözer: size her zaman çevrimiçi olan, her yerden erişilebilen ve masanızın altındaki makineye bağlı olmayan özel bir medya sunucusu verir. Buradaki ödün, kurulumun basit, öngörülebilir ve genel amaçlı boş bir sunucu yerine medya uygulamalarına göre tasarlanmış olmasını istemenizdir.
+
+Bu rehber, bulutta bir Plex kurulumu seçerken neyin önemli olduğunu ve Appbox'ın bu iş akışına nasıl uyduğunu anlatır.
+
+## Bulutta Bir Plex Sunucusunun İhtiyaç Duydukları
+
+Plex özellikle karmaşık değildir, ancak iyi bir barındırılan Plex sunucusunun günlük kullanımda rahat olması için yine de birkaç şeye ihtiyacı vardır:
+
+- Medya kitaplığınız, meta verileriniz, posterleriniz ve uygulama verileriniz için **güvenilir depolama**.
+- Kitaplık taraması, uzaktan erişim ve ara sıra yapılan kod dönüştürme için **yeterli CPU ve bellek**.
+- Uzaktan oynatmanın hızlı başlaması ve stabil kalması için **hızlı ağ erişimi**.
+- Plex web uygulaması ve sunucu erişimi için **kalıcı bir URL**.
+- Güncellemeler, yeniden başlatmalar ve kimlik bilgilerinin hafta sonu projesine dönüşmemesi için **basit uygulama yönetimi**.
+- Jellyfin, Emby, Tautulli, Overseerr, [File Browser](/apps/File%20Browser%20%26%20Webdav) veya Nextcloud gibi **tamamlayıcı uygulamaları çalıştıracak alan**.
+
+Bunu bir VPS üzerinde kendiniz kurabilirsiniz. Pek çok kişi de bunu yapar. Ancak o zaman işletim sisteminden, Docker Compose yığınından, güvenlik duvarından, reverse proxy'den, SSL sertifikalarından, depolama bağlamalarından, servis yeniden başlatmalarından ve ardından gelen her küçük operasyonel ayrıntıdan da siz sorumlu olursunuz.
+
+Appbox diğer yol için tasarlanmıştır: bir uygulama seçin, kurun ve dashboard'dan yönetin.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-plex-library-app-page.webp"
+    alt="Appbox'taki Plex uygulama sayfasından çalışan Plex web kitaplığı"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Plex Barındırma İçin Neden Appbox Kullanılır
+
+Appbox'ta Plex tek tıklamayla kurulabilen bir uygulama olarak sunulur. Boş bir sunucuyla başlamak yerine domain'leri, uygulama verilerini, depolamayı, kaynak ayırmayı ve dashboard kontrollerini zaten anlayan yönetilen bir uygulama ortamıyla başlarsınız.
+
+Bu size birkaç pratik avantaj sağlar:
+
+- Appbox uygulama kitaplığından **tek tıklamayla kurulum**.
+- Uygulama ayrıntıları, yeniden başlatmalar, kimlik bilgileri, sürümler ve kaynak kullanımı için **dashboard kontrolleri**.
+- İlgili araçların aynı dosyalarla çalışabilmesi için Appbox uygulamalarınız arasında **paylaşılan depolama**.
+- Platform akışı üzerinden yönetilen **özel domain'ler ve HTTPS**.
+- Daha ağır bir uygulama planınızdan daha fazla CPU veya belleğe ihtiyaç duyduğunda **App Boost**.
+- Aynı kitaplıkta sunulan [Jellyfin](/apps/Jellyfin), [Emby](/apps/Emby), [Tautulli](/apps/Tautulli), [File Browser](/apps/File%20Browser%20%26%20Webdav) ve [Nextcloud](/apps/Nextcloud) gibi **tamamlayıcı uygulamalar**.
+
+Amaç Plex çalıştırmaksa ve kendi medya yığınınızın operasyon ekibi olmak değilse, bu ayrıntılar önemlidir.
+
+## Plex Barındırma ve Genel Amaçlı VPS
+
+VPS esnektir. Root erişimi alırsınız ve neredeyse her şeyi kurabilirsiniz. Tam kontrol, özel servisler veya çok belirli bir Linux ortamı gerektiğinde bu kullanışlıdır.
+
+Plex barındırmada ise esneklik sürtünmeye dönüşebilir. Tipik bir VPS kurulumu, Linux dağıtımı seçmeyi, Docker veya paketler kurmayı, depolamayı yapılandırmayı, reverse proxy ayarlamayı, SSL yönetmeyi, port açmayı, yedekler oluşturmayı ve kaynak kullanımını kendiniz izlemeyi gerektirir.
+
+Appbox daha belirgin bir yaklaşım izler. Her VPS kullanım senaryosunun yerini almaya çalışmaz. Barındırılan uygulamaları kolaylaştırmaya çalışır.
+
+Her katmanı kendiniz yönetmek istiyorsanız VPS seçin.
+
+Plex ve ilgili uygulamaların ana iş akışı olduğu özel bir medya uygulaması ortamı istiyorsanız Appbox'ı seçin.
+
+## Doğru Appbox Planını Seçmek
+
+Doğru plan, Plex'in yanında başka neleri çalıştırmak istediğinize bağlıdır.
+
+Hafif bir kurulum için yalnızca Plex ve bir dosya yöneticisi yeterli olabilir. Daha kapsamlı bir medya ortamı için Plex, Tautulli, File Browser, Nextcloud ve birkaç destekleyici araç isteyebilirsiniz. Daha ağır tarama, daha büyük kitaplıklar veya aynı anda etkin birden fazla uygulama bekliyorsanız, baştan buna yetecek plan kapasitesi bırakın.
+
+Appbox'ın faydalı yanı, planların yalnızca tek bir uygulama yuvası olmamasıdır. Plan bir ortamdır. Birden fazla uygulama kurabilir, desteklenen yerlerde App Boost ile kaynak ayırabilir ve ilgili servisleri aynı depolamaya yakın tutabilirsiniz.
+
+Bu, medya sunucunuz "sadece Plex" olmaktan çıkıp küçük bir özel uygulama yığınına dönüştüğünde özellikle yararlıdır.
+
+## Appbox'ta Plex Kurulumu
+
+Temel akış basittir:
+
+1. [Plex uygulama sayfasını](/apps/Plex) açın.
+2. Kitaplığınız ve tamamlayıcı uygulamalarınız için yeterli kapasiteye sahip bir Appbox planı seçin.
+3. Plex'i uygulama akışından kurun.
+4. Oluşturulan URL'yi ve kimlik bilgilerini bulmak için uygulama ayrıntıları sayfasını açın.
+5. Plex'te oturum açın ve hesabınıza bağlayın.
+6. Medya klasörlerinizi ekleyin ve Plex'in kitaplığı taramasına izin verin.
+
+Bundan sonra, gerektiğinde Appbox uygulama kitaplığından ilgili uygulamaları ekleyebilirsiniz.
+
+<p align="center">
+  <img
+    src="/blog-images/plex-appbox-setup.png"
+    alt="Appbox'ta Plex kurulum akışı"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Düşünmeye Değer Tamamlayıcı Uygulamalar
+
+Plex çoğu zaman kurulumun merkezindedir, ancak nadiren tek faydalı uygulamadır.
+
+[Tautulli](/apps/Tautulli), Plex izleme ve kitaplık etkinliği için kullanışlıdır. [Jellyfin](/apps/Jellyfin) ve [Emby](/apps/Emby), iş akışlarını karşılaştırmak veya Plex'in yanında açık kaynaklı bir seçenek çalıştırmak istediğinizde alternatif medya sunucularıdır. [File Browser](/apps/File%20Browser%20%26%20Webdav) size sade bir web dosya yöneticisi sağlar. Aynı Appbox ortamında özel bulut depolama ve dosya senkronizasyonu istiyorsanız [Nextcloud](/apps/Nextcloud) kullanışlıdır.
+
+Appbox'ın "bir Plex barındırıcısı" olmaktan fazlasına dönüştüğü yer burasıdır. Medya kitaplığınızın etrafındaki diğer araçlar için barındırılan bir uygulama ortamıdır.
+
+## Birkaç Pratik İpucu
+
+Kitaplık yapınızı en baştan düzenli tutun. Plex medyayı eşleştirmede iyidir, ancak temiz klasörler ve tutarlı adlandırma daha sonra zaman kazandırır.
+
+Mümkün olduğunda direct play kullanın. Kod dönüştürme faydalı olabilir, ancak cihazınızın zaten desteklediği bir formatta dosya akışı yapmaktan daha zahmetlidir.
+
+Depolama büyümesini izleyin. Yalnızca medya dosyaları değil; posterler, meta veriler, küçük resimler ve tamamlayıcı uygulamalar da zamanla alan tüketir.
+
+Tamamlayıcı uygulamaları odaklı tutun. Her şeyi bir kerede kurmak cazip gelebilir, ancak daha küçük bir kurulumun anlaşılması ve ayarlanması daha kolaydır.
+
+## Plex Uygulama Sayfasıyla Başlayın
+
+Tüm yığını elle kurmadan özel bir Plex sunucusu istiyorsanız [Plex uygulama sayfasıyla](/apps/Plex) başlayın. Planları karşılaştırabilir, uygulama gereksinimlerini kontrol edebilir ve uygulama kitaplığının geri kalanı için kullanılan aynı Appbox akışıyla kurulum yapabilirsiniz.
+
+Daha sonra Plex'in ötesine geçmek isterseniz, aynı ortam özel medya sunucusunu daha kullanışlı hale getiren diğer uygulamaları da barındırabilir.
+
+---
+
+_Appbox'ta Plex barındırma hakkında sorularınız mı var? support@appbox.co üzerinden bize ulaşın veya [billing.appbox.co](https://billing.appbox.co/submitticket.php) adresinden bir destek talebi açın._

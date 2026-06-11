@@ -1,0 +1,145 @@
+---
+title: Medya Otomasyonu İçin En İyi Uzak Sunucu Kurulumu
+date: 2026-06-11 12:00:00
+excerpt: Barındırılan medya uygulamaları, paylaşılan depolama, izleme, dosya erişimi ve isteğe bağlı VPS kontrolüyle özel bir uzak medya otomasyon kurulumu oluşturmaya yönelik pratik bir rehber.
+author_id: rid
+og_image: appbox-media-app-library.jpg
+tags: [appbox, medya-sunucusu, otomasyon, bulut-barındırma, uygulamalar]
+---
+
+# Medya Otomasyonu İçin En İyi Uzak Sunucu Kurulumu
+
+İyi bir medya otomasyon kurulumu, en iyi anlamıyla sıkıcı hissettirmelidir. Uygulamalarınız çevrimiçi kalır, dosyalarınıza ulaşmak kolaydır, kitaplığınız düzenli kalır ve her yeni araç eklediğinizde proxy kurallarını veya depolama bağlamalarını yeniden kurmak zorunda kalmazsınız.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-media-app-library.jpg"
+    alt="Medya uygulamalarına göre filtrelenmiş Appbox uygulama kitaplığı"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Bu tür bir uzak kurulum oluşturmanın iki yaygın yolu vardır:
+
+- Boş bir VPS ile başlayıp tüm yığını kendiniz bir araya getirmek.
+- Barındırılan uygulamalar, paylaşılan depolama ve dashboard kontrolleriyle başlayıp yalnızca özel makine düzeyinde kontrole ihtiyaç duyduğunuzda VPS eklemek.
+
+İkisi de çalışabilir. Çoğu kişi için ikinci yolu zaman içinde sağlıklı tutmak daha kolaydır.
+
+## İş Akışıyla Başlayın
+
+Bir sunucu seçmeden önce gerçekten istediğiniz iş akışını haritalayın:
+
+- Oynatma ve kitaplıkta gezinme için bir medya sunucusu.
+- Akışları, geçmişi, bant genişliğini ve sunucu etkinliğini görebilmek için izleme.
+- İlgili tüm uygulamaların kullanabileceği paylaşılan depolama.
+- Yüklemeler, taşımalar, yeniden adlandırmalar ve temizlik için dosya erişimi.
+- Önemli dosyaları güvende tutmak için senkronizasyon veya yedekleme araçları.
+- Tek tıklamalı bir uygulamaya uymayan işler için isteğe bağlı özel script'ler.
+
+Bu liste önemlidir, çünkü medya otomasyonu nadiren tek bir uygulamadan ibarettir. Genellikle dosyaları güvenilir şekilde paylaşması gereken küçük bir uygulama sistemidir.
+
+## Önce Medya Sunucusunu Seçin
+
+Medya sunucusu kurulumun merkezidir.
+
+[Plex](/apps/Plex), geniş istemci desteği ve tanıdık kitaplık deneyimiyle olgun bir seçenektir. [Jellyfin](/apps/Jellyfin), abonelik bağımlılığı olmayan tamamen açık kaynaklı bir seçenektir. [Emby](/apps/Emby), kendi istemci ekosistemi ve yönetim modeliyle benzer bir kişisel medya sunucusu kategorisinde yer alır.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-plex-library-app-page.webp"
+    alt="Appbox Plex uygulama sayfasından Plex medya kitaplığı ekran görüntüsü"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Hangi medya sunucusunu tercih ettiğinizi zaten biliyorsanız oradan başlayın. Emin değilseniz Appbox birden fazlasını test etmeyi kolaylaştırır, çünkü her biri [uygulama kitaplığında](/apps) bulunur.
+
+## İzlemeyi Erken Ekleyin
+
+İzleme yalnızca büyük kurulumlar için değildir. Oynatmanın direct play mi yoksa kod dönüştürme mi olduğunu, hangi kullanıcıların etkin olduğunu ve sunucunun beklediğiniz gibi davranıp davranmadığını anlamanıza yardımcı olur.
+
+Plex kurulumları için [Tautulli](/apps/Tautulli) doğal tamamlayıcı uygulamadır. Oynatma geçmişi, akış ayrıntıları, kullanıcı etkinliği, bant genişliği görünürlüğü ve olay tabanlı bildirimler sağlar.
+
+Bu tür görünürlük, kurulumu ayarlarken yardımcı olur. Bir cihazın gereksiz kod dönüştürmeyi zorlayıp zorlamadığını, kitaplık taramasının yük oluşturup oluşturmadığını veya uzak bir akışın zorlanıp zorlanmadığını görebilirsiniz.
+
+## Dosya Erişimini Basit Tutun
+
+Dosya katmanı, kendi kurduğunuz birçok medya yığınının dağınık hale geldiği yerdir.
+
+Medya sunucusunun, yönetim araçlarının ve dosya erişim araçlarının aynı depolamayı anladığı bir kurulum istersiniz. Her uygulamanın kendi izole yolu veya özel bağlaması varsa, sistemi anlamak zorlaşır.
+
+Appbox'ta barındırılan uygulamalar aynı Appbox veri ortamını paylaşabilir. Tarayıcıdan dosya yönetimine, protokol erişimine, bulut senkronizasyonuna veya kişisel bulut depolamaya ihtiyacınıza bağlı olarak, kitaplıktaki [File Browser](/apps/File%20Browser%20%26%20Webdav), [SFTPGo](/apps/SFTPGo), [Rclone](/apps/Rclone), [Syncthing](/apps/Syncthing) veya [Nextcloud](/apps/Nextcloud) gibi dosya odaklı uygulamaları kullanabilirsiniz.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Paylaşılan uygulama verilerindeki barındırılan uygulama klasörlerini gösteren Appbox dosya gezgini"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Önemli olan seçtiğiniz belirli dosya uygulaması değildir. Dosya erişiminin tasarımın parçası olmasıdır; medya kitaplığı büyüdükten sonra sonradan eklenen bir şey olmamalıdır.
+
+## VPS'yi Yalnızca Yardımcı Olduğu Yerde Ekleyin
+
+VPS, tam Linux kontrolüne ihtiyaç duyduğunuzda kullanışlıdır: özel script'ler, paket kurulumları, zamanlanmış işler, geliştirme araçları veya tek tıklamalı uygulama için fazla özel kalan uygulama kombinasyonları.
+
+İş akışının bir parçası bu kontrole ihtiyaç duyuyor diye tüm medya kurulumunu VPS üzerine koymanız gerekmez.
+
+Appbox ile bir [Ubuntu VPS](/apps/Ubuntu%20VPS), barındırılan uygulama verileri ve paylaşılan depolama dahil Appbox verilerinize `/APPBOX_DATA/` altında erişebilir. Bu, barındırılan uygulamalarınızın yönetilen uygulama akışında kalabileceği, VPS'nin ise aynı dosyalar üzerinde özel otomasyonu yürütebileceği anlamına gelir.
+
+Örneğin:
+
+- Plex, Jellyfin, Emby veya Tautulli'yi barındırılan uygulama olarak çalıştırın.
+- Dosya erişimi ve senkronizasyon için File Browser, SFTPGo, Rclone, Syncthing veya Nextcloud kullanın.
+- Özel script'ler, toplu işler, geliştirme araçları veya bakım iş akışları için bir Ubuntu VPS ekleyin.
+- Kurulumu ilgisiz sunuculara bölmek yerine her şeyi aynı Appbox verilerine yönlendirin.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-immich-photos-app-page.webp"
+    alt="Appbox Immich uygulama sayfasından Immich fotoğraf kitaplığı ekran görüntüsü"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Bu hibrit yapı, çoğu zaman her görevi dev bir VPS içine zorlamaktan daha sakindir.
+
+## Nelerden Kaçınmalı
+
+İşletim sistemini, reverse proxy'yi, SSL sertifikalarını, güvenlik duvarını, servis dosyalarını, depolama bağlamalarını, paket güncellemelerini ve sorun gidermeyi gerçekten kendiniz yönetmek istemiyorsanız boş bir sunucuyla başlamaktan kaçının.
+
+Her uygulamayı bir kerede kurmaktan kaçının. Daha küçük bir kurulumun anlaşılması, ayarlanması ve toparlanması daha kolaydır.
+
+Dosya erişimini kendinizden saklamaktan kaçının. Uygulama verilerinin ve medya dosyalarının nerede yaşadığını hızlıca göremiyorsanız, gelecekte bakım olması gerekenden yavaş olur.
+
+Araçları yalnızca özellik listelerine göre seçmekten kaçının. En iyi kurulum, üç ay sonra hâlâ güvenle işletebildiğiniz kurulumdur.
+
+## Pratik Bir Appbox Kalıbı
+
+Çoğu uzak medya otomasyon kurulumu için iyi bir başlangıç kalıbı şudur:
+
+1. Tercih ettiğiniz medya sunucusunu [Appbox uygulama kitaplığından](/apps) kurun.
+2. Plex çalıştırıyorsanız ve izleme istiyorsanız [Tautulli](/apps/Tautulli) ekleyin.
+3. [File Browser](/apps/File%20Browser%20%26%20Webdav), [SFTPGo](/apps/SFTPGo) veya [Nextcloud](/apps/Nextcloud) gibi bir dosya erişim uygulaması ekleyin.
+4. İş akışınız senkronizasyon, taşıma veya yedekleme tarzı dosya hareketi gerektiriyorsa [Rclone](/apps/Rclone) veya [Syncthing](/apps/Syncthing) ekleyin.
+5. Özel işlere veya tam makine kontrolüne ihtiyaç duyduğunuzda bir [Ubuntu VPS](/apps/Ubuntu%20VPS) ekleyin.
+
+Bu size, her görevi bir sunucu yöneticiliği projesine dönüştürmeden uzak sunucunun faydalı kısımlarını verir.
+
+## En İyi Kurulum Bakımını Yapabildiğiniz Kurulumdur
+
+Medya otomasyonu sürtünmeyi azaltmalı, ikinci bir işe dönüşmemelidir.
+
+Her katmanı elle kurmaktan hoşlanıyorsanız VPS doğru araç olabilir. Amacınız medya uygulamaları çalıştırmak, onları izlemek, dosyaları yönetmek ve sistemi çevrimiçi tutmaksa, barındırılan uygulamalar ve paylaşılan depolama genellikle daha iyi bir başlangıç noktasıdır.
+
+Uygulama iş akışıyla başlayın. Tam VPS kontrolünü yalnızca yerini açıkça hak ettiği yerlerde ekleyin.
+
+---
+
+_Appbox'ta medya otomasyon kurulumu oluşturmak hakkında sorularınız mı var? support@appbox.co üzerinden bize ulaşın veya [billing.appbox.co](https://billing.appbox.co/submitticket.php) adresinden bir destek talebi açın._

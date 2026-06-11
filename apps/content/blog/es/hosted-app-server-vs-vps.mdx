@@ -1,0 +1,183 @@
+---
+title: "Servidor de apps alojadas vs VPS: ¿cuál deberías elegir?"
+date: 2026-06-11 11:00:00
+excerpt: Los servidores de apps alojadas y las VPS resuelven problemas distintos. Así puedes elegir entre hosting de apps en un clic, apps en la nube gestionadas y un servidor privado virtual completo.
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, hosting-de-apps, vps, hosting-en-la-nube, self-hosted]
+---
+
+# Servidor de apps alojadas vs VPS: ¿cuál deberías elegir?
+
+Cuando la gente busca un servidor remoto, suele usar varias frases distintas para el mismo objetivo general: servidor de apps alojadas, hosting de apps en la nube, hosting de apps privadas, hosting remoto de apps, hosting gestionado de apps, hosting VPS.
+
+Esas frases se solapan, pero no son idénticas. Un servidor de apps alojadas y una VPS pueden poner tu software online. La diferencia está en cuánta parte del sistema quieres gestionar tú mismo.
+
+Esta guía explica el intercambio en términos sencillos, especialmente si tu objetivo es ejecutar apps como [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab), [WordPress](/apps/WordPress), File Browser u otras herramientas self-hosted.
+
+## La versión corta
+
+Elige un **servidor de apps alojadas** cuando quieras instalar y ejecutar apps concretas rápidamente, con controles en el dashboard, almacenamiento persistente, URLs, credenciales y actualizaciones gestionadas mediante un flujo de plataforma.
+
+Elige una **VPS** cuando quieras acceso root completo a una máquina virtual y te sientas cómodo gestionando por tu cuenta el sistema operativo, paquetes, firewall, servicios, montajes de almacenamiento, copias de seguridad y resolución de problemas.
+
+Ninguna opción es universalmente mejor. Están optimizadas para tipos de control distintos.
+
+## Qué es un servidor de apps alojadas
+
+Un servidor de apps alojadas es un entorno de servidor diseñado alrededor de aplicaciones, no de un sistema operativo vacío.
+
+En Appbox, eso significa que empiezas desde la [biblioteca de apps](/apps). Eliges una app, la instalas y la gestionas desde el dashboard. Appbox se encarga de las piezas de plataforma que la rodean: URLs de apps, credenciales, datos de apps, integración de almacenamiento, controles de reinicio, versiones y asignación de recursos donde esté soportada.
+
+<p align="center">
+  <img
+    src="/blog-images/day1-app-store.png"
+    alt="Biblioteca de apps de Appbox para apps alojadas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Ese modelo es útil cuando la app es lo importante. Si quieres un servidor multimedia privado, sincronización de archivos, bóveda de contraseñas, servidor Git, app web o herramienta de dashboard, probablemente no quieres pasar la primera tarde montando fontanería.
+
+Quieres que la app esté funcionando.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Nextcloud Files ejecutándose desde la página de la app Nextcloud en Appbox"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Qué es una VPS
+
+Una VPS, o servidor privado virtual, te da una máquina virtual completa. Normalmente eliges una distribución Linux, te conectas por SSH y gestionas la máquina como cualquier otro servidor.
+
+Ese control extra es real. Puedes instalar paquetes personalizados, ejecutar Docker Compose, configurar servicios systemd, ajustar el firewall, gestionar usuarios y dar forma al servidor exactamente como quieras.
+
+Appbox también soporta VPSes KVM completas para casos donde necesitas ese nivel de control. Cubrimos el lanzamiento y los casos de uso en [Launch Week Día 3 - Virtual Private Servers](/blog/es/launch-week-day-3-vps).
+
+<p align="center">
+  <img
+    src="/blog-images/day3-vps-console.png"
+    alt="Consola web de VPS de Appbox"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+El intercambio es que una VPS te da el sistema operativo, no la pila de apps terminada. Eso puede ser perfecto si disfrutas o necesitas ese control. Puede ser una distracción si tu objetivo real es simplemente ejecutar unas cuantas apps alojadas.
+
+## Dónde gana un servidor de apps alojadas
+
+Un servidor de apps alojadas suele encajar mejor cuando tus requisitos se parecen a estos:
+
+- Quieres instalar apps conocidas rápidamente.
+- Quieres URLs de apps, credenciales, almacenamiento y reinicios en un solo dashboard.
+- Prefieres evitar mantener un proxy inverso a mano.
+- Quieres ejecutar varias apps que compartan el mismo entorno de almacenamiento.
+- Quieres controles a nivel de app en lugar de operaciones centradas primero en SSH.
+- Te importa más usar la app que personalizar el servidor que hay debajo.
+
+Por ejemplo, si estás configurando [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab) y [WordPress](/apps/WordPress), un servidor de apps alojadas mantiene el flujo centrado en las apps. Instalas cada una desde el mismo lugar y las gestionas mediante el mismo panel de control.
+
+Eso importa con el tiempo. La primera instalación es solo una parte del hosting. La experiencia diaria son reinicios, actualizaciones, revisiones de recursos, credenciales, dominios, acceso a archivos, soporte y recordar cómo está conectado todo.
+
+## Dónde gana una VPS
+
+Una VPS suele encajar mejor cuando tus requisitos se parecen a estos:
+
+- Necesitas acceso root.
+- Necesitas paquetes de sistema personalizados o comportamiento a nivel de kernel.
+- Quieres ejecutar tu propia pila de Docker Compose.
+- Necesitas un diseño de red o firewall personalizado.
+- Quieres gestionar servicios systemd tú mismo.
+- Estás construyendo algo que no encaja en un modelo de app de un clic.
+
+Por eso Appbox ofrece ambos caminos. Las apps alojadas de un clic son mejores cuando el flujo de la aplicación es conocido. Las VPSes son mejores cuando el propio entorno necesita ser abierto.
+
+Si estás construyendo una pila de aplicaciones personalizada, ejecutando dependencias poco habituales o experimentando con infraestructura, una VPS puede ser la herramienta correcta.
+
+## El coste oculto son las operaciones
+
+La mayor diferencia no es la línea mensual de la factura. Son las operaciones.
+
+Con una VPS, eres dueño de toda la cadena:
+
+- actualizaciones del sistema operativo
+- repositorios de paquetes
+- reglas de firewall
+- configuración de Docker o servicios
+- configuración de proxy inverso
+- renovación de certificados SSL
+- copias de seguridad de apps
+- monitorización de procesos
+- limpieza de disco
+- inspección de logs
+- endurecimiento de seguridad
+
+Algunas personas quieren eso. Algunos equipos lo necesitan. Pero muchos proyectos de hosting de apps no.
+
+Con un servidor de apps alojadas, la plataforma elimina gran parte de ese trabajo repetido de configuración. Aún necesitas elegir tus apps, entender tu almacenamiento y vigilar los recursos, pero no empiezas desde una shell vacía cada vez.
+
+## Una lista práctica para decidir
+
+Hazte estas preguntas antes de elegir:
+
+**¿Necesitas acceso root?**
+Si sí, elige una VPS. Si no, un servidor de apps alojadas probablemente sea más sencillo.
+
+**¿Estás ejecutando una app conocida de la biblioteca de apps?**
+Si sí, empieza con hosting de apps alojadas. Siempre puedes añadir una VPS después si la configuración supera el modelo de apps.
+
+**¿Quieres gestionar SSL, reglas de proxy y archivos de servicio tú mismo?**
+Si sí, VPS. Si no, apps alojadas.
+
+**¿Varias apps usarán los mismos archivos?**
+Las apps alojadas en Appbox son útiles aquí porque los datos de apps y el almacenamiento compartido forman parte del modelo de plataforma.
+
+**¿Estás experimentando con infraestructura personalizada?**
+Usa una VPS. Tiene la forma adecuada para trabajos de sistemas abiertos.
+
+**¿Intentas poner en marcha Plex, Nextcloud, GitLab o WordPress rápidamente?**
+Usa primero la biblioteca de apps.
+
+## Cómo Appbox combina ambos
+
+Lo útil de Appbox es que no tienes que tratar esto como una decisión de identidad permanente. Puedes ejecutar apps alojadas para las cosas que encajan en el modelo de apps y usar VPSes para los casos donde necesitas control completo de la máquina.
+
+La parte especialmente útil es que una VPS de Appbox puede acceder a los archivos de tus apps alojadas. Las VPSes montan tus datos de Appbox bajo `/APPBOX_DATA/`, incluido:
+
+- **`/APPBOX_DATA/apps/`** - datos de tus apps alojadas instaladas
+- **`/APPBOX_DATA/storage/`** - tu almacenamiento compartido de Appbox
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Explorador de archivos de Appbox mostrando carpetas de apps alojadas en datos compartidos de apps"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Eso significa que tus apps multimedia, sincronización de archivos, dashboards, bóveda de contraseñas y herramientas web pueden vivir en el flujo gestionado de apps, mientras que los servicios personalizados o entornos de desarrollo pueden vivir en una VPS que sigue viendo los mismos archivos.
+
+Por ejemplo, podrías ejecutar Plex o Nextcloud como apps alojadas y luego usar una Ubuntu VPS para scripts personalizados, procesamiento por lotes, copias de seguridad, herramientas de desarrollo o cualquier otra cosa que se beneficie del control completo de Linux. La VPS no tiene por qué ser una isla separada. Puede trabajar con los mismos datos de Appbox que usan tus apps alojadas.
+
+Para mucha gente, esa configuración híbrida es más tranquila que forzar todo en un único modelo.
+
+## Empieza con el flujo de trabajo
+
+La forma más fácil de elegir es empezar por el flujo de trabajo, no por el tipo de servidor.
+
+Si el flujo es "quiero ejecutar esta app", empieza con la [biblioteca de apps de Appbox](/apps).
+
+Si el flujo es "quiero controlar esta máquina", usa una VPS.
+
+Ambas opciones son válidas. La elección correcta es la que te deja dedicar más tiempo a lo que realmente querías ejecutar.
+
+---
+
+_¿Preguntas sobre servidores de apps alojadas, VPSes o cómo elegir la configuración correcta de Appbox? Escríbenos a support@appbox.co o abre un ticket en [billing.appbox.co](https://billing.appbox.co/submitticket.php)._

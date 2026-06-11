@@ -1,0 +1,183 @@
+---
+title: Hosted App Server vs VPS - kumpi kannattaa valita?
+date: 2026-06-11 11:00:00
+excerpt: "Hostatut sovelluspalvelimet ja VPS:t ratkaisevat eri ongelmia. Näin valitset yhden klikkauksen sovellushostauksen, hallittujen pilvisovellusten ja täyden virtuaalipalvelimen välillä."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, sovellushostaus, vps, pilvihostaus, itse-hostattu]
+---
+
+# Hosted App Server vs VPS: kumpi kannattaa valita?
+
+Kun ihmiset etsivät etäpalvelinta, he käyttävät usein muutamaa eri ilmausta samalle laajalle tavoitteelle: hosted app server, pilvisovellusten hostaus, yksityinen sovellushostaus, etäsovellusten hostaus, hallittu sovellushostaus, VPS-hostaus.
+
+Nämä ilmaukset menevät osittain päällekkäin, mutta ne eivät ole sama asia. Hosted app server ja VPS voivat molemmat tuoda ohjelmistosi verkkoon. Ero on siinä, kuinka paljon järjestelmästä haluat hallita itse.
+
+Tämä opas purkaa kompromissin selkeästi, erityisesti jos tavoitteesi on ajaa sovelluksia kuten [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab), [WordPress](/apps/WordPress), File Browser tai muita itse hostattuja työkaluja.
+
+## Lyhyt versio
+
+Valitse **hosted app server**, kun haluat asentaa ja ajaa tiettyjä sovelluksia nopeasti, dashboard-ohjaimilla, pysyvällä tallennustilalla, URL-osoitteilla, tunnuksilla ja päivityksillä, jotka hoidetaan alustan työnkulun kautta.
+
+Valitse **VPS**, kun haluat täyden root-pääsyn virtuaalikoneeseen ja olet valmis hallitsemaan itse käyttöjärjestelmää, paketteja, palomuuria, palveluita, tallennustilaliitoksia, varmuuskopioita ja vianmääritystä.
+
+Kumpikaan vaihtoehto ei ole yleisesti parempi. Ne on optimoitu erilaiselle hallinnan tasolle.
+
+## Mikä hosted app server on
+
+Hosted app server on palvelinympäristö, joka on suunniteltu sovellusten ympärille tyhjän käyttöjärjestelmän sijaan.
+
+Appboxissa se tarkoittaa, että aloitat [sovelluskirjastosta](/apps). Valitset sovelluksen, asennat sen ja hallitset sitä dashboardista. Appbox hoitaa ympäröivät alustaosat: sovellusten URL-osoitteet, tunnukset, sovellusdatan, tallennustilan integroinnin, uudelleenkäynnistysohjaimet, versiot ja resurssien allokoinnin siellä missä sitä tuetaan.
+
+<p align="center">
+  <img
+    src="/blog-images/day1-app-store.png"
+    alt="Appboxin sovelluskirjasto hostatuille sovelluksille"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Tämä malli on hyödyllinen, kun sovellus on pääasia. Jos haluat yksityisen mediapalvelimen, tiedostojen synkronoinnin, salasanavaraston, Git-palvelimen, verkkosovelluksen tai dashboard-työkalun, et todennäköisesti halua käyttää ensimmäistä iltapäivää putkiston kokoamiseen.
+
+Haluat sovelluksen käyntiin.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Nextcloud Files käynnissä Appboxin Nextcloud-sovellussivulta"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Mikä VPS on
+
+VPS eli virtual private server antaa sinulle kokonaisen virtuaalikoneen. Yleensä valitset Linux-jakelun, yhdistät SSH:lla ja hallitset konetta kuten mitä tahansa muuta palvelinta.
+
+Tuo lisähallinta on todellista. Voit asentaa mukautettuja paketteja, ajaa Docker Composea, määrittää systemd-palveluita, säätää palomuuria, hallita käyttäjiä ja muotoilla palvelimen täsmälleen haluamallasi tavalla.
+
+Appbox tukee myös täysiä KVM VPS:iä tilanteisiin, joissa tarvitset tuon hallinnan tason. Käsittelimme julkaisun ja käyttötapaukset artikkelissa [Launch Week Day 3 - Virtual Private Servers](/blog/fi/launch-week-day-3-vps).
+
+<p align="center">
+  <img
+    src="/blog-images/day3-vps-console.png"
+    alt="Appboxin VPS-verkkokonsoli"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Kompromissi on, että VPS antaa sinulle käyttöjärjestelmän, ei valmista sovelluspinoa. Se voi olla täydellinen, jos nautit tuosta hallinnasta tai tarvitset sitä. Se voi olla häiriötekijä, jos todellinen tavoitteesi on vain ajaa muutamaa hostattua sovellusta.
+
+## Missä hosted app server voittaa
+
+Hosted app server sopii yleensä paremmin, kun vaatimuksesi näyttävät tältä:
+
+- Haluat asentaa tunnettuja sovelluksia nopeasti.
+- Haluat sovellusten URL-osoitteet, tunnukset, tallennustilan ja uudelleenkäynnistykset yhteen dashboardiin.
+- Haluat mieluummin välttää reverse proxyn käsin ylläpitoa.
+- Haluat ajaa useita sovelluksia, jotka jakavat saman tallennustilaympäristön.
+- Haluat sovellustason ohjaimet SSH-painotteisten toimintojen sijaan.
+- Välität enemmän sovelluksen käyttämisestä kuin sen alla olevan palvelimen mukauttamisesta.
+
+Jos esimerkiksi otat käyttöön [Plexin](/apps/Plex), [Nextcloudin](/apps/Nextcloud), [GitLabin](/apps/GitLab) ja [WordPressin](/apps/WordPress), hosted app server pitää työnkulun sovelluksissa. Asennat jokaisen samasta paikasta ja hallitset niitä saman hallintapaneelin kautta.
+
+Tällä on merkitystä ajan myötä. Ensimmäinen asennus on vain yksi osa hostausta. Arjen kokemus koostuu uudelleenkäynnistyksistä, päivityksistä, resurssitarkistuksista, tunnuksista, verkkotunnuksista, tiedostojen käytöstä, tuesta ja siitä, että muistat miten kaikki liittyy toisiinsa.
+
+## Missä VPS voittaa
+
+VPS sopii yleensä paremmin, kun vaatimuksesi näyttävät tältä:
+
+- Tarvitset root-pääsyn.
+- Tarvitset mukautettuja järjestelmäpaketteja tai kernel-tason toimintaa.
+- Haluat ajaa omaa Docker Compose -pinoasi.
+- Tarvitset mukautetun verkkorakenteen tai palomuurin.
+- Haluat hallita systemd-palveluita itse.
+- Rakennat jotain, joka ei sovi yhden klikkauksen sovellusmalliin.
+
+Siksi Appboxissa on molemmat polut. Yhden klikkauksen hostatut sovellukset ovat parhaimmillaan, kun sovelluksen työnkulku tunnetaan. VPS:t ovat parhaimmillaan, kun itse ympäristön täytyy olla avoin.
+
+Jos rakennat mukautettua sovelluspinoa, ajat epätavallisia riippuvuuksia tai kokeilet infrastruktuuria, VPS voi olla oikea työkalu.
+
+## Piilokustannus on operointi
+
+Suurin ero ei ole kuukausilaskun rivissä. Se on operointi.
+
+VPS:llä omistat koko ketjun:
+
+- käyttöjärjestelmäpäivitykset
+- pakettirepositoriot
+- palomuurisäännöt
+- Docker- tai palvelumääritykset
+- reverse proxy -määritykset
+- SSL-varmenteiden uusinta
+- sovellusten varmuuskopiot
+- prosessien valvonta
+- levyn siivous
+- lokien tarkistus
+- tietoturvan koventaminen
+
+Jotkut haluavat sitä. Jotkin tiimit tarvitsevat sitä. Mutta moni sovellushostausprojekti ei.
+
+Hosted app serverillä alusta poistaa paljon tuota toistuvaa käyttöönottotyötä. Sinun täytyy silti valita sovelluksesi, ymmärtää tallennustilasi ja seurata resursseja, mutta et aloita joka kerta tyhjästä shellistä.
+
+## Käytännön päätösmuistilista
+
+Kysy nämä kysymykset ennen valintaa:
+
+**Tarvitsetko root-pääsyn?**
+Jos kyllä, valitse VPS. Jos et, hosted app server on todennäköisesti yksinkertaisempi.
+
+**Ajatko tunnettua sovellusta sovelluskirjastosta?**
+Jos kyllä, aloita hostatusta sovellushostauksesta. Voit aina lisätä VPS:n myöhemmin, jos ympäristö kasvaa sovellusmallin yli.
+
+**Haluatko hallita SSL:ää, proxy-sääntöjä ja palvelutiedostoja itse?**
+Jos kyllä, VPS. Jos et, hostatut sovellukset.
+
+**Käyttävätkö useat sovellukset samoja tiedostoja?**
+Hostatut sovellukset Appboxissa ovat tässä hyödyllisiä, koska sovellusdata ja jaettu tallennustila ovat osa alustan mallia.
+
+**Kokeiletko mukautettua infrastruktuuria?**
+Käytä VPS:ää. Se on oikean muotoinen avoimeen järjestelmätyöhön.
+
+**Yritätkö saada Plexin, Nextcloudin, GitLabin tai WordPressin käyntiin nopeasti?**
+Käytä ensin sovelluskirjastoa.
+
+## Miten Appbox yhdistää molemmat
+
+Appboxissa hyödyllistä on se, ettei tätä tarvitse käsitellä pysyvänä identiteettipäätöksenä. Voit ajaa hostattuja sovelluksia niille asioille, jotka sopivat sovellusmalliin, ja käyttää VPS:iä tilanteissa, joissa tarvitset täyden koneen hallinnan.
+
+Erityisen hyödyllistä on, että Appbox VPS voi käyttää hostattujen sovellustesi tiedostoja. VPS:t liittävät Appbox-datasi polkuun `/APPBOX_DATA/`, mukaan lukien:
+
+- **`/APPBOX_DATA/apps/`** - asennettujen hostattujen sovellustesi data
+- **`/APPBOX_DATA/storage/`** - jaettu Appbox-tallennustilasi
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Appboxin tiedostoselain näyttää hostattujen sovellusten kansiot jaetussa sovellusdatassa"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Tämä tarkoittaa, että mediasovelluksesi, tiedostojen synkronointi, dashboardit, salasanavarasto ja verkkotyökalut voivat elää hallitussa sovellustyönkulussa, kun taas mukautetut palvelut tai kehitysympäristöt voivat elää VPS:llä, joka näkee silti samat tiedostot.
+
+Voisit esimerkiksi ajaa Plexiä tai Nextcloudia hostattuina sovelluksina ja käyttää sitten Ubuntu VPS:ää mukautettuihin skripteihin, eräkäsittelyyn, varmuuskopioihin, kehitystyökaluihin tai mihin tahansa muuhun, joka hyötyy täydestä Linux-hallinnasta. VPS:n ei tarvitse olla erillinen saareke. Se voi työskennellä saman Appbox-datan kanssa, jota hostatut sovelluksesi käyttävät.
+
+Monelle tällainen hybridimalli on rauhallisempi kuin kaiken pakottaminen yhteen malliin.
+
+## Aloita työnkulusta
+
+Helpoin tapa valita on aloittaa työnkulusta, ei palvelintyypistä.
+
+Jos työnkulku on "haluan ajaa tämän sovelluksen", aloita [Appboxin sovelluskirjastosta](/apps).
+
+Jos työnkulku on "haluan hallita tätä konetta", käytä VPS:ää.
+
+Molemmat ovat päteviä. Oikea valinta on se, jonka avulla käytät enemmän aikaa siihen asiaan, jota oikeasti halusit ajaa.
+
+---
+
+_Kysymyksiä hostatuista sovelluspalvelimista, VPS:istä tai oikean Appbox-ympäristön valinnasta? Ota yhteyttä osoitteessa support@appbox.co tai avaa tukipyyntö osoitteessa [billing.appbox.co](https://billing.appbox.co/submitticket.php)._

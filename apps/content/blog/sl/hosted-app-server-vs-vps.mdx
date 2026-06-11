@@ -1,0 +1,183 @@
+---
+title: "Gostovani aplikacijski strežnik ali VPS - kaj izbrati?"
+date: 2026-06-11 11:00:00
+excerpt: "Gostovani aplikacijski strežniki in VPS rešujejo različne probleme. Tukaj je, kako izbrati med gostovanjem aplikacij na en klik, upravljanimi aplikacijami v oblaku in polnim virtualnim zasebnim strežnikom."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, gostovanje-aplikacij, vps, gostovanje-v-oblaku, samostojno-gostovanje]
+---
+
+# Gostovani aplikacijski strežnik ali VPS: kaj izbrati?
+
+Ko ljudje iščejo oddaljen strežnik, pogosto uporabljajo več različnih izrazov za isti širši cilj: gostovani aplikacijski strežnik, gostovanje aplikacij v oblaku, zasebno gostovanje aplikacij, oddaljeno gostovanje aplikacij, upravljano gostovanje aplikacij, VPS gostovanje.
+
+Ti izrazi se prekrivajo, vendar niso enaki. Gostovani aplikacijski strežnik in VPS lahko oba postavita vašo programsko opremo na splet. Razlika je v tem, koliko sistema želite upravljati sami.
+
+Ta vodič preprosto razloži kompromis, posebej če je vaš cilj poganjati aplikacije, kot so [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab), [WordPress](/apps/WordPress), File Browser ali druga samostojno gostovana orodja.
+
+## Kratka različica
+
+Izberite **gostovani aplikacijski strežnik**, ko želite hitro namestiti in poganjati določene aplikacije, s kontrolami na nadzorni plošči, trajno shrambo, URL-ji, poverilnicami in posodobitvami, urejenimi skozi tok platforme.
+
+Izberite **VPS**, ko želite poln root dostop do virtualnega stroja in vam ustreza samostojno upravljanje operacijskega sistema, paketov, požarnega zidu, storitev, priklopov shrambe, varnostnih kopij in odpravljanja težav.
+
+Nobena možnost ni splošno boljša. Optimizirani sta za različne vrste nadzora.
+
+## Kaj je gostovani aplikacijski strežnik
+
+Gostovani aplikacijski strežnik je strežniško okolje, zasnovano okoli aplikacij in ne okoli praznega operacijskega sistema.
+
+V Appbox to pomeni, da začnete v [knjižnici aplikacij](/apps). Izberete aplikacijo, jo namestite in jo upravljate z nadzorne plošče. Appbox uredi okoliške dele platforme: URL-je aplikacij, poverilnice, podatke aplikacij, integracijo shrambe, kontrole za ponovni zagon, različice in dodeljevanje virov, kjer je podprto.
+
+<p align="center">
+  <img
+    src="/blog-images/day1-app-store.png"
+    alt="Knjižnica aplikacij Appbox za gostovane aplikacije"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Ta model je uporaben, ko je aplikacija bistvo. Če želite zaseben medijski strežnik, sinhronizacijo datotek, trezor gesel, Git strežnik, spletno aplikacijo ali orodje za nadzorno ploščo, verjetno ne želite prvega popoldneva porabiti za sestavljanje vodovodne napeljave.
+
+Želite, da aplikacija deluje.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Nextcloud Files, zagnan s strani aplikacije Nextcloud v Appbox"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Kaj je VPS
+
+VPS oziroma virtualni zasebni strežnik vam da poln virtualni stroj. Običajno izberete distribucijo Linux, se povežete prek SSH in stroj upravljate kot kateri koli drug strežnik.
+
+Ta dodatni nadzor je resničen. Namestite lahko pakete po meri, poganjate Docker Compose, konfigurirate storitve systemd, prilagodite požarni zid, upravljate uporabnike in strežnik oblikujete točno tako, kot želite.
+
+Appbox podpira tudi polne KVM VPS za primere, ko potrebujete takšno raven nadzora. Zagon in primere uporabe smo opisali v [Launch Week, 3. dan - Virtual Private Servers](/blog/sl/launch-week-day-3-vps).
+
+<p align="center">
+  <img
+    src="/blog-images/day3-vps-console.png"
+    alt="Spletna konzola Appbox VPS"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Kompromis je, da vam VPS da operacijski sistem, ne pa končnega sklada aplikacij. To je lahko popolno, če tak nadzor radi imate ali ga potrebujete. Lahko pa je motnja, če je vaš pravi cilj preprosto poganjati nekaj gostovanih aplikacij.
+
+## Kje zmaga gostovani aplikacijski strežnik
+
+Gostovani aplikacijski strežnik je običajno boljša izbira, ko so vaše zahteve takšne:
+
+- Znane aplikacije želite namestiti hitro.
+- URL-je aplikacij, poverilnice, shrambo in ponovne zagone želite v eni nadzorni plošči.
+- Raje bi se izognili ročnemu vzdrževanju obratnega posrednika.
+- Poganjati želite več aplikacij, ki delijo isto okolje shrambe.
+- Želite kontrole na ravni aplikacij namesto delovanja, ki se začne pri SSH.
+- Bolj vam je pomembna uporaba aplikacije kot prilagajanje strežnika pod njo.
+
+Če na primer nastavljate [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab) in [WordPress](/apps/WordPress), gostovani aplikacijski strežnik ohrani potek dela osredotočen na aplikacije. Vsako namestite z istega mesta in jih upravljate skozi isto nadzorno ploščo.
+
+To sčasoma postane pomembno. Prva namestitev je samo en del gostovanja. Vsakodnevna izkušnja so ponovni zagoni, posodobitve, preverjanje virov, poverilnice, domene, dostop do datotek, podpora in pomnjenje, kako je vse povezano.
+
+## Kje zmaga VPS
+
+VPS je običajno boljša izbira, ko so vaše zahteve takšne:
+
+- Potrebujete root dostop.
+- Potrebujete sistemske pakete po meri ali vedenje na ravni jedra.
+- Želite poganjati svoj sklad Docker Compose.
+- Potrebujete omrežno postavitev ali požarni zid po meri.
+- Storitve systemd želite upravljati sami.
+- Gradite nekaj, kar se ne prilega modelu aplikacije na en klik.
+
+Zato ima Appbox obe poti. Gostovane aplikacije na en klik so najboljše, ko je potek dela aplikacije znan. VPS je najboljši, ko mora biti samo okolje odprto.
+
+Če gradite sklad aplikacij po meri, poganjate nenavadne odvisnosti ali eksperimentirate z infrastrukturo, je VPS lahko pravo orodje.
+
+## Skriti strošek je operativa
+
+Največja razlika ni mesečna postavka na računu. Je operativa.
+
+Pri VPS ste lastnik celotne verige:
+
+- posodobitve operacijskega sistema
+- repozitoriji paketov
+- pravila požarnega zidu
+- konfiguracija Dockerja ali storitev
+- konfiguracija obratnega posrednika
+- obnova SSL certifikatov
+- varnostne kopije aplikacij
+- spremljanje procesov
+- čiščenje diska
+- pregledovanje dnevnikov
+- varnostno utrjevanje
+
+Nekateri ljudje to želijo. Nekatere ekipe to potrebujejo. Veliko projektov gostovanja aplikacij pa ne.
+
+Pri gostovanem aplikacijskem strežniku platforma odstrani veliko ponavljajočega se nastavljanja. Še vedno morate izbrati aplikacije, razumeti shrambo in spremljati vire, vendar ne začnete vsakič iz prazne lupine.
+
+## Praktičen seznam za odločitev
+
+Pred izbiro si zastavite ta vprašanja:
+
+**Ali potrebujete root dostop?**
+Če da, izberite VPS. Če ne, je gostovani aplikacijski strežnik verjetno preprostejši.
+
+**Ali poganjate znano aplikacijo iz knjižnice aplikacij?**
+Če da, začnite z gostovanjem aplikacij. VPS lahko vedno dodate pozneje, če postavitev preraste model aplikacij.
+
+**Ali želite sami upravljati SSL, pravila posrednika in datoteke storitev?**
+Če da, VPS. Če ne, gostovane aplikacije.
+
+**Ali bo več aplikacij uporabljalo iste datoteke?**
+Gostovane aplikacije v Appbox so tukaj uporabne, ker so podatki aplikacij in skupna shramba del modela platforme.
+
+**Ali eksperimentirate z infrastrukturo po meri?**
+Uporabite VPS. Ima pravo obliko za odprto sistemsko delo.
+
+**Ali poskušate hitro zagnati Plex, Nextcloud, GitLab ali WordPress?**
+Najprej uporabite knjižnico aplikacij.
+
+## Kako Appbox združuje oboje
+
+Koristna stvar pri Appbox je, da vam tega ni treba obravnavati kot trajno identitetno odločitev. Gostovane aplikacije lahko poganjate za stvari, ki ustrezajo modelu aplikacij, VPS pa uporabite za primere, kjer potrebujete poln nadzor nad strojem.
+
+Posebej koristno je, da lahko Appbox VPS dostopa do datotek iz vaših gostovanih aplikacij. VPS priklopijo vaše podatke Appbox pod `/APPBOX_DATA/`, vključno z:
+
+- **`/APPBOX_DATA/apps/`** - podatki iz nameščenih gostovanih aplikacij
+- **`/APPBOX_DATA/storage/`** - vaša skupna shramba Appbox
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Raziskovalec datotek Appbox, ki prikazuje mape gostovanih aplikacij v skupnih podatkih aplikacij"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+To pomeni, da lahko vaše medijske aplikacije, sinhronizacija datotek, nadzorne plošče, trezor gesel in spletna orodja živijo v upravljanem toku aplikacij, storitve po meri ali razvojna okolja pa lahko živijo na VPS, ki še vedno vidi iste datoteke.
+
+Na primer, Plex ali Nextcloud lahko poganjate kot gostovani aplikaciji, nato pa uporabite Ubuntu VPS za skripte po meri, paketno obdelavo, varnostne kopije, razvojna orodja ali kar koli drugega, kar ima korist od polnega nadzora Linux. VPS ni nujno ločen otok. Deluje lahko z istimi podatki Appbox, ki jih uporabljajo vaše gostovane aplikacije.
+
+Za veliko ljudi je takšna hibridna postavitev mirnejša kot siljenje vsega v en model.
+
+## Začnite s potekom dela
+
+Najlažji način za izbiro je, da začnete pri poteku dela, ne pri vrsti strežnika.
+
+Če je potek dela "želim poganjati to aplikacijo", začnite v [knjižnici aplikacij Appbox](/apps).
+
+Če je potek dela "želim nadzorovati ta stroj", uporabite VPS.
+
+Oboje je veljavno. Prava izbira je tista, ki vam omogoči več časa za stvar, ki ste jo dejansko želeli poganjati.
+
+---
+
+_Vprašanja o gostovanih aplikacijskih strežnikih, VPS ali izbiri prave postavitve Appbox? Pišite na support@appbox.co ali odprite zahtevek na [billing.appbox.co](https://billing.appbox.co/submitticket.php)._

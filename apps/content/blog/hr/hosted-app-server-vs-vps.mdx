@@ -1,0 +1,183 @@
+---
+title: "Hostani aplikacijski server ili VPS - što odabrati?"
+date: 2026-06-11 11:00:00
+excerpt: "Hostani aplikacijski serveri i VPS-ovi rješavaju različite probleme. Evo kako odabrati između hostinga aplikacija jednim klikom, upravljanih cloud aplikacija i potpunog virtualnog privatnog servera."
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, hosting-aplikacija, vps, hosting-u-oblaku, self-hosted]
+---
+
+# Hostani aplikacijski server ili VPS: što odabrati?
+
+Kada ljudi traže udaljeni server, često koriste nekoliko različitih izraza za isti široki cilj: hostani aplikacijski server, cloud hosting aplikacija, privatni hosting aplikacija, udaljeni hosting aplikacija, upravljani hosting aplikacija, VPS hosting.
+
+Ti se izrazi preklapaju, ali nisu identični. Hostani aplikacijski server i VPS mogu postaviti vaš softver online. Razlika je u tome koliko sustava želite sami održavati.
+
+Ovaj vodič jednostavno objašnjava taj kompromis, posebno ako vam je cilj pokretati aplikacije kao što su [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab), [WordPress](/apps/WordPress), File Browser ili drugi self-hosted alati.
+
+## Kratka verzija
+
+Odaberite **hostani aplikacijski server** kada želite brzo instalirati i pokrenuti konkretne aplikacije, s kontrolama u nadzornoj ploči, trajnom pohranom, URL-ovima, vjerodajnicama i ažuriranjima riješenima kroz tok platforme.
+
+Odaberite **VPS** kada želite potpuni root pristup virtualnoj mašini i ugodno vam je sami upravljati operativnim sustavom, paketima, firewallom, servisima, montiranjem pohrane, sigurnosnim kopijama i rješavanjem problema.
+
+Nijedna opcija nije univerzalno bolja. Optimizirane su za različite vrste kontrole.
+
+## Što je hostani aplikacijski server
+
+Hostani aplikacijski server je serversko okruženje oblikovano oko aplikacija, a ne oko praznog operativnog sustava.
+
+Na Appboxu to znači da krećete iz [biblioteke aplikacija](/apps). Odaberete aplikaciju, instalirate je i upravljate njome iz nadzorne ploče. Appbox rješava okolne dijelove platforme: URL-ove aplikacija, vjerodajnice, podatke aplikacija, integraciju pohrane, kontrole restarta, verzije i dodjelu resursa gdje je podržana.
+
+<p align="center">
+  <img
+    src="/blog-images/day1-app-store.png"
+    alt="Appbox biblioteka aplikacija za hostane aplikacije"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Taj je model koristan kada je aplikacija glavna stvar. Ako želite privatni medijski server, sinkronizaciju datoteka, trezor lozinki, Git server, web aplikaciju ili alat za nadzornu ploču, vjerojatno ne želite prvo poslijepodne potrošiti na slaganje infrastrukture.
+
+Želite da aplikacija radi.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Nextcloud Files pokrenut sa stranice Nextcloud aplikacije na Appboxu"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Što je VPS
+
+VPS, odnosno virtual private server, daje vam potpunu virtualnu mašinu. Obično odaberete Linux distribuciju, povežete se putem SSH-a i upravljate mašinom kao bilo kojim drugim serverom.
+
+Ta dodatna kontrola je stvarna. Možete instalirati vlastite pakete, pokretati Docker Compose, konfigurirati systemd servise, podešavati firewall, upravljati korisnicima i oblikovati server točno kako želite.
+
+Appbox podržava i potpune KVM VPS-ove za slučajeve u kojima vam treba ta razina kontrole. Pokretanje i slučajeve upotrebe obradili smo u [Launch Week Day 3 - Virtual Private Servers](/blog/hr/launch-week-day-3-vps).
+
+<p align="center">
+  <img
+    src="/blog-images/day3-vps-console.png"
+    alt="Appbox VPS web konzola"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Kompromis je u tome što vam VPS daje operativni sustav, a ne gotov aplikacijski stack. To može biti savršeno ako uživate u toj kontroli ili vam je potrebna. Može biti smetnja ako je vaš stvarni cilj samo pokrenuti nekoliko hostanih aplikacija.
+
+## Gdje pobjeđuje hostani aplikacijski server
+
+Hostani aplikacijski server obično je bolji izbor kada vaši zahtjevi izgledaju ovako:
+
+- Želite brzo instalirati poznate aplikacije.
+- Želite URL-ove aplikacija, vjerodajnice, pohranu i restarte u jednoj nadzornoj ploči.
+- Radije biste izbjegli ručno održavanje reverse proxyja.
+- Želite pokrenuti više aplikacija koje dijele isto okruženje pohrane.
+- Želite kontrole na razini aplikacije umjesto rada koji najprije kreće od SSH-a.
+- Važnije vam je koristiti aplikaciju nego prilagođavati server ispod nje.
+
+Na primjer, ako postavljate [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab) i [WordPress](/apps/WordPress), hostani aplikacijski server drži tijek rada fokusiran na aplikacije. Svaku instalirate s istog mjesta i upravljate njima kroz istu upravljačku ploču.
+
+To s vremenom postaje važno. Prva instalacija samo je jedan dio hostinga. Svakodnevno iskustvo čine restarti, ažuriranja, provjere resursa, vjerodajnice, domene, pristup datotekama, podrška i pamćenje kako je sve povezano.
+
+## Gdje pobjeđuje VPS
+
+VPS je obično bolji izbor kada vaši zahtjevi izgledaju ovako:
+
+- Trebate root pristup.
+- Trebate vlastite sistemske pakete ili ponašanje na razini kernela.
+- Želite pokretati vlastiti Docker Compose stack.
+- Trebate vlastiti mrežni raspored ili firewall.
+- Želite sami upravljati systemd servisima.
+- Gradite nešto što ne odgovara modelu aplikacije jednim klikom.
+
+Zato Appbox ima oba puta. Hostane aplikacije jednim klikom najbolje su kada je aplikacijski tijek rada poznat. VPS-ovi su najbolji kada samo okruženje mora ostati otvoreno.
+
+Ako gradite vlastiti aplikacijski stack, pokrećete neobične ovisnosti ili eksperimentirate s infrastrukturom, VPS može biti pravi alat.
+
+## Skriveni trošak su operacije
+
+Najveća razlika nije mjesečna stavka na računu. To su operacije.
+
+S VPS-om posjedujete cijeli lanac:
+
+- ažuriranja operativnog sustava
+- repozitorije paketa
+- firewall pravila
+- Docker ili konfiguraciju servisa
+- konfiguraciju reverse proxyja
+- obnovu SSL certifikata
+- sigurnosne kopije aplikacija
+- nadzor procesa
+- čišćenje diska
+- pregled logova
+- sigurnosno očvršćivanje
+
+Neki ljudi to žele. Nekim timovima to treba. Ali mnogim projektima za hosting aplikacija ne treba.
+
+S hostanim aplikacijskim serverom platforma uklanja velik dio tog ponavljajućeg rada oko postavljanja. I dalje trebate odabrati aplikacije, razumjeti svoju pohranu i pratiti resurse, ali ne počinjete svaki put od prazne ljuske.
+
+## Praktična lista za odluku
+
+Postavite si ova pitanja prije odabira:
+
+**Trebate li root pristup?**
+Ako da, odaberite VPS. Ako ne, hostani aplikacijski server vjerojatno je jednostavniji.
+
+**Pokrećete li poznatu aplikaciju iz biblioteke aplikacija?**
+Ako da, počnite s hostanim aplikacijskim hostingom. Uvijek možete kasnije dodati VPS ako okruženje preraste aplikacijski model.
+
+**Želite li sami upravljati SSL-om, proxy pravilima i datotekama servisa?**
+Ako da, VPS. Ako ne, hostane aplikacije.
+
+**Hoće li više aplikacija koristiti iste datoteke?**
+Hostane aplikacije na Appboxu ovdje su korisne jer su podaci aplikacija i zajednička pohrana dio modela platforme.
+
+**Eksperimentirate li s vlastitom infrastrukturom?**
+Koristite VPS. To je pravi oblik za otvoren sistemski rad.
+
+**Pokušavate li brzo pokrenuti Plex, Nextcloud, GitLab ili WordPress?**
+Najprije koristite biblioteku aplikacija.
+
+## Kako Appbox kombinira oboje
+
+Korisna stvar kod Appboxa jest da ovo ne morate tretirati kao trajnu odluku o identitetu. Možete pokretati hostane aplikacije za stvari koje odgovaraju aplikacijskom modelu i koristiti VPS-ove za slučajeve u kojima trebate potpunu kontrolu nad mašinom.
+
+Posebno je korisno to što Appbox VPS može pristupiti datotekama iz vaših hostanih aplikacija. VPS-ovi montiraju vaše Appbox podatke pod `/APPBOX_DATA/`, uključujući:
+
+- **`/APPBOX_DATA/apps/`** - podatke iz vaših instaliranih hostanih aplikacija
+- **`/APPBOX_DATA/storage/`** - vašu zajedničku Appbox pohranu
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Appbox file explorer prikazuje mape hostanih aplikacija u zajedničkim aplikacijskim podacima"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+To znači da vaše medijske aplikacije, sinkronizacija datoteka, nadzorne ploče, trezor lozinki i web alati mogu živjeti u upravljanom aplikacijskom toku, dok vlastiti servisi ili razvojna okruženja mogu živjeti na VPS-u koji i dalje vidi iste datoteke.
+
+Na primjer, Plex ili Nextcloud možete pokretati kao hostane aplikacije, a zatim koristiti Ubuntu VPS za vlastite skripte, batch obradu, sigurnosne kopije, razvojne alate ili bilo što drugo čemu koristi potpuna Linux kontrola. VPS ne mora biti odvojen otok. Može raditi s istim Appbox podacima koje koriste vaše hostane aplikacije.
+
+Za mnoge je ljude takvo hibridno okruženje mirnije od prisiljavanja svega u jedan model.
+
+## Počnite od tijeka rada
+
+Najlakši način odabira je krenuti od tijeka rada, a ne od vrste servera.
+
+Ako je tijek rada "želim pokrenuti ovu aplikaciju", počnite s [Appbox bibliotekom aplikacija](/apps).
+
+Ako je tijek rada "želim kontrolirati ovu mašinu", koristite VPS.
+
+Oboje je valjano. Pravi izbor je onaj koji vam omogućuje da više vremena provedete na stvari koju ste zapravo htjeli pokrenuti.
+
+---
+
+_Imate pitanja o hostanim aplikacijskim serverima, VPS-ovima ili odabiru pravog Appbox okruženja? Javite se na support@appbox.co ili otvorite ticket na [billing.appbox.co](https://billing.appbox.co/submitticket.php)._

@@ -1,0 +1,183 @@
+---
+title: "Hosted App Server یا VPS - آپ کو کیا چننا چاہیے؟"
+date: 2026-06-11 11:00:00
+excerpt: "Hosted app servers اور VPSes مختلف مسئلے حل کرتے ہیں۔ one-click app hosting، managed cloud apps، اور مکمل virtual private server کے درمیان انتخاب کرنے کا طریقہ۔"
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, "ایپ ہوسٹنگ", vps, "کلاؤڈ ہوسٹنگ", "self-hosted"]
+---
+
+# Hosted App Server یا VPS: آپ کو کیا چننا چاہیے؟
+
+جب لوگ remote server تلاش کرتے ہیں تو وہ ایک ہی بڑے مقصد کے لیے کئی مختلف phrases استعمال کرتے ہیں: hosted app server، cloud app hosting، private app hosting، remote app hosting، managed app hosting، VPS hosting۔
+
+یہ phrases ایک دوسرے سے ملتے جلتے ہیں، مگر ایک جیسے نہیں۔ hosted app server اور VPS دونوں آپ کے software کو online لا سکتے ہیں۔ فرق یہ ہے کہ آپ system کا کتنا حصہ خود manage کرنا چاہتے ہیں۔
+
+یہ گائیڈ اس trade-off کو سادہ الفاظ میں سمجھاتا ہے، خاص طور پر اگر آپ کا مقصد [Plex](/apps/Plex)، [Nextcloud](/apps/Nextcloud)، [GitLab](/apps/GitLab)، [WordPress](/apps/WordPress)، File Browser، یا دوسرے self-hosted tools جیسی apps چلانا ہے۔
+
+## مختصر بات
+
+**hosted app server** تب چنیں جب آپ specific apps جلدی install اور run کرنا چاہتے ہوں، dashboard controls، persistent storage، URLs، credentials، اور updates platform flow کے ذریعے handle ہوتے ہوں۔
+
+**VPS** تب چنیں جب آپ virtual machine تک مکمل root access چاہتے ہوں اور operating system، packages، firewall، services، storage mounts، backups، اور troubleshooting خود manage کرنے میں comfortable ہوں۔
+
+کوئی option ہر صورت بہتر نہیں۔ دونوں مختلف قسم کے control کے لیے optimize کیے گئے ہیں۔
+
+## Hosted App Server کیا ہے
+
+hosted app server ایک server environment ہے جو خالی operating system کے بجائے applications کے گرد design ہوتا ہے۔
+
+Appbox پر اس کا مطلب ہے کہ آپ [app library](/apps) سے شروع کرتے ہیں۔ آپ app چنتے ہیں، اسے install کرتے ہیں، اور dashboard سے manage کرتے ہیں۔ Appbox ارد گرد کے platform pieces handle کرتا ہے: app URLs، credentials، app data، storage integration، restart controls، versions، اور جہاں support ہو وہاں resource allocation۔
+
+<p align="center">
+  <img
+    src="/blog-images/day1-app-store.png"
+    alt="hosted apps کے لیے Appbox ایپ لائبریری"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+یہ model تب مفید ہے جب اصل مقصد app ہو۔ اگر آپ private media server، file sync، password vault، Git server، web app، یا dashboard tool چاہتے ہیں تو غالباً آپ پہلی دوپہر plumbing جوڑنے میں نہیں گزارنا چاہتے۔
+
+آپ app کو چلتا ہوا چاہتے ہیں۔
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Appbox Nextcloud ایپ صفحے سے چلتی ہوئی Nextcloud Files"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## VPS کیا ہے
+
+VPS، یعنی virtual private server، آپ کو ایک مکمل virtual machine دیتا ہے۔ آپ عموماً Linux distribution چنتے ہیں، SSH کے ذریعے connect کرتے ہیں، اور machine کو کسی بھی دوسرے server کی طرح manage کرتے ہیں۔
+
+یہ extra control واقعی اہم ہے۔ آپ custom packages install کر سکتے ہیں، Docker Compose چلا سکتے ہیں، systemd services configure کر سکتے ہیں، firewall tune کر سکتے ہیں، users manage کر سکتے ہیں، اور server کو بالکل اپنی ضرورت کے مطابق بنا سکتے ہیں۔
+
+Appbox ایسے cases کے لیے full KVM VPSes بھی support کرتا ہے جہاں آپ کو اس سطح کا control چاہیے ہو۔ launch اور use cases ہم نے [Launch Week Day 3 - Virtual Private Servers](/blog/ur/launch-week-day-3-vps) میں cover کیے تھے۔
+
+<p align="center">
+  <img
+    src="/blog-images/day3-vps-console.png"
+    alt="Appbox VPS ویب console"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+trade-off یہ ہے کہ VPS آپ کو operating system دیتا ہے، تیار app stack نہیں۔ اگر آپ اس control سے لطف لیتے ہیں یا واقعی اسے require کرتے ہیں تو یہ بہترین ہو سکتا ہے۔ اگر آپ کا اصل مقصد صرف چند hosted apps چلانا ہے تو یہ distraction بن سکتا ہے۔
+
+## Hosted App Server کہاں بہتر ہے
+
+hosted app server عموماً تب بہتر fit ہوتا ہے جب آپ کی requirements ایسی ہوں:
+
+- آپ known apps جلد install کرنا چاہتے ہیں۔
+- آپ app URLs، credentials، storage، اور restarts ایک dashboard میں چاہتے ہیں۔
+- آپ reverse proxy ہاتھ سے maintain کرنے سے بچنا چاہتے ہیں۔
+- آپ کئی apps چلانا چاہتے ہیں جو ایک ہی storage environment share کریں۔
+- آپ SSH-first operations کے بجائے app-level controls چاہتے ہیں۔
+- آپ کو underlying server customize کرنے سے زیادہ app استعمال کرنے کی فکر ہے۔
+
+مثال کے طور پر، اگر آپ [Plex](/apps/Plex)، [Nextcloud](/apps/Nextcloud)، [GitLab](/apps/GitLab)، اور [WordPress](/apps/WordPress) setup کر رہے ہیں تو hosted app server workflow کو apps پر focused رکھتا ہے۔ آپ ہر app ایک ہی جگہ سے install کرتے ہیں اور انہیں ایک ہی control panel سے manage کرتے ہیں۔
+
+یہ وقت کے ساتھ اہم ہو جاتا ہے۔ پہلی install hosting کا صرف ایک حصہ ہے۔ روزمرہ experience میں restarts، updates، resource checks، credentials، domains، file access، support، اور یہ یاد رکھنا شامل ہے کہ سب کچھ کیسے connected ہے۔
+
+## VPS کہاں بہتر ہے
+
+VPS عموماً تب بہتر fit ہوتا ہے جب آپ کی requirements ایسی ہوں:
+
+- آپ کو root access چاہیے۔
+- آپ کو custom system packages یا kernel-level behavior چاہیے۔
+- آپ اپنا Docker Compose stack چلانا چاہتے ہیں۔
+- آپ کو custom network layout یا firewall چاہیے۔
+- آپ systemd services خود manage کرنا چاہتے ہیں۔
+- آپ کچھ ایسا بنا رہے ہیں جو one-click app model میں fit نہیں ہوتا۔
+
+اسی لیے Appbox میں دونوں راستے موجود ہیں۔ one-click hosted apps تب بہترین ہیں جب application workflow معلوم ہو۔ VPSes تب بہترین ہیں جب environment خود open-ended رہنا چاہیے۔
+
+اگر آپ custom application stack بنا رہے ہیں، unusual dependencies چلا رہے ہیں، یا infrastructure کے ساتھ تجربہ کر رہے ہیں تو VPS درست tool ہو سکتا ہے۔
+
+## پوشیدہ لاگت operations ہے
+
+سب سے بڑا فرق monthly line item نہیں۔ وہ operations ہے۔
+
+VPS کے ساتھ پوری chain آپ کے ذمے ہوتی ہے:
+
+- operating system updates
+- package repositories
+- firewall rules
+- Docker یا service configuration
+- reverse proxy configuration
+- SSL certificate renewal
+- app backups
+- process monitoring
+- disk cleanup
+- log inspection
+- security hardening
+
+کچھ لوگ یہ چاہتے ہیں۔ کچھ teams کو اس کی ضرورت ہوتی ہے۔ لیکن بہت سے app-hosting projects کو نہیں۔
+
+hosted app server کے ساتھ platform اس repeated setup work کا بڑا حصہ ہٹا دیتا ہے۔ آپ کو پھر بھی apps چننی ہوتی ہیں، storage سمجھنا ہوتا ہے، اور resources پر نظر رکھنی ہوتی ہے، مگر آپ ہر بار blank shell سے شروع نہیں کر رہے ہوتے۔
+
+## عملی decision checklist
+
+چننے سے پہلے یہ سوالات پوچھیں:
+
+**کیا آپ کو root access چاہیے؟**
+اگر ہاں، VPS چنیں۔ اگر نہیں، hosted app server غالباً آسان رہے گا۔
+
+**کیا آپ app library سے کوئی known app چلا رہے ہیں؟**
+اگر ہاں، hosted app hosting سے شروع کریں۔ اگر setup app model سے آگے نکل جائے تو بعد میں VPS شامل کیا جا سکتا ہے۔
+
+**کیا آپ SSL، proxy rules، اور service files خود manage کرنا چاہتے ہیں؟**
+اگر ہاں، VPS۔ اگر نہیں، hosted apps۔
+
+**کیا کئی apps ایک ہی files استعمال کریں گی؟**
+Appbox پر hosted apps یہاں مفید ہیں کیونکہ app data اور shared storage platform model کا حصہ ہیں۔
+
+**کیا آپ custom infrastructure کے ساتھ experiment کر رہے ہیں؟**
+VPS استعمال کریں۔ open-ended systems work کے لیے یہی صحیح shape ہے۔
+
+**کیا آپ Plex، Nextcloud، GitLab، یا WordPress جلدی چلانا چاہتے ہیں؟**
+پہلے app library استعمال کریں۔
+
+## Appbox دونوں کو کیسے جوڑتا ہے
+
+Appbox کی مفید بات یہ ہے کہ آپ کو اسے مستقل identity decision نہیں بنانا پڑتا۔ جو چیزیں app model میں fit ہوں ان کے لیے hosted apps چلا سکتے ہیں، اور جہاں full machine control چاہیے وہاں VPSes استعمال کر سکتے ہیں۔
+
+خاص طور پر مفید حصہ یہ ہے کہ Appbox VPS آپ کی hosted apps کی files تک access کر سکتا ہے۔ VPSes آپ کا Appbox data `/APPBOX_DATA/` کے تحت mount کرتے ہیں، بشمول:
+
+- **`/APPBOX_DATA/apps/`** - آپ کی installed hosted apps کا data
+- **`/APPBOX_DATA/storage/`** - آپ کا shared Appbox storage
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Appbox file explorer میں shared app data کے اندر hosted app folders"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+اس کا مطلب ہے کہ آپ کی media apps، file sync، dashboards، password vault، اور web tools managed app flow میں رہ سکتے ہیں، جبکہ custom services یا development environments ایسے VPS پر رہ سکتے ہیں جو پھر بھی وہی files دیکھتا ہے۔
+
+مثال کے طور پر، آپ Plex یا Nextcloud کو hosted apps کے طور پر چلا سکتے ہیں، پھر custom scripts، batch processing، backups، development tools، یا full Linux control سے فائدہ اٹھانے والی کسی بھی چیز کے لیے Ubuntu VPS استعمال کر سکتے ہیں۔ VPS کو الگ جزیرہ بننے کی ضرورت نہیں۔ یہ اسی Appbox data کے ساتھ کام کر سکتا ہے جو آپ کی hosted apps استعمال کرتی ہیں۔
+
+بہت سے لوگوں کے لیے یہ hybrid setup ہر چیز کو ایک ہی model میں زبردستی fit کرنے سے زیادہ پرسکون ہوتا ہے۔
+
+## workflow سے شروع کریں
+
+چننے کا آسان ترین طریقہ server type سے نہیں، workflow سے شروع کرنا ہے۔
+
+اگر workflow ہے "میں یہ app چلانا چاہتا ہوں،" تو [Appbox app library](/apps) سے شروع کریں۔
+
+اگر workflow ہے "میں اس machine کو control کرنا چاہتا ہوں،" تو VPS استعمال کریں۔
+
+دونوں درست ہیں۔ صحیح choice وہ ہے جو آپ کو اس چیز پر زیادہ وقت دینے دے جسے آپ واقعی چلانا چاہتے تھے۔
+
+---
+
+_hosted app servers، VPSes، یا صحیح Appbox setup چننے کے بارے میں سوالات ہیں؟ support@appbox.co پر رابطہ کریں یا [billing.appbox.co](https://billing.appbox.co/submitticket.php) پر ticket کھولیں۔_

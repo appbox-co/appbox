@@ -1,0 +1,183 @@
+---
+title: Barındırılan Uygulama Sunucusu mu VPS mi - Hangisini Seçmelisiniz?
+date: 2026-06-11 11:00:00
+excerpt: Barındırılan uygulama sunucuları ve VPS'ler farklı sorunları çözer. Tek tıklamayla uygulama barındırma, yönetilen bulut uygulamaları ve tam bir sanal özel sunucu arasında nasıl seçim yapacağınız burada.
+author_id: rid
+og_image: day3-vps-console.png
+tags: [appbox, uygulama-barındırma, vps, bulut-barındırma, self-hosted]
+---
+
+# Barındırılan Uygulama Sunucusu mu VPS mi: Hangisini Seçmelisiniz?
+
+İnsanlar uzak bir sunucu ararken çoğu zaman aynı geniş hedef için birkaç farklı ifade kullanır: barındırılan uygulama sunucusu, bulut uygulama barındırma, özel uygulama barındırma, uzak uygulama barındırma, yönetilen uygulama barındırma, VPS barındırma.
+
+Bu ifadeler örtüşür, ancak aynı şey değildir. Barındırılan bir uygulama sunucusu da VPS de yazılımınızı çevrimiçi hale getirebilir. Fark, sistemin ne kadarını kendiniz yönetmek istediğinizdir.
+
+Bu rehber, özellikle amacınız [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab), [WordPress](/apps/WordPress), File Browser veya diğer self-hosted araçları çalıştırmaksa, bu ödünü sade bir dille açıklar.
+
+## Kısa Versiyon
+
+Belirli uygulamaları hızlıca kurup çalıştırmak, dashboard kontrollerini, kalıcı depolamayı, URL'leri, kimlik bilgilerini ve güncellemeleri bir platform akışı üzerinden yönetmek istiyorsanız **barındırılan uygulama sunucusu** seçin.
+
+Bir sanal makineye tam root erişimi istiyorsanız ve işletim sistemini, paketleri, güvenlik duvarını, servisleri, depolama bağlamalarını, yedekleri ve sorun gidermeyi kendiniz yönetmek konusunda rahatsanız **VPS** seçin.
+
+Hiçbiri her durumda daha iyi değildir. Farklı kontrol türleri için optimize edilmişlerdir.
+
+## Barındırılan Uygulama Sunucusu Nedir?
+
+Barındırılan uygulama sunucusu, boş bir işletim sistemi yerine uygulamalar etrafında tasarlanmış bir sunucu ortamıdır.
+
+Appbox'ta bu, [uygulama kitaplığından](/apps) başlamanız anlamına gelir. Bir uygulama seçer, kurar ve dashboard'dan yönetirsiniz. Appbox çevredeki platform parçalarını yönetir: uygulama URL'leri, kimlik bilgileri, uygulama verileri, depolama entegrasyonu, yeniden başlatma kontrolleri, sürümler ve desteklenen yerlerde kaynak ayırma.
+
+<p align="center">
+  <img
+    src="/blog-images/day1-app-store.png"
+    alt="Barındırılan uygulamalar için Appbox uygulama kitaplığı"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Bu model, asıl konu uygulama olduğunda kullanışlıdır. Özel bir medya sunucusu, dosya senkronizasyonu, parola kasası, Git sunucusu, web uygulaması veya dashboard aracı istiyorsanız, muhtemelen ilk öğleden sonranızı altyapı parçalarını birleştirerek geçirmek istemezsiniz.
+
+Uygulamanın çalışmasını istersiniz.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Appbox Nextcloud uygulama sayfasından çalışan Nextcloud Files"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## VPS Nedir?
+
+VPS, yani sanal özel sunucu, size tam bir sanal makine verir. Genellikle bir Linux dağıtımı seçer, SSH üzerinden bağlanır ve makineyi başka herhangi bir sunucu gibi yönetirsiniz.
+
+Bu ek kontrol gerçektir. Özel paketler kurabilir, Docker Compose çalıştırabilir, systemd servislerini yapılandırabilir, güvenlik duvarını ayarlayabilir, kullanıcıları yönetebilir ve sunucuyu tam istediğiniz gibi şekillendirebilirsiniz.
+
+Appbox, bu düzeyde kontrole ihtiyaç duyduğunuz durumlar için tam KVM VPS'leri de destekler. Lansmanı ve kullanım senaryolarını [Launch Week Day 3 - Virtual Private Servers](/blog/tr/launch-week-day-3-vps) yazısında ele aldık.
+
+<p align="center">
+  <img
+    src="/blog-images/day3-vps-console.png"
+    alt="Appbox VPS web konsolu"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Ödün şudur: VPS size tamamlanmış uygulama yığınını değil, işletim sistemini verir. Bu kontrolden hoşlanıyorsanız veya buna ihtiyaç duyuyorsanız mükemmel olabilir. Gerçek hedefiniz yalnızca birkaç barındırılan uygulamayı çalıştırmaksa dikkat dağıtıcı olabilir.
+
+## Barındırılan Uygulama Sunucusunun Öne Çıktığı Yerler
+
+Gereksinimleriniz şöyle görünüyorsa barındırılan uygulama sunucusu genellikle daha iyi uyum sağlar:
+
+- Bilinen uygulamaları hızlıca kurmak istiyorsunuz.
+- Uygulama URL'leri, kimlik bilgileri, depolama ve yeniden başlatmalar tek bir dashboard'da olsun istiyorsunuz.
+- Reverse proxy'yi elle sürdürmekten kaçınmayı tercih ediyorsunuz.
+- Aynı depolama ortamını paylaşan birkaç uygulama çalıştırmak istiyorsunuz.
+- SSH öncelikli operasyonlar yerine uygulama düzeyinde kontroller istiyorsunuz.
+- Alttaki sunucuyu özelleştirmekten çok uygulamayı kullanmayı önemsiyorsunuz.
+
+Örneğin [Plex](/apps/Plex), [Nextcloud](/apps/Nextcloud), [GitLab](/apps/GitLab) ve [WordPress](/apps/WordPress) kuruyorsanız, barındırılan bir uygulama sunucusu iş akışını uygulamalara odaklı tutar. Her birini aynı yerden kurar ve aynı kontrol panelinden yönetirsiniz.
+
+Bu zaman içinde önem kazanır. İlk kurulum, barındırmanın yalnızca bir parçasıdır. Günlük deneyim; yeniden başlatmalar, güncellemeler, kaynak kontrolleri, kimlik bilgileri, domain'ler, dosya erişimi, destek ve her şeyin nasıl bağlandığını hatırlamaktır.
+
+## VPS'nin Öne Çıktığı Yerler
+
+Gereksinimleriniz şöyle görünüyorsa VPS genellikle daha iyi uyum sağlar:
+
+- Root erişimine ihtiyacınız var.
+- Özel sistem paketlerine veya kernel düzeyinde davranışa ihtiyacınız var.
+- Kendi Docker Compose yığınınızı çalıştırmak istiyorsunuz.
+- Özel bir ağ düzenine veya güvenlik duvarına ihtiyacınız var.
+- systemd servislerini kendiniz yönetmek istiyorsunuz.
+- Tek tıklamalı uygulama modeline uymayan bir şey inşa ediyorsunuz.
+
+Appbox'ın iki yolu da sunmasının nedeni budur. Tek tıklamayla barındırılan uygulamalar, uygulama iş akışı bilindiğinde en iyi sonucu verir. VPS'ler ise ortamın kendisinin açık uçlu olması gerektiğinde en iyisidir.
+
+Özel bir uygulama yığını inşa ediyorsanız, sıra dışı bağımlılıklar çalıştırıyorsanız veya altyapıyla denemeler yapıyorsanız VPS doğru araç olabilir.
+
+## Gizli Maliyet Operasyondur
+
+En büyük fark aylık satır kalemi değildir. Operasyondur.
+
+Bir VPS ile tüm zincirin sahibi siz olursunuz:
+
+- işletim sistemi güncellemeleri
+- paket depoları
+- güvenlik duvarı kuralları
+- Docker veya servis yapılandırması
+- reverse proxy yapılandırması
+- SSL sertifikası yenileme
+- uygulama yedekleri
+- süreç izleme
+- disk temizliği
+- log inceleme
+- güvenlik sıkılaştırması
+
+Bazı insanlar bunu ister. Bazı ekiplerin buna ihtiyacı vardır. Ancak birçok uygulama barındırma projesinde buna gerek yoktur.
+
+Barındırılan bir uygulama sunucusunda platform, tekrarlanan kurulum işlerinin büyük kısmını ortadan kaldırır. Yine de uygulamalarınızı seçmeniz, depolamanızı anlamanız ve kaynaklara göz kulak olmanız gerekir, ancak her seferinde boş bir shell'den başlamazsınız.
+
+## Pratik Bir Karar Kontrol Listesi
+
+Seçim yapmadan önce şu soruları sorun:
+
+**Root erişimine ihtiyacınız var mı?**
+Evetse VPS seçin. Değilse, barındırılan uygulama sunucusu muhtemelen daha basittir.
+
+**Uygulama kitaplığından bilinen bir uygulama mı çalıştırıyorsunuz?**
+Evetse barındırılan uygulama barındırma ile başlayın. Kurulum uygulama modelini aşarsa daha sonra her zaman bir VPS ekleyebilirsiniz.
+
+**SSL'yi, proxy kurallarını ve servis dosyalarını kendiniz yönetmek istiyor musunuz?**
+Evetse VPS. Hayırsa barındırılan uygulamalar.
+
+**Birkaç uygulama aynı dosyaları mı kullanacak?**
+Appbox'ta barındırılan uygulamalar burada kullanışlıdır, çünkü uygulama verileri ve paylaşılan depolama platform modelinin parçasıdır.
+
+**Özel altyapıyla denemeler mi yapıyorsunuz?**
+VPS kullanın. Açık uçlu sistem çalışmaları için doğru yapı budur.
+
+**Plex, Nextcloud, GitLab veya WordPress'i hızlıca çalışır hale getirmeye mi çalışıyorsunuz?**
+Önce uygulama kitaplığını kullanın.
+
+## Appbox İkisini Nasıl Birleştirir
+
+Appbox'ın faydalı yanı, bunu kalıcı bir kimlik kararı gibi ele almak zorunda olmamanızdır. Uygulama modeline uyan şeyler için barındırılan uygulamalar çalıştırabilir, tam makine kontrolüne ihtiyaç duyduğunuz durumlar için VPS kullanabilirsiniz.
+
+Özellikle kullanışlı olan taraf, bir Appbox VPS'nin barındırılan uygulamalarınızdaki dosyalara erişebilmesidir. VPS'ler Appbox verilerinizi `/APPBOX_DATA/` altında bağlar; buna şunlar dahildir:
+
+- **`/APPBOX_DATA/apps/`** - kurulu barındırılan uygulamalarınızdan gelen veriler
+- **`/APPBOX_DATA/storage/`** - paylaşılan Appbox depolamanız
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-explorer-hosted-app-files.jpg"
+    alt="Paylaşılan uygulama verilerindeki barındırılan uygulama klasörlerini gösteren Appbox dosya gezgini"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Bu, medya uygulamalarınızın, dosya senkronizasyonunuzun, dashboard'larınızın, parola kasanızın ve web araçlarınızın yönetilen uygulama akışında yaşayabileceği; özel servislerin veya geliştirme ortamlarının ise aynı dosyaları görebilen bir VPS üzerinde çalışabileceği anlamına gelir.
+
+Örneğin Plex veya Nextcloud'u barındırılan uygulama olarak çalıştırıp, ardından özel script'ler, toplu işleme, yedekler, geliştirme araçları veya tam Linux kontrolünden yararlanan başka işler için bir Ubuntu VPS kullanabilirsiniz. VPS'nin ayrı bir ada olması gerekmez. Barındırılan uygulamalarınızın kullandığı aynı Appbox verileriyle çalışabilir.
+
+Birçok kişi için bu hibrit kurulum, her şeyi tek bir modele zorlamaktan daha sakindir.
+
+## İş Akışıyla Başlayın
+
+Seçmenin en kolay yolu, sunucu türüyle değil iş akışıyla başlamaktır.
+
+İş akışı "Bu uygulamayı çalıştırmak istiyorum" ise [Appbox uygulama kitaplığıyla](/apps) başlayın.
+
+İş akışı "Bu makineyi kontrol etmek istiyorum" ise VPS kullanın.
+
+İkisi de geçerlidir. Doğru seçim, gerçekten çalıştırmak istediğiniz şeye daha fazla zaman ayırmanızı sağlayan seçimdir.
+
+---
+
+_Barındırılan uygulama sunucuları, VPS'ler veya doğru Appbox kurulumunu seçmek hakkında sorularınız mı var? support@appbox.co üzerinden bize ulaşın veya [billing.appbox.co](https://billing.appbox.co/submitticket.php) adresinden bir destek talebi açın._

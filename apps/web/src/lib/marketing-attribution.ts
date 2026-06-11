@@ -7,6 +7,7 @@ const ATTRIBUTION_PARAM_NAMES = [
   "gbraid",
   "wbraid",
   "msclkid",
+  "rdt_cid",
   "utm_source",
   "utm_medium",
   "utm_campaign",

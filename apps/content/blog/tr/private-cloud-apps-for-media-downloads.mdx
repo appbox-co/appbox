@@ -1,0 +1,160 @@
+---
+title: Medya ve İndirmeler İçin Özel Bulut Uygulamaları
+date: 2026-06-11 13:00:00
+excerpt: Her servisi elle yönetmeden medya kitaplıkları, indirmeler, dosya senkronizasyonu, tarayıcıdan dosya erişimi ve uzak depolama için özel bir bulut uygulama yığını oluşturun.
+author_id: rid
+og_image: appbox-private-cloud-sync-apps.jpg
+tags: [appbox, özel-bulut, medya-sunucusu, dosya-senkronizasyonu, uygulamalar]
+---
+
+# Medya ve İndirmeler İçin Özel Bulut Uygulamaları
+
+Özel bulut kurulumu en çok dosyalarınızı, medyanızı, indirmelerinizi ve senkronizasyon araçlarınızı tek bir yere getirdiğinde işe yarar.
+
+Bunun sıfırdan karmaşık bir sunucu yığını kurmak anlamına gelmesi gerekmez. Daha iyi başlangıç noktası genellikle depolamayı temiz şekilde paylaşan odaklı uygulamalardan oluşan bir settir: dosya senkronizasyonu için bir uygulama, tarayıcıdan dosya erişimi için bir uygulama, medya oynatma için bir uygulama, aktarımlar veya yedekler için bir uygulama ve iş akışı büyüdüğünde isteğe bağlı ek araçlar.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-private-cloud-sync-apps.jpg"
+    alt="Özel bulut ve senkronizasyon uygulamalarına göre filtrelenmiş Appbox uygulama kitaplığı"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Bu rehber, özel bulut dosyaları, medya kitaplıkları ve indirme iş akışları için pratik bir Appbox kurulumunu anlatır.
+
+## Özel Bulut Kurulumunun İhtiyaç Duydukları
+
+Tam uygulama listesi iş akışınıza bağlıdır, ancak çoğu özel bulut kurulumu birkaç katmana ihtiyaç duyar:
+
+- Dosya senkronizasyonu ve paylaşımı.
+- Tarayıcı tabanlı dosya yönetimi.
+- Güvenli dosya aktarım erişimi.
+- Medya kitaplığı oynatma.
+- Fotoğraf, video, müzik veya belge düzenleme.
+- Yedekleme, taşıma veya zamanlanmış aktarım araçları.
+- Özel script'ler için isteğe bağlı makine düzeyinde kontrol.
+
+Appbox'ın faydalı yanı, bunların ayrı adalara dönüşmeden ayrı uygulamalar olabilmesidir. Barındırılan uygulamalar aynı Appbox depolama ortamını paylaşabilir ve tam Linux kontrolüne ihtiyaç duyduğunuzda bir Appbox VPS aynı verilere `/APPBOX_DATA/` üzerinden erişebilir.
+
+## Dosya Senkronizasyonuyla Başlayın
+
+[Nextcloud](/apps/Nextcloud), birçok özel bulut kurulumu için doğal başlangıç noktasıdır. Dosya senkronizasyon istemcileri, paylaşım kontrolleri, WebDAV erişimi ve tanıdık bir bulut sürücüsü tarzı iş akışı sağlar.
+
+Şunları istediğinizde kullanın:
+
+- Masaüstü ve mobil senkronizasyonla özel dosya depolama.
+- Parolalı veya son kullanma tarihli paylaşım bağlantıları.
+- Belgeler, proje dosyaları ve kişisel medya için merkezi bir yer.
+- Uygulamalar ve masaüstü istemcileri için WebDAV uyumluluğu.
+
+Nextcloud kullanabileceğiniz tek dosya uygulaması değildir, ancak kurulumu dağınık bir araç koleksiyonu yerine kişisel bulut gibi hissettiren uygulama çoğu zaman odur.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-nextcloud-files-app-page.webp"
+    alt="Appbox Nextcloud uygulama sayfasından Nextcloud Files ekran görüntüsü"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Tarayıcıdan Dosya Erişimi Ekleyin
+
+Dosya senkronizasyonu kullanışlıdır, ancak bazen yalnızca bir tarayıcı açıp dosyaları taşımak istersiniz.
+
+[File Browser](/apps/File%20Browser%20%26%20Webdav) ve [File Browser Quantum & WebDAV](/apps/File%20Browser%20Quantum%20%26%20Webdav), bu basit dosya yönetimi ihtiyacını karşılar. Tam senkronizasyon istemcisi yapılandırmak istemediğiniz bir makineden yükleme, indirme, yeniden adlandırma, klasör temizliği ve hızlı kontroller için kullanışlıdırlar.
+
+Bu tarayıcı katmanı, özellikle medya ve indirme klasörleri büyüdüğünde işe yarar. Terminal açmadan dosya yapısını inceleyebilir, tamamlanan dosyaları kitaplık klasörlerine taşıyabilir veya geçici depolamayı toparlayabilirsiniz.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-file-browser-files-app-page.webp"
+    alt="Appbox File Browser uygulama sayfasından File Browser dosyaları ekran görüntüsü"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Daha Büyük İş Akışları İçin Aktarım Araçları Ekleyin
+
+Özel bulut kurulumları çoğu zaman manuel yükleme ve indirme düğmelerinden fazlasına ihtiyaç duyar.
+
+[SFTPGo](/apps/SFTPGo), SFTP, FTP/S, HTTP/S, WebDAV, kullanıcı kontrolleri, sanal klasörler veya politika tabanlı erişim gerektiğinde güçlü bir seçenektir. Yalnızca web arayüzü yerine protokol düzeyinde dosya erişimi istediğinizde kullanışlıdır.
+
+[Rclone](/apps/Rclone), bulut depolama sağlayıcıları ve uzak dosya sistemleri arasında kopyalama, senkronizasyon, taşıma ve yedekleme tarzı iş akışları için kullanışlıdır.
+
+[Syncthing](/apps/Syncthing) ve [Resilio Sync](/apps/Resilio%20Sync), üçüncü taraf bir bulut sürücüsünü sistemin merkezi yapmadan cihazdan cihaza senkronizasyon istediğinizde kullanışlıdır.
+
+İndirme iş akışlarında tasarımı basit ve meşru tutun: saklama ve aktarma hakkınız olan dosyaları saklayın, geçici klasörleri kitaplık klasörlerinden ayrı tutun ve her uygulamanın her yere yazmasına izin vermek yerine senkronizasyon veya yedekleme araçlarını bilinçli kullanın.
+
+## Aynı Depolamanın Etrafına Medya Uygulamaları Ekleyin
+
+Dosyalarınız düzenlendikten sonra medya uygulamaları özel bulutu daha kullanışlı hale getirir.
+
+[Plex](/apps/Plex), [Jellyfin](/apps/Jellyfin) ve [Emby](/apps/Emby), video, müzik ve fotoğraf kitaplıkları için ana medya sunucusu seçenekleridir. [Tautulli](/apps/Tautulli), Plex etkinliği, akış ayrıntıları ve kitaplık kullanımı için izleme ekler.
+
+Daha odaklı medya kitaplıkları için [Immich](/apps/Immich) özel fotoğraf ve video yönetiminde, [Navidrome](/apps/Navidrome) müzik akışında, [audiobookshelf](/apps/audiobookshelf) sesli kitaplar ve podcast'lerde, [Calibre](/apps/Calibre) ise e-kitap kitaplıklarında kullanışlıdır.
+
+<p align="center">
+  <img
+    src="/blog-images/appbox-immich-photos-app-page.webp"
+    alt="Appbox Immich uygulama sayfasından Immich fotoğraf kitaplığı ekran görüntüsü"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Önemli olan, medya uygulamalarının anladığınız bir depolama düzenini işaret etmesidir. İndirmeler, içe aktarmalar, kitaplıklar ve yedekler net klasörlere ve sahipliğe sahip olduğunda özel bulut kurulumunun bakımı kolaylaşır.
+
+## İndirmeleri Kitaplıklardan Ayrı Tutun
+
+Basit bir alışkanlık daha sonra çok fazla temizlik işini önler: gelen dosyaları tamamlanmış kitaplıklardan ayrı tutun.
+
+Örneğin:
+
+- Yeni dosyalar için `/downloads/incoming/`.
+- Kontrol edilen, yeniden adlandırılan veya sıralanan dosyalar için `/downloads/processing/`.
+- Tamamlanmış kitaplıklar için `/media/video/`, `/media/music/`, `/media/photos/` veya `/media/books/`.
+- Anlık görüntüler, dışa aktarımlar veya tesis dışı kopyalar için `/backups/`.
+
+Bu ayrım otomasyonu daha güvenli hale getirir. Bir senkronizasyon işi yalnızca tamamlanmış dosyaları kopyalayabilir. Bir medya sunucusu yalnızca kitaplık klasörlerini tarayabilir. Bir temizlik görevi önemli verilere dokunmadan geçici dosyaları kaldırabilir.
+
+## VPS Ne Zaman Yardımcı Olur
+
+Barındırılan uygulamalar yaygın iş akışını kapsar. Özel bir şeye ihtiyaç duyduğunuzda VPS yardımcı olur:
+
+- Zamanlanmış script'ler.
+- Özel dosya işleme işleri.
+- Geliştirme araçları.
+- Tek seferlik taşımalar.
+- Paket kurulumları veya komut satırı yardımcıları.
+- Uygulama şablonuna uymayan otomasyon.
+
+Appbox'taki bir [Ubuntu VPS](/apps/Ubuntu%20VPS), Appbox verilerine `/APPBOX_DATA/` altında erişebilir, bu yüzden barındırılan uygulamalarınızın kullandığı aynı dosyalarla çalışabilir. Bu, tam makine kontrolü gerektiren sıra dışı işler için VPS kullanırken Nextcloud, File Browser, Plex, Jellyfin veya Immich'i uygulama akışında tutabileceğiniz anlamına gelir.
+
+Bu hibrit modeli [Barındırılan Uygulama Sunucusu mu VPS mi](/blog/tr/hosted-app-server-vs-vps) yazısında daha ayrıntılı ele aldık.
+
+## Pratik Bir Uygulama Yığını
+
+Dengeli bir özel bulut kurulumu için küçük başlayın:
+
+1. Senkronizasyon, paylaşım ve kişisel bulut depolama için [Nextcloud](/apps/Nextcloud).
+2. Tarayıcıdan dosya yönetimi için [File Browser](/apps/File%20Browser%20%26%20Webdav) veya [File Browser Quantum & WebDAV](/apps/File%20Browser%20Quantum%20%26%20Webdav).
+3. Aktarımlar, taşıma, yedekleme veya cihaz senkronizasyonu için [SFTPGo](/apps/SFTPGo), [Rclone](/apps/Rclone), [Syncthing](/apps/Syncthing) veya [Resilio Sync](/apps/Resilio%20Sync).
+4. Medya oynatma için [Plex](/apps/Plex), [Jellyfin](/apps/Jellyfin) veya [Emby](/apps/Emby).
+5. Kitaplığınızın belirli bir yapısı varsa [Immich](/apps/Immich), [Navidrome](/apps/Navidrome), [audiobookshelf](/apps/audiobookshelf) veya [Calibre](/apps/Calibre).
+6. Yalnızca özel otomasyon gerektirdiğinde [Ubuntu VPS](/apps/Ubuntu%20VPS).
+
+Bu, her adımı manuel sunucu bakımına dönüştürmeden dosyaları, medyayı, indirmeleri ve uzak erişimi yöneten özel bir bulut oluşturmak için yeterlidir.
+
+## Bakım İçin Kurun
+
+En iyi özel bulut uygulama kurulumu, en uzun uygulama listesine sahip olan değildir. Anlayabildiğiniz, işletebildiğiniz ve toparlayabildiğiniz kurulumdur.
+
+Küçük bir uygulama yığınıyla başlayın, klasör sınırlarını net tutun ve araçları yalnızca gerçek bir iş akışı sorununu çözdüklerinde ekleyin. Appbox size uygulama kitaplığını, paylaşılan depolama modelini ve isteğe bağlı VPS kontrolünü verir; böylece her seferinde temeli yeniden kurmadan kurulumu büyütebilirsiniz.
+
+---
+
+_Appbox'taki özel bulut uygulamaları hakkında sorularınız mı var? support@appbox.co üzerinden bize ulaşın veya [billing.appbox.co](https://billing.appbox.co/submitticket.php) adresinden bir destek talebi açın._
