@@ -78,12 +78,14 @@ interface FormFieldRendererProps {
   config: FormFieldConfig
   field: ControllerRenderProps<FieldValues, string>
   error?: string
+  inputClassName?: string
 }
 
 export function FormFieldRenderer({
   config,
   field,
-  error
+  error,
+  inputClassName
 }: FormFieldRendererProps) {
   const [showPassword, setShowPassword] = useState(false)
   const fieldId = `form-field-${config.name}`
@@ -97,7 +99,7 @@ export function FormFieldRenderer({
             defaultValue={field.value as string}
             disabled={config.disabled}
           >
-            <SelectTrigger id={fieldId}>
+            <SelectTrigger id={fieldId} className={inputClassName}>
               <SelectValue placeholder={config.placeholder} />
             </SelectTrigger>
             <SelectContent>
@@ -128,6 +130,7 @@ export function FormFieldRenderer({
             id={fieldId}
             placeholder={config.placeholder}
             disabled={config.disabled}
+            className={inputClassName}
             {...field}
             value={(field.value as string) ?? ""}
           />
@@ -141,6 +144,7 @@ export function FormFieldRenderer({
               type={showPassword ? "text" : "password"}
               placeholder={config.placeholder}
               disabled={config.disabled}
+              className={inputClassName}
               {...field}
               value={(field.value as string) ?? ""}
             />
@@ -171,6 +175,7 @@ export function FormFieldRenderer({
             type="number"
             placeholder={config.placeholder}
             disabled={config.disabled}
+            className={inputClassName}
             {...field}
             value={(field.value as string | number) ?? ""}
             onChange={(e) => {
@@ -187,6 +192,7 @@ export function FormFieldRenderer({
             type="search"
             placeholder={config.placeholder}
             disabled={config.disabled}
+            className={inputClassName}
             {...field}
             value={(field.value as string) ?? ""}
           />
@@ -201,6 +207,7 @@ export function FormFieldRenderer({
             type={config.type}
             placeholder={config.placeholder}
             disabled={config.disabled}
+            className={inputClassName}
             {...field}
             value={(field.value as string) ?? ""}
           />

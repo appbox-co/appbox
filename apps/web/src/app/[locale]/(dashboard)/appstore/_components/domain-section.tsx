@@ -180,7 +180,7 @@ function AppboxDomainSection({
             onChange={(e) => onSubdomainChange(e.target.value)}
             placeholder="myapp"
             className={cn(
-              "rounded-r-none z-10",
+              "z-10 rounded-r-none bg-muted/30",
               (subdomainError || availabilityState === "taken") &&
                 "border-destructive"
             )}
@@ -342,7 +342,7 @@ function CustomDomainSection({
               onChange={(e) => onSubdomainChange(e.target.value)}
               placeholder="myapp"
               className={cn(
-                "rounded-r-none z-10",
+                "z-10 rounded-r-none bg-muted/30",
                 (subdomainError || availabilityState === "taken") &&
                   "border-destructive"
               )}

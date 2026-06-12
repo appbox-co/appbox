@@ -235,7 +235,10 @@ export function BaseDomainSelector({
                   setNewDomainInput("")
                 }
               }}
-              className={cn("flex-1", newDomainError && "border-destructive")}
+              className={cn(
+                "flex-1 bg-muted/30",
+                newDomainError && "border-destructive"
+              )}
               autoFocus
               disabled={disabled || addingDomain}
             />
@@ -276,7 +279,7 @@ export function BaseDomainSelector({
               variant="outline"
               role="combobox"
               className={cn(
-                "w-full justify-between font-normal",
+                "w-full justify-between bg-muted/30 font-normal",
                 !value && "text-muted-foreground",
                 error && "border-destructive"
               )}
@@ -289,7 +292,7 @@ export function BaseDomainSelector({
             </Button>
           </PopoverTrigger>
           <PopoverContent
-            className="w-[--radix-popover-trigger-width] p-0"
+            className="w-[--radix-popover-trigger-width] bg-card p-0"
             align="start"
           >
             <div className="flex flex-col">

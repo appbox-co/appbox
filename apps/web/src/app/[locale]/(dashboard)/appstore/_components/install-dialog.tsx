@@ -558,7 +558,7 @@ function SearchFieldInput({
               role="combobox"
               aria-expanded={open}
               className={cn(
-                "w-full justify-between font-normal",
+                "w-full justify-between bg-muted/30 font-normal",
                 !value && "text-muted-foreground",
                 error && "border-destructive"
               )}
@@ -572,7 +572,7 @@ function SearchFieldInput({
             </Button>
           </PopoverTrigger>
           <PopoverContent
-            className="w-[--radix-popover-trigger-width] p-0"
+            className="w-[--radix-popover-trigger-width] bg-card p-0"
             align="start"
           >
             <Command>
@@ -706,7 +706,7 @@ function CustomFieldInput({
           <Input
             readOnly
             value={urlValue}
-            className={cn("font-mono text-xs")}
+            className={cn("bg-muted/30 font-mono text-xs")}
           />
           {href ? (
             <a
@@ -794,7 +794,12 @@ function CustomFieldInput({
   } as unknown as ControllerRenderProps<FieldValues, string>
 
   return (
-    <FormFieldRenderer config={config} field={controllerField} error={error} />
+    <FormFieldRenderer
+      config={config}
+      field={controllerField}
+      error={error}
+      inputClassName="bg-muted/30"
+    />
   )
 }
 
@@ -988,7 +993,7 @@ function CyloSelector({
             >
               <SelectTrigger
                 id="cylo-select"
-                className="[&>span]:max-w-[calc(100%-1.25rem)] [&>span]:truncate"
+                className="bg-muted/30 [&>span]:max-w-[calc(100%-1.25rem)] [&>span]:truncate"
               >
                 <SelectValue
                   placeholder={t("install.cyloSelector.selectToSeeOptions")}
@@ -1058,7 +1063,7 @@ function CyloSelector({
         )
       ) : (
         <Select value={selectedCylo} onValueChange={onSelectCylo}>
-          <SelectTrigger id="cylo-select">
+          <SelectTrigger id="cylo-select" className="bg-muted/30">
             <SelectValue placeholder={label} />
           </SelectTrigger>
           <SelectContent>
@@ -2066,7 +2071,7 @@ export function InstallDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "max-h-[85vh] overflow-y-auto",
+          "max-h-[85vh] overflow-hidden bg-card p-0",
           hasCustomFields || requiresDomain ? "sm:max-w-lg" : "sm:max-w-md"
         )}
         onKeyDown={(event) => {
@@ -2089,7 +2094,7 @@ export function InstallDialog({
           }
         }}
       >
-        <DialogHeader>
+        <DialogHeader className="border-b bg-muted/30 px-6 py-4">
           <DialogTitle>
             {t("app.installTitle", { name: app.display_name })}
           </DialogTitle>
@@ -2098,7 +2103,7 @@ export function InstallDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 py-2">
+        <div className="max-h-[calc(85vh-9.5rem)] space-y-4 overflow-y-auto px-6 py-5">
           {/* Install guard banner */}
           {installGuard && <InstallGuardBanner guard={installGuard} />}
 
@@ -2144,7 +2149,7 @@ export function InstallDialog({
                   value={selectedVersion}
                   onValueChange={setSelectedVersion}
                 >
-                  <SelectTrigger id="version-select">
+                  <SelectTrigger id="version-select" className="bg-muted/30">
                     <SelectValue placeholder={t("app.selectVersion")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -2266,7 +2271,7 @@ export function InstallDialog({
           )}
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="border-t bg-muted/10 px-6 py-4">
           <Button
             variant="outline"
             type="button"

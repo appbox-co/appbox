@@ -2,20 +2,16 @@ import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Script from "next/script"
 import { ArrowUpRightIcon } from "lucide-react"
+import { getAppDetails } from "@/api/appbox/app-details"
 import { getPlans } from "@/api/appbox/plans"
 import { AppConnectionsSection } from "@/components/marketing/app-connections-section"
 import { AppsMarquee } from "@/components/marketing/apps-marquee"
 import { DashboardPromoSection } from "@/components/marketing/dashboard-promo-section"
 import { FAQSection } from "@/components/marketing/faq-section"
 import { FeaturesSection } from "@/components/marketing/features-section"
+import { HeroInstallPreview } from "@/components/marketing/hero-install-preview"
 import { LiveInstallCounter } from "@/components/marketing/live-install-counter"
 import { OpenClawPromoSection } from "@/components/marketing/openclaw-promo-section"
-import {
-  PageActions,
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading
-} from "@/components/marketing/page-header"
 import { SimpleInstallPromoSection } from "@/components/marketing/simple-install-promo-section"
 import { SovereignCloudSection } from "@/components/marketing/sovereign-cloud-section"
 import { VpsLaunchPromoSection } from "@/components/marketing/vps-launch-promo-section"
@@ -28,10 +24,7 @@ import {
 import { buttonVariants } from "@/components/ui/button"
 import { ClientVortexWrapper } from "@/components/ui/client-vortex-wrapper"
 import { FlipWords } from "@/components/ui/flip-words"
-import { ClientGradientSwitcher } from "@/components/ui/gradient-client-switcher"
-import { GradientWrapper } from "@/components/ui/gradient-wrapper"
 import Plans from "@/components/ui/plans"
-import { PromoBannerData } from "@/components/ui/promo-banner"
 import { launchWeekFlags } from "@/config/launch-week-flags"
 import { CURRENT_PROMO_THEME, getPromoTheme } from "@/config/promo-theme"
 import { siteConfig } from "@/config/site"
@@ -68,242 +61,83 @@ export async function generateMetadata(props: {
 
 export default async function IndexPage() {
   const t = await getTranslations()
-  const plansData = await getPlans()
   const promoTheme = getPromoTheme()
-
-  // Extract promotion data from the first active promotion found
-  const activePromotion = plansData.data
-    .flatMap((group) => group.plans)
-    .find((plan) => plan.promotion?.active)?.promotion
-
-  // Create promo banner data if promotion exists
-  const promoBannerData: PromoBannerData | null = activePromotion
-    ? {
-        active: true,
-        promo_code: activePromotion.promo_code,
-        title: activePromotion.title,
-        description: activePromotion.description,
-        discount_percentage: activePromotion.discount_percentage,
-        duration_months: activePromotion.duration_months,
-        badge_text: activePromotion.badge_text,
-        cta_text: "View Deals",
-        background_gradient: {
-          from: promoTheme.gradientFrom,
-          to: promoTheme.gradientTo
-        }
-      }
-    : null
-
-  const gradientProps = {
-    width: 180,
-    height: 180,
-    path: "M100,100 m0,-75 a75,75 0 1,1 -0.1,0 z",
-    gradientColors: ["#6366f1", "#6366f1", "#3498DB"] as [
-      string,
-      string,
-      string
-    ],
-    className: "justify-center mt-6"
-  }
+  const [plansData, openClawApp] = await Promise.all([
+    getPlans(),
+    getAppDetails("OpenClaw").catch((error) => {
+      console.error("Error fetching OpenClaw details:", error)
+      return null
+    })
+  ])
 
   return (
     <div className="container relative">
       {/* Hero Section */}
-      <div className="relative pt-8 md:pt-12 overflow-hidden">
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-          @keyframes hero-float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-          }
-        `
-          }}
-        />
+      <div className="relative overflow-hidden py-10 md:py-14 lg:py-18">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden size-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-[4rem] bg-linear-to-br from-indigo-500/15 via-sky-500/8 to-purple-500/12 blur-3xl dark:from-indigo-500/20 dark:via-sky-500/10 dark:to-purple-500/15 md:block" />
 
-        {/* Floating stars */}
-        {[
-          {
-            top: "8%",
-            left: "8%",
-            size: "w-6 h-6",
-            delay: "0s",
-            duration: "3s"
-          },
-          {
-            top: "15%",
-            right: "10%",
-            size: "w-8 h-8",
-            delay: "1.5s",
-            duration: "4s"
-          },
-          {
-            bottom: "30%",
-            left: "5%",
-            size: "w-5 h-5",
-            delay: "0.5s",
-            duration: "3.5s"
-          },
-          {
-            bottom: "20%",
-            right: "8%",
-            size: "w-7 h-7",
-            delay: "2s",
-            duration: "3.2s"
-          },
-          {
-            top: "35%",
-            left: "15%",
-            size: "w-4 h-4",
-            delay: "1s",
-            duration: "3.8s"
-          },
-          {
-            top: "25%",
-            right: "20%",
-            size: "w-5 h-5",
-            delay: "2.5s",
-            duration: "3.3s"
-          }
-        ].map((star, i) => (
-          <div
-            key={i}
-            className="absolute opacity-15 dark:opacity-25 pointer-events-none"
-            style={{
-              top: star.top,
-              left: star.left,
-              right: star.right,
-              bottom: star.bottom,
-              animation: `hero-float ${star.duration} ease-in-out infinite`,
-              animationDelay: star.delay
-            }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              className={`${star.size} text-indigo-500 dark:text-indigo-400`}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
-        ))}
+        <section className="grid min-h-[560px] items-start gap-10 min-[1036px]:grid-cols-2 min-[1036px]:gap-14 md:min-h-[620px]">
+          <div className="flex max-w-3xl flex-col items-start text-left">
+            <Link href="/blog" className="mb-7">
+              <Announcement className="rounded-xl border-slate-200/80 bg-white/80 py-1 pl-4 pr-2.5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+                <AnnouncementTag className="hidden rounded-lg sm:block">
+                  <span className="mr-2">🚀</span>
+                  {t("site.announcement_tag")}
+                </AnnouncementTag>
+                <AnnouncementTitle className="text-left">
+                  {t("site.announcement")}
+                  <ArrowUpRightIcon
+                    size={16}
+                    className="shrink-0 text-muted-foreground"
+                  />
+                </AnnouncementTitle>
+              </Announcement>
+            </Link>
 
-        <div className="flex flex-col items-center">
-          <div className="relative">
-            <GradientWrapper {...gradientProps} />
-            <div className="absolute inset-0">
-              <ClientGradientSwitcher {...gradientProps} />
-            </div>
-          </div>
-        </div>
-
-        <PageHeader className="mb-0 gap-4 md:gap-5">
-          <Link href="/blog">
-            <Announcement>
-              <AnnouncementTag className="hidden sm:block">
-                <span className="hidden sm:inline mr-2">🚀</span>
-                <span className="sm:hidden">🆕</span>
-                {t("site.announcement_tag")}
-              </AnnouncementTag>
-              <AnnouncementTitle>
-                {t("site.announcement")}
-                <ArrowUpRightIcon
-                  size={16}
-                  className="text-muted-foreground shrink-0"
-                />
-              </AnnouncementTitle>
-            </Announcement>
-          </Link>
-
-          <PageHeaderHeading>
-            <span
+            <h1
+              className="max-w-[760px] text-balance text-left text-5xl font-bold leading-[0.95] tracking-[-0.055em] text-foreground sm:text-6xl md:text-7xl xl:text-8xl [&_span]:-mr-[0.08em] [&_span]:inline-block [&_span]:bg-linear-to-r [&_span]:from-indigo-500 [&_span]:to-purple-500 [&_span]:bg-size-[calc(100%+0.16em)_100%] [&_span]:bg-clip-text [&_span]:pr-[0.08em] [&_span]:text-transparent"
+              style={{
+                fontFamily:
+                  'Inter, var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+              }}
               dangerouslySetInnerHTML={{ __html: t.raw("site.heading") }}
-              className="text-5xl sm:text-6xl md:text-7xl"
             />
-            <div className="mt-3 text-xl sm:text-2xl md:text-3xl text-muted-foreground font-normal tracking-tight">
+
+            <div className="mt-5 text-left text-2xl font-normal tracking-tight text-muted-foreground sm:text-3xl md:text-4xl">
               {t.raw("site.subheading").split("{flipwords}")[0]}
               <FlipWords
                 words={t.raw("site.flipwords")}
-                className="text-xl sm:text-2xl md:text-3xl text-primary font-semibold tracking-tight"
+                className="text-2xl font-semibold tracking-tight text-primary sm:text-3xl md:text-4xl"
               />
               {t.raw("site.subheading").split("{flipwords}")[1]}
             </div>
-          </PageHeaderHeading>
 
-          <LiveInstallCounter />
+            <LiveInstallCounter className="justify-start py-4" />
 
-          <PageHeaderDescription>{t("site.description")}</PageHeaderDescription>
+            <p className="max-w-2xl text-left text-lg text-muted-foreground sm:text-xl">
+              {t("site.description")}
+            </p>
 
-          <PageActions>
-            <Link href="/apps" className={cn(buttonVariants({ size: "lg" }))}>
-              {t("site.buttons.browse_apps")}
-            </Link>
+            <div className="flex w-full flex-col items-stretch gap-3 py-6 sm:w-auto sm:flex-row sm:items-center">
+              <Link href="/apps" className={cn(buttonVariants({ size: "lg" }))}>
+                {t("site.buttons.browse_apps")}
+              </Link>
 
-            <Link
-              target="_blank"
-              rel="noreferrer"
-              href={siteConfig.links.github.url}
-              title={siteConfig.links.github.label}
-              className={cn(buttonVariants({ variant: "ghost", size: "lg" }))}
-            >
-              <Icons.gitHub className="mr-2 size-4" />
-              {siteConfig.links.github.label}
-            </Link>
-          </PageActions>
-
-          {promoBannerData && (
-            <div className="flex flex-col items-center gap-3">
-              <div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg"
-                style={{
-                  background: `linear-gradient(135deg, ${promoBannerData.background_gradient?.from || "#6366f1"} 0%, ${promoBannerData.background_gradient?.to || "#3498DB"} 100%)`
-                }}
+              <Link
+                target="_blank"
+                rel="noreferrer"
+                href={siteConfig.links.github.url}
+                title={siteConfig.links.github.label}
+                className={cn(buttonVariants({ variant: "ghost", size: "lg" }))}
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  className="text-white shrink-0"
-                >
-                  <path
-                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span className="text-sm font-bold text-white uppercase tracking-wider">
-                  {promoBannerData.badge_text}
-                  {promoBannerData.duration_months === 1
-                    ? " on your first month"
-                    : ` for ${promoBannerData.duration_months} months`}
-                </span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <span
-                  className={`text-sm font-medium ${promoTheme.textColor} opacity-80`}
-                >
-                  Use code
-                </span>
-                <div
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg backdrop-blur-md ${promoTheme.badgeBg} ${promoTheme.badgeBorder} border`}
-                >
-                  <span
-                    className={`text-lg font-bold font-mono tracking-wider ${promoTheme.badgeText}`}
-                  >
-                    {promoBannerData.promo_code}
-                  </span>
-                </div>
-              </div>
+                <Icons.gitHub className="mr-2 size-4" />
+                {siteConfig.links.github.label}
+              </Link>
             </div>
-          )}
-        </PageHeader>
+          </div>
+
+          <HeroInstallPreview app={openClawApp} />
+        </section>
 
         {/* Bottom gradient line */}
         <div

@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { animate, useMotionValue } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 async function fetchInstallCount(): Promise<number | null> {
   try {
@@ -16,11 +17,10 @@ async function fetchInstallCount(): Promise<number | null> {
   return null
 }
 
-export function LiveInstallCounter() {
+export function LiveInstallCounter({ className }: { className?: string }) {
   const [count, setCount] = useState<number | null>(null)
   const motionValue = useMotionValue(0)
   const [display, setDisplay] = useState("0")
-  const isFirstLoad = useRef(true)
 
   useEffect(() => {
     let cancelled = false
@@ -41,10 +41,9 @@ export function LiveInstallCounter() {
   useEffect(() => {
     if (count === null) return
     const controls = animate(motionValue, count, {
-      duration: isFirstLoad.current ? 2 : 0.8,
+      duration: 0.2,
       ease: "easeOut"
     })
-    isFirstLoad.current = false
     return controls.stop
   }, [count, motionValue])
 
@@ -55,11 +54,10 @@ export function LiveInstallCounter() {
   }, [motionValue])
 
   return (
-    <div className="flex items-center justify-center gap-2.5 py-4">
-      <span className="relative flex size-2 shrink-0">
-        <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-        <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-      </span>
+    <div
+      className={cn("flex items-center justify-center gap-2.5 py-4", className)}
+    >
+      <span className="size-0 shrink-0 border-x-[5px] border-b-8 border-x-transparent border-b-emerald-500" />
       <span className="text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight">
         {display}
       </span>
