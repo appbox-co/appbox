@@ -3,6 +3,7 @@
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import { isSafeMarkdownHref } from "@/lib/marketing/safe-urls"
 import { cn } from "@/lib/utils"
 
 interface MarkdownDescriptionProps {
@@ -11,16 +12,7 @@ interface MarkdownDescriptionProps {
 }
 
 function isSafeHref(href?: string): href is string {
-  if (!href) return false
-
-  return (
-    href.startsWith("/") ||
-    href.startsWith("#") ||
-    href.startsWith("http://") ||
-    href.startsWith("https://") ||
-    href.startsWith("mailto:") ||
-    href.startsWith("tel:")
-  )
+  return href ? isSafeMarkdownHref(href) : false
 }
 
 export function MarkdownDescription({

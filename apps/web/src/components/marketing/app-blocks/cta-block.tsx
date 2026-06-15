@@ -7,6 +7,7 @@ import {
   type EligiblePlanOption
 } from "@/components/marketing/deploy-dialog"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { isDeployPath, isSafeLinkUrl } from "@/lib/marketing/safe-urls"
 import { cn } from "@/lib/utils"
 import type { CtaBlock as CtaBlockType } from "@/types/marketing-blocks"
 
@@ -18,9 +19,8 @@ interface CtaBlockProps {
 
 export function CtaBlock({ block, appId, eligiblePlans }: CtaBlockProps) {
   const variant = block.variant || "primary"
-  const isDeployLink =
-    block.button_url.startsWith("/appstore/app/") ||
-    block.button_url.includes("/app/")
+  const isDeployLink = isDeployPath(block.button_url)
+  const isSafeLink = isSafeLinkUrl(block.button_url)
   const [deployOpen, setDeployOpen] = useState(false)
 
   return (
@@ -60,18 +60,20 @@ export function CtaBlock({ block, appId, eligiblePlans }: CtaBlockProps) {
                 {block.button_text}
               </Button>
             ) : (
-              <Link
-                href={block.button_url}
-                className={cn(
-                  buttonVariants({
-                    size: "lg",
-                    variant: variant === "outline" ? "outline" : "default"
-                  }),
-                  "px-8 text-base font-semibold"
-                )}
-              >
-                {block.button_text}
-              </Link>
+              isSafeLink && (
+                <Link
+                  href={block.button_url}
+                  className={cn(
+                    buttonVariants({
+                      size: "lg",
+                      variant: variant === "outline" ? "outline" : "default"
+                    }),
+                    "px-8 text-base font-semibold"
+                  )}
+                >
+                  {block.button_text}
+                </Link>
+              )
             )}
           </div>
         </div>

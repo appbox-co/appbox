@@ -5,18 +5,12 @@ import Image from "next/image"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { BorderBeam } from "@/components/ui/border-beam"
+import { resolveSafeScreenshotUrl } from "@/lib/marketing/safe-urls"
 import { cn } from "@/lib/utils"
 import type { ScreenshotsBlock as ScreenshotsBlockType } from "@/types/marketing-blocks"
 
 interface ScreenshotsBlockProps {
   block: ScreenshotsBlockType
-}
-
-function resolveScreenshotUrl(src: string): string {
-  if (src.startsWith("http://") || src.startsWith("https://")) {
-    return src
-  }
-  return `https://api.appbox.co/assets/images/apps/${src}`
 }
 
 /** Deterministic 0–180° phase offset per screenshot; stable across SSR and client. */
@@ -30,10 +24,18 @@ function beamPhaseOffset(src: string, index: number): number {
 }
 
 export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
-  const imageCount = block.images.length
-  const offsets = useMemo(
-    () => block.images.map((img, i) => beamPhaseOffset(img.src, i)),
+  const images = useMemo(
+    () =>
+      block.images.flatMap((image) => {
+        const resolvedSrc = resolveSafeScreenshotUrl(image.src)
+        return resolvedSrc ? [{ ...image, resolvedSrc }] : []
+      }),
     [block.images]
+  )
+  const imageCount = images.length
+  const offsets = useMemo(
+    () => images.map((img, i) => beamPhaseOffset(img.resolvedSrc, i)),
+    [images]
   )
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [direction, setDirection] = useState(0)
@@ -84,6 +86,10 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
     })
   }
 
+  if (imageCount === 0) {
+    return null
+  }
+
   return (
     <section className="py-16">
       {block.title && (
@@ -100,7 +106,7 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
           imageCount >= 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         )}
       >
-        {block.images.map((image, i) => (
+        {images.map((image, i) => (
           <div
             key={i}
             className="group relative cursor-pointer rounded-xl p-2"
@@ -123,7 +129,7 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
 
             <div className="bg-muted relative aspect-video overflow-hidden rounded-lg">
               <Image
-                src={resolveScreenshotUrl(image.src)}
+                src={image.resolvedSrc}
                 alt={image.alt || "App screenshot"}
                 fill
                 className="object-contain"
@@ -202,8 +208,8 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
-                  src={resolveScreenshotUrl(block.images[lightboxIndex].src)}
-                  alt={block.images[lightboxIndex].alt || "App screenshot"}
+                  src={images[lightboxIndex].resolvedSrc}
+                  alt={images[lightboxIndex].alt || "App screenshot"}
                   fill
                   className="rounded-lg object-contain"
                   sizes="90vw"
@@ -214,7 +220,7 @@ export function ScreenshotsBlock({ block }: ScreenshotsBlockProps) {
 
             {imageCount > 1 && (
               <div className="absolute bottom-6 z-10 flex gap-2">
-                {block.images.map((_, i) => (
+                {images.map((_, i) => (
                   <button
                     key={i}
                     onClick={(e) => {

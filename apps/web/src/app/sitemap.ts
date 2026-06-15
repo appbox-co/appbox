@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next"
 import { allBlogs, allDocs } from "contentlayer/generated"
+import { getAlternativePages } from "@/api/appbox/alternative-pages"
 import { routing } from "@/i18n/routing"
 import { absoluteUrl } from "@/lib/utils"
 
 type Sitemap = MetadataRoute.Sitemap
 
-export default function sitemap(): Sitemap {
+export default async function sitemap(): Promise<Sitemap> {
   const paths: Sitemap = [
     {
       url: absoluteUrl(`/`),
@@ -71,5 +72,26 @@ export default function sitemap(): Sitemap {
     }
   })
 
-  return [...paths, ...docPaths, ...blogPaths]
+  let alternativePaths: Sitemap = []
+  try {
+    const alternativePages = await getAlternativePages()
+    alternativePaths = alternativePages.flatMap((page) =>
+      routing.locales.map((locale) => ({
+        url: absoluteUrl(`/${locale}/alternatives/${page.slug}`),
+        lastModified: page.updated_at ? new Date(page.updated_at) : new Date(),
+        alternates: {
+          languages: Object.fromEntries(
+            routing.locales.map((alternateLocale) => [
+              alternateLocale,
+              absoluteUrl(`/${alternateLocale}/alternatives/${page.slug}`)
+            ])
+          )
+        }
+      }))
+    )
+  } catch {
+    alternativePaths = []
+  }
+
+  return [...paths, ...docPaths, ...blogPaths, ...alternativePaths]
 }

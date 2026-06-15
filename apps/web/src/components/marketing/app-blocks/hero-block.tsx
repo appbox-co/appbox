@@ -10,6 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { BorderBeam } from "@/components/ui/border-beam"
 import { Button } from "@/components/ui/button"
+import { isSafeExternalUrl } from "@/lib/marketing/safe-urls"
 import type { HeroBlock as HeroBlockType } from "@/types/marketing-blocks"
 
 interface HeroBlockProps {
@@ -234,6 +235,10 @@ export function HeroBlock({
   const [deployOpen, setDeployOpen] = useState(false)
   const gradientFrom = block.gradient_from || "#6366f1"
   const gradientTo = block.gradient_to || "#8b5cf6"
+  const websiteUrl =
+    block.website_url && isSafeExternalUrl(block.website_url)
+      ? block.website_url
+      : null
 
   return (
     <section className="relative overflow-x-clip pt-8 md:pt-12">
@@ -305,20 +310,16 @@ export function HeroBlock({
           </p>
         )}
 
-        {(block.cta_text || block.website_url) && (
+        {(block.cta_text || websiteUrl) && (
           <div className="relative z-10 flex w-full flex-col items-center justify-center gap-3 py-4 sm:flex-row md:pb-10">
             {block.cta_text && (
               <Button size="lg" onClick={() => setDeployOpen(true)}>
                 {block.cta_text}
               </Button>
             )}
-            {block.website_url && (
+            {websiteUrl && (
               <Button variant="outline" size="lg" asChild>
-                <a
-                  href={block.website_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={websiteUrl} target="_blank" rel="noopener noreferrer">
                   Visit Website
                   <ExternalLink className="ml-2 size-4" />
                 </a>

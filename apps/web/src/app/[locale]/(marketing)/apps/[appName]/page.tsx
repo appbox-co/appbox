@@ -16,47 +16,19 @@ import { MarkdownDescription } from "@/components/ui/markdown-description"
 import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
 import { getEligiblePlanOptions } from "@/lib/appbox/eligible-plans"
+import {
+  extractMeta,
+  markdownToPlainText,
+  parseMarketingBlocks,
+  renderableMarketingBlocks
+} from "@/lib/marketing/marketing-content"
 import { absoluteUrl } from "@/lib/utils"
-import type { MetaBlock } from "@/types/marketing-blocks"
 
 interface AppDetailPageProps {
   params: Promise<{
     appName: string
     locale: string
   }>
-}
-
-function markdownToPlainText(content: string): string {
-  return content
-    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
-    .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
-    .replace(/`{1,3}([^`]+)`{1,3}/g, "$1")
-    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
-    .replace(/^\s*[-*+]\s+/gm, "")
-    .replace(/\r?\n+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-}
-
-function parseMarketingBlocks(raw: unknown) {
-  let blocks = raw
-  if (blocks && typeof blocks === "string") {
-    try {
-      blocks = JSON.parse(blocks)
-    } catch {
-      return null
-    }
-  }
-  if (!Array.isArray(blocks) || blocks.length === 0) return null
-  return blocks
-}
-
-function extractMeta(blocks: unknown[]): MetaBlock | null {
-  const meta = blocks.find(
-    (b): b is MetaBlock =>
-      typeof b === "object" && b !== null && (b as MetaBlock).type === "meta"
-  )
-  return meta ?? null
 }
 
 export async function generateMetadata({
@@ -173,9 +145,7 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
   if (hasMarketingContent) {
     const meta = extractMeta(marketingBlocks)
     const versions = appDetails.versions ?? []
-    const renderBlocks = marketingBlocks.filter(
-      (b: { type: string }) => b.type !== "meta"
-    )
+    const renderBlocks = renderableMarketingBlocks(marketingBlocks)
 
     const defaultVersion =
       versions.find((v) => v.version === appDetails.version) ?? versions[0]
