@@ -1,9 +1,12 @@
 import type { CustomField } from "@/api/apps/app-store"
 import type { EligiblePlanOption } from "@/components/marketing/deploy-dialog"
 import type { MarketingBlock, MarketingContent } from "@/types/marketing-blocks"
+import { AlternativeSectionsBlock } from "./alternative-sections-block"
 import { CalloutBlock } from "./callout-block"
 import { ComparisonBlock } from "./comparison-block"
+import { ComparisonMatrixBlock } from "./comparison-matrix-block"
 import { CtaBlock } from "./cta-block"
+import { DecisionQuestionsBlock } from "./decision-questions-block"
 import { FaqBlock } from "./faq-block"
 import { FeaturesBlock } from "./features-block"
 import { HeroBlock } from "./hero-block"
@@ -65,6 +68,12 @@ function renderBlock(
       return <FaqBlock block={block} />
     case "comparison":
       return <ComparisonBlock block={block} />
+    case "decision_questions":
+      return <DecisionQuestionsBlock block={block} />
+    case "comparison_matrix":
+      return <ComparisonMatrixBlock block={block} />
+    case "alternative_sections":
+      return <AlternativeSectionsBlock block={block} />
     case "meta":
       return null
     default:

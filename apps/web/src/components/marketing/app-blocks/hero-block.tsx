@@ -239,6 +239,7 @@ export function HeroBlock({
     block.website_url && isSafeExternalUrl(block.website_url)
       ? block.website_url
       : null
+  const canDeploy = appId > 0
 
   return (
     <section className="relative overflow-x-clip pt-8 md:pt-12">
@@ -310,9 +311,9 @@ export function HeroBlock({
           </p>
         )}
 
-        {(block.cta_text || websiteUrl) && (
+        {((block.cta_text && canDeploy) || websiteUrl) && (
           <div className="relative z-10 flex w-full flex-col items-center justify-center gap-3 py-4 sm:flex-row md:pb-10">
-            {block.cta_text && (
+            {block.cta_text && canDeploy && (
               <Button size="lg" onClick={() => setDeployOpen(true)}>
                 {block.cta_text}
               </Button>
@@ -336,12 +337,14 @@ export function HeroBlock({
         }}
       />
 
-      <DeployDialog
-        appId={appId}
-        open={deployOpen}
-        onOpenChange={setDeployOpen}
-        eligiblePlans={eligiblePlans}
-      />
+      {canDeploy && (
+        <DeployDialog
+          appId={appId}
+          open={deployOpen}
+          onOpenChange={setDeployOpen}
+          eligiblePlans={eligiblePlans}
+        />
+      )}
     </section>
   )
 }

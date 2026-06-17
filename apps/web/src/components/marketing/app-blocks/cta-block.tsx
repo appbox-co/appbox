@@ -19,7 +19,7 @@ interface CtaBlockProps {
 
 export function CtaBlock({ block, appId, eligiblePlans }: CtaBlockProps) {
   const variant = block.variant || "primary"
-  const isDeployLink = isDeployPath(block.button_url)
+  const isDeployLink = appId > 0 && isDeployPath(block.button_url)
   const isSafeLink = isSafeLinkUrl(block.button_url)
   const [deployOpen, setDeployOpen] = useState(false)
 
@@ -79,12 +79,14 @@ export function CtaBlock({ block, appId, eligiblePlans }: CtaBlockProps) {
         </div>
       </div>
 
-      <DeployDialog
-        appId={appId}
-        open={deployOpen}
-        onOpenChange={setDeployOpen}
-        eligiblePlans={eligiblePlans}
-      />
+      {appId > 0 && (
+        <DeployDialog
+          appId={appId}
+          open={deployOpen}
+          onOpenChange={setDeployOpen}
+          eligiblePlans={eligiblePlans}
+        />
+      )}
 
       <style jsx global>{`
         @keyframes gradient-shift {

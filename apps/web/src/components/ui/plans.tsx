@@ -12,6 +12,7 @@ import { SparklesText } from "@/components/ui/sparkles-text"
 import { CURRENT_PROMO_THEME } from "@/config/promo-theme"
 import { withAttributionParams } from "@/lib/marketing-attribution"
 import { trackBeginCheckout } from "@/lib/posthog"
+import { hasAdvertisingConsent } from "@/lib/tracking-consent"
 
 // Define types for billing cycle and pricing details
 type BillingCycle =
@@ -794,9 +795,12 @@ const Plans = ({
                                     onClick={(event) => {
                                       event.stopPropagation()
                                       event.currentTarget.href =
-                                        withAttributionParams(
-                                          "https://billing.appbox.co/contact.php"
-                                        )
+                                        hasAdvertisingConsent()
+                                          ? withAttributionParams(
+                                              "https://billing.appbox.co/contact.php",
+                                              { includeConsentMarker: true }
+                                            )
+                                          : "https://billing.appbox.co/contact.php"
                                     }}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -811,7 +815,11 @@ const Plans = ({
                                     onClick={(event) => {
                                       event.stopPropagation()
                                       event.currentTarget.href =
-                                        withAttributionParams(billingUrl)
+                                        hasAdvertisingConsent()
+                                          ? withAttributionParams(billingUrl, {
+                                              includeConsentMarker: true
+                                            })
+                                          : billingUrl
                                     }}
                                     target="_blank"
                                     rel="noopener noreferrer"

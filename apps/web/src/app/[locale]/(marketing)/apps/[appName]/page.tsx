@@ -6,6 +6,7 @@ import { notFound } from "next/navigation"
 import { ChevronLeft, ExternalLink } from "lucide-react"
 import { getAppDetails } from "@/api/appbox/app-details"
 import { getPlans } from "@/api/appbox/plans"
+import { AppAlternativeGuideCard } from "@/components/marketing/app-alternative-guide-card"
 import { BlockRenderer } from "@/components/marketing/app-blocks/block-renderer"
 import { VersionsTable } from "@/components/marketing/app-blocks/versions-table"
 import ClientStarRating from "@/components/marketing/client-star-rating"
@@ -174,6 +175,11 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
           eligiblePlans={eligiblePlans}
         />
 
+        <AppAlternativeGuideCard
+          appName={appDetails.display_name}
+          className="my-10"
+        />
+
         {versions.length > 0 && (
           <VersionsTable
             versions={versions}
@@ -301,6 +307,8 @@ export default async function AppDetailPage({ params }: AppDetailPageProps) {
               noText={t("detail.deploy_dialog.no")}
               eligiblePlans={eligiblePlans}
             />
+
+            <AppAlternativeGuideCard appName={appDetails.display_name} />
 
             <div className="bg-card rounded-lg border p-6 shadow-xs">
               <h3 className="mb-4 text-lg font-medium">

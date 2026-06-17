@@ -1,7 +1,7 @@
+import { getTranslations } from "next-intl/server"
 import { Icons } from "@/components/shared/icons"
 import { Footer2 } from "@/components/ui/shadcnblocks-com-footer2"
 import { siteConfig } from "@/config/site"
-import { getTranslations } from "next-intl/server"
 
 async function SiteFooter() {
   const t = await getTranslations("site")
@@ -21,6 +21,7 @@ async function SiteFooter() {
           { text: t("words.home"), url: "/" },
           { text: t("navigation.features"), url: "/#features" },
           { text: t("navigation.apps"), url: "/apps" },
+          { text: t("navigation.alternatives"), url: "/alternativesto" },
           { text: t("navigation.pricing"), url: "/#plans-section" }
         ]
       },

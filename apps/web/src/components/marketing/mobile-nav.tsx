@@ -174,10 +174,7 @@ export function MobileNav({ messages }: MobileNavProps) {
         </summary>
 
         <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-[80vh] overflow-y-auto border-t bg-background p-6 shadow-lg">
-          <Link
-            href="/"
-            className="mb-4 flex items-center font-bold"
-          >
+          <Link href="/" className="mb-4 flex items-center font-bold">
             <Icons.emblem className="mr-2 size-4" />
             {siteConfig.name}
           </Link>
@@ -242,94 +239,94 @@ export function MobileNav({ messages }: MobileNavProps) {
           </Button>
         </SheetTrigger>
 
-      <SheetContent side="left" className="pr-0">
-        <SheetTitle className="sr-only">{messages.menu}</SheetTitle>
+        <SheetContent side="left" className="pr-0">
+          <SheetTitle className="sr-only">{messages.menu}</SheetTitle>
 
-        <MobileLink
-          href="/"
-          className="flex items-center"
-          onOpenChange={setOpen}
-          onClick={() => setOpen(false)}
-        >
-          <Icons.emblem className="mr-2 size-4" />
-          <span className="font-bold">{siteConfig.name}</span>
-        </MobileLink>
+          <MobileLink
+            href="/"
+            className="flex items-center"
+            onOpenChange={setOpen}
+            onClick={() => setOpen(false)}
+          >
+            <Icons.emblem className="mr-2 size-4" />
+            <span className="font-bold">{siteConfig.name}</span>
+          </MobileLink>
 
-        <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-          {/* Control panel links */}
-          <div className="mb-6 flex flex-col space-y-3">
-            {/* Add Billing and Control Panel buttons */}
-            <MobileLink
-              href="https://billing.appbox.co"
-              target="_blank"
-              rel="noreferrer"
-              onOpenChange={setOpen}
-              onClick={() => setOpen(false)}
-              className="flex items-center font-medium"
-            >
-              {tExt("billing")}
-            </MobileLink>
-
-            <MobileLink
-              href="https://www.appbox.co/login"
-              target="_blank"
-              rel="noreferrer"
-              onOpenChange={setOpen}
-              onClick={() => setOpen(false)}
-              className="flex items-center font-medium"
-            >
-              {tExt("control_panel")}
-            </MobileLink>
-          </div>
-
-          {/* Add Product & Resources categories */}
-          <div className="mb-6 flex flex-col space-y-5">
-            {mobileNavItems.map((category) => (
-              <div
-                key={category.translationKey}
-                className="flex flex-col space-y-3"
+          <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+            {/* Control panel links */}
+            <div className="mb-6 flex flex-col space-y-3">
+              {/* Add Billing and Control Panel buttons */}
+              <MobileLink
+                href="https://billing.appbox.co"
+                target="_blank"
+                rel="noreferrer"
+                onOpenChange={setOpen}
+                onClick={() => setOpen(false)}
+                className="flex items-center font-medium"
               >
-                <h3 className="text-muted-foreground text-sm font-medium">
-                  {category.title}
-                </h3>
-                <div className="flex flex-col space-y-2 pl-2">
-                  {category.children?.map((item) => (
-                    <MobileLink
-                      key={item.translationKey}
-                      href={item.href || "#"}
-                      onOpenChange={setOpen}
-                      target={item.external ? "_blank" : undefined}
-                      rel={item.external ? "noopener noreferrer" : undefined}
-                      // Add special handling for pricing link
-                      onClick={(e) => {
-                        setOpen(false)
-                        if (item.title === t("pricing")) {
-                          e.preventDefault()
-                          handlePricingClick()
-                        }
-                      }}
-                      className="flex items-center"
-                    >
-                      {item.icon && <item.icon className="mr-2 size-4" />}
-                      <span>{item.title}</span>
-                    </MobileLink>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+                {tExt("billing")}
+              </MobileLink>
 
-          <div className="flex flex-col space-y-2">
-            {shouldDisplayDocsSidebarContent && (
-              <DocsSidebarNav
-                isMobile
-                locale={docsConfig.currentLocale}
-                items={docsConfig.docs.sidebarNav}
-                handleMobileSidebar={setOpen}
-              />
-            )}
-          </div>
-        </ScrollArea>
+              <MobileLink
+                href="https://www.appbox.co/login"
+                target="_blank"
+                rel="noreferrer"
+                onOpenChange={setOpen}
+                onClick={() => setOpen(false)}
+                className="flex items-center font-medium"
+              >
+                {tExt("control_panel")}
+              </MobileLink>
+            </div>
+
+            {/* Add Product & Resources categories */}
+            <div className="mb-6 flex flex-col space-y-5">
+              {mobileNavItems.map((category) => (
+                <div
+                  key={category.translationKey}
+                  className="flex flex-col space-y-3"
+                >
+                  <h3 className="text-muted-foreground text-sm font-medium">
+                    {category.title}
+                  </h3>
+                  <div className="flex flex-col space-y-2 pl-2">
+                    {category.children?.map((item) => (
+                      <MobileLink
+                        key={item.translationKey}
+                        href={item.href || "#"}
+                        onOpenChange={setOpen}
+                        target={item.external ? "_blank" : undefined}
+                        rel={item.external ? "noopener noreferrer" : undefined}
+                        // Add special handling for pricing link
+                        onClick={(e) => {
+                          setOpen(false)
+                          if (item.title === t("pricing")) {
+                            e.preventDefault()
+                            handlePricingClick()
+                          }
+                        }}
+                        className="flex items-center"
+                      >
+                        {item.icon && <item.icon className="mr-2 size-4" />}
+                        <span>{item.title}</span>
+                      </MobileLink>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col space-y-2">
+              {shouldDisplayDocsSidebarContent && (
+                <DocsSidebarNav
+                  isMobile
+                  locale={docsConfig.currentLocale}
+                  items={docsConfig.docs.sidebarNav}
+                  handleMobileSidebar={setOpen}
+                />
+              )}
+            </div>
+          </ScrollArea>
         </SheetContent>
       </Sheet>
     </>
