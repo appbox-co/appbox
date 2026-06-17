@@ -1,7 +1,10 @@
 import type {
+  AlternativeSectionsBlock,
   CalloutBlock,
   ComparisonBlock,
+  ComparisonMatrixBlock,
   CtaBlock,
+  DecisionQuestionsBlock,
   FaqBlock,
   FeaturesBlock,
   HeroBlock,
@@ -50,9 +53,7 @@ export function parseMarketingBlocks(raw: unknown): MarketingContent | null {
 }
 
 export function extractMeta(blocks: MarketingContent): MetaBlock | null {
-  const meta = blocks.find(
-    (block): block is MetaBlock => block.type === "meta"
-  )
+  const meta = blocks.find((block): block is MetaBlock => block.type === "meta")
   return meta ?? null
 }
 
@@ -96,6 +97,12 @@ function normalizeMarketingBlock(
       return normalizeFaqBlock(block)
     case "comparison":
       return normalizeComparisonBlock(block)
+    case "decision_questions":
+      return normalizeDecisionQuestionsBlock(block)
+    case "comparison_matrix":
+      return normalizeComparisonMatrixBlock(block)
+    case "alternative_sections":
+      return normalizeAlternativeSectionsBlock(block)
     default:
       return null
   }
@@ -238,22 +245,10 @@ function normalizeMarkdownBlock(block: RawRecord) {
 function normalizeScreenshotsBlock(block: RawRecord): ScreenshotsBlock | null {
   if (!Array.isArray(block.images)) return null
 
-  const images = block.images
-    .filter(isRecord)
-    .flatMap((image) => {
-      const src = stringValue(image.src)
-      if (!src || !resolveSafeScreenshotUrl(src)) {
-        return []
-      }
-
-      return [
-        {
-          src,
-          alt: stringValue(image.alt),
-          caption: stringValue(image.caption)
-        }
-      ]
-    })
+  const images = block.images.filter(isRecord).flatMap((image) => {
+    const screenshot = normalizeScreenshotImage(image)
+    return screenshot ? [screenshot] : []
+  })
 
   if (images.length === 0) return null
 
@@ -295,7 +290,9 @@ function normalizeComparisonBlock(block: RawRecord): ComparisonBlock | null {
     }))
     .filter(
       (row): row is ComparisonBlock["rows"][number] =>
-        row.feature !== undefined && row.us !== undefined && row.them !== undefined
+        row.feature !== undefined &&
+        row.us !== undefined &&
+        row.them !== undefined
     )
 
   return rows.length > 0
@@ -307,4 +304,164 @@ function normalizeComparisonBlock(block: RawRecord): ComparisonBlock | null {
         rows
       }
     : null
+}
+
+function normalizeDecisionQuestionsBlock(
+  block: RawRecord
+): DecisionQuestionsBlock | null {
+  if (!Array.isArray(block.items)) return null
+
+  const items = block.items.filter(isRecord).flatMap((item) => {
+    const question = stringValue(item.question)
+    const guidance = stringValue(item.guidance)
+    if (!question || !guidance) return []
+
+    return [
+      {
+        question,
+        guidance,
+        answer: stringValue(item.answer)
+      }
+    ]
+  })
+
+  return items.length > 0
+    ? {
+        type: "decision_questions",
+        title: stringValue(block.title),
+        intro: stringValue(block.intro),
+        items
+      }
+    : null
+}
+
+function normalizeComparisonMatrixBlock(
+  block: RawRecord
+): ComparisonMatrixBlock | null {
+  if (!Array.isArray(block.columns) || !Array.isArray(block.rows)) return null
+
+  const columns = block.columns
+    .filter(isRecord)
+    .map((column) => ({
+      key: stringValue(column.key),
+      label: stringValue(column.label)
+    }))
+    .filter(
+      (column): column is ComparisonMatrixBlock["columns"][number] =>
+        column.key !== undefined && column.label !== undefined
+    )
+
+  if (columns.length === 0) return null
+
+  const columnKeys = new Set(columns.map((column) => column.key))
+  const rows = block.rows
+    .filter(isRecord)
+    .map((row) => {
+      const values = isRecord(row.values)
+        ? Object.fromEntries(
+            Object.entries(row.values).filter(
+              (entry): entry is [string, string] =>
+                columnKeys.has(entry[0]) && stringValue(entry[1]) !== undefined
+            )
+          )
+        : {}
+
+      return {
+        label: stringValue(row.label),
+        values
+      }
+    })
+    .filter(
+      (row): row is ComparisonMatrixBlock["rows"][number] =>
+        row.label !== undefined && Object.keys(row.values).length > 0
+    )
+
+  return rows.length > 0
+    ? {
+        type: "comparison_matrix",
+        title: stringValue(block.title),
+        intro: stringValue(block.intro),
+        columns,
+        rows
+      }
+    : null
+}
+
+function normalizeAlternativeSectionsBlock(
+  block: RawRecord
+): AlternativeSectionsBlock | null {
+  if (!Array.isArray(block.items)) return null
+
+  const items = block.items.filter(isRecord).flatMap((item) => {
+    const name = stringValue(item.name)
+    const summary = stringValue(item.summary)
+    if (!name || !summary) return []
+
+    const screenshot = isRecord(item.screenshot)
+      ? normalizeScreenshotImage(item.screenshot)
+      : undefined
+    const cta = isRecord(item.cta)
+      ? normalizeAlternativeSectionCta(item.cta)
+      : undefined
+
+    return [
+      {
+        name,
+        label: stringValue(item.label),
+        summary,
+        best_for: stringValue(item.best_for),
+        strengths: stringArrayValue(item.strengths),
+        limitations: stringArrayValue(item.limitations),
+        choose_if: stringValue(item.choose_if),
+        avoid_if: stringValue(item.avoid_if),
+        screenshot,
+        cta
+      }
+    ]
+  })
+
+  return items.length > 0
+    ? {
+        type: "alternative_sections",
+        title: stringValue(block.title),
+        intro: stringValue(block.intro),
+        items
+      }
+    : null
+}
+
+function normalizeScreenshotImage(
+  image: RawRecord
+): ScreenshotsBlock["images"][number] | undefined {
+  const src = stringValue(image.src)
+  if (!src || !resolveSafeScreenshotUrl(src)) return undefined
+
+  return {
+    src,
+    alt: stringValue(image.alt),
+    caption: stringValue(image.caption)
+  }
+}
+
+function normalizeAlternativeSectionCta(
+  cta: RawRecord
+): AlternativeSectionsBlock["items"][number]["cta"] | undefined {
+  const label = stringValue(cta.label)
+  const url = stringValue(cta.url)
+  if (!label || !url || !isSafeLinkUrl(url)) return undefined
+
+  return {
+    label,
+    url,
+    variant: cta.variant === "outline" ? "outline" : "primary"
+  }
+}
+
+function stringArrayValue(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined
+
+  const items = value.filter(
+    (item): item is string => stringValue(item) !== undefined
+  )
+  return items.length > 0 ? items : undefined
 }

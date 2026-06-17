@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import {
   attachAttributionToBillingLinks,
+  ATTRIBUTION_PARAM_NAMES,
   persistAttributionParams
 } from "@/lib/marketing-attribution"
 import { captureBeginCheckoutEvent } from "@/lib/posthog"
@@ -13,46 +14,72 @@ import {
   allowRedditTrackingWithoutPreference,
   trackRedditPageVisit
 } from "@/lib/reddit-pixel"
+import {
+  allowMeasurementTracking,
+  allowMeasurementTrackingWithoutPreference,
+  allowsStatisticalAnalytics,
+  hasAdvertisingConsent,
+  hasMeasurementConsent
+} from "@/lib/tracking-consent"
 
-// Cloudflare proxy domain for PostHog
 const POSTHOG_PROXY_HOST = "piggy.appbox.co"
-const IUBENDA_MEASUREMENT_PURPOSE = "4"
 
-type IubendaPreferences = {
-  consent?: boolean
-  purposes?: Record<string, boolean>
-}
-
-type WindowWithIubenda = Window & {
+type WindowWithTrackingBridge = Window & {
   __appboxRedditAdvertisingConsentGranted?: boolean
   appboxAllowRedditTracking?: () => void
-  _iub?: {
-    cs?: {
-      api?: {
-        getPreferences?: () => IubendaPreferences | undefined
-      }
-    }
+}
+
+function unregisterAttributionParams() {
+  for (const name of ATTRIBUTION_PARAM_NAMES) {
+    posthog.unregister(name)
   }
 }
 
-const hasMeasurementConsent = () => {
-  const preferences = (
-    window as WindowWithIubenda
-  )._iub?.cs?.api?.getPreferences?.()
-
-  return (
-    preferences?.consent === true ||
-    preferences?.purposes?.[IUBENDA_MEASUREMENT_PURPOSE] === true
-  )
-}
-
-const syncPostHogConsent = () => {
-  if (hasMeasurementConsent()) {
-    posthog.opt_in_capturing()
+function syncPostHogAttribution(search = "") {
+  if (hasAdvertisingConsent()) {
+    posthog.register(
+      persistAttributionParams(search, {
+        allowStorage: true
+      })
+    )
     return
   }
 
-  posthog.opt_out_capturing()
+  persistAttributionParams(search, {
+    allowStorage: false
+  })
+  unregisterAttributionParams()
+}
+
+function referringDomain() {
+  if (!document.referrer) return "$direct"
+
+  try {
+    return new URL(document.referrer).hostname
+  } catch {
+    return ""
+  }
+}
+
+function pageviewUrl(includeQuery: boolean) {
+  const url = new URL(window.location.href)
+  if (!includeQuery) {
+    url.search = ""
+  }
+
+  return url.toString()
+}
+
+function clearLegacyPostHogOptOutIfAllowed() {
+  if (!allowsStatisticalAnalytics()) return
+
+  try {
+    if (posthog.has_opted_out_capturing()) {
+      posthog.clear_opt_in_out_capturing()
+    }
+  } catch {
+    // Historical consent state should not block aggregate pageview analytics.
+  }
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
@@ -66,31 +93,52 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         api_host: `https://${POSTHOG_PROXY_HOST}`,
         ui_host: "https://eu.posthog.com", // EU region UI host
         capture_pageview: false, // We'll capture pageviews manually
-        opt_out_capturing_by_default: true
+        capture_pageleave: false,
+        autocapture: false,
+        persistence: "memory",
+        save_campaign_params: false,
+        save_referrer: false,
+        disable_session_recording: true,
+        disable_surveys: true,
+        disable_web_experiments: true,
+        advanced_disable_decide: true,
+        advanced_disable_feature_flags: true,
+        person_profiles: "identified_only"
       })
-      posthog.register(persistAttributionParams())
-      syncPostHogConsent()
+      clearLegacyPostHogOptOutIfAllowed()
+      syncPostHogAttribution()
 
-      const trackingWindow = window as WindowWithIubenda
+      const trackingWindow = window as WindowWithTrackingBridge
       trackingWindow.appboxAllowRedditTracking = allowRedditTracking
       if (trackingWindow.__appboxRedditAdvertisingConsentGranted) {
         allowRedditTracking()
       }
 
       const handleConsentGiven = () => {
-        syncPostHogConsent()
+        allowMeasurementTracking()
+        clearLegacyPostHogOptOutIfAllowed()
+        syncPostHogAttribution()
         allowRedditTracking()
       }
-      const optInPostHog = () => posthog.opt_in_capturing()
+      const handleMeasurementConsentGiven = () => {
+        allowMeasurementTracking()
+        clearLegacyPostHogOptOutIfAllowed()
+        syncPostHogAttribution()
+      }
       const handlePreferenceNotNeeded = () => {
-        optInPostHog()
+        allowMeasurementTrackingWithoutPreference()
+        clearLegacyPostHogOptOutIfAllowed()
+        syncPostHogAttribution()
         allowRedditTrackingWithoutPreference()
+      }
+      const handleConsentRejected = () => {
+        syncPostHogAttribution()
       }
 
       window.addEventListener("iubenda_consent_given", handleConsentGiven)
       window.addEventListener(
         "iubenda_consent_given_purpose_4",
-        syncPostHogConsent
+        handleMeasurementConsentGiven
       )
       window.addEventListener(
         "iubenda_consent_given_purpose_5",
@@ -100,9 +148,9 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         "iubenda_preference_not_needed",
         handlePreferenceNotNeeded
       )
-      window.addEventListener("iubenda_consent_rejected", syncPostHogConsent)
+      window.addEventListener("iubenda_consent_rejected", handleConsentRejected)
 
-      const consentPoll = window.setInterval(syncPostHogConsent, 1000)
+      const consentPoll = window.setInterval(syncPostHogAttribution, 1000)
       const redditPixelPoll = window.setInterval(trackRedditPageVisit, 1000)
       window.setTimeout(() => window.clearInterval(consentPoll), 30000)
       window.setTimeout(() => window.clearInterval(redditPixelPoll), 30000)
@@ -111,7 +159,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         window.removeEventListener("iubenda_consent_given", handleConsentGiven)
         window.removeEventListener(
           "iubenda_consent_given_purpose_4",
-          syncPostHogConsent
+          handleMeasurementConsentGiven
         )
         window.removeEventListener(
           "iubenda_consent_given_purpose_5",
@@ -123,7 +171,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         )
         window.removeEventListener(
           "iubenda_consent_rejected",
-          syncPostHogConsent
+          handleConsentRejected
         )
         window.clearInterval(consentPoll)
         window.clearInterval(redditPixelPoll)
@@ -135,31 +183,43 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    return attachAttributionToBillingLinks(captureBeginCheckoutEvent)
+    return attachAttributionToBillingLinks(
+      captureBeginCheckoutEvent,
+      hasAdvertisingConsent
+    )
   }, [])
 
   useEffect(() => {
     if (pathname) {
-      const attributionParams = persistAttributionParams(
-        searchParams.toString()
-      )
-      posthog.register(attributionParams)
+      const includeAdvertisingAttribution = hasAdvertisingConsent()
+      const attributionParams = includeAdvertisingAttribution
+        ? persistAttributionParams(searchParams.toString(), {
+            allowStorage: true
+          })
+        : persistAttributionParams(searchParams.toString(), {
+            allowStorage: false
+          })
 
-      syncPostHogConsent()
+      syncPostHogAttribution(searchParams.toString())
       trackRedditPageVisit()
 
-      if (posthog.has_opted_out_capturing()) {
+      if (!allowsStatisticalAnalytics()) {
         return
       }
 
+      clearLegacyPostHogOptOutIfAllowed()
+
       // Track pageviews
-      let url = window.origin + pathname
-      if (searchParams.toString()) {
-        url = `${url}?${searchParams.toString()}`
-      }
       posthog.capture("$pageview", {
-        $current_url: url,
-        ...attributionParams
+        $current_url: pageviewUrl(includeAdvertisingAttribution),
+        $host: window.location.host,
+        $pathname: pathname,
+        $referrer: document.referrer,
+        $referring_domain: referringDomain(),
+        appbox_analytics_mode: hasMeasurementConsent()
+          ? "consented"
+          : "statistical",
+        ...(includeAdvertisingAttribution ? attributionParams : {})
       })
     }
   }, [pathname, searchParams])

@@ -7,18 +7,26 @@ import {
   type BillingCheckoutProperties,
   type BillingCheckoutTrigger
 } from "@/lib/marketing-attribution"
+import {
+  hasAdvertisingConsent,
+  hasMeasurementConsent
+} from "@/lib/tracking-consent"
 
 // Capture a custom event
 export const captureEvent = (
   eventName: string,
   properties?: Record<string, unknown>
 ) => {
+  if (!hasMeasurementConsent()) return
+
   posthog.capture(eventName, properties)
 }
 
 export const captureBeginCheckoutEvent = (
   properties: BillingCheckoutProperties
 ) => {
+  if (!hasMeasurementConsent()) return
+
   try {
     posthog.capture("appbox_begin_checkout", properties)
   } catch {
@@ -31,10 +39,15 @@ export const trackBeginCheckout = (
   trigger: BillingCheckoutTrigger,
   properties: BillingCheckoutProperties = {}
 ) => {
-  const attributedUrl = withAttributionParams(url)
+  const includeAttribution = hasAdvertisingConsent()
+  const attributedUrl = includeAttribution
+    ? withAttributionParams(url, { includeConsentMarker: true })
+    : url
 
   captureBeginCheckoutEvent(
-    buildBillingCheckoutProperties(attributedUrl, trigger, properties)
+    buildBillingCheckoutProperties(attributedUrl, trigger, properties, {
+      includeAttribution
+    })
   )
 
   return attributedUrl
@@ -45,6 +58,8 @@ export const identifyUser = (
   userId: string,
   userProperties?: Record<string, unknown>
 ) => {
+  if (!hasMeasurementConsent()) return
+
   posthog.identify(userId, userProperties)
 }
 

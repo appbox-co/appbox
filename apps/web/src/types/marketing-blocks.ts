@@ -84,6 +84,63 @@ export interface ComparisonBlock {
   rows: ComparisonRow[]
 }
 
+export interface DecisionQuestionItem {
+  question: string
+  guidance: string
+  answer?: string
+}
+
+export interface DecisionQuestionsBlock {
+  type: "decision_questions"
+  title?: string
+  intro?: string
+  items: DecisionQuestionItem[]
+}
+
+export interface ComparisonMatrixColumn {
+  key: string
+  label: string
+}
+
+export interface ComparisonMatrixRow {
+  label: string
+  values: Record<string, string>
+}
+
+export interface ComparisonMatrixBlock {
+  type: "comparison_matrix"
+  title?: string
+  intro?: string
+  columns: ComparisonMatrixColumn[]
+  rows: ComparisonMatrixRow[]
+}
+
+export interface AlternativeSectionCta {
+  label: string
+  url: string
+  variant?: "primary" | "outline"
+}
+
+export interface AlternativeSectionItem {
+  name: string
+  label?: string
+  summary: string
+  best_for?: string
+  strengths?: string[]
+  limitations?: string[]
+  choose_if?: string
+  avoid_if?: string
+  screenshot?: ScreenshotImage
+  cta?: AlternativeSectionCta
+}
+
+export interface AlternativeSectionsBlock {
+  type: "alternative_sections"
+  title?: string
+  intro?: string
+  items: AlternativeSectionItem[]
+}
+
 export interface MetaBlock {
   type: "meta"
   title?: string
@@ -102,5 +159,8 @@ export type MarketingBlock =
   | ScreenshotsBlock
   | FaqBlock
   | ComparisonBlock
+  | DecisionQuestionsBlock
+  | ComparisonMatrixBlock
+  | AlternativeSectionsBlock
 
 export type MarketingContent = MarketingBlock[]

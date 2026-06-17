@@ -1,14 +1,15 @@
 "use client"
 
-const IUBENDA_ADVERTISING_PURPOSE = "5"
+import {
+  allowAdvertisingTracking,
+  allowAdvertisingTrackingWithoutPreference,
+  hasAdvertisingConsent,
+  IUBENDA_ADVERTISING_PURPOSE
+} from "@/lib/tracking-consent"
+
 const REDDIT_PIXEL_ID = "a2_hofzgodvh6np"
 const REDDIT_PIXEL_SCRIPT_ID = "appbox-reddit-pixel-js"
 const REDDIT_PIXEL_SCRIPT_SRC = `https://www.redditstatic.com/ads/pixel.js?pixel_id=${REDDIT_PIXEL_ID}`
-
-type IubendaPreferences = {
-  consent?: boolean
-  purposes?: Record<string, boolean>
-}
 
 type RedditPixelFunction = (
   command: "init" | "track",
@@ -23,37 +24,9 @@ type RedditPixelQueueFunction = RedditPixelFunction & {
 
 type WindowWithTracking = Window & {
   __appboxRedditLastPageVisit?: string
-  __appboxRedditAdvertisingConsentGranted?: boolean
-  __appboxRedditAdvertisingConsentNotNeeded?: boolean
   __appboxRedditPixelInitialized?: boolean
   appboxAllowRedditTracking?: () => void
-  _iub?: {
-    cs?: {
-      api?: {
-        getPreferences?: () => IubendaPreferences | undefined
-      }
-    }
-  }
   rdt?: RedditPixelFunction
-}
-
-function hasAdvertisingConsent() {
-  if (typeof window === "undefined") return false
-
-  const trackingWindow = window as WindowWithTracking
-  if (
-    trackingWindow.__appboxRedditAdvertisingConsentGranted ||
-    trackingWindow.__appboxRedditAdvertisingConsentNotNeeded
-  ) {
-    return true
-  }
-
-  const preferences = trackingWindow._iub?.cs?.api?.getPreferences?.()
-
-  return (
-    preferences?.consent === true ||
-    preferences?.purposes?.[IUBENDA_ADVERTISING_PURPOSE] === true
-  )
 }
 
 function loadRedditPixel() {
@@ -92,16 +65,14 @@ function loadRedditPixel() {
 export function allowRedditTracking() {
   if (typeof window === "undefined") return
 
-  ;(window as WindowWithTracking).__appboxRedditAdvertisingConsentGranted =
-    true
+  allowAdvertisingTracking()
   trackRedditPageVisit()
 }
 
 export function allowRedditTrackingWithoutPreference() {
   if (typeof window === "undefined") return
 
-  ;(window as WindowWithTracking).__appboxRedditAdvertisingConsentNotNeeded =
-    true
+  allowAdvertisingTrackingWithoutPreference()
   trackRedditPageVisit()
 }
 

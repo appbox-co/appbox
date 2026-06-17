@@ -2,7 +2,7 @@
 
 const STORAGE_KEY = "appbox.marketing_attribution"
 
-const ATTRIBUTION_PARAM_NAMES = [
+export const ATTRIBUTION_PARAM_NAMES = [
   "gclid",
   "gbraid",
   "wbraid",
@@ -17,6 +17,19 @@ const ATTRIBUTION_PARAM_NAMES = [
 
 type AttributionParamName = (typeof ATTRIBUTION_PARAM_NAMES)[number]
 type AttributionParams = Partial<Record<AttributionParamName, string>>
+type AttributionPersistenceOptions = {
+  allowStorage?: boolean
+}
+type AttributionReadOptions = {
+  includeCurrent?: boolean
+  includeStored?: boolean
+}
+type AttributionLinkOptions = AttributionReadOptions & {
+  includeConsentMarker?: boolean
+}
+type BillingCheckoutPropertyOptions = {
+  includeAttribution?: boolean
+}
 export type BillingCheckoutTrigger =
   | "billing_link_click"
   | "plan_card_click"
@@ -61,11 +74,19 @@ function hasAttributionParams(params: AttributionParams): boolean {
   return Object.keys(params).length > 0
 }
 
-export function persistAttributionParams(search = ""): AttributionParams {
+export function persistAttributionParams(
+  search = "",
+  options: AttributionPersistenceOptions = {}
+): AttributionParams {
   if (typeof window === "undefined") return {}
 
+  const allowStorage = options.allowStorage !== false
   const currentSearch = search || window.location.search
   const incomingParams = collectAttributionParams(currentSearch)
+  if (!allowStorage) {
+    return incomingParams
+  }
+
   const storedParams = readStoredAttributionParams()
   const mergedParams = {
     ...storedParams,
@@ -85,20 +106,29 @@ export function persistAttributionParams(search = ""): AttributionParams {
   return mergedParams
 }
 
-export function getAttributionParams(): AttributionParams {
+export function getAttributionParams(
+  options: AttributionReadOptions = {}
+): AttributionParams {
   if (typeof window === "undefined") return {}
 
+  const includeStored = options.includeStored !== false
+  const includeCurrent = options.includeCurrent !== false
+
   return {
-    ...readStoredAttributionParams(),
-    ...collectAttributionParams(window.location.search)
+    ...(includeStored ? readStoredAttributionParams() : {}),
+    ...(includeCurrent ? collectAttributionParams(window.location.search) : {})
   }
 }
 
-export function withAttributionParams(url: string): string {
+export function withAttributionParams(
+  url: string,
+  options: AttributionLinkOptions = {}
+): string {
   if (typeof window === "undefined") return url
 
-  const params = getAttributionParams()
-  if (!hasAttributionParams(params)) return url
+  const params = getAttributionParams(options)
+  const hasParams = hasAttributionParams(params)
+  if (!hasParams && !options.includeConsentMarker) return url
 
   try {
     const targetUrl = new URL(url, window.location.href)
@@ -107,6 +137,10 @@ export function withAttributionParams(url: string): string {
       if (value && !targetUrl.searchParams.has(name)) {
         targetUrl.searchParams.set(name, value)
       }
+    }
+
+    if (options.includeConsentMarker && hasParams) {
+      targetUrl.searchParams.set("appbox_tracking_consent", "1")
     }
 
     return targetUrl.toString()
@@ -141,13 +175,15 @@ function orderPackageSlug(pathname: string): string | undefined {
 export function buildBillingCheckoutProperties(
   url: string,
   trigger: BillingCheckoutTrigger,
-  properties: BillingCheckoutProperties = {}
+  properties: BillingCheckoutProperties = {},
+  options: BillingCheckoutPropertyOptions = {}
 ): BillingCheckoutProperties {
   if (typeof window === "undefined") {
     return properties
   }
 
-  const attributionParams = getAttributionParams()
+  const attributionParams =
+    options.includeAttribution === false ? {} : getAttributionParams()
   const attributionParamNames = Object.keys(attributionParams)
 
   try {
@@ -185,7 +221,8 @@ export function buildBillingCheckoutProperties(
 }
 
 export function attachAttributionToBillingLinks(
-  onBillingLinkClick?: (properties: BillingCheckoutProperties) => void
+  onBillingLinkClick?: (properties: BillingCheckoutProperties) => void,
+  shouldAttachAttribution?: () => boolean
 ): () => void {
   if (typeof document === "undefined") return () => {}
 
@@ -198,14 +235,29 @@ export function attachAttributionToBillingLinks(
     )
     if (!anchor) return
 
-    const attributedHref = withAttributionParams(anchor.href)
-    anchor.href = attributedHref
+    const canAttachAttribution = shouldAttachAttribution
+      ? shouldAttachAttribution()
+      : true
+    const attributedHref = canAttachAttribution
+      ? withAttributionParams(anchor.href, { includeConsentMarker: true })
+      : anchor.href
+
+    if (canAttachAttribution) {
+      anchor.href = attributedHref
+    }
 
     onBillingLinkClick?.(
-      buildBillingCheckoutProperties(attributedHref, "billing_link_click", {
-        link_text: anchor.innerText.trim().slice(0, 120),
-        opens_new_tab: anchor.target === "_blank"
-      })
+      buildBillingCheckoutProperties(
+        attributedHref,
+        "billing_link_click",
+        {
+          link_text: anchor.innerText.trim().slice(0, 120),
+          opens_new_tab: anchor.target === "_blank"
+        },
+        {
+          includeAttribution: canAttachAttribution
+        }
+      )
     )
   }
 

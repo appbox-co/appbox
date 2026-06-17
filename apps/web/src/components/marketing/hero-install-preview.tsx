@@ -46,6 +46,17 @@ const fieldValueHints: Record<string, string> = {
   LOGIN_URL: "https://openclaw.appboxes.co"
 }
 
+const previewFieldLabels: Record<string, string> = {
+  OPENCLAW_GATEWAY_TOKEN: "OpenClaw Gateway Token",
+  SSH_COMMAND: "SSH Command",
+  LOGIN_URL: "Login URL"
+}
+
+const previewFieldTypes: Record<string, string> = {
+  OPENCLAW_GATEWAY_TOKEN: "password",
+  LOGIN_URL: "clientURL"
+}
+
 function getIconUrl(iconImage?: string) {
   if (!iconImage) {
     return "https://api.appbox.co/assets/images/apps/placeholder.png"
@@ -56,6 +67,52 @@ function getIconUrl(iconImage?: string) {
   }
 
   return `https://api.appbox.co/assets/images/apps/icons/${iconImage}`
+}
+
+function getPreviewFieldLabel(name: string) {
+  if (previewFieldLabels[name]) {
+    return previewFieldLabels[name]
+  }
+
+  return name
+    .toLowerCase()
+    .split("_")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
+function getMarketingPreviewFields(app: AppDetails | null) {
+  const metaBlock = Array.isArray(app?.marketing_content)
+    ? app.marketing_content.find((block) => block.type === "meta")
+    : undefined
+  const installPreview =
+    metaBlock?.type === "meta" ? metaBlock.install_preview : undefined
+
+  if (!installPreview || Object.keys(installPreview).length === 0) {
+    return undefined
+  }
+
+  return Object.fromEntries(
+    Object.entries(installPreview).map(([name, value]) => {
+      const field: CustomField = {
+        label: getPreviewFieldLabel(name),
+        type: previewFieldTypes[name] ?? "dynamicText",
+        width: 12,
+        defaultValue: value
+      }
+
+      return [name, field]
+    })
+  )
+}
+
+function getPreviewCustomFields(app: AppDetails | null) {
+  if (app?.customFields && Object.keys(app.customFields).length > 0) {
+    return app.customFields
+  }
+
+  return getMarketingPreviewFields(app)
 }
 
 function getFieldValue(name: string, field: CustomField) {
@@ -177,13 +234,14 @@ export function HeroInstallPreview({ app }: HeroInstallPreviewProps) {
     return () => window.clearTimeout(timeout)
   }, [step])
 
+  const customFields = useMemo(() => getPreviewCustomFields(app), [app])
   const installFields = useMemo(
-    () => getInstallFields(app?.customFields),
-    [app?.customFields]
+    () => getInstallFields(customFields),
+    [customFields]
   )
   const installedFields = useMemo(
-    () => getInstalledFields(app?.customFields),
-    [app?.customFields]
+    () => getInstalledFields(customFields),
+    [customFields]
   )
   const appName = app?.display_name ?? "OpenClaw"
   const appVersion = app?.version ?? "latest"

@@ -34,6 +34,23 @@ export default async function sitemap(): Promise<Sitemap> {
     }
   ]
 
+  const staticLocalizedPaths = ["/alternativesto"]
+
+  const localizedPaths: Sitemap = staticLocalizedPaths.flatMap((path) =>
+    routing.locales.map((locale) => ({
+      url: absoluteUrl(`/${locale}${path}`),
+      lastModified: new Date(),
+      alternates: {
+        languages: Object.fromEntries(
+          routing.locales.map((alternateLocale) => [
+            alternateLocale,
+            absoluteUrl(`/${alternateLocale}${path}`)
+          ])
+        )
+      }
+    }))
+  )
+
   const docPaths: Sitemap = allDocs.map((doc) => {
     const [, ...docSlugList] = doc.slugAsParams.split("/")
     const docSlug = docSlugList.join("/") || ""
@@ -77,13 +94,13 @@ export default async function sitemap(): Promise<Sitemap> {
     const alternativePages = await getAlternativePages()
     alternativePaths = alternativePages.flatMap((page) =>
       routing.locales.map((locale) => ({
-        url: absoluteUrl(`/${locale}/alternatives/${page.slug}`),
+        url: absoluteUrl(`/${locale}/alternativesto/${page.slug}`),
         lastModified: page.updated_at ? new Date(page.updated_at) : new Date(),
         alternates: {
           languages: Object.fromEntries(
             routing.locales.map((alternateLocale) => [
               alternateLocale,
-              absoluteUrl(`/${alternateLocale}/alternatives/${page.slug}`)
+              absoluteUrl(`/${alternateLocale}/alternativesto/${page.slug}`)
             ])
           )
         }
@@ -93,5 +110,11 @@ export default async function sitemap(): Promise<Sitemap> {
     alternativePaths = []
   }
 
-  return [...paths, ...docPaths, ...blogPaths, ...alternativePaths]
+  return [
+    ...paths,
+    ...localizedPaths,
+    ...docPaths,
+    ...blogPaths,
+    ...alternativePaths
+  ]
 }
