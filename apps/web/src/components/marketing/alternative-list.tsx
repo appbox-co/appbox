@@ -27,15 +27,21 @@ function appIconUrl(iconImage?: string): string | null {
 }
 
 function AlternativeCard({ item }: { item: AlternativeEntry }) {
-  const isAppbox = item.type === "appbox_app"
-  const name = isAppbox ? item.app.display_name : item.name
+  const isAppboxApp = item.type === "appbox_app"
+  const isAppboxPlatform = item.type === "appbox_platform"
+  const isAppbox = isAppboxApp || isAppboxPlatform
+  const name = isAppboxApp ? item.app.display_name : item.name
   const description =
     item.description ||
-    (isAppbox ? item.app.short_description || item.app.description : undefined)
-  const iconUrl = isAppbox ? appIconUrl(item.app.icon_image) : null
-  const appHref = isAppbox
+    (isAppboxApp ? item.app.short_description || item.app.description : undefined)
+  const iconUrl = isAppboxApp ? appIconUrl(item.app.icon_image) : null
+  const appHref = isAppboxApp
     ? `/apps/${encodeURIComponent(item.app.display_name)}`
     : null
+  const platformHref =
+    isAppboxPlatform && item.website_url && isSafeExternalUrl(item.website_url)
+      ? item.website_url
+      : null
   const externalHref =
     !isAppbox && item.website_url && isSafeExternalUrl(item.website_url)
       ? item.website_url
@@ -99,11 +105,15 @@ function AlternativeCard({ item }: { item: AlternativeEntry }) {
         )}
       </CardContent>
 
-      {(appHref || externalHref) && (
+      {(appHref || platformHref || externalHref) && (
         <CardFooter>
           <Button asChild variant={isAppbox ? "default" : "outline"}>
             {appHref ? (
               <Link href={appHref}>View Appbox app</Link>
+            ) : platformHref ? (
+              <a href={platformHref} target="_blank" rel="noopener noreferrer">
+                Visit Appbox
+              </a>
             ) : (
               <a href={externalHref ?? "#"} target="_blank" rel="noopener noreferrer">
                 Visit website

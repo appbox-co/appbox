@@ -39,7 +39,21 @@ export interface ExternalAlternative {
   highlights?: string[]
 }
 
-export type AlternativeEntry = AppboxAlternative | ExternalAlternative
+export interface AppboxPlatformAlternative {
+  type: "appbox_platform"
+  rank?: number
+  name: string
+  description?: string
+  website_url?: string
+  best_for?: string
+  caveat?: string
+  highlights?: string[]
+}
+
+export type AlternativeEntry =
+  | AppboxAlternative
+  | AppboxPlatformAlternative
+  | ExternalAlternative
 
 export interface AlternativePageDetails extends AlternativePageSummary {
   content?: MarketingContent | null
