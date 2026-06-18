@@ -82,6 +82,19 @@ function clearLegacyPostHogOptOutIfAllowed() {
   }
 }
 
+function syncPostHogSessionRecording() {
+  try {
+    if (hasMeasurementConsent()) {
+      posthog.startSessionRecording()
+      return
+    }
+
+    posthog.stopSessionRecording()
+  } catch {
+    // Replay consent sync should never block analytics or navigation.
+  }
+}
+
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -101,12 +114,12 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         disable_session_recording: true,
         disable_surveys: true,
         disable_web_experiments: true,
-        advanced_disable_decide: true,
         advanced_disable_feature_flags: true,
         person_profiles: "identified_only"
       })
       clearLegacyPostHogOptOutIfAllowed()
       syncPostHogAttribution()
+      syncPostHogSessionRecording()
 
       const trackingWindow = window as WindowWithTrackingBridge
       trackingWindow.appboxAllowRedditTracking = allowRedditTracking
@@ -118,21 +131,25 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         allowMeasurementTracking()
         clearLegacyPostHogOptOutIfAllowed()
         syncPostHogAttribution()
+        syncPostHogSessionRecording()
         allowRedditTracking()
       }
       const handleMeasurementConsentGiven = () => {
         allowMeasurementTracking()
         clearLegacyPostHogOptOutIfAllowed()
         syncPostHogAttribution()
+        syncPostHogSessionRecording()
       }
       const handlePreferenceNotNeeded = () => {
         allowMeasurementTrackingWithoutPreference()
         clearLegacyPostHogOptOutIfAllowed()
         syncPostHogAttribution()
+        syncPostHogSessionRecording()
         allowRedditTrackingWithoutPreference()
       }
       const handleConsentRejected = () => {
         syncPostHogAttribution()
+        syncPostHogSessionRecording()
       }
 
       window.addEventListener("iubenda_consent_given", handleConsentGiven)
@@ -150,7 +167,10 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       )
       window.addEventListener("iubenda_consent_rejected", handleConsentRejected)
 
-      const consentPoll = window.setInterval(syncPostHogAttribution, 1000)
+      const consentPoll = window.setInterval(() => {
+        syncPostHogAttribution()
+        syncPostHogSessionRecording()
+      }, 1000)
       const redditPixelPoll = window.setInterval(trackRedditPageVisit, 1000)
       window.setTimeout(() => window.clearInterval(consentPoll), 30000)
       window.setTimeout(() => window.clearInterval(redditPixelPoll), 30000)
@@ -201,6 +221,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
           })
 
       syncPostHogAttribution(searchParams.toString())
+      syncPostHogSessionRecording()
       trackRedditPageVisit()
 
       if (!allowsStatisticalAnalytics()) {
