@@ -2071,7 +2071,7 @@ export function InstallDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "max-h-[85vh] overflow-hidden bg-card p-0",
+          "flex max-h-[min(85vh,calc(100dvh-2rem))] flex-col overflow-hidden bg-card p-0",
           hasCustomFields || requiresDomain ? "sm:max-w-lg" : "sm:max-w-md"
         )}
         onKeyDown={(event) => {
@@ -2103,7 +2103,7 @@ export function InstallDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="max-h-[calc(85vh-9.5rem)] space-y-4 overflow-y-auto px-6 py-5">
+        <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-6 py-5">
           {/* Install guard banner */}
           {installGuard && <InstallGuardBanner guard={installGuard} />}
 
@@ -2269,9 +2269,27 @@ export function InstallDialog({
               ))}
             </div>
           )}
+
+          {installMutation.isError && parsedInstallError && (
+            <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                <div className="space-y-1">
+                  <p className="font-medium">{parsedInstallError.title}</p>
+                  {parsedInstallError.details.length > 0 && (
+                    <ul className="list-disc space-y-0.5 pl-4 text-xs sm:text-sm">
+                      {parsedInstallError.details.slice(0, 4).map((detail) => (
+                        <li key={detail}>{detail}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        <DialogFooter className="border-t bg-muted/10 px-6 py-4">
+        <DialogFooter className="shrink-0 border-t bg-muted/10 px-6 py-4">
           <Button
             variant="outline"
             type="button"
@@ -2296,24 +2314,6 @@ export function InstallDialog({
             )}
           </Button>
         </DialogFooter>
-
-        {installMutation.isError && parsedInstallError && (
-          <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-            <div className="flex items-start gap-2">
-              <AlertCircle className="mt-0.5 size-4 shrink-0" />
-              <div className="space-y-1">
-                <p className="font-medium">{parsedInstallError.title}</p>
-                {parsedInstallError.details.length > 0 && (
-                  <ul className="list-disc space-y-0.5 pl-4 text-xs sm:text-sm">
-                    {parsedInstallError.details.slice(0, 4).map((detail) => (
-                      <li key={detail}>{detail}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </DialogContent>
     </Dialog>
   )
