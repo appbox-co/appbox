@@ -1,0 +1,170 @@
+---
+title: Appbox'ta n8n'i Tanıtıyoruz
+date: 2026-06-24 08:11:00
+excerpt: n8n'i Appbox üzerinde dağıtın ve uygulamalar, API'ler, webhook'lar ve dahili araçlar için self-hosted iş akışı otomasyonları oluşturmaya başlayın.
+author_id: rid
+tags: [appbox, n8n, otomasyon, is-akislari, self-hosted, uygulama-magazasi]
+---
+
+# Appbox'ta n8n'i Tanıtıyoruz
+
+n8n artık Appbox'ta kullanılabilir.
+
+Bu, özel bir iş akışı otomasyon çalışma alanı dağıtabileceğiniz, görsel düzenleyiciyi açabileceğiniz ve sunucuyu elle yönetmeden uygulamaları, API'leri, zamanlamaları, webhook'ları ve özel kodu bağlamaya başlayabileceğiniz anlamına gelir.
+
+[n8n'i Appbox App Store'dan yükleyin](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="tuval üzerinde bağlı otomasyon düğümlerini gösteren n8n iş akışı düzenleyicisi"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Neler Oluşturabilirsiniz
+
+n8n, bir uygulamanın başka bir uygulamaya tepki vermesi, verileri temizlemesi, bir API çağırması, bildirim göndermesi veya zamanlanmış bir görev çalıştırması gereken her durumda kullanışlıdır.
+
+Appbox üzerinde bu, n8n'i webhook'lara, API'lere, bildirim hook'larına, WebDAV'a, RPC'ye veya betiklenebilir arayüzlere sahip uygulamalar için doğal bir tamamlayıcı yapar.
+
+AI, destek ve iş süreçleri için:
+
+- **OpenClaw** otomasyonlarınız için AI katmanı olarak çalışabilir. Bir destek bileti, izleme uyarısı veya yüklenen dosya özetlenmesi gerektiğinde n8n'den webhook gönderin; ardından OpenClaw yanıt taslağı hazırlasın, isteği sınıflandırsın veya olayı bir göreve dönüştürsün.
+- **Chatwoot** müşteri desteği için gelen kutusu olaylarını ve API'leri sunar. Acil konuşmaları etiketleyin, yeni kişileri başka bir sistemden zenginleştirin, bir VIP yazdığında ekip kanalını bilgilendirin veya bir konuşma kapandıktan sonra takip görevi oluşturun.
+- **Mautic** bir REST API'ye ve kampanya otomasyonu yüzeyine sahiptir. Formlardan lead'leri senkronize edin, ürün olaylarından sonra kişileri puanlayın, webhook gönderimlerinden kampanyalara kişi ekleyin veya bir lead eşik değeri geçtiğinde satış ekibini bilgilendirin.
+- **ERPNext** iş kayıtlarını API'ler üzerinden sunar. Form gönderimlerinden faturalar oluşturun, ödeme geldiğinde anlaşmaları güncelleyin, stok düşük olduğunda operasyon ekibini bilgilendirin veya müşteri kayıtlarını başka bir Appbox uygulamasına aktarın.
+- **Plane** ve **OpenProject** görev hedefleri olarak iyi çalışır. Olayları, form gönderimlerini, başarısız job'ları veya müşteri isteklerini doğru atanan kişi ve bağlamla issues ve work packages haline getirin.
+- **Rallly** zamanlama iş akışlarına uygundur. İstek formlarından anketler oluşturun, toplantı zamanı seçildikten sonra konukları bilgilendirin veya uygunluk son tarihinden önce hatırlatmalar gönderin.
+- **OnlyOffice** ve **Jitsi** belge ve toplantı iş akışlarına uyar. Bir belge hazır olduğunda inceleyenleri bilgilendirin, onaydan sonra toplantı bağlantısı oluşturun veya toplantı sonrası takip görevlerini Plane ya da OpenProject'e gönderin.
+
+İçerik, yayınlama ve geliştirici iş akışları için:
+
+- **EmDash** formlar, kısa bağlantılar, eklentiler ve autobuild hook'ları içeren yapılandırılmış bir CMS sunar. Form gönderimlerini n8n'e gönderin, içerik yayınlandığında editörleri bilgilendirin, bir taslak yayına alındıktan sonra rebuild tetikleyin veya yeni gönderileri Mattermost, Rocket.Chat ve sosyal kuyruklara gönderin.
+- **WordPress** bir REST API'ye ve hook ekosistemine sahiptir. Form gönderimlerinden yazı taslakları oluşturun, içerik yayına alındığında duyurular yayınlayın, medyayı başka bir depolama uygulamasına yedekleyin veya zamanlanmış yazılardan önce editoryal hatırlatmalar gönderin.
+- **GitLab**, **Gogs** ve diğer Git uygulamaları repository, proje ve sistem hook'ları sunar. Tag'lerde release bildirimleri çalıştırın, merge sonrası deployment kontrol listeleri oluşturun, başarısız pipeline özetlerini chate gönderin veya hata raporu şablonlarından proje yönetimi issues açın.
+- **Hugo Git** Git tabanlı yayınlama akışında yer alabilir. İçerik commit'lerinden sonra rebuild bildirimlerini tetikleyin, yeni bir tag geldiğinde changelog yayınlayın veya n8n'den her pull request için bir review görevi oluşturmasını isteyin.
+- **Docmost** belge hedefi olarak kullanışlıdır. Yeni bir müşteri kaydolduğunda onboarding kontrol listesi oluşturun, izleme olaylarından incident notları gönderin veya dahili runbook'ları iş akışı çıktılarıyla güncel tutun.
+- **Jupyter Notebook** veri ve raporlama iş akışlarını destekleyebilir. Zamanlanmış notebook'lar çalıştırın, veritabanı güncellemesinden sonra raporları dışa aktarın veya uzun süren bir analiz tamamlandığında bir kanalı bilgilendirin.
+- **Serposcope** SEO iş akışlarını besleyebilir. Sıralama değişikliği uyarıları gönderin, haftalık arama pozisyonu özeti oluşturun veya önemli bir anahtar kelime düştüğünde içerik görevi açın.
+- **MySQL/MariaDB**, **Nginx & PHP** ve **LAMP Stack** dahili araçlar için kullanışlıdır. n8n'i satır yazmak, özel admin endpoint'lerini çağırmak, zamanlanmış bakım kontrolleri çalıştırmak veya özel bir uygulama yeni gönderim aldığında ekibi bilgilendirmek için kullanın.
+
+Dosyalar, depolama, senkronizasyon ve yedekleme için:
+
+- **Nextcloud** WebDAV ve geniş bir uygulama ekosistemi sunar. Yüklenen dosyaları inceleme klasörlerine taşıyın, bir müşteri yüklemesi geldiğinde ekibi bilgilendirin, takvim takipleri oluşturun veya onaylanmış belgeleri proje alanlarına kopyalayın.
+- **SFTPGo** REST API, event actions ve login hook'ları içerir. Bir müşteri rapor yüklediğinde dosya işleme iş akışlarını tetikleyin, tamamlanan dışa aktarımları Nextcloud'a taşıyın, bir partner transferi geldiğinde kanalı bilgilendirin veya son tarihten sonra geçici kullanıcıları devre dışı bırakın.
+- **File Browser Quantum**, **File Browser WebDAV** ve **Kodbox** REST API'ler, WebDAV, command hook'ları veya depolama eklentileri gibi dosya yönetimi yüzeyleri sunar. Paylaşılan klasörleri izleyin, metadata oluşturun, tamamlanan varlıkları arşiv depolamaya kopyalayın veya dosyaları yayın öncesi onaya yönlendirin.
+- **Rclone** nesne depolama, SFTP, WebDAV ve bulut remote'ları arasında betiklenebilir. n8n'den sync job'ları zamanlayın, büyük migrasyonlardan sonra transferleri doğrulayın, işlenmiş medyayı uzun vadeli depolamaya taşıyın veya hata özetlerini chate gönderin.
+- **Restic REST Server** restic istemcilerine HTTPS backup hedefi sağlar. Zamanlanmış backup kontrolleri başarısız olduğunda adminleri bilgilendirin, kaçırılan snapshot'lardan sonra incident açın veya günlük backup sağlık özetini Docmost'a yazın.
+- **Syncthing** ve **Resilio Sync** dosya olayı pipeline'ları için kullanışlıdır. Bir klasör senkronizasyonu bitirdiğinde tepki verin, tamamlanan drop'ları medya kütüphanesine kopyalayın veya beklenen dosyalar gelmediğinde kullanıcıyı uyarın.
+- **Pure-FTPd** ve diğer FTP/SFTP tarzı endpoint'ler eski dosya iş akışlarında yer alabilir. Yeni partner dosyalarını yoklayın, bunları SFTPGo veya Nextcloud'a taşıyın, ardından işleme tamamlandığında doğru ekibi bilgilendirin.
+
+Güvenlik, erişim ve altyapı için:
+
+- **Vaultwarden** Bitwarden uyumlu bir API ve isteğe bağlı SMTP bildirimleri sunar. Vault incelemeleri için hatırlatmalar oluşturun, onboarding veya offboarding görevleri geldiğinde adminleri bilgilendirin ya da ekipler arasında parola rotasyonu kontrol listelerini koordine edin.
+- **OpenVPN** ve **WireGuard VPN** erişim iş akışlarının parçası olabilir. Kimlik bilgilerinin döndürülmesi gerektiğinde operatörleri bilgilendirin, yeni VPN kullanıcıları için kontrol listesi görevleri oluşturun veya n8n üzerinden zamanlanmış bağlantı kontrolleri çalıştırın.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** ve **Windows VPS** uygulamaları size betiklenebilir ortamlar sağlar. n8n'i SSH komutlarını tetiklemek, sağlık kontrolleri çalıştırmak, rapor dosyaları toplamak veya zamanlanmış job'lardan sonra bakım özetleri göndermek için kullanın.
+- **Ubuntu**, **Debian** ve **Firefox remote desktop** uygulamaları tarayıcı veya masaüstü görevlerini destekleyebilir. Manuel inceleme işleri için hatırlatmalar zamanlayın, betik çıktıları yakalayın veya tamamlanan masaüstü dışa aktarımlarını dosya depolamaya devredin.
+
+İzleme, chat ve bildirimler için:
+
+- **Uptime Kuma** zengin bildirim hedeflerini ve webhook'ları destekler. Kesinti olaylarını Mattermost veya Rocket.Chat uyarılarına dönüştürün, OpenProject incident'leri oluşturun, OpenClaw'dan kısa bir incident özeti isteyin veya her toparlanmayı bir durum spreadsheet'ine kaydedin.
+- **Mattermost** ve **Rocket.Chat** kullanışlı bildirim ve onay endpoint'leridir. Herhangi bir iş akışından insan tarafından okunabilir güncellemeler gönderin, bir ekipten isteği onaylamasını isteyin ve biri yanıtladığında otomasyona devam edin.
+- **RocketChat Hubot** chat komutları için kullanışlıdır. Ekip arkadaşlarının chatten n8n webhook'ları tetiklemesine, deployment durumunu sormasına veya denetim izi olan betikli bir bakım iş akışı başlatmasına izin verin.
+- **Matterbridge** IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram ve daha fazlasını bağlar. Operasyonel olayları bir kez biçimlendirmek ve sonra bunları görmesi gereken topluluklara veya odalara iletmek için n8n kullanın.
+- **ZNC** ve **The Lounge** chat-ops iş akışlarının parçası olabilir. Önemli IRC olaylarını modern ekip kanallarına yönlendirin, öne çıkanları arşivleyin veya izlenen bir anahtar kelime göründüğünde operatörleri bilgilendirin.
+
+Medya ve indirme otomasyonu için:
+
+- **Tautulli** Plex etkinliğini, bildirim betiklerini ve JSON API'yi sunar. Yeni eklenen medya özetleri gönderin, bir stream hata verdiğinde uyarı verin, kullanım raporlarını dışa aktarın veya depolama bir sınırı geçtiğinde temizlik görevleri oluşturun.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** ve **SeAT** kütüphane veya topluluk iş akışlarını besleyebilir. Yeni medyayı duyurun, import'lardan sonra kütüphaneleri yenileyin, dinleme veya okuma özetleri oluşturun, metadata'yı bir dashboard'a senkronize edin veya izlenen etkinlik değiştiğinde topluluğu bilgilendirin.
+- **Immich** fotoğraf iş akışlarına uyar. Paylaşılan albüm değiştiğinde aileyi bilgilendirin, dışa aktarılan albümleri arşiv depolamaya kopyalayın veya büyük bir mobil yüklemeden sonra backup kontrolü tetikleyin.
+- **AzuraCast** REST API ve webhook'lar içerir. Parça veya canlı yayın değişikliklerini duyurun, bir web sitesi widget'ını güncelleyin, zamanlanmış yayınlardan önce sunucuları bilgilendirin veya bir yayından sonra playlist metadata'sını arşivleyin.
+- **Icecast** yayın durumu iş akışlarını destekleyebilir. Stream kullanılabilirliğini izleyin, now-playing güncellemeleri gönderin veya kaynak bağlantısı kesildiğinde bir kanalı uyarın.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** ve **Deluge** RPC veya web API'leri sunar. Tamamlanan indirmeleri izleyin, bitmiş dosyaları doğru kütüphaneye taşıyın, medya taramaları tetikleyin veya istenen öğe hazır olduğunda kullanıcıları bilgilendirin.
+- **PufferPanel**, **TeamSpeak 3** ve oyun/chat sunucuları da operasyonel iş akışlarına uyabilir. Bir sunucu ilgilenilmesi gerektiğinde adminleri bilgilendirin, bakım hatırlatmaları oluşturun veya zamanlanmış değişikliklerden sonra oyunculara yönelik duyurular gönderin.
+
+n8n'i yerleşik düğümler, webhook'lar, HTTP istekleri, veritabanı bağlantıları ve kod düğümleri aracılığıyla harici servislerle de kullanabilirsiniz.
+
+## n8n'i Yükleyin
+
+[App Store'daki n8n sayfasını](/appstore/app/264) açın, Appbox'ınızı seçin ve kurulumu başlatın.
+
+Kurulum sırasında Appbox sizden n8n için ilk owner hesabını oluşturmanızı ister. Bu hesap için kullanmak istediğiniz admin e-posta adresini, parolayı, adı ve soyadı girin.
+
+Uygulama hazır olduğunda, yüklü uygulama sayfasında gösterilen Login URL'yi açın ve az önce oluşturduğunuz owner hesabıyla oturum açın.
+
+## İlk İş Akışınızı Oluşturun
+
+n8n'in içine girdikten sonra **Overview** bölümüne gidin ve **Create Workflow** seçeneğini seçin. Düzenleyici, otomasyonunuzdaki her adımın bir düğümle temsil edildiği bir tuvalde açılır.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="iş akışı tuvalini gösteren n8n düzenleyici arayüzü"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Basit bir manuel iş akışıyla başlayın:
+
+1. **Add first step** üzerine tıklayın.
+2. **Manual Trigger** için arama yapın ve ekleyin.
+3. Trigger düğümündeki plus düğmesine tıklayın.
+4. **Edit Fields**, **HTTP Request** veya uygulamaya özel bir düğüm gibi ikinci bir düğüm ekleyin.
+5. Düğümü yan panelde yapılandırın.
+
+n8n'deki ana çalışma alanı tuvaldir. Düğümleri burada eklersiniz, bağlarsınız, iş akışını düzenlersiniz ve test çalıştırmaları yaparsınız.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="ilk adımı ekleme kontrolünü gösteren n8n iş akışı tuvali"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## İş Akışını Test Edin
+
+İş akışını manuel olarak çalıştırmak için **Execute Workflow** üzerine tıklayın.
+
+Çalıştırma tamamlandıktan sonra aldığı ve döndürdüğü verileri incelemek için her düğüme tıklayın. Gerçek bir uygulama, webhook veya zamanlanmış trigger bağlamadan önce iş akışınızdan nelerin geçtiğini anlamanın en hızlı yolu budur.
+
+## Uygulamaları ve Kimlik Bilgilerini Bağlayın
+
+Uygulama entegrasyonları için ihtiyacınız olan düğümü ekleyin ve n8n istediğinde kimlik bilgileri oluşturun.
+
+Appbox üzerinde barındırılan uygulamalar için yaygın kalıp şudur:
+
+1. Otomatikleştirmek istediğiniz uygulamada bir API token'ı veya webhook oluşturun.
+2. Eşleşen n8n düğümünü ekleyin veya özel bir düğüm yoksa **HTTP Request** düğümünü kullanın.
+3. Token'ı n8n kimlik bilgilerine kaydedin.
+4. Dallanma, retry veya daha fazla adım eklemeden önce küçük bir eylemle test edin.
+
+Gelen olaylar için bir **Webhook** trigger kullanın. n8n size harici servislerin HTTPS üzerinden çağırabileceği production webhook URL'si verir.
+
+## Basit Bir İlk Otomasyon
+
+İlk gerçek iş akışınız olarak bunu deneyin:
+
+1. Bir **Webhook** trigger ekleyin.
+2. Başka bir servis veya Appbox uygulama API'sini çağırmak için bir **HTTP Request** düğümü ekleyin.
+3. Yanıta göre dallanmak için bir **IF** düğümü ekleyin.
+4. Mattermost, Rocket.Chat veya başka bir bildirim kanalına mesaj gönderin.
+
+Bu size birçok n8n otomasyonu için temel kalıbı verir: bir olay alın, veriyi getirin veya dönüştürün, karar verin, ardından bir kişiyi bilgilendirin ya da başka bir sistemi güncelleyin.
+
+## Ölçek Hakkında Bir Not
+
+Appbox paketi, kalıcı depolamaya sahip kompakt tek konteynerli bir n8n dağıtımı olarak tasarlanmıştır. Kişisel, ekip ve dahili otomasyonlar için harika bir başlangıç noktasıdır.
+
+Çok yüksek yürütme hacmi, büyük payload'lar veya iş açısından kritik bir otomasyon merkezi çalıştırmayı planlıyorsanız, iş yükünü dikkatle test edin ve yüklü uygulama sayfasından uygulama kaynaklarını artırmayı düşünün.
+
+## Oluşturmaya Başlayın
+
+Bir Appbox'ınız varsa n8n, diğer araçlarınızın bağlantılı hissettirmesinin en hızlı yollarından biridir.
+
+[n8n'i Appbox üzerinde dağıtın](/appstore/app/264), bir iş akışı oluşturun, bir kez manuel çalıştırın ve ardından onu uygulamalarınızın zaten sahip olmasını dilediğiniz otomasyona dönüştürün.

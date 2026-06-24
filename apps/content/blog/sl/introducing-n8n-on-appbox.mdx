@@ -1,0 +1,170 @@
+---
+title: Predstavljamo n8n na Appbox
+date: 2026-06-24 08:11:00
+excerpt: Namestite n8n na Appbox in začnite graditi samostojno gostovane avtomatizacije delovnih tokov za aplikacije, API-je, webhooke in interna orodja.
+author_id: rid
+tags: [appbox, n8n, avtomatizacija, delovni-tokovi, self-hosted, trgovina-aplikacij]
+---
+
+# Predstavljamo n8n na Appbox
+
+n8n je zdaj na voljo na Appbox.
+
+To pomeni, da lahko namestite zaseben delovni prostor za avtomatizacijo, odprete vizualni urejevalnik in začnete povezovati aplikacije, API-je, urnike, webhooke in lastno kodo brez ročnega upravljanja strežnika.
+
+[Namestite n8n iz Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="urejevalnik delovnih tokov n8n, ki prikazuje povezane avtomatizacijske vozle na platnu"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Kaj lahko zgradite
+
+n8n je uporaben vedno, ko mora ena aplikacija reagirati na drugo, urediti podatke, poklicati API, poslati obvestilo ali zagnati načrtovano opravilo.
+
+Na Appbox je zato naraven spremljevalec aplikacij z webhooki, API-ji, obvestilnimi hooki, WebDAV, RPC ali skriptljivimi vmesniki.
+
+Za AI, podporo in poslovne delovne tokove:
+
+- **OpenClaw** lahko deluje kot AI plast za vaše avtomatizacije. Pošljite webhook iz n8n, ko je treba povzeti podporni zahtevek, opozorilo nadzora ali naloženo datoteko, nato pa naj OpenClaw pripravi odgovor, razvrsti zahtevo ali dogodek spremeni v nalogo.
+- **Chatwoot** izpostavlja dogodke nabiralnikov in API-je za podporo strankam. Označite nujne pogovore, obogatite nove stike iz drugega sistema, obvestite ekipni kanal, ko piše VIP stranka, ali ustvarite nadaljnjo nalogo po zaprtju pogovora.
+- **Mautic** ima REST API in površino za avtomatizacijo kampanj. Sinhronizirajte leade iz obrazcev, ocenjujte stike po dogodkih v izdelku, dodajajte ljudi v kampanje iz oddaj webhookov ali obvestite prodajo, ko lead preseže prag.
+- **ERPNext** prek API-jev izpostavlja poslovne zapise. Ustvarjajte račune iz oddanih obrazcev, posodobite posle ob prejemu plačila, obvestite operacije, ko je zaloga nizka, ali potisnite zapise strank v drugo aplikacijo Appbox.
+- **Plane** in **OpenProject** sta dobra cilja za naloge. Incidente, oddane obrazce, neuspele jobe ali zahteve strank pretvorite v issues in delovne pakete s pravim odgovornim uporabnikom in kontekstom.
+- **Rallly** se dobro poda v delovne tokove načrtovanja. Ustvarite ankete iz obrazcev zahtev, obvestite goste po izbiri termina srečanja ali pošljite opomnike pred rokom za razpoložljivost.
+- **OnlyOffice** in **Jitsi** ustrezata delovnim tokovom dokumentov in sestankov. Obvestite pregledovalce, ko je dokument pripravljen, po odobritvi ustvarite povezavo do sestanka ali pošljite nadaljnje naloge po sestanku v Plane ali OpenProject.
+
+Za vsebino, objavljanje in razvojne delovne tokove:
+
+- **EmDash** vam daje strukturiran CMS z obrazci, kratkimi povezavami, vtičniki in autobuild hooki. Pošljite oddane obrazce v n8n, obvestite urednike ob objavi vsebine, sprožite rebuild, ko osnutek postane javen, ali pošljite nove objave v Mattermost, Rocket.Chat in družbene čakalne vrste.
+- **WordPress** ima REST API in ekosistem hookov. Pripravite osnutke objav iz oddanih obrazcev, objavite obvestila ob objavi vsebine, varnostno kopirajte medije v drugo aplikacijo za shranjevanje ali pošljite uredniške opomnike pred načrtovanimi objavami.
+- **GitLab**, **Gogs** in druge aplikacije Git izpostavljajo repozitorijske, projektne in sistemske hooke. Zaženite obvestila o izdajah na tagih, ustvarite kontrolne sezname za namestitev po merge, objavite povzetke neuspelih pipelineov v klepet ali odprite issues za vodenje projektov iz predlog za prijavo napak.
+- **Hugo Git** je lahko del objavljanja na osnovi Git. Sprožite obvestila o rebuildu po commitih vsebine, objavite changelog ob novem tagu ali naročite n8n, naj za vsak pull request ustvari nalogo pregleda.
+- **Docmost** je uporaben kot cilj za dokumentacijo. Ustvarite onboarding kontrolni seznam ob registraciji nove stranke, objavite zapiske incidentov iz nadzornih dogodkov ali ohranjajte interne runbooke posodobljene z izhodi delovnih tokov.
+- **Jupyter Notebook** lahko podpira podatkovne in poročevalske delovne tokove. Zaženite načrtovane notebooke, izvozite poročila po posodobitvi baze podatkov ali obvestite kanal, ko se dolgotrajna analiza konča.
+- **Serposcope** lahko napaja SEO delovne tokove. Pošljite opozorila o spremembah uvrstitev, ustvarite tedenski povzetek iskalnih pozicij ali odprite nalogo za vsebino, ko pomembna ključna beseda pade.
+- **MySQL/MariaDB**, **Nginx & PHP** in **LAMP Stack** so uporabni za interna orodja. Uporabite n8n za pisanje vrstic, klicanje zasebnih administratorskih endpointov, izvajanje načrtovanih vzdrževalnih pregledov ali obveščanje ekipe, ko lastna aplikacija prejme novo oddajo.
+
+Za datoteke, shrambo, sinhronizacijo in varnostne kopije:
+
+- **Nextcloud** izpostavlja WebDAV in širok ekosistem aplikacij. Premaknite naložene datoteke v mape za pregled, obvestite ekipo ob prihodu naložitve stranke, ustvarite koledarske nadaljnje korake ali kopirajte odobrene dokumente v projektne prostore.
+- **SFTPGo** vključuje REST API, dejanja ob dogodkih in login hooke. Sprožite delovne tokove obdelave datotek, ko stranka naloži poročilo, premaknite dokončane izvoze v Nextcloud, obvestite kanal ob prihodu partnerskega prenosa ali po roku onemogočite začasne uporabnike.
+- **File Browser Quantum**, **File Browser WebDAV** in **Kodbox** izpostavljajo površine za upravljanje datotek, kot so REST API-ji, WebDAV, command hooki ali vtičniki za shrambo. Spremljajte skupne mape, ustvarjajte metapodatke, kopirajte dokončana sredstva v arhivsko shrambo ali usmerite datoteke v odobritev pred objavo.
+- **Rclone** je skriptljiv prek objektne shrambe, SFTP, WebDAV in oblačnih remoteov. Načrtujte sinhronizacijske jobe iz n8n, preverite prenose po velikih migracijah, premaknite obdelane medije v dolgoročno shrambo ali pošljite povzetke napak v klepet.
+- **Restic REST Server** daje odjemalcem restic HTTPS cilj za varnostne kopije. Obvestite administratorje, ko načrtovani pregledi varnostnih kopij odpovejo, odprite incident po izpuščenih snapshotih ali zapišite dnevni povzetek zdravja varnostnih kopij v Docmost.
+- **Syncthing** in **Resilio Sync** sta uporabna za cevovode datotečnih dogodkov. Reagirajte, ko mapa konča sinhronizacijo, kopirajte zaključene drop-e v medijsko knjižnico ali opozorite uporabnika, ko pričakovane datoteke niso prispele.
+- **Pure-FTPd** in drugi endpointi v slogu FTP/SFTP lahko stojijo v starejših datotečnih delovnih tokovih. Preverjajte nove partnerske datoteke, jih premaknite v SFTPGo ali Nextcloud, nato pa obvestite pravo ekipo, ko je obdelava končana.
+
+Za varnost, dostop in infrastrukturo:
+
+- **Vaultwarden** izpostavlja API, združljiv z Bitwarden, in izbirna SMTP obvestila. Ustvarite opomnike za preglede trezorjev, obvestite administratorje, ko zapadejo onboarding ali offboarding naloge, ali usklajujte kontrolne sezname rotacije gesel med ekipami.
+- **OpenVPN** in **WireGuard VPN** sta lahko del dostopnih delovnih tokov. Obvestite operaterje, ko je treba zamenjati poverilnice, ustvarite kontrolne naloge za nove uporabnike VPN ali izvajajte načrtovane preglede povezljivosti skozi n8n.
+- Aplikacije **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** in **Windows VPS** vam dajejo skriptljiva okolja. Uporabite n8n za sprožanje SSH ukazov, izvajanje zdravstvenih pregledov, zbiranje poročilnih datotek ali objavo vzdrževalnih povzetkov po načrtovanih jobih.
+- Aplikacije **Ubuntu**, **Debian** in **Firefox remote desktop** lahko podpirajo brskalniška ali namizna opravila. Načrtujte opomnike za ročne preglede, zajemite izhode skript ali predajte dokončane namizne izvoze v datotečno shrambo.
+
+Za nadzor, klepet in obvestila:
+
+- **Uptime Kuma** podpira bogate cilje obvestil in webhooke. Dogodke nedosegljivosti spremenite v opozorila Mattermost ali Rocket.Chat, ustvarite incidente OpenProject, prosite OpenClaw za kratek povzetek incidenta ali zabeležite vsako obnovitev v statusno preglednico.
+- **Mattermost** in **Rocket.Chat** sta uporabna endpointa za obvestila in odobritve. Pošiljajte človeku berljive posodobitve iz kateregakoli delovnega toka, prosite ekipo za odobritev zahteve, nato pa nadaljujte avtomatizacijo, ko nekdo odgovori.
+- **RocketChat Hubot** je uporaben za ukaze v klepetu. Naj sodelavci sprožajo webhooke n8n iz klepeta, vprašajo za stanje namestitve ali začnejo skriptan vzdrževalni delovni tok z revizijsko sledjo.
+- **Matterbridge** povezuje IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram in več. Uporabite n8n, da enkrat oblikujete operativne dogodke in jih nato posredujete skupnostim ali sobam, ki jih morajo videti.
+- **ZNC** in **The Lounge** sta lahko del chat-ops delovnih tokov. Pomembne dogodke IRC posredujte v sodobne ekipne kanale, arhivirajte poudarke ali obvestite operaterje, ko se pojavi spremljana ključna beseda.
+
+Za medije in avtomatizacijo prenosov:
+
+- **Tautulli** izpostavlja aktivnost Plex, obvestilne skripte in JSON API. Pošljite povzetke na novo dodanih medijev, opozorite ob napaki streama, izvozite poročila o uporabi ali ustvarite čistilne naloge, ko shramba preseže mejo.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** in **SeAT** lahko napajajo knjižnične ali skupnostne delovne tokove. Objavite nove medije, osvežite knjižnice po uvozih, ustvarite poslušalske ali bralne povzetke, sinhronizirajte metapodatke v nadzorno ploščo ali obvestite skupnost, ko se spremljana aktivnost spremeni.
+- **Immich** se prilega fotografskim delovnim tokovom. Obvestite družino, ko se spremeni skupni album, kopirajte izvožene albume v arhivsko shrambo ali sprožite pregled varnostne kopije po veliki mobilni naložitvi.
+- **AzuraCast** vključuje REST API in webhooke. Objavite spremembe skladb ali oddaj v živo, posodobite spletni gradnik, obvestite voditelje pred načrtovanimi oddajami ali arhivirajte metapodatke playlist po oddaji.
+- **Icecast** lahko podpira delovne tokove stanja oddajanja. Spremljajte razpoložljivost streama, objavljajte posodobitve zdaj predvajano ali opozorite kanal, ko se vir prekine.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** in **Deluge** izpostavljajo RPC ali spletne API-je. Spremljajte dokončane prenose, premaknite končane datoteke v pravo knjižnico, sprožite medijske preglede ali obvestite uporabnike, ko je zahtevani element pripravljen.
+- **PufferPanel**, **TeamSpeak 3** ter igralni in klepetalni strežniki se lahko prilegajo tudi operativnim delovnim tokovom. Obvestite administratorje, ko strežnik potrebuje pozornost, ustvarite vzdrževalne opomnike ali objavite obvestila za igralce po načrtovanih spremembah.
+
+n8n lahko uporabljate tudi z zunanjimi storitvami prek vgrajenih vozlov, webhookov, HTTP zahtev, povezav z bazami podatkov in kodnih vozlov.
+
+## Namestite n8n
+
+Odprite [stran n8n v App Store](/appstore/app/264), izberite svoj Appbox in začnite namestitev.
+
+Med nastavitvijo vas Appbox prosi, da ustvarite prvi lastniški račun za n8n. Vnesite administratorski e-poštni naslov, geslo, ime in priimek, ki jih želite uporabiti za ta račun.
+
+Ko je aplikacija pripravljena, odprite Login URL, prikazan na strani nameščene aplikacije, in se prijavite z lastniškim računom, ki ste ga pravkar ustvarili.
+
+## Ustvarite svoj prvi delovni tok
+
+Ko ste v n8n, pojdite na **Overview** in izberite **Create Workflow**. Urejevalnik se odpre na platnu, kjer je vsak korak vaše avtomatizacije predstavljen z vozlom.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="uporabniški vmesnik urejevalnika n8n, ki prikazuje platno delovnega toka"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Začnite s preprostim ročnim delovnim tokom:
+
+1. Kliknite **Add first step**.
+2. Poiščite **Manual Trigger** in ga dodajte.
+3. Kliknite gumb plus na vozlu sprožilca.
+4. Dodajte drugi vozel, na primer **Edit Fields**, **HTTP Request** ali vozel za določeno aplikacijo.
+5. Konfigurirajte vozel v stranskem panelu.
+
+Glavni delovni prostor v n8n je platno. Tam dodajate vozle, jih povezujete, urejate delovni tok in zaganjate testne izvedbe.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="platno delovnega toka n8n, ki prikazuje kontrolnik za dodajanje prvega koraka"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Preizkusite delovni tok
+
+Kliknite **Execute Workflow**, da ročno zaženete delovni tok.
+
+Ko se zagon konča, kliknite posamezne vozle in preverite podatke, ki so jih prejeli in vrnili. To je najhitrejši način, da razumete, kaj se premika skozi vaš delovni tok, preden povežete pravo aplikacijo, webhook ali načrtovan sprožilec.
+
+## Povežite aplikacije in poverilnice
+
+Za integracije aplikacij dodajte vozel, ki ga potrebujete, in ustvarite poverilnice, ko jih n8n zahteva.
+
+Za aplikacije, gostovane na Appbox, je pogost vzorec:
+
+1. Ustvarite API token ali webhook v aplikaciji, ki jo želite avtomatizirati.
+2. Dodajte ustrezen vozel n8n ali uporabite vozel **HTTP Request**, če namenskega vozla ni.
+3. Shranite token v poverilnice n8n.
+4. Preizkusite eno majhno dejanje, preden dodate razvejanje, ponovne poskuse ali več korakov.
+
+Za dohodne dogodke uporabite sprožilec **Webhook**. n8n vam da produkcijski URL webhooka, ki ga lahko zunanje storitve kličejo prek HTTPS.
+
+## Preprosta prva avtomatizacija
+
+Poskusite to kot svoj prvi pravi delovni tok:
+
+1. Dodajte sprožilec **Webhook**.
+2. Dodajte vozel **HTTP Request** za klic druge storitve ali API-ja aplikacije Appbox.
+3. Dodajte vozel **IF** za razvejanje glede na odgovor.
+4. Pošljite sporočilo v Mattermost, Rocket.Chat ali drug kanal za obvestila.
+
+To vam da osnovni vzorec za številne avtomatizacije n8n: prejmite dogodek, pridobite ali preoblikujte podatke, sprejmite odločitev, nato obvestite osebo ali posodobite drug sistem.
+
+## Opomba o obsegu
+
+Paket Appbox je zasnovan kot kompaktna enokontejnerska namestitev n8n s trajno shrambo. Je odlično izhodišče za osebne, ekipne in interne avtomatizacije.
+
+Če nameravate izvajati zelo velik obseg izvedb, velike payloade ali poslovno kritično avtomatizacijsko središče, skrbno preizkusite obremenitev in razmislite o povečanju virov aplikacije s strani nameščene aplikacije.
+
+## Začnite graditi
+
+Če imate Appbox, je n8n eden najhitrejših načinov, da se preostala vaša orodja začnejo počutiti povezana.
+
+[Namestite n8n na Appbox](/appstore/app/264), ustvarite delovni tok, ga enkrat ročno zaženite, nato pa ga spremenite v avtomatizacijo, ki bi jo vaše aplikacije že morale imeti.

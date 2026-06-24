@@ -1,0 +1,170 @@
+---
+title: Bemutatjuk az n8n-t az Appboxon
+date: 2026-06-24 08:11:00
+excerpt: Telepítsd az n8n-t Appboxra, és kezdj self-hosted munkafolyamat-automatizációkat építeni alkalmazásokhoz, API-khoz, webhookokhoz és belső eszközökhöz.
+author_id: rid
+tags: [appbox, n8n, automatizalas, munkafolyamatok, self-hosted, alkalmazasbolt]
+---
+
+# Bemutatjuk az n8n-t az Appboxon
+
+Az n8n mostantól elérhető Appboxon.
+
+Ez azt jelenti, hogy telepíthetsz egy privát munkafolyamat-automatizációs munkateret, megnyithatod a vizuális szerkesztőt, és elkezdhetsz alkalmazásokat, API-kat, ütemezéseket, webhookokat és egyedi kódot összekapcsolni anélkül, hogy kézzel kellene szervert kezelned.
+
+[Telepítsd az n8n-t az Appbox App Store-ból](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="az n8n munkafolyamat-szerkesztője összekapcsolt automatizációs csomópontokat mutat egy vásznon"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Mit építhetsz
+
+Az n8n akkor hasznos, amikor egy alkalmazásnak reagálnia kell egy másik alkalmazásra, adatokat kell tisztítania, API-t kell hívnia, értesítést kell küldenie vagy ütemezett feladatot kell futtatnia.
+
+Appboxon emiatt természetes társa azoknak az alkalmazásoknak, amelyek webhookokat, API-kat, értesítési hookokat, WebDAV-ot, RPC-t vagy szkriptelhető felületeket kínálnak.
+
+AI, támogatási és üzleti munkafolyamatokhoz:
+
+- **OpenClaw** az automatizációid AI rétegeként működhet. Küldj webhookot n8n-ből, amikor egy support ticketet, monitorozási riasztást vagy feltöltött fájlt össze kell foglalni, majd hagyd, hogy az OpenClaw megfogalmazza a választ, besorolja a kérést vagy feladattá alakítsa az eseményt.
+- **Chatwoot** inbox eseményeket és API-kat biztosít ügyféltámogatáshoz. Címkézd a sürgős beszélgetéseket, gazdagítsd az új kontaktokat más rendszerből, értesíts egy csapatcsatornát, amikor VIP ír, vagy hozz létre utókövetési feladatot egy beszélgetés lezárása után.
+- **Mautic** REST API-val és kampányautomatizációs felülettel rendelkezik. Szinkronizálj leadeket űrlapokból, pontozz kontaktokat termékesemények után, adj embereket kampányokhoz webhook beküldésekből, vagy értesítsd az értékesítést, amikor egy lead átlép egy küszöböt.
+- **ERPNext** API-kon keresztül tesz elérhetővé üzleti rekordokat. Hozz létre számlákat űrlapbeküldésekből, frissíts üzleteket, amikor beérkezik egy fizetés, értesítsd az operációt alacsony készletnél, vagy továbbíts ügyfélrekordokat egy másik Appbox alkalmazásba.
+- **Plane** és **OpenProject** jól működnek feladatcélként. Alakítsd az incidenseket, űrlapbeküldéseket, sikertelen jobokat vagy ügyfélkéréseket issues és munkacsomagokká a megfelelő felelőssel és kontextussal.
+- **Rallly** jól illik ütemezési munkafolyamatokhoz. Készíts szavazásokat kérőűrlapokból, értesítsd a vendégeket a találkozó időpontjának kiválasztása után, vagy küldj emlékeztetőket a rendelkezésre állási határidő előtt.
+- **OnlyOffice** és **Jitsi** dokumentum- és meetingfolyamatokhoz illenek. Értesítsd a véleményezőket, amikor egy dokumentum kész, hozz létre meetinglinket jóváhagyás után, vagy küldj meeting utáni utókövetési feladatokat Plane-be vagy OpenProjectbe.
+
+Tartalomhoz, publikáláshoz és fejlesztői munkafolyamatokhoz:
+
+- **EmDash** strukturált CMS-t ad űrlapokkal, rövid linkekkel, bővítményekkel és autobuild hookokkal. Küldj űrlapbeküldéseket n8n-be, értesítsd a szerkesztőket publikáláskor, indíts rebuildet, amikor egy vázlat élesedik, vagy küldj új posztokat Mattermost, Rocket.Chat és közösségi sorok felé.
+- **WordPress** REST API-val és hook ökoszisztémával rendelkezik. Készíts posztvázlatokat űrlapbeküldésekből, publikálj bejelentéseket, amikor tartalom élesedik, ments médiát egy másik tárolóalkalmazásba, vagy küldj szerkesztőségi emlékeztetőket ütemezett posztok előtt.
+- **GitLab**, **Gogs** és más Git alkalmazások repository-, projekt- és rendszerhookokat biztosítanak. Futtass release értesítéseket tagekre, hozz létre deployment checklistet merge után, posztolj sikertelen pipeline-összefoglalókat chatbe, vagy nyiss projektmenedzsment issues elemeket hibajelentés-sablonokból.
+- **Hugo Git** beilleszthető Git-alapú publikálási folyamatba. Indíts rebuild értesítéseket tartalmi commitok után, publikálj changelogot új tag érkezésekor, vagy kérd meg az n8n-t, hogy minden pull requesthez hozzon létre review feladatot.
+- **Docmost** dokumentációs célként hasznos. Készíts onboarding checklistet új ügyfél regisztrációjakor, posztolj incidensjegyzeteket monitorozási eseményekből, vagy tartsd naprakészen a belső runbookokat a munkafolyamatok kimeneteiből.
+- **Jupyter Notebook** adat- és riportolási folyamatokat támogathat. Futtass ütemezett notebookokat, exportálj riportokat adatbázis-frissítés után, vagy értesíts egy csatornát, amikor egy hosszú elemzés befejeződik.
+- **Serposcope** SEO munkafolyamatokat táplálhat. Küldj helyezésváltozási riasztásokat, készíts heti keresési pozíció-összefoglalót, vagy nyiss tartalmi feladatot, amikor egy fontos kulcsszó visszaesik.
+- **MySQL/MariaDB**, **Nginx & PHP** és **LAMP Stack** belső eszközökhöz hasznosak. Használd az n8n-t sorok írására, privát admin endpointok hívására, ütemezett karbantartási ellenőrzések futtatására, vagy csapatértesítésre, amikor egy egyedi alkalmazás új beküldést kap.
+
+Fájlokhoz, tároláshoz, szinkronizáláshoz és biztonsági mentéshez:
+
+- **Nextcloud** WebDAV-ot és széles alkalmazás-ökoszisztémát kínál. Mozgasd a feltöltött fájlokat ellenőrzési mappákba, értesíts egy csapatot, amikor ügyfélfeltöltés érkezik, hozz létre naptári utókövetéseket, vagy másold a jóváhagyott dokumentumokat projektterekbe.
+- **SFTPGo** REST API-t, eseményműveleteket és login hookokat tartalmaz. Indíts fájlfeldolgozási munkafolyamatokat, amikor egy ügyfél riportot tölt fel, mozgasd a kész exportokat Nextcloudba, értesíts egy csatornát partneri átvitel érkezésekor, vagy határidő után tiltsd le az ideiglenes felhasználókat.
+- **File Browser Quantum**, **File Browser WebDAV** és **Kodbox** fájlkezelési felületeket kínálnak, például REST API-kat, WebDAV-ot, command hookokat vagy tárolóbővítményeket. Figyelj megosztott mappákat, generálj metaadatokat, másold a kész asseteket archív tárolóba, vagy irányíts fájlokat jóváhagyásra publikálás előtt.
+- **Rclone** szkriptelhető objektumtárolón, SFTP-n, WebDAV-on és felhős remote-okon át. Ütemezz szinkronizációs jobokat n8n-ből, ellenőrizz átviteleket nagy migrációk után, mozgasd a feldolgozott médiát hosszú távú tárolóba, vagy küldj hibajelentés-összefoglalókat chatbe.
+- **Restic REST Server** HTTPS backup célt ad a restic klienseknek. Értesítsd az adminokat, ha az ütemezett backup-ellenőrzések elbuknak, nyiss incidenst kimaradt snapshotok után, vagy írj napi backup-egészségügyi összefoglalót Docmostba.
+- **Syncthing** és **Resilio Sync** fájlesemény-pipeline-okhoz hasznosak. Reagálj, amikor egy mappa befejezi a szinkronizálást, másold a kész dropokat médiakönyvtárba, vagy riaszd a felhasználót, ha a várt fájlok nem érkeztek meg.
+- **Pure-FTPd** és más FTP/SFTP jellegű endpointok régi fájlfolyamatokban is helyet kaphatnak. Pollolj új partnerfájlokért, mozgasd őket SFTPGo vagy Nextcloud alá, majd értesítsd a megfelelő csapatot, amikor a feldolgozás kész.
+
+Biztonsághoz, hozzáféréshez és infrastruktúrához:
+
+- **Vaultwarden** Bitwarden-kompatibilis API-t és opcionális SMTP értesítéseket kínál. Készíts emlékeztetőket vault felülvizsgálatokhoz, értesítsd az adminokat esedékes onboarding vagy offboarding feladatokról, vagy koordinálj jelszórotációs checklistet csapatok között.
+- **OpenVPN** és **WireGuard VPN** hozzáférési munkafolyamatok részei lehetnek. Értesítsd az operátorokat, amikor credentialöket kell rotálni, készíts checklist feladatokat új VPN-felhasználóknak, vagy futtass ütemezett kapcsolati ellenőrzéseket n8n-en keresztül.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** és **Windows VPS** alkalmazások szkriptelhető környezetet adnak. Használd az n8n-t SSH parancsok indítására, egészségügyi ellenőrzések futtatására, riportfájlok gyűjtésére, vagy karbantartási összefoglalók posztolására ütemezett jobok után.
+- **Ubuntu**, **Debian** és **Firefox remote desktop** alkalmazások böngészős vagy asztali feladatokat is támogathatnak. Ütemezz emlékeztetőket kézi review munkához, rögzíts szkriptkimeneteket, vagy add át a kész desktop exportokat fájltárolásba.
+
+Monitorozáshoz, chathez és értesítésekhez:
+
+- **Uptime Kuma** gazdag értesítési célokat és webhookokat támogat. Alakítsd a downtime eseményeket Mattermost vagy Rocket.Chat riasztásokká, hozz létre OpenProject incidenseket, kérj rövid incidensösszefoglalót OpenClaw-tól, vagy naplózz minden helyreállást egy státusztáblába.
+- **Mattermost** és **Rocket.Chat** hasznos értesítési és jóváhagyási endpointok. Küldj ember számára olvasható frissítéseket bármely munkafolyamatból, kérj jóváhagyást egy csapattól, majd folytasd az automatizációt, amikor valaki válaszol.
+- **RocketChat Hubot** chatparancsokhoz hasznos. Engedd, hogy a csapattársak chatből indítsanak n8n webhookokat, lekérdezzék a deployment státuszát, vagy auditnyommal futtassanak szkriptelt karbantartási folyamatot.
+- **Matterbridge** összeköti az IRC-t, Matrixot, XMPP-t, Slack-et, Discordot, Microsoft Teams-et, Telegramot és sok mást. Használd az n8n-t az operatív események egyszeri formázására, majd továbbítsd őket azoknak a közösségeknek vagy szobáknak, amelyeknek látniuk kell.
+- **ZNC** és **The Lounge** chat-ops munkafolyamatok részei lehetnek. Továbbíts fontos IRC eseményeket modern csapatcsatornákba, archiválj kiemeléseket, vagy értesítsd az operátorokat, ha egy figyelt kulcsszó megjelenik.
+
+Média- és letöltésautomatizációhoz:
+
+- **Tautulli** Plex aktivitást, értesítési szkripteket és JSON API-t biztosít. Küldj frissen hozzáadott média-összefoglalókat, riaszd a csapatot streamhiba esetén, exportálj használati riportokat, vagy hozz létre takarítási feladatokat, amikor a tároló átlép egy limitet.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** és **SeAT** könyvtári vagy közösségi munkafolyamatokat táplálhatnak. Jelents be új médiát, frissíts könyvtárakat importok után, készíts hallgatási vagy olvasási összefoglalókat, szinkronizálj metaadatokat dashboardba, vagy értesíts egy közösséget, amikor a figyelt aktivitás megváltozik.
+- **Immich** jól illik fotós munkafolyamatokhoz. Értesítsd a családot, amikor egy megosztott album változik, másold az exportált albumokat archív tárolóba, vagy indíts backup-ellenőrzést nagy mobilos feltöltés után.
+- **AzuraCast** REST API-t és webhookokat tartalmaz. Jelents be zeneszám- vagy élő műsorváltozásokat, frissíts weboldal widgetet, értesítsd a műsorvezetőket ütemezett adások előtt, vagy archiváld a playlist metaadatait egy műsor után.
+- **Icecast** broadcast státuszfolyamatokat támogathat. Figyeld a stream elérhetőségét, posztolj now-playing frissítéseket, vagy riaszd a csatornát, amikor egy forrás lecsatlakozik.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** és **Deluge** RPC-t vagy webes API-kat kínálnak. Figyeld a befejezett letöltéseket, mozgasd a kész fájlokat a megfelelő könyvtárba, indíts médiaszkennelést, vagy értesítsd a felhasználókat, amikor a kért elem elkészült.
+- **PufferPanel**, **TeamSpeak 3** és játék-/chatserverek is illeszkedhetnek operatív munkafolyamatokba. Értesítsd az adminokat, ha egy szerver figyelmet igényel, hozz létre karbantartási emlékeztetőket, vagy posztolj játékosoknak szóló bejelentéseket ütemezett változások után.
+
+Az n8n-t külső szolgáltatásokkal is használhatod beépített csomópontokon, webhookokon, HTTP kéréseken, adatbázis-kapcsolatokon és kódcsomópontokon keresztül.
+
+## Az n8n telepítése
+
+Nyisd meg az [n8n App Store oldalát](/appstore/app/264), válaszd ki az Appboxodat, és indítsd el a telepítést.
+
+A beállítás során az Appbox megkéri, hogy hozd létre az első tulajdonosi fiókot az n8n-hez. Add meg az admin e-mail címet, jelszót, keresztnevet és vezetéknevet, amelyet ehhez a fiókhoz használni szeretnél.
+
+Amikor az alkalmazás készen áll, nyisd meg a telepített alkalmazás oldalán látható Login URL címet, és jelentkezz be az imént létrehozott tulajdonosi fiókkal.
+
+## Hozd létre az első munkafolyamatodat
+
+Miután beléptél az n8n-be, menj az **Overview** részre, és válaszd a **Create Workflow** lehetőséget. A szerkesztő egy vásznon nyílik meg, ahol az automatizációd minden lépését egy csomópont képviseli.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="az n8n szerkesztőfelülete, amely a munkafolyamat vásznát mutatja"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Kezdj egy egyszerű kézi munkafolyamattal:
+
+1. Kattints az **Add first step** lehetőségre.
+2. Keresd meg a **Manual Trigger** elemet, és add hozzá.
+3. Kattints a trigger csomópont plusz gombjára.
+4. Adj hozzá egy második csomópontot, például **Edit Fields**, **HTTP Request** vagy egy alkalmazásspecifikus csomópontot.
+5. Konfiguráld a csomópontot az oldalsó panelen.
+
+Az n8n fő munkaterülete a vászon. Itt adhatsz hozzá csomópontokat, összekötheted őket, rendbe teheted a munkafolyamatot, és tesztfuttatásokat indíthatsz.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="az n8n munkafolyamat-vászna az első lépés hozzáadására szolgáló vezérlővel"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Teszteld a munkafolyamatot
+
+Kattints az **Execute Workflow** gombra a munkafolyamat kézi futtatásához.
+
+Amikor a futás befejeződik, kattints az egyes csomópontokra, hogy megnézd, milyen adatokat kaptak és adtak vissza. Ez a leggyorsabb módja annak, hogy megértsd, mi halad át a munkafolyamatodon, mielőtt valódi alkalmazást, webhookot vagy ütemezett triggert kapcsolsz hozzá.
+
+## Kapcsolj alkalmazásokat és hitelesítési adatokat
+
+Alkalmazásintegrációkhoz add hozzá a szükséges csomópontot, és hozz létre hitelesítési adatokat, amikor az n8n kéri.
+
+Appboxon hosztolt alkalmazásoknál gyakori minta:
+
+1. Hozz létre API tokent vagy webhookot abban az alkalmazásban, amelyet automatizálni szeretnél.
+2. Add hozzá a megfelelő n8n csomópontot, vagy használd a **HTTP Request** csomópontot, ha nincs dedikált csomópont.
+3. Tárold a tokent az n8n hitelesítési adatai között.
+4. Tesztelj egy kis művelettel, mielőtt elágazásokat, újrapróbálkozásokat vagy több lépést adnál hozzá.
+
+Bejövő eseményekhez használj **Webhook** triggert. Az n8n ad egy production webhook URL-t, amelyet külső szolgáltatások HTTPS-en keresztül hívhatnak.
+
+## Egy egyszerű első automatizáció
+
+Próbáld ki ezt első valódi munkafolyamatként:
+
+1. Adj hozzá egy **Webhook** triggert.
+2. Adj hozzá egy **HTTP Request** csomópontot egy másik szolgáltatás vagy Appbox alkalmazás API-jának hívásához.
+3. Adj hozzá egy **IF** csomópontot a válasz szerinti elágazáshoz.
+4. Küldj üzenetet Mattermost, Rocket.Chat vagy más értesítési csatornába.
+
+Ez adja sok n8n automatizáció alapmintáját: esemény fogadása, adatok lekérése vagy átalakítása, döntés meghozatala, majd egy személy értesítése vagy egy másik rendszer frissítése.
+
+## Megjegyzés a skálázásról
+
+Az Appbox csomag kompakt, egykonténeres n8n telepítésként készült perzisztens tárolással. Remek kiindulópont személyes, csapatos és belső automatizációkhoz.
+
+Ha nagyon nagy végrehajtási volument, nagy payloadokat vagy üzletkritikus automatizációs központot tervezel futtatni, gondosan teszteld a terhelést, és fontold meg az alkalmazáserőforrások növelését a telepített alkalmazás oldalán.
+
+## Kezdj építeni
+
+Ha van Appboxod, az n8n az egyik leggyorsabb módja annak, hogy a többi eszközöd összekapcsoltnak érződjön.
+
+[Telepítsd az n8n-t Appboxra](/appstore/app/264), hozz létre egy munkafolyamatot, futtasd le egyszer kézzel, majd alakítsd át azzá az automatizációvá, amelyet bárcsak már eleve tudnának az alkalmazásaid.

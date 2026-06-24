@@ -1,0 +1,170 @@
+---
+title: แนะนำ n8n บน Appbox
+date: 2026-06-24 08:11:00
+excerpt: Deploy n8n บน Appbox แล้วเริ่มสร้าง workflow automation แบบ self-hosted สำหรับแอป API webhook และเครื่องมือภายใน
+author_id: rid
+tags: [appbox, n8n, automation, workflow, self-hosted, app-store]
+---
+
+# แนะนำ n8n บน Appbox
+
+ตอนนี้ n8n พร้อมใช้งานบน Appbox แล้ว
+
+นั่นหมายความว่าคุณสามารถ deploy พื้นที่ทำงาน workflow automation แบบส่วนตัว เปิด visual editor แล้วเริ่มเชื่อมต่อแอป API ตารางเวลา webhook และโค้ดแบบกำหนดเองได้ โดยไม่ต้องจัดการเซิร์ฟเวอร์เอง
+
+[ติดตั้ง n8n จาก Appbox App Store](/appstore/app/264)
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="ตัวแก้ไข workflow ของ n8n ที่แสดง node automation ที่เชื่อมต่อกันบน canvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## คุณสร้างอะไรได้บ้าง
+
+n8n มีประโยชน์เมื่อแอปหนึ่งต้องตอบสนองต่ออีกแอปหนึ่ง ล้างข้อมูล เรียก API ส่งการแจ้งเตือน หรือรันงานตามกำหนดเวลา
+
+บน Appbox สิ่งนี้ทำให้ n8n เป็นคู่หูที่เหมาะกับแอปที่มี webhook, API, notification hook, WebDAV, RPC หรืออินเทอร์เฟซที่สั่งงานด้วยสคริปต์ได้
+
+สำหรับ AI งานซัพพอร์ต และ workflow ธุรกิจ:
+
+- **OpenClaw** สามารถทำหน้าที่เป็นเลเยอร์ AI สำหรับ automation ของคุณได้ ส่ง webhook จาก n8n เมื่อ ticket ซัพพอร์ต การแจ้งเตือนจาก monitor หรือการอัปโหลดไฟล์ต้องการสรุป แล้วให้ OpenClaw ร่างคำตอบ จัดประเภทคำขอ หรือเปลี่ยนเหตุการณ์นั้นให้เป็นงาน
+- **Chatwoot** เปิดเผย inbox events และ API สำหรับการสนับสนุนลูกค้า แท็กบทสนทนาที่เร่งด่วน เติมข้อมูลผู้ติดต่อใหม่จากระบบอื่น แจ้งทีมในช่องเมื่อ VIP ติดต่อเข้ามา หรือสร้างงานติดตามผลหลังปิดบทสนทนา
+- **Mautic** มี REST API และพื้นผิวสำหรับ campaign automation ซิงก์ lead จากฟอร์ม ให้คะแนนผู้ติดต่อหลังเกิด product event เพิ่มคนเข้า campaign จากการส่ง webhook หรือแจ้งฝ่ายขายเมื่อ lead ผ่านเกณฑ์
+- **ERPNext** เปิดเผยข้อมูลธุรกิจผ่าน API สร้างใบแจ้งหนี้จากการส่งฟอร์ม อัปเดต deal เมื่อการชำระเงินเข้ามา แจ้งฝ่ายปฏิบัติการเมื่อสต็อกต่ำ หรือส่งข้อมูลลูกค้าไปยังแอป Appbox อื่น
+- **Plane** และ **OpenProject** เหมาะเป็นปลายทางของงาน เปลี่ยน incident การส่งฟอร์ม job ที่ล้มเหลว หรือคำขอลูกค้าให้เป็น issue และ work package พร้อมผู้รับผิดชอบและบริบทที่ถูกต้อง
+- **Rallly** ใช้กับ workflow ด้านการจัดตารางเวลาได้ สร้าง poll จาก request form แจ้งแขกหลังเลือกเวลาประชุมแล้ว หรือส่ง reminder ก่อนถึงกำหนดส่งเวลาว่าง
+- **OnlyOffice** และ **Jitsi** เหมาะกับ workflow เอกสารและการประชุม แจ้ง reviewer เมื่อเอกสารพร้อม สร้างลิงก์ประชุมหลังได้รับอนุมัติ หรือส่งงานติดตามผลหลังประชุมเข้า Plane หรือ OpenProject
+
+สำหรับ workflow ด้านคอนเทนต์ การเผยแพร่ และนักพัฒนา:
+
+- **EmDash** ให้ CMS แบบมีโครงสร้างพร้อมฟอร์ม short link plugin และ autobuild hook ส่งการส่งฟอร์มไปยัง n8n แจ้ง editor เมื่อคอนเทนต์เผยแพร่ trigger rebuild หลัง draft ขึ้นจริง หรือส่งโพสต์ใหม่ไปยัง Mattermost, Rocket.Chat และคิวโซเชียล
+- **WordPress** มี REST API และระบบ hook สร้าง draft post จากการส่งฟอร์ม เผยแพร่ประกาศเมื่อคอนเทนต์ขึ้นจริง สำรอง media ไปยังแอป storage อื่น หรือส่ง editorial reminder ก่อนโพสต์ที่ตั้งเวลาไว้
+- **GitLab**, **Gogs** และแอป Git อื่น ๆ เปิดเผย hook สำหรับ repository, project และ system รัน release notification เมื่อมี tag สร้าง checklist สำหรับ deployment หลัง merge โพสต์สรุป pipeline ที่ล้มเหลวลง chat หรือเปิด issue ด้าน project management จาก bug-report template
+- **Hugo Git** อยู่ใน flow การเผยแพร่แบบ Git-based ได้ trigger การแจ้งเตือน rebuild หลัง commit คอนเทนต์ เผยแพร่ changelog เมื่อมี tag ใหม่ หรือให้ n8n สร้าง review task สำหรับทุก pull request
+- **Docmost** เหมาะเป็นปลายทางด้านเอกสาร สร้าง onboarding checklist เมื่อลูกค้าใหม่สมัคร โพสต์ incident note จาก monitoring events หรืออัปเดต internal runbook จาก output ของ workflow
+- **Jupyter Notebook** รองรับ workflow ด้านข้อมูลและรายงานได้ รัน notebook ตามกำหนดเวลา export รายงานหลัง database update หรือแจ้ง channel เมื่อ analysis ที่ใช้เวลานานเสร็จสิ้น
+- **Serposcope** ป้อนข้อมูลให้ workflow ด้าน SEO ได้ ส่ง alert เมื่อ ranking เปลี่ยน สร้าง digest อันดับค้นหารายสัปดาห์ หรือเปิด content task เมื่อ keyword สำคัญตกอันดับ
+- **MySQL/MariaDB**, **Nginx & PHP** และ **LAMP Stack** มีประโยชน์สำหรับเครื่องมือภายใน ใช้ n8n เขียน row เรียก private admin endpoint รัน maintenance check ตามกำหนดเวลา หรือแจ้งทีมเมื่อ custom app ได้รับ submission ใหม่
+
+สำหรับไฟล์ storage การซิงก์ และ backup:
+
+- **Nextcloud** เปิดเผย WebDAV และ ecosystem แอปที่กว้าง ย้ายไฟล์ที่อัปโหลดเข้า review folder แจ้งทีมเมื่อ client upload มาถึง สร้าง calendar follow-up หรือคัดลอกเอกสารที่อนุมัติแล้วไปยัง project space
+- **SFTPGo** มี REST API, event actions และ login hooks trigger workflow ประมวลผลไฟล์เมื่อลูกค้าอัปโหลดรายงาน ย้าย export ที่เสร็จแล้วไปยัง Nextcloud แจ้ง channel เมื่อ partner transfer มาถึง หรือปิดใช้งาน temporary user หลัง deadline
+- **File Browser Quantum**, **File Browser WebDAV** และ **Kodbox** เปิดเผยพื้นผิวจัดการไฟล์ เช่น REST API, WebDAV, command hook หรือ storage plugin เฝ้าดู shared folder สร้าง metadata คัดลอก asset ที่เสร็จแล้วไปยัง archive storage หรือส่งไฟล์เข้าขั้นตอนอนุมัติก่อนเผยแพร่
+- **Rclone** สั่งงานด้วยสคริปต์ข้าม object storage, SFTP, WebDAV และ cloud remote ได้ ตั้ง schedule งาน sync จาก n8n ตรวจสอบ transfer หลัง migration ขนาดใหญ่ ย้าย media ที่ประมวลผลแล้วไปยัง long-term storage หรือส่ง failure summary ไปยัง chat
+- **Restic REST Server** ให้เป้าหมาย backup แบบ HTTPS สำหรับ restic client แจ้ง admin เมื่อ scheduled backup check ล้มเหลว เปิด incident หลัง snapshot ขาดหาย หรือเขียน daily backup health summary ลง Docmost
+- **Syncthing** และ **Resilio Sync** เหมาะกับ pipeline เหตุการณ์ไฟล์ ตอบสนองเมื่อ folder sync เสร็จ คัดลอก drop ที่เสร็จแล้วไปยัง media library หรือแจ้งผู้ใช้เมื่อไฟล์ที่คาดไว้ยังไม่มาถึง
+- **Pure-FTPd** และ endpoint แบบ FTP/SFTP อื่น ๆ ใช้ใน workflow ไฟล์แบบ legacy ได้ poll หาไฟล์ partner ใหม่ ย้ายไปยัง SFTPGo หรือ Nextcloud แล้วแจ้งทีมที่ถูกต้องเมื่อประมวลผลเสร็จ
+
+สำหรับ security, access และ infrastructure:
+
+- **Vaultwarden** เปิดเผย API ที่เข้ากันได้กับ Bitwarden และการแจ้งเตือน SMTP แบบเลือกใช้ได้ สร้าง reminder สำหรับการ review vault แจ้ง admin เมื่องาน onboarding หรือ offboarding ใกล้ถึงกำหนด หรือประสาน checklist การ rotate password ข้ามทีม
+- **OpenVPN** และ **WireGuard VPN** เป็นส่วนหนึ่งของ workflow ด้าน access ได้ แจ้ง operator เมื่อ credential ต้อง rotate สร้าง checklist task สำหรับผู้ใช้ VPN ใหม่ หรือรัน connectivity check ตามกำหนดผ่าน n8n
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** และแอป **Windows VPS** ให้ environment ที่สั่งงานด้วยสคริปต์ได้ ใช้ n8n trigger คำสั่ง SSH รัน health check รวบรวม report file หรือโพสต์ maintenance summary หลัง scheduled job
+- แอป **Ubuntu**, **Debian** และ **Firefox remote desktop** รองรับงาน browser หรือ desktop ได้ ตั้ง reminder สำหรับงาน review แบบ manual จับ output จาก script หรือส่งต่อ desktop export ที่เสร็จแล้วเข้าสู่ file storage
+
+สำหรับ monitoring, chat และการแจ้งเตือน:
+
+- **Uptime Kuma** รองรับ notification target และ webhook ที่หลากหลาย เปลี่ยน downtime event เป็น alert ใน Mattermost หรือ Rocket.Chat สร้าง incident ใน OpenProject ขอให้ OpenClaw สรุป incident สั้น ๆ หรือบันทึกทุกการ recovery ลง status spreadsheet
+- **Mattermost** และ **Rocket.Chat** เหมาะเป็น endpoint สำหรับ notification และ approval ส่ง update ที่อ่านง่ายจาก workflow ใดก็ได้ ขอให้ทีมอนุมัติคำขอ แล้วดำเนิน automation ต่อเมื่อมีคนตอบกลับ
+- **RocketChat Hubot** เหมาะกับคำสั่ง chat ให้เพื่อนร่วมทีม trigger n8n webhook จาก chat ขอ deployment status หรือเริ่ม maintenance workflow แบบ script พร้อม audit trail
+- **Matterbridge** เชื่อม IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram และอื่น ๆ ใช้ n8n format operational event เพียงครั้งเดียว แล้ว relay ไปยัง community หรือ room ที่ต้องเห็น
+- **ZNC** และ **The Lounge** เป็นส่วนหนึ่งของ workflow แบบ chat-ops ได้ ส่งต่อ IRC event สำคัญไปยัง team channel สมัยใหม่ archive highlight หรือแจ้ง operator เมื่อ keyword ที่เฝ้าดูปรากฏ
+
+สำหรับ media และ download automation:
+
+- **Tautulli** เปิดเผยกิจกรรม Plex, notification script และ JSON API ส่ง digest ของ media ที่เพิ่มใหม่ แจ้งเมื่อ stream error export usage report หรือสร้าง cleanup task เมื่อ storage เกินขีดจำกัด
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** และ **SeAT** ป้อนข้อมูลให้ workflow ของ library หรือ community ได้ ประกาศ media ใหม่ refresh library หลัง import สร้าง digest การฟังหรือการอ่าน sync metadata เข้า dashboard หรือแจ้ง community เมื่อ activity ที่ติดตามเปลี่ยนไป
+- **Immich** เหมาะกับ workflow รูปภาพ แจ้งครอบครัวเมื่อ shared album เปลี่ยน คัดลอก album ที่ export แล้วไปยัง archive storage หรือ trigger backup check หลัง mobile upload ขนาดใหญ่
+- **AzuraCast** มี REST API และ webhook ประกาศการเปลี่ยน track หรือ live-show อัปเดต widget เว็บไซต์ แจ้ง host ก่อน broadcast ตามกำหนด หรือ archive playlist metadata หลังรายการ
+- **Icecast** รองรับ workflow สถานะ broadcast ได้ เฝ้าดูความพร้อมของ stream โพสต์ now-playing update หรือแจ้ง channel เมื่อ source หลุด
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** และ **Deluge** เปิดเผย RPC หรือ web API เฝ้าดู download ที่เสร็จแล้ว ย้ายไฟล์ที่เสร็จไปยัง library ที่ถูกต้อง trigger media scan หรือแจ้งผู้ใช้เมื่อ item ที่ขอพร้อมแล้ว
+- **PufferPanel**, **TeamSpeak 3** และ server เกม/แชตก็เข้ากับ workflow ด้าน operation ได้เช่นกัน แจ้ง admin เมื่อ server ต้องการความสนใจ สร้าง maintenance reminder หรือโพสต์ประกาศถึงผู้เล่นหลังการเปลี่ยนแปลงตามกำหนด
+
+คุณยังสามารถใช้ n8n กับบริการภายนอกผ่าน node ที่มีมาให้, webhook, HTTP request, database connection และ code node ได้ด้วย
+
+## ติดตั้ง n8n
+
+เปิด [หน้า n8n App Store](/appstore/app/264) เลือก Appbox ของคุณ แล้วเริ่มการติดตั้ง
+
+ระหว่าง setup, Appbox จะขอให้คุณสร้าง owner account แรกสำหรับ n8n ใส่อีเมล admin รหัสผ่าน ชื่อ และนามสกุลที่ต้องการใช้กับบัญชีนั้น
+
+เมื่อแอปพร้อมแล้ว ให้เปิด Login URL ที่แสดงบนหน้าของแอปที่ติดตั้ง แล้ว sign in ด้วย owner account ที่คุณเพิ่งสร้าง
+
+## สร้าง Workflow แรกของคุณ
+
+เมื่อคุณเข้า n8n แล้ว ไปที่ **Overview** และเลือก **Create Workflow** editor จะเปิดบน canvas ซึ่งแต่ละขั้นตอนใน automation ของคุณจะแสดงเป็น node
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="UI editor ของ n8n ที่แสดง canvas ของ workflow"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+เริ่มด้วย workflow แบบ manual ง่าย ๆ:
+
+1. คลิก **Add first step**
+2. ค้นหา **Manual Trigger** แล้วเพิ่มเข้าไป
+3. คลิกปุ่ม plus บน trigger node
+4. เพิ่ม node ที่สอง เช่น **Edit Fields**, **HTTP Request** หรือ node เฉพาะแอป
+5. ตั้งค่า node ใน side panel
+
+workspace หลักใน n8n คือ canvas ที่นี่คือที่ที่คุณเพิ่ม node เชื่อมต่อ node จัด workflow ให้เรียบร้อย และรัน test execution
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="canvas workflow ของ n8n ที่แสดงตัวควบคุม add first step"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## ทดสอบ Workflow
+
+คลิก **Execute Workflow** เพื่อรัน workflow แบบ manual
+
+หลังการรันเสร็จ ให้คลิกแต่ละ node เพื่อตรวจสอบข้อมูลที่รับเข้าและส่งออก นี่คือวิธีที่เร็วที่สุดในการเข้าใจว่าข้อมูลไหลผ่าน workflow อย่างไร ก่อนที่คุณจะเชื่อมต่อแอปจริง webhook หรือ scheduled trigger
+
+## เชื่อมต่อแอปและ Credentials
+
+สำหรับ app integration ให้เพิ่ม node ที่ต้องการและสร้าง credentials เมื่อ n8n ขอ
+
+สำหรับแอปที่ host บน Appbox รูปแบบทั่วไปคือ:
+
+1. สร้าง API token หรือ webhook ในแอปที่คุณต้องการทำ automation
+2. เพิ่ม n8n node ที่ตรงกัน หรือใช้ node **HTTP Request** หากไม่มี node เฉพาะ
+3. เก็บ token ไว้ใน n8n credentials
+4. ทดสอบด้วย action เล็ก ๆ หนึ่งอย่างก่อนเพิ่ม branching, retry หรือขั้นตอนเพิ่มเติม
+
+สำหรับ event ขาเข้า ให้ใช้ trigger **Webhook** n8n จะให้ production webhook URL ที่บริการภายนอกสามารถเรียกผ่าน HTTPS ได้
+
+## Automation แรกแบบง่าย ๆ
+
+ลองใช้สิ่งนี้เป็น workflow จริงแรกของคุณ:
+
+1. เพิ่ม trigger **Webhook**
+2. เพิ่ม node **HTTP Request** เพื่อเรียกบริการอื่นหรือ API ของแอป Appbox
+3. เพิ่ม node **IF** เพื่อแยกเส้นทางตาม response
+4. ส่งข้อความไปยัง Mattermost, Rocket.Chat หรือ notification channel อื่น
+
+สิ่งนี้ให้ pattern หลักสำหรับ automation ของ n8n จำนวนมาก: รับ event ดึงหรือแปลงข้อมูล ตัดสินใจ แล้วแจ้งคนหรืออัปเดตระบบอื่น
+
+## หมายเหตุเรื่อง Scale
+
+แพ็กเกจ Appbox ออกแบบมาเป็น deployment n8n แบบ single-container ขนาดกะทัดรัดพร้อม persistent storage เป็นจุดเริ่มต้นที่ดีมากสำหรับ automation ส่วนตัว ทีม และภายในองค์กร
+
+หากคุณวางแผนจะรัน execution volume สูงมาก payload ขนาดใหญ่ หรือ automation hub ที่สำคัญต่อธุรกิจ ให้ทดสอบ workload อย่างรอบคอบ และพิจารณาเพิ่มทรัพยากรแอปจากหน้าของแอปที่ติดตั้ง
+
+## เริ่มสร้างได้เลย
+
+ถ้าคุณมี Appbox, n8n เป็นหนึ่งในวิธีที่เร็วที่สุดในการทำให้เครื่องมืออื่น ๆ ของคุณรู้สึกเชื่อมต่อกัน
+
+[Deploy n8n บน Appbox](/appstore/app/264) สร้าง workflow รันแบบ manual หนึ่งครั้ง แล้วเปลี่ยนมันให้เป็น automation ที่คุณอยากให้แอปของคุณมีอยู่แล้ว

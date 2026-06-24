@@ -1,0 +1,170 @@
+---
+title: Appbox-এ n8n পরিচিতি
+date: 2026-06-24 08:11:00
+excerpt: Appbox-এ n8n deploy করুন এবং apps, APIs, webhooks ও internal tools-এর জন্য self-hosted workflow automations তৈরি করা শুরু করুন।
+author_id: rid
+tags: [appbox, n8n, automation, workflows, self-hosted, app-store]
+---
+
+# Appbox-এ n8n পরিচিতি
+
+n8n এখন Appbox-এ উপলভ্য।
+
+এর মানে আপনি একটি private workflow automation workspace deploy করতে পারেন, visual editor খুলতে পারেন, এবং server হাতে manage না করেই apps, APIs, schedules, webhooks ও custom code যুক্ত করা শুরু করতে পারেন।
+
+[Appbox App Store থেকে n8n install করুন](/appstore/app/264)।
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="n8n workflow editor যেখানে canvas-এ connected automation nodes দেখা যাচ্ছে"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## আপনি কী তৈরি করতে পারেন
+
+যখনই একটি app-কে আরেকটি app-এর প্রতিক্রিয়া দিতে, data clean করতে, API call করতে, notification পাঠাতে, বা scheduled task চালাতে হয়, n8n কাজে লাগে।
+
+Appbox-এ এটি webhooks, APIs, notification hooks, WebDAV, RPC, বা scriptable interfaces থাকা apps-এর জন্য স্বাভাবিক সঙ্গী হয়ে ওঠে।
+
+AI, support, এবং business workflows-এর জন্য:
+
+- **OpenClaw** আপনার automations-এর AI layer হিসেবে কাজ করতে পারে। Support ticket, monitor alert, বা file upload summarize করতে হলে n8n থেকে webhook পাঠান, তারপর OpenClaw দিয়ে reply draft করান, request classify করান, বা event-কে task-এ রূপান্তর করান।
+- **Chatwoot** customer support-এর জন্য inbox events এবং APIs expose করে। Urgent conversations tag করুন, অন্য system থেকে নতুন contacts enrich করুন, VIP লিখলে team channel-কে notify করুন, বা conversation close হওয়ার পর follow-up task তৈরি করুন।
+- **Mautic**-এর REST API এবং campaign automation surface আছে। Forms থেকে leads sync করুন, product events-এর পর contacts score করুন, webhook submissions থেকে মানুষকে campaigns-এ যোগ করুন, বা lead threshold পার করলে sales-কে notify করুন।
+- **ERPNext** APIs-এর মাধ্যমে business records expose করে। Form submissions থেকে invoices তৈরি করুন, payment এলে deals update করুন, stock কমে গেলে operations-কে notify করুন, বা customer records অন্য Appbox app-এ push করুন।
+- **Plane** এবং **OpenProject** task destinations হিসেবে ভালো কাজ করে। Incidents, form submissions, failed jobs, বা customer requests-কে সঠিক assignee ও context সহ issues এবং work packages-এ রূপান্তর করুন।
+- **Rallly** scheduling workflows-এ মানিয়ে যায়। Request forms থেকে polls তৈরি করুন, meeting time select হওয়ার পর guests-কে notify করুন, বা availability deadline-এর আগে reminders পাঠান।
+- **OnlyOffice** এবং **Jitsi** document ও meeting workflows-এর জন্য উপযোগী। Document ready হলে reviewers-কে notify করুন, approval-এর পর meeting link তৈরি করুন, বা post-meeting follow-up tasks Plane বা OpenProject-এ পাঠান।
+
+Content, publishing, এবং developer workflows-এর জন্য:
+
+- **EmDash** forms, short links, plugins, এবং autobuild hooks-সহ structured CMS দেয়। Form submissions n8n-এ পাঠান, content publish হলে editors-কে notify করুন, draft live হওয়ার পর rebuild trigger করুন, বা নতুন posts Mattermost, Rocket.Chat, এবং social queues-এ পাঠান।
+- **WordPress**-এর REST API এবং hook ecosystem আছে। Form submissions থেকে posts draft করুন, content live হলে announcements publish করুন, media অন্য storage app-এ back up করুন, বা scheduled posts-এর আগে editorial reminders পাঠান।
+- **GitLab**, **Gogs**, এবং অন্যান্য Git apps repository, project, এবং system hooks expose করে। Tags-এ release notifications চালান, merges-এর পর deployment checklists তৈরি করুন, failed pipeline summaries chat-এ post করুন, বা bug-report templates থেকে project-management issues খুলুন।
+- **Hugo Git** Git-based publishing flow-তে থাকতে পারে। Content commits-এর পর rebuild notifications trigger করুন, নতুন tag এলে changelog publish করুন, বা প্রতিটি pull request-এর জন্য n8n দিয়ে review task তৈরি করান।
+- **Docmost** documentation destination হিসেবে উপযোগী। নতুন customer sign up করলে onboarding checklist তৈরি করুন, monitoring events থেকে incident notes post করুন, বা workflow outputs থেকে internal runbooks updated রাখুন।
+- **Jupyter Notebook** data ও reporting workflows support করতে পারে। Scheduled notebooks চালান, database update-এর পর reports export করুন, বা long-running analysis শেষ হলে channel-কে notify করুন।
+- **Serposcope** SEO workflows feed করতে পারে। Rank-change alerts পাঠান, weekly search-position digest তৈরি করুন, বা important keyword drop করলে content task খুলুন।
+- **MySQL/MariaDB**, **Nginx & PHP**, এবং **LAMP Stack** internal tools-এর জন্য উপযোগী। n8n দিয়ে rows লিখুন, private admin endpoints call করুন, scheduled maintenance checks চালান, বা custom app নতুন submission পেলে team-কে notify করুন।
+
+Files, storage, sync, এবং backup-এর জন্য:
+
+- **Nextcloud** WebDAV এবং বিস্তৃত app ecosystem expose করে। Uploaded files review folders-এ move করুন, client upload এলে team-কে notify করুন, calendar follow-ups তৈরি করুন, বা approved documents project spaces-এ copy করুন।
+- **SFTPGo**-তে REST API, event actions, এবং login hooks আছে। Client report upload করলে file-processing workflows trigger করুন, completed exports Nextcloud-এ move করুন, partner transfer এলে channel-কে notify করুন, বা deadline-এর পর temporary users disable করুন।
+- **File Browser Quantum**, **File Browser WebDAV**, এবং **Kodbox** REST APIs, WebDAV, command hooks, বা storage plugins-এর মতো file-management surfaces expose করে। Shared folders watch করুন, metadata generate করুন, finished assets archive storage-এ copy করুন, বা publish করার আগে files approval-এর জন্য route করুন।
+- **Rclone** object storage, SFTP, WebDAV, এবং cloud remotes জুড়ে scriptable। n8n থেকে sync jobs schedule করুন, large migrations-এর পর transfers verify করুন, processed media long-term storage-এ move করুন, বা failure summaries chat-এ পাঠান।
+- **Restic REST Server** restic clients-এর জন্য HTTPS backup target দেয়। Scheduled backup checks fail করলে admins-কে notify করুন, missed snapshots-এর পর incident খুলুন, বা daily backup health summary Docmost-এ লিখুন।
+- **Syncthing** এবং **Resilio Sync** file event pipelines-এর জন্য উপযোগী। Folder sync শেষ হলে react করুন, completed drops media library-তে copy করুন, বা expected files না এলে user-কে alert করুন।
+- **Pure-FTPd** এবং অন্যান্য FTP/SFTP-style endpoints legacy file workflows-এ থাকতে পারে। New partner files poll করুন, সেগুলো SFTPGo বা Nextcloud-এ move করুন, তারপর processing complete হলে সঠিক team-কে notify করুন।
+
+Security, access, এবং infrastructure-এর জন্য:
+
+- **Vaultwarden** Bitwarden-compatible API এবং optional SMTP notifications expose করে। Vault reviews-এর জন্য reminders তৈরি করুন, onboarding বা offboarding tasks due হলে admins-কে notify করুন, বা teams জুড়ে password-rotation checklists coordinate করুন।
+- **OpenVPN** এবং **WireGuard VPN** access workflows-এর অংশ হতে পারে। Credentials rotate করতে হলে operators-কে notify করুন, নতুন VPN users-এর জন্য checklist tasks তৈরি করুন, বা n8n-এর মাধ্যমে scheduled connectivity checks চালান।
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux**, এবং **Windows VPS** apps আপনাকে scriptable environments দেয়। n8n দিয়ে SSH commands trigger করুন, health checks চালান, report files collect করুন, বা scheduled jobs-এর পর maintenance summaries post করুন।
+- **Ubuntu**, **Debian**, এবং **Firefox remote desktop** apps browser বা desktop tasks support করতে পারে। Manual review work-এর reminders schedule করুন, scripts থেকে outputs capture করুন, বা completed desktop exports file storage-এ hand off করুন।
+
+Monitoring, chat, এবং notifications-এর জন্য:
+
+- **Uptime Kuma** rich notification targets এবং webhooks support করে। Downtime events Mattermost বা Rocket.Chat alerts-এ বদলান, OpenProject incidents তৈরি করুন, OpenClaw দিয়ে ছোট incident summary করান, বা প্রতিটি recovery status spreadsheet-এ log করুন।
+- **Mattermost** এবং **Rocket.Chat** notification ও approval endpoints হিসেবে উপযোগী। যেকোনো workflow থেকে human-readable updates পাঠান, team-কে request approve করতে বলুন, তারপর কেউ respond করলে automation continue করুন।
+- **RocketChat Hubot** chat commands-এর জন্য উপযোগী। Teammates-কে chat থেকে n8n webhooks trigger করতে দিন, deployment status জানতে দিন, বা audit trail-সহ scripted maintenance workflow শুরু করতে দিন।
+- **Matterbridge** IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram, এবং আরও অনেক কিছু connect করে। n8n দিয়ে operational events একবার format করুন, তারপর যেসব communities বা rooms সেগুলো দেখতে হবে সেখানে relay করুন।
+- **ZNC** এবং **The Lounge** chat-ops workflows-এর অংশ হতে পারে। Important IRC events modern team channels-এ forward করুন, highlights archive করুন, বা watched keyword দেখা গেলে operators-কে notify করুন।
+
+Media এবং download automation-এর জন্য:
+
+- **Tautulli** Plex activity, notification scripts, এবং JSON API expose করে। Newly added media digests পাঠান, stream error হলে alert করুন, usage reports export করুন, বা storage limit cross করলে cleanup tasks তৈরি করুন।
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic**, এবং **SeAT** library বা community workflows feed করতে পারে। New media announce করুন, imports-এর পর libraries refresh করুন, listening বা reading digests তৈরি করুন, metadata dashboard-এ sync করুন, বা tracked activity বদলালে community-কে notify করুন।
+- **Immich** photo workflows-এ মানিয়ে যায়। Shared album বদলালে family-কে notify করুন, exported albums archive storage-এ copy করুন, বা বড় mobile upload-এর পর backup check trigger করুন।
+- **AzuraCast**-এ REST API এবং webhooks আছে। Track বা live-show changes announce করুন, website widget update করুন, scheduled broadcasts-এর আগে hosts-কে notify করুন, বা show-এর পর playlist metadata archive করুন।
+- **Icecast** broadcast status workflows support করতে পারে। Stream availability watch করুন, now-playing updates post করুন, বা source disconnect হলে channel-কে alert করুন।
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission**, এবং **Deluge** RPC বা web APIs expose করে। Completed downloads watch করুন, finished files সঠিক library-তে move করুন, media scans trigger করুন, বা requested item ready হলে users-কে notify করুন।
+- **PufferPanel**, **TeamSpeak 3**, এবং game/chat servers-ও operational workflows-এ মানিয়ে যেতে পারে। Server attention চাইলে admins-কে notify করুন, maintenance reminders তৈরি করুন, বা scheduled changes-এর পর player-facing announcements post করুন।
+
+Built-in nodes, webhooks, HTTP requests, database connections, এবং code nodes-এর মাধ্যমে n8n external services-এর সাথেও ব্যবহার করতে পারেন।
+
+## n8n install করুন
+
+[n8n App Store page](/appstore/app/264) খুলুন, আপনার Appbox বেছে নিন, এবং install শুরু করুন।
+
+Setup চলাকালীন, Appbox আপনাকে n8n-এর জন্য প্রথম owner account তৈরি করতে বলে। সেই account-এর জন্য admin email address, password, first name, এবং last name লিখুন।
+
+App ready হলে, installed app page-এ দেখানো Login URL খুলুন এবং সদ্য তৈরি করা owner account দিয়ে sign in করুন।
+
+## আপনার প্রথম Workflow তৈরি করুন
+
+n8n-এর ভিতরে গেলে **Overview**-এ যান এবং **Create Workflow** বেছে নিন। Editor একটি canvas-এ খুলবে, যেখানে আপনার automation-এর প্রতিটি step একটি node হিসেবে দেখা যাবে।
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="n8n editor UI যেখানে workflow canvas দেখা যাচ্ছে"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+একটি simple manual workflow দিয়ে শুরু করুন:
+
+1. **Add first step** click করুন।
+2. **Manual Trigger** search করুন এবং add করুন।
+3. Trigger node-এর plus button click করুন।
+4. দ্বিতীয় node add করুন, যেমন **Edit Fields**, **HTTP Request**, বা app-specific node।
+5. Side panel-এ node configure করুন।
+
+n8n-এর main workspace হলো canvas। এখানেই আপনি nodes add করেন, connect করেন, workflow tidy করেন, এবং test executions run করেন।
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="n8n workflow canvas যেখানে add first step control দেখা যাচ্ছে"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Workflow test করুন
+
+Workflow manually run করতে **Execute Workflow** click করুন।
+
+Run complete হলে, প্রতিটি node click করে দেখুন সেটি কোন data receive ও return করেছে। Real app, webhook, বা scheduled trigger connect করার আগে আপনার workflow-তে কী চলাচল করছে তা বোঝার এটাই দ্রুততম উপায়।
+
+## Apps এবং Credentials connect করুন
+
+App integrations-এর জন্য, আপনার দরকারি node add করুন এবং n8n চাইলে credentials তৈরি করুন।
+
+Appbox-hosted apps-এর জন্য common pattern হলো:
+
+1. যে app automate করতে চান সেখানে API token বা webhook তৈরি করুন।
+2. Matching n8n node add করুন, বা dedicated node না থাকলে **HTTP Request** node ব্যবহার করুন।
+3. Token n8n credentials-এ store করুন।
+4. Branching, retries, বা আরও steps যোগ করার আগে একটি small action দিয়ে test করুন।
+
+Incoming events-এর জন্য **Webhook** trigger ব্যবহার করুন। n8n আপনাকে production webhook URL দেয়, যা external services HTTPS দিয়ে call করতে পারে।
+
+## একটি simple প্রথম automation
+
+আপনার প্রথম real workflow হিসেবে এটি try করুন:
+
+1. একটি **Webhook** trigger add করুন।
+2. অন্য service বা Appbox app API call করতে একটি **HTTP Request** node add করুন।
+3. Response অনুযায়ী branch করতে একটি **IF** node add করুন।
+4. Mattermost, Rocket.Chat, বা অন্য notification channel-এ message পাঠান।
+
+এটি আপনাকে অনেক n8n automations-এর core pattern দেয়: event receive করুন, data fetch বা transform করুন, decision নিন, তারপর কোনো ব্যক্তিকে notify করুন বা অন্য system update করুন।
+
+## Scale নিয়ে একটি note
+
+Appbox package persistent storage-সহ compact single-container n8n deployment হিসেবে design করা হয়েছে। Personal, team, এবং internal automations-এর জন্য এটি দারুণ starting point।
+
+আপনি যদি খুব high execution volume, large payloads, বা business-critical automation hub চালানোর পরিকল্পনা করেন, workload carefully test করুন এবং installed app page থেকে app resources boost করার কথা ভাবুন।
+
+## তৈরি করা শুরু করুন
+
+আপনার যদি Appbox থাকে, n8n হলো আপনার বাকি tools-কে connected মনে করানোর দ্রুততম উপায়গুলোর একটি।
+
+[Appbox-এ n8n deploy করুন](/appstore/app/264), একটি workflow তৈরি করুন, একবার manually run করুন, তারপর এটিকে সেই automation-এ পরিণত করুন যা আপনি চাইতেন আপনার apps-এ আগে থেকেই থাকত।

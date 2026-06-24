@@ -1,0 +1,170 @@
+---
+title: Prezentăm n8n pe Appbox
+date: 2026-06-24 08:11:00
+excerpt: Deployează n8n pe Appbox și începe să construiești automatizări self-hosted de fluxuri de lucru pentru aplicații, API-uri, webhookuri și instrumente interne.
+author_id: rid
+tags: [appbox, n8n, automatizare, fluxuri-de-lucru, self-hosted, magazin-de-aplicatii]
+---
+
+# Prezentăm n8n pe Appbox
+
+n8n este acum disponibil pe Appbox.
+
+Asta înseamnă că poți deploya un spațiu privat pentru automatizarea fluxurilor de lucru, poți deschide editorul vizual și poți începe să conectezi aplicații, API-uri, programări, webhookuri și cod personalizat fără să administrezi manual un server.
+
+[Instalează n8n din Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="editorul de fluxuri de lucru n8n afișând noduri de automatizare conectate pe o pânză"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Ce poți construi
+
+n8n este util ori de câte ori o aplicație trebuie să reacționeze la alta, să curețe date, să apeleze un API, să trimită o notificare sau să ruleze o sarcină programată.
+
+Pe Appbox, asta îl face un partener natural pentru aplicațiile cu webhookuri, API-uri, hookuri de notificare, WebDAV, RPC sau interfețe scriptabile.
+
+Pentru AI, suport și fluxuri de lucru de business:
+
+- **OpenClaw** poate acționa ca stratul AI pentru automatizările tale. Trimite un webhook din n8n când un tichet de suport, o alertă de monitorizare sau un fișier încărcat trebuie rezumat, apoi lasă OpenClaw să redacteze răspunsul, să clasifice cererea sau să transforme evenimentul într-o sarcină.
+- **Chatwoot** expune evenimente din inbox și API-uri pentru suport clienți. Etichetează conversațiile urgente, îmbogățește contactele noi din alt sistem, notifică un canal de echipă când scrie un VIP sau creează o sarcină de follow-up după închiderea unei conversații.
+- **Mautic** are un REST API și o suprafață pentru automatizarea campaniilor. Sincronizează leaduri din formulare, scorează contacte după evenimente de produs, adaugă oameni în campanii din trimiteri webhook sau notifică vânzările când un lead trece un prag.
+- **ERPNext** expune înregistrări de business prin API-uri. Creează facturi din formulare trimise, actualizează oportunități când intră o plată, notifică operațiunile când stocul este scăzut sau împinge înregistrări de clienți într-o altă aplicație Appbox.
+- **Plane** și **OpenProject** funcționează bine ca destinații pentru sarcini. Transformă incidente, formulare trimise, joburi eșuate sau cereri ale clienților în issues și pachete de lucru cu responsabilul și contextul potrivit.
+- **Rallly** se potrivește fluxurilor de programare. Creează sondaje din formulare de cerere, notifică invitații după alegerea orei întâlnirii sau trimite mementouri înainte de termenul pentru disponibilitate.
+- **OnlyOffice** și **Jitsi** se potrivesc fluxurilor pentru documente și întâlniri. Notifică recenzenții când un document este gata, creează un link de întâlnire după aprobare sau trimite sarcini de follow-up după întâlnire în Plane sau OpenProject.
+
+Pentru conținut, publicare și fluxuri de lucru pentru dezvoltatori:
+
+- **EmDash** îți oferă un CMS structurat cu formulare, linkuri scurte, pluginuri și hookuri autobuild. Trimite formulare către n8n, notifică editorii când conținutul este publicat, declanșează un rebuild după ce un draft intră live sau trimite postări noi către Mattermost, Rocket.Chat și cozi sociale.
+- **WordPress** are un REST API și un ecosistem de hookuri. Redactează postări din formulare trimise, publică anunțuri când conținutul intră live, fă backup pentru media într-o altă aplicație de stocare sau trimite mementouri editoriale înaintea postărilor programate.
+- **GitLab**, **Gogs** și alte aplicații Git expun hookuri de repository, proiect și sistem. Rulează notificări de release pe taguri, creează checklisturi de deploy după merge, postează rezumate ale pipeline-urilor eșuate în chat sau deschide issues de project management din șabloane de raportare a bugurilor.
+- **Hugo Git** poate sta într-un flux de publicare bazat pe Git. Declanșează notificări de rebuild după commituri de conținut, publică un changelog când apare un tag nou sau cere n8n să creeze o sarcină de review pentru fiecare pull request.
+- **Docmost** este util ca destinație de documentație. Creează un checklist de onboarding când se înscrie un client nou, postează note de incident din evenimente de monitorizare sau menține runbookurile interne actualizate din ieșirile fluxurilor de lucru.
+- **Jupyter Notebook** poate susține fluxuri de date și raportare. Rulează notebookuri programate, exportă rapoarte după o actualizare de bază de date sau notifică un canal când se termină o analiză de durată.
+- **Serposcope** poate alimenta fluxuri SEO. Trimite alerte de schimbare a pozițiilor, creează un digest săptămânal al pozițiilor în căutare sau deschide o sarcină de conținut când un cuvânt-cheie important scade.
+- **MySQL/MariaDB**, **Nginx & PHP** și **LAMP Stack** sunt utile pentru instrumente interne. Folosește n8n pentru a scrie rânduri, a apela endpointuri administrative private, a rula verificări de mentenanță programate sau a notifica o echipă când o aplicație personalizată primește o trimitere nouă.
+
+Pentru fișiere, stocare, sincronizare și backup:
+
+- **Nextcloud** expune WebDAV și un ecosistem larg de aplicații. Mută fișiere încărcate în foldere de review, notifică o echipă când ajunge o încărcare de la client, creează follow-upuri în calendar sau copiază documente aprobate în spații de proiect.
+- **SFTPGo** include un REST API, acțiuni de eveniment și hookuri de login. Declanșează fluxuri de procesare a fișierelor când un client încarcă un raport, mută exporturile finalizate în Nextcloud, notifică un canal când sosește un transfer de la partener sau dezactivează utilizatori temporari după un termen.
+- **File Browser Quantum**, **File Browser WebDAV** și **Kodbox** expun suprafețe de gestionare a fișierelor precum REST API-uri, WebDAV, command hookuri sau pluginuri de stocare. Monitorizează foldere partajate, generează metadate, copiază asseturi finalizate în stocare de arhivă sau direcționează fișiere către aprobare înainte de publicare.
+- **Rclone** este scriptabil peste stocare de obiecte, SFTP, WebDAV și remote-uri cloud. Programează joburi de sincronizare din n8n, verifică transferuri după migrări mari, mută media procesată în stocare pe termen lung sau trimite rezumate de eșec în chat.
+- **Restic REST Server** oferă clienților restic o țintă de backup HTTPS. Notifică administratorii când verificările programate de backup eșuează, deschide un incident după snapshoturi ratate sau scrie un rezumat zilnic al stării backupului în Docmost.
+- **Syncthing** și **Resilio Sync** sunt utile pentru pipeline-uri de evenimente de fișiere. Reacționează când un folder termină sincronizarea, copiază dropurile finalizate într-o bibliotecă media sau alertează un utilizator când fișierele așteptate nu au sosit.
+- **Pure-FTPd** și alte endpointuri de tip FTP/SFTP pot sta în fluxuri legacy de fișiere. Caută fișiere noi de la parteneri, mută-le în SFTPGo sau Nextcloud, apoi notifică echipa potrivită după finalizarea procesării.
+
+Pentru securitate, acces și infrastructură:
+
+- **Vaultwarden** expune un API compatibil cu Bitwarden și notificări SMTP opționale. Creează mementouri pentru revizuiri de seifuri, notifică administratorii când sunt scadente sarcini de onboarding sau offboarding ori coordonează checklisturi de rotație a parolelor între echipe.
+- **OpenVPN** și **WireGuard VPN** pot face parte din fluxuri de acces. Notifică operatorii când credentialele trebuie rotite, creează sarcini de checklist pentru utilizatori VPN noi sau rulează verificări de conectivitate programate prin n8n.
+- Aplicațiile **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** și **Windows VPS** îți oferă medii scriptabile. Folosește n8n pentru a declanșa comenzi SSH, a rula verificări de sănătate, a colecta fișiere de raport sau a posta rezumate de mentenanță după joburi programate.
+- Aplicațiile **Ubuntu**, **Debian** și **Firefox remote desktop** pot susține sarcini de browser sau desktop. Programează mementouri pentru lucrări de review manual, capturează ieșiri din scripturi sau predă exporturi desktop finalizate în stocarea de fișiere.
+
+Pentru monitorizare, chat și notificări:
+
+- **Uptime Kuma** acceptă ținte bogate de notificare și webhookuri. Transformă evenimentele de downtime în alerte Mattermost sau Rocket.Chat, creează incidente OpenProject, cere OpenClaw un scurt rezumat de incident sau loghează fiecare revenire într-un spreadsheet de status.
+- **Mattermost** și **Rocket.Chat** sunt endpointuri utile pentru notificări și aprobări. Trimite actualizări lizibile din orice flux de lucru, cere unei echipe să aprobe o solicitare, apoi continuă automatizarea după ce răspunde cineva.
+- **RocketChat Hubot** este util pentru comenzi de chat. Lasă colegii să declanșeze webhookuri n8n din chat, să întrebe de statusul deployului sau să pornească un flux scriptat de mentenanță cu pistă de audit.
+- **Matterbridge** conectează IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram și altele. Folosește n8n pentru a formata o singură dată evenimente operaționale, apoi transmite-le comunităților sau camerelor care trebuie să le vadă.
+- **ZNC** și **The Lounge** pot face parte din fluxuri chat-ops. Redirecționează evenimente IRC importante către canale moderne de echipă, arhivează highlights sau notifică operatorii când apare un cuvânt-cheie monitorizat.
+
+Pentru media și automatizarea descărcărilor:
+
+- **Tautulli** expune activitate Plex, scripturi de notificare și un JSON API. Trimite digesturi cu media nou adăugată, alertează când un stream dă eroare, exportă rapoarte de utilizare sau creează sarcini de curățare când stocarea trece un prag.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** și **SeAT** pot alimenta fluxuri de bibliotecă sau comunitate. Anunță media nouă, reîmprospătează biblioteci după importuri, creează digesturi de ascultare sau lectură, sincronizează metadate într-un dashboard sau notifică o comunitate când se schimbă activitatea urmărită.
+- **Immich** se potrivește fluxurilor foto. Notifică familia când se schimbă un album partajat, copiază albume exportate în stocare de arhivă sau declanșează o verificare de backup după o încărcare mobilă mare.
+- **AzuraCast** include un REST API și webhookuri. Anunță schimbări de melodii sau emisiuni live, actualizează un widget de site, notifică gazdele înaintea transmisiunilor programate sau arhivează metadatele playlistului după o emisiune.
+- **Icecast** poate susține fluxuri pentru statusul transmisiunii. Monitorizează disponibilitatea streamului, postează actualizări now-playing sau alertează un canal când o sursă se deconectează.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** și **Deluge** expun RPC sau API-uri web. Urmărește descărcările finalizate, mută fișierele terminate în biblioteca potrivită, declanșează scanări media sau notifică utilizatorii când elementul cerut este gata.
+- **PufferPanel**, **TeamSpeak 3** și serverele de joc/chat se pot potrivi și ele în fluxuri operaționale. Notifică administratorii când un server are nevoie de atenție, creează mementouri de mentenanță sau postează anunțuri pentru jucători după schimbări programate.
+
+Poți folosi n8n și cu servicii externe prin noduri integrate, webhookuri, cereri HTTP, conexiuni la baze de date și noduri de cod.
+
+## Instalează n8n
+
+Deschide [pagina n8n din App Store](/appstore/app/264), alege Appbox-ul tău și pornește instalarea.
+
+În timpul configurării, Appbox îți cere să creezi primul cont de owner pentru n8n. Introdu adresa de e-mail de admin, parola, prenumele și numele pe care vrei să le folosești pentru acel cont.
+
+Când aplicația este gata, deschide Login URL afișat pe pagina aplicației instalate și autentifică-te cu contul de owner pe care tocmai l-ai creat.
+
+## Creează primul tău flux de lucru
+
+După ce ești în n8n, mergi la **Overview** și alege **Create Workflow**. Editorul se deschide pe o pânză unde fiecare pas din automatizarea ta este reprezentat de un nod.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="interfața editorului n8n afișând pânza fluxului de lucru"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Începe cu un flux manual simplu:
+
+1. Dă clic pe **Add first step**.
+2. Caută **Manual Trigger** și adaugă-l.
+3. Dă clic pe butonul plus de pe nodul trigger.
+4. Adaugă un al doilea nod, precum **Edit Fields**, **HTTP Request** sau un nod specific unei aplicații.
+5. Configurează nodul în panoul lateral.
+
+Spațiul principal de lucru din n8n este pânza. Acolo adaugi noduri, le conectezi, ordonezi fluxul și rulezi execuții de test.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="pânza fluxului de lucru n8n afișând controlul pentru adăugarea primului pas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Testează fluxul de lucru
+
+Dă clic pe **Execute Workflow** pentru a rula manual fluxul.
+
+După ce rularea se încheie, dă clic pe fiecare nod pentru a inspecta datele primite și returnate. Este cel mai rapid mod de a înțelege ce se mișcă prin fluxul tău înainte să conectezi o aplicație reală, un webhook sau un trigger programat.
+
+## Conectează aplicații și credentiale
+
+Pentru integrări cu aplicații, adaugă nodul de care ai nevoie și creează credentiale când n8n le cere.
+
+Pentru aplicațiile găzduite pe Appbox, un tipar obișnuit este:
+
+1. Creează un token API sau un webhook în aplicația pe care vrei să o automatizezi.
+2. Adaugă nodul n8n potrivit sau folosește nodul **HTTP Request** dacă nu există un nod dedicat.
+3. Stochează tokenul în credentialele n8n.
+4. Testează cu o acțiune mică înainte să adaugi ramificări, retry-uri sau mai mulți pași.
+
+Pentru evenimente primite, folosește un trigger **Webhook**. n8n îți dă un URL de webhook de producție pe care serviciile externe îl pot apela prin HTTPS.
+
+## O primă automatizare simplă
+
+Încearcă asta ca primul tău flux real:
+
+1. Adaugă un trigger **Webhook**.
+2. Adaugă un nod **HTTP Request** pentru a apela un alt serviciu sau API-ul unei aplicații Appbox.
+3. Adaugă un nod **IF** pentru a ramifica după răspuns.
+4. Trimite un mesaj către Mattermost, Rocket.Chat sau alt canal de notificări.
+
+Asta îți dă tiparul de bază pentru multe automatizări n8n: primești un eveniment, aduci sau transformi date, iei o decizie, apoi notifici o persoană sau actualizezi un alt sistem.
+
+## O notă despre scalare
+
+Pachetul Appbox este conceput ca un deployment n8n compact, într-un singur container, cu stocare persistentă. Este un punct de pornire excelent pentru automatizări personale, de echipă și interne.
+
+Dacă plănuiești să rulezi un volum foarte mare de execuții, payloaduri mari sau un hub de automatizare critic pentru business, testează atent volumul de lucru și ia în calcul creșterea resurselor aplicației din pagina aplicației instalate.
+
+## Începe să construiești
+
+Dacă ai un Appbox, n8n este una dintre cele mai rapide căi de a face restul instrumentelor tale să pară conectate.
+
+[Deployează n8n pe Appbox](/appstore/app/264), creează un flux de lucru, rulează-l o dată manual, apoi transformă-l în automatizarea pe care ai fi vrut ca aplicațiile tale să o aibă deja.

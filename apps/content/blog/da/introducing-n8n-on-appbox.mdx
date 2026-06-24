@@ -1,0 +1,170 @@
+---
+title: Introduktion af n8n på Appbox
+date: 2026-06-24 08:11:00
+excerpt: Deploy n8n på Appbox, og begynd at bygge self-hosted workflow-automatiseringer til apps, API'er, webhooks og interne værktøjer.
+author_id: rid
+tags: [appbox, n8n, automatisering, workflows, self-hosted, app-store]
+---
+
+# Introduktion af n8n på Appbox
+
+n8n er nu tilgængelig på Appbox.
+
+Det betyder, at du kan deploye et privat workspace til workflow-automatisering, åbne den visuelle editor og begynde at forbinde apps, API'er, tidsplaner, webhooks og brugerdefineret kode uden at administrere en server manuelt.
+
+[Installer n8n fra Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="n8n-workfloweditor, der viser forbundne automatiseringsnoder på et canvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Hvad du kan bygge
+
+n8n er nyttig, når en app skal reagere på en anden app, rydde op i data, kalde en API, sende en notifikation eller køre en planlagt opgave.
+
+På Appbox gør det den til en naturlig makker for apps med webhooks, API'er, notifikationshooks, WebDAV, RPC eller scriptbare interfaces.
+
+Til AI-, support- og forretningsworkflows:
+
+- **OpenClaw** kan fungere som AI-laget i dine automatiseringer. Send en webhook fra n8n, når en supportsag, monitoreringsalarm eller filupload skal opsummeres, og lad derefter OpenClaw skrive et svarudkast, klassificere forespørgslen eller gøre hændelsen til en opgave.
+- **Chatwoot** eksponerer inbox-hændelser og API'er til kundesupport. Tag hastesamtaler, berig nye kontakter fra et andet system, notifikér en teamkanal når en VIP skriver, eller opret en opfølgningsopgave, når en samtale lukkes.
+- **Mautic** har en REST API og en overflade til kampagneautomatisering. Synkroniser leads fra formularer, score kontakter efter produkthændelser, føj personer til kampagner fra webhook-indsendelser, eller notifikér salg når et lead krydser en tærskel.
+- **ERPNext** eksponerer forretningsdata gennem API'er. Opret fakturaer fra formularindsendelser, opdater deals når en betaling lander, notifikér operations når lageret er lavt, eller skub kundedata ind i en anden Appbox-app.
+- **Plane** og **OpenProject** fungerer godt som opgavedestinationer. Gør incidents, formularindsendelser, fejlede jobs eller kundehenvendelser til issues og work packages med den rigtige ansvarlige og kontekst.
+- **Rallly** kan passe ind i planlægningsworkflows. Opret afstemninger fra forespørgselsformularer, notifikér gæster når et mødetidspunkt er valgt, eller send påmindelser før en deadline for tilgængelighed.
+- **OnlyOffice** og **Jitsi** passer til dokument- og mødeworkflows. Notifikér reviewers når et dokument er klar, opret et mødelink efter en godkendelse, eller send opfølgningsopgaver efter mødet til Plane eller OpenProject.
+
+Til indhold, publicering og udviklerworkflows:
+
+- **EmDash** giver dig et struktureret CMS med formularer, korte links, plugins og autobuild-hooks. Send formularindsendelser til n8n, notifikér redaktører når indhold publiceres, udløs et rebuild efter en kladde går live, eller send nye indlæg til Mattermost, Rocket.Chat og sociale køer.
+- **WordPress** har en REST API og et hook-økosystem. Lav udkast til indlæg fra formularindsendelser, publicér annonceringer når indhold går live, sikkerhedskopiér medier til en anden lagerapp, eller send redaktionelle påmindelser før planlagte indlæg.
+- **GitLab**, **Gogs** og andre Git-apps eksponerer repository-, projekt- og systemhooks. Kør release-notifikationer på tags, opret deployment-checklister efter merges, post resuméer af fejlede pipelines i chat, eller åbn projektstyrings-issues fra bugrapportskabeloner.
+- **Hugo Git** kan indgå i et Git-baseret publiceringsflow. Udløs rebuild-notifikationer efter content commits, publicér en changelog når et nyt tag lander, eller bed n8n oprette en review-opgave for hver pull request.
+- **Docmost** er nyttig som dokumentationsdestination. Opret en onboarding-checkliste når en ny kunde tilmelder sig, post incident-noter fra monitoreringshændelser, eller hold interne runbooks opdateret fra workflow-output.
+- **Jupyter Notebook** kan understøtte data- og rapporteringsworkflows. Kør planlagte notebooks, eksportér rapporter efter en databaseopdatering, eller notifikér en kanal når en langvarig analyse er færdig.
+- **Serposcope** kan føde SEO-workflows. Send alarmer ved rankingændringer, opret et ugentligt digest over søgepositioner, eller åbn en content-opgave når et vigtigt søgeord falder.
+- **MySQL/MariaDB**, **Nginx & PHP** og **LAMP Stack** er nyttige til interne værktøjer. Brug n8n til at skrive rækker, kalde private admin-endpoints, køre planlagte vedligeholdelsestjek eller notifikere et team når en brugerdefineret app modtager en ny indsendelse.
+
+Til filer, storage, sync og backup:
+
+- **Nextcloud** eksponerer WebDAV og et bredt app-økosystem. Flyt uploadede filer til review-mapper, notifikér et team når en kundeupload kommer ind, opret kalenderopfølgninger, eller kopiér godkendte dokumenter ind i projektrum.
+- **SFTPGo** inkluderer en REST API, event actions og login-hooks. Udløs filbehandlingsworkflows når en kunde uploader en rapport, flyt færdige exports til Nextcloud, notifikér en kanal når en partneroverførsel ankommer, eller deaktivér midlertidige brugere efter en deadline.
+- **File Browser Quantum**, **File Browser WebDAV** og **Kodbox** eksponerer filhåndteringsflader som REST API'er, WebDAV, command hooks eller storage-plugins. Overvåg delte mapper, generér metadata, kopiér færdige assets til arkivlager, eller send filer til godkendelse før publicering.
+- **Rclone** kan scriptes på tværs af object storage, SFTP, WebDAV og cloud remotes. Planlæg sync-jobs fra n8n, verificér overførsler efter store migrationer, flyt behandlede medier til langtidslager, eller send fejlresuméer til chat.
+- **Restic REST Server** giver restic-klienter et HTTPS-backupmål. Notifikér administratorer når planlagte backuptjek fejler, åbn en incident efter manglende snapshots, eller skriv et dagligt backup-sundhedsresumé i Docmost.
+- **Syncthing** og **Resilio Sync** er nyttige til filevent-pipelines. Reagér når en mappe er færdig med at synkronisere, kopiér færdige drops ind i et mediebibliotek, eller alarmér en bruger når forventede filer ikke er ankommet.
+- **Pure-FTPd** og andre FTP/SFTP-lignende endpoints kan indgå i legacy-filworkflows. Poll efter nye partnerfiler, flyt dem til SFTPGo eller Nextcloud, og notifikér derefter det rigtige team når behandlingen er færdig.
+
+Til sikkerhed, adgang og infrastruktur:
+
+- **Vaultwarden** eksponerer en Bitwarden-kompatibel API og valgfrie SMTP-notifikationer. Opret påmindelser om vault-reviews, notifikér administratorer når onboarding- eller offboarding-opgaver forfalder, eller koordiner passwordrotations-checklister på tværs af teams.
+- **OpenVPN** og **WireGuard VPN** kan være en del af adgangsworkflows. Notifikér operatører når credentials skal roteres, opret checklist-opgaver til nye VPN-brugere, eller kør planlagte connectivity checks gennem n8n.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** og **Windows VPS** apps giver dig scriptbare miljøer. Brug n8n til at udløse SSH-kommandoer, køre health checks, indsamle rapportfiler eller poste vedligeholdelsesresuméer efter planlagte jobs.
+- **Ubuntu**, **Debian** og **Firefox** remote desktop-apps kan understøtte browser- eller desktopopgaver. Planlæg påmindelser om manuelt reviewarbejde, fang output fra scripts, eller aflever færdige desktop-exports til fillager.
+
+Til monitorering, chat og notifikationer:
+
+- **Uptime Kuma** understøtter rige notifikationsmål og webhooks. Gør nedetidshændelser til Mattermost- eller Rocket.Chat-alarmer, opret OpenProject-incidents, bed OpenClaw om et kort incidentresumé, eller log hver recovery i et statusregneark.
+- **Mattermost** og **Rocket.Chat** er nyttige notifikations- og godkendelsesendpoints. Send menneskelæselige opdateringer fra ethvert workflow, bed et team godkende en forespørgsel, og fortsæt derefter automatiseringen når nogen svarer.
+- **RocketChat Hubot** er nyttig til chatkommandoer. Lad teammates udløse n8n-webhooks fra chat, bede om deployment-status eller starte et scriptet vedligeholdelsesworkflow med audit trail.
+- **Matterbridge** forbinder IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram og mere. Brug n8n til at formatere operationelle hændelser én gang og derefter videresende dem til de communities eller rum, der skal se dem.
+- **ZNC** og **The Lounge** kan være en del af chat-ops-workflows. Videresend vigtige IRC-hændelser til moderne teamkanaler, arkivér highlights, eller notifikér operatører når et overvåget keyword dukker op.
+
+Til medier og downloadautomatisering:
+
+- **Tautulli** eksponerer Plex-aktivitet, notifikationsscripts og en JSON API. Send digests over nyligt tilføjede medier, alarmér når en stream fejler, eksportér brugsrapporter, eller opret cleanup-opgaver når storage krydser en grænse.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** og **SeAT** kan føde biblioteks- eller communityworkflows. Annoncér nye medier, opdater biblioteker efter imports, opret lytte- eller læsedigests, synkronisér metadata til et dashboard, eller notifikér et community når overvåget aktivitet ændrer sig.
+- **Immich** kan passe til fotoworkflows. Notifikér familien når et delt album ændres, kopiér eksporterede albums til arkivlager, eller udløs et backuptjek efter en stor mobilupload.
+- **AzuraCast** inkluderer en REST API og webhooks. Annoncér track- eller live show-ændringer, opdater en website-widget, notifikér værter før planlagte udsendelser, eller arkivér playlist-metadata efter et show.
+- **Icecast** kan understøtte broadcast-statusworkflows. Overvåg streamtilgængelighed, post now-playing-opdateringer, eller alarmér en kanal når en source afbryder forbindelsen.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** og **Deluge** eksponerer RPC- eller web-API'er. Overvåg færdige downloads, flyt færdige filer til det rigtige bibliotek, udløs mediescans, eller notifikér brugere når et ønsket item er klar.
+- **PufferPanel**, **TeamSpeak 3** og game/chat-servere kan også passe ind i operationelle workflows. Notifikér administratorer når en server kræver opmærksomhed, opret vedligeholdelsespåmindelser, eller post spillerrettede annonceringer efter planlagte ændringer.
+
+Du kan også bruge n8n med eksterne services gennem indbyggede noder, webhooks, HTTP requests, databaseforbindelser og kodenoder.
+
+## Installer n8n
+
+Åbn [n8n App Store-siden](/appstore/app/264), vælg din Appbox, og start installationen.
+
+Under opsætningen beder Appbox dig om at oprette den første ejerkonto til n8n. Indtast den admin-mailadresse, adgangskode, fornavn og efternavn, du vil bruge til den konto.
+
+Når appen er klar, skal du åbne Login URL'en, der vises på siden for den installerede app, og logge ind med den ejerkonto, du lige har oprettet.
+
+## Opret dit første workflow
+
+Når du er inde i n8n, skal du gå til **Overview** og vælge **Create Workflow**. Editoren åbner på et canvas, hvor hvert trin i din automatisering er repræsenteret af en node.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="n8n-editorinterface, der viser workflowcanvaset"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Start med et simpelt manuelt workflow:
+
+1. Klik på **Add first step**.
+2. Søg efter **Manual Trigger**, og tilføj den.
+3. Klik på plusknappen på triggernoden.
+4. Tilføj en anden node, f.eks. **Edit Fields**, **HTTP Request** eller en app-specifik node.
+5. Konfigurer noden i sidepanelet.
+
+Det primære workspace i n8n er canvaset. Det er her, du tilføjer noder, forbinder dem, rydder op i workflowet og kører testeksekveringer.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="n8n-workflowcanvas, der viser kontrollen til at tilføje første trin"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Test workflowet
+
+Klik på **Execute Workflow** for at køre workflowet manuelt.
+
+Når kørslen er færdig, skal du klikke på hver node for at inspicere de data, den modtog og returnerede. Det er den hurtigste måde at forstå, hvad der bevæger sig gennem dit workflow, før du forbinder en rigtig app, webhook eller planlagt trigger.
+
+## Forbind apps og credentials
+
+Til app-integrationer skal du tilføje den node, du har brug for, og oprette credentials når n8n beder om dem.
+
+For Appbox-hostede apps er et almindeligt mønster:
+
+1. Opret et API-token eller en webhook i den app, du vil automatisere.
+2. Tilføj den matchende n8n-node, eller brug **HTTP Request**-noden hvis der ikke findes en dedikeret node.
+3. Gem tokenet i n8n credentials.
+4. Test med én lille handling før du tilføjer forgreninger, retries eller flere trin.
+
+Til indgående hændelser skal du bruge en **Webhook** trigger. n8n giver dig en produktions-webhook-URL, som eksterne services kan kalde over HTTPS.
+
+## En simpel første automatisering
+
+Prøv dette som dit første rigtige workflow:
+
+1. Tilføj en **Webhook** trigger.
+2. Tilføj en **HTTP Request**-node for at kalde en anden service eller en Appbox-app-API.
+3. Tilføj en **IF**-node for at forgrene på svaret.
+4. Send en besked til Mattermost, Rocket.Chat eller en anden notifikationskanal.
+
+Det giver dig grundmønsteret for mange n8n-automatiseringer: modtag en hændelse, hent eller transformér data, træf en beslutning, og notifikér derefter en person eller opdater et andet system.
+
+## En note om skala
+
+Appbox-pakken er designet som en kompakt n8n-deployment i én container med persistent storage. Det er et stærkt udgangspunkt for personlige, team- og interne automatiseringer.
+
+Hvis du planlægger at køre meget høj eksekveringsvolumen, store payloads eller et forretningskritisk automatiseringshub, skal du teste workloaden grundigt og overveje at øge appens ressourcer fra siden for den installerede app.
+
+## Begynd at bygge
+
+Hvis du har en Appbox, er n8n en af de hurtigste måder at få resten af dine værktøjer til at føles forbundet.
+
+[Deploy n8n på Appbox](/appstore/app/264), opret et workflow, kør det én gang manuelt, og gør det derefter til den automatisering, du ville ønske, dine apps allerede havde.

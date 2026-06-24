@@ -1,0 +1,170 @@
+---
+title: Представляємо n8n в Appbox
+date: 2026-06-24 08:11:00
+excerpt: Розгорніть n8n в Appbox і почніть будувати self-hosted автоматизації робочих процесів для застосунків, API, webhooks та внутрішніх інструментів.
+author_id: rid
+tags: [appbox, n8n, автоматизація, робочі-процеси, self-hosted, app-store]
+---
+
+# Представляємо n8n в Appbox
+
+n8n тепер доступний в Appbox.
+
+Це означає, що ви можете розгорнути приватний робочий простір для автоматизації, відкрити візуальний редактор і почати поєднувати застосунки, API, розклади, webhooks та власний код без ручного адміністрування сервера.
+
+[Встановіть n8n з Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="Редактор workflow в n8n із поєднаними вузлами автоматизації на canvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Що можна побудувати
+
+n8n корисний щоразу, коли один застосунок має реагувати на інший застосунок, очищати дані, викликати API, надсилати сповіщення або запускати заплановане завдання.
+
+В Appbox це робить його природним супутником для застосунків із webhooks, API, notification hooks, WebDAV, RPC або скриптованими інтерфейсами.
+
+Для AI, підтримки та бізнес-процесів:
+
+- **OpenClaw** може бути AI-шаром для ваших автоматизацій. Надішліть webhook з n8n, коли тікет підтримки, alert моніторингу або завантаження файла потребує короткого підсумку, а OpenClaw підготує відповідь, класифікує запит або перетворить подію на задачу.
+- **Chatwoot** надає inbox events та API для підтримки клієнтів. Позначайте термінові розмови, збагачуйте нові контакти з іншої системи, сповіщайте командний канал, коли пише VIP-клієнт, або створюйте follow-up задачу після закриття розмови.
+- **Mautic** має REST API та поверхню для campaign automation. Синхронізуйте leads із форм, нараховуйте бали контактам після подій продукту, додавайте людей до кампаній із webhook submissions або сповіщайте sales, коли lead перетинає поріг.
+- **ERPNext** відкриває бізнес-записи через API. Створюйте invoices з form submissions, оновлюйте deals після надходження платежу, сповіщайте operations, коли запаси низькі, або передавайте customer records до іншого застосунку Appbox.
+- **Plane** і **OpenProject** добре працюють як місця призначення для задач. Перетворюйте incidents, form submissions, failed jobs або customer requests на issues і work packages із правильним assignee та context.
+- **Rallly** може вписатися у scheduling workflows. Створюйте polls із request forms, сповіщайте guests після вибору часу зустрічі або надсилайте reminders перед deadline доступності.
+- **OnlyOffice** і **Jitsi** підходять для document та meeting workflows. Сповіщайте reviewers, коли документ готовий, створюйте meeting link після approval або надсилайте post-meeting follow-up tasks у Plane чи OpenProject.
+
+Для контенту, публікацій і developer workflows:
+
+- **EmDash** дає структуровану CMS із формами, short links, plugins та autobuild hooks. Надсилайте form submissions до n8n, сповіщайте editors, коли контент опубліковано, запускайте rebuild після виходу draft у live або надсилайте нові posts до Mattermost, Rocket.Chat і social queues.
+- **WordPress** має REST API та екосистему hooks. Створюйте drafts posts із form submissions, публікуйте announcements, коли контент виходить live, робіть backup media до іншого storage app або надсилайте editorial reminders перед scheduled posts.
+- **GitLab**, **Gogs** та інші Git-застосунки надають repository, project і system hooks. Запускайте release notifications на tags, створюйте deployment checklists після merges, публікуйте summaries failed pipelines у chat або відкривайте project-management issues із bug-report templates.
+- **Hugo Git** може бути частиною Git-based publishing flow. Запускайте rebuild notifications після content commits, публікуйте changelog, коли з'являється новий tag, або просіть n8n створити review task для кожного pull request.
+- **Docmost** корисний як місце призначення для документації. Створюйте onboarding checklist, коли реєструється новий клієнт, публікуйте incident notes із monitoring events або підтримуйте internal runbooks актуальними з outputs workflow.
+- **Jupyter Notebook** може підтримувати data та reporting workflows. Запускайте scheduled notebooks, експортуйте reports після оновлення бази даних або сповіщайте канал, коли long-running analysis завершено.
+- **Serposcope** може живити SEO workflows. Надсилайте rank-change alerts, створюйте щотижневий digest search positions або відкривайте content task, коли важливий keyword падає.
+- **MySQL/MariaDB**, **Nginx & PHP** і **LAMP Stack** корисні для внутрішніх інструментів. Використовуйте n8n, щоб записувати rows, викликати private admin endpoints, запускати scheduled maintenance checks або сповіщати команду, коли custom app отримує нову submission.
+
+Для файлів, сховища, синхронізації та backup:
+
+- **Nextcloud** надає WebDAV і широку екосистему застосунків. Переміщуйте uploaded files до review folders, сповіщайте команду, коли приходить client upload, створюйте calendar follow-ups або копіюйте approved documents у project spaces.
+- **SFTPGo** включає REST API, event actions і login hooks. Запускайте file-processing workflows, коли клієнт завантажує report, переміщуйте completed exports до Nextcloud, сповіщайте канал, коли приходить partner transfer, або вимикайте temporary users після deadline.
+- **File Browser Quantum**, **File Browser WebDAV** і **Kodbox** надають поверхні file-management, як-от REST APIs, WebDAV, command hooks або storage plugins. Стежте за shared folders, генеруйте metadata, копіюйте finished assets до archive storage або спрямовуйте files на approval перед публікацією.
+- **Rclone** скриптується через object storage, SFTP, WebDAV і cloud remotes. Плануйте sync jobs із n8n, перевіряйте transfers після великих migrations, переміщуйте processed media до long-term storage або надсилайте failure summaries у chat.
+- **Restic REST Server** дає клієнтам restic HTTPS backup target. Сповіщайте admins, коли scheduled backup checks не проходять, відкривайте incident після missed snapshots або записуйте daily backup health summary у Docmost.
+- **Syncthing** і **Resilio Sync** корисні для file event pipelines. Реагуйте, коли folder finishes syncing, копіюйте completed drops до media library або попереджайте користувача, коли expected files не надійшли.
+- **Pure-FTPd** та інші FTP/SFTP-style endpoints можуть бути частиною legacy file workflows. Опитуйте нові partner files, переміщуйте їх до SFTPGo або Nextcloud, а потім сповіщайте потрібну команду після завершення обробки.
+
+Для безпеки, доступу та інфраструктури:
+
+- **Vaultwarden** надає Bitwarden-compatible API та optional SMTP notifications. Створюйте reminders для vault reviews, сповіщайте admins, коли настає термін onboarding або offboarding tasks, або координуйте password-rotation checklists між командами.
+- **OpenVPN** і **WireGuard VPN** можуть бути частиною access workflows. Сповіщайте operators, коли credentials потрібно ротувати, створюйте checklist tasks для нових VPN users або запускайте scheduled connectivity checks через n8n.
+- Застосунки **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** і **Windows VPS** дають скриптовані середовища. Використовуйте n8n, щоб запускати SSH commands, виконувати health checks, збирати report files або публікувати maintenance summaries після scheduled jobs.
+- Застосунки **Ubuntu**, **Debian** і **Firefox remote desktop** можуть підтримувати browser або desktop tasks. Плануйте reminders для manual review work, фіксуйте outputs зі scripts або передавайте completed desktop exports у file storage.
+
+Для моніторингу, chat і сповіщень:
+
+- **Uptime Kuma** підтримує багаті notification targets і webhooks. Перетворюйте downtime events на alerts Mattermost або Rocket.Chat, створюйте OpenProject incidents, просіть OpenClaw зробити короткий incident summary або записуйте кожне recovery у status spreadsheet.
+- **Mattermost** і **Rocket.Chat** корисні як notification і approval endpoints. Надсилайте human-readable updates із будь-якого workflow, просіть команду approve request, а потім продовжуйте automation після відповіді.
+- **RocketChat Hubot** корисний для chat commands. Дайте teammates запускати n8n webhooks із chat, питати deployment status або стартувати scripted maintenance workflow з audit trail.
+- **Matterbridge** з'єднує IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram та інші. Використовуйте n8n, щоб один раз форматувати operational events, а потім передавати їх у communities або rooms, яким потрібно їх бачити.
+- **ZNC** і **The Lounge** можуть бути частиною chat-ops workflows. Пересилайте важливі IRC events у сучасні team channels, архівуйте highlights або сповіщайте operators, коли з'являється watched keyword.
+
+Для media та download automation:
+
+- **Tautulli** надає Plex activity, notification scripts і JSON API. Надсилайте digests про newly added media, сповіщайте про stream errors, експортуйте usage reports або створюйте cleanup tasks, коли storage перетинає limit.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** і **SeAT** можуть живити library або community workflows. Анонсуйте new media, оновлюйте libraries після imports, створюйте listening або reading digests, синхронізуйте metadata в dashboard або сповіщайте community, коли tracked activity змінюється.
+- **Immich** може підходити для photo workflows. Сповіщайте family, коли shared album змінюється, копіюйте exported albums до archive storage або запускайте backup check після великого mobile upload.
+- **AzuraCast** включає REST API і webhooks. Анонсуйте track або live-show changes, оновлюйте website widget, сповіщайте hosts перед scheduled broadcasts або архівуйте playlist metadata після show.
+- **Icecast** може підтримувати broadcast status workflows. Стежте за stream availability, публікуйте now-playing updates або сповіщайте канал, коли source disconnects.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** і **Deluge** надають RPC або web APIs. Стежте за completed downloads, переміщуйте finished files до правильної library, запускайте media scans або сповіщайте users, коли requested item готовий.
+- **PufferPanel**, **TeamSpeak 3** і game/chat servers також можуть вписатися в operational workflows. Сповіщайте admins, коли server потребує уваги, створюйте maintenance reminders або публікуйте player-facing announcements після scheduled changes.
+
+Ви також можете використовувати n8n із зовнішніми сервісами через вбудовані nodes, webhooks, HTTP requests, database connections і code nodes.
+
+## Встановіть n8n
+
+Відкрийте [сторінку n8n в App Store](/appstore/app/264), виберіть свій Appbox і почніть встановлення.
+
+Під час налаштування Appbox попросить вас створити перший owner account для n8n. Введіть admin email address, password, first name і last name, які хочете використовувати для цього акаунта.
+
+Коли застосунок буде готовий, відкрийте Login URL, показаний на сторінці встановленого застосунку, і увійдіть з owner account, який щойно створили.
+
+## Створіть перший workflow
+
+Коли ви вже в n8n, перейдіть до **Overview** і виберіть **Create Workflow**. Редактор відкриється на canvas, де кожен крок вашої automation представлений node.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="Інтерфейс редактора n8n із canvas робочого процесу"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Почніть із простого manual workflow:
+
+1. Натисніть **Add first step**.
+2. Знайдіть **Manual Trigger** і додайте його.
+3. Натисніть кнопку plus на trigger node.
+4. Додайте другий node, наприклад **Edit Fields**, **HTTP Request** або app-specific node.
+5. Налаштуйте node у боковій панелі.
+
+Основний робочий простір у n8n — це canvas. Там ви додаєте nodes, з'єднуєте їх, впорядковуєте workflow і запускаєте test executions.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="Canvas workflow в n8n з елементом керування add first step"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Протестуйте workflow
+
+Натисніть **Execute Workflow**, щоб запустити workflow вручну.
+
+Після завершення запуску натисніть кожен node, щоб переглянути дані, які він отримав і повернув. Це найшвидший спосіб зрозуміти, що рухається через ваш workflow, перш ніж підключати реальний застосунок, webhook або scheduled trigger.
+
+## Підключіть застосунки та credentials
+
+Для app integrations додайте потрібний node і створіть credentials, коли n8n попросить їх.
+
+Для застосунків, hosted в Appbox, поширений шаблон такий:
+
+1. Створіть API token або webhook у застосунку, який хочете автоматизувати.
+2. Додайте відповідний n8n node або використайте node **HTTP Request**, якщо dedicated node немає.
+3. Збережіть token у credentials n8n.
+4. Протестуйте одну невелику дію, перш ніж додавати branching, retries або більше кроків.
+
+Для вхідних подій використовуйте trigger **Webhook**. n8n дає production webhook URL, який зовнішні сервіси можуть викликати через HTTPS.
+
+## Проста перша автоматизація
+
+Спробуйте це як перший справжній workflow:
+
+1. Додайте trigger **Webhook**.
+2. Додайте node **HTTP Request**, щоб викликати інший сервіс або API застосунку Appbox.
+3. Додайте node **IF**, щоб розгалужуватися за response.
+4. Надішліть повідомлення до Mattermost, Rocket.Chat або іншого notification channel.
+
+Це дає базовий pattern для багатьох автоматизацій n8n: отримати подію, взяти або перетворити дані, ухвалити рішення, а потім сповістити людину або оновити іншу систему.
+
+## Нотатка про масштаб
+
+Пакет Appbox спроєктований як компактне single-container розгортання n8n із persistent storage. Це чудова відправна точка для personal, team та internal automations.
+
+Якщо ви плануєте запускати дуже високий execution volume, великі payloads або business-critical automation hub, ретельно протестуйте workload і подумайте про збільшення ресурсів застосунку зі сторінки встановленого застосунку.
+
+## Почніть будувати
+
+Якщо у вас є Appbox, n8n — один із найшвидших способів зробити так, щоб решта ваших інструментів відчувалася пов'язаною.
+
+[Розгорніть n8n в Appbox](/appstore/app/264), створіть workflow, запустіть його один раз вручну, а потім перетворіть на automation, яку ви хотіли б уже мати у своїх застосунках.

@@ -1,0 +1,170 @@
+---
+title: Présentation de n8n sur Appbox
+date: 2026-06-24 08:11:00
+excerpt: Déployez n8n sur Appbox et commencez à créer des automatisations de workflows self-hosted pour vos apps, APIs, webhooks et outils internes.
+author_id: rid
+tags: [appbox, n8n, automatisation, workflows, self-hosted, app-store]
+---
+
+# Présentation de n8n sur Appbox
+
+n8n est maintenant disponible sur Appbox.
+
+Vous pouvez donc déployer un espace privé d'automatisation de workflows, ouvrir l'éditeur visuel et commencer à connecter des apps, des APIs, des planifications, des webhooks et du code personnalisé sans gérer un serveur à la main.
+
+[Installez n8n depuis l'App Store Appbox](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="éditeur de workflows n8n montrant des nœuds d'automatisation connectés sur un canevas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Ce que vous pouvez créer
+
+n8n est utile dès qu'une app doit réagir à une autre app, nettoyer des données, appeler une API, envoyer une notification ou exécuter une tâche planifiée.
+
+Sur Appbox, cela en fait un compagnon naturel pour les apps qui proposent des webhooks, des APIs, des hooks de notification, WebDAV, RPC ou des interfaces scriptables.
+
+Pour les workflows d'IA, de support et de gestion:
+
+- **OpenClaw** peut servir de couche IA pour vos automatisations. Envoyez un webhook depuis n8n lorsqu'un ticket de support, une alerte de monitoring ou un téléversement de fichier doit être résumé, puis laissez OpenClaw rédiger la réponse, classer la demande ou transformer l'événement en tâche.
+- **Chatwoot** expose des événements de boîte de réception et des APIs pour le support client. Étiquetez les conversations urgentes, enrichissez les nouveaux contacts depuis un autre système, notifiez un canal d'équipe lorsqu'un VIP écrit ou créez une tâche de suivi après la clôture d'une conversation.
+- **Mautic** dispose d'une API REST et d'une surface d'automatisation de campagnes. Synchronisez des leads depuis des formulaires, scorez des contacts après des événements produit, ajoutez des personnes à des campagnes depuis des soumissions webhook ou notifiez les ventes lorsqu'un lead franchit un seuil.
+- **ERPNext** expose les dossiers métier via des APIs. Créez des factures à partir de soumissions de formulaire, mettez à jour des opportunités lorsqu'un paiement arrive, notifiez les opérations quand le stock est bas ou poussez des fiches client vers une autre app Appbox.
+- **Plane** et **OpenProject** fonctionnent bien comme destinations de tâches. Transformez incidents, soumissions de formulaire, jobs échoués ou demandes client en issues et lots de travaux avec le bon responsable et le bon contexte.
+- **Rallly** peut s'intégrer aux workflows de planification. Créez des sondages depuis des formulaires de demande, notifiez les invités après le choix d'un créneau de réunion ou envoyez des rappels avant une échéance de disponibilité.
+- **OnlyOffice** et **Jitsi** conviennent aux workflows de documents et de réunions. Notifiez les relecteurs lorsqu'un document est prêt, créez un lien de réunion après une approbation ou envoyez les tâches de suivi post-réunion vers Plane ou OpenProject.
+
+Pour le contenu, la publication et les workflows développeur:
+
+- **EmDash** vous donne un CMS structuré avec formulaires, liens courts, plugins et hooks d'autobuild. Envoyez les soumissions de formulaire vers n8n, notifiez les éditeurs lorsqu'un contenu est publié, déclenchez une reconstruction après la mise en ligne d'un brouillon ou envoyez les nouveaux articles vers Mattermost, Rocket.Chat et des files sociales.
+- **WordPress** dispose d'une API REST et d'un écosystème de hooks. Rédigez des articles depuis des soumissions de formulaire, publiez des annonces lorsqu'un contenu est mis en ligne, sauvegardez les médias vers une autre app de stockage ou envoyez des rappels éditoriaux avant les publications planifiées.
+- **GitLab**, **Gogs** et d'autres apps Git exposent des hooks de dépôt, de projet et de système. Envoyez des notifications de release sur les tags, créez des checklists de déploiement après des merges, publiez des résumés de pipelines échoués dans le chat ou ouvrez des issues de gestion de projet depuis des modèles de rapport de bug.
+- **Hugo Git** peut s'inscrire dans un flux de publication basé sur Git. Déclenchez des notifications de reconstruction après des commits de contenu, publiez un changelog lorsqu'un nouveau tag arrive ou demandez à n8n de créer une tâche de revue pour chaque pull request.
+- **Docmost** est utile comme destination de documentation. Créez une checklist d'onboarding lorsqu'un nouveau client s'inscrit, publiez des notes d'incident à partir d'événements de monitoring ou maintenez les runbooks internes à jour depuis les sorties des workflows.
+- **Jupyter Notebook** peut soutenir les workflows de données et de reporting. Exécutez des notebooks planifiés, exportez des rapports après une mise à jour de base de données ou notifiez un canal lorsqu'une longue analyse se termine.
+- **Serposcope** peut alimenter des workflows SEO. Envoyez des alertes de changement de classement, créez un résumé hebdomadaire des positions de recherche ou ouvrez une tâche de contenu lorsqu'un mot-clé important baisse.
+- **MySQL/MariaDB**, **Nginx & PHP** et **LAMP Stack** sont utiles pour les outils internes. Utilisez n8n pour écrire des lignes, appeler des endpoints d'administration privés, exécuter des contrôles de maintenance planifiés ou notifier une équipe lorsqu'une app personnalisée reçoit une nouvelle soumission.
+
+Pour les fichiers, le stockage, la synchronisation et la sauvegarde:
+
+- **Nextcloud** expose WebDAV et un large écosystème d'apps. Déplacez les fichiers téléversés vers des dossiers de revue, notifiez une équipe lorsqu'un téléversement client arrive, créez des suivis calendrier ou copiez les documents approuvés dans des espaces projet.
+- **SFTPGo** inclut une API REST, des actions d'événement et des hooks de connexion. Déclenchez des workflows de traitement de fichiers lorsqu'un client téléverse un rapport, déplacez les exports terminés vers Nextcloud, notifiez un canal lorsqu'un transfert partenaire arrive ou désactivez les utilisateurs temporaires après une échéance.
+- **File Browser Quantum**, **File Browser WebDAV** et **Kodbox** exposent des surfaces de gestion de fichiers comme des APIs REST, WebDAV, des hooks de commande ou des plugins de stockage. Surveillez des dossiers partagés, générez des métadonnées, copiez des assets terminés vers un stockage d'archive ou routez des fichiers pour approbation avant publication.
+- **Rclone** est scriptable sur stockage objet, SFTP, WebDAV et remotes cloud. Planifiez des jobs de synchronisation depuis n8n, vérifiez les transferts après de grosses migrations, déplacez les médias traités vers un stockage long terme ou envoyez des résumés d'échec dans le chat.
+- **Restic REST Server** donne aux clients restic une cible de sauvegarde HTTPS. Notifiez les administrateurs lorsque les contrôles de sauvegarde planifiés échouent, ouvrez un incident après des snapshots manqués ou écrivez un résumé quotidien de santé des sauvegardes dans Docmost.
+- **Syncthing** et **Resilio Sync** sont utiles pour les pipelines d'événements de fichiers. Réagissez lorsqu'un dossier termine sa synchronisation, copiez des dépôts terminés dans une médiathèque ou alertez un utilisateur lorsque des fichiers attendus ne sont pas arrivés.
+- **Pure-FTPd** et d'autres endpoints de type FTP/SFTP peuvent s'inscrire dans des workflows de fichiers hérités. Interrogez périodiquement de nouveaux fichiers partenaires, déplacez-les vers SFTPGo ou Nextcloud, puis notifiez la bonne équipe lorsque le traitement est terminé.
+
+Pour la sécurité, l'accès et l'infrastructure:
+
+- **Vaultwarden** expose une API compatible Bitwarden et des notifications SMTP optionnelles. Créez des rappels pour les revues de coffre, notifiez les administrateurs lorsque des tâches d'onboarding ou d'offboarding arrivent à échéance ou coordonnez des checklists de rotation de mots de passe entre équipes.
+- **OpenVPN** et **WireGuard VPN** peuvent faire partie de workflows d'accès. Notifiez les opérateurs lorsque des identifiants doivent être renouvelés, créez des tâches de checklist pour les nouveaux utilisateurs VPN ou exécutez des contrôles de connectivité planifiés via n8n.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** et **Windows VPS** vous donnent des environnements scriptables. Utilisez n8n pour déclencher des commandes SSH, exécuter des health checks, collecter des fichiers de rapport ou publier des résumés de maintenance après des jobs planifiés.
+- Les apps de bureau distant **Ubuntu**, **Debian** et **Firefox** peuvent soutenir des tâches navigateur ou desktop. Planifiez des rappels pour des travaux de revue manuelle, capturez les sorties de scripts ou transmettez des exports desktop terminés vers le stockage de fichiers.
+
+Pour le monitoring, le chat et les notifications:
+
+- **Uptime Kuma** prend en charge des cibles de notification riches et des webhooks. Transformez des événements d'indisponibilité en alertes Mattermost ou Rocket.Chat, créez des incidents OpenProject, demandez à OpenClaw un court résumé d'incident ou journalisez chaque rétablissement dans une feuille de statut.
+- **Mattermost** et **Rocket.Chat** sont des endpoints utiles de notification et d'approbation. Envoyez des mises à jour lisibles par des humains depuis n'importe quel workflow, demandez à une équipe d'approuver une demande, puis poursuivez l'automatisation lorsqu'une personne répond.
+- **RocketChat Hubot** est utile pour les commandes de chat. Laissez vos coéquipiers déclencher des webhooks n8n depuis le chat, demander l'état d'un déploiement ou lancer un workflow de maintenance scripté avec une piste d'audit.
+- **Matterbridge** connecte IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram et plus encore. Utilisez n8n pour formater les événements opérationnels une seule fois, puis les relayer vers les communautés ou salons qui doivent les voir.
+- **ZNC** et **The Lounge** peuvent faire partie de workflows chat-ops. Transférez les événements IRC importants vers des canaux d'équipe modernes, archivez les temps forts ou notifiez les opérateurs lorsqu'un mot-clé surveillé apparaît.
+
+Pour les médias et l'automatisation des téléchargements:
+
+- **Tautulli** expose l'activité Plex, des scripts de notification et une API JSON. Envoyez des résumés des médias récemment ajoutés, alertez lorsqu'un stream échoue, exportez des rapports d'utilisation ou créez des tâches de nettoyage lorsque le stockage dépasse une limite.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** et **SeAT** peuvent alimenter des workflows de bibliothèque ou de communauté. Annoncez de nouveaux médias, rafraîchissez les bibliothèques après import, créez des résumés d'écoute ou de lecture, synchronisez des métadonnées dans un dashboard ou notifiez une communauté lorsqu'une activité suivie change.
+- **Immich** peut s'intégrer aux workflows photo. Notifiez la famille lorsqu'un album partagé change, copiez des albums exportés vers un stockage d'archive ou déclenchez un contrôle de sauvegarde après un gros téléversement mobile.
+- **AzuraCast** inclut une API REST et des webhooks. Annoncez des changements de piste ou d'émission en direct, mettez à jour un widget de site web, notifiez les animateurs avant des diffusions planifiées ou archivez les métadonnées de playlist après une émission.
+- **Icecast** peut soutenir les workflows de statut de diffusion. Surveillez la disponibilité des streams, publiez les titres en cours ou alertez un canal lorsqu'une source se déconnecte.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** et **Deluge** exposent des APIs RPC ou web. Surveillez les téléchargements terminés, déplacez les fichiers finalisés vers la bonne bibliothèque, déclenchez des scans média ou notifiez les utilisateurs lorsqu'un élément demandé est prêt.
+- **PufferPanel**, **TeamSpeak 3** et les serveurs de jeux/chat peuvent aussi s'intégrer aux workflows opérationnels. Notifiez les administrateurs lorsqu'un serveur demande de l'attention, créez des rappels de maintenance ou publiez des annonces destinées aux joueurs après des changements planifiés.
+
+Vous pouvez aussi utiliser n8n avec des services externes grâce aux nœuds intégrés, aux webhooks, aux requêtes HTTP, aux connexions de base de données et aux nœuds de code.
+
+## Installer n8n
+
+Ouvrez la [page n8n de l'App Store](/appstore/app/264), choisissez votre Appbox et lancez l'installation.
+
+Pendant la configuration, Appbox vous demande de créer le premier compte propriétaire pour n8n. Saisissez l'adresse e-mail administrateur, le mot de passe, le prénom et le nom que vous voulez utiliser pour ce compte.
+
+Quand l'app est prête, ouvrez l'URL de Login indiquée sur la page de l'app installée et connectez-vous avec le compte propriétaire que vous venez de créer.
+
+## Créer votre premier workflow
+
+Une fois dans n8n, allez dans **Overview** et choisissez **Create Workflow**. L'éditeur s'ouvre sur un canevas où chaque étape de votre automatisation est représentée par un nœud.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="interface de l'éditeur n8n montrant le canevas du workflow"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Commencez par un workflow manuel simple:
+
+1. Cliquez sur **Add first step**.
+2. Recherchez **Manual Trigger** et ajoutez-le.
+3. Cliquez sur le bouton plus du nœud déclencheur.
+4. Ajoutez un deuxième nœud, comme **Edit Fields**, **HTTP Request** ou un nœud propre à une app.
+5. Configurez le nœud dans le panneau latéral.
+
+L'espace de travail principal de n8n est le canevas. C'est là que vous ajoutez des nœuds, les connectez, organisez le workflow et lancez des exécutions de test.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="canevas de workflow n8n montrant le contrôle d'ajout de première étape"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Tester le workflow
+
+Cliquez sur **Execute Workflow** pour exécuter le workflow manuellement.
+
+Une fois l'exécution terminée, cliquez sur chaque nœud pour inspecter les données qu'il a reçues et renvoyées. C'est le moyen le plus rapide de comprendre ce qui circule dans votre workflow avant de connecter une vraie app, un webhook ou un déclencheur planifié.
+
+## Connecter apps et identifiants
+
+Pour les intégrations d'apps, ajoutez le nœud dont vous avez besoin et créez les identifiants lorsque n8n vous les demande.
+
+Pour les apps hébergées sur Appbox, un schéma courant est:
+
+1. Créez un token API ou un webhook dans l'app que vous voulez automatiser.
+2. Ajoutez le nœud n8n correspondant, ou utilisez le nœud **HTTP Request** s'il n'existe pas de nœud dédié.
+3. Stockez le token dans les identifiants n8n.
+4. Testez avec une petite action avant d'ajouter des embranchements, des tentatives de reprise ou d'autres étapes.
+
+Pour les événements entrants, utilisez un déclencheur **Webhook**. n8n vous fournit une URL de webhook de production que les services externes peuvent appeler en HTTPS.
+
+## Une première automatisation simple
+
+Essayez ceci comme premier vrai workflow:
+
+1. Ajoutez un déclencheur **Webhook**.
+2. Ajoutez un nœud **HTTP Request** pour appeler un autre service ou l'API d'une app Appbox.
+3. Ajoutez un nœud **IF** pour créer une branche selon la réponse.
+4. Envoyez un message à Mattermost, Rocket.Chat ou un autre canal de notification.
+
+Cela vous donne le modèle central de nombreuses automatisations n8n: recevoir un événement, récupérer ou transformer des données, prendre une décision, puis notifier une personne ou mettre à jour un autre système.
+
+## Une note sur l'échelle
+
+Le package Appbox est conçu comme un déploiement n8n compact en conteneur unique avec stockage persistant. C'est un excellent point de départ pour des automatisations personnelles, d'équipe et internes.
+
+Si vous prévoyez d'exécuter un très grand volume d'exécutions, de gros payloads ou un hub d'automatisation critique pour l'activité, testez soigneusement la charge de travail et envisagez d'augmenter les ressources de l'app depuis la page de l'app installée.
+
+## Commencer à créer
+
+Si vous avez une Appbox, n8n est l'un des moyens les plus rapides de donner l'impression que le reste de vos outils est connecté.
+
+[Déployez n8n sur Appbox](/appstore/app/264), créez un workflow, exécutez-le une fois manuellement, puis transformez-le en l'automatisation que vous auriez aimé que vos apps aient déjà.

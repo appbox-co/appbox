@@ -1,0 +1,170 @@
+---
+title: Memperkenalkan n8n di Appbox
+date: 2026-06-24 08:11:00
+excerpt: Deploy n8n di Appbox dan mulai bangun otomatisasi workflow self-hosted untuk aplikasi, API, webhook, dan tool internal.
+author_id: rid
+tags: [appbox, n8n, otomatisasi, workflow, self-hosted, app-store]
+---
+
+# Memperkenalkan n8n di Appbox
+
+n8n kini tersedia di Appbox.
+
+Artinya, Anda bisa men-deploy workspace otomatisasi workflow privat, membuka editor visual, lalu mulai menghubungkan aplikasi, API, jadwal, webhook, dan kode khusus tanpa mengelola server secara manual.
+
+[Instal n8n dari Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="editor workflow n8n yang menampilkan node otomatisasi terhubung di kanvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Apa yang Bisa Anda Bangun
+
+n8n berguna kapan pun satu aplikasi perlu bereaksi terhadap aplikasi lain, membersihkan data, memanggil API, mengirim notifikasi, atau menjalankan tugas terjadwal.
+
+Di Appbox, hal itu menjadikannya pendamping alami untuk aplikasi yang memiliki webhook, API, hook notifikasi, WebDAV, RPC, atau antarmuka yang bisa diskripkan.
+
+Untuk AI, dukungan, dan workflow bisnis:
+
+- **OpenClaw** dapat bertindak sebagai lapisan AI untuk otomatisasi Anda. Kirim webhook dari n8n saat tiket dukungan, peringatan monitoring, atau unggahan file perlu diringkas, lalu biarkan OpenClaw membuat draf balasan, mengklasifikasikan permintaan, atau mengubah peristiwa itu menjadi tugas.
+- **Chatwoot** menyediakan event inbox dan API untuk dukungan pelanggan. Tandai percakapan mendesak, perkaya kontak baru dari sistem lain, beri tahu kanal tim saat VIP menulis, atau buat tugas tindak lanjut setelah percakapan ditutup.
+- **Mautic** memiliki REST API dan permukaan otomatisasi kampanye. Sinkronkan lead dari formulir, beri skor kontak setelah event produk, tambahkan orang ke kampanye dari kiriman webhook, atau beri tahu sales saat lead melewati ambang tertentu.
+- **ERPNext** membuka data bisnis melalui API. Buat faktur dari kiriman formulir, perbarui deal saat pembayaran masuk, beri tahu operasional saat stok menipis, atau dorong data pelanggan ke aplikasi Appbox lain.
+- **Plane** dan **OpenProject** cocok sebagai tujuan tugas. Ubah insiden, kiriman formulir, job yang gagal, atau permintaan pelanggan menjadi issue dan work package dengan assignee serta konteks yang tepat.
+- **Rallly** dapat masuk ke workflow penjadwalan. Buat polling dari formulir permintaan, beri tahu tamu setelah waktu rapat dipilih, atau kirim pengingat sebelum batas waktu ketersediaan.
+- **OnlyOffice** dan **Jitsi** cocok untuk workflow dokumen dan rapat. Beri tahu reviewer saat dokumen siap, buat tautan rapat setelah persetujuan, atau kirim tugas tindak lanjut pascarapat ke Plane atau OpenProject.
+
+Untuk konten, penerbitan, dan workflow developer:
+
+- **EmDash** memberi Anda CMS terstruktur dengan formulir, tautan pendek, plugin, dan hook autobuild. Kirim kiriman formulir ke n8n, beri tahu editor saat konten diterbitkan, picu rebuild setelah draf tayang, atau kirim posting baru ke Mattermost, Rocket.Chat, dan antrean sosial.
+- **WordPress** memiliki REST API dan ekosistem hook. Buat draf posting dari kiriman formulir, publikasikan pengumuman saat konten tayang, cadangkan media ke aplikasi penyimpanan lain, atau kirim pengingat editorial sebelum posting terjadwal.
+- **GitLab**, **Gogs**, dan aplikasi Git lain menyediakan hook repositori, proyek, dan sistem. Jalankan notifikasi rilis pada tag, buat checklist deployment setelah merge, posting ringkasan pipeline gagal ke chat, atau buka issue manajemen proyek dari template laporan bug.
+- **Hugo Git** dapat berada dalam alur penerbitan berbasis Git. Picu notifikasi rebuild setelah commit konten, publikasikan changelog saat tag baru muncul, atau minta n8n membuat tugas review untuk setiap pull request.
+- **Docmost** berguna sebagai tujuan dokumentasi. Buat checklist onboarding saat pelanggan baru mendaftar, posting catatan insiden dari event monitoring, atau jaga runbook internal tetap diperbarui dari output workflow.
+- **Jupyter Notebook** dapat mendukung workflow data dan pelaporan. Jalankan notebook terjadwal, ekspor laporan setelah pembaruan database, atau beri tahu kanal saat analisis panjang selesai.
+- **Serposcope** dapat memberi masukan ke workflow SEO. Kirim peringatan perubahan ranking, buat ringkasan posisi pencarian mingguan, atau buka tugas konten saat kata kunci penting turun.
+- **MySQL/MariaDB**, **Nginx & PHP**, dan **LAMP Stack** berguna untuk tool internal. Gunakan n8n untuk menulis baris, memanggil endpoint admin privat, menjalankan pemeriksaan pemeliharaan terjadwal, atau memberi tahu tim saat aplikasi khusus menerima kiriman baru.
+
+Untuk file, penyimpanan, sinkronisasi, dan backup:
+
+- **Nextcloud** menyediakan WebDAV dan ekosistem aplikasi yang luas. Pindahkan file unggahan ke folder review, beri tahu tim saat unggahan klien tiba, buat tindak lanjut kalender, atau salin dokumen yang disetujui ke ruang proyek.
+- **SFTPGo** mencakup REST API, aksi event, dan hook login. Picu workflow pemrosesan file saat klien mengunggah laporan, pindahkan ekspor yang selesai ke Nextcloud, beri tahu kanal saat transfer partner tiba, atau nonaktifkan pengguna sementara setelah tenggat.
+- **File Browser Quantum**, **File Browser WebDAV**, dan **Kodbox** menyediakan permukaan pengelolaan file seperti REST API, WebDAV, command hook, atau plugin penyimpanan. Pantau folder bersama, buat metadata, salin aset final ke penyimpanan arsip, atau alirkan file untuk persetujuan sebelum diterbitkan.
+- **Rclone** bisa diskripkan lintas object storage, SFTP, WebDAV, dan remote cloud. Jadwalkan job sinkronisasi dari n8n, verifikasi transfer setelah migrasi besar, pindahkan media yang telah diproses ke penyimpanan jangka panjang, atau kirim ringkasan kegagalan ke chat.
+- **Restic REST Server** memberi klien restic target backup HTTPS. Beri tahu admin saat pemeriksaan backup terjadwal gagal, buka insiden setelah snapshot terlewat, atau tulis ringkasan kesehatan backup harian ke Docmost.
+- **Syncthing** dan **Resilio Sync** berguna untuk pipeline event file. Bereaksi saat folder selesai disinkronkan, salin drop yang selesai ke library media, atau beri tahu pengguna saat file yang diharapkan belum tiba.
+- **Pure-FTPd** dan endpoint bergaya FTP/SFTP lain dapat berada dalam workflow file lama. Poll file partner baru, pindahkan ke SFTPGo atau Nextcloud, lalu beri tahu tim yang tepat setelah pemrosesan selesai.
+
+Untuk keamanan, akses, dan infrastruktur:
+
+- **Vaultwarden** menyediakan API yang kompatibel dengan Bitwarden dan notifikasi SMTP opsional. Buat pengingat review vault, beri tahu admin saat tugas onboarding atau offboarding jatuh tempo, atau koordinasikan checklist rotasi kata sandi lintas tim.
+- **OpenVPN** dan **WireGuard VPN** dapat menjadi bagian dari workflow akses. Beri tahu operator saat kredensial perlu dirotasi, buat tugas checklist untuk pengguna VPN baru, atau jalankan pemeriksaan konektivitas terjadwal melalui n8n.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux**, dan aplikasi **Windows VPS** memberi Anda lingkungan yang bisa diskripkan. Gunakan n8n untuk memicu perintah SSH, menjalankan health check, mengumpulkan file laporan, atau memposting ringkasan pemeliharaan setelah job terjadwal.
+- **Ubuntu**, **Debian**, dan aplikasi **Firefox remote desktop** dapat mendukung tugas browser atau desktop. Jadwalkan pengingat untuk pekerjaan review manual, tangkap output dari skrip, atau serahkan ekspor desktop yang selesai ke penyimpanan file.
+
+Untuk monitoring, chat, dan notifikasi:
+
+- **Uptime Kuma** mendukung target notifikasi dan webhook yang kaya. Ubah event downtime menjadi peringatan Mattermost atau Rocket.Chat, buat insiden OpenProject, minta OpenClaw membuat ringkasan insiden singkat, atau catat setiap pemulihan ke spreadsheet status.
+- **Mattermost** dan **Rocket.Chat** berguna sebagai endpoint notifikasi dan persetujuan. Kirim pembaruan yang mudah dibaca dari workflow apa pun, minta tim menyetujui permintaan, lalu lanjutkan otomatisasi setelah seseorang merespons.
+- **RocketChat Hubot** berguna untuk perintah chat. Biarkan rekan tim memicu webhook n8n dari chat, menanyakan status deployment, atau memulai workflow pemeliharaan berskrip dengan jejak audit.
+- **Matterbridge** menghubungkan IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram, dan lainnya. Gunakan n8n untuk memformat event operasional sekali, lalu meneruskannya ke komunitas atau room yang perlu melihatnya.
+- **ZNC** dan **The Lounge** dapat menjadi bagian dari workflow chat-ops. Teruskan event IRC penting ke kanal tim modern, arsipkan highlight, atau beri tahu operator saat kata kunci yang dipantau muncul.
+
+Untuk otomatisasi media dan unduhan:
+
+- **Tautulli** menyediakan aktivitas Plex, skrip notifikasi, dan JSON API. Kirim ringkasan media baru, beri peringatan saat stream error, ekspor laporan penggunaan, atau buat tugas pembersihan saat penyimpanan melewati batas.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic**, dan **SeAT** dapat memberi masukan ke workflow library atau komunitas. Umumkan media baru, segarkan library setelah impor, buat ringkasan mendengar atau membaca, sinkronkan metadata ke dashboard, atau beri tahu komunitas saat aktivitas yang dilacak berubah.
+- **Immich** cocok untuk workflow foto. Beri tahu keluarga saat album bersama berubah, salin album yang diekspor ke penyimpanan arsip, atau picu pemeriksaan backup setelah unggahan mobile besar.
+- **AzuraCast** mencakup REST API dan webhook. Umumkan perubahan lagu atau acara live, perbarui widget situs web, beri tahu host sebelum siaran terjadwal, atau arsipkan metadata playlist setelah acara.
+- **Icecast** dapat mendukung workflow status siaran. Pantau ketersediaan stream, posting pembaruan now-playing, atau beri peringatan ke kanal saat sumber terputus.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission**, dan **Deluge** menyediakan RPC atau web API. Pantau unduhan selesai, pindahkan file final ke library yang tepat, picu pemindaian media, atau beri tahu pengguna saat item yang diminta siap.
+- **PufferPanel**, **TeamSpeak 3**, dan server game/chat juga bisa masuk ke workflow operasional. Beri tahu admin saat server perlu perhatian, buat pengingat pemeliharaan, atau posting pengumuman untuk pemain setelah perubahan terjadwal.
+
+Anda juga dapat menggunakan n8n dengan layanan eksternal melalui node bawaan, webhook, HTTP request, koneksi database, dan code node.
+
+## Instal n8n
+
+Buka [halaman n8n App Store](/appstore/app/264), pilih Appbox Anda, lalu mulai instalasi.
+
+Saat setup, Appbox meminta Anda membuat akun owner pertama untuk n8n. Masukkan alamat email admin, kata sandi, nama depan, dan nama belakang yang ingin Anda gunakan untuk akun itu.
+
+Saat aplikasi siap, buka Login URL yang ditampilkan di halaman aplikasi terinstal dan masuk dengan akun owner yang baru Anda buat.
+
+## Buat Workflow Pertama Anda
+
+Setelah berada di dalam n8n, buka **Overview** dan pilih **Create Workflow**. Editor terbuka di kanvas tempat setiap langkah otomatisasi Anda direpresentasikan sebagai node.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="UI editor n8n yang menampilkan kanvas workflow"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Mulailah dengan workflow manual sederhana:
+
+1. Klik **Add first step**.
+2. Cari **Manual Trigger** dan tambahkan.
+3. Klik tombol plus pada node trigger.
+4. Tambahkan node kedua, seperti **Edit Fields**, **HTTP Request**, atau node khusus aplikasi.
+5. Konfigurasikan node di panel samping.
+
+Workspace utama di n8n adalah kanvas. Di sanalah Anda menambahkan node, menghubungkannya, merapikan workflow, dan menjalankan eksekusi uji.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="kanvas workflow n8n yang menampilkan kontrol tambah langkah pertama"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Uji Workflow
+
+Klik **Execute Workflow** untuk menjalankan workflow secara manual.
+
+Setelah eksekusi selesai, klik setiap node untuk memeriksa data yang diterima dan dikembalikannya. Ini adalah cara tercepat untuk memahami apa yang bergerak melalui workflow sebelum Anda menghubungkan aplikasi nyata, webhook, atau trigger terjadwal.
+
+## Hubungkan Aplikasi dan Kredensial
+
+Untuk integrasi aplikasi, tambahkan node yang Anda butuhkan dan buat kredensial saat n8n memintanya.
+
+Untuk aplikasi yang di-host di Appbox, pola umumnya adalah:
+
+1. Buat token API atau webhook di aplikasi yang ingin Anda otomatisasi.
+2. Tambahkan node n8n yang sesuai, atau gunakan node **HTTP Request** jika tidak ada node khusus.
+3. Simpan token di kredensial n8n.
+4. Uji dengan satu aksi kecil sebelum menambahkan percabangan, retry, atau langkah lain.
+
+Untuk event masuk, gunakan trigger **Webhook**. n8n memberi Anda URL webhook produksi yang bisa dipanggil layanan eksternal melalui HTTPS.
+
+## Otomatisasi Pertama yang Sederhana
+
+Coba ini sebagai workflow nyata pertama Anda:
+
+1. Tambahkan trigger **Webhook**.
+2. Tambahkan node **HTTP Request** untuk memanggil layanan lain atau API aplikasi Appbox.
+3. Tambahkan node **IF** untuk bercabang berdasarkan respons.
+4. Kirim pesan ke Mattermost, Rocket.Chat, atau kanal notifikasi lain.
+
+Itu memberi Anda pola inti untuk banyak otomatisasi n8n: menerima event, mengambil atau mengubah data, membuat keputusan, lalu memberi tahu seseorang atau memperbarui sistem lain.
+
+## Catatan tentang Skala
+
+Paket Appbox dirancang sebagai deployment n8n satu kontainer yang ringkas dengan penyimpanan persisten. Ini adalah titik awal yang bagus untuk otomatisasi personal, tim, dan internal.
+
+Jika Anda berencana menjalankan volume eksekusi yang sangat tinggi, payload besar, atau hub otomatisasi yang penting bagi bisnis, uji workload dengan cermat dan pertimbangkan untuk meningkatkan resource aplikasi dari halaman aplikasi terinstal.
+
+## Mulai Membangun
+
+Jika Anda memiliki Appbox, n8n adalah salah satu cara tercepat untuk membuat tool Anda yang lain terasa saling terhubung.
+
+[Deploy n8n di Appbox](/appstore/app/264), buat workflow, jalankan sekali secara manual, lalu ubah menjadi otomatisasi yang Anda harap sudah dimiliki aplikasi Anda.

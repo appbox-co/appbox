@@ -1,0 +1,170 @@
+---
+title: n8n on nyt saatavilla Appbox-palvelussa
+date: 2026-06-24 08:11:00
+excerpt: Ota n8n käyttöön Appbox-palvelussa ja ala rakentaa itse hostattuja työnkulkuautomaatioita sovelluksille, API-rajapinnoille, webhooks-tapahtumille ja sisäisille työkaluille.
+author_id: rid
+tags: [appbox, n8n, automaatio, työnkulut, self-hosted, app-store]
+---
+
+# n8n on nyt saatavilla Appbox-palvelussa
+
+n8n on nyt saatavilla Appbox-palvelussa.
+
+Se tarkoittaa, että voit ottaa käyttöön yksityisen työnkulkuautomaation työtilan, avata visuaalisen editorin ja alkaa yhdistää sovelluksia, API-rajapintoja, ajastuksia, webhookeja ja omaa koodia ilman, että palvelinta tarvitsee hallita käsin.
+
+[Asenna n8n Appbox App Storesta](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="n8n-työnkulkueditori, jossa yhdistettyjä automaationodeja näkyy canvas-näkymässä"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Mitä voit rakentaa
+
+n8n on hyödyllinen aina, kun yhden sovelluksen täytyy reagoida toiseen sovellukseen, siistiä dataa, kutsua APIa, lähettää ilmoitus tai suorittaa ajastettu tehtävä.
+
+Appbox-palvelussa se tekee n8n-sovelluksesta luontevan kumppanin sovelluksille, joissa on webhookeja, API-rajapintoja, ilmoitushookeja, WebDAV, RPC tai skriptattavia rajapintoja.
+
+AI-, tuki- ja liiketoimintatyönkulkuihin:
+
+- **OpenClaw** voi toimia automaatioidesi AI-kerroksena. Lähetä webhook n8n-sovelluksesta, kun tukipyyntö, valvontahälytys tai tiedostolataus tarvitsee tiivistämistä, ja anna OpenClaw-palvelun luonnostella vastaus, luokitella pyyntö tai muuttaa tapahtuma tehtäväksi.
+- **Chatwoot** tarjoaa inbox-tapahtumat ja API-rajapinnat asiakastukeen. Merkitse kiireelliset keskustelut, rikasta uudet yhteystiedot toisesta järjestelmästä, ilmoita tiimikanavalle kun VIP-asiakas kirjoittaa tai luo jatkotehtävä keskustelun sulkeuduttua.
+- **Mautic** sisältää REST APIn ja kampanja-automaation pinnan. Synkronoi liidejä lomakkeista, pisteytä kontakteja tuotetapahtumien jälkeen, lisää ihmisiä kampanjoihin webhook-lähetyksistä tai ilmoita myynnille, kun liidi ylittää raja-arvon.
+- **ERPNext** avaa liiketoimintatietueet APIen kautta. Luo laskuja lomakelähetyksistä, päivitä diilejä maksun saavuttua, ilmoita operaatioille kun varasto on vähissä tai työnnä asiakastietueita toiseen Appbox-sovellukseen.
+- **Plane** ja **OpenProject** toimivat hyvin tehtävien kohteina. Muuta incidentit, lomakelähetykset, epäonnistuneet ajot tai asiakaspyynnöt issueiksi ja work packageiksi oikealla vastuuhenkilöllä ja kontekstilla.
+- **Rallly** sopii aikataulutustyönkulkuihin. Luo kyselyitä pyyntölomakkeista, ilmoita vieraille kun tapaamisaika valitaan tai lähetä muistutuksia ennen saatavuuden määräaikaa.
+- **OnlyOffice** ja **Jitsi** sopivat dokumentti- ja kokoustyönkulkuihin. Ilmoita tarkastajille, kun dokumentti on valmis, luo kokouslinkki hyväksynnän jälkeen tai lähetä kokouksen jälkeiset jatkotehtävät Plane-palveluun tai OpenProject-palveluun.
+
+Sisällön, julkaisun ja kehittäjätyönkulkuihin:
+
+- **EmDash** tarjoaa rakenteisen CMS:n, jossa on lomakkeita, lyhytlinkkejä, plugineja ja autobuild-hookeja. Lähetä lomakelähetykset n8n-palveluun, ilmoita toimittajille kun sisältö julkaistaan, käynnistä rebuild luonnoksen mennessä liveksi tai lähetä uudet julkaisut Mattermost-palveluun, Rocket.Chat-palveluun ja some-jonoihin.
+- **WordPress** sisältää REST APIn ja hook-ekosysteemin. Luonnostele julkaisuja lomakelähetyksistä, julkaise ilmoituksia kun sisältö menee liveksi, varmuuskopioi media toiseen tallennussovellukseen tai lähetä toimituksellisia muistutuksia ennen ajastettuja julkaisuja.
+- **GitLab**, **Gogs** ja muut Git-sovellukset tarjoavat repository-, project- ja system-hookeja. Aja julkaisu-ilmoituksia tageista, luo käyttöönoton tarkistuslistoja mergejen jälkeen, postaa epäonnistuneiden pipelinejen tiivistelmät chattiin tai avaa projektinhallinnan issueita bugiraporttimalleista.
+- **Hugo Git** voi olla osa Git-pohjaista julkaisuprosessia. Käynnistä rebuild-ilmoituksia sisältöcommittien jälkeen, julkaise changelog uuden tagin ilmestyessä tai pyydä n8n:ää luomaan tarkistustehtävä jokaiselle pull requestille.
+- **Docmost** on hyödyllinen dokumentaation kohteena. Luo onboarding-tarkistuslista uuden asiakkaan rekisteröityessä, julkaise incident-muistiinpanoja valvontatapahtumista tai pidä sisäiset runbookit ajan tasalla työnkulkujen tuloksista.
+- **Jupyter Notebook** voi tukea data- ja raportointityönkulkuja. Aja ajastettuja notebookeja, vie raportteja tietokantapäivityksen jälkeen tai ilmoita kanavalle, kun pitkä analyysi valmistuu.
+- **Serposcope** voi ruokkia SEO-työnkulkuja. Lähetä ilmoituksia sijoitusmuutoksista, luo viikoittainen hakusijaintien kooste tai avaa sisältötehtävä, kun tärkeä avainsana putoaa.
+- **MySQL/MariaDB**, **Nginx & PHP** ja **LAMP Stack** ovat hyödyllisiä sisäisille työkaluille. Käytä n8n:ää rivien kirjoittamiseen, yksityisten admin-endpointtien kutsumiseen, ajastettujen ylläpitotarkistusten ajamiseen tai tiimin ilmoittamiseen, kun oma sovellus vastaanottaa uuden lähetyksen.
+
+Tiedostoihin, tallennukseen, synkronointiin ja varmuuskopiointiin:
+
+- **Nextcloud** tarjoaa WebDAVin ja laajan sovellusekosysteemin. Siirrä ladatut tiedostot tarkistuskansioihin, ilmoita tiimille kun asiakkaan lataus saapuu, luo kalenterijatkoja tai kopioi hyväksytyt dokumentit projektitiloihin.
+- **SFTPGo** sisältää REST APIn, tapahtumatoiminnot ja login-hookit. Käynnistä tiedostojen käsittelytyönkulkuja kun asiakas lataa raportin, siirrä valmiit viennit Nextcloudiin, ilmoita kanavalle kun kumppanin siirto saapuu tai poista väliaikaiset käyttäjät käytöstä määräajan jälkeen.
+- **File Browser Quantum**, **File Browser WebDAV** ja **Kodbox** tarjoavat tiedostonhallinnan pintoja, kuten REST APIeja, WebDAVin, komentohookeja tai tallennusplugineja. Valvo jaettuja kansioita, generoi metadataa, kopioi valmiit aineistot arkistotallennukseen tai ohjaa tiedostot hyväksyttäväksi ennen julkaisua.
+- **Rclone** on skriptattava object storagen, SFTP:n, WebDAVin ja cloud remotejen yli. Ajasta synkronointitöitä n8n:stä, varmista siirrot suurten migraatioiden jälkeen, siirrä käsitelty media pitkäaikaistallennukseen tai lähetä epäonnistumistiivistelmät chattiin.
+- **Restic REST Server** antaa restic-asiakkaille HTTPS-varmuuskopiointikohteen. Ilmoita admineille kun ajastetut varmuuskopiotarkistukset epäonnistuvat, avaa incident puuttuvien snapshotien jälkeen tai kirjoita päivittäinen varmuuskopioinnin terveystiivistelmä Docmost-palveluun.
+- **Syncthing** ja **Resilio Sync** ovat hyödyllisiä tiedostotapahtumien putkissa. Reagoi kun kansion synkronointi valmistuu, kopioi valmiit pudotukset mediakirjastoon tai hälytä käyttäjälle, kun odotettuja tiedostoja ei ole saapunut.
+- **Pure-FTPd** ja muut FTP/SFTP-tyyliset endpointit voivat olla osa legacy-tiedostotyönkulkuja. Pollaa uusia kumppanitiedostoja, siirrä ne SFTPGo-palveluun tai Nextcloud-palveluun ja ilmoita oikealle tiimille, kun käsittely valmistuu.
+
+Tietoturvaan, käyttöoikeuksiin ja infrastruktuuriin:
+
+- **Vaultwarden** tarjoaa Bitwarden-yhteensopivan APIn ja valinnaiset SMTP-ilmoitukset. Luo muistutuksia vault-tarkistuksista, ilmoita admineille kun onboarding- tai offboarding-tehtävät erääntyvät tai koordinoi salasanojen kierrätyksen tarkistuslistoja tiimien välillä.
+- **OpenVPN** ja **WireGuard VPN** voivat olla osa pääsytyönkulkuja. Ilmoita operaattoreille kun tunnuksia pitää kierrättää, luo tarkistuslistatehtäviä uusille VPN-käyttäjille tai aja ajastettuja yhteystarkistuksia n8n:n kautta.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** ja **Windows VPS** -sovellukset antavat skriptattavia ympäristöjä. Käytä n8n:ää SSH-komentojen käynnistämiseen, terveystarkistusten ajamiseen, raporttitiedostojen keräämiseen tai ylläpitotiivistelmien postaamiseen ajastettujen töiden jälkeen.
+- **Ubuntu**, **Debian** ja **Firefox remote desktop** -sovellukset voivat tukea selain- tai työpöytätehtäviä. Ajasta muistutuksia manuaaliseen tarkistustyöhön, tallenna skriptien tuloksia tai siirrä valmistuneet työpöytäviennit tiedostotallennukseen.
+
+Valvontaan, chattiin ja ilmoituksiin:
+
+- **Uptime Kuma** tukee monipuolisia ilmoituskohteita ja webhookeja. Muuta käyttökatkotapahtumat Mattermost- tai Rocket.Chat-hälytyksiksi, luo OpenProject-incidenttejä, pyydä OpenClaw-palvelulta lyhyt incident-tiivistelmä tai kirjaa jokainen palautuminen status-taulukkoon.
+- **Mattermost** ja **Rocket.Chat** ovat hyödyllisiä ilmoitus- ja hyväksyntäendpointteja. Lähetä ihmisen luettavia päivityksiä mistä tahansa työnkulusta, pyydä tiimiä hyväksymään pyyntö ja jatka automaatiota, kun joku vastaa.
+- **RocketChat Hubot** on hyödyllinen chat-komennoille. Anna tiimikavereiden käynnistää n8n-webhookeja chatista, kysyä käyttöönoton tilaa tai käynnistää skriptattu ylläpitotyönkulku audit trailin kanssa.
+- **Matterbridge** yhdistää IRC:n, Matrixin, XMPP:n, Slackin, Discordin, Microsoft Teamsin, Telegramin ja muut. Käytä n8n:ää operatiivisten tapahtumien muotoiluun kerran ja välitä ne sitten yhteisöihin tai huoneisiin, joiden pitää nähdä ne.
+- **ZNC** ja **The Lounge** voivat olla osa chat-ops-työnkulkuja. Välitä tärkeät IRC-tapahtumat moderneihin tiimikanaviin, arkistoi highlightit tai ilmoita operaattoreille, kun seurattu avainsana ilmestyy.
+
+Media- ja latausautomaatioon:
+
+- **Tautulli** tarjoaa Plex-aktiviteetin, ilmoitusskriptit ja JSON APIn. Lähetä koosteita uudesta mediasta, hälytä stream-virheistä, vie käyttöraportteja tai luo siivoustehtäviä, kun tallennustila ylittää rajan.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** ja **SeAT** voivat ruokkia kirjasto- tai yhteisötyönkulkuja. Ilmoita uudesta mediasta, päivitä kirjastot tuontien jälkeen, luo kuuntelu- tai lukukoosteita, synkronoi metadata dashboardiin tai ilmoita yhteisölle, kun seurattu toiminta muuttuu.
+- **Immich** sopii valokuvatyönkulkuihin. Ilmoita perheelle, kun jaettu albumi muuttuu, kopioi viedyt albumit arkistotallennukseen tai käynnistä varmuuskopiotarkistus suuren mobiililatauksen jälkeen.
+- **AzuraCast** sisältää REST APIn ja webhookeja. Ilmoita kappale- tai live-ohjelmamuutoksista, päivitä verkkosivun widget, muistuta juontajia ennen ajastettuja lähetyksiä tai arkistoi soittolistan metadata ohjelman jälkeen.
+- **Icecast** voi tukea lähetyksen tilatyönkulkuja. Valvo streamin saatavuutta, postaa nyt soi -päivityksiä tai hälytä kanavalle, kun lähde katkeaa.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** ja **Deluge** tarjoavat RPC- tai web-APIeja. Valvo valmistuneita latauksia, siirrä valmiit tiedostot oikeaan kirjastoon, käynnistä mediaskannaukset tai ilmoita käyttäjille, kun pyydetty kohde on valmis.
+- **PufferPanel**, **TeamSpeak 3** ja peli- tai chat-palvelimet voivat sopia myös operatiivisiin työnkulkuihin. Ilmoita admineille kun palvelin tarvitsee huomiota, luo ylläpitomuistutuksia tai postaa pelaajille suunnattuja ilmoituksia ajastettujen muutosten jälkeen.
+
+Voit käyttää n8n:ää myös ulkoisten palveluiden kanssa sisäänrakennettujen nodejen, webhookien, HTTP-pyyntöjen, tietokantayhteyksien ja koodinodejen kautta.
+
+## Asenna n8n
+
+Avaa [n8n App Store -sivu](/appstore/app/264), valitse oma Appbox ja aloita asennus.
+
+Asennuksen aikana Appbox pyytää sinua luomaan n8n-palvelun ensimmäisen owner-tilin. Syötä admin-sähköpostiosoite, salasana, etunimi ja sukunimi, joita haluat käyttää tälle tilille.
+
+Kun sovellus on valmis, avaa asennetun sovelluksen sivulla näkyvä Login URL ja kirjaudu sisään juuri luomallasi owner-tilillä.
+
+## Luo ensimmäinen työnkulkusi
+
+Kun olet n8n-palvelun sisällä, siirry kohtaan **Overview** ja valitse **Create Workflow**. Editori avautuu canvas-näkymään, jossa automaatiosi jokainen vaihe esitetään nodena.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="n8n-editorin käyttöliittymä, jossa näkyy työnkulun canvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Aloita yksinkertaisella manuaalisella työnkululla:
+
+1. Klikkaa **Add first step**.
+2. Etsi **Manual Trigger** ja lisää se.
+3. Klikkaa trigger-noden plus-painiketta.
+4. Lisää toinen node, esimerkiksi **Edit Fields**, **HTTP Request** tai sovelluskohtainen node.
+5. Määritä node sivupaneelissa.
+
+n8n-palvelun päätyötila on canvas. Siellä lisäät nodeja, yhdistät ne, siistit työnkulun ja ajat testisuorituksia.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="n8n-työnkulun canvas, jossa näkyy add first step -ohjain"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Testaa työnkulku
+
+Klikkaa **Execute Workflow** ajaaksesi työnkulun manuaalisesti.
+
+Kun ajo valmistuu, klikkaa jokaista nodea tarkistaaksesi, mitä dataa se vastaanotti ja palautti. Tämä on nopein tapa ymmärtää, mitä työnkulussa liikkuu, ennen kuin yhdistät oikean sovelluksen, webhookin tai ajastetun triggerin.
+
+## Yhdistä sovellukset ja tunnukset
+
+Sovellusintegraatioissa lisää tarvitsemasi node ja luo tunnukset, kun n8n pyytää niitä.
+
+Appbox-palvelussa hostatuille sovelluksille yleinen malli on:
+
+1. Luo API-token tai webhook sovelluksessa, jota haluat automatisoida.
+2. Lisää vastaava n8n-node tai käytä **HTTP Request** -nodea, jos erillistä nodea ei ole.
+3. Tallenna token n8n-palvelun tunnuksiin.
+4. Testaa yhdellä pienellä toiminnolla ennen haarojen, uudelleenyritysten tai lisävaiheiden lisäämistä.
+
+Saapuville tapahtumille käytä **Webhook**-triggeriä. n8n antaa sinulle tuotannon webhook-URLin, jota ulkoiset palvelut voivat kutsua HTTPS:n yli.
+
+## Yksinkertainen ensimmäinen automaatio
+
+Kokeile tätä ensimmäisenä oikeana työnkulkuna:
+
+1. Lisää **Webhook**-triggeri.
+2. Lisää **HTTP Request** -node kutsumaan toista palvelua tai Appbox-sovelluksen APIa.
+3. Lisää **IF**-node haarautumaan vastauksen perusteella.
+4. Lähetä viesti Mattermost-palveluun, Rocket.Chat-palveluun tai toiseen ilmoituskanavaan.
+
+Tämä antaa sinulle ydinkuvion monille n8n-automaatioille: vastaanota tapahtuma, hae tai muunna dataa, tee päätös ja ilmoita sitten ihmiselle tai päivitä toinen järjestelmä.
+
+## Huomio skaalasta
+
+Appbox-paketti on suunniteltu kompaktiksi yhden kontin n8n-asennukseksi pysyvällä tallennuksella. Se on erinomainen lähtökohta henkilökohtaisille, tiimi- ja sisäisille automaatioille.
+
+Jos aiot ajaa erittäin suurta suoritusmäärää, suuria payload-tietoja tai liiketoimintakriittistä automaatiokeskusta, testaa kuorma huolellisesti ja harkitse sovellusresurssien kasvattamista asennetun sovelluksen sivulta.
+
+## Aloita rakentaminen
+
+Jos sinulla on Appbox, n8n on yksi nopeimmista tavoista saada muut työkalusi tuntumaan siltä, että ne ovat yhteydessä toisiinsa.
+
+[Ota n8n käyttöön Appbox-palvelussa](/appstore/app/264), luo työnkulku, aja se kerran manuaalisesti ja muuta se sitten automaatioksi, jonka toivoisit sovelluksillasi jo olevan.

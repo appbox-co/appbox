@@ -1,0 +1,170 @@
+---
+title: Představujeme n8n na Appbox
+date: 2026-06-24 08:11:00
+excerpt: Nasaďte n8n na Appbox a začněte vytvářet samostatně hostované automatizace pracovních postupů pro aplikace, API, webhooky a interní nástroje.
+author_id: rid
+tags: [appbox, n8n, automatizace, pracovní-postupy, self-hosted, obchod-s-aplikacemi]
+---
+
+# Představujeme n8n na Appbox
+
+n8n je teď dostupné na Appbox.
+
+To znamená, že můžete nasadit soukromý pracovní prostor pro automatizaci, otevřít vizuální editor a začít propojovat aplikace, API, plánovače, webhooky a vlastní kód bez ruční správy serveru.
+
+[Nainstalujte n8n z Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="editor pracovních postupů n8n zobrazující propojené automatizační uzly na plátně"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Co můžete vytvořit
+
+n8n se hodí vždy, když má jedna aplikace reagovat na jinou aplikaci, vyčistit data, zavolat API, poslat oznámení nebo spustit naplánovanou úlohu.
+
+Na Appbox je proto přirozeným doplňkem aplikací s webhooky, API, notifikačními hooky, WebDAV, RPC nebo skriptovatelnými rozhraními.
+
+Pro AI, podporu a obchodní pracovní postupy:
+
+- **OpenClaw** může fungovat jako AI vrstva pro vaše automatizace. Pošlete webhook z n8n, když tiket podpory, monitorovací upozornění nebo nahraný soubor potřebuje shrnutí, a nechte OpenClaw navrhnout odpověď, klasifikovat požadavek nebo převést událost na úlohu.
+- **Chatwoot** zpřístupňuje události inboxů a API pro zákaznickou podporu. Označujte urgentní konverzace, obohacujte nové kontakty z jiného systému, upozorněte týmový kanál, když napíše VIP zákazník, nebo vytvořte následnou úlohu po uzavření konverzace.
+- **Mautic** má REST API a prostředí pro automatizaci kampaní. Synchronizujte leady z formulářů, skórujte kontakty po produktových událostech, přidávejte lidi do kampaní z webhookových odeslání nebo upozorněte obchod, když lead překročí práh.
+- **ERPNext** zpřístupňuje obchodní záznamy přes API. Vytvářejte faktury z odeslaných formulářů, aktualizujte obchody po přijetí platby, upozorněte provoz při nízkých zásobách nebo posílejte záznamy zákazníků do jiné aplikace Appbox.
+- **Plane** a **OpenProject** dobře fungují jako cíle pro úlohy. Převádějte incidenty, formuláře, neúspěšné joby nebo požadavky zákazníků na issues a pracovní balíčky se správným řešitelem a kontextem.
+- **Rallly** se hodí pro plánovací workflow. Vytvářejte ankety z poptávkových formulářů, upozorněte hosty po výběru času schůzky nebo posílejte připomínky před termínem dostupnosti.
+- **OnlyOffice** a **Jitsi** zapadají do dokumentových a schůzkových workflow. Upozorněte recenzenty, když je dokument připravený, vytvořte odkaz na schůzku po schválení nebo pošlete následné úlohy po schůzce do Plane nebo OpenProject.
+
+Pro obsah, publikování a vývojářské workflow:
+
+- **EmDash** nabízí strukturovaný CMS s formuláři, krátkými odkazy, pluginy a autobuild hooky. Posílejte odeslané formuláře do n8n, upozorněte editory po publikování obsahu, spusťte rebuild po zveřejnění návrhu nebo posílejte nové příspěvky do Mattermost, Rocket.Chat a sociálních front.
+- **WordPress** má REST API a ekosystém hooků. Vytvářejte koncepty příspěvků z formulářů, publikujte oznámení po zveřejnění obsahu, zálohujte média do jiné úložné aplikace nebo posílejte redakční připomínky před naplánovanými příspěvky.
+- **GitLab**, **Gogs** a další aplikace Git zpřístupňují repozitářové, projektové a systémové hooky. Spouštějte oznámení o vydáních na tagech, vytvářejte deployment checklisty po merge, posílejte souhrny neúspěšných pipeline do chatu nebo otevírejte projektové issues ze šablon hlášení chyb.
+- **Hugo Git** může být součástí publikačního workflow založeného na Git. Spouštějte oznámení o rebuildu po commitech obsahu, publikujte changelog po vytvoření nového tagu nebo požádejte n8n o vytvoření úlohy review pro každý pull request.
+- **Docmost** je užitečný jako cíl dokumentace. Vytvořte onboardingový checklist po registraci nového zákazníka, publikujte poznámky k incidentům z monitorovacích událostí nebo udržujte interní runbooky aktuální z výstupů workflow.
+- **Jupyter Notebook** může podporovat datové a reportovací workflow. Spouštějte naplánované notebooky, exportujte reporty po aktualizaci databáze nebo upozorněte kanál, když doběhne dlouhá analýza.
+- **Serposcope** může napájet SEO workflow. Posílejte upozornění na změny pozic, vytvářejte týdenní přehled pozic ve vyhledávání nebo otevřete obsahovou úlohu, když důležité klíčové slovo klesne.
+- **MySQL/MariaDB**, **Nginx & PHP** a **LAMP Stack** se hodí pro interní nástroje. Používejte n8n k zapisování řádků, volání soukromých administrátorských endpointů, spouštění naplánovaných kontrol údržby nebo upozornění týmu, když vlastní aplikace přijme nové odeslání.
+
+Pro soubory, úložiště, synchronizaci a zálohy:
+
+- **Nextcloud** zpřístupňuje WebDAV a široký ekosystém aplikací. Přesouvejte nahrané soubory do složek pro kontrolu, upozorněte tým, když dorazí nahrávka od klienta, vytvářejte následné kalendářové položky nebo kopírujte schválené dokumenty do projektových prostorů.
+- **SFTPGo** obsahuje REST API, akce událostí a login hooky. Spouštějte workflow pro zpracování souborů, když klient nahraje report, přesouvejte dokončené exporty do Nextcloud, upozorněte kanál při přenosu od partnera nebo po termínu deaktivujte dočasné uživatele.
+- **File Browser Quantum**, **File Browser WebDAV** a **Kodbox** zpřístupňují možnosti správy souborů, jako jsou REST API, WebDAV, command hooky nebo úložné pluginy. Sledujte sdílené složky, generujte metadata, kopírujte hotové assety do archivního úložiště nebo směrujte soubory ke schválení před publikací.
+- **Rclone** je skriptovatelný napříč objektovým úložištěm, SFTP, WebDAV a cloudovými remotes. Plánujte synchronizační joby z n8n, ověřujte přenosy po velkých migracích, přesouvejte zpracovaná média do dlouhodobého úložiště nebo posílejte souhrny selhání do chatu.
+- **Restic REST Server** dává klientům restic zálohovací cíl přes HTTPS. Upozorněte administrátory, když selžou naplánované kontroly záloh, otevřete incident po chybějících snapshotech nebo zapisujte denní přehled zdraví záloh do Docmost.
+- **Syncthing** a **Resilio Sync** jsou užitečné pro souborové event pipelines. Reagujte, když složka dokončí synchronizaci, kopírujte dokončené dropy do mediální knihovny nebo upozorněte uživatele, když očekávané soubory nedorazily.
+- **Pure-FTPd** a další endpointy ve stylu FTP/SFTP mohou fungovat ve starších souborových workflow. Pollujte nové partnerské soubory, přesouvejte je do SFTPGo nebo Nextcloud a potom upozorněte správný tým po dokončení zpracování.
+
+Pro bezpečnost, přístup a infrastrukturu:
+
+- **Vaultwarden** zpřístupňuje API kompatibilní s Bitwarden a volitelná SMTP oznámení. Vytvářejte připomínky pro kontroly trezorů, upozorněte administrátory, když se blíží onboardingové nebo offboardingové úlohy, nebo koordinujte checklisty rotace hesel napříč týmy.
+- **OpenVPN** a **WireGuard VPN** mohou být součástí přístupových workflow. Upozorněte operátory, když je potřeba rotovat přihlašovací údaje, vytvářejte checklistové úlohy pro nové uživatele VPN nebo spouštějte naplánované kontroly konektivity přes n8n.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** a **Windows VPS** aplikace vám dávají skriptovatelná prostředí. Používejte n8n ke spouštění SSH příkazů, kontrol zdraví, sběru reportových souborů nebo publikování souhrnů údržby po naplánovaných jobech.
+- Aplikace **Ubuntu**, **Debian** a vzdálená plocha **Firefox** mohou podporovat úlohy v prohlížeči nebo na desktopu. Plánujte připomínky ručních kontrol, zachycujte výstupy skriptů nebo předávejte dokončené desktopové exporty do souborového úložiště.
+
+Pro monitoring, chat a oznámení:
+
+- **Uptime Kuma** podporuje bohaté cíle oznámení a webhooky. Převádějte výpadky na upozornění v Mattermost nebo Rocket.Chat, vytvářejte incidenty OpenProject, požádejte OpenClaw o krátké shrnutí incidentu nebo logujte každé zotavení do stavové tabulky.
+- **Mattermost** a **Rocket.Chat** jsou užitečné endpointy pro oznámení a schvalování. Posílejte čitelné aktualizace z libovolného workflow, požádejte tým o schválení požadavku a potom pokračujte v automatizaci, jakmile někdo odpoví.
+- **RocketChat Hubot** se hodí pro chatové příkazy. Nechte spolupracovníky spouštět webhooky n8n z chatu, ptát se na stav deploymentu nebo zahájit skriptované údržbové workflow s auditní stopou.
+- **Matterbridge** propojuje IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram a další. Použijte n8n k jednotnému formátování provozních událostí a potom je předejte komunitám nebo místnostem, které je potřebují vidět.
+- **ZNC** a **The Lounge** mohou být součástí chat-ops workflow. Přeposílejte důležité IRC události do moderních týmových kanálů, archivujte highlights nebo upozorněte operátory, když se objeví sledované klíčové slovo.
+
+Pro média a automatizaci stahování:
+
+- **Tautulli** zpřístupňuje aktivitu Plex, notifikační skripty a JSON API. Posílejte přehledy nově přidaných médií, upozorněte při chybě streamu, exportujte reporty používání nebo vytvářejte úklidové úlohy, když úložiště překročí limit.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** a **SeAT** mohou napájet knihovní nebo komunitní workflow. Oznamujte nová média, obnovujte knihovny po importech, vytvářejte poslechové nebo čtenářské přehledy, synchronizujte metadata do dashboardu nebo upozorněte komunitu, když se změní sledovaná aktivita.
+- **Immich** se hodí pro fotografická workflow. Upozorněte rodinu, když se změní sdílené album, kopírujte exportovaná alba do archivního úložiště nebo spusťte kontrolu záloh po velkém mobilním nahrání.
+- **AzuraCast** obsahuje REST API a webhooky. Oznamujte změny skladeb nebo živých pořadů, aktualizujte widget webu, upozorněte moderátory před naplánovaným vysíláním nebo po pořadu archivujte metadata playlistu.
+- **Icecast** může podporovat workflow stavu vysílání. Sledujte dostupnost streamu, publikujte now-playing aktualizace nebo upozorněte kanál, když se zdroj odpojí.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** a **Deluge** zpřístupňují RPC nebo webová API. Sledujte dokončená stahování, přesouvejte hotové soubory do správné knihovny, spouštějte mediální skeny nebo upozorněte uživatele, když je požadovaná položka připravená.
+- **PufferPanel**, **TeamSpeak 3** a herní/chatové servery se také hodí do provozních workflow. Upozorněte administrátory, když server potřebuje pozornost, vytvářejte připomínky údržby nebo publikujte oznámení pro hráče po naplánovaných změnách.
+
+n8n můžete používat také s externími službami přes vestavěné uzly, webhooky, HTTP požadavky, databázová připojení a kódové uzly.
+
+## Instalace n8n
+
+Otevřete [stránku n8n v App Store](/appstore/app/264), vyberte svůj Appbox a spusťte instalaci.
+
+Během nastavení vás Appbox požádá o vytvoření prvního účtu vlastníka pro n8n. Zadejte administrátorský e-mail, heslo, jméno a příjmení, které chcete pro tento účet použít.
+
+Když je aplikace připravená, otevřete Login URL zobrazené na stránce nainstalované aplikace a přihlaste se účtem vlastníka, který jste právě vytvořili.
+
+## Vytvořte svůj první workflow
+
+Jakmile jste uvnitř n8n, přejděte na **Overview** a zvolte **Create Workflow**. Editor se otevře na plátně, kde je každý krok automatizace reprezentován uzlem.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="uživatelské rozhraní editoru n8n zobrazující plátno workflow"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Začněte jednoduchým ručním workflow:
+
+1. Klikněte na **Add first step**.
+2. Vyhledejte **Manual Trigger** a přidejte ho.
+3. Klikněte na tlačítko plus na uzlu triggeru.
+4. Přidejte druhý uzel, například **Edit Fields**, **HTTP Request** nebo uzel pro konkrétní aplikaci.
+5. Nakonfigurujte uzel v bočním panelu.
+
+Hlavní pracovní prostor v n8n je plátno. Tady přidáváte uzly, propojujete je, upravujete workflow a spouštíte testovací provedení.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="plátno workflow n8n zobrazující ovládací prvek pro přidání prvního kroku"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Otestujte workflow
+
+Klikněte na **Execute Workflow** a spusťte workflow ručně.
+
+Po dokončení běhu klikněte na jednotlivé uzly a zkontrolujte data, která přijaly a vrátily. Je to nejrychlejší způsob, jak pochopit, co vaším workflow prochází, než připojíte skutečnou aplikaci, webhook nebo naplánovaný trigger.
+
+## Propojte aplikace a přihlašovací údaje
+
+Pro integrace aplikací přidejte potřebný uzel a vytvořte přihlašovací údaje, když si o ně n8n řekne.
+
+U aplikací hostovaných na Appbox je běžný postup:
+
+1. Vytvořte API token nebo webhook v aplikaci, kterou chcete automatizovat.
+2. Přidejte odpovídající uzel n8n nebo použijte uzel **HTTP Request**, pokud specializovaný uzel neexistuje.
+3. Uložte token do přihlašovacích údajů n8n.
+4. Otestujte jednu malou akci, než přidáte větvení, opakované pokusy nebo další kroky.
+
+Pro příchozí události použijte trigger **Webhook**. n8n vám dá produkční webhook URL, kterou mohou externí služby volat přes HTTPS.
+
+## Jednoduchá první automatizace
+
+Vyzkoušejte toto jako své první skutečné workflow:
+
+1. Přidejte trigger **Webhook**.
+2. Přidejte uzel **HTTP Request** pro volání jiné služby nebo API aplikace Appbox.
+3. Přidejte uzel **IF** pro větvení podle odpovědi.
+4. Pošlete zprávu do Mattermost, Rocket.Chat nebo jiného notifikačního kanálu.
+
+Tím získáte základní vzor pro mnoho automatizací n8n: přijmout událost, načíst nebo transformovat data, rozhodnout se a potom upozornit člověka nebo aktualizovat jiný systém.
+
+## Poznámka ke škálování
+
+Balíček Appbox je navržený jako kompaktní jednokontejnerové nasazení n8n s perzistentním úložištěm. Je to skvělý výchozí bod pro osobní, týmové i interní automatizace.
+
+Pokud plánujete spouštět velmi vysoký objem provedení, velké payloady nebo business-critical automatizační centrum, pečlivě otestujte zátěž a zvažte navýšení prostředků aplikace ze stránky nainstalované aplikace.
+
+## Začněte tvořit
+
+Pokud máte Appbox, n8n je jeden z nejrychlejších způsobů, jak propojit zbytek vašich nástrojů.
+
+[Nasaďte n8n na Appbox](/appstore/app/264), vytvořte workflow, jednou ho ručně spusťte a potom z něj udělejte automatizaci, kterou byste si u svých aplikací přáli už od začátku.

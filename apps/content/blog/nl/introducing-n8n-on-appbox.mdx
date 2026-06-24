@@ -1,0 +1,170 @@
+---
+title: Introductie van n8n op Appbox
+date: 2026-06-24 08:11:00
+excerpt: Deploy n8n op Appbox en begin met het bouwen van self-hosted workflowautomatiseringen voor apps, API's, webhooks en interne tools.
+author_id: rid
+tags: [appbox, n8n, automatisering, workflows, self-hosted, app-store]
+---
+
+# Introductie van n8n op Appbox
+
+n8n is nu beschikbaar op Appbox.
+
+Dat betekent dat je een private workflowautomatiseringsworkspace kunt deployen, de visuele editor kunt openen en apps, API's, planningen, webhooks en eigen code kunt verbinden zonder handmatig een server te beheren.
+
+[Installeer n8n vanuit de Appbox App Store](/appstore/app/264).
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-workflow-editor.png"
+    alt="n8n-workfloweditor met verbonden automatiseringsnodes op een canvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Wat je kunt bouwen
+
+n8n is nuttig wanneer de ene app moet reageren op een andere app, data moet opschonen, een API moet aanroepen, een notificatie moet versturen of een geplande taak moet uitvoeren.
+
+Op Appbox maakt dat het een natuurlijke partner voor apps met webhooks, API's, notificatiehooks, WebDAV, RPC of scriptbare interfaces.
+
+Voor AI-, support- en bedrijfsworkflows:
+
+- **OpenClaw** kan dienen als de AI-laag voor je automatiseringen. Stuur een webhook vanuit n8n wanneer een supportticket, monitoringsmelding of bestandsupload moet worden samengevat, en laat OpenClaw daarna het antwoord opstellen, de aanvraag classificeren of de gebeurtenis omzetten in een taak.
+- **Chatwoot** biedt inbox-events en API's voor klantenservice. Label urgente gesprekken, verrijk nieuwe contacten vanuit een ander systeem, notify een teamkanaal wanneer een VIP schrijft of maak een follow-uptaak nadat een gesprek is gesloten.
+- **Mautic** heeft een REST API en mogelijkheden voor campagneautomatisering. Synchroniseer leads uit formulieren, score contacten na productevents, voeg mensen toe aan campagnes vanuit webhookinzendingen of notify sales wanneer een lead een drempel overschrijdt.
+- **ERPNext** stelt bedrijfsrecords beschikbaar via API's. Maak facturen uit formulierinzendingen, werk deals bij wanneer een betaling binnenkomt, notify operations wanneer voorraad laag is of push klantrecords naar een andere Appbox-app.
+- **Plane** en **OpenProject** werken goed als taakbestemmingen. Zet incidenten, formulierinzendingen, mislukte jobs of klantverzoeken om in issues en work packages met de juiste verantwoordelijke en context.
+- **Rallly** past in planningsworkflows. Maak polls uit aanvraagformulieren, notify gasten nadat een vergadertijd is gekozen of stuur herinneringen vóór een beschikbaarheidsdeadline.
+- **OnlyOffice** en **Jitsi** passen bij document- en vergaderworkflows. Notify reviewers wanneer een document klaar is, maak een vergaderlink na goedkeuring of stuur follow-uptaken na een vergadering naar Plane of OpenProject.
+
+Voor content, publiceren en ontwikkelaarsworkflows:
+
+- **EmDash** geeft je een gestructureerd CMS met formulieren, korte links, plugins en autobuild-hooks. Stuur formulierinzendingen naar n8n, notify editors wanneer content wordt gepubliceerd, trigger een rebuild nadat een concept live gaat of stuur nieuwe posts naar Mattermost, Rocket.Chat en social queues.
+- **WordPress** heeft een REST API en een hook-ecosysteem. Maak conceptposts uit formulierinzendingen, publiceer aankondigingen wanneer content live gaat, back-up media naar een andere opslagapp of stuur redactionele herinneringen vóór geplande posts.
+- **GitLab**, **Gogs** en andere Git-apps bieden repository-, project- en systeemhooks. Verstuur releasenotificaties op tags, maak deploymentchecklists na merges, post samenvattingen van mislukte pipelines in chat of open projectmanagementissues vanuit bugrapporttemplates.
+- **Hugo Git** kan onderdeel zijn van een Git-gebaseerde publicatiestroom. Trigger rebuildnotificaties na contentcommits, publiceer een changelog wanneer een nieuwe tag binnenkomt of laat n8n een reviewtaak maken voor elke pull request.
+- **Docmost** is nuttig als documentatiebestemming. Maak een onboardingchecklist wanneer een nieuwe klant zich aanmeldt, post incidentnotities vanuit monitoringevents of houd interne runbooks bijgewerkt vanuit workflowoutputs.
+- **Jupyter Notebook** kan data- en rapportageworkflows ondersteunen. Draai geplande notebooks, exporteer rapporten na een database-update of notify een kanaal wanneer een langdurige analyse klaar is.
+- **Serposcope** kan SEO-workflows voeden. Verstuur rank-change alerts, maak een wekelijkse digest van zoekposities of open een contenttaak wanneer een belangrijk keyword daalt.
+- **MySQL/MariaDB**, **Nginx & PHP** en **LAMP Stack** zijn nuttig voor interne tools. Gebruik n8n om rijen te schrijven, private admin-endpoints aan te roepen, geplande onderhoudschecks uit te voeren of een team te notifyen wanneer een custom app een nieuwe inzending ontvangt.
+
+Voor bestanden, opslag, sync en back-up:
+
+- **Nextcloud** biedt WebDAV en een breed app-ecosysteem. Verplaats geüploade bestanden naar reviewmappen, notify een team wanneer een klantupload binnenkomt, maak kalenderopvolgingen of kopieer goedgekeurde documenten naar projectruimtes.
+- **SFTPGo** bevat een REST API, event actions en login-hooks. Trigger bestandsverwerkingsworkflows wanneer een klant een rapport uploadt, verplaats voltooide exports naar Nextcloud, notify een kanaal wanneer een partnertransfer binnenkomt of schakel tijdelijke gebruikers uit na een deadline.
+- **File Browser Quantum**, **File Browser WebDAV** en **Kodbox** bieden bestandsbeheeroppervlakken zoals REST API's, WebDAV, command hooks of opslagplugins. Monitor gedeelde mappen, genereer metadata, kopieer afgeronde assets naar archiefopslag of routeer bestanden voor goedkeuring vóór publicatie.
+- **Rclone** is scriptbaar over object storage, SFTP, WebDAV en cloud remotes. Plan sync-jobs vanuit n8n, verifieer transfers na grote migraties, verplaats verwerkte media naar langetermijnopslag of stuur foutensamenvattingen naar chat.
+- **Restic REST Server** geeft restic-clients een HTTPS-back-updoel. Notify admins wanneer geplande back-upchecks mislukken, open een incident na gemiste snapshots of schrijf een dagelijkse back-upgezondheidssamenvatting in Docmost.
+- **Syncthing** en **Resilio Sync** zijn nuttig voor bestandseventpipelines. Reageer wanneer een map klaar is met synchroniseren, kopieer afgeronde drops naar een mediabibliotheek of waarschuw een gebruiker wanneer verwachte bestanden niet zijn aangekomen.
+- **Pure-FTPd** en andere FTP/SFTP-achtige endpoints kunnen onderdeel zijn van legacy-bestandsworkflows. Poll op nieuwe partnerbestanden, verplaats ze naar SFTPGo of Nextcloud en notify daarna het juiste team zodra de verwerking klaar is.
+
+Voor beveiliging, toegang en infrastructuur:
+
+- **Vaultwarden** biedt een Bitwarden-compatibele API en optionele SMTP-notificaties. Maak herinneringen voor kluisreviews, notify admins wanneer onboarding- of offboardingtaken verlopen of coördineer wachtwoordrotatiechecklists over teams heen.
+- **OpenVPN** en **WireGuard VPN** kunnen onderdeel zijn van toegangsworkflows. Notify operators wanneer credentials moeten roteren, maak checklisttaken voor nieuwe VPN-gebruikers of voer geplande connectiviteitschecks uit via n8n.
+- **Ubuntu**, **Debian**, **Fedora**, **Rocky Linux**, **AlmaLinux**, **Arch Linux** en **Windows VPS** apps geven je scriptbare omgevingen. Gebruik n8n om SSH-commando's te triggeren, health checks te draaien, rapportbestanden te verzamelen of onderhoudssamenvattingen te posten na geplande jobs.
+- **Ubuntu**, **Debian** en **Firefox** remote desktop-apps kunnen browser- of desktoptaken ondersteunen. Plan herinneringen voor handmatig reviewwerk, leg outputs van scripts vast of lever voltooide desktopexports af in bestandsopslag.
+
+Voor monitoring, chat en notificaties:
+
+- **Uptime Kuma** ondersteunt uitgebreide notificatiedoelen en webhooks. Zet downtime-events om in Mattermost- of Rocket.Chat-alerts, maak OpenProject-incidenten, vraag OpenClaw om een korte incidentsamenvatting of log elk herstel in een statusspreadsheet.
+- **Mattermost** en **Rocket.Chat** zijn nuttige notificatie- en goedkeuringsendpoints. Stuur menselijk leesbare updates vanuit elke workflow, vraag een team om een verzoek goed te keuren en ga daarna verder met de automatisering wanneer iemand reageert.
+- **RocketChat Hubot** is nuttig voor chatcommando's. Laat teamgenoten n8n-webhooks vanuit chat triggeren, deploymentstatus opvragen of een gescripte onderhoudsworkflow starten met audit trail.
+- **Matterbridge** verbindt IRC, Matrix, XMPP, Slack, Discord, Microsoft Teams, Telegram en meer. Gebruik n8n om operationele events één keer te formatteren en ze daarna door te sturen naar de communities of ruimtes die ze moeten zien.
+- **ZNC** en **The Lounge** kunnen onderdeel zijn van chat-ops-workflows. Stuur belangrijke IRC-events door naar moderne teamkanalen, archiveer highlights of notify operators wanneer een bewaakt keyword verschijnt.
+
+Voor media en downloadautomatisering:
+
+- **Tautulli** biedt Plex-activiteit, notificatiescripts en een JSON API. Verstuur digests van nieuw toegevoegde media, waarschuw wanneer een stream fouten geeft, exporteer gebruiksrapporten of maak opschoontaken wanneer opslag een limiet overschrijdt.
+- **Plex**, **Jellyfin**, **Emby**, **Navidrome**, **Audiobookshelf**, **Calibre**, **Madsonic** en **SeAT** kunnen bibliotheek- of communityworkflows voeden. Kondig nieuwe media aan, refresh bibliotheken na imports, maak luister- of leesdigests, synchroniseer metadata naar een dashboard of notify een community wanneer gevolgde activiteit verandert.
+- **Immich** kan passen bij fotoworkflows. Notify familie wanneer een gedeeld album verandert, kopieer geëxporteerde albums naar archiefopslag of trigger een back-upcheck na een grote mobiele upload.
+- **AzuraCast** bevat een REST API en webhooks. Kondig track- of liveshowwijzigingen aan, werk een websitewidget bij, notify hosts vóór geplande uitzendingen of archiveer playlistmetadata na een show.
+- **Icecast** kan broadcaststatusworkflows ondersteunen. Monitor streambeschikbaarheid, post now-playing updates of waarschuw een kanaal wanneer een bron wegvalt.
+- **Flood**, **ruTorrent**, **qBittorrent**, **Transmission** en **Deluge** bieden RPC- of web-API's. Monitor voltooide downloads, verplaats afgeronde bestanden naar de juiste bibliotheek, trigger mediascans of notify gebruikers wanneer een aangevraagd item klaar is.
+- **PufferPanel**, **TeamSpeak 3** en game-/chatservers kunnen ook in operationele workflows passen. Notify admins wanneer een server aandacht nodig heeft, maak onderhoudsherinneringen of post spelergerichte aankondigingen na geplande wijzigingen.
+
+Je kunt n8n ook gebruiken met externe services via ingebouwde nodes, webhooks, HTTP requests, databaseverbindingen en codenodes.
+
+## n8n installeren
+
+Open de [n8n App Store-pagina](/appstore/app/264), kies je Appbox en start de installatie.
+
+Tijdens de setup vraagt Appbox je om het eerste owner-account voor n8n te maken. Vul het admin-e-mailadres, wachtwoord, voornaam en achternaam in die je voor dat account wilt gebruiken.
+
+Wanneer de app klaar is, open je de Login URL die op de geïnstalleerde apppagina wordt getoond en log je in met het owner-account dat je net hebt aangemaakt.
+
+## Maak je eerste workflow
+
+Zodra je in n8n bent, ga je naar **Overview** en kies je **Create Workflow**. De editor opent op een canvas waar elke stap in je automatisering wordt weergegeven door een node.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-editor-ui.png"
+    alt="n8n-editorinterface met het workflowcanvas"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+Begin met een eenvoudige handmatige workflow:
+
+1. Klik op **Add first step**.
+2. Zoek naar **Manual Trigger** en voeg die toe.
+3. Klik op de plusknop op de triggernode.
+4. Voeg een tweede node toe, zoals **Edit Fields**, **HTTP Request** of een app-specifieke node.
+5. Configureer de node in het zijpaneel.
+
+De hoofdworkspace in n8n is het canvas. Daar voeg je nodes toe, verbind je ze, ruim je de workflow op en voer je testexecuties uit.
+
+<p align="center">
+  <img
+    src="/blog-images/n8n-canvas.png"
+    alt="n8n-workflowcanvas met de knop om de eerste stap toe te voegen"
+    width="860"
+    className="mt-8 mb-10"
+  />
+</p>
+
+## Test de workflow
+
+Klik op **Execute Workflow** om de workflow handmatig uit te voeren.
+
+Nadat de run is voltooid, klik je op elke node om de data te inspecteren die deze heeft ontvangen en teruggegeven. Dit is de snelste manier om te begrijpen wat er door je workflow beweegt voordat je een echte app, webhook of geplande trigger verbindt.
+
+## Verbind apps en credentials
+
+Voor appintegraties voeg je de node toe die je nodig hebt en maak je credentials aan wanneer n8n daarom vraagt.
+
+Voor apps die op Appbox worden gehost, is een gangbaar patroon:
+
+1. Maak een API-token of webhook in de app die je wilt automatiseren.
+2. Voeg de bijpassende n8n-node toe, of gebruik de **HTTP Request**-node als er geen dedicated node is.
+3. Sla het token op in n8n credentials.
+4. Test met één kleine actie voordat je branching, retries of meer stappen toevoegt.
+
+Voor inkomende events gebruik je een **Webhook** trigger. n8n geeft je een productie-webhook-URL die externe services via HTTPS kunnen aanroepen.
+
+## Een eenvoudige eerste automatisering
+
+Probeer dit als je eerste echte workflow:
+
+1. Voeg een **Webhook** trigger toe.
+2. Voeg een **HTTP Request**-node toe om een andere service of Appbox-app-API aan te roepen.
+3. Voeg een **IF**-node toe om op de response te vertakken.
+4. Stuur een bericht naar Mattermost, Rocket.Chat of een ander notificatiekanaal.
+
+Dat geeft je het kernpatroon voor veel n8n-automatiseringen: ontvang een event, haal data op of transformeer die, neem een beslissing en notify daarna een persoon of werk een ander systeem bij.
+
+## Een opmerking over schaal
+
+Het Appbox-pakket is ontworpen als een compacte n8n-deployment in één container met persistente opslag. Het is een uitstekend startpunt voor persoonlijke, team- en interne automatiseringen.
+
+Als je van plan bent een zeer hoog uitvoeringsvolume, grote payloads of een bedrijfskritische automatiseringshub te draaien, test de workload dan zorgvuldig en overweeg de appresources te verhogen vanaf de pagina van de geïnstalleerde app.
+
+## Begin met bouwen
+
+Als je een Appbox hebt, is n8n een van de snelste manieren om de rest van je tools verbonden te laten aanvoelen.
+
+[Deploy n8n op Appbox](/appstore/app/264), maak een workflow, draai die één keer handmatig en verander hem daarna in de automatisering waarvan je zou willen dat je apps die al hadden.
