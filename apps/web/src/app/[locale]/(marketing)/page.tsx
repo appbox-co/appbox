@@ -31,6 +31,22 @@ import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
 import { absoluteUrl, cn } from "@/lib/utils"
 
+type IndexPageProps = {
+  searchParams: Promise<{
+    aff?: string | string[]
+  }>
+}
+
+function getAffiliateId(value: string | string[] | undefined) {
+  const affiliateId = Array.isArray(value) ? value[0] : value
+
+  if (!affiliateId || !/^\d+$/.test(affiliateId)) {
+    return undefined
+  }
+
+  return affiliateId
+}
+
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
@@ -59,7 +75,9 @@ export async function generateMetadata(props: {
   }
 }
 
-export default async function IndexPage() {
+export default async function IndexPage(props: IndexPageProps) {
+  const searchParams = await props.searchParams
+  const affiliateId = getAffiliateId(searchParams.aff)
   const t = await getTranslations()
   const promoTheme = getPromoTheme()
   const [plansData, openClawApp] = await Promise.all([
@@ -171,6 +189,7 @@ export default async function IndexPage() {
       <section id="plans-section" className="scroll-mt-4 pt-4">
         <Plans
           data={plansData.data}
+          affiliateId={affiliateId}
           boostEnabled={launchWeekFlags.day_2}
           messages={{
             billing_cycles: {

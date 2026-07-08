@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server"
 import deepmerge from "deepmerge"
-import { routing } from "./routing"
+import { routing } from "./routing-config"
 
 // Add a type that matches the routing.locales union type
 type SupportedLocale = (typeof routing.locales)[number]

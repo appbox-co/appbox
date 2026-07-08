@@ -165,6 +165,141 @@
       "description": "Appbox réduit les installations complexes d'apps open source à l'essentiel : saisissez un nom d'utilisateur et un mot de passe, cliquez sur installer, et votre app est configurée pour vous.",
       "preview_app_name": "Nextcloud"
     },
+    "reddit_landing": {
+      "meta_title": "Hébergement privé d'apps et stockage | Appbox",
+      "meta_description": "Faites tourner vos propres apps de cloud privé, votre stockage, vos automatisations et vos accès à distance sur Appbox, sans gérer de VPS.",
+      "hero": {
+        "heading_prefix": "Apps et stockage,",
+        "heading_emphasis": "sans maintenance serveur",
+        "subheading_prefix": "Lancez ",
+        "flipwords": [
+          "Nextcloud",
+          "des automatisations",
+          "des tableaux de bord",
+          "des bases de données",
+          "des outils personnels"
+        ],
+        "subheading_suffix": " depuis votre Appbox.",
+        "description": "Appbox vous fournit du stockage géré, des apps open source en un clic, HTTPS, des domaines, des mises à jour depuis le tableau de bord et les détails d'accès à distance, sans maintenir le serveur sous-jacent."
+      },
+      "cta": {
+        "primary": "Voir les formules et le stockage",
+        "secondary": "Parcourir les apps"
+      },
+      "spec_strip": [
+        {
+          "label": "Un stockage adapté à votre usage",
+          "value": "De la place pour les fichiers, la synchronisation, les sauvegardes, les données d'apps et les services longue durée."
+        },
+        {
+          "label": "Transfert de données illimité",
+          "value": "Toutes les formules incluent le transfert illimité ; comparez la vitesse de connexion."
+        },
+        {
+          "label": "Des apps en quelques clics",
+          "value": "Installez des outils de transfert de fichiers, Nextcloud, des tableaux de bord, des bases de données et des automatisations."
+        },
+        {
+          "label": "Mises à jour simples des apps",
+          "value": "Mettez à jour les apps compatibles depuis le tableau de bord."
+        },
+        {
+          "label": "Domaines et HTTPS pris en charge",
+          "value": "Utilisez des URLs d'app propres ou ajoutez votre propre domaine."
+        },
+        {
+          "label": "Accès depuis n'importe où",
+          "value": "Utilisez des apps web, les détails SSH, des URLs gérées et HTTPS."
+        }
+      ],
+      "plans": {
+        "eyebrow": "Choisissez votre Appbox",
+        "heading": "Stockage, vitesse et slots d'apps dans une seule formule",
+        "description": "Toutes les formules incluent le transfert de données illimité. Comparez-les par stockage, slots d'apps et vitesse de connexion, puis choisissez l'Appbox adaptée à vos apps privées et à vos flux de fichiers, sans gérer le serveur vous-même."
+      },
+      "apps_section": {
+        "headline_1": "Des apps pour votre cloud privé.",
+        "headline_2": "Installées en quelques clics.",
+        "description": "Lancez synchronisation de fichiers, notes, tableaux de bord, bases de données, monitoring, automatisations et autres outils open source sans construire vous-même la pile serveur."
+      },
+      "connections_section": {
+        "headline_1": "Vos apps peuvent travailler ensemble.",
+        "headline_2": "Sans raccords supplémentaires.",
+        "description": "Les apps de votre Appbox peuvent partager le stockage et la connectivité interne, pour que vos outils de cloud privé ressemblent à un espace de travail géré plutôt qu'à des projets VPS séparés."
+      },
+      "features_section": {
+        "headline_1": "Pensé autour de ce",
+        "headline_2": "que les gens comparent vraiment.",
+        "description": "Le stockage, la vitesse de connexion, la prise en charge des apps, l'accès à distance et la fiabilité au quotidien comptent plus que des promesses vagues de rapidité. Appbox affiche ces détails dans la formule et garde la configuration gérée.",
+        "cards": [
+          {
+            "title": "Un stockage que vous pouvez planifier",
+            "description": "Comparez les formules selon la capacité réelle, les slots d'apps et les possibilités d'évolution, afin que votre cloud privé ait de la place pour les fichiers, la synchronisation, les sauvegardes, les données d'apps et les services longue durée."
+          },
+          {
+            "title": "Transfert illimité sur chaque formule",
+            "description": "Chaque formule Appbox inclut le transfert de données illimité. Choisissez selon le stockage, la vitesse de connexion et la capacité d'apps dont votre configuration a besoin."
+          },
+          {
+            "title": "Installation d'apps en un clic",
+            "description": "Installez des outils de transfert de fichiers, Nextcloud, des tableaux de bord, des bases de données, du monitoring et des automatisations depuis le panneau, sans passer votre soirée à configurer des paquets."
+          },
+          {
+            "title": "Un accès à distance adapté à votre façon de travailler",
+            "description": "Utilisez des apps web, les détails SSH, des URLs gérées et HTTPS pour accéder à votre Appbox depuis votre ordinateur portable, votre téléphone ou votre installation à domicile."
+          },
+          {
+            "title": "Des mises à jour d'apps sans corvées",
+            "description": "Gardez vos apps à jour depuis le tableau de bord Appbox, sans reconstruire de conteneurs, suivre toutes les notes de version ni vous connecter à un serveur pour les mises à jour courantes."
+          },
+          {
+            "title": "Conçu pour des apps privées stables",
+            "description": "Les formules Appbox combinent stockage, vitesse réseau et capacité d'apps pour que vos outils personnels ressemblent à un espace de travail géré, pas à un projet serveur ponctuel."
+          }
+        ]
+      },
+      "faq_section": {
+        "title": "Des questions avant de choisir une formule ?",
+        "description": "Commencez par les détails que l'on compare généralement avant de choisir une infrastructure privée hébergée.",
+        "items": [
+          {
+            "id": "upgrade_after_purchase",
+            "question": "Puis-je faire évoluer mon Appbox plus tard ?",
+            "answer": "Oui. Commencez avec le stockage et les slots d'apps dont vous avez besoin maintenant, puis passez à une formule supérieure quand vos fichiers, vos outils ou votre usage demandent plus de place."
+          },
+          {
+            "id": "app_slots",
+            "question": "Que sont les slots d'apps ?",
+            "answer": "Les slots d'apps correspondent au nombre d'apps gérées que vous pouvez installer en même temps sur un Appbox. Les formules plus grandes incluent plus de slots, et les apps VPS ou OS peuvent servir lorsque vous avez besoin d'une configuration personnalisée hors du catalogue géré."
+          },
+          {
+            "id": "excluded_app_categories",
+            "question": "Pourquoi certains types d'apps sont-ils exclus d'une formule ?",
+            "answer": "Certains types d'apps ont besoin de davantage de ressources ou de fonctionnalités propres à certaines formules. Si une formule exclut un type d'app, choisissez un Appbox plus grand ou utilisez une app VPS ou OS lorsque vous avez besoin d'une pile personnalisée."
+          },
+          {
+            "id": "app_updates",
+            "question": "Comment les mises à jour des apps sont-elles gérées ?",
+            "answer": "Les apps compatibles peuvent être mises à jour depuis le tableau de bord Appbox, si bien que les mises à niveau courantes ne nécessitent pas de reconstruire des services ni de se connecter au serveur."
+          },
+          {
+            "id": "custom_domain",
+            "question": "Puis-je utiliser mon propre domaine ?",
+            "answer": "Oui. Vous pouvez utiliser des URLs gérées par Appbox pour démarrer rapidement, ou ajouter un domaine personnalisé avec des étapes DNS guidées et HTTPS."
+          },
+          {
+            "id": "deployment_time",
+            "question": "Que se passe-t-il après le paiement ?",
+            "answer": "Votre Appbox est provisionné, puis vous pouvez ouvrir le tableau de bord, installer des apps, consulter les détails de connexion et commencer à configurer votre espace de travail privé."
+          },
+          {
+            "id": "vps",
+            "question": "Quels types d'apps puis-je lancer ?",
+            "answer": "Presque tout. Commencez avec les apps en un clic du catalogue Appbox, ou utilisez des apps VPS et OS lorsque vous avez besoin d'une pile personnalisée au-delà de la liste d'apps gérées."
+          }
+        ]
+      }
+    },
     "install_preview": {
       "headline": "Installation en quelques secondes",
       "description": "Choisissez votre Appbox, remplissez quelques champs, et {appName} est en ligne.",

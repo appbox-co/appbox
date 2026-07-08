@@ -165,6 +165,141 @@
       "description": "Appbox koger komplekse open source-appinstallationer ned til det vigtigste: indtast et brugernavn og en adgangskode, klik på installer, og din app bliver konfigureret for dig.",
       "preview_app_name": "Nextcloud"
     },
+    "reddit_landing": {
+      "meta_title": "Privat apphosting og lager | Appbox",
+      "meta_description": "Kør dine egne private cloud-apps, lager, automatisering og fjernadgang på Appbox uden at administrere en VPS.",
+      "hero": {
+        "heading_prefix": "Apps og lager,",
+        "heading_emphasis": "uden servervedligeholdelse",
+        "subheading_prefix": "Kør ",
+        "flipwords": [
+          "Nextcloud",
+          "automatisering",
+          "dashboards",
+          "databaser",
+          "personlige værktøjer"
+        ],
+        "subheading_suffix": " fra din Appbox.",
+        "description": "Appbox giver dig administreret lager, open source-apps med ét klik, HTTPS, domæner, dashboardopgraderinger og oplysninger til fjernadgang uden at du skal vedligeholde serveren nedenunder."
+      },
+      "cta": {
+        "primary": "Se planer og lager",
+        "secondary": "Gennemse apps"
+      },
+      "spec_strip": [
+        {
+          "label": "Lager der passer til din opsætning",
+          "value": "Plads til filer, synkronisering, backups, appdata og langvarige tjenester."
+        },
+        {
+          "label": "Ubegrænset dataoverførsel",
+          "value": "Alle planer inkluderer ubegrænset overførsel; sammenlign forbindelseshastighed."
+        },
+        {
+          "label": "Apps med få klik",
+          "value": "Installer filoverførselsværktøjer, Nextcloud, dashboards, databaser og automatisering."
+        },
+        {
+          "label": "Enkle appopgraderinger",
+          "value": "Opdater understøttede apps fra dashboardet."
+        },
+        {
+          "label": "Domæner og HTTPS håndteres",
+          "value": "Brug rene app-URL'er, eller brug dit eget domæne."
+        },
+        {
+          "label": "Adgang fra hvor som helst",
+          "value": "Brug webapps, SSH-oplysninger, administrerede URL'er og HTTPS."
+        }
+      ],
+      "plans": {
+        "eyebrow": "Vælg din Appbox",
+        "heading": "Lager, hastighed og app-slots i én plan",
+        "description": "Alle planer inkluderer ubegrænset dataoverførsel. Sammenlign planer efter lager, app-slots og forbindelseshastighed, og vælg derefter den Appbox, der passer til dine private apps og filarbejdsgange, uden selv at administrere serveren."
+      },
+      "apps_section": {
+        "headline_1": "Apps til din private cloud.",
+        "headline_2": "Installeret med klik.",
+        "description": "Kør filsynkronisering, noter, dashboards, databaser, overvågning, automatisering og andre open source-værktøjer uden selv at bygge serverstakken."
+      },
+      "connections_section": {
+        "headline_1": "Dine apps kan arbejde sammen.",
+        "headline_2": "Uden ekstra sammenkobling.",
+        "description": "Apps på din Appbox kan dele lager og intern forbindelse, så dine private cloud-værktøjer føles som ét administreret arbejdsområde i stedet for adskilte VPS-projekter."
+      },
+      "features_section": {
+        "headline_1": "Bygget omkring de ting,",
+        "headline_2": "folk faktisk sammenligner.",
+        "description": "Lager, forbindelseshastighed, appunderstøttelse, fjernadgang og daglig driftssikkerhed betyder mere end vage hastighedsløfter. Appbox lægger de detaljer ind i planen og holder opsætningen administreret.",
+        "cards": [
+          {
+            "title": "Lager du kan planlægge efter",
+            "description": "Sammenlign planer efter reel kapacitet, app-slots og opgraderingsvej, så din private cloud har plads til filer, synkronisering, backups, appdata og langvarige tjenester."
+          },
+          {
+            "title": "Ubegrænset overførsel på alle planer",
+            "description": "Alle Appbox-planer inkluderer ubegrænset dataoverførsel. Vælg efter lager, forbindelseshastighed og den appkapacitet, din opsætning kræver."
+          },
+          {
+            "title": "Appinstallationer med ét klik",
+            "description": "Installer filoverførselsværktøjer, Nextcloud, dashboards, databaser, overvågning og automatisering fra panelet uden at bruge aftenen på pakkeopsætning."
+          },
+          {
+            "title": "Fjernadgang der passer til din arbejdsgang",
+            "description": "Brug webapps, SSH-oplysninger, administrerede URL'er og HTTPS, så din Appbox kan nås fra din laptop, telefon eller hjemmeopsætning."
+          },
+          {
+            "title": "Appopgraderinger uden rutinearbejdet",
+            "description": "Hold apps opdaterede fra Appbox-dashboardet uden at genbygge containere, følge release notes eller logge ind på en server for rutineopdateringer."
+          },
+          {
+            "title": "Bygget til stabile private apps",
+            "description": "Appbox-planer kombinerer lager, netværkshastighed og appkapacitet, så dine personlige værktøjer føles som et administreret arbejdsområde i stedet for et enkeltstående serverprojekt."
+          }
+        ]
+      },
+      "faq_section": {
+        "title": "Spørgsmål før du vælger en plan?",
+        "description": "Start med de detaljer, folk normalt sammenligner, før de vælger hostet privat infrastruktur.",
+        "items": [
+          {
+            "id": "upgrade_after_purchase",
+            "question": "Kan jeg opgradere min Appbox senere?",
+            "answer": "Ja. Start med det lager og de app-slots, du har brug for nu, og gå op i plan, når dine filer, værktøjer eller brug kræver mere plads."
+          },
+          {
+            "id": "app_slots",
+            "question": "Hvad er app-slots?",
+            "answer": "App-slots er antallet af administrerede apps, du kan installere på en Appbox samtidig. Større planer inkluderer flere slots, og VPS- eller OS-apps kan bruges, når du har brug for en tilpasset opsætning uden for det administrerede katalog."
+          },
+          {
+            "id": "excluded_app_categories",
+            "question": "Hvorfor er nogle appkategorier udelukket fra en plan?",
+            "answer": "Nogle appkategorier kræver flere ressourcer eller specifikke planfunktioner. Hvis en plan udelukker en kategori, skal du vælge en større Appbox eller bruge en VPS- eller OS-app, når du har brug for en tilpasset stack."
+          },
+          {
+            "id": "app_updates",
+            "question": "Hvordan håndteres appopdateringer?",
+            "answer": "Understøttede apps kan opdateres fra Appbox-dashboardet, så rutineopgraderinger ikke kræver genopbygning af tjenester eller login på serveren."
+          },
+          {
+            "id": "custom_domain",
+            "question": "Kan jeg bruge mit eget domæne?",
+            "answer": "Ja. Du kan bruge administrerede Appbox-URL'er til hurtig opsætning eller bruge dit eget domæne med guidede DNS-trin og HTTPS."
+          },
+          {
+            "id": "deployment_time",
+            "question": "Hvad sker der efter betaling?",
+            "answer": "Din Appbox bliver klargjort. Derefter kan du åbne dashboardet, installere apps, tjekke forbindelsesoplysninger og begynde at sætte dit private arbejdsområde op."
+          },
+          {
+            "id": "vps",
+            "question": "Hvilke slags apps kan jeg køre?",
+            "answer": "Næsten hvad som helst. Start med apps med ét klik fra Appbox-kataloget, eller brug VPS- og OS-apps, når du har brug for en tilpasset stack ud over den administrerede appliste."
+          }
+        ]
+      }
+    },
     "install_preview": {
       "headline": "Installer på sekunder",
       "description": "Vælg din Appbox, udfyld nogle få felter, og {appName} er live.",

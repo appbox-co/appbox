@@ -164,6 +164,141 @@
       "description": "Appbox distills complex open-source app installs down to the essentials: enter a username and password, click install, and your app is configured for you.",
       "preview_app_name": "Nextcloud"
     },
+    "reddit_landing": {
+      "meta_title": "Private App Hosting and Storage | Appbox",
+      "meta_description": "Run your own private cloud apps, storage, automation, and remote access on Appbox without managing a VPS.",
+      "hero": {
+        "heading_prefix": "Apps and storage,",
+        "heading_emphasis": "without server maintenance",
+        "subheading_prefix": "Run ",
+        "flipwords": [
+          "Nextcloud",
+          "automation",
+          "dashboards",
+          "databases",
+          "personal tools"
+        ],
+        "subheading_suffix": " from your Appbox.",
+        "description": "Appbox gives you managed storage, one-click open-source apps, HTTPS, domains, dashboard upgrades, and remote access details without maintaining the server underneath."
+      },
+      "cta": {
+        "primary": "View plans and storage",
+        "secondary": "Browse apps"
+      },
+      "spec_strip": [
+        {
+          "label": "Storage that fits your setup",
+          "value": "Room for files, sync, backups, app data, and long-running services."
+        },
+        {
+          "label": "Unlimited data transfer",
+          "value": "All plans include unlimited transfer; compare connection speed."
+        },
+        {
+          "label": "Apps in a few clicks",
+          "value": "Install file transfer tools, Nextcloud, dashboards, databases, and automation."
+        },
+        {
+          "label": "Simple app upgrades",
+          "value": "Update supported apps from the dashboard."
+        },
+        {
+          "label": "Domains and HTTPS handled",
+          "value": "Use clean app URLs or bring your own domain."
+        },
+        {
+          "label": "Access from anywhere",
+          "value": "Use web apps, SSH details, managed URLs, and HTTPS."
+        }
+      ],
+      "plans": {
+        "eyebrow": "Pick your Appbox",
+        "heading": "Storage, speed, and app slots in one plan",
+        "description": "All plans include unlimited data transfer. Compare plans by storage, app slots, and connection speed, then pick the Appbox that fits your private apps and file workflows without managing the server yourself."
+      },
+      "apps_section": {
+        "headline_1": "Apps for your private cloud.",
+        "headline_2": "Installed in clicks.",
+        "description": "Run file sync, notes, dashboards, databases, monitoring, automation, and other open-source tools without building the server stack yourself."
+      },
+      "connections_section": {
+        "headline_1": "Your apps can work together.",
+        "headline_2": "Without extra glue.",
+        "description": "Apps on your Appbox can share storage and internal connectivity, so your private cloud tools feel like one managed workspace instead of separate VPS projects."
+      },
+      "features_section": {
+        "headline_1": "Built around the things",
+        "headline_2": "people actually compare.",
+        "description": "Storage, connection speed, app support, remote access, and day-to-day reliability matter more than vague speed claims. Appbox puts those details in the plan and keeps setup managed.",
+        "cards": [
+          {
+            "title": "Storage you can plan around",
+            "description": "Compare plans by real capacity, app slots, and upgrade path so your private cloud has room for files, sync, backups, app data, and long-running services."
+          },
+          {
+            "title": "Unlimited transfer on every plan",
+            "description": "Every Appbox plan includes unlimited data transfer. Choose by storage, connection speed, and the app capacity your setup needs."
+          },
+          {
+            "title": "One-click app installs",
+            "description": "Install file transfer tools, Nextcloud, dashboards, databases, monitoring, and automation from the panel without spending your evening on package setup."
+          },
+          {
+            "title": "Remote access that fits your workflow",
+            "description": "Use web apps, SSH details, managed URLs, and HTTPS so your Appbox is reachable from your laptop, phone, or home setup."
+          },
+          {
+            "title": "App upgrades without the chores",
+            "description": "Keep apps current from the Appbox dashboard without rebuilding containers, chasing release notes, or logging into a server for routine updates."
+          },
+          {
+            "title": "Built for steady private apps",
+            "description": "Appbox plans combine storage, network speed, and app capacity so your personal tools feel like a managed workspace instead of a one-off server project."
+          }
+        ]
+      },
+      "faq_section": {
+        "title": "Questions before you pick a plan?",
+        "description": "Start with the details people usually compare before choosing hosted private infrastructure.",
+        "items": [
+          {
+            "id": "upgrade_after_purchase",
+            "question": "Can I upgrade my Appbox later?",
+            "answer": "Yes. Start with the storage and app slots you need now, then move up when your files, tools, or usage need more room."
+          },
+          {
+            "id": "app_slots",
+            "question": "What are app slots?",
+            "answer": "App slots are the number of managed apps you can install on an Appbox at the same time. Larger plans include more slots, and VPS or OS apps can be used when you need a custom setup outside the managed catalog."
+          },
+          {
+            "id": "excluded_app_categories",
+            "question": "Why are some app categories excluded from a plan?",
+            "answer": "Some app categories need more resources or specific plan features. If a plan excludes a category, choose a larger Appbox or use a VPS or OS app when you need a custom stack."
+          },
+          {
+            "id": "app_updates",
+            "question": "How are app updates handled?",
+            "answer": "Supported apps can be updated from the Appbox dashboard, so routine upgrades do not require rebuilding services or logging into the server."
+          },
+          {
+            "id": "custom_domain",
+            "question": "Can I use my own domain?",
+            "answer": "Yes. You can use managed Appbox URLs for quick setup or bring a custom domain with guided DNS steps and HTTPS."
+          },
+          {
+            "id": "deployment_time",
+            "question": "What happens after checkout?",
+            "answer": "Your Appbox is provisioned, then you can open the dashboard, install apps, check connection details, and start setting up your private workspace."
+          },
+          {
+            "id": "vps",
+            "question": "What kinds of apps can I run?",
+            "answer": "Almost anything. Start with one-click apps from the Appbox catalog, or use VPS and OS apps when you need a custom stack beyond the managed app list."
+          }
+        ]
+      }
+    },
     "install_preview": {
       "headline": "Install in seconds",
       "description": "Pick your Appbox, fill in a few fields, and {appName} is live.",

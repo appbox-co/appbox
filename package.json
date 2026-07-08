@@ -13,33 +13,22 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.0",
-    "@commitlint/config-conventional": "^20.5.0",
-    "eslint": "9.39.2",
+    "@commitlint/cli": "^21.2.0",
+    "@commitlint/config-conventional": "^21.2.0",
+    "eslint": "9.39.4",
     "husky": "^9.1.7",
-    "pnpm": "^10.33.0",
-    "prettier": "^3.8.2",
-    "sharp": "^0.34.5",
-    "turbo": "^2.9.6",
+    "pnpm": "^11.10.0",
+    "prettier": "^3.9.4",
+    "sharp": "^0.35.3",
+    "turbo": "^2.10.4",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@11.10.0",
   "engines": {
-    "node": ">=23"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "^19.0.10",
-      "@types/react-dom": "^19.0.4",
-      "postcss": "8.5.10",
-      "posthog-js>dompurify": "3.4.2",
-      "protobufjs": "7.5.6",
-      "@microsoft/tsdoc-config>ajv": "6.14.0",
-      "mdx-bundler>uuid": "14.0.0"
-    }
+    "node": ">=26.4.0"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.19",
-    "next": "^16.2.4"
+    "@tailwindcss/typography": "^0.5.20",
+    "next": "^16.2.10"
   }
 }

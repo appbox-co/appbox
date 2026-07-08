@@ -112,6 +112,7 @@ export interface PlansData {
 
 interface PlansProps {
   data: Group[]
+  affiliateId?: string
   boostEnabled?: boolean
   messages: {
     billing_cycles: {
@@ -212,11 +213,24 @@ function getPlanGradient(
 // The Plans component
 const Plans = ({
   data,
+  affiliateId,
   boostEnabled = false,
   messages,
   gradientStartColor = "#00CCB1",
   gradientEndColor = "#1CA0FB"
 }: PlansProps) => {
+  const withAffiliateParam = (url: string) => {
+    if (!affiliateId) return url
+
+    try {
+      const targetUrl = new URL(url)
+      targetUrl.searchParams.set("aff", affiliateId)
+      return targetUrl.toString()
+    } catch {
+      return url
+    }
+  }
+
   const getPlanTierValue = (plan: Plan): number | null => {
     const source = `${plan.short_title} ${plan.title}`
     const match = source.match(/NG[-\s]?(\d+)/i)
@@ -436,14 +450,18 @@ const Plans = ({
                           )
                           const billingUrl =
                             plan.available === false
-                              ? "https://billing.appbox.co/contact.php"
-                              : `https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}${
-                                  hasActivePromotion &&
-                                  plan.promotion?.auto_apply &&
-                                  plan.promotion?.promo_code
-                                    ? `&promocode=${plan.promotion.promo_code}`
-                                    : ""
-                                }`
+                              ? withAffiliateParam(
+                                  "https://billing.appbox.co/contact.php"
+                                )
+                              : withAffiliateParam(
+                                  `https://billing.appbox.co/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${billingCycle[0]}${
+                                    hasActivePromotion &&
+                                    plan.promotion?.auto_apply &&
+                                    plan.promotion?.promo_code
+                                      ? `&promocode=${plan.promotion.promo_code}`
+                                      : ""
+                                  }`
+                                )
                           const openBillingUrl = () => {
                             window.open(
                               trackBeginCheckout(
@@ -791,16 +809,16 @@ const Plans = ({
                               {plan.available === false ? (
                                 <Button variant="outline" asChild>
                                   <a
-                                    href="https://billing.appbox.co/contact.php"
+                                    href={billingUrl}
                                     onClick={(event) => {
                                       event.stopPropagation()
                                       event.currentTarget.href =
                                         hasAdvertisingConsent()
                                           ? withAttributionParams(
-                                              "https://billing.appbox.co/contact.php",
+                                              billingUrl,
                                               { includeConsentMarker: true }
                                             )
-                                          : "https://billing.appbox.co/contact.php"
+                                          : billingUrl
                                     }}
                                     target="_blank"
                                     rel="noopener noreferrer"

@@ -165,6 +165,141 @@
       "description": "Appbox destillerar komplexa installationer av appar med öppen källkod till det viktigaste: ange användarnamn och lösenord, klicka på installera, och din app konfigureras åt dig.",
       "preview_app_name": "Nextcloud"
     },
+    "reddit_landing": {
+      "meta_title": "Privat apphosting och lagring | Appbox",
+      "meta_description": "Kör dina egna privata molnappar, lagring, automatisering och fjärråtkomst på Appbox utan att administrera en VPS.",
+      "hero": {
+        "heading_prefix": "Appar och lagring,",
+        "heading_emphasis": "utan serverunderhåll",
+        "subheading_prefix": "Kör ",
+        "flipwords": [
+          "Nextcloud",
+          "automatisering",
+          "dashboardar",
+          "databaser",
+          "personliga verktyg"
+        ],
+        "subheading_suffix": " från din Appbox.",
+        "description": "Appbox ger dig hanterad lagring, appar med öppen källkod med ett klick, HTTPS, domäner, dashboarduppgraderingar och uppgifter för fjärråtkomst utan att du behöver underhålla servern under."
+      },
+      "cta": {
+        "primary": "Visa planer och lagring",
+        "secondary": "Bläddra bland appar"
+      },
+      "spec_strip": [
+        {
+          "label": "Lagring som passar din setup",
+          "value": "Plats för filer, synkronisering, säkerhetskopior, appdata och långvariga tjänster."
+        },
+        {
+          "label": "Obegränsad dataöverföring",
+          "value": "Alla planer inkluderar obegränsad överföring; jämför anslutningshastighet."
+        },
+        {
+          "label": "Appar med några klick",
+          "value": "Installera filöverföringsverktyg, Nextcloud, dashboardar, databaser och automatisering."
+        },
+        {
+          "label": "Enkla appuppgraderingar",
+          "value": "Uppdatera appar som stöds från dashboarden."
+        },
+        {
+          "label": "Domäner och HTTPS hanteras",
+          "value": "Använd tydliga app-URL:er eller ta med din egen domän."
+        },
+        {
+          "label": "Åtkomst var du än är",
+          "value": "Använd webbappar, SSH-uppgifter, hanterade URL:er och HTTPS."
+        }
+      ],
+      "plans": {
+        "eyebrow": "Välj din Appbox",
+        "heading": "Lagring, hastighet och appplatser i en plan",
+        "description": "Alla planer inkluderar obegränsad dataöverföring. Jämför planer efter lagring, appplatser och anslutningshastighet, och välj sedan den Appbox som passar dina privata appar och filarbetsflöden utan att själv administrera servern."
+      },
+      "apps_section": {
+        "headline_1": "Appar för ditt privata moln.",
+        "headline_2": "Installerade med klick.",
+        "description": "Kör filsynkronisering, anteckningar, dashboardar, databaser, övervakning, automatisering och andra verktyg med öppen källkod utan att bygga serverstacken själv."
+      },
+      "connections_section": {
+        "headline_1": "Dina appar kan arbeta tillsammans.",
+        "headline_2": "Utan extra kopplingar.",
+        "description": "Appar på din Appbox kan dela lagring och intern anslutning, så dina privata molnverktyg känns som en hanterad arbetsyta i stället för separata VPS-projekt."
+      },
+      "features_section": {
+        "headline_1": "Byggt kring det",
+        "headline_2": "folk faktiskt jämför.",
+        "description": "Lagring, anslutningshastighet, appstöd, fjärråtkomst och tillförlitlighet i vardagen betyder mer än vaga hastighetslöften. Appbox visar de detaljerna i planen och håller setupen hanterad.",
+        "cards": [
+          {
+            "title": "Lagring du kan planera kring",
+            "description": "Jämför planer efter verklig kapacitet, appplatser och uppgraderingsväg, så att ditt privata moln har plats för filer, synkronisering, säkerhetskopior, appdata och långvariga tjänster."
+          },
+          {
+            "title": "Obegränsad överföring i alla planer",
+            "description": "Varje Appbox-plan inkluderar obegränsad dataöverföring. Välj efter lagring, anslutningshastighet och den appkapacitet din setup behöver."
+          },
+          {
+            "title": "Appinstallationer med ett klick",
+            "description": "Installera filöverföringsverktyg, Nextcloud, dashboardar, databaser, övervakning och automatisering från panelen utan att lägga kvällen på paketsetup."
+          },
+          {
+            "title": "Fjärråtkomst som passar ditt arbetsflöde",
+            "description": "Använd webbappar, SSH-uppgifter, hanterade URL:er och HTTPS så att din Appbox kan nås från din laptop, telefon eller hemmauppsättning."
+          },
+          {
+            "title": "Appuppgraderingar utan rutinarbetet",
+            "description": "Håll appar uppdaterade från Appbox-dashboarden utan att bygga om containrar, följa release notes eller logga in på en server för rutinuppdateringar."
+          },
+          {
+            "title": "Byggt för stabila privata appar",
+            "description": "Appbox-planer kombinerar lagring, nätverkshastighet och appkapacitet, så dina personliga verktyg känns som en hanterad arbetsyta i stället för ett enskilt serverprojekt."
+          }
+        ]
+      },
+      "faq_section": {
+        "title": "Frågor innan du väljer plan?",
+        "description": "Börja med detaljerna som folk vanligtvis jämför innan de väljer hostad privat infrastruktur.",
+        "items": [
+          {
+            "id": "upgrade_after_purchase",
+            "question": "Kan jag uppgradera min Appbox senare?",
+            "answer": "Ja. Börja med den lagring och de appplatser du behöver nu, och gå upp senare när dina filer, verktyg eller din användning behöver mer utrymme."
+          },
+          {
+            "id": "app_slots",
+            "question": "Vad är appplatser?",
+            "answer": "Appplatser är antalet hanterade appar du kan installera på en Appbox samtidigt. Större planer inkluderar fler platser, och VPS- eller OS-appar kan användas när du behöver en anpassad setup utanför den hanterade katalogen."
+          },
+          {
+            "id": "excluded_app_categories",
+            "question": "Varför är vissa appkategorier undantagna från en plan?",
+            "answer": "Vissa appkategorier behöver mer resurser eller specifika planfunktioner. Om en plan undantar en kategori väljer du en större Appbox eller använder en VPS- eller OS-app när du behöver en anpassad stack."
+          },
+          {
+            "id": "app_updates",
+            "question": "Hur hanteras appuppdateringar?",
+            "answer": "Appar som stöds kan uppdateras från Appbox-dashboarden, så rutinuppgraderingar kräver inte att tjänster byggs om eller att du loggar in på servern."
+          },
+          {
+            "id": "custom_domain",
+            "question": "Kan jag använda min egen domän?",
+            "answer": "Ja. Du kan använda hanterade Appbox-URL:er för snabb setup eller ta med en egen domän med guidade DNS-steg och HTTPS."
+          },
+          {
+            "id": "deployment_time",
+            "question": "Vad händer efter betalning?",
+            "answer": "Din Appbox provisioneras. Sedan kan du öppna dashboarden, installera appar, kontrollera anslutningsuppgifter och börja sätta upp din privata arbetsyta."
+          },
+          {
+            "id": "vps",
+            "question": "Vilka slags appar kan jag köra?",
+            "answer": "Nästan vad som helst. Börja med appar med ett klick från Appbox-katalogen, eller använd VPS- och OS-appar när du behöver en anpassad stack utöver den hanterade applistan."
+          }
+        ]
+      }
+    },
     "install_preview": {
       "headline": "Installera på sekunder",
       "description": "Välj din Appbox, fyll i några fält och {appName} är live.",

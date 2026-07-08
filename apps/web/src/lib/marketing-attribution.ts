@@ -34,6 +34,7 @@ export type BillingCheckoutTrigger =
   | "billing_link_click"
   | "plan_card_click"
   | "deploy_plan_select"
+  | "campaign_landing_checkout_click"
   | (string & {})
 
 export type BillingCheckoutProperties = Record<string, unknown>
@@ -234,6 +235,7 @@ export function attachAttributionToBillingLinks(
       'a[href*="billing.appbox.co"]'
     )
     if (!anchor) return
+    if (anchor.dataset.appboxCheckoutTracked === "manual") return
 
     const canAttachAttribution = shouldAttachAttribution
       ? shouldAttachAttribution()

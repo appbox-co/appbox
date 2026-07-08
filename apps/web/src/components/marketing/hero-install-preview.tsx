@@ -38,22 +38,32 @@ const FORM_FILL_STEP_MS = 900
 const INSTALLING_STEP_MS = 3000
 
 const fieldValueHints: Record<string, string> = {
-  OPENCLAW_GATEWAY_TOKEN: "oc_live_9Kf4...n7Qx",
+  ADMIN_USER: "admin",
+  ADMIN_PASS: "••••••••••••",
+  NC_URL: "https://nextcloud.steve.appbox.co",
+  SERVER_ADDR: "nextcloud.steve.appbox.co",
+  SSH_CMD: "ssh appbox@nextcloud.steve.appbox.co -p 22022",
   SSH_USERNAME: "appbox",
   SSH_HOST: "demo.appboxes.co",
-  SSH_PORT: "22",
+  SSH_PORT: "22022",
   SSH_COMMAND: "ssh -p 22 appbox@demo.appboxes.co",
-  LOGIN_URL: "https://openclaw.appboxes.co"
+  LOGIN_URL: "https://app.steve.appbox.co"
 }
 
 const previewFieldLabels: Record<string, string> = {
-  OPENCLAW_GATEWAY_TOKEN: "OpenClaw Gateway Token",
+  ADMIN_USER: "Admin Username",
+  ADMIN_PASS: "Admin Password",
+  NC_URL: "NextCloud URL",
+  SERVER_ADDR: "Server Address",
+  SSH_PORT: "SSH Port",
+  SSH_CMD: "SSH Command (For CLI Access)",
   SSH_COMMAND: "SSH Command",
   LOGIN_URL: "Login URL"
 }
 
 const previewFieldTypes: Record<string, string> = {
-  OPENCLAW_GATEWAY_TOKEN: "password",
+  ADMIN_PASS: "password",
+  NC_URL: "externalURL",
   LOGIN_URL: "clientURL"
 }
 
@@ -107,12 +117,109 @@ function getMarketingPreviewFields(app: AppDetails | null) {
   )
 }
 
+function getNextcloudPreviewFields(): Record<string, CustomField> {
+  return {
+    ADMIN_USER: {
+      label: previewFieldLabels.ADMIN_USER,
+      type: "staticText",
+      width: 6,
+      defaultValue: fieldValueHints.ADMIN_USER
+    },
+    ADMIN_PASS: {
+      label: previewFieldLabels.ADMIN_PASS,
+      type: "password",
+      width: 6,
+      defaultValue: fieldValueHints.ADMIN_PASS
+    },
+    NC_URL: {
+      label: previewFieldLabels.NC_URL,
+      type: "externalURL",
+      width: 12,
+      defaultValue: fieldValueHints.NC_URL
+    },
+    SERVER_ADDR: {
+      label: previewFieldLabels.SERVER_ADDR,
+      type: "staticText",
+      width: 6,
+      defaultValue: fieldValueHints.SERVER_ADDR
+    },
+    SSH_PORT: {
+      label: previewFieldLabels.SSH_PORT,
+      type: "staticText",
+      width: 6,
+      defaultValue: fieldValueHints.SSH_PORT
+    },
+    SSH_CMD: {
+      label: previewFieldLabels.SSH_CMD,
+      type: "staticText",
+      width: 12,
+      defaultValue: fieldValueHints.SSH_CMD
+    }
+  }
+}
+
+function getFallbackPreviewFields(app: AppDetails | null): Record<string, CustomField> {
+  const appSlug = (app?.display_name ?? "app")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+  const appUrl = `https://${appSlug || "app"}.steve.appbox.co`
+
+  return {
+    ADMIN_USER: {
+      label: previewFieldLabels.ADMIN_USER,
+      type: "text",
+      width: 6,
+      defaultValue: fieldValueHints.ADMIN_USER
+    },
+    ADMIN_PASS: {
+      label: previewFieldLabels.ADMIN_PASS,
+      type: "password",
+      width: 6,
+      defaultValue: fieldValueHints.ADMIN_PASS
+    },
+    LOGIN_URL: {
+      label: previewFieldLabels.LOGIN_URL,
+      type: "clientURL",
+      width: 12,
+      defaultValue: appUrl
+    }
+  }
+}
+
+function isNextcloudApp(app: AppDetails | null) {
+  return app?.display_name?.toLowerCase() === "nextcloud"
+}
+
 function getPreviewCustomFields(app: AppDetails | null) {
+  const marketingPreviewFields = getMarketingPreviewFields(app)
+  if (marketingPreviewFields) {
+    return marketingPreviewFields
+  }
+
+  if (isNextcloudApp(app)) {
+    return getNextcloudPreviewFields()
+  }
+
   if (app?.customFields && Object.keys(app.customFields).length > 0) {
     return app.customFields
   }
 
-  return getMarketingPreviewFields(app)
+  return getFallbackPreviewFields(app)
+}
+
+function getInstalledPreviewFields(
+  app: AppDetails | null,
+  customFields?: Record<string, CustomField>
+) {
+  if (isNextcloudApp(app)) {
+    return {
+      ...customFields,
+      ...getNextcloudPreviewFields()
+    }
+  }
+
+  return customFields
 }
 
 function getFieldValue(name: string, field: CustomField) {
@@ -135,7 +242,7 @@ function getInstallFields(customFields?: Record<string, CustomField>) {
 
 function getInstalledFields(customFields?: Record<string, CustomField>) {
   return Object.entries(customFields ?? {})
-    .filter(([, field]) => !["spacer", "staticText"].includes(field.type))
+    .filter(([, field]) => field.type !== "spacer")
     .slice(0, 6)
 }
 
@@ -235,21 +342,25 @@ export function HeroInstallPreview({ app }: HeroInstallPreviewProps) {
   }, [step])
 
   const customFields = useMemo(() => getPreviewCustomFields(app), [app])
+  const installedCustomFields = useMemo(
+    () => getInstalledPreviewFields(app, customFields),
+    [app, customFields]
+  )
   const installFields = useMemo(
     () => getInstallFields(customFields),
     [customFields]
   )
   const installedFields = useMemo(
-    () => getInstalledFields(customFields),
-    [customFields]
+    () => getInstalledFields(installedCustomFields),
+    [installedCustomFields]
   )
-  const appName = app?.display_name ?? "OpenClaw"
+  const appName = app?.display_name ?? "App"
   const appVersion = app?.version ?? "latest"
   const iconUrl = getIconUrl(app?.icon_image)
   const slotCount = app?.app_slots ?? 2
   const customFieldDescription =
     app?.custom_field_preinstall_description ??
-    "OpenClaw needs these connection details before Appbox starts the install."
+    `${appName} needs these setup details before Appbox starts the install.`
   const showInstalledPage = step === "installing" || step === "installed"
 
   return (

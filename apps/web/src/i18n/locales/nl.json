@@ -165,6 +165,141 @@
       "description": "Appbox brengt complexe installaties van open-source apps terug tot de essentie: voer een gebruikersnaam en wachtwoord in, klik op installeren en je app wordt voor je geconfigureerd.",
       "preview_app_name": "Nextcloud"
     },
+    "reddit_landing": {
+      "meta_title": "Private apphosting en opslag | Appbox",
+      "meta_description": "Draai je eigen private cloud-apps, opslag, automatisering en externe toegang op Appbox zonder een VPS te beheren.",
+      "hero": {
+        "heading_prefix": "Apps en opslag,",
+        "heading_emphasis": "zonder serveronderhoud",
+        "subheading_prefix": "Draai ",
+        "flipwords": [
+          "Nextcloud",
+          "automatisering",
+          "dashboards",
+          "databases",
+          "persoonlijke tools"
+        ],
+        "subheading_suffix": " vanaf je Appbox.",
+        "description": "Appbox geeft je beheerde opslag, open-source apps met een klik, HTTPS, domeinen, dashboardupgrades en gegevens voor externe toegang, zonder dat je de onderliggende server hoeft te onderhouden."
+      },
+      "cta": {
+        "primary": "Bekijk plannen en opslag",
+        "secondary": "Apps bekijken"
+      },
+      "spec_strip": [
+        {
+          "label": "Opslag die past bij je setup",
+          "value": "Ruimte voor bestanden, synchronisatie, back-ups, appgegevens en langlopende diensten."
+        },
+        {
+          "label": "Onbeperkte datadoorvoer",
+          "value": "Alle plannen bevatten onbeperkte doorvoer; vergelijk de verbindingssnelheid."
+        },
+        {
+          "label": "Apps in een paar klikken",
+          "value": "Installeer tools voor bestandsoverdracht, Nextcloud, dashboards, databases en automatisering."
+        },
+        {
+          "label": "Eenvoudige appupgrades",
+          "value": "Werk ondersteunde apps bij vanuit het dashboard."
+        },
+        {
+          "label": "Domeinen en HTTPS geregeld",
+          "value": "Gebruik nette app-URL's of breng je eigen domein mee."
+        },
+        {
+          "label": "Toegang vanaf overal",
+          "value": "Gebruik web-apps, SSH-gegevens, beheerde URL's en HTTPS."
+        }
+      ],
+      "plans": {
+        "eyebrow": "Kies je Appbox",
+        "heading": "Opslag, snelheid en appslots in een plan",
+        "description": "Alle plannen bevatten onbeperkte datadoorvoer. Vergelijk plannen op opslag, appslots en verbindingssnelheid en kies daarna de Appbox die past bij je private apps en bestandsworkflows, zonder zelf de server te beheren."
+      },
+      "apps_section": {
+        "headline_1": "Apps voor je private cloud.",
+        "headline_2": "Geinstalleerd in klikken.",
+        "description": "Draai bestandssynchronisatie, notities, dashboards, databases, monitoring, automatisering en andere open-source tools zonder zelf de serverstack te bouwen."
+      },
+      "connections_section": {
+        "headline_1": "Je apps kunnen samenwerken.",
+        "headline_2": "Zonder extra koppelingen.",
+        "description": "Apps op je Appbox kunnen opslag en interne connectiviteit delen, zodat je private cloudtools aanvoelen als een beheerde werkruimte in plaats van losse VPS-projecten."
+      },
+      "features_section": {
+        "headline_1": "Gebouwd rond de dingen",
+        "headline_2": "die mensen echt vergelijken.",
+        "description": "Opslag, verbindingssnelheid, appondersteuning, externe toegang en dagelijkse betrouwbaarheid zijn belangrijker dan vage snelheidsclaims. Appbox zet die details in het plan en houdt de setup beheerd.",
+        "cards": [
+          {
+            "title": "Opslag waar je omheen kunt plannen",
+            "description": "Vergelijk plannen op echte capaciteit, appslots en upgradepad, zodat je private cloud ruimte heeft voor bestanden, synchronisatie, back-ups, appgegevens en langlopende diensten."
+          },
+          {
+            "title": "Onbeperkte doorvoer op elk plan",
+            "description": "Elk Appbox-plan bevat onbeperkte datadoorvoer. Kies op opslag, verbindingssnelheid en de appcapaciteit die je setup nodig heeft."
+          },
+          {
+            "title": "Appinstallaties met een klik",
+            "description": "Installeer tools voor bestandsoverdracht, Nextcloud, dashboards, databases, monitoring en automatisering vanuit het paneel, zonder je avond kwijt te zijn aan pakketconfiguratie."
+          },
+          {
+            "title": "Externe toegang die past bij je workflow",
+            "description": "Gebruik web-apps, SSH-gegevens, beheerde URL's en HTTPS, zodat je Appbox bereikbaar is vanaf je laptop, telefoon of thuissetup."
+          },
+          {
+            "title": "Appupgrades zonder klusjes",
+            "description": "Houd apps actueel vanuit het Appbox-dashboard zonder containers opnieuw te bouwen, release notes na te lopen of in te loggen op een server voor routineupdates."
+          },
+          {
+            "title": "Gebouwd voor stabiele private apps",
+            "description": "Appbox-plannen combineren opslag, netwerksnelheid en appcapaciteit, zodat je persoonlijke tools aanvoelen als een beheerde werkruimte in plaats van een eenmalig serverproject."
+          }
+        ]
+      },
+      "faq_section": {
+        "title": "Vragen voordat je een plan kiest?",
+        "description": "Begin met de details die mensen meestal vergelijken voordat ze kiezen voor gehoste private infrastructuur.",
+        "items": [
+          {
+            "id": "upgrade_after_purchase",
+            "question": "Kan ik mijn Appbox later upgraden?",
+            "answer": "Ja. Begin met de opslag en appslots die je nu nodig hebt en stap later over wanneer je bestanden, tools of gebruik meer ruimte vragen."
+          },
+          {
+            "id": "app_slots",
+            "question": "Wat zijn appslots?",
+            "answer": "Appslots zijn het aantal beheerde apps dat je tegelijk op een Appbox kunt installeren. Grotere plannen bevatten meer slots, en VPS- of OS-apps kun je gebruiken wanneer je een eigen setup nodig hebt buiten de beheerde catalogus."
+          },
+          {
+            "id": "excluded_app_categories",
+            "question": "Waarom zijn sommige appcategorieen uitgesloten van een plan?",
+            "answer": "Sommige appcategorieen vragen meer resources of specifieke planfuncties. Als een plan een categorie uitsluit, kies dan een grotere Appbox of gebruik een VPS- of OS-app wanneer je een eigen stack nodig hebt."
+          },
+          {
+            "id": "app_updates",
+            "question": "Hoe worden appupdates afgehandeld?",
+            "answer": "Ondersteunde apps kunnen vanuit het Appbox-dashboard worden bijgewerkt, zodat routineupgrades geen herbouw van diensten of login op de server vereisen."
+          },
+          {
+            "id": "custom_domain",
+            "question": "Kan ik mijn eigen domein gebruiken?",
+            "answer": "Ja. Je kunt beheerde Appbox-URL's gebruiken voor een snelle setup of een eigen domein toevoegen met begeleide DNS-stappen en HTTPS."
+          },
+          {
+            "id": "deployment_time",
+            "question": "Wat gebeurt er na het afrekenen?",
+            "answer": "Je Appbox wordt ingericht. Daarna kun je het dashboard openen, apps installeren, verbindingsgegevens controleren en beginnen met het opzetten van je private werkruimte."
+          },
+          {
+            "id": "vps",
+            "question": "Wat voor apps kan ik draaien?",
+            "answer": "Bijna alles. Begin met eenklik-apps uit de Appbox-catalogus of gebruik VPS- en OS-apps wanneer je een eigen stack nodig hebt buiten de beheerde applijst."
+          }
+        ]
+      }
+    },
     "install_preview": {
       "headline": "Installeer in seconden",
       "description": "Kies je Appbox, vul een paar velden in en {appName} is live.",

@@ -1,11 +1,17 @@
 import { withContentlayer } from "next-contentlayer2"
 import nextIntlPlugin from "next-intl/plugin"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
 const withNextIntl = nextIntlPlugin()
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  turbopack: {
+    root: path.resolve(__dirname, "../..")
+  },
   images: {
     remotePatterns: [
       {
@@ -52,7 +58,14 @@ const nextConfig = {
   async rewrites() {
     return [
       // Email links use /abusecomplainant/:id?token= — serve en route without changing URL (avoids redirect loop with localePrefix as-needed)
-      { source: "/abusecomplainant/:id", destination: "/en/abusecomplainant/:id" }
+      { source: "/abusecomplainant/:id", destination: "/en/abusecomplainant/:id" },
+      // Dashboard routes are authored under /[locale], while default-locale URLs stay unprefixed.
+      { source: "/dashboard/:path*", destination: "/en/dashboard/:path*" },
+      { source: "/appboxmanager/:path*", destination: "/en/appboxmanager/:path*" },
+      { source: "/account/:path*", destination: "/en/account/:path*" },
+      { source: "/appstore/:path*", destination: "/en/appstore/:path*" },
+      { source: "/login", destination: "/en/login" },
+      { source: "/forgot/:path*", destination: "/en/forgot/:path*" }
     ]
   }
 }

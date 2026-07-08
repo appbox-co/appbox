@@ -165,6 +165,141 @@
       "description": "Appbox 将复杂的开源应用安装流程压缩到最关键的步骤：输入用户名和密码，点击安装，应用就会为你配置好。",
       "preview_app_name": "Nextcloud"
     },
+    "reddit_landing": {
+      "meta_title": "私有应用托管与存储 | Appbox",
+      "meta_description": "无需管理 VPS，即可在 Appbox 上运行自己的私有云应用、存储、自动化和远程访问。",
+      "hero": {
+        "heading_prefix": "应用和存储，",
+        "heading_emphasis": "不用维护服务器",
+        "subheading_prefix": "在 Appbox 上运行 ",
+        "flipwords": [
+          "Nextcloud",
+          "自动化",
+          "Dashboard",
+          "数据库",
+          "个人工具"
+        ],
+        "subheading_suffix": "。",
+        "description": "Appbox 为你提供托管式存储、一键开源应用、HTTPS、域名、Dashboard 升级和远程访问详情，而无需维护底层服务器。"
+      },
+      "cta": {
+        "primary": "查看套餐和存储",
+        "secondary": "浏览应用"
+      },
+      "spec_strip": [
+        {
+          "label": "适合你配置的存储",
+          "value": "为文件、同步、备份、应用数据和长期运行的服务预留空间。"
+        },
+        {
+          "label": "无限制数据传输",
+          "value": "所有套餐都包含无限制传输；可按连接速度进行比较。"
+        },
+        {
+          "label": "几次点击即可安装应用",
+          "value": "安装文件传输工具、Nextcloud、Dashboard、数据库和自动化工具。"
+        },
+        {
+          "label": "简单的应用升级",
+          "value": "可从 Dashboard 更新受支持的应用。"
+        },
+        {
+          "label": "域名和 HTTPS 都已处理",
+          "value": "使用清晰的应用 URL，或接入你自己的域名。"
+        },
+        {
+          "label": "随时随地访问",
+          "value": "使用 Web 应用、SSH 详情、托管 URL 和 HTTPS。"
+        }
+      ],
+      "plans": {
+        "eyebrow": "选择你的 Appbox",
+        "heading": "一个套餐涵盖存储、速度和 App Slot",
+        "description": "所有套餐都包含无限制数据传输。按存储、App Slot 和连接速度比较套餐，然后选择适合你的私有应用和文件工作流的 Appbox，无需自己管理服务器。"
+      },
+      "apps_section": {
+        "headline_1": "适合私有云的应用。",
+        "headline_2": "点击即可安装。",
+        "description": "无需自己搭建服务器栈，也能运行文件同步、笔记、Dashboard、数据库、监控、自动化和其他开源工具。"
+      },
+      "connections_section": {
+        "headline_1": "你的应用可以协同工作。",
+        "headline_2": "无需额外拼接。",
+        "description": "Appbox 上的应用可以共享存储和内部连接，让你的私有云工具像一个托管式工作区，而不是一组分散的 VPS 项目。"
+      },
+      "features_section": {
+        "headline_1": "围绕人们真正会比较的",
+        "headline_2": "关键点而构建。",
+        "description": "存储、连接速度、应用支持、远程访问和日常可靠性，比含糊的速度宣传更重要。Appbox 将这些细节放进套餐，并让设置保持托管状态。",
+        "cards": [
+          {
+            "title": "可以提前规划的存储",
+            "description": "按真实容量、App Slot 和升级路径比较套餐，让你的私有云有足够空间容纳文件、同步、备份、应用数据和长期运行的服务。"
+          },
+          {
+            "title": "每个套餐都包含无限制传输",
+            "description": "每个 Appbox 套餐都包含无限制数据传输。可按存储、连接速度和你的配置所需应用容量来选择。"
+          },
+          {
+            "title": "一键安装应用",
+            "description": "从面板安装文件传输工具、Nextcloud、Dashboard、数据库、监控和自动化工具，不必把晚上花在软件包设置上。"
+          },
+          {
+            "title": "适合你工作流的远程访问",
+            "description": "使用 Web 应用、SSH 详情、托管 URL 和 HTTPS，让你的 Appbox 能从笔记本、手机或家中环境访问。"
+          },
+          {
+            "title": "少些杂务的应用升级",
+            "description": "从 Appbox Dashboard 让应用保持更新，无需重建容器、追踪发布说明，也不用为常规更新登录服务器。"
+          },
+          {
+            "title": "为稳定的私有应用而建",
+            "description": "Appbox 套餐结合存储、网络速度和应用容量，让你的个人工具像一个托管式工作区，而不是一次性的服务器项目。"
+          }
+        ]
+      },
+      "faq_section": {
+        "title": "选择套餐前还有问题？",
+        "description": "先了解人们在选择托管式私有基础设施前通常会比较的细节。",
+        "items": [
+          {
+            "id": "upgrade_after_purchase",
+            "question": "之后可以升级我的 Appbox 吗？",
+            "answer": "可以。先从当前需要的存储和 App Slot 开始；当文件、工具或使用量需要更多空间时，再升级到更高套餐。"
+          },
+          {
+            "id": "app_slots",
+            "question": "什么是 App Slot？",
+            "answer": "App Slot 是你可以在一个 Appbox 上同时安装的托管应用数量。更大的套餐包含更多 slot；当你需要托管目录之外的自定义配置时，可以使用 VPS 或 OS 应用。"
+          },
+          {
+            "id": "excluded_app_categories",
+            "question": "为什么某些应用类别不包含在某个套餐中？",
+            "answer": "某些应用类别需要更多资源或特定套餐功能。如果某个套餐不包含某个类别，可以选择更大的 Appbox，或在需要自定义栈时使用 VPS 或 OS 应用。"
+          },
+          {
+            "id": "app_updates",
+            "question": "应用更新如何处理？",
+            "answer": "受支持的应用可以从 Appbox Dashboard 更新，因此常规升级无需重建服务，也无需登录服务器。"
+          },
+          {
+            "id": "custom_domain",
+            "question": "我可以使用自己的域名吗？",
+            "answer": "可以。你可以使用 Appbox 托管 URL 快速开始，也可以接入自定义域名，并按指引完成 DNS 步骤和 HTTPS。"
+          },
+          {
+            "id": "deployment_time",
+            "question": "结账后会发生什么？",
+            "answer": "你的 Appbox 会完成配置，然后你可以打开 Dashboard、安装应用、查看连接详情，并开始设置自己的私有工作区。"
+          },
+          {
+            "id": "vps",
+            "question": "我可以运行哪些类型的应用？",
+            "answer": "几乎都可以。你可以从 Appbox 目录中的一键应用开始；如果需要超出托管应用列表的自定义栈，则可以使用 VPS 和 OS 应用。"
+          }
+        ]
+      }
+    },
     "install_preview": {
       "headline": "几秒钟内安装",
       "description": "选择你的 Appbox，填写几个字段，{appName} 就会上线。",
