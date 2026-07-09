@@ -88,27 +88,27 @@ export function RedditPlansSection({
             return baseBillingUrl
           }
 
-          const orderUrl = new URL("/reddit/order", window.location.origin)
+          const orderParams = new URLSearchParams()
 
-          orderUrl.searchParams.set("pid", productId)
-          orderUrl.searchParams.set("billingcycle", billingCycle)
+          orderParams.set("pid", productId)
+          orderParams.set("billingcycle", billingCycle)
 
           if (landingId) {
-            orderUrl.searchParams.set("landing_id", landingId)
+            orderParams.set("landing_id", landingId)
           }
 
           const promoCode = billingUrl.searchParams.get("promocode")
           if (promoCode) {
-            orderUrl.searchParams.set("promocode", promoCode)
+            orderParams.set("promocode", promoCode)
           }
 
           Object.entries(attribution).forEach(([key, value]) => {
             if (value) {
-              orderUrl.searchParams.set(key, value)
+              orderParams.set(key, value)
             }
           })
 
-          return `${orderUrl.pathname}${orderUrl.search}`
+          return `/reddit/order?${orderParams.toString()}`
         }}
         prepareCheckoutUrl={prepareCheckoutUrl}
       />
