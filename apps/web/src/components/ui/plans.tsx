@@ -116,12 +116,14 @@ export type PlanBillingUrlBuilder = (params: {
   billingCycle: BillingCycle[number]
   baseBillingUrl: string
 }) => string
+export type PlanCheckoutUrlPreparer = (url: string) => string | Promise<string>
 
 interface PlansProps {
   data: Group[]
   affiliateId?: string
   boostEnabled?: boolean
   buildBillingUrl?: PlanBillingUrlBuilder
+  prepareCheckoutUrl?: PlanCheckoutUrlPreparer
   messages: {
     billing_cycles: {
       monthly: string
@@ -225,6 +227,7 @@ const Plans = ({
   boostEnabled = false,
   messages,
   buildBillingUrl,
+  prepareCheckoutUrl,
   gradientStartColor = "#00CCB1",
   gradientEndColor = "#1CA0FB"
 }: PlansProps) => {
@@ -480,10 +483,14 @@ const Plans = ({
                                   billingCycle: billingCycle[0],
                                   baseBillingUrl
                                 })
-                          const openBillingUrl = () => {
+                          const openBillingUrl = async () => {
+                            const preparedBillingUrl = prepareCheckoutUrl
+                              ? await prepareCheckoutUrl(billingUrl)
+                              : billingUrl
+
                             window.open(
                               trackBeginCheckout(
-                                billingUrl,
+                                preparedBillingUrl,
                                 "plan_card_click",
                                 {
                                   billing_product_id: plan.product_id,

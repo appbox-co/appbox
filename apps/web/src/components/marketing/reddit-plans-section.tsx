@@ -1,9 +1,25 @@
 "use client"
 
 import type { ComponentProps } from "react"
+import { useCallback } from "react"
 import type { PlansData } from "@/components/ui/plans"
 import Plans from "@/components/ui/plans"
 import type { RedditCampaignAttribution } from "@/lib/reddit-campaign-attribution"
+import { hasAdvertisingConsent } from "@/lib/tracking-consent"
+
+const BILLING_URL = "https://billing.appbox.co/order.php"
+const DIRECT_BILLING_PARAMS = [
+  "pid",
+  "billingcycle",
+  "promocode",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+  "rdt_cid",
+  "landing_id"
+]
 
 interface RedditPlansSectionProps {
   plansData: PlansData
@@ -24,6 +40,31 @@ export function RedditPlansSection({
   description,
   messages
 }: RedditPlansSectionProps) {
+  const prepareCheckoutUrl = useCallback((url: string) => {
+    if (!hasAdvertisingConsent()) return url
+
+    const orderUrl = new URL(url, window.location.origin)
+    if (orderUrl.pathname !== "/reddit/order") return url
+
+    const billingUrl = new URL(BILLING_URL)
+
+    billingUrl.searchParams.set("spage", "product")
+    billingUrl.searchParams.set("a", "add")
+
+    DIRECT_BILLING_PARAMS.forEach((param) => {
+      const value = orderUrl.searchParams.get(param)
+      if (value) {
+        billingUrl.searchParams.set(param, value)
+      }
+    })
+
+    if (!billingUrl.searchParams.get("pid")) return url
+
+    billingUrl.searchParams.set("appbox_tracking_consent", "1")
+
+    return billingUrl.toString()
+  }, [])
+
   return (
     <section id="plans-section" className="scroll-mt-4 pt-4">
       <div className="mb-2 max-w-3xl">
@@ -69,6 +110,7 @@ export function RedditPlansSection({
 
           return `${orderUrl.pathname}${orderUrl.search}`
         }}
+        prepareCheckoutUrl={prepareCheckoutUrl}
       />
     </section>
   )

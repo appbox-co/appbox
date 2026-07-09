@@ -47,17 +47,23 @@ try {
     null
   )
 
-  const consentedLocation = buildRedditOrderBillingUrl(
+  const spoofedConsentLocation = buildRedditOrderBillingUrl(
     new URLSearchParams(
-      "pid=83&billingcycle=annually&utm_source=reddit&rdt_cid=TEST123&appbox_tracking_consent=1"
+      "pid=83&billingcycle=annually&utm_source=reddit&rdt_cid=TEST123&landing_id=landing-123&appbox_tracking_consent=1&appbox_consent_token=fake-token"
     )
   ).billingUrl
 
-  assert.equal(consentedLocation.searchParams.get("billingcycle"), "annually")
-  assert.equal(consentedLocation.searchParams.get("rdt_cid"), null)
-  assert.equal(consentedLocation.searchParams.get("rdt_cid_present"), "1")
+  assert.equal(spoofedConsentLocation.searchParams.get("billingcycle"), "annually")
+  assert.equal(spoofedConsentLocation.searchParams.get("utm_source"), "reddit")
+  assert.equal(spoofedConsentLocation.searchParams.get("rdt_cid"), null)
+  assert.equal(spoofedConsentLocation.searchParams.get("rdt_cid_present"), "1")
+  assert.equal(spoofedConsentLocation.searchParams.get("landing_id"), null)
   assert.equal(
-    consentedLocation.searchParams.get("appbox_tracking_consent"),
+    spoofedConsentLocation.searchParams.get("appbox_tracking_consent"),
+    null
+  )
+  assert.equal(
+    spoofedConsentLocation.searchParams.get("appbox_consent_token"),
     null
   )
 

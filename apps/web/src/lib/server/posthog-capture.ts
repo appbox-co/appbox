@@ -1,8 +1,13 @@
 import "server-only"
 
 const POSTHOG_HOST =
-  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com"
-const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
+  process.env.POSTHOG_CAPTURE_HOST ||
+  process.env.NEXT_PUBLIC_POSTHOG_HOST ||
+  "https://piggy.appbox.co"
+const POSTHOG_KEY =
+  process.env.POSTHOG_CAPTURE_KEY ||
+  process.env.NEXT_PUBLIC_POSTHOG_KEY ||
+  "phc_et9aGikely5Rh6zc3qA5tFyCAZNyX2CD4kGSalefCQJ"
 
 type CaptureProperties = Record<
   string,

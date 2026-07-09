@@ -81,7 +81,6 @@ export function buildRedditOrderBillingUrl(searchParams: URLSearchParams) {
     attribution,
     landingId,
     productId,
-    billingCycle,
-    hasTrackingConsent: false
+    billingCycle
   }
 }
