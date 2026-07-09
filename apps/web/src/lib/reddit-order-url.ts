@@ -65,6 +65,10 @@ export function buildRedditOrderBillingUrl(searchParams: URLSearchParams) {
     billingUrl.searchParams.set("promocode", promoCode)
   }
 
+  if (landingId) {
+    billingUrl.searchParams.set("landing_id", landingId)
+  }
+
   UTM_PARAMS.forEach((param) => {
     const value = attribution[param]
     if (value) {

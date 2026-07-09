@@ -53,11 +53,17 @@ try {
     )
   ).billingUrl
 
-  assert.equal(spoofedConsentLocation.searchParams.get("billingcycle"), "annually")
+  assert.equal(
+    spoofedConsentLocation.searchParams.get("billingcycle"),
+    "annually"
+  )
   assert.equal(spoofedConsentLocation.searchParams.get("utm_source"), "reddit")
   assert.equal(spoofedConsentLocation.searchParams.get("rdt_cid"), null)
   assert.equal(spoofedConsentLocation.searchParams.get("rdt_cid_present"), "1")
-  assert.equal(spoofedConsentLocation.searchParams.get("landing_id"), null)
+  assert.equal(
+    spoofedConsentLocation.searchParams.get("landing_id"),
+    "landing-123"
+  )
   assert.equal(
     spoofedConsentLocation.searchParams.get("appbox_tracking_consent"),
     null
@@ -72,7 +78,10 @@ try {
   )
 
   assert.equal(landingIdResult.landingId, "landing-123")
-  assert.equal(landingIdResult.billingUrl.searchParams.get("landing_id"), null)
+  assert.equal(
+    landingIdResult.billingUrl.searchParams.get("landing_id"),
+    "landing-123"
+  )
 
   assert.equal(buildRedditOrderBillingUrl(new URLSearchParams("pid=bad")), null)
 } finally {

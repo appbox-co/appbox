@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto"
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { headers } from "next/headers"
 import { after } from "next/server"
 import { getAppDetails } from "@/api/appbox/app-details"
 import { getPlans } from "@/api/appbox/plans"
@@ -73,13 +74,16 @@ export default async function RedditLandingPage(props: {
   const redditAttribution =
     collectRedditAttributionFromSearchParams(urlSearchParams)
   const landingId = randomUUID()
+  const requestHeaders = await headers()
+  const userAgent = requestHeaders.get("user-agent") ?? ""
 
   after(() =>
     captureRedditLandingEvent({
       path: "/reddit",
       attribution: redditAttribution,
-      landingId
-    })
+      landingId,
+      userAgent
+    }).catch(() => undefined)
   )
 
   const [plansData, nextcloudApp] = await Promise.all([

@@ -27,15 +27,14 @@ function getSafeCampaignProperties(attribution: RedditCampaignAttribution) {
 export async function captureRedditLandingEvent({
   path,
   attribution,
-  landingId
+  landingId,
+  userAgent
 }: {
   path: string
   attribution: RedditCampaignAttribution
   landingId: string
+  userAgent?: string
 }) {
-  const requestHeaders = await headers()
-  const userAgent = requestHeaders.get("user-agent") ?? ""
-
   await captureServerEvent({
     event: "appbox_reddit_landing",
     distinctId: landingId,
@@ -43,7 +42,7 @@ export async function captureRedditLandingEvent({
       path,
       landing_id: landingId,
       ...getSafeCampaignProperties(attribution),
-      device_family: getDeviceFamily(userAgent),
+      device_family: getDeviceFamily(userAgent ?? ""),
       captured_at: new Date().toISOString()
     }
   })
