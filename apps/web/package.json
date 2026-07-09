@@ -13,6 +13,7 @@
     "start": "pnpm admin:bridge && node server.mjs",
     "lint": "pnpm admin:bridge && tsc --noEmit && eslint .",
     "lint:fix": "pnpm admin:bridge && tsc --noEmit && eslint --fix .",
+    "test:reddit-order": "node scripts/test-reddit-order-route.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "migrate:app-descriptions": "node scripts/migrate-app-descriptions.mjs",

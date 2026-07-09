@@ -144,6 +144,10 @@ export function withAttributionParams(
       targetUrl.searchParams.set("appbox_tracking_consent", "1")
     }
 
+    if (targetUrl.origin === window.location.origin) {
+      return `${targetUrl.pathname}${targetUrl.search}${targetUrl.hash}`
+    }
+
     return targetUrl.toString()
   } catch {
     return url

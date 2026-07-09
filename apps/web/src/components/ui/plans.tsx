@@ -110,10 +110,18 @@ export interface PlansData {
   data: Group[]
 }
 
+export type PlanBillingUrlBuilder = (params: {
+  plan: Plan
+  group: Group
+  billingCycle: BillingCycle[number]
+  baseBillingUrl: string
+}) => string
+
 interface PlansProps {
   data: Group[]
   affiliateId?: string
   boostEnabled?: boolean
+  buildBillingUrl?: PlanBillingUrlBuilder
   messages: {
     billing_cycles: {
       monthly: string
@@ -216,6 +224,7 @@ const Plans = ({
   affiliateId,
   boostEnabled = false,
   messages,
+  buildBillingUrl,
   gradientStartColor = "#00CCB1",
   gradientEndColor = "#1CA0FB"
 }: PlansProps) => {
@@ -448,7 +457,7 @@ const Plans = ({
                             startColor,
                             endColor
                           )
-                          const billingUrl =
+                          const baseBillingUrl =
                             plan.available === false
                               ? withAffiliateParam(
                                   "https://billing.appbox.co/contact.php"
@@ -462,6 +471,15 @@ const Plans = ({
                                       : ""
                                   }`
                                 )
+                          const billingUrl =
+                            plan.available === false || !buildBillingUrl
+                              ? baseBillingUrl
+                              : buildBillingUrl({
+                                  plan,
+                                  group,
+                                  billingCycle: billingCycle[0],
+                                  baseBillingUrl
+                                })
                           const openBillingUrl = () => {
                             window.open(
                               trackBeginCheckout(
@@ -814,10 +832,9 @@ const Plans = ({
                                       event.stopPropagation()
                                       event.currentTarget.href =
                                         hasAdvertisingConsent()
-                                          ? withAttributionParams(
-                                              billingUrl,
-                                              { includeConsentMarker: true }
-                                            )
+                                          ? withAttributionParams(billingUrl, {
+                                              includeConsentMarker: true
+                                            })
                                           : billingUrl
                                     }}
                                     target="_blank"

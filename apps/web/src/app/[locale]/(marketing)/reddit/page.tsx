@@ -1,17 +1,23 @@
+import { randomUUID } from "node:crypto"
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { after } from "next/server"
 import { getAppDetails } from "@/api/appbox/app-details"
 import { getPlans } from "@/api/appbox/plans"
 import { AppConnectionsSection } from "@/components/marketing/app-connections-section"
 import { AppsMarquee } from "@/components/marketing/apps-marquee"
-import { RedditFeatureCardsSection } from "@/components/marketing/reddit-feature-cards-section"
 import { RedditFAQSection } from "@/components/marketing/reddit-faq-section"
+import { RedditFeatureCardsSection } from "@/components/marketing/reddit-feature-cards-section"
 import { RedditHeroSection } from "@/components/marketing/reddit-hero-section"
 import { RedditPlansSection } from "@/components/marketing/reddit-plans-section"
 import { RedditSpecStrip } from "@/components/marketing/reddit-spec-strip"
 import { SimpleInstallPromoSection } from "@/components/marketing/simple-install-promo-section"
 import { siteConfig } from "@/config/site"
+import { collectRedditAttributionFromSearchParams } from "@/lib/reddit-campaign-attribution"
+import { captureRedditLandingEvent } from "@/lib/server/reddit-campaign-events"
 import { absoluteUrl } from "@/lib/utils"
+
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>
@@ -48,8 +54,34 @@ export async function generateMetadata(props: {
   }
 }
 
-export default async function RedditLandingPage() {
+export default async function RedditLandingPage(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
   const t = await getTranslations()
+  const searchParams = await props.searchParams
+  const urlSearchParams = new URLSearchParams()
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((entry) => urlSearchParams.append(key, entry))
+      return
+    }
+
+    if (value) {
+      urlSearchParams.set(key, value)
+    }
+  })
+  const redditAttribution =
+    collectRedditAttributionFromSearchParams(urlSearchParams)
+  const landingId = randomUUID()
+
+  after(() =>
+    captureRedditLandingEvent({
+      path: "/reddit",
+      attribution: redditAttribution,
+      landingId
+    })
+  )
+
   const [plansData, nextcloudApp] = await Promise.all([
     getPlans(),
     getAppDetails("Nextcloud").catch(() => null)
@@ -75,6 +107,8 @@ export default async function RedditLandingPage() {
 
       <RedditPlansSection
         plansData={plansData}
+        landingId={landingId}
+        attribution={redditAttribution}
         eyebrow={t("site.reddit_landing.plans.eyebrow")}
         heading={t("site.reddit_landing.plans.heading")}
         description={t("site.reddit_landing.plans.description")}
