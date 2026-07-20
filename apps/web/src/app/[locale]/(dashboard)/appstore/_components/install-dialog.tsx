@@ -70,6 +70,7 @@ import {
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { ROUTES } from "@/constants/routes"
 import type { Cylo } from "@/lib/auth/session"
+import { clearHiddenFieldValues, isFieldVisible } from "@/lib/dynamic-form"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
 import type { FormFieldConfig } from "@/types/dashboard"
@@ -96,11 +97,7 @@ const PASSWORD_INPUT_TYPES = new Set([
 /* -------------------------------------------------------------------------- */
 
 type InstallGuardType =
-  | "disabled"
-  | "no_cylo"
-  | "restricted"
-  | "no_slots"
-  | "no_multi"
+  "disabled" | "no_cylo" | "restricted" | "no_slots" | "no_multi"
 
 interface InstallGuard {
   type: InstallGuardType
@@ -313,6 +310,8 @@ function validateField(
   const rules = field.validate
   if (!rules || rules.length === 0) return null
 
+  if (value.trim() === "" && !isFieldRequired(field)) return null
+
   for (const rule of rules) {
     if (typeof rule === "string") {
       switch (rule) {
@@ -388,14 +387,19 @@ function mapCustomFieldToFormConfig(
   const base = {
     name: fname,
     label: field.label,
-    required
+    required,
+    generatePassword: field.params?.generatePassword === true,
+    generatedPasswordLength:
+      typeof field.params?.generatedPasswordLength === "number"
+        ? field.params.generatedPasswordLength
+        : undefined,
+    generatePasswordLabel: "Generate password"
   }
 
   const type = field.type
   if (type === "selector") {
     const menuItems = field.params?.menuItems as
-      | Record<string, string>
-      | undefined
+      Record<string, string> | undefined
     return {
       ...base,
       type: "select",
@@ -454,8 +458,7 @@ function SearchFieldInput({
   const submitValue = (params.submitValue as string) ?? "domain"
   const useIfSingleItem = params.useIfSingleItem as boolean | undefined
   const depends = params.depends as
-    | Record<string, Record<string, string>>[]
-    | undefined
+    Record<string, Record<string, string>>[] | undefined
 
   const buildFilters = useCallback(() => {
     const filters: Record<string, string> = {}
@@ -770,11 +773,7 @@ function CustomFieldInput({
     ref: () => undefined,
     onChange: (
       next:
-        | string
-        | number
-        | boolean
-        | { target?: { value?: unknown } }
-        | undefined
+        string | number | boolean | { target?: { value?: unknown } } | undefined
     ) => {
       if (typeof next === "string" || typeof next === "number") {
         onChange(fname, String(next))
@@ -1557,9 +1556,11 @@ export function InstallDialog({
 
   const visibleFields = useMemo(() => {
     return Object.entries(customFields).filter(([, field]) => {
-      return !SKIP_INPUT_TYPES.has(field.type)
+      return (
+        !SKIP_INPUT_TYPES.has(field.type) && isFieldVisible(field, fieldValues)
+      )
     })
-  }, [customFields])
+  }, [customFields, fieldValues])
 
   // Keep only overlapping custom-field values/errors when version changes.
   useEffect(() => {
@@ -1773,7 +1774,12 @@ export function InstallDialog({
   /* ----- Handlers ----- */
   const handleFieldChange = useCallback(
     (fname: string, value: string) => {
-      setFieldValues((prev) => ({ ...prev, [fname]: value }))
+      setFieldValues((prev) =>
+        clearHiddenFieldValues(Object.entries(customFields), {
+          ...prev,
+          [fname]: value
+        })
+      )
 
       const field = customFields[fname]
       if (
@@ -1844,6 +1850,7 @@ export function InstallDialog({
       if (SKIP_INPUT_TYPES.has(field.type) || field.type === "staticText") {
         continue
       }
+      if (!isFieldVisible(field, fieldValues)) continue
       const val = fieldValues[fname] ?? String(field.defaultValue ?? "")
       const err = validateField(val, field, t)
       if (err) {
@@ -1930,8 +1937,9 @@ export function InstallDialog({
     // Add custom field values
     for (const [fname, field] of Object.entries(customFields)) {
       if (field.type === "staticText" || field.type === "spacer") continue
+      if (!isFieldVisible(field, fieldValues)) continue
       const val = fieldValues[fname] ?? String(field.defaultValue ?? "")
-      if (val) {
+      if (val.trim() !== "") {
         payload[fname] = val
       }
     }
@@ -2039,6 +2047,7 @@ export function InstallDialog({
       if (field.type === "staticText" || SKIP_INPUT_TYPES.has(field.type)) {
         return true
       }
+      if (!isFieldVisible(field, fieldValues)) return true
 
       const value = fieldValues[fname] ?? String(field.defaultValue ?? "")
       return validateField(value, field, t) === null

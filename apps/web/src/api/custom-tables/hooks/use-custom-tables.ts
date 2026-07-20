@@ -8,7 +8,10 @@ import {
   getCustomTableRows,
   getInstanceCustomTables,
   revealCustomTableRowField,
-  updateCustomTableRow
+  runCustomTableRowAction,
+  updateCustomTableRow,
+  type CustomTableRow,
+  type CustomTableRowAction
 } from "../custom-tables"
 
 export function useInstanceCustomTables(instanceId: number) {
@@ -83,5 +86,28 @@ export function useRevealCustomTableRowField(
       rowId: number | string
       fieldId: number
     }) => revealCustomTableRowField(tableId, instanceId, rowId, fieldId)
+  })
+}
+
+export function useCustomTableRowAction(tableId: number, instanceId: number) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      action,
+      row,
+      confirmationValue
+    }: {
+      action: CustomTableRowAction
+      row: CustomTableRow
+      confirmationValue?: string
+    }) => runCustomTableRowAction(action, row, confirmationValue),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.customTables.rows(instanceId, tableId)
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.customTables.byInstance(instanceId)
+      })
+    }
   })
 }

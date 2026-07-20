@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState
@@ -117,6 +118,24 @@ const AVATAR_COLORS = [
 ]
 
 const COLLAPSE_REPLIES_AT_DEPTH = 2
+const DEFAULT_COMMENT_MAX_LENGTH = 500
+const ABUSE_REPORT_COMMENT_MAX_LENGTH = 10000
+const ABUSE_REPORT_COMMENT_TYPES = new Set([
+  "abuseReportUser",
+  "abuseReportComplainant"
+])
+
+function commentMaxLength(ctx: CommentContextValue): number {
+  return ctx.mode === "byType" && ABUSE_REPORT_COMMENT_TYPES.has(ctx.type)
+    ? ABUSE_REPORT_COMMENT_MAX_LENGTH
+    : DEFAULT_COMMENT_MAX_LENGTH
+}
+
+function remainingCountClass(remaining: number, maxLength: number): string {
+  if (remaining <= 0) return "text-destructive"
+  if (remaining <= maxLength * 0.1) return "text-orange-500"
+  return "text-muted-foreground"
+}
 
 function UserAvatar({
   alias,
@@ -159,7 +178,11 @@ interface CommentFormProps {
 function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
   const ctx = useContext(CommentContext)
   const auth = useOptionalAuth()
+  const lengthCounterId = useId()
   const [text, setText] = useState("")
+  const maxLength = commentMaxLength(ctx)
+  const remaining = maxLength - text.length
+  const isOverLimit = remaining < 0
   const createByApp = useCreateComment(
     ctx.mode === "app" ? ctx.appId : 0,
     ctx.mode === "app" ? ctx.sortOrder : "rating"
@@ -173,7 +196,7 @@ function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
 
   const handleSubmit = useCallback(() => {
     const trimmed = text.trim()
-    if (!trimmed) return
+    if (!trimmed || trimmed.length > maxLength) return
     if (ctx.mode === "app") {
       createByApp.mutate(
         {
@@ -196,34 +219,47 @@ function CommentForm({ parentId, onCancel, placeholder }: CommentFormProps) {
         { onSuccess: () => setText("") }
       )
     }
-  }, [text, ctx, parentId, auth, createByApp, createByType])
+  }, [text, maxLength, ctx, parentId, auth, createByApp, createByType])
 
   return (
     <div className="flex gap-2">
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={placeholder ?? "Write a comment..."}
-        rows={2}
-        className="flex-1 resize-none rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
-        onKeyDown={(e) => {
-          if (e.key === "Escape") {
-            e.preventDefault()
-            onCancel?.()
-            return
-          }
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault()
-            handleSubmit()
-          }
-        }}
-      />
+      <div className="min-w-0 flex-1 space-y-1">
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={placeholder ?? "Write a comment..."}
+          rows={2}
+          maxLength={maxLength}
+          aria-describedby={lengthCounterId}
+          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              e.preventDefault()
+              onCancel?.()
+              return
+            }
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault()
+              handleSubmit()
+            }
+          }}
+        />
+        <p
+          id={lengthCounterId}
+          className={cn(
+            "text-right text-xs tabular-nums",
+            remainingCountClass(remaining, maxLength)
+          )}
+        >
+          {remaining.toLocaleString()} characters remaining
+        </p>
+      </div>
       <div className="flex flex-col gap-1">
         <Button
           size="icon"
           variant="ghost"
           className="size-8"
-          disabled={!text.trim() || createComment.isPending}
+          disabled={!text.trim() || isOverLimit || createComment.isPending}
           onClick={handleSubmit}
         >
           {createComment.isPending ? (
@@ -298,12 +334,16 @@ function CommentItem({
   depth = 0
 }: CommentItemProps) {
   const ctx = useContext(CommentContext)
+  const editLengthCounterId = useId()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editText, setEditText] = useState(comment.comment)
   const [isReplying, setIsReplying] = useState(false)
   const [showDeepReplies, setShowDeepReplies] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const maxLength = commentMaxLength(ctx)
+  const editRemaining = maxLength - editText.length
+  const isEditOverLimit = editRemaining < 0
 
   const updateByApp = useUpdateComment(ctx.mode === "app" ? ctx.appId : 0)
   const updateByType = useUpdateCommentByType(
@@ -337,11 +377,12 @@ function CommentItem({
       setIsEditing(false)
       return
     }
+    if (trimmed.length > maxLength) return
     updateComment.mutate(
       { id: comment.id, comment: trimmed },
       { onSuccess: () => setIsEditing(false) }
     )
-  }, [editText, comment.id, comment.comment, updateComment])
+  }, [editText, maxLength, comment.id, comment.comment, updateComment])
 
   const handleDelete = useCallback(() => {
     deleteCommentMutation.mutate(comment.id, {
@@ -423,28 +464,41 @@ function CommentItem({
 
           {!isCollapsed && isEditing ? (
             <div className="mt-1 flex gap-2">
-              <textarea
-                value={editText}
-                onChange={(e) => setEditText(e.target.value)}
-                rows={2}
-                className="flex-1 resize-none rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") {
-                    e.preventDefault()
-                    setIsEditing(false)
-                    setEditText(comment.comment)
-                  } else if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault()
-                    handleSaveEdit()
-                  }
-                }}
-              />
+              <div className="min-w-0 flex-1 space-y-1">
+                <textarea
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  rows={2}
+                  maxLength={maxLength}
+                  aria-describedby={editLengthCounterId}
+                  className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      e.preventDefault()
+                      setIsEditing(false)
+                      setEditText(comment.comment)
+                    } else if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault()
+                      handleSaveEdit()
+                    }
+                  }}
+                />
+                <p
+                  id={editLengthCounterId}
+                  className={cn(
+                    "text-right text-xs tabular-nums",
+                    remainingCountClass(editRemaining, maxLength)
+                  )}
+                >
+                  {editRemaining.toLocaleString()} characters remaining
+                </p>
+              </div>
               <div className="flex flex-col gap-1">
                 <Button
                   size="sm"
                   variant="ghost"
                   className="h-7 text-xs"
-                  disabled={updateComment.isPending}
+                  disabled={isEditOverLimit || updateComment.isPending}
                   onClick={handleSaveEdit}
                 >
                   {updateComment.isPending ? (

@@ -1,6 +1,27 @@
 import { apiDelete, apiGet, apiPost, apiPut } from "@/api/client"
+import { idempotencyHeaders } from "@/api/idempotency"
+import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
-export interface CustomTableColumn {
+export interface CustomTableRowAction {
+  name: string
+  label: string
+  APIRoute: string
+  APIMethod: "post" | "put" | "delete"
+  variant?: "default" | "destructive"
+  dialogTitle?: string
+  dialogText?: string
+  confirmation?: {
+    type: "text"
+    rowField?: string
+    payloadField?: string
+    expectedValue?: string
+    label?: string
+    placeholder?: string
+  }
+  payload?: Record<string, unknown>
+}
+
+export interface CustomTableColumn extends ConditionalFieldMetadata {
   name: string
   fieldId?: number
   title: string
@@ -20,6 +41,7 @@ export interface CustomTableColumn {
   defaultValue?: unknown
   actionName?: string
   buttonLabel?: string
+  rowAction?: CustomTableRowAction
 }
 
 export interface CustomTableDefinition {
@@ -30,6 +52,7 @@ export interface CustomTableDefinition {
   APIRoute: string
   columns: CustomTableColumn[]
   columnOrder: string[]
+  rowActions?: CustomTableRowAction[]
   enableAdding: boolean
   enableEditing: boolean
   enableDeleting: boolean
@@ -111,6 +134,38 @@ export async function revealCustomTableRowField(
   )
 
   return typeof res?.value === "string" ? res.value : ""
+}
+
+function interpolateRowRoute(route: string, row: CustomTableRow): string {
+  return route.replace(/\{row\.([^}]+)\}/g, (_match, field: string) =>
+    encodeURIComponent(String(row[field] ?? ""))
+  )
+}
+
+export async function runCustomTableRowAction(
+  action: CustomTableRowAction,
+  row: CustomTableRow,
+  confirmationValue?: string
+): Promise<void> {
+  const route = interpolateRowRoute(action.APIRoute, row)
+  const options = {
+    headers: idempotencyHeaders(`custom_table.${action.name}`)
+  }
+  const payload: Record<string, unknown> = {
+    ...(action.payload ?? {}),
+    rowId: row.id
+  }
+  if (action.confirmation?.payloadField && confirmationValue !== undefined) {
+    payload[action.confirmation.payloadField] = confirmationValue
+  }
+
+  if (action.APIMethod === "delete") {
+    await apiDelete(route, options)
+  } else if (action.APIMethod === "put") {
+    await apiPut(route, payload, options)
+  } else {
+    await apiPost(route, payload, options)
+  }
 }
 
 export { parseTableRef }

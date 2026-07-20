@@ -1,6 +1,7 @@
 import { apiDelete, apiGet, apiPost, apiPut } from "@/api/client"
 import { getInstalledApps } from "@/api/installed-apps/installed-apps"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
+import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -13,7 +14,7 @@ export interface CustomFieldValidation {
   maxLength?: number
 }
 
-export interface CustomField {
+export interface CustomField extends ConditionalFieldMetadata {
   fieldId?: number
   label: string
   type: string // dynamicText | password | switch | email | date | search | selector | staticText | hidden | spacer | number
@@ -27,6 +28,8 @@ export interface CustomField {
     menuItems?: Record<string, string>
     regex?: string
     errorText?: string
+    generatePassword?: boolean
+    generatedPasswordLength?: number
     [key: string]: unknown
   }
 }

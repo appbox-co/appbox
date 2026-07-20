@@ -3,17 +3,19 @@
 import { useCallback, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import type { ColumnDef } from "@tanstack/react-table"
-import { Eye, EyeOff, Loader2, Pencil, Plus, Trash2 } from "lucide-react"
+import { Eye, EyeOff, Loader2, Pencil, Play, Plus, Trash2 } from "lucide-react"
 import type { ControllerRenderProps, FieldValues } from "react-hook-form"
 import { toast } from "sonner"
 import type {
   CustomTableColumn,
   CustomTableDefinition,
-  CustomTableRow
+  CustomTableRow,
+  CustomTableRowAction
 } from "@/api/custom-tables/custom-tables"
 import { parseTableRef } from "@/api/custom-tables/custom-tables"
 import {
   useAddCustomTableRow,
+  useCustomTableRowAction,
   useCustomTableRows,
   useDeleteCustomTableRow,
   useInstanceCustomTables,
@@ -36,6 +38,7 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog"
+import { clearHiddenFieldValues, isFieldVisible } from "@/lib/dynamic-form"
 import type { FormFieldConfig } from "@/types/dashboard"
 
 const REDACTED_SECRET_VALUE = "[REDACTED]"
@@ -85,7 +88,13 @@ function mapColumnToFormConfig(column: CustomTableColumn): FormFieldConfig {
   const base = {
     name: column.name,
     label: column.title || column.name,
-    required
+    required,
+    generatePassword: column.inputField?.params?.generatePassword === true,
+    generatedPasswordLength:
+      typeof column.inputField?.params?.generatedPasswordLength === "number"
+        ? column.inputField.params.generatedPasswordLength
+        : undefined,
+    generatePasswordLabel: "Generate password"
   }
 
   if (type === "switch") return { ...base, type: "toggle" }
@@ -93,8 +102,7 @@ function mapColumnToFormConfig(column: CustomTableColumn): FormFieldConfig {
   if (type === "selector") {
     const menuItems =
       (column.inputField?.params?.menuItems as
-        | Record<string, string>
-        | undefined) ?? {}
+        Record<string, string> | undefined) ?? {}
     return {
       ...base,
       type: "select",
@@ -170,10 +178,16 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const updateMutation = useUpdateCustomTableRow(tableId, instanceId)
   const deleteMutation = useDeleteCustomTableRow(tableId, instanceId)
   const revealMutation = useRevealCustomTableRowField(tableId, instanceId)
+  const rowActionMutation = useCustomTableRowAction(tableId, instanceId)
 
   const [addOpen, setAddOpen] = useState(false)
   const [editTarget, setEditTarget] = useState<CustomTableRow | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<CustomTableRow | null>(null)
+  const [actionTarget, setActionTarget] = useState<{
+    action: CustomTableRowAction
+    row: CustomTableRow
+  } | null>(null)
+  const [actionConfirmation, setActionConfirmation] = useState("")
   const [revealedPasswords, setRevealedPasswords] = useState<
     Record<string, boolean>
   >({})
@@ -202,6 +216,13 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     () => dataColumns.filter((col) => !isExternalLinkColumn(col)),
     [dataColumns]
   )
+
+  const rowActions = useMemo(() => {
+    if (table.rowActions?.length) return table.rowActions
+    return orderedColumns
+      .map((column) => column.rowAction)
+      .filter((action): action is CustomTableRowAction => Boolean(action))
+  }, [orderedColumns, table.rowActions])
 
   const editableFieldSet = useMemo(
     () => new Set(table.editableFields ?? []),
@@ -267,6 +288,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   ): boolean => {
     const nextErrors: Record<string, string> = {}
     for (const col of columns) {
+      if (!isFieldVisible(col, formValues)) continue
       const value = formValues[col.name] ?? ""
       if (shouldPreserveRedactedSensitiveValue(col, row, value)) continue
 
@@ -299,6 +321,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const buildEditPayload = (): Record<string, string> => {
     const payload: Record<string, string> = {}
     for (const col of editableColumnsForEdit) {
+      if (!isFieldVisible(col, formValues)) continue
       const value = formValues[col.name] ?? ""
       if (shouldPreserveRedactedSensitiveValue(col, editTarget, value)) {
         continue
@@ -331,6 +354,25 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
       toast.success(t("customTablesDeleteSuccess"))
     } catch {
       toast.error(t("customTablesDeleteFailed"))
+    }
+  }
+
+  const handleRowAction = async () => {
+    if (!actionTarget) return
+    try {
+      await rowActionMutation.mutateAsync({
+        ...actionTarget,
+        confirmationValue: actionConfirmation
+      })
+      toast.success(t("customTablesActionSuccess"))
+      setActionTarget(null)
+      setActionConfirmation("")
+    } catch (error) {
+      toast.error(
+        error instanceof Error && error.message.trim()
+          ? error.message
+          : t("customTablesActionFailed")
+      )
     }
   }
 
@@ -455,12 +497,34 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
         }
       }))
 
-    if (canEdit || canDelete) {
+    if (canEdit || canDelete || rowActions.length > 0) {
       cols.push({
         id: "actions",
         header: t("customTablesActions"),
         cell: ({ row }) => (
           <div className="flex justify-end gap-1">
+            {rowActions.map((action) => (
+              <Button
+                key={action.name}
+                variant={
+                  action.variant === "destructive" ? "destructive" : "ghost"
+                }
+                size="sm"
+                className="h-8 px-2"
+                disabled={rowActionMutation.isPending}
+                onClick={() => {
+                  setActionConfirmation("")
+                  setActionTarget({ action, row: row.original })
+                }}
+              >
+                {action.variant === "destructive" ? (
+                  <Trash2 className="mr-1 size-3.5" />
+                ) : (
+                  <Play className="mr-1 size-3.5" />
+                )}
+                {action.label}
+              </Button>
+            ))}
             {canEdit && (
               <Button
                 variant="ghost"
@@ -491,6 +555,8 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     orderedColumns,
     canEdit,
     canDelete,
+    rowActions,
+    rowActionMutation.isPending,
     t,
     revealedPasswords,
     revealedPasswordValues,
@@ -503,53 +569,63 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const searchColumn = orderedColumns.find((col) => isDataColumn(col))
 
   const renderFormFields = (columns: CustomTableColumn[]) => {
-    return columns.map((col) => {
-      const config = mapColumnToFormConfig(col)
-      const field = {
-        name: col.name,
-        value: formValues[col.name] ?? "",
-        onBlur: () => undefined,
-        ref: () => undefined,
-        onChange: (
-          next:
-            | string
-            | number
-            | boolean
-            | { target?: { value?: unknown } }
-            | undefined
-        ) => {
-          if (typeof next === "string" || typeof next === "number") {
-            setFormValues((prev) => ({ ...prev, [col.name]: String(next) }))
-            return
+    return columns
+      .filter((col) => isFieldVisible(col, formValues))
+      .map((col) => {
+        const config = mapColumnToFormConfig(col)
+        const field = {
+          name: col.name,
+          value: formValues[col.name] ?? "",
+          onBlur: () => undefined,
+          ref: () => undefined,
+          onChange: (
+            next:
+              | string
+              | number
+              | boolean
+              | { target?: { value?: unknown } }
+              | undefined
+          ) => {
+            if (typeof next === "string" || typeof next === "number") {
+              setFormValues((prev) =>
+                clearHiddenFieldValues(
+                  columns.map((column) => [column.name, column]),
+                  { ...prev, [col.name]: String(next) }
+                )
+              )
+              return
+            }
+            if (typeof next === "boolean") {
+              setFormValues((prev) => ({
+                ...prev,
+                [col.name]: next ? "1" : "0"
+              }))
+              return
+            }
+            const targetValue = next?.target?.value
+            if (
+              typeof targetValue === "string" ||
+              typeof targetValue === "number"
+            ) {
+              setFormValues((prev) => ({
+                ...prev,
+                [col.name]: String(targetValue)
+              }))
+              return
+            }
+            setFormValues((prev) => ({ ...prev, [col.name]: "" }))
           }
-          if (typeof next === "boolean") {
-            setFormValues((prev) => ({ ...prev, [col.name]: next ? "1" : "0" }))
-            return
-          }
-          const targetValue = next?.target?.value
-          if (
-            typeof targetValue === "string" ||
-            typeof targetValue === "number"
-          ) {
-            setFormValues((prev) => ({
-              ...prev,
-              [col.name]: String(targetValue)
-            }))
-            return
-          }
-          setFormValues((prev) => ({ ...prev, [col.name]: "" }))
-        }
-      } as unknown as ControllerRenderProps<FieldValues, string>
+        } as unknown as ControllerRenderProps<FieldValues, string>
 
-      return (
-        <FormFieldRenderer
-          key={col.name}
-          config={config}
-          field={field}
-          error={formErrors[col.name]}
-        />
-      )
-    })
+        return (
+          <FormFieldRenderer
+            key={col.name}
+            config={config}
+            field={field}
+            error={formErrors[col.name]}
+          />
+        )
+      })
   }
 
   return (
@@ -626,6 +702,85 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
                 <Loader2 className="mr-1.5 size-4 animate-spin" />
               )}
               {t("customTablesSave")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={actionTarget !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setActionTarget(null)
+            setActionConfirmation("")
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {actionTarget?.action.dialogTitle ?? actionTarget?.action.label}
+            </DialogTitle>
+            <DialogDescription>
+              {actionTarget?.action.dialogText ??
+                t("customTablesActionDescription")}
+            </DialogDescription>
+          </DialogHeader>
+          {actionTarget?.action.confirmation ? (
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                {actionTarget.action.confirmation.label ??
+                  t("customTablesConfirmationLabel", {
+                    value:
+                      actionTarget.action.confirmation.expectedValue ??
+                      toTextValue(
+                        actionTarget.row[
+                          actionTarget.action.confirmation.rowField ?? ""
+                        ]
+                      )
+                  })}
+              </label>
+              <input
+                className="border-border bg-input h-9 w-full rounded-md border px-3 text-sm"
+                value={actionConfirmation}
+                placeholder={actionTarget.action.confirmation.placeholder}
+                onChange={(event) => setActionConfirmation(event.target.value)}
+                autoComplete="off"
+              />
+            </div>
+          ) : null}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              disabled={rowActionMutation.isPending}
+              onClick={() => setActionTarget(null)}
+            >
+              {t("customTablesCancel")}
+            </Button>
+            <Button
+              variant={
+                actionTarget?.action.variant === "destructive"
+                  ? "destructive"
+                  : "default"
+              }
+              disabled={
+                rowActionMutation.isPending ||
+                (actionTarget?.action.confirmation
+                  ? actionConfirmation !==
+                    (actionTarget.action.confirmation.expectedValue ??
+                      toTextValue(
+                        actionTarget.row[
+                          actionTarget.action.confirmation.rowField ?? ""
+                        ]
+                      ))
+                  : false)
+              }
+              onClick={handleRowAction}
+            >
+              {rowActionMutation.isPending ? (
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
+              ) : null}
+              {actionTarget?.action.label}
             </Button>
           </DialogFooter>
         </DialogContent>

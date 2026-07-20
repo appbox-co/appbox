@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, RefreshCw } from "lucide-react"
 import type { ControllerRenderProps, FieldValues } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import { generateSecurePassword } from "@/lib/dynamic-form"
 import { cn } from "@/lib/utils"
 import type { FormFieldConfig } from "@/types/dashboard"
 
@@ -138,33 +139,52 @@ export function FormFieldRenderer({
 
       case "password":
         return (
-          <div className="relative">
-            <Input
-              id={fieldId}
-              type={showPassword ? "text" : "password"}
-              placeholder={config.placeholder}
-              disabled={config.disabled}
-              className={inputClassName}
-              {...field}
-              value={(field.value as string) ?? ""}
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-              onClick={() => setShowPassword((prev) => !prev)}
-              tabIndex={-1}
-            >
-              {showPassword ? (
-                <EyeOff className="text-muted-foreground size-4" />
-              ) : (
-                <Eye className="text-muted-foreground size-4" />
-              )}
-              <span className="sr-only">
-                {showPassword ? "Hide password" : "Show password"}
-              </span>
-            </Button>
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                id={fieldId}
+                type={showPassword ? "text" : "password"}
+                placeholder={config.placeholder}
+                disabled={config.disabled}
+                className={inputClassName}
+                {...field}
+                value={(field.value as string) ?? ""}
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                onClick={() => setShowPassword((prev) => !prev)}
+                tabIndex={-1}
+              >
+                {showPassword ? (
+                  <EyeOff className="text-muted-foreground size-4" />
+                ) : (
+                  <Eye className="text-muted-foreground size-4" />
+                )}
+                <span className="sr-only">
+                  {showPassword ? "Hide password" : "Show password"}
+                </span>
+              </Button>
+            </div>
+            {config.generatePassword ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={config.disabled}
+                onClick={() => {
+                  field.onChange(
+                    generateSecurePassword(config.generatedPasswordLength)
+                  )
+                  setShowPassword(true)
+                }}
+              >
+                <RefreshCw className="mr-1.5 size-3.5" />
+                {config.generatePasswordLabel ?? "Generate password"}
+              </Button>
+            ) : null}
           </div>
         )
 

@@ -48,6 +48,11 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
+import {
+  clearHiddenFieldValues,
+  isFieldVisible,
+  type ConditionalFieldMetadata
+} from "@/lib/dynamic-form"
 import { useAuth } from "@/providers/auth-provider"
 import type { FormFieldConfig } from "@/types/dashboard"
 
@@ -65,7 +70,7 @@ type ButtonFieldValidation =
       maxLength?: number
     }
 
-type ButtonField = {
+type ButtonField = ConditionalFieldMetadata & {
   label: string
   type: string
   width?: number
@@ -111,7 +116,13 @@ function mapButtonFieldToConfig(
   const base = {
     name,
     label: field.label,
-    required
+    required,
+    generatePassword: field.params?.generatePassword === true,
+    generatedPasswordLength:
+      typeof field.params?.generatedPasswordLength === "number"
+        ? field.params.generatedPasswordLength
+        : undefined,
+    generatePasswordLabel: "Generate password"
   }
 
   if (field.type === "selector") {
@@ -759,6 +770,10 @@ function CustomButtonItem({
   }, [button.inputForm?.fields])
 
   const hasForm = formFields.length > 0
+  const visibleFormFields = useMemo(
+    () => formFields.filter(([, field]) => isFieldVisible(field, fieldValues)),
+    [formFields, fieldValues]
+  )
 
   const openDialog = () => {
     if (hasForm) {
@@ -780,7 +795,9 @@ function CustomButtonItem({
   }
 
   const handleFieldChange = (name: string, value: string) => {
-    setFieldValues((prev) => ({ ...prev, [name]: value }))
+    setFieldValues((prev) =>
+      clearHiddenFieldValues(formFields, { ...prev, [name]: value })
+    )
     setFieldErrors((prev) => {
       if (!prev[name]) return prev
       const next = { ...prev }
@@ -792,7 +809,7 @@ function CustomButtonItem({
   const handleConfirm = () => {
     if (hasForm) {
       const errors: Record<string, string> = {}
-      formFields.forEach(([name, field]) => {
+      visibleFormFields.forEach(([name, field]) => {
         const value = fieldValues[name] ?? ""
         const error = validateButtonField(value, field, t)
         if (error) errors[name] = error
@@ -805,7 +822,7 @@ function CustomButtonItem({
 
     const payload: Record<string, unknown> = {}
     if (hasForm) {
-      formFields.forEach(([name, field]) => {
+      visibleFormFields.forEach(([name, field]) => {
         const raw = fieldValues[name] ?? ""
         if (field.type === "number") {
           payload[name] = raw === "" ? null : Number(raw)
@@ -860,7 +877,7 @@ function CustomButtonItem({
           </DialogHeader>
           {hasForm && (
             <div className="space-y-4">
-              {formFields.map(([name, field]) => {
+              {visibleFormFields.map(([name, field]) => {
                 const config = mapButtonFieldToConfig(name, field)
                 const controllerField = {
                   name,

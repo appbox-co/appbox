@@ -1,5 +1,6 @@
 import { apiGet, apiPost, apiPut } from "@/api/client"
 import { idempotencyHeaders } from "@/api/idempotency"
+import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -23,7 +24,7 @@ export interface CustomButton {
     inputFormId: number
     fields: Record<
       string,
-      {
+      ConditionalFieldMetadata & {
         label: string
         type: string
         width?: number
@@ -39,6 +40,8 @@ export interface CustomButton {
         )[]
         params?: {
           menuItems?: Record<string, string>
+          generatePassword?: boolean
+          generatedPasswordLength?: number
           [key: string]: unknown
         }
       }

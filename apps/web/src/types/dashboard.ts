@@ -1,6 +1,7 @@
 import type React from "react"
+import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
-export interface FormFieldConfig {
+export interface FormFieldConfig extends ConditionalFieldMetadata {
   name: string
   label: string
   type:
@@ -17,6 +18,9 @@ export interface FormFieldConfig {
   options?: { label: string; value: string }[]
   description?: string
   disabled?: boolean
+  generatePassword?: boolean
+  generatedPasswordLength?: number
+  generatePasswordLabel?: string
 }
 
 export interface StatCardProps {
