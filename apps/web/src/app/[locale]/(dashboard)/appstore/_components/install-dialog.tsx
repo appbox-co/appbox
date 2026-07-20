@@ -1554,13 +1554,22 @@ export function InstallDialog({
     return app.customFields
   }, [selectedVersionApp?.customFields, app.customFields])
 
+  const fieldValuesWithDefaults = useMemo(() => {
+    const values: Record<string, string> = {}
+    for (const [fname, field] of Object.entries(customFields)) {
+      values[fname] = String(field.defaultValue ?? "")
+    }
+    return { ...values, ...fieldValues }
+  }, [customFields, fieldValues])
+
   const visibleFields = useMemo(() => {
     return Object.entries(customFields).filter(([, field]) => {
       return (
-        !SKIP_INPUT_TYPES.has(field.type) && isFieldVisible(field, fieldValues)
+        !SKIP_INPUT_TYPES.has(field.type) &&
+        isFieldVisible(field, fieldValuesWithDefaults)
       )
     })
-  }, [customFields, fieldValues])
+  }, [customFields, fieldValuesWithDefaults])
 
   // Keep only overlapping custom-field values/errors when version changes.
   useEffect(() => {
@@ -1776,6 +1785,12 @@ export function InstallDialog({
     (fname: string, value: string) => {
       setFieldValues((prev) =>
         clearHiddenFieldValues(Object.entries(customFields), {
+          ...Object.fromEntries(
+            Object.entries(customFields).map(([key, field]) => [
+              key,
+              String(field.defaultValue ?? "")
+            ])
+          ),
           ...prev,
           [fname]: value
         })
@@ -1850,7 +1865,7 @@ export function InstallDialog({
       if (SKIP_INPUT_TYPES.has(field.type) || field.type === "staticText") {
         continue
       }
-      if (!isFieldVisible(field, fieldValues)) continue
+      if (!isFieldVisible(field, fieldValuesWithDefaults)) continue
       const val = fieldValues[fname] ?? String(field.defaultValue ?? "")
       const err = validateField(val, field, t)
       if (err) {
@@ -1897,6 +1912,7 @@ export function InstallDialog({
   }, [
     customFields,
     fieldValues,
+    fieldValuesWithDefaults,
     requiresDomain,
     domainState,
     subdomainError,
@@ -1937,7 +1953,7 @@ export function InstallDialog({
     // Add custom field values
     for (const [fname, field] of Object.entries(customFields)) {
       if (field.type === "staticText" || field.type === "spacer") continue
-      if (!isFieldVisible(field, fieldValues)) continue
+      if (!isFieldVisible(field, fieldValuesWithDefaults)) continue
       const val = fieldValues[fname] ?? String(field.defaultValue ?? "")
       if (val.trim() !== "") {
         payload[fname] = val
@@ -2047,12 +2063,12 @@ export function InstallDialog({
       if (field.type === "staticText" || SKIP_INPUT_TYPES.has(field.type)) {
         return true
       }
-      if (!isFieldVisible(field, fieldValues)) return true
+      if (!isFieldVisible(field, fieldValuesWithDefaults)) return true
 
       const value = fieldValues[fname] ?? String(field.defaultValue ?? "")
       return validateField(value, field, t) === null
     })
-  }, [customFields, fieldValues, t])
+  }, [customFields, fieldValues, fieldValuesWithDefaults, t])
 
   const isInstallDisabled =
     isBlocked ||
