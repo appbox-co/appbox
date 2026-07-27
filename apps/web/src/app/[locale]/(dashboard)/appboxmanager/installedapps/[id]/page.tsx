@@ -43,6 +43,7 @@ import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { WS_EVENTS, WS_SERVER_EVENTS } from "@/constants/events"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
+import { isFieldVisible } from "@/lib/dynamic-form"
 import { cn, formatDate } from "@/lib/utils"
 import type {
   DomainChangedData,
@@ -830,7 +831,15 @@ export default function InstalledAppDetailPage({
             app.custom_fields &&
             (() => {
               const fieldsObj = app.custom_fields as Record<string, CustomField>
-              const entries = Object.entries(fieldsObj)
+              const fieldValues = Object.fromEntries(
+                Object.entries(fieldsObj).map(([key, field]) => [
+                  key,
+                  field.defaultValue == null ? "" : String(field.defaultValue)
+                ])
+              )
+              const entries = Object.entries(fieldsObj).filter(([, field]) =>
+                isFieldVisible(field, fieldValues)
+              )
               if (entries.length === 0) return null
               return (
                 <Card className="min-w-0 overflow-hidden">

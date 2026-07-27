@@ -263,6 +263,28 @@ export function AppActions({
   const triggerMutation = useTriggerCustomButton()
 
   const { data: customButtons = [] } = useCustomButtons(app.id)
+  const customFieldValues = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(app.custom_fields ?? {}).map(([name, field]) => [
+          name,
+          field && typeof field === "object"
+            ? String(field.defaultValue ?? "")
+            : String(field ?? "")
+        ])
+      ),
+    [app.custom_fields]
+  )
+  const visibleCustomButtons = useMemo(
+    () =>
+      customButtons.filter((button) =>
+        isFieldVisible(
+          { conditions: button.visibilityConditions ?? button.conditions },
+          customFieldValues
+        )
+      ),
+    [customButtons, customFieldValues]
+  )
 
   const freezeEnabled = isLaunchWeekEnabled("day_5", isAdmin)
   const isFrozen = app.status === "frozen"
@@ -482,7 +504,7 @@ export function AppActions({
         </Button>
 
         {/* Custom buttons — fetched from buttons/instance API */}
-        {customButtons.map((btn) => (
+        {visibleCustomButtons.map((btn) => (
           <CustomButtonItem
             key={btn.id}
             button={btn}

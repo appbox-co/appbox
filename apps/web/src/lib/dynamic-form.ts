@@ -2,13 +2,23 @@ export type DynamicFormValues = Record<string, string>
 
 export interface FieldCondition {
   field: string
-  operator?: "equals" | "notEquals" | "in" | "notIn" | "truthy" | "falsy"
+  operator?:
+    | "equals"
+    | "notEquals"
+    | "not_equals"
+    | "in"
+    | "notIn"
+    | "not_in"
+    | "truthy"
+    | "falsy"
   value?: unknown
   values?: unknown[]
 }
 
 export interface ConditionalFieldMetadata {
   visibleWhen?: FieldCondition | FieldCondition[]
+  condition?: FieldCondition | null
+  conditions?: FieldCondition[]
   clearWhenHidden?: boolean
 }
 
@@ -22,16 +32,24 @@ function conditionMatches(
   condition: FieldCondition,
   values: DynamicFormValues
 ) {
+  if (!Object.prototype.hasOwnProperty.call(values, condition.field)) {
+    return false
+  }
   const actual = normalize(values[condition.field])
   const expected = normalize(condition.value)
-  const candidates = (condition.values ?? []).map(normalize)
+  const candidates = (
+    condition.values ??
+    (Array.isArray(condition.value) ? condition.value : [])
+  ).map(normalize)
 
   switch (condition.operator ?? "equals") {
     case "notEquals":
+    case "not_equals":
       return actual !== expected
     case "in":
       return candidates.includes(actual)
     case "notIn":
+    case "not_in":
       return !candidates.includes(actual)
     case "truthy":
       return actual !== "" && actual !== "0" && actual !== "false"
@@ -46,7 +64,8 @@ export function isFieldVisible(
   metadata: ConditionalFieldMetadata | undefined,
   values: DynamicFormValues
 ): boolean {
-  const conditions = metadata?.visibleWhen
+  const conditions =
+    metadata?.conditions ?? metadata?.condition ?? metadata?.visibleWhen
   if (!conditions) return true
   const list = Array.isArray(conditions) ? conditions : [conditions]
   return list.every((condition) => conditionMatches(condition, values))

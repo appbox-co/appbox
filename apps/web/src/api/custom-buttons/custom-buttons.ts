@@ -6,7 +6,7 @@ import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 /*  Types                                                                      */
 /* -------------------------------------------------------------------------- */
 
-export interface CustomButton {
+export interface CustomButton extends ConditionalFieldMetadata {
   id: number
   label: string
   icon: string
@@ -18,6 +18,7 @@ export interface CustomButton {
   dialogTitle?: string
   dialogText?: string
   routeOnSubmit?: string
+  visibilityConditions?: ConditionalFieldMetadata["conditions"]
   /** Present when the button requires additional form fields before firing */
   inputForm?: {
     typeOf: string
