@@ -1,4 +1,5 @@
 const APPBOX_ASSET_BASE = "https://api.appbox.co/assets/images/apps/"
+const UNSAFE_INTERNAL_PATH_CHARACTERS = /[\\\u0000-\u001F\u007F]/
 const SAFE_COLOR_KEYWORDS = new Set(["black", "white", "transparent"])
 const SAFE_COLOR_PATTERN =
   /^(#[0-9a-fA-F]{3,8}|rgb\(\s*(\d{1,3}\s*,\s*){2}\d{1,3}\s*\)|rgba\(\s*(\d{1,3}\s*,\s*){3}(0|1|0?\.\d+)\s*\)|hsl\(\s*\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*\)|hsla\(\s*\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*,\s*(0|1|0?\.\d+)\s*\))$/
@@ -17,7 +18,11 @@ export function isSafeExternalUrl(value: string): boolean {
 }
 
 export function isSafeInternalPath(value: string): boolean {
-  return value.startsWith("/") && !value.startsWith("//")
+  return (
+    value.startsWith("/") &&
+    !value.startsWith("//") &&
+    !UNSAFE_INTERNAL_PATH_CHARACTERS.test(value)
+  )
 }
 
 export function isSafeLinkUrl(value: string): boolean {
