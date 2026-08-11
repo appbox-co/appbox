@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
-import { ArrowLeft, Info, Loader2 } from "lucide-react"
+import { Info, Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/input-otp"
 import { Label } from "@/components/ui/label"
 import { Link, useRouter } from "@/i18n/routing"
+import { getSafeAuthRedirect } from "@/lib/auth/safe-redirect"
+import { cn } from "@/lib/utils"
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -32,11 +34,7 @@ export default function LoginPage() {
   const t = useTranslations("auth.login")
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get("redirect") || "/dashboard"
-  const safeRedirect =
-    redirect.startsWith("/") && !redirect.startsWith("//")
-      ? redirect
-      : "/dashboard"
+  const safeRedirect = getSafeAuthRedirect(searchParams.get("redirect"))
   const isAppInstallRedirect = safeRedirect.startsWith("/appstore/app/")
 
   const [showTwoFactor, setShowTwoFactor] = useState(false)
@@ -162,10 +160,10 @@ export default function LoginPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="appbox-display text-4xl font-bold leading-tight tracking-[-0.035em]">
             {t("2fa_title")}
           </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
             {useRecoveryCode
               ? "Enter one of your recovery codes"
               : t("2fa_description")}
@@ -194,24 +192,27 @@ export default function LoginPage() {
               disabled={isLoading}
               autoFocus
             >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
+              <InputOTPGroup className="gap-1.5">
+                <InputOTPSlot className="appbox-otp-slot" index={0} />
+                <InputOTPSlot className="appbox-otp-slot" index={1} />
+                <InputOTPSlot className="appbox-otp-slot" index={2} />
+                <InputOTPSlot className="appbox-otp-slot" index={3} />
               </InputOTPGroup>
               <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-                <InputOTPSlot index={6} />
-                <InputOTPSlot index={7} />
+              <InputOTPGroup className="gap-1.5">
+                <InputOTPSlot className="appbox-otp-slot" index={4} />
+                <InputOTPSlot className="appbox-otp-slot" index={5} />
+                <InputOTPSlot className="appbox-otp-slot" index={6} />
+                <InputOTPSlot className="appbox-otp-slot" index={7} />
               </InputOTPGroup>
             </InputOTP>
 
             {isLoading && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
+              <div
+                aria-live="polite"
+                className="flex items-center gap-2 text-sm text-muted-foreground"
+              >
+                <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" />
                 Verifying...
               </div>
             )}
@@ -225,22 +226,25 @@ export default function LoginPage() {
               disabled={isLoading}
               autoFocus
             >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
+              <InputOTPGroup className="gap-1.5">
+                <InputOTPSlot className="appbox-otp-slot" index={0} />
+                <InputOTPSlot className="appbox-otp-slot" index={1} />
+                <InputOTPSlot className="appbox-otp-slot" index={2} />
               </InputOTPGroup>
               <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
+              <InputOTPGroup className="gap-1.5">
+                <InputOTPSlot className="appbox-otp-slot" index={3} />
+                <InputOTPSlot className="appbox-otp-slot" index={4} />
+                <InputOTPSlot className="appbox-otp-slot" index={5} />
               </InputOTPGroup>
             </InputOTP>
 
             {isLoading && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
+              <div
+                aria-live="polite"
+                className="flex items-center gap-2 text-sm text-muted-foreground"
+              >
+                <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" />
                 {t("2fa_submit")}...
               </div>
             )}
@@ -251,7 +255,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={toggleRecoveryMode}
-            className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            className="appbox-text-link inline-flex text-sm"
           >
             {useRecoveryCode
               ? "Use authenticator app instead"
@@ -261,8 +265,8 @@ export default function LoginPage() {
 
         <Button
           type="button"
-          variant="ghost"
-          className="w-full"
+          variant="appboxOutline"
+          className="h-11 w-full"
           onClick={() => {
             setShowTwoFactor(false)
             setTwoFactorToken("")
@@ -271,7 +275,6 @@ export default function LoginPage() {
             setUseRecoveryCode(false)
           }}
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
           {t("2fa_back")}
         </Button>
       </div>
@@ -281,21 +284,25 @@ export default function LoginPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">
+        <h1 className="appbox-display text-4xl font-bold leading-tight tracking-[-0.035em]">
+          {t("title")}
+        </h1>
+        <p className="mt-3 text-sm leading-6 text-muted-foreground">
           {t("description")}
         </p>
       </div>
 
       {isAppInstallRedirect && (
-        <Alert>
-          <Info className="size-4" />
-          <AlertTitle>{t("appbox_required_title")}</AlertTitle>
-          <AlertDescription className="space-y-2 text-muted-foreground">
+        <Alert className="appbox-cut-surface appbox-subcard [--marketing-cut-size:9px]">
+          <Info className="size-4 text-[var(--appbox-signal)]" />
+          <AlertTitle className="font-semibold">
+            {t("appbox_required_title")}
+          </AlertTitle>
+          <AlertDescription className="space-y-2 leading-6 text-muted-foreground">
             <p>{t("appbox_required_description")}</p>
             <Link
               href="/#plans-section"
-              className="inline-flex font-medium text-foreground underline-offset-4 hover:underline"
+              className="appbox-text-link inline-flex"
             >
               {t("appbox_required_link")}
             </Link>
@@ -305,63 +312,99 @@ export default function LoginPage() {
 
       <form
         onSubmit={loginForm.handleSubmit(onLoginSubmit)}
-        className="space-y-4"
+        className="space-y-5"
       >
         <div className="space-y-2">
-          <Label htmlFor="email">{t("email_label")}</Label>
-          <Input
-            id="email"
-            type="email"
-            autoComplete="email"
-            placeholder={t("email_placeholder")}
-            className="h-11"
-            {...loginForm.register("email")}
-          />
+          <Label htmlFor="email" className="text-sm font-semibold">
+            {t("email_label")}
+          </Label>
+          <div
+            className={cn(
+              "appbox-field-frame",
+              loginForm.formState.errors.email && "appbox-field-frame-error"
+            )}
+          >
+            <Input
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder={t("email_placeholder")}
+              aria-invalid={Boolean(loginForm.formState.errors.email)}
+              aria-describedby={
+                loginForm.formState.errors.email ? "email-error" : undefined
+              }
+              className="appbox-form-control h-12 px-4"
+              {...loginForm.register("email")}
+            />
+          </div>
           {loginForm.formState.errors.email && (
-            <p className="text-sm text-destructive">{t("email_error")}</p>
+            <p
+              id="email-error"
+              role="alert"
+              className="text-sm text-destructive"
+            >
+              {t("email_error")}
+            </p>
           )}
         </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">{t("password_label")}</Label>
-            <Link
-              href="/forgot"
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-            >
+            <Label htmlFor="password" className="text-sm font-semibold">
+              {t("password_label")}
+            </Label>
+            <Link href="/forgot" className="appbox-text-link text-xs">
               {t("forgot_password")}
             </Link>
           </div>
-          <Input
-            id="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder={t("password_placeholder")}
-            className="h-11"
-            {...loginForm.register("password")}
-          />
+          <div
+            className={cn(
+              "appbox-field-frame",
+              loginForm.formState.errors.password && "appbox-field-frame-error"
+            )}
+          >
+            <Input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder={t("password_placeholder")}
+              aria-invalid={Boolean(loginForm.formState.errors.password)}
+              aria-describedby={
+                loginForm.formState.errors.password
+                  ? "password-error"
+                  : undefined
+              }
+              className="appbox-form-control h-12 px-4"
+              {...loginForm.register("password")}
+            />
+          </div>
           {loginForm.formState.errors.password && (
-            <p className="text-sm text-destructive">{t("password_error")}</p>
+            <p
+              id="password-error"
+              role="alert"
+              className="text-sm text-destructive"
+            >
+              {t("password_error")}
+            </p>
           )}
         </div>
 
         <Button
           type="submit"
-          variant="primary"
-          className="h-11 w-full"
+          variant="appboxSignal"
+          className="relative h-12 w-full"
           disabled={isLoading}
         >
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {isLoading && (
+            <Loader2 className="absolute left-4 h-4 w-4 animate-spin motion-reduce:animate-none" />
+          )}
           {t("submit")}
         </Button>
       </form>
 
       <p className="text-center text-xs text-muted-foreground">
         {t("external_signup")}{" "}
-        <Link
-          href="/#plans-section"
-          className="text-foreground underline-offset-4 hover:underline"
-        >
+        <Link href="/#plans-section" className="appbox-text-link">
           {t("external_signup_link")}
         </Link>
       </p>
