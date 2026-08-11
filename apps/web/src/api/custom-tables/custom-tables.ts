@@ -137,9 +137,15 @@ export async function revealCustomTableRowField(
 }
 
 function interpolateRowRoute(route: string, row: CustomTableRow): string {
-  return route.replace(/\{row\.([^}]+)\}/g, (_match, field: string) =>
-    encodeURIComponent(String(row[field] ?? ""))
-  )
+  return route.replace(/\{row\.([^}]+)\}/g, (_match, field: string) => {
+    const value = String(row[field] ?? "")
+
+    if (value === "." || value === "..") {
+      throw new Error("Invalid custom table row route segment")
+    }
+
+    return encodeURIComponent(value)
+  })
 }
 
 export async function runCustomTableRowAction(
