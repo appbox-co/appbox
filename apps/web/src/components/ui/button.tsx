@@ -23,7 +23,13 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         pulse:
-          "bg-foreground text-background hover:bg-foreground/80 hover:animate-pulse-glow"
+          "bg-foreground text-background hover:bg-foreground/80 hover:animate-pulse-glow",
+        appboxPrimary:
+          "appbox-primary-action appbox-neutral-action shadow-none",
+        appboxSignal: "appbox-primary-action appbox-signal-action shadow-none",
+        appboxOutline:
+          "appbox-primary-action appbox-outline-action shadow-none",
+        appboxQuiet: "appbox-primary-action appbox-quiet-action shadow-none"
       },
       size: {
         default: "h-9 px-4 py-2",
