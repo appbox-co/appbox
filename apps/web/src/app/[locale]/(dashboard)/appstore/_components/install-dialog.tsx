@@ -1,13 +1,13 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
   AlertCircle,
   Check,
-  ChevronsUpDown,
+  ChevronDown,
   ExternalLink,
   Loader2,
   Package
@@ -450,6 +450,7 @@ function SearchFieldInput({
   const [open, setOpen] = useState(false)
   const [options, setOptions] = useState<{ label: string; value: string }[]>([])
   const [loading, setLoading] = useState(false)
+  const optionListId = useId()
   const autoSelected = useRef(false)
   const required = isFieldRequired(field)
 
@@ -480,11 +481,8 @@ function SearchFieldInput({
         }
       }
     }
-    if (selectedVersionId && selectedVersionId > 0) {
-      filters.version_id = String(selectedVersionId)
-    }
     return filters
-  }, [depends, selectedCyloId, customFields, fieldValues, selectedVersionId])
+  }, [depends, selectedCyloId, customFields, fieldValues])
 
   useEffect(() => {
     if (!apiRoute || !selectedCyloId) {
@@ -550,44 +548,48 @@ function SearchFieldInput({
       </Label>
 
       {!selectedCyloId ? (
-        <p className="rounded-md border bg-muted/50 px-3 py-2 text-sm text-muted-foreground">
+        <p className="appbox-cut-surface appbox-subcard px-3 py-2 text-sm text-muted-foreground shadow-none [--marketing-cut-size:9px]">
           {t("install.searchField.selectAppboxFirst")}
         </p>
       ) : (
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <Button
-              variant="outline"
+            <button
+              type="button"
               role="combobox"
               aria-expanded={open}
+              aria-controls={optionListId}
               className={cn(
-                "w-full justify-between bg-muted/30 font-normal",
+                "appbox-select-trigger flex h-11 w-full items-center justify-between px-3 py-2 text-sm font-normal focus:outline-none",
                 !value && "text-muted-foreground",
-                error && "border-destructive"
+                error && "[--marketing-cut-line:hsl(var(--destructive))]"
               )}
             >
-              {value
-                ? selectedLabel
-                : t("install.searchField.selectPlaceholder", {
-                    label: field.label
-                  })}
-              <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-            </Button>
+              <span className="truncate text-left">
+                {value
+                  ? selectedLabel
+                  : t("install.searchField.selectPlaceholder", {
+                      label: field.label
+                    })}
+              </span>
+              <ChevronDown className="ml-2 size-4 shrink-0 opacity-60 transition-transform duration-150 motion-reduce:transition-none" />
+            </button>
           </PopoverTrigger>
           <PopoverContent
-            className="w-[--radix-popover-trigger-width] bg-card p-0"
+            className="marketing-nav-popover w-[--radix-popover-trigger-width] rounded-none border-0 p-0"
             align="start"
+            sideOffset={6}
           >
-            <Command>
+            <Command className="rounded-none bg-transparent">
               <CommandInput
                 placeholder={t("install.searchField.searchPlaceholder", {
                   label: field.label
                 })}
               />
-              <CommandList>
+              <CommandList id={optionListId}>
                 {loading ? (
                   <div className="flex items-center justify-center py-6">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                    <Loader2 className="size-4 animate-spin text-muted-foreground motion-reduce:animate-none" />
                   </div>
                 ) : (
                   <>
@@ -599,6 +601,7 @@ function SearchFieldInput({
                         <CommandItem
                           key={option.value}
                           value={option.label}
+                          className="appbox-body-menu-option marketing-nav-popover-tile relative cursor-pointer py-3 pl-3 pr-9 aria-selected:!bg-[rgb(217_173_90_/_12%)] aria-selected:!text-foreground"
                           onSelect={() => {
                             onChange(
                               fname,
@@ -609,7 +612,7 @@ function SearchFieldInput({
                         >
                           <Check
                             className={cn(
-                              "mr-2 size-4",
+                              "appbox-menu-check absolute right-3 size-4 text-[var(--appbox-signal)]",
                               value === option.value
                                 ? "opacity-100"
                                 : "opacity-0"
@@ -680,7 +683,7 @@ function CustomFieldInput({
     return (
       <div className="space-y-2">
         <Label className="text-sm font-medium">{field.label}</Label>
-        <p className="rounded-md border bg-muted/50 px-3 py-2 text-sm text-muted-foreground">
+        <p className="appbox-cut-surface appbox-subcard px-3 py-2 text-sm text-muted-foreground shadow-none [--marketing-cut-size:9px]">
           {field.defaultValue ?? "—"}
         </p>
       </div>
@@ -706,17 +709,19 @@ function CustomFieldInput({
       <div className="space-y-2">
         <Label className="text-sm font-medium">{field.label}</Label>
         <div className="flex items-center gap-2">
-          <Input
-            readOnly
-            value={urlValue}
-            className={cn("bg-muted/30 font-mono text-xs")}
-          />
+          <div className="appbox-field-frame flex-1">
+            <Input
+              readOnly
+              value={urlValue}
+              className="appbox-form-control font-mono text-xs"
+            />
+          </div>
           {href ? (
             <a
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md border px-2 py-2 text-muted-foreground transition-colors hover:text-foreground"
+              className="appbox-primary-action appbox-outline-action !min-h-9 !px-2 text-muted-foreground"
               aria-label="Open URL"
             >
               <ExternalLink className="size-4" />
@@ -740,8 +745,8 @@ function CustomFieldInput({
             aria-checked={isOn}
             onClick={() => onChange(fname, isOn ? "0" : "1")}
             className={cn(
-              "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors",
-              isOn ? "bg-primary" : "bg-muted"
+              "appbox-cut-surface relative inline-flex h-6 w-11 shrink-0 cursor-pointer transition-colors [--marketing-cut-size:5px]",
+              isOn ? "!bg-[var(--appbox-signal)]" : "appbox-subcard"
             )}
           >
             <span
@@ -797,7 +802,7 @@ function CustomFieldInput({
       config={config}
       field={controllerField}
       error={error}
-      inputClassName="bg-muted/30"
+      useAppboxFieldFrame
     />
   )
 }
@@ -808,10 +813,6 @@ function CustomFieldInput({
 
 function InstallGuardBanner({ guard }: { guard: InstallGuard }) {
   const isWarning = guard.type === "no_cylo"
-  const borderColor = isWarning
-    ? "border-amber-500/50"
-    : "border-destructive/50"
-  const bgColor = isWarning ? "bg-amber-500/10" : "bg-destructive/10"
   const textColor = isWarning
     ? "text-amber-700 dark:text-amber-400"
     : "text-destructive"
@@ -819,9 +820,10 @@ function InstallGuardBanner({ guard }: { guard: InstallGuard }) {
   return (
     <div
       className={cn(
-        "flex items-start gap-3 rounded-md border p-4 text-sm",
-        borderColor,
-        bgColor,
+        "appbox-cut-surface appbox-subcard flex items-start gap-3 p-4 text-sm shadow-none [--marketing-cut-size:9px]",
+        isWarning
+          ? "[--marketing-cut-line:rgb(217_173_90_/_46%)]"
+          : "[--marketing-cut-line:hsl(var(--destructive))]",
         textColor
       )}
     >
@@ -833,12 +835,7 @@ function InstallGuardBanner({ guard }: { guard: InstallGuard }) {
           (guard.actionUrl.startsWith("/") ? (
             <Link
               href={guard.actionUrl}
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
-                isWarning
-                  ? "bg-amber-500/20 hover:bg-amber-500/30"
-                  : "bg-destructive/20 hover:bg-destructive/30"
-              )}
+              className="appbox-primary-action appbox-dense-action appbox-signal-action gap-1.5"
             >
               {guard.actionLabel}
             </Link>
@@ -847,12 +844,7 @@ function InstallGuardBanner({ guard }: { guard: InstallGuard }) {
               href={guard.actionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
-                isWarning
-                  ? "bg-amber-500/20 hover:bg-amber-500/30"
-                  : "bg-destructive/20 hover:bg-destructive/30"
-              )}
+              className="appbox-primary-action appbox-dense-action appbox-signal-action gap-1.5"
             >
               {guard.actionLabel}
               <ExternalLink className="size-3" />
@@ -992,7 +984,7 @@ function CyloSelector({
             >
               <SelectTrigger
                 id="cylo-select"
-                className="bg-muted/30 [&>span]:max-w-[calc(100%-1.25rem)] [&>span]:truncate"
+                className="[&>span]:max-w-[calc(100%-1.25rem)] [&>span]:truncate"
               >
                 <SelectValue
                   placeholder={t("install.cyloSelector.selectToSeeOptions")}
@@ -1015,7 +1007,7 @@ function CyloSelector({
 
             {/* Show action for the selected ineligible appbox */}
             {selectedIneligibleCylo && (
-              <div className="rounded-md border border-muted bg-muted/20 p-3 text-sm">
+              <div className="appbox-cut-surface appbox-subcard p-3 text-sm shadow-none [--marketing-cut-size:9px]">
                 <p className="text-muted-foreground wrap-break-word">
                   <span className="font-medium text-foreground">
                     {selectedIneligibleCylo.display_name}
@@ -1027,7 +1019,7 @@ function CyloSelector({
                     href={selectedUpgradeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                    className="appbox-primary-action appbox-signal-action mt-2 !min-h-8 !px-3 text-xs"
                   >
                     {t("install.cyloSelector.upgradeThisAppbox")}
                     <ExternalLink className="size-3" />
@@ -1039,7 +1031,7 @@ function CyloSelector({
                     </p>
                     <Link
                       href="/"
-                      className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                      className="appbox-primary-action appbox-signal-action !min-h-8 !px-3 text-xs"
                     >
                       {t("install.guard.getAnotherAppbox")}
                     </Link>
@@ -1055,14 +1047,14 @@ function CyloSelector({
             )}
           </>
         ) : (
-          <div className="flex items-center gap-2 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+          <div className="appbox-cut-surface appbox-subcard flex items-center gap-2 bg-destructive/10 p-3 text-sm text-destructive shadow-none [--marketing-cut-line:hsl(var(--destructive))] [--marketing-cut-size:9px]">
             <AlertCircle className="size-4 shrink-0" />
             {noSlotsLabel}
           </div>
         )
       ) : (
         <Select value={selectedCylo} onValueChange={onSelectCylo}>
-          <SelectTrigger id="cylo-select" className="bg-muted/30">
+          <SelectTrigger id="cylo-select">
             <SelectValue placeholder={label} />
           </SelectTrigger>
           <SelectContent>
@@ -1071,7 +1063,7 @@ function CyloSelector({
                 <div className="flex items-center gap-2">
                   <Package className="size-3.5 text-muted-foreground" />
                   <span>{cylo.display_name}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="appbox-mono text-xs tabular-nums text-muted-foreground">
                     (
                     {t("install.cyloSelector.slotsFree", {
                       count: cylo.app_slots - cylo.app_slots_used
@@ -1124,7 +1116,7 @@ function CyloSelector({
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-medium text-primary underline underline-offset-2 hover:text-primary/80"
+                      className="font-medium text-[var(--appbox-signal)] underline decoration-[rgb(217_173_90_/_42%)] underline-offset-4 hover:text-[var(--appbox-signal-strong)]"
                     >
                       {t("install.cyloSelector.upgradeName", {
                         name: c.display_name
@@ -1158,7 +1150,7 @@ function CyloSelector({
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-medium text-primary underline underline-offset-2 hover:text-primary/80"
+                      className="font-medium text-[var(--appbox-signal)] underline decoration-[rgb(217_173_90_/_42%)] underline-offset-4 hover:text-[var(--appbox-signal-strong)]"
                     >
                       {t("install.cyloSelector.upgradeName", {
                         name: c.display_name
@@ -2096,9 +2088,10 @@ export function InstallDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "flex max-h-[min(85vh,calc(100dvh-2rem))] flex-col overflow-hidden bg-card p-0",
+          "appbox-appstore appbox-cut-surface flex max-h-[min(85vh,calc(100dvh-2rem))] w-[calc(100%-2rem)] flex-col gap-0 overflow-hidden rounded-none p-0 shadow-none [--marketing-cut-size:13px]",
           hasCustomFields || requiresDomain ? "sm:max-w-lg" : "sm:max-w-md"
         )}
+        closeClassName="appbox-primary-action appbox-product-action appbox-outline-action !right-4 !top-4 z-30 !size-10 !min-h-10 !p-0 !opacity-100 focus:!ring-0"
         onKeyDown={(event) => {
           if (
             event.key !== "Enter" ||
@@ -2119,8 +2112,8 @@ export function InstallDialog({
           }
         }}
       >
-        <DialogHeader className="border-b bg-muted/30 px-6 py-4">
-          <DialogTitle>
+        <DialogHeader className="border-b border-[var(--appbox-frame-line)] px-6 py-5 pr-20">
+          <DialogTitle className="text-xl font-semibold leading-tight tracking-normal">
             {t("app.installTitle", { name: app.display_name })}
           </DialogTitle>
           <DialogDescription>
@@ -2135,7 +2128,7 @@ export function InstallDialog({
           {/* Loading guards indicator */}
           {guardsLoading && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />
               {t("install.guard.checkingAvailability")}
             </div>
           )}
@@ -2166,7 +2159,7 @@ export function InstallDialog({
               <Label htmlFor="version-select">{t("app.selectVersion")}</Label>
               {versionSourceLoading ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Loader2 className="size-4 animate-spin" />
+                  <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />
                   {t("install.dialog.loadingVersions")}
                 </div>
               ) : (
@@ -2174,16 +2167,16 @@ export function InstallDialog({
                   value={selectedVersion}
                   onValueChange={setSelectedVersion}
                 >
-                  <SelectTrigger id="version-select" className="bg-muted/30">
+                  <SelectTrigger id="version-select" className="appbox-mono">
                     <SelectValue placeholder={t("app.selectVersion")} />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="appbox-mono">
                     {versionSource.map((version) => (
                       <SelectItem key={version.id} value={String(version.id)}>
                         <div className="flex items-center gap-2">
                           <span>{version.version}</span>
                           {version.is_default === 1 && (
-                            <span className="text-xs text-primary">
+                            <span className="text-xs text-[var(--appbox-signal)]">
                               {t("install.dialog.defaultVersion")}
                             </span>
                           )}
@@ -2205,7 +2198,7 @@ export function InstallDialog({
 
           {!isBlocked && selectedCyloId > 0 && boostInfoLoading && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />
               {t("install.boost.loading")}
             </div>
           )}
@@ -2236,14 +2229,14 @@ export function InstallDialog({
           )}
 
           {showBoostUnavailable && (
-            <div className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm text-amber-700 dark:text-amber-300">
+            <div className="appbox-cut-surface appbox-subcard p-3 text-sm text-amber-700 shadow-none [--marketing-cut-line:rgb(217_173_90_/_46%)] [--marketing-cut-size:9px] dark:text-amber-300">
               <p>{boostUnavailableReason}</p>
               {boostUpgradeUrl && (
                 <a
                   href={boostUpgradeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-amber-500/20 px-3 py-1.5 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-500/30 dark:text-amber-200"
+                  className="appbox-primary-action appbox-dense-action appbox-outline-action mt-2"
                 >
                   {t("install.boost.cta")}
                   <ExternalLink className="size-3" />
@@ -2270,14 +2263,14 @@ export function InstallDialog({
 
           {/* Pre-install description */}
           {!isBlocked && preinstallDescription && (
-            <div className="rounded-md border bg-muted/50 p-3 text-sm text-muted-foreground">
+            <div className="border-l-2 border-[var(--appbox-signal)] py-1 pl-3 text-sm leading-relaxed text-muted-foreground">
               {preinstallDescription}
             </div>
           )}
 
           {/* Custom Fields */}
           {!isBlocked && hasCustomFields && (
-            <div className="space-y-4 pt-4">
+            <div className="space-y-5 border-t border-[var(--appbox-frame-line)] pt-5">
               {visibleFields.map(([fname, field]) => (
                 <CustomFieldInput
                   key={fname}
@@ -2296,7 +2289,7 @@ export function InstallDialog({
           )}
 
           {installMutation.isError && parsedInstallError && (
-            <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+            <div className="appbox-cut-surface appbox-subcard p-3 text-sm text-destructive shadow-none [--marketing-cut-line:hsl(var(--destructive))] [--marketing-cut-size:9px]">
               <div className="flex items-start gap-2">
                 <AlertCircle className="mt-0.5 size-4 shrink-0" />
                 <div className="space-y-1">
@@ -2314,24 +2307,30 @@ export function InstallDialog({
           )}
         </div>
 
-        <DialogFooter className="shrink-0 border-t bg-muted/10 px-6 py-4">
+        <DialogFooter className="shrink-0 border-t border-[var(--appbox-frame-line)] px-6 py-4">
           <Button
-            variant="outline"
+            variant="appboxOutline"
             type="button"
             onClick={() => onOpenChange(false)}
             disabled={installMutation.isPending}
+            className="appbox-product-action"
           >
             {t("install.dialog.cancel")}
           </Button>
           <Button
+            variant="appboxSignal"
             type="button"
             onClick={handleInstall}
             disabled={isInstallDisabled}
-            className={cn(installMutation.isPending && "pointer-events-none")}
+            data-dialog-submit="true"
+            className={cn(
+              "appbox-product-action",
+              installMutation.isPending && "pointer-events-none"
+            )}
           >
             {installMutation.isPending ? (
               <>
-                <Loader2 className="mr-2 size-4 animate-spin" />
+                <Loader2 className="mr-2 size-4 animate-spin motion-reduce:animate-none" />
                 {t("app.installing")}
               </>
             ) : (
