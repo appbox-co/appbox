@@ -45,9 +45,16 @@ interface ToggleProps {
   onCheckedChange: (checked: boolean) => void
   disabled?: boolean
   id?: string
+  appboxStyle?: boolean
 }
 
-function Toggle({ checked, onCheckedChange, disabled, id }: ToggleProps) {
+function Toggle({
+  checked,
+  onCheckedChange,
+  disabled,
+  id,
+  appboxStyle = false
+}: ToggleProps) {
   return (
     <button
       id={id}
@@ -57,8 +64,17 @@ function Toggle({ checked, onCheckedChange, disabled, id }: ToggleProps) {
       disabled={disabled}
       onClick={() => onCheckedChange(!checked)}
       className={cn(
-        "focus-visible:ring-ring peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-xs transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-        checked ? "bg-primary" : "bg-input"
+        "focus-visible:ring-ring peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center shadow-xs transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        appboxStyle
+          ? "appbox-cut-surface [--marketing-cut-size:5px]"
+          : "rounded-full border-2 border-transparent",
+        checked
+          ? appboxStyle
+            ? "!bg-[var(--appbox-signal)]"
+            : "bg-primary"
+          : appboxStyle
+            ? "appbox-subcard"
+            : "bg-input"
       )}
     >
       <span
@@ -80,16 +96,36 @@ interface FormFieldRendererProps {
   field: ControllerRenderProps<FieldValues, string>
   error?: string
   inputClassName?: string
+  useAppboxFieldFrame?: boolean
 }
 
 export function FormFieldRenderer({
   config,
   field,
   error,
-  inputClassName
+  inputClassName,
+  useAppboxFieldFrame = false
 }: FormFieldRendererProps) {
   const [showPassword, setShowPassword] = useState(false)
   const fieldId = `form-field-${config.name}`
+  const controlClassName = cn(
+    useAppboxFieldFrame && "appbox-form-control",
+    inputClassName
+  )
+
+  const withFieldFrame = (control: React.ReactNode) =>
+    useAppboxFieldFrame ? (
+      <div
+        className={cn(
+          "appbox-field-frame",
+          error && "appbox-field-frame-error"
+        )}
+      >
+        {control}
+      </div>
+    ) : (
+      control
+    )
 
   const renderField = () => {
     switch (config.type) {
@@ -121,17 +157,18 @@ export function FormFieldRenderer({
               checked={!!field.value}
               onCheckedChange={field.onChange}
               disabled={config.disabled}
+              appboxStyle={useAppboxFieldFrame}
             />
           </div>
         )
 
       case "textarea":
-        return (
+        return withFieldFrame(
           <Textarea
             id={fieldId}
             placeholder={config.placeholder}
             disabled={config.disabled}
-            className={inputClassName}
+            className={controlClassName}
             {...field}
             value={(field.value as string) ?? ""}
           />
@@ -140,21 +177,27 @@ export function FormFieldRenderer({
       case "password":
         return (
           <div className="space-y-2">
-            <div className="relative">
+            <div
+              className={cn(
+                "relative",
+                useAppboxFieldFrame && "appbox-field-frame",
+                useAppboxFieldFrame && error && "appbox-field-frame-error"
+              )}
+            >
               <Input
                 id={fieldId}
                 type={showPassword ? "text" : "password"}
                 placeholder={config.placeholder}
                 disabled={config.disabled}
-                className={inputClassName}
+                className={cn(controlClassName, "pr-11")}
                 {...field}
                 value={(field.value as string) ?? ""}
               />
               <Button
                 type="button"
-                variant="ghost"
+                variant={useAppboxFieldFrame ? "appboxQuiet" : "ghost"}
                 size="icon"
-                className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                className="absolute right-0 top-0 h-full !min-h-0 px-3 hover:bg-transparent"
                 onClick={() => setShowPassword((prev) => !prev)}
                 tabIndex={-1}
               >
@@ -171,7 +214,7 @@ export function FormFieldRenderer({
             {config.generatePassword ? (
               <Button
                 type="button"
-                variant="outline"
+                variant={useAppboxFieldFrame ? "appboxOutline" : "outline"}
                 size="sm"
                 disabled={config.disabled}
                 onClick={() => {
@@ -189,13 +232,13 @@ export function FormFieldRenderer({
         )
 
       case "number":
-        return (
+        return withFieldFrame(
           <Input
             id={fieldId}
             type="number"
             placeholder={config.placeholder}
             disabled={config.disabled}
-            className={inputClassName}
+            className={controlClassName}
             {...field}
             value={(field.value as string | number) ?? ""}
             onChange={(e) => {
@@ -206,13 +249,13 @@ export function FormFieldRenderer({
         )
 
       case "search":
-        return (
+        return withFieldFrame(
           <Input
             id={fieldId}
             type="search"
             placeholder={config.placeholder}
             disabled={config.disabled}
-            className={inputClassName}
+            className={controlClassName}
             {...field}
             value={(field.value as string) ?? ""}
           />
@@ -221,13 +264,13 @@ export function FormFieldRenderer({
       case "text":
       case "email":
       default:
-        return (
+        return withFieldFrame(
           <Input
             id={fieldId}
             type={config.type}
             placeholder={config.placeholder}
             disabled={config.disabled}
-            className={inputClassName}
+            className={controlClassName}
             {...field}
             value={(field.value as string) ?? ""}
           />
