@@ -29,14 +29,14 @@ export function getNotificationSubtext(
   action: string
 ): string | null {
   if (type === "instance") {
+    // Lifecycle actions also label accepted, failed and unconfirmed requests.
+    // Their notification message owns the outcome; the action cannot prove success.
+    if (["start", "stop", "restart"].includes(action)) return null
     if (action === "add") return t("subtext.instance_add")
     if (action === "removed") return t("subtext.instance_removed")
     if (action === "removing") return t("subtext.instance_removing")
-    if (action === "restart") return t("subtext.instance_restart")
     if (action === "updating") return t("subtext.instance_updating")
     if (action === "updated") return t("subtext.instance_updated")
-    if (action === "stop") return t("subtext.instance_stop")
-    if (action === "start") return t("subtext.instance_start")
   }
   if (type === "user" && action === "updated") return t("subtext.user_updated")
   if (type === "cylo") {
