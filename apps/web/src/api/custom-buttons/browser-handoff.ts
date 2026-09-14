@@ -96,7 +96,7 @@ export async function finishBrowserHandoff(
   popup: Window,
   admission: BrowserHandoffAdmission
 ): Promise<void> {
-  const deadline = Date.now() + 90_000
+  const deadline = Date.now() + 180_000
   try {
     while (Date.now() < deadline) {
       if (popup.closed || popup.location.href !== "about:blank") return
