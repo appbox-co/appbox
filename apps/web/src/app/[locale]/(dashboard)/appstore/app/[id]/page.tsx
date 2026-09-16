@@ -132,6 +132,7 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isFrozen = app.status === "frozen"
   const isTransitioning =
+    app.vm_control_pending === true ||
     app.status === "restarting" ||
     app.status === "installing" ||
     app.status === "updating" ||
@@ -576,6 +577,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
   ) => {
     const eligibleIds = selectedRows
       .filter((installedApp) => {
+        if (installedApp.vm_control_pending) return false
         const isStopped =
           installedApp.status === "offline" ||
           installedApp.status === "inactive"
@@ -868,6 +870,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         disabled={
                           bulkAction !== null ||
                           !selectedRows.some((installedApp) => {
+                            if (installedApp.vm_control_pending) return false
                             const isStopped =
                               installedApp.status === "offline" ||
                               installedApp.status === "inactive"
@@ -898,6 +901,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         disabled={
                           bulkAction !== null ||
                           !selectedRows.some((installedApp) => {
+                            if (installedApp.vm_control_pending) return false
                             const isFrozen = installedApp.status === "frozen"
                             const isTransitioning =
                               installedApp.status === "restarting" ||
@@ -929,6 +933,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         disabled={
                           bulkAction !== null ||
                           !selectedRows.some((installedApp) => {
+                            if (installedApp.vm_control_pending) return false
                             const isStopped =
                               installedApp.status === "offline" ||
                               installedApp.status === "inactive"
@@ -959,6 +964,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         disabled={
                           bulkAction !== null ||
                           !selectedRows.some((installedApp) => {
+                            if (installedApp.vm_control_pending) return false
                             const isFrozen = installedApp.status === "frozen"
                             const isTransitioning =
                               installedApp.status === "restarting" ||
@@ -986,7 +992,9 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                         disabled={
                           bulkAction !== null ||
                           !selectedRows.some(
-                            (installedApp) => installedApp.status === "frozen"
+                            (installedApp) =>
+                              !installedApp.vm_control_pending &&
+                              installedApp.status === "frozen"
                           )
                         }
                         onClick={() =>

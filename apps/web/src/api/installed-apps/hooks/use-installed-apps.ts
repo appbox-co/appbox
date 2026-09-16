@@ -38,7 +38,14 @@ export function useInstalledApps(cyloId?: number, userIdOverride?: number) {
     queryKey: cyloId
       ? queryKeys.installedApps.byCylo(cyloId)
       : queryKeys.installedApps.all,
-    queryFn: () => getInstalledApps(cyloId, userIdOverride ?? user.id)
+    queryFn: () => getInstalledApps(cyloId, userIdOverride ?? user.id),
+    // Native Windows power requests can start without a panel mutation.
+    refetchInterval: (query) =>
+      query.state.data?.some(
+        (app) => app.app_type === "vm" && app.windows_preshutdown_enabled
+      )
+        ? 5000
+        : false
   })
 }
 
@@ -46,7 +53,12 @@ export function useInstalledApp(id: number) {
   return useQuery({
     queryKey: queryKeys.installedApps.detail(id),
     queryFn: () => getInstalledApp(id),
-    enabled: id > 0
+    enabled: id > 0,
+    refetchInterval: (query) =>
+      query.state.data?.app_type === "vm" &&
+      query.state.data.windows_preshutdown_enabled
+        ? 5000
+        : false
   })
 }
 

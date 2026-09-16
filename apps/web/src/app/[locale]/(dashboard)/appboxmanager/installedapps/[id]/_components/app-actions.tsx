@@ -297,7 +297,14 @@ export function AppActions({
   const isRunning = app.status === "online"
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isCyloRestarting = cylo?.status === "restarting"
+  const isVmControlPending =
+    app.vm_control_pending === true ||
+    (app.windows_preshutdown_enabled === true &&
+      (startMutation.isPending ||
+        stopMutation.isPending ||
+        restartMutation.isPending))
   const isTransitioning =
+    isVmControlPending ||
     isCyloRestarting ||
     isFrozen ||
     app.status === "restarting" ||
@@ -345,6 +352,7 @@ export function AppActions({
   )
 
   const handleUninstall = () => {
+    if (isVmControlPending) return
     uninstallMutation.mutate(app.id, {
       onSuccess: () => {
         setUninstallOpen(false)
@@ -354,6 +362,11 @@ export function AppActions({
 
   return (
     <>
+      {app.vm_control_pending && (
+        <p role="status" className="w-full text-sm text-muted-foreground">
+          {t("vmControlPending")}
+        </p>
+      )}
       <div className="flex min-w-0 flex-1 flex-wrap gap-2">
         {/* Start */}
         <Button
@@ -419,7 +432,9 @@ export function AppActions({
             variant="outline"
             size="sm"
             className={ACTION_BUTTON_CLASSNAME}
-            disabled={startOnlyActionable || updateMutation.isPending}
+            disabled={
+              startOnlyActionable || isVmControlPending || updateMutation.isPending
+            }
             onClick={() => setUpdateConfirmOpen(true)}
           >
             {updateMutation.isPending ? (
@@ -485,7 +500,7 @@ export function AppActions({
             variant="outline"
             size="sm"
             className={ACTION_BUTTON_CLASSNAME}
-            disabled={unfreezeMutation.isPending}
+            disabled={isVmControlPending || unfreezeMutation.isPending}
             onClick={() => setUnfreezeConfirmOpen(true)}
           >
             {unfreezeMutation.isPending ? (
@@ -502,7 +517,9 @@ export function AppActions({
           variant="destructive"
           size="sm"
           className={ACTION_BUTTON_CLASSNAME}
-          disabled={startOnlyActionable && !isRecoverableStopped}
+          disabled={
+            isVmControlPending || (startOnlyActionable && !isRecoverableStopped)
+          }
           onClick={() => setUninstallOpen(true)}
         >
           <Trash2 className="mr-1.5 size-4" />
@@ -517,6 +534,7 @@ export function AppActions({
             isTransitioning={isTransitioning || startOnlyActionable}
             isPending={triggerMutation.isPending && customConfirmId === btn.id}
             onConfirm={(payload) => {
+              if (isVmControlPending) return
               let popup: Window | null = null
               if (btn.resultMode === "browser_handoff") {
                 try {
@@ -589,7 +607,7 @@ export function AppActions({
             </Button>
             <Button
               onClick={() => {
-                if (!hasUpdate || !updateVersionId) return
+                if (isVmControlPending || !hasUpdate || !updateVersionId) return
                 updateMutation.mutate(
                   {
                     id: app.id,
@@ -602,7 +620,9 @@ export function AppActions({
                   }
                 )
               }}
-              disabled={updateMutation.isPending || !updateVersionId}
+              disabled={
+                isVmControlPending || updateMutation.isPending || !updateVersionId
+              }
             >
               {updateMutation.isPending && (
                 <Loader2 className="mr-1.5 size-4 animate-spin" />
@@ -637,11 +657,12 @@ export function AppActions({
             </Button>
             <Button
               onClick={() => {
+                if (isVmControlPending) return
                 freezeMutation.mutate(app.id, {
                   onSuccess: () => setFreezeConfirmOpen(false)
                 })
               }}
-              disabled={freezeMutation.isPending}
+              disabled={isVmControlPending || freezeMutation.isPending}
             >
               {freezeMutation.isPending && (
                 <Loader2 className="mr-1.5 size-4 animate-spin" />
@@ -676,11 +697,12 @@ export function AppActions({
             </Button>
             <Button
               onClick={() => {
+                if (isVmControlPending) return
                 unfreezeMutation.mutate(app.id, {
                   onSuccess: () => setUnfreezeConfirmOpen(false)
                 })
               }}
-              disabled={unfreezeMutation.isPending}
+              disabled={isVmControlPending || unfreezeMutation.isPending}
             >
               {unfreezeMutation.isPending && (
                 <Loader2 className="mr-1.5 size-4 animate-spin" />
@@ -711,7 +733,7 @@ export function AppActions({
             <Button
               variant="destructive"
               onClick={handleUninstall}
-              disabled={uninstallMutation.isPending}
+              disabled={isVmControlPending || uninstallMutation.isPending}
             >
               {uninstallMutation.isPending && (
                 <Loader2 className="mr-1.5 size-4 animate-spin" />
@@ -760,7 +782,7 @@ export function AppActions({
             </Button>
             <Button
               onClick={() => {
-                if (!selectedSwitchVersionId) return
+                if (isVmControlPending || !selectedSwitchVersionId) return
                 switchVersionMutation.mutate(
                   {
                     id: app.id,
@@ -775,7 +797,9 @@ export function AppActions({
                 )
               }}
               disabled={
-                !selectedSwitchVersionId || switchVersionMutation.isPending
+                isVmControlPending ||
+                !selectedSwitchVersionId ||
+                switchVersionMutation.isPending
               }
             >
               {switchVersionMutation.isPending && (

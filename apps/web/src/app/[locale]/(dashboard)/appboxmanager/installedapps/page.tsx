@@ -104,6 +104,7 @@ function isEligibleForBulkAction(
   app: InstalledApp,
   action: "start" | "stop" | "restart" | "freeze" | "unfreeze"
 ): boolean {
+  if (app.vm_control_pending) return false
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isFrozen = app.status === "frozen"
   const isTransitioning = isTransitioningStatus(app.status) && !isFrozen
@@ -132,6 +133,7 @@ function RowActions({ app }: { app: InstalledApp }) {
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isFrozen = app.status === "frozen"
   const isTransitioning =
+    app.vm_control_pending === true ||
     app.status === "restarting" ||
     app.status === "migrating" ||
     app.status === "installing" ||

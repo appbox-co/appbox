@@ -111,6 +111,7 @@ function RowActions({
   const isStopped = app.status === "offline" || app.status === "inactive"
   const isFrozen = app.status === "frozen"
   const isTransitioning =
+    app.vm_control_pending === true ||
     cyloRestarting ||
     app.status === "restarting" ||
     app.status === "migrating" ||
@@ -504,6 +505,7 @@ export function InstalledAppsQuickList({
   ) => {
     const eligibleIds = selectedRows
       .filter((app) => {
+        if (app.vm_control_pending) return false
         const isStopped = app.status === "offline" || app.status === "inactive"
         const isFrozen = app.status === "frozen"
         const isTransitioning =
@@ -599,6 +601,7 @@ export function InstalledAppsQuickList({
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
+                        if (app.vm_control_pending) return false
                         const isStopped =
                           app.status === "offline" || app.status === "inactive"
                         const isFrozen = app.status === "frozen"
@@ -629,6 +632,7 @@ export function InstalledAppsQuickList({
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
+                        if (app.vm_control_pending) return false
                         const isFrozen = app.status === "frozen"
                         const isTransitioning =
                           app.status === "restarting" ||
@@ -661,6 +665,7 @@ export function InstalledAppsQuickList({
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
+                        if (app.vm_control_pending) return false
                         const isStopped =
                           app.status === "offline" || app.status === "inactive"
                         const isFrozen = app.status === "frozen"
@@ -691,6 +696,7 @@ export function InstalledAppsQuickList({
                     disabled={
                       bulkAction !== null ||
                       !selectedRows.some((app) => {
+                        if (app.vm_control_pending) return false
                         const isFrozen = app.status === "frozen"
                         const isTransitioning =
                           app.status === "restarting" ||
@@ -718,7 +724,9 @@ export function InstalledAppsQuickList({
                     className="h-auto min-h-9 min-w-0 break-all whitespace-normal"
                     disabled={
                       bulkAction !== null ||
-                      !selectedRows.some((app) => app.status === "frozen")
+                      !selectedRows.some(
+                        (app) => !app.vm_control_pending && app.status === "frozen"
+                      )
                     }
                     onClick={() =>
                       runBulkAction("unfreeze", selectedRows, clearSelection)

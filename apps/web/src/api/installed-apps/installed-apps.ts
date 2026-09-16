@@ -1,6 +1,7 @@
 import type { CustomField } from "@/api/apps/app-store"
 import { apiDelete, apiGet, apiPost, apiPut, serverApiGet } from "@/api/client"
 import { idempotencyHeaders } from "@/api/idempotency"
+import { getVmControlPending, hasWindowsPreshutdown } from "./vm-control"
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                      */
@@ -22,6 +23,10 @@ export interface InstalledApp {
   install_date: string
   /** "docker" for container apps, "vm" for virtual machine apps */
   app_type: string
+  /** Server-owned pending operation, including protected Windows restart. */
+  vm_control_pending?: boolean
+  /** Explicit API capability: Windows image and server-owned opt-in both verified. */
+  windows_preshutdown_enabled?: boolean
   state: number
   enabled: boolean
   cylo_default: number
@@ -133,6 +138,11 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     app_slots: Number(raw.app_slots ?? 1),
     install_date: raw.created_at ? String(raw.created_at) : "",
     app_type: String(app?.type ?? "docker"),
+    vm_control_pending: getVmControlPending(String(app?.type ?? "docker"), raw),
+    windows_preshutdown_enabled: hasWindowsPreshutdown(
+      String(app?.type ?? "docker"),
+      raw
+    ),
     state,
     enabled: isEnabled,
     cylo_default: Number(raw.cylo_default ?? 0),

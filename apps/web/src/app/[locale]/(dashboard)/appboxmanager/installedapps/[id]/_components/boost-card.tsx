@@ -20,6 +20,7 @@ const BILLING_BASE_URL = "https://billing.appbox.co"
 export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
   const t = useTranslations("appboxmanager.appDetail")
   const boostMutation = useBoostApp()
+  const isDisabled = disabled || app.vm_control_pending === true
   const [boostSlots, setBoostSlots] = useState(app.boost_slots ?? 0)
 
   useEffect(() => {
@@ -61,7 +62,7 @@ export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
           appSlotsCost={app.app_slots ?? 0}
           cyloFreeSlots={0}
           onChange={setBoostSlots}
-          disabled={disabled || boostMutation.isPending}
+          disabled={isDisabled || boostMutation.isPending}
           upgradeUrl={upgradeUrl}
           showHeader={false}
           showUpgradeCta={false}
@@ -94,13 +95,14 @@ export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
           )}
           <Button
             type="button"
-            onClick={() =>
+            onClick={() => {
+              if (isDisabled) return
               boostMutation.mutate({
                 id: app.id,
                 boostSlots
               })
-            }
-            disabled={disabled || !hasChanges || boostMutation.isPending}
+            }}
+            disabled={isDisabled || !hasChanges || boostMutation.isPending}
           >
             {boostMutation.isPending ? t("boost.applying") : t("boost.apply")}
           </Button>

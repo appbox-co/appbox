@@ -740,8 +740,13 @@ export default function InstalledAppDetailPage({
             <CardTitle className="text-base">{t("actions")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {t("actionsUnavailable")}
+            <p
+              role={app.vm_control_pending ? "status" : undefined}
+              className="text-sm text-muted-foreground"
+            >
+              {t(
+                app.vm_control_pending ? "vmControlPending" : "actionsUnavailable"
+              )}
             </p>
           </CardContent>
         </Card>
