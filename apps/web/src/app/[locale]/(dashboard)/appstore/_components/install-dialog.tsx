@@ -13,11 +13,7 @@ import {
   Package
 } from "lucide-react"
 import type { ControllerRenderProps, FieldValues } from "react-hook-form"
-import type {
-  AppStoreItem,
-  CustomField,
-  CustomFieldValidation
-} from "@/api/apps/app-store"
+import type { AppStoreItem, CustomField } from "@/api/apps/app-store"
 import {
   computeInstallGuards,
   fetchSearchFieldOptions,
@@ -32,6 +28,7 @@ import {
   useAppVersions,
   useInstallApp
 } from "@/api/apps/hooks/use-app-store"
+import { useInstallValidation } from "@/api/apps/hooks/use-install-validation"
 import type { CyloSummary } from "@/api/cylos/cylos"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import { BoostSlider } from "@/components/dashboard/boost-slider"
@@ -70,7 +67,12 @@ import {
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { ROUTES } from "@/constants/routes"
 import type { Cylo } from "@/lib/auth/session"
-import { clearHiddenFieldValues, isFieldVisible } from "@/lib/dynamic-form"
+import {
+  clearInactiveInstallValues,
+  getInstallFieldActivity,
+  validateInstallField,
+  validInstallSubdomain
+} from "@/lib/install-validation"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
 import type { FormFieldConfig } from "@/types/dashboard"
@@ -307,75 +309,20 @@ function validateField(
   field: CustomField,
   t: TranslateFn
 ): string | null {
-  const rules = field.validate
-  if (!rules || rules.length === 0) return null
-
-  if (value.trim() === "" && !isFieldRequired(field)) return null
-
-  for (const rule of rules) {
-    if (typeof rule === "string") {
-      switch (rule) {
-        case "required":
-          if (!value || value.trim() === "")
-            return t("install.validation.required")
-          break
-        case "alphanumeric":
-          if (value && !/^[a-zA-Z0-9]+$/.test(value))
-            return t("install.validation.alphanumeric")
-          break
-        case "notOnlyAlpha":
-          if (value && /^[a-zA-Z]+$/.test(value))
-            return t("install.validation.notOnlyAlpha")
-          break
-        case "complexPassword":
-          if (value) {
-            if (!/[a-z]/.test(value)) return t("install.validation.lowercase")
-            if (!/[A-Z]/.test(value)) return t("install.validation.uppercase")
-            if (!/[0-9]/.test(value)) return t("install.validation.number")
-            if (!/[^a-zA-Z0-9]/.test(value))
-              return t("install.validation.specialChar")
-          }
-          break
-        case "email":
-          if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
-            return t("install.validation.invalidEmail")
-          break
-        case "date":
-          if (value && isNaN(Date.parse(value)))
-            return t("install.validation.invalidDate")
-          break
-        case "domain":
-        case "depends":
-          break
-      }
-    } else if (typeof rule === "object") {
-      const r = rule as CustomFieldValidation
-      if (r.minLength != null && value.length < r.minLength) {
-        return t("install.validation.minLength", { count: r.minLength })
-      }
-      if (r.maxLength != null && value.length > r.maxLength) {
-        return t("install.validation.maxLength", { count: r.maxLength })
-      }
-      if (r.name === "matches" && r.params) {
-        const regex = r.params.regex as string | undefined
-        const errorText =
-          (r.params.errorText as string) ??
-          t("install.validation.invalidFormat")
-        if (regex && value) {
-          try {
-            if (!new RegExp(regex).test(value)) return errorText
-          } catch {
-            // Invalid regex from backend, skip
-          }
-        }
-      }
-    }
-  }
-  return null
+  const issue = validateInstallField(value, field)
+  if (!issue) return null
+  if (issue.code === "configuration") return issue.message
+  if (issue.code === "date")
+    return t("install.validation.invalidDate") + " (YYYY-MM-DD)"
+  const key = issue.code === "email" ? "invalidEmail" : issue.code
+  return t(
+    "install.validation." + key,
+    issue.count == null ? undefined : { count: issue.count }
+  )
 }
 
 function isFieldRequired(field: CustomField): boolean {
-  if (!field.validate) return false
+  if (!Array.isArray(field.validate)) return false
   return field.validate.some((r) => r === "required")
 }
 
@@ -414,7 +361,8 @@ function mapCustomFieldToFormConfig(
   }
 
   if (type === "email") return { ...base, type: "email" }
-  if (type === "date") return { ...base, type: "text" }
+  if (type === "date")
+    return { ...base, type: "text", placeholder: "YYYY-MM-DD" }
   if (type === "number") return { ...base, type: "number" }
 
   // dynamicText, alphaNumeric, and unknown text-like inputs
@@ -1353,9 +1301,7 @@ export function InstallDialog({
     selectedDomainId: "",
     // Pre-fill with app's default subdomain, falling back to display_name (same logic as backend)
     subdomain:
-      (app.subdomain
-        ? app.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, "")
-        : "") ||
+      (app.subdomain ? app.subdomain.trim().toLowerCase() : "") ||
       app.display_name.toLowerCase().replace(/[^a-z0-9-]/g, "") ||
       "",
     dnsVerified: false
@@ -1554,14 +1500,43 @@ export function InstallDialog({
     return { ...values, ...fieldValues }
   }, [customFields, fieldValues])
 
-  const visibleFields = useMemo(() => {
-    return Object.entries(customFields).filter(([, field]) => {
-      return (
-        !SKIP_INPUT_TYPES.has(field.type) &&
-        isFieldVisible(field, fieldValuesWithDefaults)
-      )
-    })
+  const fieldActivity = useMemo(() => {
+    try {
+      return {
+        active: getInstallFieldActivity(customFields, fieldValuesWithDefaults),
+        error: undefined
+      }
+    } catch (error) {
+      return {
+        active: {} as Record<string, boolean>,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Invalid installation field configuration."
+      }
+    }
   }, [customFields, fieldValuesWithDefaults])
+
+  const visibleFields = useMemo(() => {
+    return Object.entries(customFields).filter(([fname, field]) => {
+      return !SKIP_INPUT_TYPES.has(field.type) && fieldActivity.active[fname]
+    })
+  }, [customFields, fieldActivity])
+
+  const customFieldsValid = useMemo(() => {
+    return (
+      !fieldActivity.error &&
+      Object.entries(customFields).every(([fname, field]) => {
+        if (field.type === "staticText" || SKIP_INPUT_TYPES.has(field.type)) {
+          return true
+        }
+        if (!fieldActivity.active[fname]) return true
+
+        const value = fieldValues[fname] ?? String(field.defaultValue ?? "")
+        return validateField(value, field, t) === null
+      })
+    )
+  }, [customFields, fieldValues, fieldActivity, t])
 
   // Keep only overlapping custom-field values/errors when version changes.
   useEffect(() => {
@@ -1772,11 +1747,81 @@ export function InstallDialog({
     t
   ])
 
+  const isBlocked = installGuard !== null && !effectiveIsAdmin
+  const { data: boostInfo, isLoading: boostInfoLoading } = useAppBoostInfo(
+    app.id,
+    selectedCyloId
+  )
+  const maxInstallBoostSlots = Math.max(
+    0,
+    boostInfo?.max_install_boost_slots ?? 0
+  )
+  const showBoostSlider =
+    !isBlocked &&
+    isLaunchWeekEnabled("day_2", effectiveIsAdmin) &&
+    selectedCyloId > 0 &&
+    (boostInfo?.boost_install_allowed ?? 0) === 1 &&
+    maxInstallBoostSlots > 0
+
+  const preflightPayload = useMemo(() => {
+    const payload: Record<string, unknown> = {
+      app_id: app.id,
+      cylo_id: Number(selectedCylo),
+      version_id: selectedVersion
+        ? Number(selectedVersion)
+        : (defaultVersionId ?? 0),
+      user_id: effectiveUserId
+    }
+    if (showBoostSlider && boostSlots > 0) payload.boost_slots = boostSlots
+    if (requiresDomain) {
+      const effectiveDomainId =
+        domainState.selectedDomainId ||
+        (domainState.domainType === "appbox"
+          ? String(selectedCyloData?.domain_id ?? "")
+          : "")
+      payload.subdomain = domainState.subdomain.trim().toLowerCase()
+      payload.domain_id = Number(effectiveDomainId)
+    }
+    for (const [name, field] of Object.entries(customFields)) {
+      if (
+        !fieldActivity.active[name] ||
+        SKIP_INPUT_TYPES.has(field.type) ||
+        field.type === "staticText"
+      )
+        continue
+      const value = fieldValuesWithDefaults[name] ?? ""
+      payload[name] = value
+    }
+    return payload
+  }, [
+    app.id,
+    selectedCylo,
+    selectedVersion,
+    defaultVersionId,
+    effectiveUserId,
+    requiresDomain,
+    domainState,
+    selectedCyloData?.domain_id,
+    showBoostSlider,
+    boostSlots,
+    customFields,
+    fieldActivity,
+    fieldValuesWithDefaults
+  ])
+  const preflight = useInstallValidation(
+    preflightPayload,
+    open &&
+      !!selectedCylo &&
+      customFieldsValid &&
+      !installMutation.isPending &&
+      (!requiresDomain || validInstallSubdomain(domainState.subdomain.trim()))
+  )
+
   /* ----- Handlers ----- */
   const handleFieldChange = useCallback(
     (fname: string, value: string) => {
       setFieldValues((prev) =>
-        clearHiddenFieldValues(Object.entries(customFields), {
+        clearInactiveInstallValues(customFields, {
           ...Object.fromEntries(
             Object.entries(customFields).map(([key, field]) => [
               key,
@@ -1827,9 +1872,7 @@ export function InstallDialog({
 
   // Reset domain state when cylo changes, but preserve the default subdomain
   const defaultSubdomain =
-    (app.subdomain
-      ? app.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, "")
-      : "") ||
+    (app.subdomain ? app.subdomain.trim().toLowerCase() : "") ||
     app.display_name.toLowerCase().replace(/[^a-z0-9-]/g, "") ||
     ""
   useEffect(() => {
@@ -1857,7 +1900,7 @@ export function InstallDialog({
       if (SKIP_INPUT_TYPES.has(field.type) || field.type === "staticText") {
         continue
       }
-      if (!isFieldVisible(field, fieldValuesWithDefaults)) continue
+      if (!fieldActivity.active[fname]) continue
       const val = fieldValues[fname] ?? String(field.defaultValue ?? "")
       const err = validateField(val, field, t)
       if (err) {
@@ -1886,7 +1929,7 @@ export function InstallDialog({
       if (!trimmedSub) {
         setSubdomainError(t("install.validation.required"))
         valid = false
-      } else if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(trimmedSub)) {
+      } else if (!validInstallSubdomain(trimmedSub)) {
         setSubdomainError(t("install.validation.invalidSubdomain"))
         valid = false
       } else if (subdomainError) {
@@ -1904,7 +1947,7 @@ export function InstallDialog({
   }, [
     customFields,
     fieldValues,
-    fieldValuesWithDefaults,
+    fieldActivity,
     requiresDomain,
     domainState,
     subdomainError,
@@ -1914,45 +1957,13 @@ export function InstallDialog({
 
   const handleInstall = async () => {
     if (!selectedCylo) return
-    if (!validateAllFields()) return
+    if (fieldActivity.error || !validateAllFields()) return
 
-    const versionId = selectedVersion
-      ? Number(selectedVersion)
-      : (defaultVersionId ?? 0)
-
-    const payload: Record<string, unknown> = {
-      app_id: app.id,
-      version_id: versionId,
-      cylo_id: Number(selectedCylo),
-      user_id: effectiveUserId
-    }
-
-    if (showBoostSlider && boostSlots > 0) {
-      payload.boost_slots = boostSlots
-    }
-
-    // Add domain fields
-    if (requiresDomain) {
-      const effectiveDomainId =
-        domainState.selectedDomainId ||
-        (domainState.domainType === "appbox"
-          ? String(selectedCyloData?.domain_id ?? "")
-          : "")
-      payload.subdomain = domainState.subdomain.trim()
-      payload.domain_id = Number(effectiveDomainId)
-    }
-
-    // Add custom field values
-    for (const [fname, field] of Object.entries(customFields)) {
-      if (field.type === "staticText" || field.type === "spacer") continue
-      if (!isFieldVisible(field, fieldValuesWithDefaults)) continue
-      const val = fieldValues[fname] ?? String(field.defaultValue ?? "")
-      if (val.trim() !== "") {
-        payload[fname] = val
-      }
-    }
+    const payload = preflightPayload
 
     try {
+      const validation = await preflight.validate()
+      if (!validation?.valid) return
       const result = await installMutation.mutateAsync(
         payload as {
           app_id: number
@@ -1988,11 +1999,6 @@ export function InstallDialog({
   const hasMultipleVersions =
     (app.enabled_version_count ?? 0) > 1 && versionSource.length > 1
   const hasCustomFields = visibleFields.length > 0
-  const isBlocked = installGuard !== null && !effectiveIsAdmin
-  const { data: boostInfo, isLoading: boostInfoLoading } = useAppBoostInfo(
-    app.id,
-    selectedCyloId
-  )
   const selectedVersionData = versionSource.find(
     (v) => String(v.id) === selectedVersion
   )
@@ -2019,16 +2025,6 @@ export function InstallDialog({
     defaultVersionData?.app_slots ??
     boostInfo?.app_slots_cost ??
     requiredSlots
-  const maxInstallBoostSlots = Math.max(
-    0,
-    boostInfo?.max_install_boost_slots ?? 0
-  )
-  const showBoostSlider =
-    !isBlocked &&
-    isLaunchWeekEnabled("day_2", effectiveIsAdmin) &&
-    selectedCyloId > 0 &&
-    (boostInfo?.boost_install_allowed ?? 0) === 1 &&
-    maxInstallBoostSlots > 0
   const showBoostUnavailable =
     !isBlocked &&
     isLaunchWeekEnabled("day_2", effectiveIsAdmin) &&
@@ -2050,22 +2046,12 @@ export function InstallDialog({
     }
   }, [boostSlots, maxInstallBoostSlots])
 
-  const customFieldsValid = useMemo(() => {
-    return Object.entries(customFields).every(([fname, field]) => {
-      if (field.type === "staticText" || SKIP_INPUT_TYPES.has(field.type)) {
-        return true
-      }
-      if (!isFieldVisible(field, fieldValuesWithDefaults)) return true
-
-      const value = fieldValues[fname] ?? String(field.defaultValue ?? "")
-      return validateField(value, field, t) === null
-    })
-  }, [customFields, fieldValues, fieldValuesWithDefaults, t])
-
   const isInstallDisabled =
     isBlocked ||
     !selectedCylo ||
     !customFieldsValid ||
+    preflight.pending ||
+    preflight.invalid ||
     availableCylos.length === 0 ||
     installMutation.isPending ||
     guardsLoading ||
@@ -2254,7 +2240,9 @@ export function InstallDialog({
               }
               state={domainState}
               domainError={domainError}
-              subdomainError={subdomainError}
+              subdomainError={
+                subdomainError ?? preflight.fieldErrors.subdomain?.message
+              }
               onChange={handleDomainStateChange}
               onSubdomainError={setSubdomainError}
               onDomainError={setDomainError}
@@ -2277,7 +2265,9 @@ export function InstallDialog({
                   fname={fname}
                   field={field}
                   value={fieldValues[fname] ?? String(field.defaultValue ?? "")}
-                  error={fieldErrors[fname]}
+                  error={
+                    fieldErrors[fname] ?? preflight.fieldErrors[fname]?.message
+                  }
                   onChange={handleFieldChange}
                   selectedCyloId={selectedCylo}
                   selectedVersionId={selectedVersionId}
@@ -2286,6 +2276,12 @@ export function InstallDialog({
                 />
               ))}
             </div>
+          )}
+
+          {(fieldActivity.error || preflight.error) && (
+            <p role="alert" className="text-sm text-destructive">
+              {fieldActivity.error || preflight.error}
+            </p>
           )}
 
           {installMutation.isError && parsedInstallError && (
@@ -2328,10 +2324,12 @@ export function InstallDialog({
               installMutation.isPending && "pointer-events-none"
             )}
           >
-            {installMutation.isPending ? (
+            {installMutation.isPending || preflight.pending ? (
               <>
                 <Loader2 className="mr-2 size-4 animate-spin motion-reduce:animate-none" />
-                {t("app.installing")}
+                {installMutation.isPending
+                  ? t("app.installing")
+                  : t("install.validation.validating")}
               </>
             ) : (
               t("app.install")

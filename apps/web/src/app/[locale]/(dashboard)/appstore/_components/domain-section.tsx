@@ -9,6 +9,7 @@ import { DnsVerificationPanel } from "@/components/dashboard/domain/dns-verifica
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { Cylo } from "@/lib/auth/session"
+import { validInstallSubdomain } from "@/lib/install-validation"
 import { cn } from "@/lib/utils"
 
 const SUBDOMAIN_VALIDATION_FAILED =
@@ -132,17 +133,31 @@ function AppboxDomainSection({
       queueMicrotask(() => setAvailabilityState("idle"))
       return
     }
+    let cancelled = false
+    if (!validInstallSubdomain(subdomain)) {
+      queueMicrotask(() => {
+        if (cancelled) return
+        setAvailabilityState("idle")
+        onSubdomainError(t("install.validation.invalidSubdomain"))
+      })
+      return () => {
+        cancelled = true
+      }
+    }
     if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     queueMicrotask(() => {
+      if (cancelled) return
       setAvailabilityState("checking")
       onSubdomainError(undefined)
     })
     availabilityTimer.current = setTimeout(async () => {
       try {
         const available = await validateSubdomain(subdomain, domainId)
+        if (cancelled) return
         setAvailabilityState(available ? "available" : "taken")
         onSubdomainError(undefined)
       } catch (error) {
+        if (cancelled) return
         setAvailabilityState("idle")
         onSubdomainError(
           error instanceof Error && error.message
@@ -152,9 +167,10 @@ function AppboxDomainSection({
       }
     }, 500)
     return () => {
+      cancelled = true
       if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     }
-  }, [subdomain, domainId, onSubdomainError])
+  }, [subdomain, domainId, onSubdomainError, t])
 
   if (!selectedCyloId) {
     return (
@@ -280,8 +296,20 @@ function CustomDomainSection({
       queueMicrotask(() => setAvailabilityState("idle"))
       return
     }
+    let cancelled = false
+    if (!validInstallSubdomain(subdomain)) {
+      queueMicrotask(() => {
+        if (cancelled) return
+        setAvailabilityState("idle")
+        onSubdomainError(t("install.validation.invalidSubdomain"))
+      })
+      return () => {
+        cancelled = true
+      }
+    }
     if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     queueMicrotask(() => {
+      if (cancelled) return
       setAvailabilityState("checking")
       onSubdomainError(undefined)
     })
@@ -291,9 +319,11 @@ function CustomDomainSection({
           subdomain,
           Number(selectedDomainId)
         )
+        if (cancelled) return
         setAvailabilityState(available ? "available" : "taken")
         onSubdomainError(undefined)
       } catch (error) {
+        if (cancelled) return
         setAvailabilityState("idle")
         onSubdomainError(
           error instanceof Error && error.message
@@ -303,9 +333,10 @@ function CustomDomainSection({
       }
     }, 500)
     return () => {
+      cancelled = true
       if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     }
-  }, [subdomain, selectedDomainId, onSubdomainError])
+  }, [subdomain, selectedDomainId, onSubdomainError, t])
 
   const fullDomain =
     selectedDomain && subdomain ? `${subdomain}.${selectedDomain.domain}` : ""
@@ -441,8 +472,8 @@ export function DomainSection({
 
   const handleSubdomainChange = useCallback(
     (value: string) => {
-      const sanitized = value.toLowerCase().replace(/[^a-z0-9-]/g, "")
-      onChange({ subdomain: sanitized, dnsVerified: false })
+      const normalized = value.trim().toLowerCase()
+      onChange({ subdomain: normalized, dnsVerified: false })
       onSubdomainError(undefined)
     },
     [onChange, onSubdomainError]
