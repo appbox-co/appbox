@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
@@ -19,7 +19,7 @@ import {
   InputOTPSlot
 } from "@/components/ui/input-otp"
 import { Label } from "@/components/ui/label"
-import { Link, useRouter } from "@/i18n/routing"
+import { getPathname, Link, routing } from "@/i18n/routing"
 import { getSafeAuthRedirect } from "@/lib/auth/safe-redirect"
 import { cn } from "@/lib/utils"
 
@@ -32,7 +32,7 @@ type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
   const t = useTranslations("auth.login")
-  const router = useRouter()
+  const locale = useLocale()
   const searchParams = useSearchParams()
   const safeRedirect = getSafeAuthRedirect(searchParams.get("redirect"))
   const isAppInstallRedirect = safeRedirect.startsWith("/appstore/app/")
@@ -49,6 +49,24 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" }
   })
+
+  const navigateAfterLogin = useCallback(
+    (destination: string) => {
+      const pathname = destination.split(/[?#]/)[0]
+      const hasLocalePrefix = routing.locales.some(
+        (code) => pathname === `/${code}` || pathname?.startsWith(`/${code}/`)
+      )
+
+      // Login sets the session cookie in a route handler. A full navigation
+      // prevents the client router from reusing the signed-out page state.
+      window.location.replace(
+        hasLocalePrefix
+          ? destination
+          : getPathname({ href: destination, locale })
+      )
+    },
+    [locale]
+  )
 
   function extractErrorMessage(data: unknown, fallback: string): string {
     if (!data || typeof data !== "object") return fallback
@@ -84,7 +102,7 @@ export default function LoginPage() {
       }
 
       toast.success(t("success"))
-      router.replace(safeRedirect)
+      navigateAfterLogin(safeRedirect)
     } catch {
       toast.error(t("error_generic"))
     } finally {
@@ -121,9 +139,9 @@ export default function LoginPage() {
         // regenerate them before they get locked out. For low (but non-zero)
         // codes the dashboard banner will handle the nudge.
         if (data.recovery_codes_exhausted) {
-          router.replace("/account/2fa-setup")
+          navigateAfterLogin("/account/2fa-setup")
         } else {
-          router.replace(safeRedirect)
+          navigateAfterLogin(safeRedirect)
         }
       } catch {
         toast.error(t("error_generic"))
@@ -133,7 +151,7 @@ export default function LoginPage() {
         setIsLoading(false)
       }
     },
-    [router, safeRedirect, t, twoFactorToken]
+    [navigateAfterLogin, safeRedirect, t, twoFactorToken]
   )
 
   function handleOtpChange(value: string) {
