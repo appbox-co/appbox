@@ -73,8 +73,12 @@ export interface AppStoreItem {
 }
 
 export function getEffectiveAppSlots(
-  app: Pick<AppStoreItem, "app_slots" | "default_version">
+  app: Pick<AppStoreItem, "app_slots" | "default_version">,
+  selectedVersion?: Pick<AppVersion, "app_slots">
 ): number {
+  if (typeof selectedVersion?.app_slots === "number") {
+    return selectedVersion.app_slots
+  }
   const defaultSlots = app.default_version?.app_slots
   if (typeof defaultSlots === "number") {
     return defaultSlots
@@ -269,10 +273,15 @@ export async function getAppDetail(
 
 export async function getAppBoostInfo(
   appId: number,
-  cyloId: number
+  cyloId: number,
+  versionId?: number
 ): Promise<AppBoostInfo> {
+  const params: Record<string, string> = { cylo_id: String(cyloId) }
+  if (versionId && versionId > 0) {
+    params.version_id = String(versionId)
+  }
   const data = await apiGet<AppBoostInfo>(`apps/${appId}`, {
-    params: { cylo_id: String(cyloId) }
+    params
   })
   return data
 }

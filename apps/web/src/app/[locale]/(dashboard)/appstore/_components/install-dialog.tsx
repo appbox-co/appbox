@@ -1373,7 +1373,10 @@ export function InstallDialog({
   const [guardsLoading, setGuardsLoading] = useState(false)
 
   const requiresDomain = app.RequiresDomain === 1
-  const requiredSlots = getEffectiveAppSlots(app)
+  const selectedVersionData = versionSource.find(
+    (v) => String(v.id) === selectedVersion
+  )
+  const requiredSlots = getEffectiveAppSlots(app, selectedVersionData)
   const appCategoryIds = useMemo(
     () =>
       (app.categories ?? [])
@@ -1991,10 +1994,8 @@ export function InstallDialog({
   const isBlocked = installGuard !== null && !effectiveIsAdmin
   const { data: boostInfo, isLoading: boostInfoLoading } = useAppBoostInfo(
     app.id,
-    selectedCyloId
-  )
-  const selectedVersionData = versionSource.find(
-    (v) => String(v.id) === selectedVersion
+    selectedCyloId,
+    selectedVersionId
   )
   const defaultVersionData =
     versionSource.find((v) => v.is_default === 1) ??
@@ -2045,10 +2046,10 @@ export function InstallDialog({
     : undefined
 
   useEffect(() => {
-    if (boostSlots > maxInstallBoostSlots) {
+    if (!boostInfoLoading && boostSlots > maxInstallBoostSlots) {
       setBoostSlots(maxInstallBoostSlots)
     }
-  }, [boostSlots, maxInstallBoostSlots])
+  }, [boostInfoLoading, boostSlots, maxInstallBoostSlots])
 
   const customFieldsValid = useMemo(() => {
     return Object.entries(customFields).every(([fname, field]) => {

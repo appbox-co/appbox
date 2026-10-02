@@ -96,10 +96,14 @@ export function useAppVersions(appId: number) {
   })
 }
 
-export function useAppBoostInfo(appId: number, cyloId: number) {
+export function useAppBoostInfo(
+  appId: number,
+  cyloId: number,
+  versionId?: number
+) {
   return useQuery({
-    queryKey: queryKeys.apps.boostInfo(appId, cyloId),
-    queryFn: () => getAppBoostInfo(appId, cyloId),
+    queryKey: queryKeys.apps.boostInfo(appId, cyloId, versionId),
+    queryFn: () => getAppBoostInfo(appId, cyloId, versionId),
     enabled: appId > 0 && cyloId > 0
   })
 }

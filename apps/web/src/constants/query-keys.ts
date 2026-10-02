@@ -3,8 +3,8 @@ export const queryKeys = {
     all: ["apps"] as const,
     detail: (id: number, versionId?: number) =>
       ["apps", id, "detail", versionId ?? "default"] as const,
-    boostInfo: (id: number, cyloId: number) =>
-      ["apps", id, "boost-info", cyloId] as const,
+    boostInfo: (id: number, cyloId: number, versionId?: number) =>
+      ["apps", id, "boost-info", cyloId, versionId ?? "default"] as const,
     detailByName: (name: string) => ["apps", "name", name] as const,
     versions: (appId: number) => ["apps", appId, "versions"] as const,
     featured: ["apps", "featured"] as const,
