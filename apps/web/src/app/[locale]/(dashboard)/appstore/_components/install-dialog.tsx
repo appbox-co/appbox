@@ -745,8 +745,8 @@ function CustomFieldInput({
             aria-checked={isOn}
             onClick={() => onChange(fname, isOn ? "0" : "1")}
             className={cn(
-              "appbox-cut-surface relative inline-flex h-6 w-11 shrink-0 cursor-pointer transition-colors [--marketing-cut-size:5px]",
-              isOn ? "!bg-[var(--appbox-signal)]" : "appbox-subcard"
+              "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors",
+              isOn ? "bg-primary" : "bg-muted"
             )}
           >
             <span
