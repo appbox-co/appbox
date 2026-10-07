@@ -1,0 +1,126 @@
+---
+title: Coolify web app deployment
+description: Deploy apps in Coolify and connect their web interfaces using Appbox subdomains or your own domain.
+sort: 2
+---
+
+Give each app's web interface its own hostname, then add that hostname in both Appbox and Coolify. Appbox directs visitors to your Coolify VPS; Coolify directs them to the app inside it.
+
+You can use another subdomain of your Appbox domain. You do not need to buy a domain or install another Coolify VPS for each app.
+
+This guide uses `mybox` as an example Appbox name. Replace it with your own name throughout.
+
+| Purpose           | Example address                     |
+| ----------------- | ----------------------------------- |
+| Coolify dashboard | `https://coolify.mybox.appboxes.co` |
+| First app         | `https://demo.mybox.appboxes.co`    |
+| Another app       | `https://notes.mybox.appboxes.co`   |
+
+Keep the dashboard hostname for Coolify itself. Use a different hostname for each app you deploy.
+
+## Open Coolify
+
+1. In Appbox, open **Installed Apps** and select **Coolify VPS**.
+2. On **Overview**, find **Configuration** and open the **Web UI** link.
+3. Sign in using the administrator credentials shown in Appbox. If you have since changed them in Coolify, use your current credentials.
+
+## Add the app's hostname in Appbox
+
+Start with the first app, `demo.mybox.appboxes.co`:
+
+1. Return to the same **Coolify VPS** details page in Appbox.
+2. Under **Custom Domains**, select **Add Domain**.
+3. In **Parent Domain**, select your Appbox domain, such as `mybox.appboxes.co`.
+4. Enter `demo` in **Subdomain**. Enter only this part; Appbox adds the parent domain.
+5. Check that the resulting hostname is `demo.mybox.appboxes.co` and DNS verification succeeds.
+6. Select **Add Domain** and wait for the hostname to appear in the list.
+
+Add this hostname to the Coolify VPS that will run the app. Coolify does not register app hostnames in Appbox automatically. Creating a DNS record or setting a domain only in Coolify leaves the Appbox setup incomplete.
+
+## Deploy a first app
+
+This example uses the [official Nginx Docker image](https://hub.docker.com/_/nginx) to serve a welcome page. It gives you a simple way to check that the hostname reaches an app in your VPS.
+
+### Create the resource
+
+1. In Coolify, open **Projects** and create a project called `My apps`, or open an existing project.
+2. Open its **production** environment.
+3. Select **New Resource**, then **Docker Compose Empty**.
+4. Choose **localhost** as the server and its default Docker destination. This runs the app on your Coolify VPS.
+5. Enter the following Compose definition:
+
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    environment:
+      - SERVICE_FQDN_WEB_80
+```
+
+6. Select **Save**. To change the definition later, open **Configuration > General > Edit Compose File**, then validate and save it.
+
+`SERVICE_FQDN_WEB_80` tells Coolify that the `web` component needs a domain and listens on container port `80`. Replace any generated hostname with the one you added in Appbox. See [Coolify's Compose configuration guide](https://coolify.io/docs/services/configuration/docker-compose) for other Compose options.
+
+### Connect the hostname
+
+1. Open the resource's **Domains** page and select **Add domain**.
+2. Choose the `web` service component.
+3. Set **Protocol** to `https`, **Domain** to `demo.mybox.appboxes.co`, and **Port** to `80`. Leave **Path** empty to serve the whole hostname.
+4. Select **Add domain** to save the route. If a generated domain is still listed, remove it so this resource uses your Appbox hostname.
+5. Select **Deploy**. If the resource is already running, redeploy it after changing the domain.
+6. Follow the deployment output until the app is running, then open `https://demo.mybox.appboxes.co` in your browser.
+
+You should see the Nginx welcome page with a valid HTTPS certificate. The browser address uses normal HTTPS, without `:80`.
+
+## Deploy another app with a web UI
+
+For an app whose web interface listens on container port `3000`, use `notes.mybox.appboxes.co`:
+
+1. In Appbox, repeat **Custom Domains > Add Domain** on the same Coolify VPS. Select `mybox.appboxes.co` and enter `notes` as the subdomain.
+2. In Coolify, create another resource in your project. Choose the app's service template, Docker image, repository, or Compose definition, and deploy it to **localhost**.
+3. Complete the app's required settings, such as environment variables and persistent storage, following its own documentation.
+4. On **Domains**, add the hostname to the component that serves the web UI. Use these values:
+
+| Field    | Value                     |
+| -------- | ------------------------- |
+| Protocol | `https`                   |
+| Domain   | `notes.mybox.appboxes.co` |
+| Port     | `3000`                    |
+| Path     | Leave empty               |
+
+5. Save the domain and deploy or redeploy the resource.
+6. Open `https://notes.mybox.appboxes.co`.
+
+Use the internal port specified by the app's documentation. For example, with a Compose mapping of `8080:3000`, Coolify must target `3000`. The app must listen on a network interface reachable by the proxy, usually `0.0.0.0` inside its container.
+
+The domain's **Port** selects a port inside the container. Visitors connect over HTTPS on port `443`, so you share `https://notes.mybox.appboxes.co`. You do not need a separate Appbox public port mapping or a Compose `ports:` entry for this web route. [Coolify documents this distinction in its domain guide](https://coolify.io/docs/core/networking/domains#route-to-a-port-or-path).
+
+If the app asks for its public URL, enter `https://notes.mybox.appboxes.co`. Use this address for browser links and login callbacks too.
+
+## Use a domain you own
+
+For an address such as `notes.example.com`:
+
+1. On the Coolify VPS details page in Appbox, select **Custom Domains > Add Domain**.
+2. Open **Parent Domain** and select `example.com`. If it is missing, choose **Add new domain**, enter `example.com`, and select **Add**.
+3. Enter `notes` in **Subdomain**.
+4. At your DNS provider, create the **A** record shown under **DNS Setup**. Use `notes` as the record name and the Appbox server IP shown in the form as its value. Use the Appbox address provided here for DNS rather than the VPS's private address.
+5. Select **Check DNS**, or **Verify Again**, until Appbox confirms the record. DNS changes can take time to appear.
+6. Select **Add Domain**. Adding a parent domain outside your Appbox domain restarts the VM, as the form warns. Do this when a brief interruption to Coolify and its deployed apps is acceptable, then wait for the VPS to return.
+7. In the app's Coolify **Domains** page, add `notes.example.com` with **Protocol** set to `https` and the correct container **Port**.
+8. Deploy or redeploy the app, then open `https://notes.example.com`.
+
+Appbox may take a few minutes to issue HTTPS for a newly added custom domain. The Coolify VPS loads the Appbox certificate automatically once it is available.
+
+## If the address does not work
+
+| What you see                               | What to check                                                                                                             |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| DNS verification fails                     | Follow the **DNS Setup** record in Appbox. Check the full hostname and the server IP, then verify again.                  |
+| The Coolify dashboard or another app opens | Give the app a separate hostname. Check that it belongs to the correct VPS in Appbox and the correct resource in Coolify. |
+| A 404 response                             | Check that the exact hostname is saved in Coolify, assigned to the web component, and applied by a deployment.            |
+| A 502 or 503 response                      | Check deployment logs and container health. Confirm that the domain targets the app's internal web port.                  |
+| An HTTPS certificate warning               | Confirm the hostname was added in Appbox and allow time for certificate issuance. If it persists, contact Appbox support. |
+
+Coolify-generated `sslip.io` addresses and wildcard domain settings do not register routes in Appbox. Use a hostname added to the VPS in Appbox, and configure that same hostname in Coolify.
