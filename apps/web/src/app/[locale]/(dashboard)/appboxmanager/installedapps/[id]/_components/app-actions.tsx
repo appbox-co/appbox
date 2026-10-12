@@ -13,6 +13,12 @@ import {
   Zap
 } from "lucide-react"
 import type { ControllerRenderProps, FieldValues } from "react-hook-form"
+import { toast } from "sonner"
+import {
+  failHandoffWindow,
+  finishBrowserHandoff,
+  openHandoffWindow
+} from "@/api/custom-buttons/browser-handoff"
 import type { CustomButton } from "@/api/custom-buttons/custom-buttons"
 import {
   useCustomButtons,
@@ -511,10 +517,35 @@ export function AppActions({
             isTransitioning={isTransitioning || startOnlyActionable}
             isPending={triggerMutation.isPending && customConfirmId === btn.id}
             onConfirm={(payload) => {
+              let popup: Window | null = null
+              if (btn.resultMode === "browser_handoff") {
+                try {
+                  popup = openHandoffWindow()
+                } catch (error) {
+                  toast.error(
+                    error instanceof Error
+                      ? error.message
+                      : "Allow pop-ups for Appbox."
+                  )
+                  return
+                }
+              }
               setCustomConfirmId(btn.id)
               triggerMutation.mutate(
                 { button: btn, payload },
                 {
+                  onSuccess: (admission) => {
+                    if (popup && admission) {
+                      void finishBrowserHandoff(popup, admission).catch(
+                        (error: Error) => toast.error(error.message)
+                      )
+                    } else if (popup) {
+                      failHandoffWindow(popup)
+                    }
+                  },
+                  onError: () => {
+                    if (popup) failHandoffWindow(popup)
+                  },
                   onSettled: () => setCustomConfirmId(null)
                 }
               )
