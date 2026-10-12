@@ -77,7 +77,8 @@ export function openHandoffWindow(): Window {
   policy.name = "referrer"
   policy.content = "no-referrer"
   popup.document.head.append(policy)
-  popup.document.body.textContent = "Preparing your secure OpenClaw dashboard…"
+  popup.document.body.textContent =
+    "Preparing your secure OpenClaw dashboard. This can take a minute or two, so please keep this tab open."
   return popup
 }
 
