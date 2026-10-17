@@ -518,6 +518,10 @@ export default function TwoFactorSetupPage() {
   const [recoveryCodes, setRecoveryCodes] = useState<string[]>([])
   const [showNewCodes, setShowNewCodes] = useState(false)
   const [newCodes, setNewCodes] = useState<string[]>([])
+  const [reauthOpen, setReauthOpen] = useState(false)
+  const [reauthAction, setReauthAction] = useState<"setup" | "verify" | null>(
+    null
+  )
 
   // The session user.two_factor_enabled is validated fresh on every page load
   // (validate_token, cache: no-store), so it's safe to render immediately.
@@ -534,9 +538,16 @@ export default function TwoFactorSetupPage() {
       const result = await generate2FA.mutateAsync()
       setSecret(result.secret)
       setProvisioningUri(result.provisioning_uri)
-    } catch {
-      toast.error("Failed to generate 2FA secret. Please try again.")
+    } catch (error) {
       setStep("idle")
+
+      if (isRecentAuthError(error)) {
+        setReauthAction("setup")
+        setReauthOpen(true)
+        return
+      }
+
+      toast.error("Failed to generate 2FA secret. Please try again.")
     }
   }
 
@@ -553,8 +564,25 @@ export default function TwoFactorSetupPage() {
       }).catch(() => {})
       setRecoveryCodes(result.recovery_codes)
       setStep("complete")
-    } catch {
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthAction("verify")
+        setReauthOpen(true)
+        return
+      }
+
       toast.error("Invalid verification code. Please try again.")
+    }
+  }
+
+  async function handleReauthVerified() {
+    const action = reauthAction
+    setReauthAction(null)
+
+    // Setup is retried automatically. A verification code may have expired
+    // while the user signed in again, so they enter a fresh one.
+    if (action === "setup") {
+      await startSetup()
     }
   }
 
@@ -725,6 +753,14 @@ export default function TwoFactorSetupPage() {
           </Card>
         </div>
       )}
+
+      <RecentAuthDialog
+        open={reauthOpen}
+        onOpenChange={setReauthOpen}
+        onVerified={handleReauthVerified}
+        description={t("twoFactor.setupReauthDescription")}
+        idPrefix="setup-2fa-reauth"
+      />
     </div>
   )
 }
