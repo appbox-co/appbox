@@ -518,6 +518,11 @@ export default function TwoFactorSetupPage() {
   const [recoveryCodes, setRecoveryCodes] = useState<string[]>([])
   const [showNewCodes, setShowNewCodes] = useState(false)
   const [newCodes, setNewCodes] = useState<string[]>([])
+  const [reauthOpen, setReauthOpen] = useState(false)
+  const [reauthAction, setReauthAction] = useState<"setup" | "verify" | null>(
+    null
+  )
+  const [verifyAttempt, setVerifyAttempt] = useState(0)
 
   // The session user.two_factor_enabled is validated fresh on every page load
   // (validate_token, cache: no-store), so it's safe to render immediately.
@@ -528,15 +533,26 @@ export default function TwoFactorSetupPage() {
     profile?.two_factor_enabled ??
     user.two_factor_enabled
 
-  async function startSetup() {
+  async function startSetup({ afterReauth = false } = {}) {
     try {
       setStep("generating")
       const result = await generate2FA.mutateAsync()
       setSecret(result.secret)
       setProvisioningUri(result.provisioning_uri)
-    } catch {
-      toast.error("Failed to generate 2FA secret. Please try again.")
+    } catch (error) {
       setStep("idle")
+
+      if (isRecentAuthError(error)) {
+        // Refused again straight after signing in: let the dialog stay open
+        // and report the failure instead of closing without a message.
+        if (afterReauth) throw error
+
+        setReauthAction("setup")
+        setReauthOpen(true)
+        return
+      }
+
+      toast.error("Failed to generate 2FA secret. Please try again.")
     }
   }
 
@@ -553,9 +569,35 @@ export default function TwoFactorSetupPage() {
       }).catch(() => {})
       setRecoveryCodes(result.recovery_codes)
       setStep("complete")
-    } catch {
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthAction("verify")
+        setReauthOpen(true)
+        return
+      }
+
+      // The backend returns 404 once the pending setup has expired or been
+      // cleared, so no code can succeed until setup starts again.
+      if (error instanceof ApiError && error.status === 404) {
+        setStep("idle")
+        toast.error("Your 2FA setup expired. Please start again.")
+        return
+      }
+
       toast.error("Invalid verification code. Please try again.")
     }
+  }
+
+  async function handleReauthVerified() {
+    // Setup is retried automatically. A verification code may have expired
+    // while the user signed in again, so the input is cleared for a fresh one.
+    if (reauthAction === "setup") {
+      await startSetup({ afterReauth: true })
+    } else if (reauthAction === "verify") {
+      setVerifyAttempt((attempt) => attempt + 1)
+    }
+
+    setReauthAction(null)
   }
 
   async function handleDone() {
@@ -686,7 +728,10 @@ export default function TwoFactorSetupPage() {
                 two-factor authentication with an authenticator app.
               </p>
             </div>
-            <Button onClick={startSetup} disabled={generate2FA.isPending}>
+            <Button
+              onClick={() => startSetup()}
+              disabled={generate2FA.isPending}
+            >
               {generate2FA.isPending && (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               )}
@@ -712,6 +757,7 @@ export default function TwoFactorSetupPage() {
 
               {step === "verifying" && (
                 <VerifyStep
+                  key={verifyAttempt}
                   onVerify={handleVerify}
                   onBack={() => setStep("generating")}
                   isPending={verify2FA.isPending}
@@ -725,6 +771,14 @@ export default function TwoFactorSetupPage() {
           </Card>
         </div>
       )}
+
+      <RecentAuthDialog
+        open={reauthOpen}
+        onOpenChange={setReauthOpen}
+        onVerified={handleReauthVerified}
+        description={t("twoFactor.setupReauthDescription")}
+        idPrefix="setup-2fa-reauth"
+      />
     </div>
   )
 }
