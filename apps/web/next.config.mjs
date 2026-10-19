@@ -28,33 +28,6 @@ const nextConfig = {
       }
     ]
   },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "appbox-delta.vercel.app" }],
-        missing: [
-          { type: "header", key: "X-Rerouted" },
-          { type: "header", key: "X-Worker-Route" }
-        ],
-        headers: [{ key: "X-Robots-Tag", value: "noindex" }]
-      }
-    ]
-  },
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "appbox-delta.vercel.app" }],
-        missing: [
-          { type: "header", key: "X-Rerouted" },
-          { type: "header", key: "X-Worker-Route" }
-        ],
-        destination: "https://www.appbox.co/:path*",
-        permanent: true
-      }
-    ]
-  },
   async rewrites() {
     return [
       // Email links use /abusecomplainant/:id?token= — serve en route without changing URL (avoids redirect loop with localePrefix as-needed)
