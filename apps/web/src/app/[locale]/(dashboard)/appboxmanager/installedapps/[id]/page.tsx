@@ -795,7 +795,7 @@ export default function InstalledAppDetailPage({
                 <p className="text-xs font-semibold uppercase tracking-wide text-blue-700/90 dark:text-blue-300/80">
                   {t("appNote")}
                 </p>
-                <p className="mt-1 wrap-break-word text-sm leading-6 text-blue-900 dark:text-blue-200/90">
+                <p className="mt-1 whitespace-pre-line wrap-break-word text-sm leading-6 text-blue-900 dark:text-blue-200/90">
                   {customDescription}
                 </p>
               </div>

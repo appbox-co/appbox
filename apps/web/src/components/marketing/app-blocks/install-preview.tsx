@@ -809,7 +809,7 @@ export function InstallPreview({
 
             {/* Preinstall description */}
             {preinstallDescription && (
-              <div className="rounded-md border bg-muted/50 p-3 text-sm text-muted-foreground">
+              <div className="whitespace-pre-line wrap-break-word rounded-md border bg-muted/50 p-3 text-sm text-muted-foreground">
                 {preinstallDescription}
               </div>
             )}

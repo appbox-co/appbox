@@ -2264,7 +2264,7 @@ export function InstallDialog({
 
           {/* Pre-install description */}
           {!isBlocked && preinstallDescription && (
-            <div className="border-l-2 border-[var(--appbox-signal)] py-1 pl-3 text-sm leading-relaxed text-muted-foreground">
+            <div className="whitespace-pre-line wrap-break-word border-l-2 border-[var(--appbox-signal)] py-1 pl-3 text-sm leading-relaxed text-muted-foreground">
               {preinstallDescription}
             </div>
           )}
