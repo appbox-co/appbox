@@ -1647,7 +1647,7 @@
       "explainerTitle": "Fejlesztői API",
       "explainerBody": "Az API kulcsok csak a fejlesztői API-val működnek a(z) <code>{url}</code> címen. A kulcsot a(z) <code>{header}</code> kérésfejlécben küldd.",
       "explainerScopes": "Minden kulcs csak azt hívhatja, amit a jogosultságai engednek. Az API kulcsok soha nem kezelhetnek API kulcsokat, fiókbiztonságot, felhasználókat vagy számlázást.",
-      "explainerAdmin": "A fejlesztői API elutasítja az adminisztrátori fiókokhoz tartozó API kulcsokat.",
+      "explainerAdmin": "Az adminisztrátori fiókok kulcsai normál ügyfélfiókként működnek: csak a saját Appboxaidat, alkalmazásaidat és domainjeidet érik el.",
       "docsLink": "Fejlesztői API dokumentáció",
       "scopeGroups": {
         "catalog": "Alkalmazáskatalógus",

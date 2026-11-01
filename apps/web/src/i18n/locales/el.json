@@ -1647,7 +1647,7 @@
       "explainerTitle": "Developer API",
       "explainerBody": "Τα API keys λειτουργούν μόνο με το developer API στη διεύθυνση <code>{url}</code>. Στείλτε το key στο request header <code>{header}</code>.",
       "explainerScopes": "Κάθε key μπορεί να καλεί μόνο ό,τι επιτρέπουν τα scopes του. Τα API keys δεν μπορούν ποτέ να διαχειριστούν API keys, την ασφάλεια του λογαριασμού, χρήστες ή τη χρέωση.",
-      "explainerAdmin": "Το developer API απορρίπτει API keys που ανήκουν σε λογαριασμούς διαχειριστή.",
+      "explainerAdmin": "Τα keys λογαριασμών διαχειριστή λειτουργούν σαν κανονικός λογαριασμός πελάτη: έχουν πρόσβαση μόνο στα δικά σας Appboxes, apps και domains.",
       "docsLink": "Τεκμηρίωση developer API",
       "scopeGroups": {
         "catalog": "Κατάλογος εφαρμογών",

@@ -1647,7 +1647,7 @@
       "explainerTitle": "Vývojářské API",
       "explainerBody": "API klíče fungují pouze s vývojářským API na adrese <code>{url}</code>. Klíč posílejte v hlavičce požadavku <code>{header}</code>.",
       "explainerScopes": "Každý klíč může volat jen to, co povolují jeho oprávnění. API klíče nikdy nemohou spravovat API klíče, zabezpečení účtu, uživatele ani fakturaci.",
-      "explainerAdmin": "Vývojářské API odmítá API klíče patřící administrátorským účtům.",
+      "explainerAdmin": "Klíče administrátorských účtů se chovají jako běžný zákaznický účet: dosáhnou jen na vaše vlastní Appboxy, aplikace a domény.",
       "docsLink": "Dokumentace vývojářského API",
       "scopeGroups": {
         "catalog": "Katalog aplikací",

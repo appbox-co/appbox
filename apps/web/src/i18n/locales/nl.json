@@ -1647,7 +1647,7 @@
       "explainerTitle": "Developer-API",
       "explainerBody": "API keys werken alleen met de developer-API op <code>{url}</code>. Stuur de key mee in de request-header <code>{header}</code>.",
       "explainerScopes": "Elke key kan alleen aanroepen wat zijn rechten toestaan. API keys kunnen nooit API keys, accountbeveiliging, gebruikers of facturering beheren.",
-      "explainerAdmin": "De developer-API weigert API keys van beheerdersaccounts.",
+      "explainerAdmin": "Keys van beheerdersaccounts werken als een normaal klantaccount: ze bereiken alleen je eigen Appboxes, apps en domeinen.",
       "docsLink": "Documentatie developer-API",
       "scopeGroups": {
         "catalog": "App-catalogus",

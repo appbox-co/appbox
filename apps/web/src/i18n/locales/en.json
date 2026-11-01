@@ -1651,7 +1651,7 @@
       "explainerTitle": "Developer API",
       "explainerBody": "API keys only work with the developer API at <code>{url}</code>. Send the key in the <code>{header}</code> request header.",
       "explainerScopes": "Each key can only call what its scopes allow. API keys can never manage API keys, account security, users or billing.",
-      "explainerAdmin": "API keys owned by admin accounts are rejected by the developer API.",
+      "explainerAdmin": "Keys owned by admin accounts act as a normal customer account: they only reach your own Appboxes, apps and domains.",
       "docsLink": "Developer API docs",
       "scopeGroups": {
         "catalog": "App catalog",

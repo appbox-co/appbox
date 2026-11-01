@@ -1647,7 +1647,7 @@
       "explainerTitle": "Utvecklar-API",
       "explainerBody": "API-nycklar fungerar bara med utvecklar-API:et på <code>{url}</code>. Skicka nyckeln i request-headern <code>{header}</code>.",
       "explainerScopes": "Varje nyckel kan bara anropa det som dess behörigheter tillåter. API-nycklar kan aldrig hantera API-nycklar, kontosäkerhet, användare eller fakturering.",
-      "explainerAdmin": "Utvecklar-API:et avvisar API-nycklar som ägs av administratörskonton.",
+      "explainerAdmin": "Nycklar som ägs av administratörskonton fungerar som ett vanligt kundkonto: de når bara dina egna Appboxar, appar och domäner.",
       "docsLink": "Dokumentation för utvecklar-API",
       "scopeGroups": {
         "catalog": "Appkatalog",

@@ -1647,7 +1647,7 @@
       "explainerTitle": "API développeur",
       "explainerBody": "Les clés API fonctionnent uniquement avec l'API développeur à l'adresse <code>{url}</code>. Envoyez la clé dans l'en-tête de requête <code>{header}</code>.",
       "explainerScopes": "Chaque clé ne peut appeler que ce que ses autorisations permettent. Les clés API ne peuvent jamais gérer les clés API, la sécurité du compte, les utilisateurs ni la facturation.",
-      "explainerAdmin": "L'API développeur refuse les clés API appartenant à des comptes administrateur.",
+      "explainerAdmin": "Les clés des comptes administrateur se comportent comme un compte client normal : elles n'accèdent qu'à vos propres Appboxes, apps et domaines.",
       "docsLink": "Documentation de l'API développeur",
       "scopeGroups": {
         "catalog": "Catalogue d'apps",

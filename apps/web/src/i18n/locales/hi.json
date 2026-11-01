@@ -1647,7 +1647,7 @@
       "explainerTitle": "Developer API",
       "explainerBody": "API keys सिर्फ़ <code>{url}</code> पर developer API के साथ काम करती हैं। Key को <code>{header}</code> request header में भेजें।",
       "explainerScopes": "हर key सिर्फ़ वही call कर सकती है जिसकी अनुमति उसके scopes देते हैं। API keys कभी भी API keys, account security, users या billing manage नहीं कर सकतीं।",
-      "explainerAdmin": "Admin accounts की API keys को developer API अस्वीकार कर देता है।",
+      "explainerAdmin": "Admin accounts की keys सामान्य customer account की तरह काम करती हैं: वे केवल आपके अपने Appboxes, apps और domains तक पहुँचती हैं।",
       "docsLink": "Developer API docs",
       "scopeGroups": {
         "catalog": "ऐप कैटलॉग",
