@@ -13,6 +13,7 @@ import {
   getAbuseReportFiles,
   getAbuseReports,
   getApiKeys,
+  getApiKeyScopes,
   getProfile,
   regenerateRecoveryCodes,
   resolveAbuseReport,
@@ -71,6 +72,14 @@ export function useApiKeys() {
   return useQuery({
     queryKey: queryKeys.apiKeys.all,
     queryFn: getApiKeys
+  })
+}
+
+export function useApiKeyScopes() {
+  return useQuery({
+    queryKey: queryKeys.apiKeys.scopeCatalog,
+    queryFn: getApiKeyScopes,
+    staleTime: 10 * 60 * 1000
   })
 }
 
