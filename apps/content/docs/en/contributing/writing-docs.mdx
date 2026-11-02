@@ -1,0 +1,143 @@
+---
+title: Writing docs
+description: Pick a topic, write a page that matches the rest of the docs, and get it reviewed.
+sort: 3
+---
+
+These docs cover the apps you can install on Appbox and the Appbox platform itself. Anyone can contribute. You need a GitHub account, and an Appbox to test your steps on.
+
+## Pick a topic
+
+Open issues labelled [`documentation`](https://github.com/appbox-co/appbox/issues?q=is%3Aissue%20state%3Aopen%20label%3Adocumentation) list the pages we need. Issues also labelled `good first issue` are the easiest place to start.
+
+1. Comment on the issue to say you'd like to write it.
+2. Wait for a maintainer to assign it to you, so two people don't write the same page.
+3. Open one pull request per issue.
+
+To suggest a page that has no issue yet, open a [documentation request](https://github.com/appbox-co/appbox/issues/new?template=doc-request.yml). If you stop working on an issue, say so in a comment so someone else can pick it up.
+
+## Write in English
+
+Write and edit pages in `apps/content/docs/en` only. The Appbox team translates pages into the other languages after merging. Until a translation exists, readers see the English page with a notice that it isn't available in their language.
+
+When you change an English page, leave the copies in the other language folders alone. The team updates them.
+
+## Test every step
+
+Follow each step on a current Appbox before you submit, and note the app version you tested in your pull request. Appbox installs apps with its own settings, folders and domains, so steps copied from an app's own documentation are often wrong here.
+
+Link to the app's own documentation for features Appbox doesn't change. Spend your words on what's specific to Appbox: the install fields, the address the app opens on, where its files live, how it works with other Appbox apps, and what happens when it updates.
+
+## Where pages go
+
+Each folder in `apps/content/docs/en` is a section in the sidebar, and each `.mdx` file in it is a page. The sidebar and search build themselves from these files, so you don't need to edit any configuration.
+
+| Page                                    | File                                                                          |
+| --------------------------------------- | ----------------------------------------------------------------------------- |
+| Main page for an app                    | `apps/<app>.mdx`, for example `apps/jellyfin.mdx`                             |
+| A task with one app                     | `apps/<app>-<task>.mdx`, for example `apps/openclaw-model-provider-setup.mdx` |
+| A guide that uses several apps or tools | `tutorials/<topic>.mdx`                                                       |
+
+Name files in lowercase with hyphens, after the app's name in the Appbox **App Store**. Leave out `sort` on app pages so they list alphabetically. Ask in your issue before adding a new folder, because it adds a section to everyone's sidebar.
+
+## Page structure
+
+Start a new app page from this template. Keep the sections that apply, in this order, and remove the rest. The [Coolify web app deployment](/docs/apps/coolify-deploying-web-apps) guide shows the style in practice.
+
+```mdx
+---
+title: Jellyfin
+description: Install Jellyfin on Appbox, add your media and stream it to your devices.
+---
+
+Say what the app does in one or two sentences, and what people use it for on Appbox.
+
+## Install
+
+Number the steps from the App Store to a running app. List each install field and what to enter:
+
+| Field | What to enter |
+| ----- | ------------- |
+| ...   | ...           |
+
+## Sign in for the first time
+
+The address the app opens on, where to find the login details in Appbox, and any first-run setup.
+
+## Where your files are
+
+The folders the app reads and writes, and how to reach them from other apps, such as an FTP server or file manager.
+
+## Use it with other apps
+
+Common pairings, for example a download client saving into a folder that a media server reads.
+
+## Updates and backups
+
+What updating from Appbox keeps and what it replaces. If you aren't sure, ask in your issue and a maintainer will confirm.
+
+## Troubleshooting
+
+| What you see | What to check |
+| ------------ | ------------- |
+| ...          | ...           |
+
+## More help
+
+Link the app's own documentation for features Appbox doesn't change.
+```
+
+## Style
+
+- Address the reader as "you" and write steps as instructions: "Select **Add Domain**."
+- Put one action in each numbered step.
+- Write interface labels in bold, exactly as they appear on screen. Use `>` for a path through menus: **Custom Domains > Add Domain**.
+- Put commands, file paths, hostnames, ports and anything the reader types in `code`.
+- Use `mybox` as the example Appbox name and `mybox.appboxes.co` as its address.
+- Use sentence case for headings.
+- Use tables for field values and for troubleshooting.
+
+Use an alert only for something that can lose data or break a working setup:
+
+```mdx
+<Alert className="my-4" variant="warning">
+  <AlertTitle className="font-bold">Back up first</AlertTitle>
+  <AlertDescription className="pl-2">
+    Say what the reader could lose and how to avoid it.
+  </AlertDescription>
+</Alert>
+```
+
+## Screenshots
+
+Add a screenshot where the reader would otherwise have to hunt for a button or field.
+
+- Crop to the part of the screen that matters.
+- Hide passwords, tokens, email addresses, IP addresses and anything else that identifies your account.
+- Save images as PNG or WebP in `apps/web/public/docs-images/<app>/`.
+- Describe what the image shows in its alt text.
+
+```mdx
+<img
+  src="/docs-images/jellyfin/add-library.png"
+  alt="Jellyfin dashboard with the Add Media Library button highlighted"
+  width="860"
+/>
+```
+
+## Preview your page
+
+Install the project as described in [Getting started](/docs/contributing/introduction#getting-started), run `pnpm dev`, and open `http://localhost:3000/docs/<section>/<page>`. If a new page doesn't appear, rebuild the content cache:
+
+```bash
+cd apps/web
+pnpm contentlayer:build
+```
+
+## Open a pull request
+
+1. Use a conventional commit message, such as `docs: add Jellyfin page`.
+2. Write `Closes #<issue number>` in the pull request description.
+3. Complete the docs checklist in the pull request template.
+
+A maintainer checks each page against a live Appbox and may push small fixes to your branch before merging.
