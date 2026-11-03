@@ -6,9 +6,12 @@ sort: 2
 
 # 用于文档
 
-1. 在 `apps/content/docs/[language]` 文件夹中创建新的 `.mdx` 文件，并写入你的文档内容。
-2. 将该文档添加到站点导航菜单。
-    为此，请在 `src/config/docs.ts` 文件的 `sidebarNav` 属性中按现有项目的模式添加一个新项目，并填入所需信息。这样做后，该文档也会被添加到搜索命令面板中。
+1. 在 `apps/content/docs/en` 下的某个栏目文件夹中创建新的 `.mdx` 文件，例如 `apps/content/docs/en/apps/jellyfin.mdx`。
+2. 添加下文所述的 frontmatter，然后编写页面。
+
+侧边栏和搜索命令面板由 `apps/web/src/config/docs.ts` 根据英文文件生成。每个文件夹会成为一个栏目，其中的每个文件会成为该栏目下的一个页面，因此新文件无需任何配置更改即可显示。新建文件夹会增加一个新栏目，因此请先在 issue 中讨论。
+
+新页面只用英文编写。关于页面应放在哪里、应用页面模板和风格指南，请参阅[编写文档](/docs/contributing/writing-docs)。
 
 ## MDX 文档设置
 
@@ -26,7 +29,7 @@ sort: 1
 
 - `title`（必填）：文档标题。
 - `description`（必填）：文档的简短描述。
-- `sort`（可选）：决定文档在导航中顺序的数字。`sort` 值较低的文档会优先显示。如果未提供，则按标题字母顺序排序。
+- `sort`（可选）：决定文档在所属栏目中顺序的数字。设置了 `sort` 值的文档排在前面，值越小越靠前。未设置该值的文档排在其后，按标题字母顺序排序。
 - `links`（可选）：指向相关文档、API 参考、源代码等的链接。
 - `toc`（可选）：是否显示目录。默认为 `true`。
 
@@ -41,24 +44,9 @@ author: Author Name
 ---
 ```
 
-但添加自定义元数据时，还需要更新项目根目录下的 `contentlayer.config.ts` 文件，并在 `Doc` 或 `Blog` 常量的 `fields` 属性中添加相应字段。
-之后，你需要在文档模板中显示新信息。为此，需要更新 `src/app/[locale]/docs/[[...slug]]/page.tsx` 文件，或 `src/app/[locale]/blog/[[...slug]]/page.tsx`，或其中的某个子组件。
+但添加自定义元数据时，还需要在 `apps/web/src/lib/content/index.ts` 中把该字段添加到对应的 schema（`docSchema`、`blogSchema` 或 `policySchema`）。不在 schema 中的 frontmatter 键会被丢弃。
+之后，你需要在文档模板中显示新信息。为此，需要更新 `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` 文件，或 `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`，或其中的某个子组件。
 
-## 重建 Contentlayer
+## 检查你的更改
 
-当你更改文档内容、添加新文档或修改 `contentlayer.config.ts` 文件时，需要重建 contentlayer 缓存，才能在开发过程中让更改生效。运行：
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-此命令会重新生成应用所需的内容类型和数据。每当你进行以下操作时，都需要运行此命令：
-
-- 向 `contentlayer.config.ts` 文件添加新的元数据字段
-- 在开发服务器未运行时添加或修改 MDX 内容
-- 更改内容组织结构
-
-构建生产版本时会自动运行此命令，但在开发过程中如果你对内容做了结构性更改，则需要手动运行。
-
-
+站点直接读取 MDX 文件，因此刷新页面后 `pnpm dev` 就会显示更改。如果某个文件的 frontmatter 无效，`pnpm dev` 会跳过该页面，并在终端中输出对应的文件和字段。`pnpm build` 会检查所有语言中的每个文件，只要有任何文件无效就会失败。

@@ -6,9 +6,12 @@ sort: 2
 
 # Dla dokumentacji
 
-1. Utwórz nowy plik `.mdx` w folderze `apps/content/docs/[language]` z treścią swojego dokumentu.
-2. Dodaj dokument do menu nawigacyjnego strony.
-    Aby to zrobić, dodaj nowy element do pliku `src/config/docs.ts` we właściwości `sidebarNav`, podając odpowiednie informacje i trzymając się wzorca istniejących elementów. Dzięki temu dokument zostanie też dodany do palety poleceń wyszukiwania.
+1. Utwórz nowy plik `.mdx` w folderze sekcji w `apps/content/docs/en`, na przykład `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Dodaj frontmatter opisany poniżej, a następnie napisz stronę.
+
+Pasek boczny i paleta poleceń wyszukiwania są budowane przez `apps/web/src/config/docs.ts` na podstawie angielskich plików. Każdy folder staje się sekcją, a każdy plik stroną w tej sekcji, więc nowy plik pojawia się bez żadnych zmian w konfiguracji. Nowy folder dodaje nową sekcję, dlatego najpierw omów to w issue.
+
+Nowe strony pisz wyłącznie po angielsku. Na stronie [Pisanie dokumentacji](/docs/contributing/writing-docs) znajdziesz informacje o tym, gdzie umieszczać strony, szablon strony aplikacji i przewodnik po stylu.
 
 ## Ustawienia dokumentu MDX
 
@@ -26,7 +29,7 @@ Obsługiwane są następujące pola metadanych:
 
 - `title` (wymagane): Tytuł dokumentu.
 - `description` (wymagane): Krótki opis dokumentu.
-- `sort` (opcjonalne): Liczba określająca kolejność dokumentu w nawigacji. Dokumenty z niższymi wartościami `sort` pojawiają się jako pierwsze. Jeśli nie zostanie podana, dokumenty są sortowane alfabetycznie według tytułu.
+- `sort` (opcjonalne): Liczba określająca kolejność dokumentu w jego sekcji. Dokumenty z wartością `sort` są wyświetlane jako pierwsze, od najniższej wartości. Po nich następują dokumenty bez tej wartości, posortowane alfabetycznie według tytułu.
 - `links` (opcjonalne): Linki do powiązanych dokumentów, referencji API, kodu źródłowego itp.
 - `toc` (opcjonalne): Określa, czy wyświetlać spis treści. Domyślnie `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Jednak przy dodawaniu niestandardowych metadanych musisz również zaktualizować plik `contentlayer.config.ts` znajdujący się w katalogu głównym projektu oraz właściwość `fields` w stałych `Doc` lub `Blog`.
-Następnie trzeba wyświetlić nowe informacje w szablonie dokumentu. Aby to zrobić, zaktualizuj plik `src/app/[locale]/docs/[[...slug]]/page.tsx`, plik `src/app/[locale]/blog/[[...slug]]/page.tsx` albo jeden z ich komponentów potomnych.
+Jednak przy dodawaniu niestandardowych metadanych musisz również dodać to pole do odpowiedniego schematu (`docSchema`, `blogSchema` lub `policySchema`) w pliku `apps/web/src/lib/content/index.ts`. Klucze frontmatter, których nie ma w schemacie, są pomijane.
+Następnie trzeba wyświetlić nowe informacje w szablonie dokumentu. Aby to zrobić, zaktualizuj plik `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, plik `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` albo jeden z ich komponentów potomnych.
 
-## Przebudowywanie Contentlayer
+## Sprawdzanie zmian
 
-Gdy zmieniasz treść dokumentacji, dodajesz nowe dokumenty albo modyfikujesz plik `contentlayer.config.ts`, musisz przebudować pamięć podręczną Contentlayer, aby zmiany zaczęły działać podczas developmentu. Uruchom:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-To polecenie ponownie generuje typy treści i dane wymagane przez aplikację. Uruchom je za każdym razem, gdy:
-
-- Dodasz nowe pola metadanych do pliku `contentlayer.config.ts`
-- Dodasz lub zmodyfikujesz treści MDX, gdy serwer dev nie jest uruchomiony
-- Zmienisz strukturę organizacji treści
-
-Polecenie jest uruchamiane automatycznie podczas budowania projektu na produkcję, ale w trakcie developmentu trzeba uruchomić je ręcznie, jeśli wprowadzasz zmiany strukturalne w treści.
-
-
-
+Witryna odczytuje pliki MDX bezpośrednio, więc `pnpm dev` pokazuje zmiany po odświeżeniu strony. Jeśli frontmatter pliku jest nieprawidłowy, `pnpm dev` pomija tę stronę i wypisuje w terminalu plik i pole. `pnpm build` sprawdza każdy plik w każdym języku i kończy się błędem, jeśli którykolwiek z nich jest nieprawidłowy.

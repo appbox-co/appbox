@@ -6,9 +6,12 @@ sort: 2
 
 # Für Dokumentation
 
-1. Erstellt eine neue `.mdx`-Datei im `apps/content/docs/[language]`-Ordner mit dem Inhalt eures Dokuments.
-2. Fügt das Dokument zum Navigationsmenü der Website hinzu.
-    Dazu fügt ihr ein neues Element zur Datei `src/config/docs.ts` in der `sidebarNav`-Eigenschaft mit den gewünschten Informationen hinzu, folgt einfach dem Muster der bestehenden Elemente. Dadurch wird das Dokument auch zur Such-Befehlspalette hinzugefügt.
+1. Erstellt eine neue `.mdx`-Datei in einem Abschnittsordner unter `apps/content/docs/en`, zum Beispiel `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Fügt das unten beschriebene Frontmatter hinzu und schreibt dann die Seite.
+
+Die Seitenleiste und die Such-Befehlspalette werden von `apps/web/src/config/docs.ts` aus den englischen Dateien erzeugt. Jeder Ordner wird zu einem Abschnitt und jede Datei zu einer Seite darin, sodass eine neue Datei ohne jede Änderung an der Konfiguration erscheint. Ein neuer Ordner legt einen neuen Abschnitt an, deshalb besprecht ihn zuerst in einem Issue.
+
+Schreibt neue Seiten nur auf Englisch. Unter [Docs schreiben](/docs/contributing/writing-docs) findet ihr, wohin Seiten gehören, die Vorlage für App-Seiten und den Styleguide.
 
 ## MDX-Dokumenteinstellungen
 
@@ -26,7 +29,7 @@ Die folgenden Metadatenfelder werden unterstützt:
 
 - `title` (erforderlich): Der Titel des Dokuments.
 - `description` (erforderlich): Eine kurze Beschreibung des Dokuments.
-- `sort` (optional): Eine Nummer, die die Reihenfolge des Dokuments in der Navigation bestimmt. Dokumente mit niedrigeren Sort-Werten erscheinen zuerst. Falls nicht angegeben, werden Dokumente alphabetisch nach Titel sortiert.
+- `sort` (optional): Eine Zahl, die die Reihenfolge des Dokuments in seinem Abschnitt bestimmt. Dokumente mit einem `sort`-Wert kommen zuerst, der niedrigste Wert zuerst. Dokumente ohne diesen Wert folgen danach, alphabetisch nach Titel sortiert.
 - `links` (optional): Links zu verwandten Dokumenten, API-Referenzen, Quellcode, etc.
 - `toc` (optional): Ob das Inhaltsverzeichnis angezeigt werden soll. Standard ist `true`.
 
@@ -41,22 +44,9 @@ author: Author Name
 ---
 ```
 
-Beim Hinzufügen benutzerdefinierter Metadaten müsst ihr jedoch auch die Datei `contentlayer.config.ts` aktualisieren, die sich im Stammverzeichnis des Projekts befindet, und zwar innerhalb der `fields`-Eigenschaft in den `Doc`- oder `Blog`-Konstanten.
-Danach müsst ihr die neuen Informationen im Dokumenttemplate anzeigen. Dazu müsst ihr die Datei `src/app/[locale]/docs/[[...slug]]/page.tsx` oder `src/app/[locale]/blog/[[...slug]]/page.tsx` oder eine ihrer Kindkomponenten aktualisieren.
+Beim Hinzufügen benutzerdefinierter Metadaten müsst ihr das Feld jedoch auch zum passenden Schema (`docSchema`, `blogSchema` oder `policySchema`) in `apps/web/src/lib/content/index.ts` hinzufügen. Frontmatter-Schlüssel, die nicht im Schema stehen, werden verworfen.
+Danach müsst ihr die neuen Informationen im Dokumenttemplate anzeigen. Dazu müsst ihr die Datei `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` oder `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` oder eine ihrer Kindkomponenten aktualisieren.
 
-## Contentlayer neu erstellen
+## Eure Änderungen prüfen
 
-Wenn ihr Änderungen am Dokumentationsinhalt vornehmt, neue Docs hinzufügt oder die Datei `contentlayer.config.ts` modifiziert, müsst ihr den Contentlayer-Cache neu erstellen, damit eure Änderungen während der Entwicklung wirksam werden. Führt aus:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Dieser Befehl regeneriert die Inhaltstypen und Daten, die von der Anwendung benötigt werden. Ihr müsst diesen Befehl ausführen, wann immer ihr:
-
-- Neue Metadatenfelder zur Datei `contentlayer.config.ts` hinzufügt
-- MDX-Inhalte hinzufügt oder modifiziert, wenn der Dev-Server nicht läuft
-- Die Struktur eurer Inhaltsorganisation ändert
-
-Der Befehl wird automatisch ausgeführt, wenn das Projekt für die Produktion erstellt wird, aber ihr müsst ihn während der Entwicklung manuell ausführen, wenn ihr strukturelle Änderungen am Inhalt vornehmt. 
+Die Website liest die MDX-Dateien direkt, daher zeigt `pnpm dev` Änderungen an, sobald ihr die Seite neu ladet. Wenn das Frontmatter einer Datei ungültig ist, lässt `pnpm dev` diese Seite weg und gibt die Datei und das Feld im Terminal aus. `pnpm build` prüft jede Datei in jeder Sprache und schlägt fehl, wenn eine davon ungültig ist.

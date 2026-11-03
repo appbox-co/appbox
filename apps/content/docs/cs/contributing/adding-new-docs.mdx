@@ -6,9 +6,12 @@ sort: 2
 
 # Pro dokumentaci
 
-1. Vytvořte nový soubor `.mdx` ve složce `apps/content/docs/[language]` s obsahem svého dokumentu.
-2. Přidejte dokument do navigačního menu webu.
-    Uděláte to tak, že přidáte novou položku do souboru `src/config/docs.ts` ve vlastnosti `sidebarNav` s požadovanými informacemi; stačí následovat vzor existujících položek. Tím se dokument zároveň přidá i do vyhledávací palety příkazů.
+1. Vytvořte nový soubor `.mdx` ve složce některé sekce v `apps/content/docs/en`, například `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Přidejte frontmatter popsaný níže a potom napište stránku.
+
+Postranní panel a vyhledávací paletu příkazů sestavuje `apps/web/src/config/docs.ts` z anglických souborů. Každá složka se stává sekcí a každý soubor stránkou v ní, takže se nový soubor zobrazí bez jakékoli změny konfigurace. Nová složka přidává novou sekci, proto ji nejdřív proberte v issue.
+
+Nové stránky pište pouze anglicky. Kam stránky patří, šablonu stránky aplikace a stylistickou příručku najdete v části [Psaní dokumentace](/docs/contributing/writing-docs).
 
 ## Nastavení MDX dokumentu
 
@@ -26,7 +29,7 @@ Podporována jsou následující pole metadat:
 
 - `title` (povinné): Název dokumentu.
 - `description` (povinné): Stručný popis dokumentu.
-- `sort` (volitelné): Číslo určující pořadí dokumentu v navigaci. Dokumenty s nižší hodnotou `sort` se zobrazí dříve. Pokud není uvedeno, dokumenty se řadí abecedně podle názvu.
+- `sort` (volitelné): Číslo určující pořadí dokumentu v jeho sekci. Dokumenty s hodnotou `sort` jsou na začátku, seřazené od nejnižší hodnoty. Dokumenty bez ní následují, seřazené abecedně podle názvu.
 - `links` (volitelné): Odkazy na související dokumenty, API reference, zdrojový kód atd.
 - `toc` (volitelné): Určuje, zda zobrazit obsah. Výchozí hodnota je `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Při přidání vlastních metadat ale musíte také aktualizovat soubor `contentlayer.config.ts`, který se nachází v kořeni projektu, a to ve vlastnosti `fields` v konstantách `Doc` nebo `Blog`.
-Poté budete muset nové informace zobrazit v šabloně dokumentu. K tomu je potřeba aktualizovat soubor `src/app/[locale]/docs/[[...slug]]/page.tsx`, případně `src/app/[locale]/blog/[[...slug]]/page.tsx` nebo některou z jeho podřízených komponent.
+Při přidání vlastních metadat ale musíte také přidat pole do odpovídajícího schématu (`docSchema`, `blogSchema` nebo `policySchema`) v `apps/web/src/lib/content/index.ts`. Klíče frontmatteru, které ve schématu nejsou, se zahodí.
+Poté budete muset nové informace zobrazit v šabloně dokumentu. K tomu je potřeba aktualizovat soubor `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, případně `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` nebo některou z jeho podřízených komponent.
 
-## Znovuvytvoření Contentlayer
+## Kontrola změn
 
-Když měníte obsah dokumentace, přidáváte nové dokumenty nebo upravujete soubor `contentlayer.config.ts`, musíte znovu vytvořit cache Contentlayer, aby se změny během vývoje projevily. Spusťte:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Tento příkaz znovu vygeneruje typy obsahu a data potřebná aplikací. Příkaz je potřeba spustit pokaždé, když:
-
-- Přidáte nová pole metadat do souboru `contentlayer.config.ts`
-- Přidáte nebo upravíte obsah MDX, když neběží vývojový server
-- Změníte strukturu organizace obsahu
-
-Příkaz se spouští automaticky při sestavení projektu pro produkci, ale během vývoje ho musíte spustit ručně, pokud v obsahu provedete strukturální změny.
-
-
-
+Web čte soubory MDX přímo, takže `pnpm dev` zobrazí změny po obnovení stránky. Pokud má soubor neplatný frontmatter, `pnpm dev` tuto stránku vynechá a vypíše soubor a pole do terminálu. `pnpm build` zkontroluje všechny soubory ve všech jazycích a selže, pokud je některý z nich neplatný.

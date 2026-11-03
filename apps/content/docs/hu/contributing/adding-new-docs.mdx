@@ -6,9 +6,12 @@ sort: 2
 
 # Dokumentációhoz
 
-1. Hozz létre egy új `.mdx` fájlt az `apps/content/docs/[language]` mappában a dokumentumod tartalmával.
-2. Add hozzá a dokumentumot a webhely navigációs menüjéhez.
-    Ehhez adj hozzá egy új elemet a `src/config/docs.ts` fájl `sidebarNav` tulajdonságához a kívánt adatokkal, az előző elemek mintáját követve. Ezzel a dokumentum a keresési parancspalettába is bekerül.
+1. Hozz létre egy új `.mdx` fájlt az `apps/content/docs/en` alatti egyik szakaszmappában, például `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Add hozzá a lent leírt frontmattert, majd írd meg az oldalt.
+
+Az oldalsávot és a keresési parancspalettát az `apps/web/src/config/docs.ts` állítja elő az angol fájlokból. Minden mappából egy szakasz lesz, minden fájlból pedig egy oldal abban a szakaszban, így az új fájl konfigurációmódosítás nélkül megjelenik. Egy új mappa új szakaszt hoz létre, ezért előbb beszéld meg egy issue-ban.
+
+Új oldalakat csak angolul írj. Az oldalak helyéről, az alkalmazásoldal-sablonról és a stílusútmutatóról a [Dokumentáció írása](/docs/contributing/writing-docs) oldalon olvashatsz.
 
 ## MDX dokumentumbeállítások
 
@@ -26,7 +29,7 @@ A következő metaadatmezők támogatottak:
 
 - `title` (kötelező): A dokumentum címe.
 - `description` (kötelező): A dokumentum rövid leírása.
-- `sort` (opcionális): Egy szám, amely meghatározza a dokumentum sorrendjét a navigációban. Az alacsonyabb `sort` értékű dokumentumok jelennek meg előbb. Ha nincs megadva, a dokumentumok cím szerint, ábécésorrendben rendeződnek.
+- `sort` (opcionális): Egy szám, amely meghatározza a dokumentum sorrendjét a saját szakaszán belül. A `sort` értékkel rendelkező dokumentumok kerülnek előre, növekvő sorrendben. Az érték nélküli dokumentumok ezek után következnek, cím szerint ábécésorrendben.
 - `links` (opcionális): Kapcsolódó dokumentumokra, API referenciákra, forráskódra stb. mutató hivatkozások.
 - `toc` (opcionális): Megjelenjen-e a tartalomjegyzék. Alapértelmezés szerint `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Egyéni metaadat hozzáadásakor azonban frissítened kell a projekt gyökerében található `contentlayer.config.ts` fájlt is, a `Doc` vagy `Blog` konstansok `fields` tulajdonságán belül.
-Ezután meg kell jelenítened az új információt a dokumentumsablonban. Ehhez frissítened kell a `src/app/[locale]/docs/[[...slug]]/page.tsx` fájlt, vagy a `src/app/[locale]/blog/[[...slug]]/page.tsx` fájlt, illetve annak valamelyik gyermekkomponensét.
+Egyéni metaadat hozzáadásakor azonban a mezőt a megfelelő sémához (`docSchema`, `blogSchema` vagy `policySchema`) is hozzá kell adnod az `apps/web/src/lib/content/index.ts` fájlban. A sémában nem szereplő frontmatter-kulcsok elvesznek.
+Ezután meg kell jelenítened az új információt a dokumentumsablonban. Ehhez frissítened kell az `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` fájlt, vagy az `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` fájlt, illetve annak valamelyik gyermekkomponensét.
 
-## Contentlayer újraépítése
+## A módosítások ellenőrzése
 
-Amikor módosítod a dokumentációs tartalmat, új dokumentumokat adsz hozzá, vagy módosítod a `contentlayer.config.ts` fájlt, újra kell építened a contentlayer gyorsítótárat, hogy a változtatások fejlesztés közben érvénybe lépjenek. Futtasd:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Ez a parancs újragenerálja az alkalmazás számára szükséges tartalomtípusokat és adatokat. Ezt a parancsot minden alkalommal futtatnod kell, amikor:
-
-- Új metaadatmezőket adsz a `contentlayer.config.ts` fájlhoz
-- MDX tartalmat adsz hozzá vagy módosítasz, miközben a fejlesztői szerver nem fut
-- Megváltoztatod a tartalomszervezés szerkezetét
-
-A parancs automatikusan lefut a projekt éles buildelésekor, de fejlesztés közben manuálisan kell futtatnod, ha strukturális módosításokat végzel a tartalomban.
-
-
-
+A webhely közvetlenül olvassa az MDX fájlokat, így a `pnpm dev` az oldal frissítésekor megjeleníti a módosításokat. Ha egy fájl frontmattere érvénytelen, a `pnpm dev` kihagyja azt az oldalt, és kiírja a terminálba a fájlt és a mezőt. A `pnpm build` minden nyelv minden fájlját ellenőrzi, és hibával leáll, ha bármelyik érvénytelen.

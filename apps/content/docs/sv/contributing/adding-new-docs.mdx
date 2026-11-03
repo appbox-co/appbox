@@ -6,9 +6,12 @@ sort: 2
 
 # För dokumentation
 
-1. Skapa en ny `.mdx`-fil i mappen `apps/content/docs/[language]` med innehållet för ditt dokument.
-2. Lägg till dokumentet i webbplatsens navigeringsmeny.
-    För att göra detta lägger du till ett nytt objekt i filen `src/config/docs.ts` i egenskapen `sidebarNav` med önskad information. Följ bara mönstret för de befintliga objekten. När du gör detta läggs dokumentet också till i sökkommandopaletten.
+1. Skapa en ny `.mdx`-fil i en avsnittsmapp under `apps/content/docs/en`, till exempel `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Lägg till den frontmatter som beskrivs nedan och skriv sedan sidan.
+
+Sidofältet och sökkommandopaletten byggs från de engelska filerna av `apps/web/src/config/docs.ts`. Varje mapp blir ett avsnitt och varje fil blir en sida i det, så en ny fil visas utan att du behöver ändra någon konfiguration. En ny mapp lägger till ett nytt avsnitt, så diskutera det i ett issue först.
+
+Skriv nya sidor endast på engelska. Se [Skriva dokumentation](/docs/contributing/writing-docs) för var sidor ska ligga, mallen för appsidor och stilguiden.
 
 ## Inställningar för MDX-dokument
 
@@ -26,7 +29,7 @@ Följande metadatafält stöds:
 
 - `title` (obligatoriskt): Dokumentets titel.
 - `description` (obligatoriskt): En kort beskrivning av dokumentet.
-- `sort` (valfritt): Ett nummer som avgör dokumentets ordning i navigeringen. Dokument med lägre sorteringsvärden visas först. Om det inte anges sorteras dokument alfabetiskt efter titel.
+- `sort` (valfritt): Ett tal som avgör dokumentets ordning i dess avsnitt. Dokument med ett `sort`-värde kommer först, med det lägsta värdet först. Dokument utan värde kommer därefter, sorterade alfabetiskt efter titel.
 - `links` (valfritt): Länkar till relaterade dokument, API-referenser, källkod osv.
 - `toc` (valfritt): Om innehållsförteckningen ska visas. Standardvärdet är `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Men när du lägger till anpassad metadata behöver du också uppdatera filen `contentlayer.config.ts` som finns i projektets rot, inne i egenskapen `fields` i konstanterna `Doc` eller `Blog`.
-Efter det behöver du visa den nya informationen i dokumentmallen. För att göra detta behöver du uppdatera filen `src/app/[locale]/docs/[[...slug]]/page.tsx`, eller `src/app/[locale]/blog/[[...slug]]/page.tsx`, eller en av dess underkomponenter.
+Men när du lägger till anpassad metadata behöver du också lägga till fältet i motsvarande schema (`docSchema`, `blogSchema` eller `policySchema`) i `apps/web/src/lib/content/index.ts`. Frontmatter-nycklar som inte finns i schemat tas bort.
+Efter det behöver du visa den nya informationen i dokumentmallen. För att göra detta behöver du uppdatera filen `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, eller `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`, eller en av dess underkomponenter.
 
-## Bygga om Contentlayer
+## Kontrollera dina ändringar
 
-När du gör ändringar i dokumentationsinnehåll, lägger till nya dokument eller ändrar filen `contentlayer.config.ts` behöver du bygga om Contentlayer-cachen för att dina ändringar ska träda i kraft under utveckling. Kör:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Det här kommandot genererar om de innehållstyper och data som programmet behöver. Du behöver köra kommandot varje gång du:
-
-- Lägger till nya metadatafält i filen `contentlayer.config.ts`
-- Lägger till eller ändrar MDX-innehåll när utvecklingsservern inte körs
-- Ändrar strukturen för din innehållsorganisation
-
-Kommandot körs automatiskt när projektet byggs för produktion, men du behöver köra det manuellt under utveckling om du gör strukturella ändringar i innehåll.
-
-
-
+Webbplatsen läser MDX-filerna direkt, så `pnpm dev` visar ändringarna när du laddar om sidan. Om en fils frontmatter är ogiltig utelämnar `pnpm dev` den sidan och skriver ut filen och fältet i terminalen. `pnpm build` kontrollerar varje fil på varje språk och misslyckas om någon av dem är ogiltig.

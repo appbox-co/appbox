@@ -6,9 +6,12 @@ sort: 2
 
 # Dokümantasyon için
 
-1. Belgenizin içeriğiyle `apps/content/docs/[language]` klasöründe yeni bir `.mdx` dosyası oluşturun.
-2. Belgeyi sitenin gezinme menüsüne ekleyin.
-    Bunu yapmak için `src/config/docs.ts` dosyasındaki `sidebarNav` özelliğine, istenen bilgilerle yeni bir öğe ekleyin; mevcut öğelerin kalıbını takip etmeniz yeterlidir. Bunu yaptığınızda belge arama komut paletine de eklenir.
+1. `apps/content/docs/en` altındaki bir bölüm klasöründe yeni bir `.mdx` dosyası oluşturun; örneğin `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Aşağıda açıklanan frontmatter'ı ekleyin, ardından sayfayı yazın.
+
+Kenar çubuğu ve arama komut paleti, `apps/web/src/config/docs.ts` tarafından İngilizce dosyalardan oluşturulur. Her klasör bir bölüm, içindeki her dosya da o bölümde bir sayfa olur; bu yüzden yeni bir dosya, hiçbir yapılandırma değişikliği gerekmeden görünür. Yeni bir klasör yeni bir bölüm ekler, bu yüzden bunu önce bir issue'da tartışın.
+
+Yeni sayfaları yalnızca İngilizce yazın. Sayfaların nereye konacağı, uygulama sayfası şablonu ve stil kılavuzu için [Doküman yazma](/docs/contributing/writing-docs) sayfasına bakın.
 
 ## MDX belge ayarları
 
@@ -26,7 +29,7 @@ Aşağıdaki metadata alanları desteklenir:
 
 - `title` (gerekli): Belgenin başlığı.
 - `description` (gerekli): Belgenin kısa açıklaması.
-- `sort` (isteğe bağlı): Belgenin gezinmede sırasını belirleyen sayı. Daha düşük sort değerine sahip belgeler önce görünür. Sağlanmazsa belgeler başlığa göre alfabetik sıralanır.
+- `sort` (isteğe bağlı): Belgenin kendi bölümündeki sırasını belirleyen sayı. `sort` değeri olan belgeler önce gelir; en düşük değer en başta yer alır. Değeri olmayan belgeler bunlardan sonra gelir ve başlığa göre alfabetik sıralanır.
 - `links` (isteğe bağlı): İlgili belgelere, API referanslarına, kaynak koda vb. bağlantılar.
 - `toc` (isteğe bağlı): İçindekiler tablosunun gösterilip gösterilmeyeceği. Varsayılan olarak `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Ancak özel metadata eklerken projenin kökünde bulunan `contentlayer.config.ts` dosyasını ve `Doc` veya `Blog` sabitlerindeki `fields` özelliğini de güncellemeniz gerekir.
-Bundan sonra yeni bilgiyi belge şablonunda göstermeniz gerekir. Bunu yapmak için `src/app/[locale]/docs/[[...slug]]/page.tsx` dosyasını ya da `src/app/[locale]/blog/[[...slug]]/page.tsx` dosyasını veya bunların alt bileşenlerinden birini güncellemeniz gerekir.
+Ancak özel metadata eklerken alanı `apps/web/src/lib/content/index.ts` dosyasındaki ilgili şemaya (`docSchema`, `blogSchema` veya `policySchema`) da eklemeniz gerekir. Şemada bulunmayan frontmatter anahtarları atılır.
+Bundan sonra yeni bilgiyi belge şablonunda göstermeniz gerekir. Bunu yapmak için `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` dosyasını ya da `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` dosyasını veya bunların alt bileşenlerinden birini güncellemeniz gerekir.
 
-## Contentlayer'ı yeniden oluşturma
+## Değişikliklerinizi kontrol etme
 
-Dokümantasyon içeriğinde değişiklik yaptığınızda, yeni dokümanlar eklediğinizde veya `contentlayer.config.ts` dosyasını değiştirdiğinizde, geliştirme sırasında değişikliklerinizin etkili olması için contentlayer önbelleğini yeniden oluşturmanız gerekir. Şunu çalıştırın:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Bu komut, uygulamanın ihtiyaç duyduğu içerik türlerini ve verileri yeniden oluşturur. Şunları her yaptığınızda bu komutu çalıştırmanız gerekir:
-
-- `contentlayer.config.ts` dosyasına yeni metadata alanları ekleme
-- Geliştirme sunucusu çalışmıyorken MDX içeriği ekleme veya değiştirme
-- İçerik düzenleme yapınızın yapısını değiştirme
-
-Komut, projeyi üretim için derlerken otomatik olarak çalıştırılır; ancak geliştirme sırasında içerikte yapısal değişiklikler yaparsanız elle çalıştırmanız gerekir.
-
-
-
+Site MDX dosyalarını doğrudan okur, bu yüzden sayfayı yenilediğinizde `pnpm dev` değişiklikleri gösterir. Bir dosyanın frontmatter'ı geçersizse `pnpm dev` o sayfayı dışarıda bırakır ve dosyayı ve alanı terminale yazdırır. `pnpm build` her dildeki her dosyayı kontrol eder ve herhangi biri geçersizse başarısız olur.
