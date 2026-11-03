@@ -1,0 +1,132 @@
+---
+title: Install an app
+description: Install an app with the developer API, from choosing an Appbox to a running app.
+sort: 3
+---
+
+These steps install an app from the App Store onto one of your Appboxes. You need a key with the **Deployment automation** preset, or at least `catalog:read`, `apps:read` and `apps:install`.
+
+The examples use `curl` and [`jq`](https://jqlang.org/), with your key in the `APPBOX_API_KEY` environment variable:
+
+```bash
+export APPBOX_API_KEY="abx_sk_live_..."
+API="https://api.appbox.co/developer/v1"
+```
+
+## 1. Choose an Appbox
+
+List your Appboxes and note the `id` of one with enough `free_slots`:
+
+```bash
+curl -s "$API/appboxes" -H "X-API-Key: $APPBOX_API_KEY" \
+  | jq '.data[] | {id, name, free_slots}'
+```
+
+```json
+{ "id": 1234, "name": "mybox", "free_slots": 13 }
+```
+
+## 2. Find the app
+
+Search the catalog by name:
+
+```bash
+curl -s "$API/catalog/apps?q=jellyfin" -H "X-API-Key: $APPBOX_API_KEY" \
+  | jq '.data[] | {id, name, app_slots, requires_domain, installable}'
+```
+
+```json
+{
+  "id": 87,
+  "name": "Jellyfin",
+  "app_slots": 2,
+  "requires_domain": true,
+  "installable": true
+}
+```
+
+Check that `app_slots` fits in the Appbox's `free_slots`.
+
+## 3. Get the install fields
+
+```bash
+curl -s "$API/catalog/apps/87/install-schema" -H "X-API-Key: $APPBOX_API_KEY" \
+  | jq '.data.fields[] | {name, type, required, default}'
+```
+
+Each field's `name` is the key to send in `fields`. Fill in every `required` field. Fields with a `visible_when` only apply when their conditions hold, and anything you leave out takes its `default`.
+
+## 4. Validate the request
+
+Build the request body, then check it without installing:
+
+```bash
+cat > install.json <<'EOF'
+{
+  "app_id": 87,
+  "appbox_id": 1234,
+  "fields": {
+    "USERNAME": "admin",
+    "PASSWORD": "a-long-unique-password"
+  }
+}
+EOF
+
+curl -s -X POST "$API/apps/install/validate" \
+  -H "X-API-Key: $APPBOX_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data @install.json | jq '.data'
+```
+
+Fix anything listed in `errors` until `valid` is `true`.
+
+Apps with `requires_domain` get a subdomain of the Appbox's own hostname, such as `jellyfin.mybox.appboxes.co`, unless you send a `domain`. To use your own domain instead, add `"domain": { "domain_id": ..., "subdomain": "media" }` and give the key `domains:read` and `domains:write`. Check the DNS first with `POST /apps/install/dns-check`.
+
+## 5. Install
+
+Send the same body to `POST /apps`. Add an `Idempotency-Key` so that a retry after a network error can't start a second install:
+
+```bash
+curl -s -X POST "$API/apps" \
+  -H "X-API-Key: $APPBOX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: install-jellyfin-mybox-1" \
+  --data @install.json | jq '.data'
+```
+
+```json
+{
+  "app_instance_id": 5822,
+  "status": "installing",
+  "app_id": 87,
+  "appbox_id": 1234,
+  "version_id": 1450,
+  "version": "10.11.2",
+  "boost_slots": 0
+}
+```
+
+## 6. Wait for it to finish
+
+Poll the new app until `status` is no longer `installing`:
+
+```bash
+while true; do
+  status=$(curl -s "$API/apps/5822" -H "X-API-Key: $APPBOX_API_KEY" | jq -r '.data.status')
+  echo "$status"
+  [ "$status" != "installing" ] && break
+  sleep 15
+done
+```
+
+A finished install reports `running`. With `domains:read`, `GET /apps/5822` also returns the app's `url`.
+
+## Troubleshooting
+
+| What you see                   | What to check                                                                                        |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `403 missing_scope`            | Add the scopes in `error.details.missing_scopes` to the key under **Account > API Keys**.            |
+| `409 no_slots`                 | The Appbox doesn't have enough free app slots. Freeze or uninstall an app, or choose another Appbox. |
+| `409 app_already_installed`    | The app allows only one copy per Appbox, and one is already installed.                               |
+| `400 validation_failed`        | Run the request through `POST /apps/install/validate` to see each field's problem.                   |
+| `409 idempotency_key_replayed` | This request already ran. List your apps to find the install instead of sending it again.            |

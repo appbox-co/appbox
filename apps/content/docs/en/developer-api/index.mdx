@@ -1,0 +1,175 @@
+---
+title: Developer API
+description: Automate your Appbox account with API keys. Install and manage apps, domains, and the tables and actions apps provide.
+sort: 1
+---
+
+The developer API lets scripts and CI/CD pipelines manage your Appbox account. You can list and install apps, start, stop and update them, attach domains, and work with the tables and actions some apps provide.
+
+| What                  | Value                                      |
+| --------------------- | ------------------------------------------ |
+| Base URL              | `https://api.appbox.co/developer/v1`       |
+| Format                | JSON over HTTPS                            |
+| Authentication        | An API key in the `X-API-Key` header       |
+| Machine-readable spec | [OpenAPI 3.1](/developer-api-openapi.yaml) |
+
+All paths in these docs are relative to the base URL. For example, `GET /apps` means `GET https://api.appbox.co/developer/v1/apps`.
+
+## Create an API key
+
+1. In Appbox, open **Account > API Keys**.
+2. Select **Create API Key**. If you haven't signed in recently, Appbox first asks for your password, and your two-factor code if you use one.
+3. Enter a **Name** that says where the key is used, such as `Deploy pipeline`.
+4. Under **Scopes**, choose a **Preset** or tick individual scopes. Give the key only what your tool needs. See [Scopes and presets](/docs/developer-api/scopes).
+5. Optionally set **Expires at**.
+6. Select **Create API Key**, then copy the key. It starts with `abx_` and is shown only once.
+
+Store the key like a password, for example in your CI system's secret store. If it leaks, select **Revoke** next to it on the same page. Revoked keys stop working immediately.
+
+To change a key's scopes later, select **Edit** next to it. Changes apply to the key's next request.
+
+## Make your first request
+
+`GET /key` needs no scope and shows the key you are using:
+
+```bash
+curl https://api.appbox.co/developer/v1/key \
+  -H "X-API-Key: $APPBOX_API_KEY"
+```
+
+```json
+{
+  "data": {
+    "id": 42,
+    "name": "Deploy pipeline",
+    "key_prefix": "abx_sk_live_3f9a",
+    "scopes": ["catalog:read", "apps:read", "apps:lifecycle"],
+    "created_at": "2026-11-03T11:02:15+00:00",
+    "expires_at": null,
+    "last_used_at": "2026-11-03T11:05:40+00:00"
+  }
+}
+```
+
+Then list your apps:
+
+```bash
+curl https://api.appbox.co/developer/v1/apps \
+  -H "X-API-Key: $APPBOX_API_KEY"
+```
+
+## Authentication
+
+Send the key on every request, in either header:
+
+```http
+X-API-Key: abx_sk_live_...
+Authorization: Bearer abx_sk_live_...
+```
+
+- API keys only work on `/developer/v1`. The dashboard API under `/v1` refuses them with `403 api_key_route_not_allowed`.
+- A key can never manage API keys, account security, users or billing, whatever its scopes.
+- A key always acts as a normal customer account, even when an admin owns it. It only reaches the owner's own Appboxes, apps and domains. Anything else returns `404`, including apps Appbox runs for you, such as the backup agent.
+
+A missing, malformed, unknown, revoked or expired key returns `401`.
+
+## Responses
+
+Successful responses wrap the result in `data`:
+
+```json
+{ "data": { "id": 5821, "status": "running" } }
+```
+
+Lists also return `pagination`:
+
+```json
+{
+  "data": [{ "id": 5821 }, { "id": 5822 }],
+  "pagination": { "page": 1, "per_page": 25, "total": 2, "total_pages": 1 }
+}
+```
+
+Send request bodies as JSON with `Content-Type: application/json`. Other content types return `415 unsupported_media_type`.
+
+### Pagination
+
+Every list accepts two query parameters:
+
+| Parameter  | Default | Allowed values |
+| ---------- | ------- | -------------- |
+| `page`     | `1`     | 1 or more      |
+| `per_page` | `25`    | 1 to 100       |
+
+Keep requesting the next `page` until it reaches `pagination.total_pages`.
+
+## Errors
+
+Errors return the HTTP status and an `error` object:
+
+```json
+{
+  "error": {
+    "code": 3022,
+    "status": 403,
+    "message": "API key is missing required scope(s): apps:read",
+    "type": "missing_scope",
+    "details": {
+      "required_scopes": ["apps:read"],
+      "missing_scopes": ["apps:read"]
+    }
+  }
+}
+```
+
+Branch on `type`, which stays the same over time. `code` is Appbox's internal error number, `message` is for people, and `details` appears when there is more to say, such as which field failed.
+
+| Status | `type`                                                                                                         | What it means                                                                  |
+| ------ | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 400    | `invalid_request`, `invalid_json`, `field_missing`, `unknown_field`, `validation_failed`, `field_not_editable` | The request is malformed or a value is invalid. `details` names the field.     |
+| 400    | `dns_verification_failed`                                                                                      | A domain doesn't resolve to the app's server yet.                              |
+| 401    | `api_key_required`, `unauthorized`, `api_key_expired`                                                          | No key, or the key is malformed, unknown, revoked or expired.                  |
+| 403    | `missing_scope`                                                                                                | The key lacks a scope. `details.missing_scopes` lists what to add.             |
+| 403    | `api_key_route_not_allowed`, `forbidden`, `not_allowed`, `rejected`, `app_disabled`                            | The key may not do this, whatever its scopes.                                  |
+| 404    | `not_found`                                                                                                    | The resource doesn't exist or isn't yours.                                     |
+| 409    | `conflict`, `not_ready`, `change_pending`, `already_on_version`, `app_already_installed`                       | The resource is busy or already in the requested state.                        |
+| 409    | `no_slots`, `row_limit_reached`                                                                                | The Appbox has no free app slots, or the table is full.                        |
+| 409    | `idempotency_key_replayed`, `idempotency_key_reused`                                                           | The `Idempotency-Key` was used before. See below.                              |
+| 415    | `unsupported_media_type`                                                                                       | The body isn't `application/json`.                                             |
+| 429    | `rate_limited`, `cooldown`                                                                                     | Too many requests, or the same operation ran too recently. Wait and retry.     |
+| 500    | `internal_error`                                                                                               | Something failed on our side. Retry later, and contact support if it persists. |
+| 503    | `server_unavailable`                                                                                           | The server the app runs on can't be reached right now. Retry later.            |
+
+## Idempotency
+
+Operations that can run commands on your apps accept an `Idempotency-Key` header: installs, lifecycle and version changes, custom table writes and custom actions. Use a unique value for each change you intend to make, up to 200 characters of `A-Z a-z 0-9 _ . : -`:
+
+```bash
+curl -X POST https://api.appbox.co/developer/v1/apps/5821/restart \
+  -H "X-API-Key: $APPBOX_API_KEY" \
+  -H "Idempotency-Key: deploy-2026-11-03-1"
+```
+
+If you send the same key again:
+
+- with the same request, you get `409 idempotency_key_replayed` and the operation doesn't run again;
+- with a different request, you get `409 idempotency_key_reused`.
+
+The API doesn't repeat the original response, so read the resource's current state with a `GET` to see what happened.
+
+## Rate limits
+
+| Limit                                 | Reads per minute | Writes per minute |
+| ------------------------------------- | ---------------- | ----------------- |
+| Each API key                          | 600              | 60                |
+| All of an account's API keys together | 1200             | 120               |
+
+Some operations have their own, tighter limits, listed in the [endpoint reference](/docs/developer-api/endpoints). Starting, stopping, restarting and unfreezing an app also has a 30-second cooldown per app, shared with the dashboard.
+
+Responses include `X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset`. Over the limit you get `429 rate_limited` with a `Retry-After` header in seconds.
+
+## Next steps
+
+- [Scopes and presets](/docs/developer-api/scopes): what each scope allows and which presets to start from.
+- [Install an app](/docs/developer-api/install-an-app): a walkthrough from finding an app to a running install.
+- [Endpoint reference](/docs/developer-api/endpoints): every operation, its scopes and its parameters.
