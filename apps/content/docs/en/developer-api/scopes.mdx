@@ -56,7 +56,7 @@ Some operations need more scopes depending on what you send or what the app has:
 | `POST /apps` with `boost_slots` above 0                      | `apps:boost`                       |
 | `DELETE /apps/{id}` when domains were attached after install | `domains:delete`                   |
 
-An install that uses a subdomain of your Appbox's own hostname, such as `files.mybox.appboxes.co`, needs only `apps:install`. Uninstalling removes the domain the install created without `domains:delete`.
+An install on a subdomain of your Appbox's own hostname, such as `files.mybox.appboxes.co`, needs only `apps:install`. Uninstalling that app needs only `apps:uninstall`, because the install created the domain.
 
 Some responses also depend on scopes. Installed apps include `domain` and `url`, and Appboxes include `domain`, only when the key has `domains:read`. Custom table writes return the row's values only when the key has `custom_tables:read`.
 

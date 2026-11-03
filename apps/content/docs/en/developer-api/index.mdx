@@ -4,7 +4,7 @@ description: Automate your Appbox account with API keys. Install and manage apps
 sort: 1
 ---
 
-The developer API lets scripts, CI/CD pipelines and other tools manage your Appbox account. You can list and install apps, start, stop and update them, attach domains, and work with the tables and actions some apps provide.
+The developer API lets scripts and CI/CD pipelines manage your Appbox account. You can list and install apps, start, stop and update them, attach domains, and work with the tables and actions some apps provide.
 
 | What                  | Value                                      |
 | --------------------- | ------------------------------------------ |
@@ -69,7 +69,7 @@ Authorization: Bearer abx_sk_live_...
 
 - API keys only work on `/developer/v1`. The dashboard API under `/v1` refuses them with `403 api_key_route_not_allowed`.
 - A key can never manage API keys, account security, users or billing, whatever its scopes.
-- A key always acts as a normal customer account, even when an admin owns it. It only reaches the owner's own Appboxes, apps and domains.
+- A key always acts as a normal customer account, even when an admin owns it. It only reaches the owner's own Appboxes, apps and domains. Anything else returns `404`, including apps Appbox runs for you, such as the backup agent.
 
 A missing, malformed, unknown, revoked or expired key returns `401`.
 
@@ -152,10 +152,10 @@ curl -X POST https://api.appbox.co/developer/v1/apps/5821/restart \
 
 If you send the same key again:
 
-- with the same request, you get `409 idempotency_key_replayed` and nothing runs twice;
+- with the same request, you get `409 idempotency_key_replayed` and the operation doesn't run again;
 - with a different request, you get `409 idempotency_key_reused`.
 
-The original response is not repeated, so read the resource's current state with a `GET` to see what happened.
+The API doesn't repeat the original response, so read the resource's current state with a `GET` to see what happened.
 
 ## Rate limits
 
@@ -167,10 +167,6 @@ The original response is not repeated, so read the resource's current state with
 Some operations have their own, tighter limits, listed in the [endpoint reference](/docs/developer-api/endpoints). Starting, stopping, restarting and unfreezing an app also has a 30-second cooldown per app, shared with the dashboard.
 
 Responses include `X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset`. Over the limit you get `429 rate_limited` with a `Retry-After` header in seconds.
-
-## What a key can see
-
-A key only sees your own Appboxes, apps and domains. Anything else returns `404`, including apps Appbox runs for you, such as the backup agent.
 
 ## Next steps
 
