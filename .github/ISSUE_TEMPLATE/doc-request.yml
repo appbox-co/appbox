@@ -1,0 +1,41 @@
+name: Documentation request
+description: Suggest a new docs page or report a problem with an existing one.
+title: "docs: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is for the docs at https://www.appbox.co/docs. For help with your own Appbox, [open a support ticket](https://billing.appbox.co/submitticket.php) instead, and don't post account details here.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type of change
+      options:
+        - New app page
+        - New platform page or how-to guide
+        - Fix or update an existing page
+        - Move a knowledge base article
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: App or page
+      description: The app's name in the Appbox App Store, or the address of the existing page or knowledge base article.
+      placeholder: Jellyfin, or https://www.appbox.co/docs/apps/...
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What the page should cover
+      description: For a new page, list what readers need to know. For a fix, quote the wrong text and say what is correct now.
+    validations:
+      required: true
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: Writing it yourself
+      options:
+        - label: I'd like to write this page. Please assign it to me.
