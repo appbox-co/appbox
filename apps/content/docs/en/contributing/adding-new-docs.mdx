@@ -49,4 +49,4 @@ After that, you will need to display the new information in the document templat
 
 ## Checking your changes
 
-The site reads the MDX files directly, so `pnpm dev` shows changes when you refresh the page. A file with invalid frontmatter stops the page from loading and names the file and field. `pnpm build` checks every file in every language.
+The site reads the MDX files directly, so `pnpm dev` shows changes when you refresh the page. If a file's frontmatter is invalid, `pnpm dev` leaves that page out and prints the file and field in the terminal. `pnpm build` checks every file in every language and fails if any are invalid.

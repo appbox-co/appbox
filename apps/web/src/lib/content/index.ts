@@ -14,6 +14,8 @@ import { z } from "zod"
 import { blogConfig } from "@/config/blog"
 import type { PostAuthor } from "@/lib/opendocs/types/blog"
 
+// The build traces the file reads below from this path and bundles the MDX
+// files with every route that imports this module, so keep it static.
 export const contentDir = path.join(process.cwd(), "../content")
 
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/
@@ -113,7 +115,20 @@ function readDocument<T extends z.ZodObject>(
   const sourceFilePath = `${collection}/${file}`
   const source = fs.readFileSync(path.join(contentDir, sourceFilePath), "utf8")
   const match = FRONTMATTER.exec(source)
-  const data = schema.safeParse(match ? (parseYaml(match[1]) ?? {}) : {})
+  let frontmatter: unknown = {}
+
+  if (match) {
+    try {
+      frontmatter = parseYaml(match[1]) ?? {}
+    } catch (error) {
+      // The parser's message doesn't name the file, so add it.
+      const message = error instanceof Error ? error.message : String(error)
+      const summary = message.split("\n")[0].replace(/:$/, "")
+      throw new Error(`${sourceFilePath}\n  frontmatter: ${summary}`)
+    }
+  }
+
+  const data = schema.safeParse(frontmatter)
 
   if (!data.success) {
     const issues = data.error.issues
@@ -180,9 +195,15 @@ function defineCollection<T extends z.ZodObject, D>(
     }
 
     if (errors.length > 0) {
-      throw new Error(
-        `Invalid frontmatter in ${errors.length} ${collection} file(s):\n${errors.join("\n")}`
-      )
+      const message = `Invalid frontmatter in ${errors.length} ${collection} file(s):\n${errors.join("\n")}`
+
+      // A build fails on any bad file. In development, leave the file out
+      // instead, so one bad page doesn't break every page that lists content.
+      if (process.env.NODE_ENV === "production") {
+        throw new Error(message)
+      }
+
+      console.error(message)
     }
 
     cache = { signature, documents }

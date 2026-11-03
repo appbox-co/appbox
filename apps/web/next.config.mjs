@@ -11,11 +11,6 @@ const nextConfig = {
   turbopack: {
     root: path.resolve(__dirname, "../..")
   },
-  // src/lib/content reads these at request time for dynamic routes such as
-  // the blog OG images and feeds, and file tracing can't see those reads.
-  outputFileTracingIncludes: {
-    "/**": ["../content/**/*.mdx"]
-  },
   images: {
     remotePatterns: [
       {
