@@ -102,7 +102,6 @@ let postHogInitialized = false
 // the provider's, and the first pageview must never be captured before init.
 function initPostHog() {
   if (postHogInitialized) return
-  postHogInitialized = true
 
   posthog.init("phc_et9aGikely5Rh6zc3qA5tFyCAZNyX2CD4kGSalefCQJ", {
     api_host: `https://${POSTHOG_PROXY_HOST}`,
@@ -119,10 +118,18 @@ function initPostHog() {
     advanced_disable_feature_flags: true,
     person_profiles: "identified_only"
   })
+  // Set only after init succeeds, so a failed init is retried by the next call.
+  postHogInitialized = true
+
   clearLegacyPostHogOptOutIfAllowed()
   syncPostHogAttribution()
   syncPostHogSessionRecording()
+  allowRedditTrackingIfConsentBridgeRan()
+}
 
+// The iubenda consent bridge in the root layout sets this flag when it runs
+// before the provider has installed window.appboxAllowRedditTracking.
+function allowRedditTrackingIfConsentBridgeRan() {
   if (
     (window as WindowWithTrackingBridge).__appboxRedditAdvertisingConsentGranted
   ) {
@@ -179,86 +186,82 @@ function PostHogPageviewTracker() {
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      initPostHog()
+    initPostHog()
 
-      const trackingWindow = window as WindowWithTrackingBridge
-      trackingWindow.appboxAllowRedditTracking = allowRedditTracking
-      if (trackingWindow.__appboxRedditAdvertisingConsentGranted) {
-        allowRedditTracking()
-      }
+    const trackingWindow = window as WindowWithTrackingBridge
+    trackingWindow.appboxAllowRedditTracking = allowRedditTracking
+    allowRedditTrackingIfConsentBridgeRan()
 
-      const handleConsentGiven = () => {
-        allowMeasurementTracking()
-        clearLegacyPostHogOptOutIfAllowed()
-        syncPostHogAttribution()
-        syncPostHogSessionRecording()
-        allowRedditTracking()
-      }
-      const handleMeasurementConsentGiven = () => {
-        allowMeasurementTracking()
-        clearLegacyPostHogOptOutIfAllowed()
-        syncPostHogAttribution()
-        syncPostHogSessionRecording()
-      }
-      const handlePreferenceNotNeeded = () => {
-        allowMeasurementTrackingWithoutPreference()
-        clearLegacyPostHogOptOutIfAllowed()
-        syncPostHogAttribution()
-        syncPostHogSessionRecording()
-        allowRedditTrackingWithoutPreference()
-      }
-      const handleConsentRejected = () => {
-        syncPostHogAttribution()
-        syncPostHogSessionRecording()
-      }
+    const handleConsentGiven = () => {
+      allowMeasurementTracking()
+      clearLegacyPostHogOptOutIfAllowed()
+      syncPostHogAttribution()
+      syncPostHogSessionRecording()
+      allowRedditTracking()
+    }
+    const handleMeasurementConsentGiven = () => {
+      allowMeasurementTracking()
+      clearLegacyPostHogOptOutIfAllowed()
+      syncPostHogAttribution()
+      syncPostHogSessionRecording()
+    }
+    const handlePreferenceNotNeeded = () => {
+      allowMeasurementTrackingWithoutPreference()
+      clearLegacyPostHogOptOutIfAllowed()
+      syncPostHogAttribution()
+      syncPostHogSessionRecording()
+      allowRedditTrackingWithoutPreference()
+    }
+    const handleConsentRejected = () => {
+      syncPostHogAttribution()
+      syncPostHogSessionRecording()
+    }
 
-      window.addEventListener("iubenda_consent_given", handleConsentGiven)
-      window.addEventListener(
+    window.addEventListener("iubenda_consent_given", handleConsentGiven)
+    window.addEventListener(
+      "iubenda_consent_given_purpose_4",
+      handleMeasurementConsentGiven
+    )
+    window.addEventListener(
+      "iubenda_consent_given_purpose_5",
+      allowRedditTracking
+    )
+    window.addEventListener(
+      "iubenda_preference_not_needed",
+      handlePreferenceNotNeeded
+    )
+    window.addEventListener("iubenda_consent_rejected", handleConsentRejected)
+
+    const consentPoll = window.setInterval(() => {
+      syncPostHogAttribution()
+      syncPostHogSessionRecording()
+    }, 1000)
+    const redditPixelPoll = window.setInterval(trackRedditPageVisit, 1000)
+    window.setTimeout(() => window.clearInterval(consentPoll), 30000)
+    window.setTimeout(() => window.clearInterval(redditPixelPoll), 30000)
+
+    return () => {
+      window.removeEventListener("iubenda_consent_given", handleConsentGiven)
+      window.removeEventListener(
         "iubenda_consent_given_purpose_4",
         handleMeasurementConsentGiven
       )
-      window.addEventListener(
+      window.removeEventListener(
         "iubenda_consent_given_purpose_5",
         allowRedditTracking
       )
-      window.addEventListener(
+      window.removeEventListener(
         "iubenda_preference_not_needed",
         handlePreferenceNotNeeded
       )
-      window.addEventListener("iubenda_consent_rejected", handleConsentRejected)
-
-      const consentPoll = window.setInterval(() => {
-        syncPostHogAttribution()
-        syncPostHogSessionRecording()
-      }, 1000)
-      const redditPixelPoll = window.setInterval(trackRedditPageVisit, 1000)
-      window.setTimeout(() => window.clearInterval(consentPoll), 30000)
-      window.setTimeout(() => window.clearInterval(redditPixelPoll), 30000)
-
-      return () => {
-        window.removeEventListener("iubenda_consent_given", handleConsentGiven)
-        window.removeEventListener(
-          "iubenda_consent_given_purpose_4",
-          handleMeasurementConsentGiven
-        )
-        window.removeEventListener(
-          "iubenda_consent_given_purpose_5",
-          allowRedditTracking
-        )
-        window.removeEventListener(
-          "iubenda_preference_not_needed",
-          handlePreferenceNotNeeded
-        )
-        window.removeEventListener(
-          "iubenda_consent_rejected",
-          handleConsentRejected
-        )
-        window.clearInterval(consentPoll)
-        window.clearInterval(redditPixelPoll)
-        if (trackingWindow.appboxAllowRedditTracking === allowRedditTracking) {
-          delete trackingWindow.appboxAllowRedditTracking
-        }
+      window.removeEventListener(
+        "iubenda_consent_rejected",
+        handleConsentRejected
+      )
+      window.clearInterval(consentPoll)
+      window.clearInterval(redditPixelPoll)
+      if (trackingWindow.appboxAllowRedditTracking === allowRedditTracking) {
+        delete trackingWindow.appboxAllowRedditTracking
       }
     }
   }, [])

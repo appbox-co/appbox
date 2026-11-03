@@ -86,55 +86,55 @@ export async function generateMetadata({
 }: AlternativePageProps): Promise<Metadata> {
   const { locale, slug } = await params
 
-  try {
-    const page = await getAlternativePage(slug)
-    const blocks = parseMarketingBlocks(page.content)
-    const meta = blocks ? extractMeta(blocks) : null
-    const firstMarkdown = blocks?.find((block) => block.type === "markdown")
-    const plainDescription =
-      firstMarkdown?.type === "markdown"
-        ? markdownToPlainText(firstMarkdown.content)
-        : ""
-    const truncatedDescription =
-      plainDescription.length > 155
-        ? `${plainDescription.substring(0, 152)}...`
-        : plainDescription
-    const title =
-      page.seo_title ||
-      meta?.title ||
-      `Best ${page.competitor_name} alternatives - ${siteConfig.name}`
-    const description =
-      page.seo_description ||
-      meta?.description ||
-      truncatedDescription ||
-      `Compare ${page.competitor_name} alternatives, including Appbox apps and external tools.`
-    const keywords =
-      page.seo_keywords && page.seo_keywords.length > 0
-        ? page.seo_keywords
-        : meta?.keywords
-
-    return {
-      title,
-      description,
-      keywords,
-      alternates: {
-        canonical: absoluteUrl(`/${locale}/alternativesto/${page.slug}`)
-      },
-      openGraph: {
-        type: "website",
-        title,
-        url: absoluteUrl(`/${locale}/alternativesto/${page.slug}`),
-        description,
-        images: [
-          {
-            url: siteConfig.og.image,
-            alt: `${page.competitor_name} alternatives - ${siteConfig.name}`
-          }
-        ]
-      }
-    }
-  } catch {
+  const page = await getAlternativePage(slug)
+  if (!page) {
     return {}
+  }
+
+  const blocks = parseMarketingBlocks(page.content)
+  const meta = blocks ? extractMeta(blocks) : null
+  const firstMarkdown = blocks?.find((block) => block.type === "markdown")
+  const plainDescription =
+    firstMarkdown?.type === "markdown"
+      ? markdownToPlainText(firstMarkdown.content)
+      : ""
+  const truncatedDescription =
+    plainDescription.length > 155
+      ? `${plainDescription.substring(0, 152)}...`
+      : plainDescription
+  const title =
+    page.seo_title ||
+    meta?.title ||
+    `Best ${page.competitor_name} alternatives - ${siteConfig.name}`
+  const description =
+    page.seo_description ||
+    meta?.description ||
+    truncatedDescription ||
+    `Compare ${page.competitor_name} alternatives, including Appbox apps and external tools.`
+  const keywords =
+    page.seo_keywords && page.seo_keywords.length > 0
+      ? page.seo_keywords
+      : meta?.keywords
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: absoluteUrl(`/${locale}/alternativesto/${page.slug}`)
+    },
+    openGraph: {
+      type: "website",
+      title,
+      url: absoluteUrl(`/${locale}/alternativesto/${page.slug}`),
+      description,
+      images: [
+        {
+          url: siteConfig.og.image,
+          alt: `${page.competitor_name} alternatives - ${siteConfig.name}`
+        }
+      ]
+    }
   }
 }
 
@@ -143,11 +143,8 @@ export default async function AlternativePage({
 }: AlternativePageProps) {
   const { locale, slug } = await params
 
-  let page
-  try {
-    page = await getAlternativePage(slug)
-  } catch (error) {
-    console.error("Error fetching alternative page:", error)
+  const page = await getAlternativePage(slug)
+  if (!page) {
     notFound()
   }
 
