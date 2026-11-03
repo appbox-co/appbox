@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
-import { allDocs } from "contentlayer/generated"
+import { getAllDocs } from "@/lib/content"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
 import Link from "next/link"
@@ -92,7 +92,7 @@ export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
 export async function generateStaticParams(): Promise<
   { slug: string[]; locale: LocaleOptions }[]
 > {
-  const docs = allDocs.map((doc) => {
+  const docs = getAllDocs().map((doc) => {
     const [locale, ...slugs] = doc.slugAsParams.split("/")
 
     return {
@@ -123,13 +123,13 @@ export default async function DocPage(props: DocPageProps) {
       }
     >()
 
-    const docsInLocale = allDocs.filter((doc) =>
+    const docsInLocale = getAllDocs().filter((doc) =>
       doc.slugAsParams.startsWith(params.locale || "en")
     )
     const docsToDisplay =
       docsInLocale.length > 0
         ? docsInLocale
-        : allDocs.filter((doc) =>
+        : getAllDocs().filter((doc) =>
             doc.slugAsParams.startsWith(routing.defaultLocale)
           )
 
@@ -255,7 +255,7 @@ export default async function DocPage(props: DocPageProps) {
         <DocLinks doc={doc} />
 
         <div className="pb-12 pt-8">
-          <Mdx code={doc.body.code} />
+          <Mdx source={doc.body.raw} sourceFilePath={doc._raw.sourceFilePath} />
         </div>
 
         <DocsPager doc={doc} locale={params.locale} />

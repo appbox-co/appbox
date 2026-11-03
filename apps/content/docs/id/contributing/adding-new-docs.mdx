@@ -6,9 +6,12 @@ sort: 2
 
 # Untuk dokumentasi
 
-1. Buat file `.mdx` baru di folder `apps/content/docs/[language]` dengan isi dokumen Anda.
-2. Tambahkan dokumen ke menu navigasi situs.
-    Untuk melakukannya, tambahkan item baru ke file `src/config/docs.ts` pada properti `sidebarNav` dengan informasi yang diinginkan, cukup ikuti pola item yang sudah ada. Dengan melakukan ini, dokumen juga akan ditambahkan ke command palette pencarian.
+1. Buat file `.mdx` baru di folder bagian di bawah `apps/content/docs/en`, misalnya `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Tambahkan frontmatter yang dijelaskan di bawah, lalu tulis halamannya.
+
+Sidebar dan command palette pencarian dibuat oleh `apps/web/src/config/docs.ts` dari file berbahasa Inggris. Setiap folder menjadi sebuah bagian dan setiap file menjadi halaman di dalamnya, sehingga file baru akan muncul tanpa perlu mengubah konfigurasi apa pun. Folder baru akan menambahkan bagian baru, jadi diskusikan terlebih dahulu di sebuah issue.
+
+Tulis halaman baru hanya dalam bahasa Inggris. Lihat [Menulis dokumentasi](/docs/contributing/writing-docs) untuk lokasi halaman, template halaman aplikasi, dan panduan gaya.
 
 ## Pengaturan Dokumen MDX
 
@@ -26,7 +29,7 @@ Field metadata berikut didukung:
 
 - `title` (wajib): Judul dokumen.
 - `description` (wajib): Deskripsi singkat dokumen.
-- `sort` (opsional): Angka yang menentukan urutan dokumen dalam navigasi. Dokumen dengan nilai sort lebih rendah muncul lebih dulu. Jika tidak disediakan, dokumen diurutkan secara alfabetis berdasarkan judul.
+- `sort` (opsional): Angka yang menentukan urutan dokumen di dalam bagiannya. Dokumen yang memiliki nilai `sort` muncul lebih dulu, dimulai dari nilai terendah. Dokumen tanpa nilai tersebut menyusul, diurutkan secara alfabetis berdasarkan judul.
 - `links` (opsional): Link ke dokumen terkait, referensi API, source code, dan sebagainya.
 - `toc` (opsional): Apakah daftar isi ditampilkan. Default-nya `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Namun saat menambahkan metadata custom, Anda juga perlu memperbarui file `contentlayer.config.ts` yang berada di root project dan di dalam properti `fields` pada konstanta `Doc` atau `Blog`.
-Setelah itu, Anda perlu menampilkan informasi baru tersebut di template dokumen. Untuk melakukannya, Anda perlu memperbarui file `src/app/[locale]/docs/[[...slug]]/page.tsx`, atau `src/app/[locale]/blog/[[...slug]]/page.tsx` atau salah satu child component-nya.
+Namun saat menambahkan metadata custom, Anda juga perlu menambahkan field tersebut ke schema yang sesuai (`docSchema`, `blogSchema`, atau `policySchema`) di `apps/web/src/lib/content/index.ts`. Key frontmatter yang tidak ada di schema akan dibuang.
+Setelah itu, Anda perlu menampilkan informasi baru tersebut di template dokumen. Untuk melakukannya, Anda perlu memperbarui file `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, atau `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` atau salah satu child component-nya.
 
-## Membangun Ulang Contentlayer
+## Memeriksa perubahan Anda
 
-Saat Anda mengubah konten dokumentasi, menambahkan dokumen baru, atau memodifikasi file `contentlayer.config.ts`, Anda perlu membangun ulang cache contentlayer agar perubahan berlaku selama pengembangan. Jalankan:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Perintah ini membuat ulang tipe konten dan data yang dibutuhkan aplikasi. Anda perlu menjalankan perintah ini setiap kali Anda:
-
-- Menambahkan field metadata baru ke file `contentlayer.config.ts`
-- Menambahkan atau memodifikasi konten MDX saat dev server tidak berjalan
-- Mengubah struktur organisasi konten Anda
-
-Perintah ini dijalankan otomatis saat membangun project untuk production, tetapi Anda perlu menjalankannya secara manual selama pengembangan jika membuat perubahan struktural pada konten.
-
-
-
+Situs membaca file MDX secara langsung, sehingga `pnpm dev` menampilkan perubahan saat Anda memuat ulang halaman. Jika frontmatter sebuah file tidak valid, `pnpm dev` tidak menyertakan halaman tersebut dan menampilkan nama file serta field-nya di terminal. `pnpm build` memeriksa setiap file dalam setiap bahasa dan gagal jika ada yang tidak valid.

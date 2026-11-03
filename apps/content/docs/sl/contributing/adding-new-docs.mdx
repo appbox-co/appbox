@@ -6,9 +6,12 @@ sort: 2
 
 # Za dokumentacijo
 
-1. Ustvarite novo datoteko `.mdx` v mapi `apps/content/docs/[language]` z vsebino svojega dokumenta.
-2. Dodajte dokument v navigacijski meni spletnega mesta.
-    To storite tako, da v datoteko `src/config/docs.ts`, v lastnost `sidebarNav`, dodate nov element z želenimi informacijami; sledite vzorcu obstoječih elementov. S tem bo dokument dodan tudi v iskalno ukazno paleto.
+1. Ustvarite novo datoteko `.mdx` v mapi razdelka pod `apps/content/docs/en`, na primer `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Dodajte spodaj opisani frontmatter, nato napišite stran.
+
+Stransko vrstico in iskalno ukazno paleto iz angleških datotek zgradi `apps/web/src/config/docs.ts`. Vsaka mapa postane razdelek, vsaka datoteka pa stran v njem, zato se nova datoteka prikaže brez kakršne koli spremembe konfiguracije. Nova mapa doda nov razdelek, zato o njej najprej razpravljajte v issueju.
+
+Nove strani pišite samo v angleščini. Kam sodijo strani, predlogo za strani aplikacij in slogovni priročnik najdete na strani [Pisanje dokumentacije](/docs/contributing/writing-docs).
 
 ## Nastavitve dokumenta MDX
 
@@ -26,7 +29,7 @@ Podprta so naslednja polja metapodatkov:
 
 - `title` (obvezno): naslov dokumenta.
 - `description` (obvezno): kratek opis dokumenta.
-- `sort` (neobvezno): številka, ki določa vrstni red dokumenta v navigaciji. Dokumenti z nižjimi vrednostmi `sort` se prikažejo prvi. Če ni navedena, so dokumenti razvrščeni abecedno po naslovu.
+- `sort` (neobvezno): številka, ki določa vrstni red dokumenta v njegovem razdelku. Dokumenti z vrednostjo `sort` so prvi, od najnižje vrednosti navzgor. Sledijo jim dokumenti brez te vrednosti, razvrščeni abecedno po naslovu.
 - `links` (neobvezno): povezave do povezanih dokumentov, referenc API, izvorne kode itd.
 - `toc` (neobvezno): ali naj se prikaže kazalo vsebine. Privzeta vrednost je `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Pri dodajanju metapodatkov po meri morate posodobiti tudi datoteko `contentlayer.config.ts`, ki je v korenu projekta, in sicer znotraj lastnosti `fields` v konstantah `Doc` ali `Blog`.
-Nato boste morali nove informacije prikazati v predlogi dokumenta. Za to morate posodobiti datoteko `src/app/[locale]/docs/[[...slug]]/page.tsx` ali `src/app/[locale]/blog/[[...slug]]/page.tsx` oziroma eno od njenih podrejenih komponent.
+Pri dodajanju metapodatkov po meri morate polje dodati tudi v ustrezno shemo (`docSchema`, `blogSchema` ali `policySchema`) v `apps/web/src/lib/content/index.ts`. Ključi v frontmatterju, ki jih ni v shemi, se zavržejo.
+Nato boste morali nove informacije prikazati v predlogi dokumenta. Za to morate posodobiti datoteko `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` ali `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` oziroma eno od njenih podrejenih komponent.
 
-## Ponovna izgradnja Contentlayer
+## Preverjanje sprememb
 
-Ko spremenite vsebino dokumentacije, dodate novo dokumentacijo ali spremenite datoteko `contentlayer.config.ts`, morate ponovno zgraditi predpomnilnik Contentlayer, da spremembe začnejo veljati med razvojem. Zaženite:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Ta ukaz ponovno ustvari tipe vsebine in podatke, ki jih aplikacija potrebuje. Ukaz morate zagnati vsakič, ko:
-
-- dodate nova polja metapodatkov v datoteko `contentlayer.config.ts`,
-- dodate ali spremenite vsebino MDX, ko razvojni strežnik ne teče,
-- spremenite strukturo organizacije vsebine.
-
-Ukaz se samodejno zažene pri gradnji projekta za produkcijo, med razvojem pa ga morate zagnati ročno, če naredite strukturne spremembe vsebine.
-
-
-
+Spletno mesto bere datoteke MDX neposredno, zato `pnpm dev` pokaže spremembe, ko osvežite stran. Če je frontmatter datoteke neveljaven, `pnpm dev` to stran izpusti ter v terminalu izpiše datoteko in polje. `pnpm build` preveri vse datoteke v vseh jezikih in ne uspe, če je katera koli od njih neveljavna.

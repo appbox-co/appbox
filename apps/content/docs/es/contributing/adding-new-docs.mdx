@@ -6,9 +6,12 @@ sort: 2
 
 # Para documentación
 
-1. Crea un nuevo archivo `.mdx` en la carpeta `apps/content/docs/[language]` con el contenido de tu documento.
-2. Añade el documento al menú de navegación del sitio.
-    Para hacerlo, añade un nuevo elemento al archivo `src/config/docs.ts`, dentro de la propiedad `sidebarNav`, con la información deseada. Solo tienes que seguir el patrón de los elementos existentes. Al hacerlo, el documento también se añadirá a la paleta de comandos de búsqueda.
+1. Crea un nuevo archivo `.mdx` en una carpeta de sección dentro de `apps/content/docs/en`, por ejemplo `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Añade el frontmatter que se describe a continuación y después escribe la página.
+
+La barra lateral y la paleta de comandos de búsqueda las genera `apps/web/src/config/docs.ts` a partir de los archivos en inglés. Cada carpeta se convierte en una sección y cada archivo, en una página de esa sección, de modo que un archivo nuevo aparece sin ningún cambio de configuración. Una carpeta nueva añade una sección nueva, así que coméntala primero en un issue.
+
+Escribe las páginas nuevas solo en inglés. En [Escribir documentación](/docs/contributing/writing-docs) encontrarás dónde van las páginas, la plantilla para páginas de apps y la guía de estilo.
 
 ## Configuración de documentos MDX
 
@@ -26,7 +29,7 @@ Se admiten los siguientes campos de metadatos:
 
 - `title` (obligatorio): el título del documento.
 - `description` (obligatorio): una breve descripción del documento.
-- `sort` (opcional): un número que determina el orden del documento en la navegación. Los documentos con valores de `sort` más bajos aparecen primero. Si no se proporciona, los documentos se ordenan alfabéticamente por título.
+- `sort` (opcional): un número que determina el orden del documento dentro de su sección. Los documentos con un valor de `sort` van primero, de menor a mayor. Después van los que no lo tienen, ordenados alfabéticamente por título.
 - `links` (opcional): enlaces a documentos relacionados, referencias de API, código fuente, etc.
 - `toc` (opcional): si se debe mostrar la tabla de contenidos. Por defecto es `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Pero al añadir metadatos personalizados, también tienes que actualizar el archivo `contentlayer.config.ts`, ubicado en la raíz del proyecto, dentro de la propiedad `fields` de las constantes `Doc` o `Blog`.
-Después, tendrás que mostrar la nueva información en la plantilla del documento. Para hacerlo, actualiza el archivo `src/app/[locale]/docs/[[...slug]]/page.tsx`, o `src/app/[locale]/blog/[[...slug]]/page.tsx`, o alguno de sus componentes hijos.
+Pero al añadir metadatos personalizados, también tienes que añadir el campo al esquema correspondiente (`docSchema`, `blogSchema` o `policySchema`) en `apps/web/src/lib/content/index.ts`. Las claves del frontmatter que no están en el esquema se descartan.
+Después, tendrás que mostrar la nueva información en la plantilla del documento. Para hacerlo, actualiza el archivo `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, o `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`, o alguno de sus componentes hijos.
 
-## Reconstruir Contentlayer
+## Comprobar tus cambios
 
-Cuando hagas cambios en el contenido de la documentación, añadas nuevos documentos o modifiques el archivo `contentlayer.config.ts`, tendrás que reconstruir la caché de Contentlayer para que tus cambios surtan efecto durante el desarrollo. Ejecuta:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Este comando regenera los tipos de contenido y los datos que necesita la aplicación. Tendrás que ejecutarlo siempre que:
-
-- Añadas nuevos campos de metadatos al archivo `contentlayer.config.ts`
-- Añadas o modifiques contenido MDX cuando el servidor de desarrollo no esté en ejecución
-- Cambies la estructura de organización del contenido
-
-El comando se ejecuta automáticamente al compilar el proyecto para producción, pero tendrás que ejecutarlo manualmente durante el desarrollo si haces cambios estructurales en el contenido.
-
-
-
+El sitio lee los archivos MDX directamente, así que `pnpm dev` muestra los cambios cuando recargas la página. Si el frontmatter de un archivo no es válido, `pnpm dev` omite esa página e indica en la terminal el archivo y el campo. `pnpm build` comprueba todos los archivos de todos los idiomas y falla si alguno no es válido.

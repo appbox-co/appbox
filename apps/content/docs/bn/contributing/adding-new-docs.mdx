@@ -6,9 +6,12 @@ sort: 2
 
 # ডকুমেন্টেশনের জন্য
 
-1. আপনার ডকুমেন্টের কনটেন্ট দিয়ে `apps/content/docs/[language]` ফোল্ডারে একটি নতুন `.mdx` ফাইল তৈরি করুন।
-2. সাইটের নেভিগেশন মেনুতে ডকুমেন্টটি যোগ করুন।
-    এটি করতে, `src/config/docs.ts` ফাইলের `sidebarNav` প্রপার্টিতে প্রয়োজনীয় তথ্যসহ একটি নতুন আইটেম যোগ করুন; বিদ্যমান আইটেমগুলোর প্যাটার্ন অনুসরণ করলেই হবে। এটি করলে ডকুমেন্টটি সার্চ কমান্ড প্যালেটেও যোগ হবে।
+1. `apps/content/docs/en`-এর ভেতরের কোনো section ফোল্ডারে একটি নতুন `.mdx` ফাইল তৈরি করুন, যেমন `apps/content/docs/en/apps/jellyfin.mdx`।
+2. নিচে বর্ণিত frontmatter যোগ করুন, তারপর পেজটি লিখুন।
+
+`apps/web/src/config/docs.ts` ইংরেজি ফাইলগুলো থেকে সাইডবার ও সার্চ কমান্ড প্যালেট তৈরি করে। প্রতিটি ফোল্ডার একটি section এবং তার ভেতরের প্রতিটি ফাইল একটি পেজ হয়ে যায়, তাই কোনো configuration পরিবর্তন ছাড়াই নতুন ফাইল দেখা যায়। নতুন ফোল্ডার একটি নতুন section যোগ করে, তাই আগে একটি issue-তে এ নিয়ে আলোচনা করুন।
+
+নতুন পেজ শুধু ইংরেজিতে লিখুন। পেজ কোথায় রাখতে হবে, app পেজের template এবং style guide জানতে [ডকস লেখা](/docs/contributing/writing-docs) দেখুন।
 
 ## MDX ডকুমেন্ট সেটিংস
 
@@ -26,7 +29,7 @@ sort: 1
 
 - `title` (প্রয়োজনীয়): ডকুমেন্টের শিরোনাম।
 - `description` (প্রয়োজনীয়): ডকুমেন্টের সংক্ষিপ্ত বর্ণনা।
-- `sort` (ঐচ্ছিক): নেভিগেশনে ডকুমেন্টের ক্রম নির্ধারণ করে এমন একটি সংখ্যা। কম sort মানের ডকুমেন্ট আগে দেখায়। না দিলে ডকুমেন্টগুলো title অনুযায়ী বর্ণানুক্রমে সাজানো হয়।
+- `sort` (ঐচ্ছিক): নিজের section-এ ডকুমেন্টের ক্রম নির্ধারণ করে এমন একটি সংখ্যা। যেসব ডকুমেন্টে `sort` মান আছে সেগুলো আগে আসে, সবচেয়ে কম মানেরটি সবার আগে। যেগুলোতে এই মান নেই, সেগুলো এরপর title অনুযায়ী বর্ণানুক্রমে সাজানো থাকে।
 - `links` (ঐচ্ছিক): সম্পর্কিত ডকুমেন্ট, API reference, source code ইত্যাদির link।
 - `toc` (ঐচ্ছিক): table of contents দেখানো হবে কি না। ডিফল্ট `true`।
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-তবে custom metadata যোগ করলে project root-এ থাকা `contentlayer.config.ts` ফাইলের `Doc` বা `Blog` constants-এর `fields` property-ও update করতে হবে।
-এরপর ডকুমেন্ট template-এ নতুন তথ্য দেখাতে হবে। এটি করতে `src/app/[locale]/docs/[[...slug]]/page.tsx` ফাইল, অথবা `src/app/[locale]/blog/[[...slug]]/page.tsx` বা তার কোনো child component update করতে হবে।
+তবে custom metadata যোগ করলে `apps/web/src/lib/content/index.ts`-এর সংশ্লিষ্ট schema-তেও (`docSchema`, `blogSchema` বা `policySchema`) field-টি যোগ করতে হবে। schema-তে নেই এমন frontmatter key বাদ দেওয়া হয়।
+এরপর ডকুমেন্ট template-এ নতুন তথ্য দেখাতে হবে। এটি করতে `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` ফাইল, অথবা `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` বা তার কোনো child component update করতে হবে।
 
-## Contentlayer পুনর্নির্মাণ
+## আপনার পরিবর্তনগুলো যাচাই করা
 
-ডকুমেন্টেশন content বদলালে, নতুন docs যোগ করলে, অথবা `contentlayer.config.ts` ফাইল পরিবর্তন করলে development চলাকালে পরিবর্তন কার্যকর করতে contentlayer cache পুনর্নির্মাণ করতে হবে। চালান:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-এই command application-এর জন্য প্রয়োজনীয় content type ও data আবার generate করে। নিচের কাজগুলোর যেকোনোটি করলে commandটি আবার চালাতে হবে:
-
-- `contentlayer.config.ts` ফাইলে নতুন metadata field যোগ করা
-- dev server চলমান না থাকলে MDX content যোগ বা পরিবর্তন করা
-- content organization-এর structure পরিবর্তন করা
-
-production build করার সময় commandটি স্বয়ংক্রিয়ভাবে চলে, তবে development-এ structural content change করলে এটি manually চালাতে হবে।
-
-
-
+সাইট সরাসরি MDX ফাইলগুলো পড়ে, তাই পেজ refresh করলেই `pnpm dev`-এ পরিবর্তন দেখা যায়। কোনো ফাইলের frontmatter invalid হলে `pnpm dev` সেই পেজটি বাদ দেয় এবং terminal-এ ফাইল ও field-টি print করে। `pnpm build` প্রতিটি ভাষার প্রতিটি ফাইল যাচাই করে, এবং কোনোটি invalid হলে fail করে।

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
-import { allPolicies } from "contentlayer/generated"
+import { getAllPolicies } from "@/lib/content"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
 import Link from "next/link"
@@ -97,7 +97,7 @@ export async function generateMetadata(
 export async function generateStaticParams(): Promise<
   { slug?: string[]; locale: LocaleOptions }[]
 > {
-  const policies = allPolicies.map((policy) => {
+  const policies = getAllPolicies().map((policy) => {
     const [locale, ...slugs] = policy.slugAsParams.split("/")
 
     return {
@@ -117,13 +117,13 @@ export default async function PolicyPage(props: PolicyPageProps) {
 
   // If no slug is provided, render a policy index page
   if (!params.slug || params.slug.length === 0) {
-    const policiesInLocale = allPolicies.filter((policy) =>
+    const policiesInLocale = getAllPolicies().filter((policy) =>
       policy.slugAsParams.startsWith(params.locale || "en")
     )
     const policies = (
       policiesInLocale.length > 0
         ? policiesInLocale
-        : allPolicies.filter((policy) =>
+        : getAllPolicies().filter((policy) =>
             policy.slugAsParams.startsWith(routing.defaultLocale)
           )
     ).sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically by title
@@ -205,7 +205,7 @@ export default async function PolicyPage(props: PolicyPageProps) {
         <PolicyHeading policy={policyWithToc} locale={params.locale} />
 
         <div className="pb-12 pt-8">
-          <Mdx code={policy.body.code} />
+          <Mdx source={policy.body.raw} sourceFilePath={policy._raw.sourceFilePath} />
         </div>
       </div>
 

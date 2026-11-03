@@ -1,6 +1,5 @@
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { withContentlayer } from "next-contentlayer2"
 import nextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = nextIntlPlugin()
@@ -50,4 +49,4 @@ const nextConfig = {
   }
 }
 
-export default withNextIntl(withContentlayer(nextConfig))
+export default withNextIntl(nextConfig)

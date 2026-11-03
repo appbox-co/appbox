@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import type { Doc } from "contentlayer/generated"
+import type { Doc } from "@/lib/content"
 import { ChevronRightIcon } from "lucide-react"
 import { Link, routing } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"

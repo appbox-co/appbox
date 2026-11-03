@@ -1,4 +1,4 @@
-import type { Blog } from "contentlayer/generated"
+import type { Blog } from "@/lib/content"
 import { ChevronRightIcon } from "lucide-react"
 import { Link } from "@/i18n/routing"
 

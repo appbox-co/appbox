@@ -6,9 +6,12 @@ sort: 2
 
 # Til dokumentation
 
-1. Opret en ny `.mdx`-fil i mappen `apps/content/docs/[language]` med indholdet af dit dokument.
-2. Tilføj dokumentet til sitets navigationsmenu.
-    For at gøre dette skal du tilføje et nyt element i filen `src/config/docs.ts` i egenskaben `sidebarNav` med de ønskede oplysninger. Følg blot mønsteret fra de eksisterende elementer. Når du gør dette, bliver dokumentet også føjet til søgekommandopaletten.
+1. Opret en ny `.mdx`-fil i en sektionsmappe under `apps/content/docs/en`, for eksempel `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Tilføj den frontmatter, der er beskrevet nedenfor, og skriv derefter siden.
+
+Sidebjælken og søgekommandopaletten bygges af `apps/web/src/config/docs.ts` ud fra de engelske filer. Hver mappe bliver til en sektion og hver fil til en side i den, så en ny fil dukker op uden nogen ændringer i konfigurationen. En ny mappe tilføjer en ny sektion, så drøft den først i et issue.
+
+Skriv kun nye sider på engelsk. Se [Skrivning af dokumentation](/docs/contributing/writing-docs) for, hvor sider skal placeres, skabelonen til app-sider og stilguiden.
 
 ## MDX-dokumentindstillinger
 
@@ -26,7 +29,7 @@ Følgende metadatafelter understøttes:
 
 - `title` (påkrævet): Dokumentets titel.
 - `description` (påkrævet): En kort beskrivelse af dokumentet.
-- `sort` (valgfrit): Et tal, der bestemmer dokumentets rækkefølge i navigationen. Dokumenter med lavere sorteringsværdier vises først. Hvis det ikke angives, sorteres dokumenter alfabetisk efter titel.
+- `sort` (valgfrit): Et tal, der bestemmer dokumentets rækkefølge i sektionen. Dokumenter med en `sort`-værdi kommer først, med den laveste først. Dokumenter uden en værdi følger efter, sorteret alfabetisk efter titel.
 - `links` (valgfrit): Links til relaterede dokumenter, API-referencer, kildekode osv.
 - `toc` (valgfrit): Om indholdsfortegnelsen skal vises. Standardværdien er `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Når du tilføjer brugerdefinerede metadata, skal du dog også opdatere filen `contentlayer.config.ts`, som ligger i projektets rod, og egenskaben `fields` i konstanterne `Doc` eller `Blog`.
-Derefter skal du vise de nye oplysninger i dokumentskabelonen. For at gøre dette skal du opdatere filen `src/app/[locale]/docs/[[...slug]]/page.tsx`, eller `src/app/[locale]/blog/[[...slug]]/page.tsx` eller en af dens underkomponenter.
+Når du tilføjer brugerdefinerede metadata, skal du dog også tilføje feltet til det tilsvarende skema (`docSchema`, `blogSchema` eller `policySchema`) i `apps/web/src/lib/content/index.ts`. Frontmatter-nøgler, der ikke er i skemaet, bliver kasseret.
+Derefter skal du vise de nye oplysninger i dokumentskabelonen. For at gøre dette skal du opdatere filen `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, eller `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` eller en af dens underkomponenter.
 
-## Genopbygning af Contentlayer
+## Kontrol af dine ændringer
 
-Når du ændrer dokumentationsindhold, tilføjer ny dokumentation eller ændrer filen `contentlayer.config.ts`, skal du genopbygge Contentlayer-cachen, så dine ændringer træder i kraft under udvikling. Kør:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Denne kommando regenererer de indholdstyper og data, som applikationen har brug for. Du skal køre denne kommando, hver gang du:
-
-- Tilføjer nye metadatafelter til filen `contentlayer.config.ts`
-- Tilføjer eller ændrer MDX-indhold, når dev-serveren ikke kører
-- Ændrer strukturen i din indholdsorganisering
-
-Kommandoen køres automatisk, når projektet bygges til produktion, men du skal køre den manuelt under udvikling, hvis du foretager strukturelle ændringer i indholdet.
-
-
-
+Sitet læser MDX-filerne direkte, så `pnpm dev` viser ændringerne, når du genindlæser siden. Hvis en fils frontmatter er ugyldig, udelader `pnpm dev` den side og skriver filen og feltet i terminalen. `pnpm build` tjekker alle filer på alle sprog og fejler, hvis nogen af dem er ugyldige.

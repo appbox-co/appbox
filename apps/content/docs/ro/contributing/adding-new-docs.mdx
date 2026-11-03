@@ -6,9 +6,12 @@ sort: 2
 
 # Pentru documentație
 
-1. Creează un fișier `.mdx` nou în folderul `apps/content/docs/[language]` cu conținutul documentului tău.
-2. Adaugă documentul în meniul de navigare al site-ului.
-    Pentru a face acest lucru, adaugă un element nou în fișierul `src/config/docs.ts`, în proprietatea `sidebarNav`, cu informațiile dorite; urmează modelul elementelor existente. Astfel, documentul va fi adăugat și în paleta de comenzi pentru căutare.
+1. Creează un fișier `.mdx` nou într-un folder de secțiune din `apps/content/docs/en`, de exemplu `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Adaugă frontmatter-ul descris mai jos, apoi scrie pagina.
+
+Bara laterală și paleta de comenzi pentru căutare sunt generate de `apps/web/src/config/docs.ts` din fișierele în limba engleză. Fiecare folder devine o secțiune și fiecare fișier devine o pagină în secțiunea respectivă, așa că un fișier nou apare fără nicio modificare a configurației. Un folder nou adaugă o secțiune nouă, deci discută-l mai întâi într-un issue.
+
+Scrie paginile noi doar în engleză. În [Scrierea documentației](/docs/contributing/writing-docs) găsești unde se pun paginile, șablonul pentru paginile de aplicații și ghidul de stil.
 
 ## Setări pentru documente MDX
 
@@ -26,7 +29,7 @@ Sunt acceptate următoarele câmpuri de metadate:
 
 - `title` (obligatoriu): Titlul documentului.
 - `description` (obligatoriu): O scurtă descriere a documentului.
-- `sort` (opțional): Un număr care determină ordinea documentului în navigare. Documentele cu valori `sort` mai mici apar primele. Dacă nu este furnizat, documentele sunt sortate alfabetic după titlu.
+- `sort` (opțional): Un număr care determină ordinea documentului în secțiunea sa. Documentele cu o valoare `sort` apar primele, în ordine crescătoare. Urmează documentele fără această valoare, sortate alfabetic după titlu.
 - `links` (opțional): Linkuri către documente conexe, referințe API, cod sursă etc.
 - `toc` (opțional): Dacă se afișează cuprinsul. Valoarea implicită este `true`.
 
@@ -41,22 +44,9 @@ author: Author Name
 ---
 ```
 
-Dar, atunci când adaugi metadate personalizate, trebuie să actualizezi și fișierul `contentlayer.config.ts` aflat la rădăcina proiectului și proprietatea `fields` din constantele `Doc` sau `Blog`.
-După aceea, va trebui să afișezi noile informații în șablonul documentului. Pentru a face acest lucru, va trebui să actualizezi fișierul `src/app/[locale]/docs/[[...slug]]/page.tsx`, sau `src/app/[locale]/blog/[[...slug]]/page.tsx`, ori una dintre componentele sale copil.
+Dar, atunci când adaugi metadate personalizate, trebuie să adaugi și câmpul în schema corespunzătoare (`docSchema`, `blogSchema` sau `policySchema`) din `apps/web/src/lib/content/index.ts`. Cheile din frontmatter care nu există în schemă sunt eliminate.
+După aceea, va trebui să afișezi noile informații în șablonul documentului. Pentru a face acest lucru, va trebui să actualizezi fișierul `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, sau `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`, ori una dintre componentele sale copil.
 
-## Reconstruirea Contentlayer
+## Verificarea modificărilor
 
-Când modifici conținutul documentației, adaugi documente noi sau modifici fișierul `contentlayer.config.ts`, trebuie să reconstruiești cache-ul contentlayer pentru ca schimbările să aibă efect în timpul dezvoltării. Rulează:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Această comandă regenerează tipurile de conținut și datele necesare aplicației. Va trebui să rulezi această comandă ori de câte ori:
-
-- Adaugi câmpuri de metadate noi în fișierul `contentlayer.config.ts`
-- Adaugi sau modifici conținut MDX când serverul de dezvoltare nu rulează
-- Schimbi structura organizării conținutului
-
-Comanda este rulată automat la construirea proiectului pentru producție, dar va trebui să o rulezi manual în timpul dezvoltării dacă faci schimbări structurale ale conținutului.
+Site-ul citește direct fișierele MDX, așa că `pnpm dev` afișează modificările când reîncarci pagina. Dacă frontmatter-ul unui fișier nu este valid, `pnpm dev` omite pagina respectivă și afișează în terminal fișierul și câmpul. `pnpm build` verifică fiecare fișier în fiecare limbă și eșuează dacă vreunul nu este valid.

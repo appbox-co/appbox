@@ -6,9 +6,12 @@ sort: 2
 
 # Za dokumentaciju
 
-1. Stvorite novu `.mdx` datoteku u mapi `apps/content/docs/[language]` sa sadržajem svojeg dokumenta.
-2. Dodajte dokument u navigacijski izbornik web-mjesta.
-    Da biste to učinili, dodajte novu stavku u datoteku `src/config/docs.ts`, u svojstvo `sidebarNav`, sa željenim informacijama. Samo slijedite obrazac postojećih stavki. Time će dokument biti dodan i u paletu naredbi za pretraživanje.
+1. Stvorite novu `.mdx` datoteku u mapi odjeljka unutar `apps/content/docs/en`, na primjer `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Dodajte frontmatter opisan u nastavku, a zatim napišite stranicu.
+
+Bočnu traku i paletu naredbi za pretraživanje gradi `apps/web/src/config/docs.ts` iz datoteka na engleskom. Svaka mapa postaje odjeljak, a svaka datoteka stranica u tom odjeljku, pa se nova datoteka pojavljuje bez ikakve promjene konfiguracije. Nova mapa dodaje novi odjeljak, pa o tome najprije raspravite u issueu.
+
+Nove stranice pišite samo na engleskom. Pogledajte [Pisanje dokumentacije](/docs/contributing/writing-docs) za smještaj stranica, predložak stranice aplikacije i vodič za stil.
 
 ## Postavke MDX dokumenta
 
@@ -26,7 +29,7 @@ Podržana su sljedeća polja metapodataka:
 
 - `title` (obavezno): Naslov dokumenta.
 - `description` (obavezno): Kratak opis dokumenta.
-- `sort` (neobavezno): Broj koji određuje redoslijed dokumenta u navigaciji. Dokumenti s nižim vrijednostima `sort` prikazuju se prvi. Ako nije navedeno, dokumenti se sortiraju abecedno prema naslovu.
+- `sort` (neobavezno): Broj koji određuje redoslijed dokumenta unutar njegova odjeljka. Dokumenti s vrijednošću `sort` dolaze prvi, uzlaznim redoslijedom. Dokumenti bez nje slijede iza njih, abecedno sortirani prema naslovu.
 - `links` (neobavezno): Poveznice na povezane dokumente, API reference, izvorni kod itd.
 - `toc` (neobavezno): Treba li prikazati sadržaj. Zadana je vrijednost `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-No pri dodavanju prilagođenih metapodataka morate ažurirati i datoteku `contentlayer.config.ts`, koja se nalazi u korijenu projekta, unutar svojstva `fields` u konstantama `Doc` ili `Blog`.
-Nakon toga morat ćete prikazati nove informacije u predlošku dokumenta. Da biste to učinili, morat ćete ažurirati datoteku `src/app/[locale]/docs/[[...slug]]/page.tsx`, ili `src/app/[locale]/blog/[[...slug]]/page.tsx`, ili neku od njezinih podkomponenti.
+No pri dodavanju prilagođenih metapodataka morate dodati i polje u odgovarajuću shemu (`docSchema`, `blogSchema` ili `policySchema`) u datoteci `apps/web/src/lib/content/index.ts`. Ključevi frontmattera kojih nema u shemi odbacuju se.
+Nakon toga morat ćete prikazati nove informacije u predlošku dokumenta. Da biste to učinili, morat ćete ažurirati datoteku `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`, ili `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`, ili neku od njezinih podkomponenti.
 
-## Ponovna izgradnja Contentlayera
+## Provjera promjena
 
-Kada promijenite sadržaj dokumentacije, dodate nove dokumente ili izmijenite datoteku `contentlayer.config.ts`, morat ćete ponovno izgraditi Contentlayer predmemoriju kako bi promjene stupile na snagu tijekom razvoja. Pokrenite:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Ova naredba ponovno generira vrste sadržaja i podatke potrebne aplikaciji. Morat ćete pokrenuti ovu naredbu svaki put kada:
-
-- dodate nova polja metapodataka u datoteku `contentlayer.config.ts`
-- dodate ili izmijenite MDX sadržaj dok razvojni poslužitelj nije pokrenut
-- promijenite strukturu organizacije sadržaja
-
-Naredba se automatski pokreće pri izgradnji projekta za produkciju, ali tijekom razvoja morat ćete je pokrenuti ručno ako napravite strukturne promjene u sadržaju.
-
-
-
+Web-mjesto izravno čita MDX datoteke, pa `pnpm dev` prikazuje promjene kada osvježite stranicu. Ako frontmatter neke datoteke nije valjan, `pnpm dev` izostavlja tu stranicu i u terminalu ispisuje datoteku i polje. `pnpm build` provjerava svaku datoteku na svakom jeziku i završava s pogreškom ako bilo koja od njih nije valjana.

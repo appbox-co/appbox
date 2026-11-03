@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/mdx.css"
-import { allBlogs } from "contentlayer/generated"
+import { getAllBlogs } from "@/lib/content"
 import { AuthorCard } from "@/components/blog/author"
 import { BlogPostBreadcrumb } from "@/components/blog/breadcrumb"
 import { BlogPostHeading } from "@/components/blog/heading"
@@ -49,7 +49,7 @@ export async function generateMetadata(
     const description = blogT("meta_description")
 
     const tags = new Set(
-      allBlogs
+      getAllBlogs()
         .map((blog) => blog.tags)
         .flat()
         .filter(Boolean)
@@ -138,7 +138,7 @@ export async function generateMetadata(
 export async function generateStaticParams(): Promise<
   { slug: string[]; locale: LocaleOptions }[]
 > {
-  const blog = allBlogs.map((blog) => {
+  const blog = getAllBlogs().map((blog) => {
     const [locale, ...slugs] = blog.slugAsParams.split("/")
 
     return {
@@ -166,7 +166,7 @@ export default async function BlogPage(props: BlogPageProps) {
 
     return (
       <PaginatedBlogPosts
-        posts={allBlogs}
+        posts={getAllBlogs()}
         locale={locale}
         perPage={6}
         currentPage={currentPage}
@@ -209,7 +209,7 @@ export default async function BlogPage(props: BlogPageProps) {
         <BlogPostTags post={blogPost} />
 
         <div className="pb-12 pt-8">
-          <Mdx code={blogPost.body.code} />
+          <Mdx source={blogPost.body.raw} sourceFilePath={blogPost._raw.sourceFilePath} />
         </div>
 
         <AuthorCard post={blogPost} kudosSlug={blogPost.slugAsParams} />

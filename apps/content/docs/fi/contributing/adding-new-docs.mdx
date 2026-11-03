@@ -6,9 +6,12 @@ sort: 2
 
 # Dokumentaatiota varten
 
-1. Luo uusi `.mdx`-tiedosto `apps/content/docs/[language]`-kansioon dokumenttisi sisällöllä.
-2. Lisää dokumentti sivuston navigointivalikkoon.
-    Tee tämä lisäämällä uusi kohde `src/config/docs.ts`-tiedoston `sidebarNav`-ominaisuuteen halutuilla tiedoilla. Seuraa vain olemassa olevien kohteiden mallia. Näin dokumentti lisätään myös hakukomentopalettiin.
+1. Luo uusi `.mdx`-tiedosto johonkin `apps/content/docs/en`-kansion alla olevaan osiokansioon, esimerkiksi `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Lisää alla kuvattu frontmatter ja kirjoita sitten sivu.
+
+`apps/web/src/config/docs.ts` muodostaa sivupalkin ja hakukomentopaletin englanninkielisistä tiedostoista. Jokaisesta kansiosta tulee osio ja jokaisesta tiedostosta sivu sen sisään, joten uusi tiedosto tulee näkyviin ilman mitään muutoksia konfiguraatioon. Uusi kansio lisää uuden osion, joten keskustele siitä ensin issuessa.
+
+Kirjoita uudet sivut vain englanniksi. Sivujen sijoittelu, sovellussivun pohja ja tyyliopas löytyvät sivulta [Dokumenttien kirjoittaminen](/docs/contributing/writing-docs).
 
 ## MDX-dokumentin asetukset
 
@@ -26,7 +29,7 @@ Seuraavia metatietokenttiä tuetaan:
 
 - `title` (pakollinen): Dokumentin otsikko.
 - `description` (pakollinen): Lyhyt kuvaus dokumentista.
-- `sort` (valinnainen): Numero, joka määrittää dokumentin järjestyksen navigaatiossa. Pienemmät sort-arvot näkyvät ensin. Jos arvoa ei anneta, dokumentit järjestetään aakkosittain otsikon mukaan.
+- `sort` (valinnainen): Numero, joka määrittää dokumentin järjestyksen osiossaan. Dokumentit, joilla on `sort`-arvo, tulevat ensin pienimmästä alkaen. Niiden jälkeen tulevat dokumentit, joilla arvoa ei ole, aakkosjärjestyksessä otsikon mukaan.
 - `links` (valinnainen): Linkkejä liittyviin dokumentteihin, API-viitteisiin, lähdekoodiin jne.
 - `toc` (valinnainen): Näytetäänkö sisällysluettelo. Oletus on `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Kun lisäät mukautettuja metatietoja, sinun täytyy kuitenkin päivittää projektin juuressa sijaitseva `contentlayer.config.ts`-tiedosto sekä `Doc`- tai `Blog`-vakioiden `fields`-ominaisuus.
-Sen jälkeen uusi tieto täytyy näyttää dokumenttipohjassa. Tee tämä päivittämällä `src/app/[locale]/docs/[[...slug]]/page.tsx`-tiedosto, `src/app/[locale]/blog/[[...slug]]/page.tsx`-tiedosto tai jokin niiden alikomponenteista.
+Kun lisäät mukautettuja metatietoja, sinun täytyy kuitenkin lisätä kenttä myös vastaavaan skeemaan (`docSchema`, `blogSchema` tai `policySchema`) tiedostossa `apps/web/src/lib/content/index.ts`. Frontmatter-avaimet, joita skeemassa ei ole, jätetään pois.
+Sen jälkeen uusi tieto täytyy näyttää dokumenttipohjassa. Tee tämä päivittämällä `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx`-tiedosto, `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`-tiedosto tai jokin niiden alikomponenteista.
 
-## Contentlayerin uudelleenrakennus
+## Muutosten tarkistaminen
 
-Kun teet muutoksia dokumentaatiosisältöön, lisäät uusia dokumentteja tai muokkaat `contentlayer.config.ts`-tiedostoa, sinun täytyy rakentaa contentlayer-välimuisti uudelleen, jotta muutokset tulevat voimaan kehityksen aikana. Suorita:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Tämä komento luo uudelleen sovelluksen tarvitsemat sisältötyypit ja tiedot. Komento täytyy suorittaa aina, kun:
-
-- Lisäät uusia metatietokenttiä `contentlayer.config.ts`-tiedostoon
-- Lisäät tai muokkaat MDX-sisältöä, kun kehityspalvelin ei ole käynnissä
-- Muutat sisällön organisaatiorakennetta
-
-Komento suoritetaan automaattisesti, kun projekti rakennetaan tuotantoon, mutta kehityksen aikana se täytyy suorittaa käsin, jos teet rakenteellisia muutoksia sisältöön.
-
-
-
+Sivusto lukee MDX-tiedostot suoraan, joten `pnpm dev` näyttää muutokset, kun päivität sivun. Jos tiedoston frontmatter on virheellinen, `pnpm dev` jättää sivun pois ja tulostaa tiedoston ja kentän terminaaliin. `pnpm build` tarkistaa kaikki tiedostot kaikilla kielillä ja epäonnistuu, jos jokin niistä on virheellinen.

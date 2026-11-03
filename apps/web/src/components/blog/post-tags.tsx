@@ -1,4 +1,4 @@
-import type { Blog } from "contentlayer/generated"
+import type { Blog } from "@/lib/content"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { badgeVariants } from "../ui/badge"

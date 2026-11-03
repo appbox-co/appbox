@@ -6,9 +6,12 @@ sort: 2
 
 # Voor documentatie
 
-1. Maak een nieuw `.mdx`-bestand aan in de map `apps/content/docs/[language]` met de inhoud van je document.
-2. Voeg het document toe aan het navigatiemenu van de site.
-    Voeg hiervoor een nieuw item toe aan het bestand `src/config/docs.ts` in de property `sidebarNav` met de gewenste informatie. Volg daarbij gewoon het patroon van de bestaande items. Hierdoor wordt het document ook toegevoegd aan het zoekcommando-palet.
+1. Maak een nieuw `.mdx`-bestand aan in een sectiemap onder `apps/content/docs/en`, bijvoorbeeld `apps/content/docs/en/apps/jellyfin.mdx`.
+2. Voeg de hieronder beschreven frontmatter toe en schrijf daarna de pagina.
+
+De zijbalk en het zoekcommando-palet worden door `apps/web/src/config/docs.ts` opgebouwd uit de Engelse bestanden. Elke map wordt een sectie en elk bestand een pagina daarin, dus een nieuw bestand verschijnt zonder dat je de configuratie hoeft aan te passen. Een nieuwe map voegt een nieuwe sectie toe, dus bespreek die eerst in een issue.
+
+Schrijf nieuwe pagina's alleen in het Engels. Zie [Docs schrijven](/docs/contributing/writing-docs) voor waar pagina's thuishoren, de sjabloon voor app-pagina's en de stijlgids.
 
 ## MDX-documentinstellingen
 
@@ -26,7 +29,7 @@ De volgende metadatavelden worden ondersteund:
 
 - `title` (verplicht): De titel van het document.
 - `description` (verplicht): Een korte beschrijving van het document.
-- `sort` (optioneel): Een getal dat de volgorde van het document in de navigatie bepaalt. Documenten met lagere sort-waarden verschijnen eerst. Als dit niet is opgegeven, worden documenten alfabetisch gesorteerd op titel.
+- `sort` (optioneel): Een getal dat de volgorde van het document binnen zijn sectie bepaalt. Documenten met een `sort`-waarde komen eerst, de laagste waarde vooraan. Documenten zonder zo'n waarde volgen daarna, alfabetisch gesorteerd op titel.
 - `links` (optioneel): Links naar gerelateerde documenten, API-referenties, broncode, enz.
 - `toc` (optioneel): Of de inhoudsopgave moet worden getoond. Standaard is dit `true`.
 
@@ -41,25 +44,9 @@ author: Author Name
 ---
 ```
 
-Wanneer je aangepaste metadata toevoegt, moet je ook het bestand `contentlayer.config.ts` bijwerken. Dit bestand staat in de root van het project, binnen de property `fields` in de constanten `Doc` of `Blog`.
-Daarna moet je de nieuwe informatie tonen in de documentsjabloon. Hiervoor moet je het bestand `src/app/[locale]/docs/[[...slug]]/page.tsx` bijwerken, of `src/app/[locale]/blog/[[...slug]]/page.tsx`, of een van de child components daarvan.
+Wanneer je aangepaste metadata toevoegt, moet je het veld ook toevoegen aan het bijbehorende schema (`docSchema`, `blogSchema` of `policySchema`) in `apps/web/src/lib/content/index.ts`. Frontmatter-keys die niet in het schema staan, worden weggelaten.
+Daarna moet je de nieuwe informatie tonen in de documentsjabloon. Hiervoor moet je het bestand `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` bijwerken, of `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`, of een van de child components daarvan.
 
-## Contentlayer opnieuw bouwen
+## Je wijzigingen controleren
 
-Wanneer je wijzigingen aanbrengt in documentatiecontent, nieuwe docs toevoegt of het bestand `contentlayer.config.ts` wijzigt, moet je de contentlayer-cache opnieuw bouwen zodat je wijzigingen tijdens development effect hebben. Voer uit:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-Deze opdracht genereert opnieuw de contenttypes en data die de applicatie nodig heeft. Je moet deze opdracht uitvoeren wanneer je:
-
-- Nieuwe metadatavelden toevoegt aan het bestand `contentlayer.config.ts`
-- MDX-content toevoegt of wijzigt terwijl de dev server niet draait
-- De structuur van je contentorganisatie verandert
-
-De opdracht wordt automatisch uitgevoerd wanneer het project voor productie wordt gebouwd, maar tijdens development moet je hem handmatig uitvoeren als je structurele wijzigingen aan content aanbrengt.
-
-
-
+De site leest de MDX-bestanden rechtstreeks, dus `pnpm dev` toont wijzigingen zodra je de pagina vernieuwt. Als de frontmatter van een bestand ongeldig is, laat `pnpm dev` die pagina weg en toont het bestand en het veld in de terminal. `pnpm build` controleert elk bestand in elke taal en mislukt als er ongeldige bestanden zijn.

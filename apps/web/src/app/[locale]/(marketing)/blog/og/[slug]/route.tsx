@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og"
-import { allBlogs, type Blog } from "contentlayer/generated"
+import { getAllBlogs, type Blog } from "@/lib/content"
 import { siteConfig } from "@/config/site"
 import { getFonts } from "@/lib/og-fonts"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
@@ -116,7 +116,7 @@ function Fallback({ src }: { src: string }) {
 }
 
 function getBlogPostBySlugAndLocale(slug: string, locale: LocaleOptions) {
-  return allBlogs.find((post) => {
+  return getAllBlogs().find((post) => {
     const [postLocale, ...slugs] = post.slugAsParams.split("/")
 
     return slugs.join("/") === slug && postLocale === locale

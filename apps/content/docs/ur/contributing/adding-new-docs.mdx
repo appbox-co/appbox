@@ -6,9 +6,12 @@ sort: 2
 
 # Documentation کے لیے
 
-1. اپنی دستاویز کے content کے ساتھ `apps/content/docs/[language]` folder میں نئی `.mdx` file بنائیں۔
-2. دستاویز کو site کے navigation menu میں شامل کریں۔
-    اس کے لیے `src/config/docs.ts` file کی `sidebarNav` property میں مطلوبہ information کے ساتھ نیا item شامل کریں، اور موجودہ items کے pattern کی پیروی کریں۔ اس سے دستاویز search command palette میں بھی شامل ہو جائے گی۔
+1. `apps/content/docs/en` کے تحت کسی section folder میں نئی `.mdx` file بنائیں، جیسے `apps/content/docs/en/apps/jellyfin.mdx`۔
+2. نیچے بیان کیا گیا frontmatter شامل کریں، پھر page لکھیں۔
+
+Sidebar اور search command palette انگریزی files سے `apps/web/src/config/docs.ts` کے ذریعے بنتے ہیں۔ ہر folder ایک section بن جاتا ہے اور اس میں موجود ہر file ایک page بن جاتی ہے، اس لیے نئی file کسی configuration change کے بغیر نظر آ جاتی ہے۔ نیا folder ایک نیا section شامل کرتا ہے، اس لیے پہلے کسی issue میں اس پر بات کریں۔
+
+نئے pages صرف انگریزی میں لکھیں۔ Pages کہاں رکھے جائیں، app page template اور style guide کے بارے میں جاننے کے لیے [دستاویزات لکھنا](/docs/contributing/writing-docs) دیکھیں۔
 
 ## MDX document settings
 
@@ -26,7 +29,7 @@ sort: 1
 
 - `title` (required): document کا title۔
 - `description` (required): document کی مختصر description۔
-- `sort` (optional): ایک number جو navigation میں document کی ترتیب طے کرتا ہے۔ کم sort values والے documents پہلے آتے ہیں۔ اگر یہ نہ دیا جائے تو documents title کے حساب سے alphabetically sorted ہوتے ہیں۔
+- `sort` (optional): ایک number جو طے کرتا ہے کہ document اپنے section میں کس ترتیب پر آئے گا۔ جن documents کی `sort` value ہو وہ پہلے آتے ہیں، سب سے کم value سب سے پہلے۔ جن کی value نہ ہو وہ ان کے بعد آتے ہیں اور title کے حساب سے alphabetically sorted ہوتے ہیں۔
 - `links` (optional): related documents، API references، source code وغیرہ کے links۔
 - `toc` (optional): table of contents دکھانا ہے یا نہیں۔ default value `true` ہے۔
 
@@ -41,22 +44,9 @@ author: Author Name
 ---
 ```
 
-لیکن custom metadata add کرتے وقت آپ کو project root میں موجود `contentlayer.config.ts` file میں `Doc` یا `Blog` constants کی `fields` property بھی update کرنی ہوگی۔
-اس کے بعد نئی information کو document template میں display کرنا ہوگا۔ اس کے لیے `src/app/[locale]/docs/[[...slug]]/page.tsx` file، یا `src/app/[locale]/blog/[[...slug]]/page.tsx`، یا اس کے child components میں سے کسی ایک کو update کرنا ہوگا۔
+لیکن custom metadata add کرتے وقت آپ کو وہ field `apps/web/src/lib/content/index.ts` میں متعلقہ schema (`docSchema`، `blogSchema` یا `policySchema`) میں بھی add کرنی ہوگی۔ جو frontmatter keys schema میں نہیں ہیں وہ نکال دی جاتی ہیں۔
+اس کے بعد نئی information کو document template میں display کرنا ہوگا۔ اس کے لیے `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` file، یا `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx`، یا اس کے child components میں سے کسی ایک کو update کرنا ہوگا۔
 
-## Contentlayer دوبارہ build کرنا
+## اپنی changes check کرنا
 
-جب آپ documentation content میں changes کرتے ہیں، نئی docs add کرتے ہیں، یا `contentlayer.config.ts` file modify کرتے ہیں، تو development کے دوران changes اثر انداز کرنے کے لیے contentlayer cache دوبارہ build کرنا ہوگا۔ چلائیں:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-یہ command application کے لیے required content types اور data دوبارہ generate کرتی ہے۔ آپ کو یہ command تب چلانی ہوگی جب آپ:
-
-- `contentlayer.config.ts` file میں نئے metadata fields add کریں
-- dev server نہ چل رہا ہو اور آپ MDX content add یا modify کریں
-- اپنی content organization کی structure change کریں
-
-Production کے لیے project build کرتے وقت یہ command automatically چلتی ہے، لیکن development کے دوران structural content changes کرنے پر اسے manually چلانا ہوگا۔
+Site MDX files کو براہ راست پڑھتی ہے، اس لیے page refresh کرنے پر `pnpm dev` changes دکھا دیتا ہے۔ اگر کسی file کا frontmatter invalid ہو تو `pnpm dev` وہ page چھوڑ دیتا ہے اور terminal میں file اور field print کرتا ہے۔ `pnpm build` ہر زبان کی ہر file check کرتا ہے اور اگر ان میں سے کوئی بھی invalid ہو تو fail ہو جاتا ہے۔

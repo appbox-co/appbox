@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
-import type { Blog } from "contentlayer/generated"
+import type { Blog } from "@/lib/content"
 import { Globe, Mail } from "lucide-react"
 import { BlogKudosButton } from "@/components/blog/kudos-button"
 import {

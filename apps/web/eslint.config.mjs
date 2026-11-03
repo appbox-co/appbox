@@ -13,6 +13,7 @@ export default defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Left over from Contentlayer in older checkouts
     ".contentlayer/**",
     ".turbo/**",
     "public/**"

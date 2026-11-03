@@ -1,4 +1,4 @@
-import { allDocs, type Doc } from "contentlayer/generated"
+import { getAllDocs, type Doc } from "@/lib/content"
 import { docsConfig } from "@/config/docs"
 import { routing } from "@/i18n/routing"
 import type { LocaleOptions } from "../types/i18n"
@@ -26,7 +26,7 @@ export async function getDocFromParams({
   }
 }): Promise<(Doc & { notAvailable: boolean }) | null> {
   let localizedSlug = makeLocalizedSlug(params)
-  let doc = allDocs.find((doc) => doc.slugAsParams === localizedSlug)
+  let doc = getAllDocs().find((doc) => doc.slugAsParams === localizedSlug)
 
   if (!doc) {
     localizedSlug = makeLocalizedSlug({
@@ -34,7 +34,7 @@ export async function getDocFromParams({
       locale: routing.defaultLocale
     })
 
-    doc = allDocs.find((doc) => doc.slugAsParams === localizedSlug)
+    doc = getAllDocs().find((doc) => doc.slugAsParams === localizedSlug)
 
     return doc ? { ...doc, notAvailable: true } : null
   }
