@@ -107,16 +107,50 @@ export interface ApiKey {
   last_used_at: string | null
   expires_at: string | null
   revoked_at: string | null
+  /** Developer API scopes. Keys created before scopes existed have none. */
+  scopes: string[]
 }
 
 export interface CreateApiKeyInput {
   name: string
   expires_at?: string | null
+  scopes: string[]
 }
 
 export interface UpdateApiKeyInput {
   name?: string
   expires_at?: string | null
+  scopes?: string[]
+}
+
+/** A scope group heading. The label comes from the backend. */
+export interface ApiKeyScopeGroup {
+  id: string
+  label: string
+}
+
+/** One developer API scope. Label and description come from the backend. */
+export interface ApiKeyScope {
+  scope: string
+  group: string
+  label: string
+  description: string
+  high_risk: boolean
+}
+
+/** A named set of scopes offered as a starting point. */
+export interface ApiKeyScopePreset {
+  id: string
+  label: string
+  description: string
+  scopes: string[]
+  high_risk: boolean
+}
+
+export interface ApiKeyScopeCatalog {
+  groups: ApiKeyScopeGroup[]
+  scopes: ApiKeyScope[]
+  presets: ApiKeyScopePreset[]
 }
 
 export interface CreateApiKeyResult {
@@ -344,7 +378,30 @@ export async function regenerateRecoveryCodes(data: {
  */
 export async function getApiKeys(): Promise<ApiKey[]> {
   const res = await apiGet<{ items: ApiKey[] }>("users/api-keys")
-  return res.items ?? []
+  return (res.items ?? []).map((item) => ({
+    ...item,
+    scopes: Array.isArray(item.scopes) ? item.scopes : []
+  }))
+}
+
+/**
+ * Backend: GET /v1/users/api-keys/scopes (session auth, no recent auth)
+ * Lists the scopes an API key can carry and the presets built from them.
+ */
+export async function getApiKeyScopes(): Promise<ApiKeyScopeCatalog> {
+  const res = await apiGet<Partial<ApiKeyScopeCatalog>>("users/api-keys/scopes")
+  return {
+    groups: Array.isArray(res?.groups) ? res.groups : [],
+    // high_risk may be absent on older responses; treat that as false.
+    scopes: (Array.isArray(res?.scopes) ? res.scopes : []).map((scope) => ({
+      ...scope,
+      high_risk: scope.high_risk === true
+    })),
+    presets: (Array.isArray(res?.presets) ? res.presets : []).map((preset) => ({
+      ...preset,
+      high_risk: preset.high_risk === true
+    }))
+  }
 }
 
 /**

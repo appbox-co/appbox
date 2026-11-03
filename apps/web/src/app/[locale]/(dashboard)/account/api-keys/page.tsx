@@ -1,10 +1,11 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { FormEvent, Fragment, useState } from "react"
 import { useTranslations } from "next-intl"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   AlertTriangle,
+  ArrowUpRight,
   Check,
   Copy,
   KeyRound,
@@ -19,14 +20,17 @@ import {
   revokeApiKey as revokeApiKeyRequest,
   updateApiKey as updateApiKeyRequest,
   type ApiKey,
-  type CreateApiKeyInput
+  type CreateApiKeyInput,
+  type UpdateApiKeyInput
 } from "@/api/account/account"
 import {
   useApiKeys,
+  useApiKeyScopes,
   useCreateApiKey,
   useRevokeApiKey,
   useUpdateApiKey
 } from "@/api/account/hooks/use-account"
+import { ApiError } from "@/api/client"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -48,17 +52,36 @@ import {
   TableRow
 } from "@/components/ui/table"
 import { queryKeys } from "@/constants/query-keys"
+import { Link } from "@/i18n/routing"
+import { useAuth } from "@/providers/auth-provider"
 import { AccountPageHeader } from "../_components/account-page-header"
 import {
   isRecentAuthError,
   RecentAuthDialog
 } from "../_components/recent-auth-dialog"
+import {
+  ApiKeyScopePicker,
+  scopePickerHintId
+} from "./_components/api-key-scope-picker"
+import { ApiKeyScopeSummary } from "./_components/api-key-scope-summary"
+import { getDefaultScopes, hasSameScopes } from "./_components/api-key-scopes"
+
+const DEVELOPER_API_URL = "https://api.appbox.co/developer/v1"
+const DEVELOPER_API_KEY_HEADER = "X-API-Key"
+const DEVELOPER_API_DOCS_PATH = "/docs/developer-api"
 
 type ApiKeyStatus = "active" | "expired" | "revoked"
 type PendingApiKeyAction =
   | { type: "create"; input: CreateApiKeyInput }
-  | { type: "rename"; id: number; name: string }
+  | { type: "update"; id: number; input: UpdateApiKeyInput }
   | { type: "revoke"; id: number }
+
+/** Backend validation message (for example an unknown scope) for 4xx errors. */
+function apiErrorDetail(error: unknown) {
+  if (!(error instanceof ApiError)) return undefined
+  if (error.status < 400 || error.status >= 500) return undefined
+  return error.message || undefined
+}
 
 function getStatus(key: ApiKey): ApiKeyStatus {
   if (key.revoked_at) return "revoked"
@@ -147,14 +170,22 @@ function CreateApiKeyDialog({
 }) {
   const t = useTranslations("account.apiKeys")
   const createApiKey = useCreateApiKey()
+  const { data: scopeCatalog } = useApiKeyScopes()
   const [name, setName] = useState("")
   const [expiresAt, setExpiresAt] = useState("")
+  // null until the user changes the selection, so the default preset applies
+  // as soon as the scope catalog arrives.
+  const [scopes, setScopes] = useState<string[] | null>(null)
+  const selectedScopes = scopes ?? getDefaultScopes(scopeCatalog?.presets ?? [])
+  const missingScopes = selectedScopes.length === 0
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const input = {
+    if (missingScopes) return
+    const input: CreateApiKeyInput = {
       name: name.trim(),
-      expires_at: expiresAt ? new Date(expiresAt).toISOString() : null
+      expires_at: expiresAt ? new Date(expiresAt).toISOString() : null,
+      scopes: selectedScopes
     }
 
     try {
@@ -162,6 +193,7 @@ function CreateApiKeyDialog({
       toast.success(t("createSuccess"))
       setName("")
       setExpiresAt("")
+      setScopes(null)
       onOpenChange(false)
       onCreated(result.key)
     } catch (error) {
@@ -169,13 +201,13 @@ function CreateApiKeyDialog({
         onRecentAuthRequired({ type: "create", input })
         return
       }
-      toast.error(t("createFailed"))
+      toast.error(t("createFailed"), { description: apiErrorDetail(error) })
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
         <form onSubmit={handleSubmit} className="space-y-4">
           <DialogHeader>
             <DialogTitle>{t("createTitle")}</DialogTitle>
@@ -207,6 +239,13 @@ function CreateApiKeyDialog({
             />
           </div>
 
+          <ApiKeyScopePicker
+            idPrefix="create-api-key"
+            value={selectedScopes}
+            onChange={setScopes}
+            disabled={createApiKey.isPending}
+          />
+
           <DialogFooter>
             <Button
               type="button"
@@ -215,7 +254,13 @@ function CreateApiKeyDialog({
             >
               {t("cancel")}
             </Button>
-            <Button type="submit" disabled={createApiKey.isPending}>
+            <Button
+              type="submit"
+              disabled={createApiKey.isPending || missingScopes}
+              aria-describedby={
+                missingScopes ? scopePickerHintId("create-api-key") : undefined
+              }
+            >
               {createApiKey.isPending && (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               )}
@@ -228,7 +273,7 @@ function CreateApiKeyDialog({
   )
 }
 
-function RenameApiKeyDialog({
+function EditApiKeyDialog({
   apiKey,
   onOpenChange,
   onRecentAuthRequired
@@ -239,28 +284,33 @@ function RenameApiKeyDialog({
 }) {
   const t = useTranslations("account.apiKeys")
   const updateApiKey = useUpdateApiKey(apiKey?.id ?? 0)
+  const initialScopes = apiKey?.scopes ?? []
   const [name, setName] = useState(apiKey?.name ?? "")
+  const [scopes, setScopes] = useState<string[]>(initialScopes)
+  const scopesChanged = !hasSameScopes(scopes, initialScopes)
+  // A key without scopes may still be renamed, but a selection can't be
+  // cleared down to nothing.
+  const blockedByScopes = scopes.length === 0 && scopesChanged
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!apiKey) return
-    const nextName = name.trim()
+    if (!apiKey || blockedByScopes) return
+    const input: UpdateApiKeyInput = {
+      name: name.trim(),
+      ...(scopesChanged ? { scopes } : {})
+    }
 
     try {
-      await updateApiKey.mutateAsync({ name: nextName })
+      await updateApiKey.mutateAsync(input)
       toast.success(t("updateSuccess"))
       onOpenChange(null)
     } catch (error) {
       if (isRecentAuthError(error)) {
         onOpenChange(null)
-        onRecentAuthRequired({
-          type: "rename",
-          id: apiKey.id,
-          name: nextName
-        })
+        onRecentAuthRequired({ type: "update", id: apiKey.id, input })
         return
       }
-      toast.error(t("updateFailed"))
+      toast.error(t("updateFailed"), { description: apiErrorDetail(error) })
     }
   }
 
@@ -271,22 +321,30 @@ function RenameApiKeyDialog({
         if (!open) onOpenChange(null)
       }}
     >
-      <DialogContent>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
         <form onSubmit={handleSubmit} className="space-y-4">
           <DialogHeader>
-            <DialogTitle>{t("rename")}</DialogTitle>
+            <DialogTitle>{t("editTitle")}</DialogTitle>
+            <DialogDescription>{t("editDescription")}</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-2">
-            <Label htmlFor="rename-api-key">{t("name")}</Label>
+            <Label htmlFor="edit-api-key-name">{t("name")}</Label>
             <Input
-              id="rename-api-key"
+              id="edit-api-key-name"
               value={name}
               onChange={(event) => setName(event.target.value)}
               maxLength={100}
               required
             />
           </div>
+
+          <ApiKeyScopePicker
+            idPrefix="edit-api-key"
+            value={scopes}
+            onChange={setScopes}
+            disabled={updateApiKey.isPending}
+          />
 
           <DialogFooter>
             <Button
@@ -296,7 +354,15 @@ function RenameApiKeyDialog({
             >
               {t("cancel")}
             </Button>
-            <Button type="submit" disabled={updateApiKey.isPending}>
+            <Button
+              type="submit"
+              disabled={updateApiKey.isPending || blockedByScopes}
+              aria-describedby={
+                scopes.length === 0
+                  ? scopePickerHintId("edit-api-key")
+                  : undefined
+              }
+            >
               {updateApiKey.isPending && (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               )}
@@ -385,13 +451,54 @@ function RevokeApiKeyDialog({
   )
 }
 
+function DeveloperApiNotice() {
+  const t = useTranslations("account.apiKeys")
+  const { isAdmin } = useAuth()
+
+  return (
+    <section
+      aria-labelledby="developer-api-notice-title"
+      className="space-y-2 border-l-2 border-primary/60 py-1 pl-4 text-sm"
+    >
+      <h2 id="developer-api-notice-title" className="font-semibold">
+        {t("explainerTitle")}
+      </h2>
+      <p className="text-muted-foreground">
+        {t.rich("explainerBody", {
+          url: DEVELOPER_API_URL,
+          header: DEVELOPER_API_KEY_HEADER,
+          code: (chunks) => (
+            <code className="break-all bg-muted px-1 py-0.5 font-mono text-xs text-foreground">
+              {chunks}
+            </code>
+          )
+        })}
+      </p>
+      <p className="text-muted-foreground">{t("explainerScopes")}</p>
+      {isAdmin && (
+        <p className="text-amber-700 dark:text-amber-300">
+          {t("explainerAdmin")}
+        </p>
+      )}
+      <Link
+        href={DEVELOPER_API_DOCS_PATH}
+        className="inline-flex items-center gap-2 font-semibold underline decoration-primary/60 underline-offset-4 transition-colors hover:decoration-primary"
+      >
+        {t("docsLink")}
+        <ArrowUpRight className="size-4" aria-hidden="true" />
+      </Link>
+    </section>
+  )
+}
+
 export default function ApiKeysPage() {
   const t = useTranslations("account.apiKeys")
   const queryClient = useQueryClient()
   const { data: apiKeys = [], isLoading, error } = useApiKeys()
+  const { data: scopeCatalog } = useApiKeyScopes()
   const [createOpen, setCreateOpen] = useState(false)
   const [createdSecret, setCreatedSecret] = useState("")
-  const [renameKey, setRenameKey] = useState<ApiKey | null>(null)
+  const [editKey, setEditKey] = useState<ApiKey | null>(null)
   const [revokeKey, setRevokeKey] = useState<ApiKey | null>(null)
   const [reauthOpen, setReauthOpen] = useState(false)
   const [pendingAction, setPendingAction] =
@@ -402,7 +509,7 @@ export default function ApiKeysPage() {
   function handleRecentAuthRequired(action: PendingApiKeyAction) {
     setPendingAction(action)
     setCreateOpen(false)
-    setRenameKey(null)
+    setEditKey(null)
     setRevokeKey(null)
     setReauthOpen(true)
   }
@@ -420,8 +527,8 @@ export default function ApiKeysPage() {
         const result = await createApiKeyRequest(action.input)
         toast.success(t("createSuccess"))
         setCreatedSecret(result.key)
-      } else if (action.type === "rename") {
-        await updateApiKeyRequest(action.id, { name: action.name })
+      } else if (action.type === "update") {
+        await updateApiKeyRequest(action.id, action.input)
         toast.success(t("updateSuccess"))
       } else {
         await revokeApiKeyRequest(action.id)
@@ -429,11 +536,12 @@ export default function ApiKeysPage() {
       }
 
       await queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
-    } catch {
+    } catch (error) {
+      const description = apiErrorDetail(error)
       if (action.type === "create") {
-        toast.error(t("createFailed"))
-      } else if (action.type === "rename") {
-        toast.error(t("updateFailed"))
+        toast.error(t("createFailed"), { description })
+      } else if (action.type === "update") {
+        toast.error(t("updateFailed"), { description })
       } else {
         toast.error(t("revokeFailed"))
       }
@@ -474,6 +582,8 @@ export default function ApiKeysPage() {
           </Button>
         }
       />
+
+      <DeveloperApiNotice />
 
       {isLoading && (
         <div className="space-y-2">
@@ -548,6 +658,7 @@ export default function ApiKeysPage() {
               <TableRow>
                 <TableHead>{t("name")}</TableHead>
                 <TableHead>{t("prefix")}</TableHead>
+                <TableHead>{t("scopes")}</TableHead>
                 <TableHead>{t("status")}</TableHead>
                 <TableHead>{t("created")}</TableHead>
                 <TableHead>{t("lastUsed")}</TableHead>
@@ -559,51 +670,98 @@ export default function ApiKeysPage() {
               {apiKeys.map((apiKey) => {
                 const status = getStatus(apiKey)
                 const disabled = status !== "active"
+                const editable = status !== "revoked"
+                const showNoScopesCallout =
+                  status === "active" && apiKey.scopes.length === 0
                 return (
-                  <TableRow key={apiKey.id}>
-                    <TableCell className="font-medium">{apiKey.name}</TableCell>
-                    <TableCell>
-                      <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-                        {apiKey.key_prefix}...
-                      </code>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={statusVariant(status)}>{t(status)}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      {formatDate(apiKey.created_at, t("never"))}
-                    </TableCell>
-                    <TableCell>
-                      {formatDate(apiKey.last_used_at, t("never"))}
-                    </TableCell>
-                    <TableCell>
-                      {formatDate(apiKey.expires_at, t("never"))}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          disabled={disabled}
-                          onClick={() => setRenameKey(apiKey)}
-                        >
-                          <Pencil className="mr-2 size-3.5" />
-                          {t("rename")}
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="sm"
-                          disabled={disabled}
-                          onClick={() => setRevokeKey(apiKey)}
-                        >
-                          <Trash2 className="mr-2 size-3.5" />
-                          {t("revoke")}
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                  <Fragment key={apiKey.id}>
+                    <TableRow
+                      className={showNoScopesCallout ? "border-b-0" : undefined}
+                    >
+                      <TableCell className="font-medium">
+                        {apiKey.name}
+                      </TableCell>
+                      <TableCell>
+                        <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+                          {apiKey.key_prefix}...
+                        </code>
+                      </TableCell>
+                      <TableCell>
+                        <ApiKeyScopeSummary
+                          name={apiKey.name}
+                          scopes={apiKey.scopes}
+                          catalog={scopeCatalog}
+                          muted={status !== "active"}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={statusVariant(status)}>
+                          {t(status)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {formatDate(apiKey.created_at, t("never"))}
+                      </TableCell>
+                      <TableCell>
+                        {formatDate(apiKey.last_used_at, t("never"))}
+                      </TableCell>
+                      <TableCell>
+                        {formatDate(apiKey.expires_at, t("never"))}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            disabled={!editable}
+                            onClick={() => setEditKey(apiKey)}
+                          >
+                            <Pencil className="mr-2 size-3.5" />
+                            {t("edit")}
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            disabled={disabled}
+                            onClick={() => setRevokeKey(apiKey)}
+                          >
+                            <Trash2 className="mr-2 size-3.5" />
+                            {t("revoke")}
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {showNoScopesCallout && (
+                      <TableRow className="hover:bg-transparent">
+                        <TableCell colSpan={8} className="pt-0">
+                          <div
+                            role="note"
+                            className="flex flex-col gap-2 border-l-2 border-amber-500 bg-amber-500/5 py-2 pl-3 pr-2 text-amber-800 sm:flex-row sm:items-center sm:justify-between dark:text-amber-200"
+                          >
+                            <span className="flex items-start gap-2">
+                              <AlertTriangle
+                                className="mt-0.5 size-4 shrink-0"
+                                aria-hidden="true"
+                              />
+                              {t("noScopesCallout")}
+                            </span>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              className="shrink-0 self-start sm:self-auto"
+                              onClick={() => setEditKey(apiKey)}
+                            >
+                              <Pencil className="mr-2 size-3.5" />
+                              {t("editScopes")}
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Fragment>
                 )
               })}
             </TableBody>
@@ -626,10 +784,10 @@ export default function ApiKeysPage() {
         secret={createdSecret}
         onClose={() => setCreatedSecret("")}
       />
-      <RenameApiKeyDialog
-        key={renameKey?.id ?? "rename-api-key"}
-        apiKey={renameKey}
-        onOpenChange={setRenameKey}
+      <EditApiKeyDialog
+        key={editKey?.id ?? "edit-api-key"}
+        apiKey={editKey}
+        onOpenChange={setEditKey}
         onRecentAuthRequired={handleRecentAuthRequired}
       />
       <RevokeApiKeyDialog
