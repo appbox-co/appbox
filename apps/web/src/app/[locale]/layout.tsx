@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next"
-import { getMessages } from "next-intl/server"
+import { getMessages, setRequestLocale } from "next-intl/server"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import "@/styles/globals.css"
+import { Suspense } from "react"
 import { NextIntlClientProvider } from "next-intl"
 import Script from "next/script"
 import { Analytics } from "@/components/marketing/analytics"
@@ -133,13 +134,15 @@ export const viewport: Viewport = {
 
 export default async function RootLayout(props: AppLayoutProps) {
   const params = await props.params
-  const messages = await getMessages()
   const locale = params.locale.toString() || routing.defaultLocale
   const dir = locale === "ar" || locale === "ur" ? "rtl" : "ltr"
 
   const { children } = props
 
-  // setRequestLocale(params.locale)
+  // Without this, next-intl reads the locale from request headers and every
+  // route under [locale] renders dynamically.
+  setRequestLocale(locale)
+  const messages = await getMessages()
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
@@ -210,7 +213,10 @@ export default async function RootLayout(props: AppLayoutProps) {
           <TanstackQueryProvider>
             <NextIntlClientProvider messages={messages}>
               <PostHogProvider>
-                <Analytics />
+                {/* useSearchParams() inside needs a boundary for static pages */}
+                <Suspense fallback={null}>
+                  <Analytics />
+                </Suspense>
                 {children}
               </PostHogProvider>
             </NextIntlClientProvider>

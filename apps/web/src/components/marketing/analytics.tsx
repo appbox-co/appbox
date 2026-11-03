@@ -19,7 +19,8 @@ export function Analytics() {
 
   useEffect(() => {
     if (typeof window.gtag === "function") {
-      const url = pathname + searchParams.toString()
+      const query = searchParams.toString()
+      const url = query ? `${pathname}?${query}` : pathname
       window.gtag("config", "GT-T53F3CT6", {
         page_path: url
       })
