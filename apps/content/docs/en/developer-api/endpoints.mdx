@@ -1,0 +1,428 @@
+---
+title: Endpoint reference
+description: Every developer API operation with the scopes it needs, its parameters and what it returns.
+sort: 4
+---
+
+Paths are relative to `https://api.appbox.co/developer/v1`. Every list takes `page` and `per_page` and returns `pagination`, as described in [Pagination](/docs/developer-api#pagination). For every field of every response, see the [OpenAPI spec](/developer-api-openapi.yaml).
+
+## Key
+
+### Show the calling key
+
+`GET /key` · no scope needed
+
+Returns the key's `id`, `name`, `key_prefix`, `scopes`, `created_at`, `expires_at` and `last_used_at`.
+
+## Appboxes
+
+### List your Appboxes
+
+`GET /appboxes` · `apps:read`
+
+Use an Appbox's `id` as `appbox_id` when installing apps.
+
+```json
+{
+  "data": [
+    {
+      "id": 1234,
+      "name": "mybox",
+      "status": "active",
+      "enabled": true,
+      "app_slots": 20,
+      "used_slots": 7,
+      "free_slots": 13,
+      "storage_limit_gb": 2000,
+      "resource_multiplier": 1,
+      "plan": { "id": 12, "name": "Pro" },
+      "domain": "mybox.appboxes.co",
+      "created_at": "2025-06-14 09:12:44"
+    }
+  ],
+  "pagination": { "page": 1, "per_page": 25, "total": 1, "total_pages": 1 }
+}
+```
+
+`status` is one of `active`, `disabled`, `installing`, `migrating` or `restarting`. `domain` is only included when the key has `domains:read`.
+
+### Get an Appbox
+
+`GET /appboxes/{id}` · `apps:read`
+
+Returns one Appbox in the same shape.
+
+## Catalog
+
+### List installable apps
+
+`GET /catalog/apps` · `catalog:read` · 120 requests per minute per account
+
+| Query parameter | Description                                                                           |
+| --------------- | ------------------------------------------------------------------------------------- |
+| `q`             | Case-insensitive match on name, short description or publisher. Up to 100 characters. |
+| `category`      | A category id.                                                                        |
+
+Each app has `id`, `name`, `publisher`, `short_description`, `type` (`docker` or `vm`), `icon_url`, `categories`, `requires_domain`, `allow_multiple`, `app_slots`, `default_version_id` and `installable`.
+
+### Get an installable app
+
+`GET /catalog/apps/{id}` · `catalog:read`
+
+Adds `description`, `website_url`, `documentation_url`, `default_subdomain`, `supports_multiple_domains`, `preinstall_notes`, `postinstall_notes` and its `versions`. Each version has `id`, `version`, `is_default`, `deprecated`, `deprecation_message` and `app_slots`.
+
+### Get the fields an install needs
+
+`GET /catalog/apps/{id}/install-schema` · `catalog:read`
+
+| Query parameter | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `version_id`    | A version from the app. Defaults to the default version. |
+
+Returns the fields to send as `fields` in `POST /apps`. Each field has `name` (the key to use), `label`, `description`, `type`, `required`, `write_only`, `default`, `options`, `min_length`, `max_length`, `rules` and `format_message`.
+
+- `type` is one of `string`, `text`, `secret`, `email`, `date`, `boolean`, `enum` or `number`.
+- `rules` can include `alphanumeric`, `not_only_letters`, `complex_password`, `hostname` and `pattern`.
+- `visible_when` lists conditions on other fields. The field only applies when all of them hold.
+- `write_only` fields, such as passwords, are never returned after install.
+
+Defaults that Appbox fills in itself aren't listed.
+
+## Apps
+
+### List installed apps
+
+`GET /apps` · `apps:read`
+
+| Query parameter | Description               |
+| --------------- | ------------------------- |
+| `appbox_id`     | Only apps on this Appbox. |
+
+```json
+{
+  "data": [
+    {
+      "id": 5821,
+      "app": { "id": 87, "name": "Jellyfin", "icon_url": "https://..." },
+      "appbox_id": 1234,
+      "version": "10.11.2",
+      "latest_version": "10.11.2",
+      "update_available": false,
+      "status": "running",
+      "running": true,
+      "frozen": false,
+      "app_slots": 2,
+      "boost": {
+        "available": true,
+        "slots": 0,
+        "max_slots": 4,
+        "resource_multiplier": 1
+      },
+      "created_at": "2026-02-01 18:20:03",
+      "updated_at": "2026-10-28 07:45:10",
+      "domain": "jellyfin.mybox.appboxes.co",
+      "url": "https://jellyfin.mybox.appboxes.co",
+      "fields": [{ "name": "USERNAME", "label": "Username", "value": "admin" }]
+    }
+  ],
+  "pagination": { "page": 1, "per_page": 25, "total": 1, "total_pages": 1 }
+}
+```
+
+`status` is one of `installing`, `uninstalling`, `updating`, `frozen`, `running` or `stopped`. `app_slots` includes boost slots. `domain` and `url` are only included when the key has `domains:read`. `fields` holds the app's non-secret settings, as the dashboard shows them.
+
+### Get an installed app
+
+`GET /apps/{id}` · `apps:read`
+
+Returns one app in the same shape. Poll this after installing or changing an app to follow its `status`.
+
+### Install an app
+
+`POST /apps` · `apps:install` · accepts `Idempotency-Key`
+
+| Body field    | Required | Description                                                                                                              |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `app_id`      | Yes      | The app's id from the catalog.                                                                                           |
+| `appbox_id`   | Yes      | The Appbox to install on.                                                                                                |
+| `version_id`  | No       | Defaults to the app's default version.                                                                                   |
+| `fields`      | No       | Install fields by `name`, from the install schema.                                                                       |
+| `domain`      | No       | `{ "domain_id": ..., "subdomain": "..." }`. Apps that need a domain default to a subdomain of the Appbox's own hostname. |
+| `boost_slots` | No       | Boost slots to add at install. Above 0 needs `apps:boost`.                                                               |
+
+A `domain` under one of your own domains also needs `domains:read` and `domains:write`.
+
+The install starts in the background and the response returns at once:
+
+```json
+{
+  "data": {
+    "app_instance_id": 5822,
+    "status": "installing",
+    "app_id": 87,
+    "appbox_id": 1234,
+    "version_id": 1450,
+    "version": "10.11.2",
+    "boost_slots": 0
+  }
+}
+```
+
+Poll `GET /apps/{app_instance_id}` until `status` is no longer `installing`. [Install an app](/docs/developer-api/install-an-app) walks through the whole flow.
+
+### Check an install without installing
+
+`POST /apps/install/validate` · same scopes as `POST /apps`
+
+Takes the same body as `POST /apps`. Field problems come back as `"valid": false` with an `errors` list, each with `field`, `code` and `message`, so you can fix them before installing:
+
+```json
+{
+  "data": {
+    "valid": false,
+    "errors": [
+      {
+        "field": "fields.ADMIN_PASSWORD",
+        "code": "minLength",
+        "message": "ADMIN_PASSWORD must contain at least 8 characters."
+      }
+    ]
+  }
+}
+```
+
+### Check DNS for an install domain
+
+`POST /apps/install/dns-check` · `apps:install`, `domains:read`, `domains:write` · 60 checks per 5 minutes per account
+
+| Body field  | Description                                |
+| ----------- | ------------------------------------------ |
+| `appbox_id` | The Appbox you'll install on.              |
+| `domain`    | `{ "domain_id": ..., "subdomain": "..." }` |
+
+```json
+{
+  "data": {
+    "domain": "shop.example.com",
+    "available": true,
+    "managed_dns": false,
+    "verified": true,
+    "expected_ip": "203.0.113.10",
+    "resolved_ip": "203.0.113.10",
+    "message": null
+  }
+}
+```
+
+When `managed_dns` is `true`, Appbox manages the domain's DNS and creates the record for you. Otherwise point an `A` record at `expected_ip` and check again until `verified` is `true`.
+
+## App operations
+
+These return as soon as the change is accepted. Poll `GET /apps/{id}` to follow it:
+
+```json
+{
+  "data": {
+    "app_instance_id": 5821,
+    "operation": "restart",
+    "status": "accepted"
+  }
+}
+```
+
+### Start, stop or restart an app
+
+`POST /apps/{id}/start`, `POST /apps/{id}/stop`, `POST /apps/{id}/restart` · `apps:lifecycle` · accept `Idempotency-Key`
+
+Each has a 30-second cooldown per app, shared with the dashboard. Repeating one sooner returns `429 cooldown`.
+
+### Freeze or unfreeze an app
+
+`POST /apps/{id}/freeze`, `POST /apps/{id}/unfreeze` · `apps:lifecycle` · accept `Idempotency-Key`
+
+Freezing stops the app and frees its app slots until you unfreeze it. The response includes `frozen`. Unfreezing has the same 30-second cooldown as starting.
+
+### Change an app's version
+
+`POST /apps/{id}/version` · `apps:version` · accepts `Idempotency-Key`
+
+Send exactly one of:
+
+| Body field   | Description                                                                               |
+| ------------ | ----------------------------------------------------------------------------------------- |
+| `version_id` | A version from `GET /catalog/apps/{id}`.                                                  |
+| `version`    | `"default"` updates to the app's current release, like the dashboard's **Update** button. |
+
+The response includes `previous_version` and `target_version`. Asking for the version the app already runs returns `409 already_on_version`.
+
+### Set an app's boost slots
+
+`POST /apps/{id}/boost` · `apps:boost`
+
+| Body field    | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `boost_slots` | The total boost slots the app should have. `0` removes boost. |
+
+Boost gives the app more resources and uses more of your plan. Sending the current value again is safe. The response includes `boost_slots` and `resource_multiplier`.
+
+### Uninstall an app
+
+`DELETE /apps/{id}` · `apps:uninstall`
+
+Removes the app and its domains. Removing the domain the install created needs no extra scope. If domains were attached later, the key also needs `domains:delete`. Repeating the request while the uninstall runs returns `"already_in_progress": true`.
+
+## App domains
+
+### List an app's domains
+
+`GET /apps/{id}/domains` · `apps:read`, `domains:read`
+
+Each domain has `id`, `domain`, `type`, `parent_domain_id`, `platform_managed`, `has_ssl`, `app_instance_id` and `is_primary`. The primary domain is the one the install created. It can't be detached.
+
+### Check DNS before attaching a domain
+
+`POST /apps/{id}/domains/dns-check` · `apps:update`, `domains:read`, `domains:write` · 60 checks per 5 minutes per account
+
+Takes `{ "domain_id": ..., "subdomain": "..." }` and returns the same result as the install DNS check.
+
+### Attach a domain
+
+`POST /apps/{id}/domains` · `apps:update`, `domains:read`, `domains:write`
+
+| Body field  | Description                                         |
+| ----------- | --------------------------------------------------- |
+| `domain_id` | One of your domains, or your Appbox's own hostname. |
+| `subdomain` | A single DNS label, such as `shop`.                 |
+
+Creates the subdomain and points it at the app. Its DNS must already resolve to the app's server unless Appbox manages the domain's DNS; otherwise you get `400 dns_verification_failed`. Returns the new domain.
+
+### Detach a domain
+
+`DELETE /apps/{id}/domains/{domain_id}` · `apps:update`, `domains:delete`
+
+Returns `{ "id": ..., "app_instance_id": ..., "detached": true }`. The primary domain can't be detached (`403 not_allowed`).
+
+## Domains
+
+### List your domains
+
+`GET /domains` · `domains:read`
+
+| Query parameter   | Description                        |
+| ----------------- | ---------------------------------- |
+| `type`            | `base` or `subdomain`.             |
+| `app_instance_id` | Only domains attached to this app. |
+| `search`          | Case-insensitive substring.        |
+
+`platform_managed` is `true` for domains under an Appbox platform domain, such as `mybox.appboxes.co`.
+
+### Get a domain
+
+`GET /domains/{id}` · `domains:read`
+
+### Add a domain
+
+`POST /domains` · `domains:write`
+
+| Body field | Description                                   |
+| ---------- | --------------------------------------------- |
+| `domain`   | A base domain you own, such as `example.com`. |
+
+Appbox platform domains, such as `appboxes.co`, can't be added.
+
+### Check whether a subdomain is free
+
+`POST /domains/availability` · `domains:write`
+
+Takes `{ "domain_id": ..., "subdomain": "..." }` and returns `domain`, `available` and, when it isn't available, `reason`.
+
+### Delete a domain
+
+`DELETE /domains/{id}` · `domains:delete`
+
+Only base domains with no subdomains and no attached app can be deleted. Detach and delete the subdomains first. Platform domains can't be deleted.
+
+## Custom tables
+
+Some apps provide tables you can manage from Appbox, such as mailboxes or users. All custom table operations need `apps:read` as well as the scope listed.
+
+### List an app's custom tables
+
+`GET /apps/{id}/custom-tables` · `custom_tables:read`
+
+Each table has `id`, `slug`, `label`, `description`, `capabilities` and `fields`.
+
+- `capabilities` holds `can_add`, `can_update`, `can_delete`, `max_rows`, `current_rows` and `remaining_rows`.
+- Each field has `name`, `label`, `type`, `required`, `default`, `options` and `validation`, plus flags: `writable` (can be set when adding a row), `editable` (can be changed later), `read_only`, `write_only` and `secret`.
+
+### List rows
+
+`GET /apps/{id}/custom-tables/{table_id}/rows` · `custom_tables:read`
+
+Rows are ordered by id. Secret and write-only values are always `null` and listed in `redactions`:
+
+```json
+{
+  "data": [
+    {
+      "id": 310,
+      "fields": { "username": "alice", "password": null, "quota_gb": 10 },
+      "redactions": { "password": "write_only" }
+    }
+  ],
+  "pagination": { "page": 1, "per_page": 25, "total": 1, "total_pages": 1 }
+}
+```
+
+### Add a row
+
+`POST /apps/{id}/custom-tables/{table_id}/rows` · `custom_tables:write` · accepts `Idempotency-Key`
+
+```json
+{
+  "fields": {
+    "username": "bob",
+    "password": "correct-horse-battery",
+    "quota_gb": 5
+  }
+}
+```
+
+Needs the table's `can_add` capability and a free row; a full table returns `409 row_limit_reached`. On tables where adding a row runs a command in the app, `Idempotency-Key` is honoured and a short cooldown applies per table. When the app applies the change in the background, the response includes an `operation` with its `status`. Row values are returned only when the key also has `custom_tables:read`.
+
+### Update a row
+
+`PATCH /apps/{id}/custom-tables/{table_id}/rows/{row_id}` · `custom_tables:write` · accepts `Idempotency-Key`
+
+Takes `fields` like adding a row. Only `editable` fields can change, and `null` leaves a field as it is.
+
+### Delete a row
+
+`DELETE /apps/{id}/custom-tables/{table_id}/rows/{row_id}` · `custom_tables:delete` · accepts `Idempotency-Key`
+
+Returns `{ "id": ..., "deleted": true }`.
+
+## Custom actions
+
+Some apps provide actions, such as rescanning a library. Only actions Appbox has reviewed and opened to the API are listed. All custom action operations need `apps:read` as well as the scope listed.
+
+### List an app's custom actions
+
+`GET /apps/{id}/custom-actions` · `custom_actions:read`
+
+Each action has `id`, `stable_id`, `label`, `description`, `risk`, `requires_confirmation`, `confirmation_text`, `idempotency_key_supported`, `idempotency_key_required`, `cooldown_seconds`, `timeout_seconds` and its input `fields`.
+
+### Get a custom action
+
+`GET /apps/{id}/custom-actions/{action_id}` · `custom_actions:read`
+
+### Run a custom action
+
+`POST /apps/{id}/custom-actions/{action_id}/execute` · `custom_actions:execute` · accepts `Idempotency-Key`
+
+| Body field | Description                                              |
+| ---------- | -------------------------------------------------------- |
+| `fields`   | The action's inputs, by `name`.                          |
+| `confirm`  | Send `true` when the action has `requires_confirmation`. |
+
+`Idempotency-Key` is required when the action has `idempotency_key_required`. The action is queued and the response returns at once with `status: "queued"`. Inputs are never echoed back.

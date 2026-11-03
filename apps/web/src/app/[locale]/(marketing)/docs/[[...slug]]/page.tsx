@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+import { docsSectionTitle } from "@/config/docs"
 import { siteConfig } from "@/config/site"
 import { routing } from "@/i18n/routing"
 import { DocPageProps } from "@/lib/opendocs/types/docs"
@@ -142,8 +143,8 @@ export default async function DocPage(props: DocPageProps) {
 
         if (!docsBySection.has(section)) {
           docsBySection.set(section, {
-            title: section.charAt(0).toUpperCase() + section.slice(1),
-            description: `Documentation about ${section}`,
+            title: docsSectionTitle(section),
+            description: `Documentation about ${docsSectionTitle(section)}`,
             count: 1,
             firstDocSlug: docPath,
             lowestSortValue:

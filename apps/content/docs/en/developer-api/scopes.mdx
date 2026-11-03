@@ -1,0 +1,80 @@
+---
+title: Scopes and presets
+description: What each API key scope allows, which presets to start from, and which requests need extra scopes.
+sort: 2
+---
+
+Every API key has a list of scopes. A request only succeeds when the key has every scope the operation needs. Choose scopes when you create a key in **Account > API Keys**, and change them later with **Edit**.
+
+Keys created before 3 November 2026 have no scopes and can't call the API until you add some.
+
+## Scopes
+
+| Scope                    | Allows                                                                      | Higher risk |
+| ------------------------ | --------------------------------------------------------------------------- | ----------- |
+| `catalog:read`           | List installable apps, their versions and install fields.                   |             |
+| `apps:read`              | List installed apps and read their details and status.                      |             |
+| `apps:install`           | Install new apps.                                                           |             |
+| `apps:update`            | Change installed apps' settings, including attaching and detaching domains. |             |
+| `apps:uninstall`         | Uninstall apps.                                                             | Yes         |
+| `apps:lifecycle`         | Start, stop, restart, freeze and unfreeze apps.                             |             |
+| `apps:version`           | Upgrade, downgrade or switch app versions.                                  |             |
+| `apps:boost`             | Change apps' boost slots. This can use more of your plan's resources.       | Yes         |
+| `custom_tables:read`     | Read app-provided tables, such as mailboxes or users.                       |             |
+| `custom_tables:write`    | Add and edit rows in app-provided tables.                                   |             |
+| `custom_tables:delete`   | Delete rows from app-provided tables.                                       | Yes         |
+| `custom_actions:read`    | List the actions an app exposes to the API.                                 |             |
+| `custom_actions:execute` | Run app actions that are exposed to the API.                                | Yes         |
+| `domains:read`           | List domains and the domains attached to apps.                              |             |
+| `domains:write`          | Add domains and attach them to apps.                                        |             |
+| `domains:delete`         | Remove domains and detach them from apps.                                   | Yes         |
+
+Higher-risk scopes can delete data, run commands inside apps or use more of your plan. Only give them to automation you trust.
+
+No scope lets a key manage API keys, account security, users or billing.
+
+## Presets
+
+Presets are starting points in the key form. You can add or remove scopes after choosing one.
+
+| Preset                       | For                                                                                 | Scopes                                                                                                                            |
+| ---------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Read only**                | Dashboards, audits and inventory tools.                                             | `catalog:read`, `apps:read`, `domains:read`                                                                                       |
+| **Deployment automation**    | CI/CD that installs, updates and restarts apps, without uninstall or domain access. | `catalog:read`, `apps:read`, `apps:install`, `apps:update`, `apps:lifecycle`, `apps:version`                                      |
+| **Full app management**      | The whole app lifecycle, including uninstall and boost.                             | Deployment automation, plus `apps:uninstall` and `apps:boost`                                                                     |
+| **App extension automation** | Reading, writing and deleting custom table rows, and running custom actions.        | `apps:read`, `custom_tables:read`, `custom_tables:write`, `custom_tables:delete`, `custom_actions:read`, `custom_actions:execute` |
+| **Domain automation**        | Reading and adding domains, without app or delete access.                           | `domains:read`, `domains:write`                                                                                                   |
+| **Full platform automation** | Everything the API can do.                                                          | Every scope                                                                                                                       |
+
+## Requests that need extra scopes
+
+Some operations need more scopes depending on what you send or what the app has:
+
+| Request                                                      | Also needs                         |
+| ------------------------------------------------------------ | ---------------------------------- |
+| `POST /apps` with `domain` set to one of your own domains    | `domains:read` and `domains:write` |
+| `POST /apps` with `boost_slots` above 0                      | `apps:boost`                       |
+| `DELETE /apps/{id}` when domains were attached after install | `domains:delete`                   |
+
+An install on a subdomain of your Appbox's own hostname, such as `files.mybox.appboxes.co`, needs only `apps:install`. Uninstalling that app needs only `apps:uninstall`, because the install created the domain.
+
+Some responses also depend on scopes. Installed apps include `domain` and `url`, and Appboxes include `domain`, only when the key has `domains:read`. Custom table writes return the row's values only when the key has `custom_tables:read`.
+
+## Check a key's scopes
+
+`GET /key` returns the calling key's scopes and needs no scope itself. When a request fails for a missing scope, the error lists what to add:
+
+```json
+{
+  "error": {
+    "code": 3022,
+    "status": 403,
+    "message": "API key is missing required scope(s): apps:lifecycle",
+    "type": "missing_scope",
+    "details": {
+      "required_scopes": ["apps:lifecycle"],
+      "missing_scopes": ["apps:lifecycle"]
+    }
+  }
+}
+```

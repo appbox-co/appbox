@@ -1,0 +1,1450 @@
+openapi: 3.1.0
+info:
+  title: Appbox Developer API
+  version: 1.0.0
+  description: |
+    Automate your Appbox account: discover apps, install and manage app
+    instances, manage domains, and work with app-provided custom tables and
+    actions.
+
+    **Authentication.** Create an API key in the dashboard under
+    Account → API keys and send it on every request:
+
+        X-API-Key: abx_sk_live_...
+
+    `Authorization: Bearer abx_sk_live_...` also works. Keys only work on
+    `/developer/v1` and only with the scopes you gave them. A key can never
+    manage API keys, account security, users or billing. A key always acts as
+    a normal customer account, even when an admin owns it: it only reaches the
+    owner's own Appboxes, apps and domains.
+
+    **Scopes.** Each operation lists the scopes it needs. Some operations need
+    extra scopes depending on the request (for example installing an app with
+    a domain also needs `domains:read` and `domains:write`). A missing scope
+    returns `403` with `error.type = missing_scope` and the missing scopes in
+    `error.details.missing_scopes`. `GET /key` shows your key's scopes.
+
+    **Responses.** Successful responses wrap the result in `data`. List
+    responses add `pagination` and accept `page` (from 1) and `per_page`
+    (1–100, default 25).
+
+    **Errors.** Errors return `{"error": {"code", "status", "message",
+    "type", "details"?}}`. Branch on `type`; `code` is the platform's numeric
+    code and `message` is for humans.
+
+    **Idempotency.** Mutating operations that can run app commands accept an
+    `Idempotency-Key` header (up to 200 characters of `A-Z a-z 0-9 _ . : -`). Reusing a key with the same
+    request returns `409 idempotency_key_replayed`; reusing it with a different
+    request returns `409 idempotency_key_reused`. Responses are not replayed.
+
+    **Rate limits.** Each key may make 600 read and 60 write requests per
+    minute, and all of an account's keys together 1200 and 120. Some
+    operations have tighter limits. Exceeding a limit returns
+    `429 rate_limited`.
+
+    **Ownership.** A key only sees and changes your own Appboxes, apps and
+    domains. Anything else, including apps Appbox manages for you such as the
+    backup agent, returns `404`.
+servers:
+  - url: https://api.appbox.co/developer/v1
+security:
+  - apiKey: []
+  - bearer: []
+tags:
+  - name: Key
+  - name: Appboxes
+  - name: Catalog
+  - name: Apps
+  - name: App operations
+  - name: App domains
+  - name: Custom tables
+  - name: Custom actions
+  - name: Domains
+paths:
+  /key:
+    get:
+      tags: [Key]
+      operationId: getKey
+      summary: Show the calling API key
+      description: Name, prefix, scopes and expiry of the key making the request. Needs no scope.
+      x-required-scopes: []
+      responses:
+        '200':
+          description: The key.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/ApiKey' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /appboxes:
+    get:
+      tags: [Appboxes]
+      operationId: listAppboxes
+      summary: List your Appboxes
+      description: Your Appboxes with their free app slots. Use an Appbox's `id` as `appbox_id` when installing apps.
+      x-required-scopes: ['apps:read']
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of Appboxes.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Appbox' }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /appboxes/{id}:
+    get:
+      tags: [Appboxes]
+      operationId: getAppbox
+      summary: Get an Appbox
+      x-required-scopes: ['apps:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: The Appbox.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/Appbox' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /catalog/apps:
+    get:
+      tags: [Catalog]
+      operationId: listCatalogApps
+      summary: List installable apps
+      description: Limited to 120 requests per minute per account.
+      x-required-scopes: ['catalog:read']
+      parameters:
+        - { name: q, in: query, description: 'Case-insensitive match on name, short description or publisher.', schema: { type: string, maxLength: 100 } }
+        - { name: category, in: query, description: Category id., schema: { type: integer } }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of apps.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/CatalogApp' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /catalog/apps/{id}:
+    get:
+      tags: [Catalog]
+      operationId: getCatalogApp
+      summary: Get an installable app
+      description: App details and its installable versions. Nothing here depends on your Appboxes.
+      x-required-scopes: ['catalog:read']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200':
+          description: The app.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/CatalogAppDetail' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /catalog/apps/{id}/install-schema:
+    get:
+      tags: [Catalog]
+      operationId: getInstallSchema
+      summary: Get the fields an install needs
+      description: Send these as `fields` in `POST /apps`. Defaults the server fills in itself are not listed.
+      x-required-scopes: ['catalog:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - { name: version_id, in: query, description: Defaults to the app's default version., schema: { type: integer } }
+      responses:
+        '200':
+          description: The install schema.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/InstallSchema' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps:
+    get:
+      tags: [Apps]
+      operationId: listApps
+      summary: List installed apps
+      description: Apps on your Appboxes. Domain fields are only included when the key has `domains:read`.
+      x-required-scopes: ['apps:read']
+      parameters:
+        - { name: appbox_id, in: query, schema: { type: integer } }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of installed apps.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/InstalledApp' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      tags: [Apps]
+      operationId: installApp
+      summary: Install an app
+      description: |
+        Starts an install and returns at once; poll `GET /apps/{id}` until
+        `status` is no longer `installing`.
+
+        Extra scopes: `apps:boost` when `boost_slots` > 0, and `domains:read`
+        plus `domains:write` when `domain` names a domain other than the
+        Appbox's own hostname. Apps that need a domain default to a subdomain of
+        the Appbox's own hostname.
+      x-required-scopes: ['apps:install']
+      parameters: [ { $ref: '#/components/parameters/IdempotencyKey' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/InstallRequest' }
+      responses:
+        '200':
+          description: Install started.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/InstallResult' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/install/validate:
+    post:
+      tags: [Apps]
+      operationId: validateInstall
+      summary: Check an install request without installing
+      description: 'Takes the same body and needs the same scopes as `POST /apps`. Field problems come back as `valid: false` with `errors`; malformed requests fail as they would on install.'
+      x-required-scopes: ['apps:install']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/InstallRequest' }
+      responses:
+        '200':
+          description: Validation result.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [valid, errors]
+                    properties:
+                      valid: { type: boolean }
+                      errors: { type: array, items: { $ref: '#/components/schemas/FieldError' } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps/install/dns-check:
+    post:
+      tags: [Apps]
+      operationId: checkInstallDns
+      summary: Check DNS for an install-time domain
+      description: Rate limited to 60 checks per 5 minutes per account.
+      x-required-scopes: ['apps:install', 'domains:read', 'domains:write']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [appbox_id, domain]
+              additionalProperties: false
+              properties:
+                appbox_id: { type: integer }
+                domain: { $ref: '#/components/schemas/DomainChoice' }
+      responses:
+        '200':
+          description: DNS check result.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/DnsCheckResult' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}:
+    get:
+      tags: [Apps]
+      operationId: getApp
+      summary: Get an installed app
+      x-required-scopes: ['apps:read']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200':
+          description: The app.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/InstalledApp' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [App operations]
+      operationId: uninstallApp
+      summary: Uninstall an app
+      description: |
+        Removes the app and its domains. The domain the install created is
+        covered by `apps:uninstall`; if other domains were attached later the
+        key also needs `domains:delete`. Repeating the request while an
+        uninstall is running returns `already_in_progress: true`.
+      x-required-scopes: ['apps:uninstall']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200':
+          description: Uninstall accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps/{id}/start:
+    post:
+      tags: [App operations]
+      operationId: startApp
+      summary: Start an app
+      description: Has a 30-second cooldown per app, shared with the dashboard.
+      x-required-scopes: ['apps:lifecycle']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/stop:
+    post:
+      tags: [App operations]
+      operationId: stopApp
+      summary: Stop an app
+      description: Has a 30-second cooldown per app, shared with the dashboard.
+      x-required-scopes: ['apps:lifecycle']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/restart:
+    post:
+      tags: [App operations]
+      operationId: restartApp
+      summary: Restart an app
+      description: Has a 30-second cooldown per app, shared with the dashboard.
+      x-required-scopes: ['apps:lifecycle']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/freeze:
+    post:
+      tags: [App operations]
+      operationId: freezeApp
+      summary: Freeze an app
+      description: Stops the app and frees its app slots until it is unfrozen.
+      x-required-scopes: ['apps:lifecycle']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/unfreeze:
+    post:
+      tags: [App operations]
+      operationId: unfreezeApp
+      summary: Unfreeze an app
+      description: Has a 30-second cooldown per app, shared with the dashboard.
+      x-required-scopes: ['apps:lifecycle']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/version:
+    post:
+      tags: [App operations]
+      operationId: changeAppVersion
+      summary: Change an app's version
+      description: 'Send exactly one of `version_id` or `version: "default"` (update to the app''s current release, like the dashboard''s Update button).'
+      x-required-scopes: ['apps:version']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                version_id: { type: integer }
+                version: { type: string, enum: [default] }
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /apps/{id}/boost:
+    post:
+      tags: [App operations]
+      operationId: boostApp
+      summary: Set an app's boost slots
+      description: Sets the total boost slots (0 removes the boost). Boost uses more of your plan's resources. Repeating the same value is safe.
+      x-required-scopes: ['apps:boost']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [boost_slots]
+              additionalProperties: false
+              properties:
+                boost_slots: { type: integer, minimum: 0 }
+      responses:
+        '200':
+          description: Accepted.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/OperationAccepted' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /apps/{id}/domains:
+    get:
+      tags: [App domains]
+      operationId: listAppDomains
+      summary: List an app's domains
+      x-required-scopes: ['apps:read', 'domains:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: The app's domains; the primary one cannot be detached.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/AppDomain' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    post:
+      tags: [App domains]
+      operationId: attachAppDomain
+      summary: Attach a domain to an app
+      description: Creates `subdomain` under one of your domains and points it at the app. DNS must already resolve to the app's server unless the domain's DNS is managed by Appbox.
+      x-required-scopes: ['apps:update', 'domains:read', 'domains:write']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainChoice' }
+      responses:
+        '200':
+          description: The attached domain.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/AppDomain' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/domains/dns-check:
+    post:
+      tags: [App domains]
+      operationId: checkAttachDns
+      summary: Check DNS before attaching a domain
+      description: Rate limited to 60 checks per 5 minutes per account.
+      x-required-scopes: ['apps:update', 'domains:read', 'domains:write']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainChoice' }
+      responses:
+        '200':
+          description: DNS check result.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/DnsCheckResult' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/domains/{domain_id}:
+    delete:
+      tags: [App domains]
+      operationId: detachAppDomain
+      summary: Detach a domain from an app
+      description: The app's primary domain cannot be detached (`not_allowed`).
+      x-required-scopes: ['apps:update', 'domains:delete']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - { name: domain_id, in: path, required: true, schema: { type: integer } }
+      responses:
+        '200':
+          description: Detached.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [id, app_instance_id, detached]
+                    properties:
+                      id: { type: integer }
+                      app_instance_id: { type: integer }
+                      detached: { type: boolean, const: true }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps/{id}/custom-tables:
+    get:
+      tags: [Custom tables]
+      operationId: listCustomTables
+      summary: List an app's custom tables
+      description: Tables an app provides, such as mailboxes or users, with their field schemas and limits.
+      x-required-scopes: ['apps:read', 'custom_tables:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of tables.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/CustomTable' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps/{id}/custom-tables/{table_id}/rows:
+    get:
+      tags: [Custom tables]
+      operationId: listCustomTableRows
+      summary: List rows
+      description: Ordered by id. Secret and write-only values are always `null` and listed in `redactions`.
+      x-required-scopes: ['apps:read', 'custom_tables:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/TableId'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of rows.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/CustomTableRow' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    post:
+      tags: [Custom tables]
+      operationId: createCustomTableRow
+      summary: Add a row
+      description: |
+        Needs the table's `can_add` capability and a free row. Adding a row
+        can run an app command; on those tables `Idempotency-Key` is honoured
+        and a short cooldown applies per table. Row values are returned only
+        when the key also has `custom_tables:read`.
+      x-required-scopes: ['apps:read', 'custom_tables:write']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/TableId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CustomTableRowWrite' }
+      responses:
+        '200':
+          description: The new row.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/CustomTableRowWriteResult' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/custom-tables/{table_id}/rows/{row_id}:
+    patch:
+      tags: [Custom tables]
+      operationId: updateCustomTableRow
+      summary: Update a row
+      description: Only fields marked `editable` can change; `null` leaves a field unchanged.
+      x-required-scopes: ['apps:read', 'custom_tables:write']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/TableId'
+        - $ref: '#/components/parameters/RowId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CustomTableRowWrite' }
+      responses:
+        '200':
+          description: The updated row.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/CustomTableRowWriteResult' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+    delete:
+      tags: [Custom tables]
+      operationId: deleteCustomTableRow
+      summary: Delete a row
+      x-required-scopes: ['apps:read', 'custom_tables:delete']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/TableId'
+        - $ref: '#/components/parameters/RowId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [id, deleted]
+                    properties:
+                      id: { type: integer }
+                      deleted: { type: boolean, const: true }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /apps/{id}/custom-actions:
+    get:
+      tags: [Custom actions]
+      operationId: listCustomActions
+      summary: List an app's custom actions
+      description: Only actions Appbox has reviewed and opened to the API are listed.
+      x-required-scopes: ['apps:read', 'custom_actions:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of actions.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/CustomAction' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps/{id}/custom-actions/{action_id}:
+    get:
+      tags: [Custom actions]
+      operationId: getCustomAction
+      summary: Get a custom action
+      x-required-scopes: ['apps:read', 'custom_actions:read']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/ActionId'
+      responses:
+        '200':
+          description: The action.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/CustomAction' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /apps/{id}/custom-actions/{action_id}/execute:
+    post:
+      tags: [Custom actions]
+      operationId: executeCustomAction
+      summary: Run a custom action
+      description: |
+        Queues the action and returns. Send `"confirm": true` when the action
+        has `requires_confirmation`. `Idempotency-Key` is required when the
+        action has `idempotency_key_required`. Inputs are never echoed back.
+      x-required-scopes: ['apps:read', 'custom_actions:execute']
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/ActionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                fields: { type: object, additionalProperties: { type: [string, integer, boolean, 'null'] } }
+                confirm: { type: boolean }
+      responses:
+        '200':
+          description: Queued.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [status, action_id, app_instance_id]
+                    properties:
+                      operation_id: { type: [integer, 'null'] }
+                      status: { type: string, enum: [queued] }
+                      action_id: { type: integer }
+                      app_instance_id: { type: integer }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /domains:
+    get:
+      tags: [Domains]
+      operationId: listDomains
+      summary: List your domains
+      x-required-scopes: ['domains:read']
+      parameters:
+        - { name: type, in: query, schema: { type: string, enum: [base, subdomain] } }
+        - { name: app_instance_id, in: query, schema: { type: integer } }
+        - { name: search, in: query, description: Case-insensitive substring., schema: { type: string } }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: One page of domains.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Domain' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      tags: [Domains]
+      operationId: createDomain
+      summary: Add a domain
+      description: Adds a base domain you own, such as `example.com`. Platform domains (appboxes.co and similar) can't be added.
+      x-required-scopes: ['domains:write']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [domain]
+              additionalProperties: false
+              properties:
+                domain: { type: string, examples: [example.com] }
+      responses:
+        '200':
+          description: The new domain.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/Domain' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /domains/availability:
+    post:
+      tags: [Domains]
+      operationId: checkSubdomainAvailability
+      summary: Check whether a subdomain is free
+      x-required-scopes: ['domains:write']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainChoice' }
+      responses:
+        '200':
+          description: Availability.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [domain, available]
+                    properties:
+                      domain: { type: string, examples: [shop.example.com] }
+                      available: { type: boolean }
+                      reason: { type: string, enum: [taken] }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /domains/{id}:
+    get:
+      tags: [Domains]
+      operationId: getDomain
+      summary: Get a domain
+      x-required-scopes: ['domains:read']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200':
+          description: The domain.
+          content:
+            application/json:
+              schema: { type: object, required: [data], properties: { data: { $ref: '#/components/schemas/Domain' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [Domains]
+      operationId: deleteDomain
+      summary: Delete a domain
+      description: Only base domains with no subdomains and no attached app can be deleted; detach first. Platform domains can't be deleted.
+      x-required-scopes: ['domains:delete']
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200':
+          description: Deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [id, deleted]
+                    properties:
+                      id: { type: integer }
+                      deleted: { type: boolean, const: true }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    bearer:
+      type: http
+      scheme: bearer
+      description: The API key as a bearer token.
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: integer, minimum: 1 }
+    Page:
+      name: page
+      in: query
+      schema: { type: integer, minimum: 1, default: 1 }
+    PerPage:
+      name: per_page
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 25 }
+    TableId:
+      name: table_id
+      in: path
+      required: true
+      schema: { type: integer, minimum: 1 }
+    RowId:
+      name: row_id
+      in: path
+      required: true
+      schema: { type: integer, minimum: 1 }
+    ActionId:
+      name: action_id
+      in: path
+      required: true
+      schema: { type: integer, minimum: 1 }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: Optional key that makes retries of this request safe to send.
+      schema: { type: string, maxLength: 200, pattern: '^[A-Za-z0-9_.:-]+$' }
+  responses:
+    BadRequest:
+      description: The request was invalid.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Unauthorized:
+      description: Missing, malformed, unknown, revoked or expired API key.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Forbidden:
+      description: The key lacks a required scope (`missing_scope`) or may not do this.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+          example:
+            error:
+              code: 3022
+              status: 403
+              message: 'API key is missing required scope(s): apps:read'
+              type: missing_scope
+              details:
+                required_scopes: ['apps:read']
+                missing_scopes: ['apps:read']
+    NotFound:
+      description: The resource does not exist or does not belong to you.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Conflict:
+      description: The request conflicts with the resource's current state or reuses an idempotency key.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    RateLimited:
+      description: Too many requests.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, status, message, type]
+          properties:
+            code: { type: integer, description: 'Platform error code.' }
+            status: { type: integer, description: 'HTTP status.' }
+            message: { type: string }
+            type:
+              type: string
+              description: Stable machine-readable error type.
+              examples:
+                - missing_scope
+                - api_key_route_not_allowed
+                - api_key_required
+                - api_key_owner_not_allowed
+                - api_key_expired
+                - unauthorized
+                - forbidden
+                - not_found
+                - invalid_request
+                - invalid_json
+                - unsupported_media_type
+                - field_missing
+                - unknown_field
+                - validation_failed
+                - conflict
+                - not_allowed
+                - no_slots
+                - not_ready
+                - cooldown
+                - idempotency_key_replayed
+                - idempotency_key_reused
+                - rate_limited
+                - dns_verification_failed
+                - server_unavailable
+                - internal_error
+            details:
+              type: object
+              additionalProperties: true
+    Pagination:
+      type: object
+      required: [page, per_page, total, total_pages]
+      properties:
+        page: { type: integer }
+        per_page: { type: integer }
+        total: { type: integer }
+        total_pages: { type: integer }
+    Scope:
+      type: string
+      enum:
+        - catalog:read
+        - apps:read
+        - apps:install
+        - apps:update
+        - apps:uninstall
+        - apps:lifecycle
+        - apps:version
+        - apps:boost
+        - custom_tables:read
+        - custom_tables:write
+        - custom_tables:delete
+        - custom_actions:read
+        - custom_actions:execute
+        - domains:read
+        - domains:write
+        - domains:delete
+    ApiKey:
+      type: object
+      required: [id, name, key_prefix, scopes, created_at]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        key_prefix: { type: string, description: 'First characters of the key, for identification.' }
+        scopes:
+          type: array
+          items: { $ref: '#/components/schemas/Scope' }
+        created_at: { type: string, format: date-time }
+        expires_at: { type: [string, 'null'], format: date-time }
+        last_used_at: { type: [string, 'null'], format: date-time }
+    Appbox:
+      type: object
+      required: [id, name, status, enabled, app_slots, used_slots, free_slots, created_at]
+      properties:
+        id: { type: integer, description: 'Use as `appbox_id` when installing.' }
+        name: { type: string }
+        status: { type: string, enum: [active, disabled, installing, migrating, restarting] }
+        enabled: { type: boolean }
+        app_slots: { type: integer }
+        used_slots: { type: integer }
+        free_slots: { type: integer }
+        storage_limit_gb: { type: [number, 'null'] }
+        resource_multiplier: { type: [number, 'null'] }
+        plan:
+          type: [object, 'null']
+          properties:
+            id: { type: integer }
+            name: { type: string }
+        domain:
+          type: [string, 'null']
+          description: The Appbox's own hostname. Only returned when the key has `domains:read`.
+        created_at: { type: string }
+    Category:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+    CatalogApp:
+      type: object
+      required: [id, name, type, categories, requires_domain, allow_multiple, installable]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        publisher: { type: [string, 'null'] }
+        short_description: { type: [string, 'null'] }
+        type: { type: string, enum: [docker, vm] }
+        icon_url: { type: [string, 'null'] }
+        categories: { type: array, items: { $ref: '#/components/schemas/Category' } }
+        requires_domain: { type: boolean, description: 'The app always gets a hostname at install.' }
+        allow_multiple: { type: boolean, description: 'More than one copy may be installed on an Appbox.' }
+        app_slots: { type: [integer, 'null'] }
+        default_version_id: { type: [integer, 'null'] }
+        installable: { type: boolean }
+    CatalogAppDetail:
+      allOf:
+        - $ref: '#/components/schemas/CatalogApp'
+        - type: object
+          properties:
+            description: { type: [string, 'null'] }
+            website_url: { type: [string, 'null'] }
+            documentation_url: { type: [string, 'null'] }
+            default_subdomain: { type: [string, 'null'] }
+            supports_multiple_domains: { type: boolean }
+            preinstall_notes: { type: [string, 'null'] }
+            postinstall_notes: { type: [string, 'null'] }
+            versions:
+              type: array
+              items:
+                type: object
+                properties:
+                  id: { type: integer }
+                  version: { type: string }
+                  is_default: { type: boolean }
+                  deprecated: { type: boolean }
+                  deprecation_message: { type: [string, 'null'] }
+                  app_slots: { type: [integer, 'null'] }
+                  created_at: { type: [string, 'null'] }
+    InstallSchema:
+      type: object
+      required: [app_id, version_id, version, fields]
+      properties:
+        app_id: { type: integer }
+        version_id: { type: integer }
+        version: { type: string }
+        requires_domain: { type: boolean }
+        default_subdomain: { type: [string, 'null'] }
+        fields: { type: array, items: { $ref: '#/components/schemas/InstallField' } }
+    InstallField:
+      type: object
+      required: [name, label, type, required, write_only]
+      properties:
+        name: { type: string, description: 'Key to use in `fields`.' }
+        label: { type: string }
+        description: { type: [string, 'null'] }
+        type: { type: string, enum: [string, text, secret, email, date, boolean, enum, number] }
+        required: { type: boolean }
+        write_only: { type: boolean, description: 'Never returned after install.' }
+        default: { description: 'Absent for write-only fields.' }
+        options:
+          type: [array, 'null']
+          items: { type: object, properties: { value: {}, label: { type: string } } }
+        min_length: { type: [integer, 'null'] }
+        max_length: { type: [integer, 'null'] }
+        rules:
+          type: array
+          items: { type: string, enum: [alphanumeric, not_only_letters, complex_password, hostname, pattern] }
+        format_message: { type: [string, 'null'] }
+        visible_when:
+          type: [array, 'null']
+          description: The field only applies when every condition holds.
+          items:
+            type: object
+            properties:
+              field: { type: string }
+              operator: { type: string, enum: [equals, not_equals, in, not_in, truthy, falsy] }
+              value: {}
+              values: { type: array, items: {} }
+        clear_when_hidden: { type: [boolean, 'null'] }
+    InstalledApp:
+      type: object
+      required: [id, app, appbox_id, version, status, running, frozen, created_at]
+      properties:
+        id: { type: integer }
+        app:
+          type: object
+          properties:
+            id: { type: integer }
+            name: { type: string }
+            icon_url: { type: [string, 'null'] }
+        appbox_id: { type: integer }
+        version: { type: string }
+        latest_version: { type: [string, 'null'] }
+        update_available: { type: boolean }
+        status: { type: string, enum: [installing, uninstalling, updating, frozen, running, stopped] }
+        running: { type: boolean }
+        frozen: { type: boolean }
+        app_slots: { type: integer, description: 'Includes boost slots.' }
+        boost:
+          type: object
+          properties:
+            available: { type: boolean }
+            slots: { type: integer }
+            max_slots: { type: [integer, 'null'] }
+            resource_multiplier: { type: [number, 'null'] }
+        created_at: { type: [string, 'null'] }
+        updated_at: { type: [string, 'null'] }
+        domain: { type: [string, 'null'], description: 'Only with `domains:read`.' }
+        url: { type: [string, 'null'], description: 'Only with `domains:read`.' }
+        fields:
+          type: array
+          description: Non-secret settings, as the dashboard shows them.
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              label: { type: string }
+              value: {}
+    DomainChoice:
+      type: object
+      required: [domain_id, subdomain]
+      additionalProperties: false
+      properties:
+        domain_id: { type: integer, description: 'One of your domains, or your Appbox''s own hostname.' }
+        subdomain: { type: string, description: 'Single DNS label, e.g. `shop`.' }
+    InstallRequest:
+      type: object
+      required: [app_id, appbox_id]
+      additionalProperties: false
+      properties:
+        app_id: { type: integer }
+        appbox_id: { type: integer }
+        version_id: { type: [integer, 'null'], description: 'Defaults to the app''s default version.' }
+        fields:
+          type: object
+          description: Install fields from the install schema, by `name`.
+          additionalProperties: { type: [string, number, boolean, 'null'] }
+        domain:
+          $ref: '#/components/schemas/DomainChoice'
+        boost_slots: { type: integer, minimum: 0 }
+    InstallResult:
+      type: object
+      required: [app_instance_id, status, app_id, appbox_id]
+      properties:
+        app_instance_id: { type: integer }
+        status: { type: string, enum: [installing] }
+        app_id: { type: integer }
+        appbox_id: { type: integer }
+        version_id: { type: integer }
+        version: { type: string }
+        boost_slots: { type: integer }
+    FieldError:
+      type: object
+      properties:
+        field: { type: [string, 'null'], examples: ['fields.ADMIN_PASSWORD', 'domain.subdomain'] }
+        code: { type: string }
+        message: { type: string }
+    DnsCheckResult:
+      type: object
+      required: [domain, verified]
+      properties:
+        domain: { type: string, examples: [shop.example.com] }
+        available: { type: boolean }
+        managed_dns: { type: boolean, description: 'Appbox manages this domain''s DNS and will create the record.' }
+        verified: { type: boolean }
+        expected_ip: { type: [string, 'null'] }
+        resolved_ip: { type: [string, 'null'] }
+        message: { type: [string, 'null'] }
+    OperationAccepted:
+      type: object
+      required: [app_instance_id, operation, status]
+      properties:
+        app_instance_id: { type: integer }
+        operation: { type: string, enum: [uninstall, start, stop, restart, freeze, unfreeze, change_version, boost] }
+        status: { type: string, enum: [accepted] }
+        already_in_progress: { type: boolean, description: 'Uninstall only.' }
+        frozen: { type: boolean, description: 'Freeze and unfreeze only.' }
+        previous_version: { type: string, description: 'Version change only.' }
+        target_version:
+          type: [object, 'null']
+          description: Version change only.
+          properties:
+            id: { type: integer }
+            version: { type: string }
+        boost_slots: { type: integer, description: 'Boost only.' }
+        resource_multiplier: { type: [number, 'null'], description: 'Boost only.' }
+    Domain:
+      type: object
+      required: [id, domain, type, platform_managed, has_ssl]
+      properties:
+        id: { type: integer }
+        domain: { type: string }
+        type: { type: string, enum: [base, subdomain] }
+        parent_domain_id: { type: [integer, 'null'] }
+        platform_managed: { type: boolean, description: 'Under an Appbox platform domain such as appboxes.co.' }
+        has_ssl: { type: boolean }
+        app_instance_id: { type: [integer, 'null'] }
+        created_at: { type: [string, 'null'] }
+        updated_at: { type: [string, 'null'] }
+    AppDomain:
+      allOf:
+        - $ref: '#/components/schemas/Domain'
+        - type: object
+          required: [is_primary]
+          properties:
+            is_primary: { type: boolean, description: 'The domain the install created; it can''t be detached.' }
+    CustomTable:
+      type: object
+      required: [id, label, capabilities, fields]
+      properties:
+        id: { type: integer }
+        slug: { type: [string, 'null'] }
+        label: { type: string }
+        description: { type: [string, 'null'] }
+        capabilities:
+          type: object
+          properties:
+            can_add: { type: boolean }
+            can_update: { type: boolean }
+            can_delete: { type: boolean }
+            max_rows: { type: [integer, 'null'] }
+            current_rows: { type: integer }
+            remaining_rows: { type: [integer, 'null'] }
+        fields: { type: array, items: { $ref: '#/components/schemas/CustomTableField' } }
+        query:
+          type: object
+          properties:
+            default_sort: { type: object, properties: { field: { type: string }, direction: { type: string } } }
+            default_per_page: { type: integer }
+            max_per_page: { type: integer }
+    CustomTableField:
+      type: object
+      required: [name, label, type, required, writable, editable, read_only, write_only, secret]
+      properties:
+        name: { type: string }
+        label: { type: string }
+        type: { type: string, enum: [string, password, number, email, date, boolean, enum, url] }
+        description: { type: [string, 'null'] }
+        required: { type: boolean }
+        default: { description: 'Never returned for secret fields.' }
+        options:
+          type: [array, 'null']
+          items: { type: object, properties: { value: {}, label: { type: string } } }
+        validation:
+          type: object
+          properties:
+            min_length: { type: [integer, 'null'] }
+            max_length: { type: [integer, 'null'] }
+            pattern: { type: [string, 'null'] }
+            unique: { type: boolean }
+            alphanumeric: { type: boolean }
+            complex_password: { type: boolean }
+        writable: { type: boolean, description: 'Can be set when adding a row.' }
+        editable: { type: boolean, description: 'Can be changed on an existing row.' }
+        read_only: { type: boolean }
+        write_only: { type: boolean }
+        secret: { type: boolean }
+    CustomTableRow:
+      type: object
+      required: [id, fields, redactions]
+      properties:
+        id: { type: integer }
+        fields: { type: object, additionalProperties: { type: [string, number, boolean, 'null'] } }
+        redactions:
+          type: object
+          description: Fields whose value is withheld, and why.
+          additionalProperties: { type: string, enum: [write_only, secret] }
+    CustomTableRowWrite:
+      type: object
+      required: [fields]
+      additionalProperties: false
+      properties:
+        fields: { type: object, additionalProperties: { type: [string, number, boolean, 'null'] } }
+    CustomTableRowWriteResult:
+      type: object
+      required: [id]
+      properties:
+        id: { type: [integer, 'null'] }
+        fields: { type: [object, 'null'], description: 'Only with `custom_tables:read`.' }
+        redactions: { type: object }
+        operation:
+          type: [object, 'null']
+          description: Set when the change is applied asynchronously by the app.
+          properties:
+            id: { type: integer }
+            type: { type: string, enum: [create, update] }
+            status: { type: string, enum: [admission_pending, queued, unknown, completed, failed] }
+    CustomAction:
+      type: object
+      required: [id, label, risk, requires_confirmation, execution_mode, returns_output, cooldown_seconds, fields]
+      properties:
+        id: { type: integer }
+        stable_id: { type: [string, 'null'] }
+        label: { type: string }
+        description: { type: string }
+        confirmation_text: { type: [string, 'null'] }
+        risk: { type: string, enum: [low, medium] }
+        requires_confirmation: { type: boolean }
+        idempotency_key_supported: { type: boolean }
+        idempotency_key_required: { type: boolean }
+        execution_mode: { type: string, enum: [async] }
+        returns_output: { type: boolean }
+        cooldown_seconds: { type: integer }
+        timeout_seconds: { type: [integer, 'null'] }
+        fields:
+          type: array
+          items:
+            type: object
+            required: [name, label, type, required, secret, write_only]
+            properties:
+              name: { type: string }
+              label: { type: string }
+              type: { type: string, enum: [string, integer, boolean, enum] }
+              required: { type: boolean }
+              options: { type: [array, 'null'], items: { type: string } }
+              secret: { type: boolean }
+              write_only: { type: boolean }
+              default: { description: 'Absent for secret and write-only fields.' }
+              min_length: { type: integer }
+              max_length: { type: integer }
+              minimum: { type: integer }
+              maximum: { type: integer }
+              pattern: { type: string }

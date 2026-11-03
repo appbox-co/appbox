@@ -4,6 +4,10 @@ import type { AppDetails } from "./hooks/use-app-details"
 const PUBLIC_ALTERNATIVES_ENDPOINT =
   "https://api.appbox.co/v1/apps/public/alternatives-to"
 
+// Matches the alternatives pages' ISR interval, so a regeneration fetches
+// fresh data and the index and sitemap list the same pages as the detail route.
+const ALTERNATIVES_REVALIDATE_SECONDS = 300
+
 export interface AlternativePageSummary {
   id: number
   slug: string
@@ -62,7 +66,7 @@ export interface AlternativePageDetails extends AlternativePageSummary {
 
 export async function getAlternativePages(): Promise<AlternativePageSummary[]> {
   const response = await fetch(PUBLIC_ALTERNATIVES_ENDPOINT, {
-    next: { revalidate: 3600 }
+    next: { revalidate: ALTERNATIVES_REVALIDATE_SECONDS }
   })
 
   if (!response.ok) {
@@ -74,13 +78,19 @@ export async function getAlternativePages(): Promise<AlternativePageSummary[]> {
   return response.json()
 }
 
+// Resolves to null only when the API says the slug doesn't exist. Other
+// failures throw, so an ISR page isn't cached as a 404 because of an API blip.
 export async function getAlternativePage(
   slug: string
-): Promise<AlternativePageDetails> {
+): Promise<AlternativePageDetails | null> {
   const response = await fetch(
     `${PUBLIC_ALTERNATIVES_ENDPOINT}/${encodeURIComponent(slug)}`,
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: ALTERNATIVES_REVALIDATE_SECONDS } }
   )
+
+  if (response.status === 404) {
+    return null
+  }
 
   if (!response.ok) {
     const body = await response

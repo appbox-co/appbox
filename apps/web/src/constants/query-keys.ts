@@ -64,7 +64,9 @@ export const queryKeys = {
     me: ["profile", "me"] as const
   },
   apiKeys: {
-    all: ["apiKeys"] as const
+    all: ["apiKeys"] as const,
+    // Kept outside the "apiKeys" prefix so key mutations don't refetch it.
+    scopeCatalog: ["apiKeyScopes"] as const
   },
   abuseReports: {
     all: ["abuseReports"] as const,

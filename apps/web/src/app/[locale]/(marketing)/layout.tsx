@@ -1,11 +1,20 @@
+import { setRequestLocale } from "next-intl/server"
 import { SiteFooter } from "@/components/marketing/site-footer"
 import { SiteHeader } from "@/components/marketing/site-header"
 
 interface MarketingLayoutProps {
   children: React.ReactNode
+  params: Promise<{
+    locale: string
+  }>
 }
 
-export default function MarketingLayout({ children }: MarketingLayoutProps) {
+export default async function MarketingLayout(props: MarketingLayoutProps) {
+  const { locale } = await props.params
+  const { children } = props
+
+  setRequestLocale(locale)
+
   return (
     <div className="overflow-x-clip">
       <div className="relative z-10 flex min-h-screen flex-col">
