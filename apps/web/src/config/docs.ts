@@ -47,6 +47,17 @@ const newLabels: Record<LocaleOptions, string> = {
   zh: "新"
 }
 
+// Section titles that capitalising the folder name gets wrong
+const sectionTitles: Record<string, string> = {
+  "developer-api": "Developer API"
+}
+
+export function docsSectionTitle(section: string): string {
+  return (
+    sectionTitles[section] ?? section.charAt(0).toUpperCase() + section.slice(1)
+  )
+}
+
 // Items that should be labeled as "new"
 const newItems = [
   "/docs/mdx/frontmatter",
@@ -108,7 +119,7 @@ function generateSidebarNav(
     // Create the main section item without an href
     const sectionItem: NavItemWithChildren = {
       title: {
-        [locale]: section.charAt(0).toUpperCase() + section.slice(1)
+        [locale]: docsSectionTitle(section)
       },
       items: []
     }
