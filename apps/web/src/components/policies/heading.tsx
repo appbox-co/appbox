@@ -1,4 +1,4 @@
-import type { Policy } from "contentlayer/generated"
+import type { Policy } from "@/lib/content"
 import Balancer from "react-wrap-balancer"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 

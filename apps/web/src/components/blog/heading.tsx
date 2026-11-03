@@ -1,4 +1,4 @@
-import type { Blog } from "contentlayer/generated"
+import type { Blog } from "@/lib/content"
 import Balancer from "react-wrap-balancer"
 import { dateLocales } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"

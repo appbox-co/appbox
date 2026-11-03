@@ -1,12 +1,14 @@
-import { getTranslations } from "next-intl/server"
+import { getLocale, getTranslations } from "next-intl/server"
 import dynamic from "next/dynamic"
 import { MainNav } from "@/components/marketing/main-nav"
 import { MobileNav } from "@/components/marketing/mobile-nav"
 import { Icons } from "@/components/shared/icons"
 import { ThemeModeToggle } from "@/components/shared/theme-mode-toggle"
 import { Separator } from "@/components/ui/separator"
+import { docsConfig } from "@/config/docs"
 import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
+import { getAllBlogs } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { I18nToggle } from "../shared/i18n-toggle"
 import { Button, buttonVariants } from "../ui/button"
@@ -17,6 +19,22 @@ const CommandMenu = dynamic(() =>
 
 export async function SiteHeader() {
   const t = await getTranslations("site")
+  const locale = await getLocale()
+
+  const docs = {
+    mainNav: docsConfig.mainNav,
+    sidebarNav: docsConfig.sidebarNav
+  }
+
+  const blogPosts = getAllBlogs()
+    .filter((post) => post.slugAsParams.split("/")[0] === locale)
+    .map(({ _id, title, excerpt, tags, slugAsParams }) => ({
+      _id,
+      title,
+      excerpt,
+      tags,
+      slugAsParams
+    }))
 
   return (
     <header className={"sticky top-0 z-50 w-full"}>
@@ -41,6 +59,7 @@ export async function SiteHeader() {
         <MainNav />
 
         <MobileNav
+          docs={docs}
           messages={{
             menu: t("words.menu"),
             toggleMenu: t("buttons.toggle_menu")
@@ -50,6 +69,8 @@ export async function SiteHeader() {
         <div className="flex flex-1 items-center justify-end space-x-2">
           <div className="hidden w-full flex-1 xl:block xl:w-auto xl:flex-none">
             <CommandMenu
+              docs={docs}
+              blogPosts={blogPosts}
               messages={{
                 docs: t("words.docs"),
                 blog: t("words.blog"),

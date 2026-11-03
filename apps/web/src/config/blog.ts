@@ -14,7 +14,7 @@ export const blogConfig: BlogConfig = {
   authors: [
     {
       /* the id property must be the same as author_id in the blog post mdx files required for the computed field
-        in contentlayer.config.ts so we can get the author details from the blogConfig by comparing the author_id
+        in src/lib/content so we can get the author details from the blogConfig by comparing the author_id
         with the id below
       */
       id: "rid",

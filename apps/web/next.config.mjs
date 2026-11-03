@@ -1,6 +1,5 @@
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { withContentlayer } from "next-contentlayer2"
 import nextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = nextIntlPlugin()
@@ -11,6 +10,11 @@ const nextConfig = {
   reactStrictMode: true,
   turbopack: {
     root: path.resolve(__dirname, "../..")
+  },
+  // src/lib/content reads these at request time for dynamic routes such as
+  // the blog OG images and feeds, and file tracing can't see those reads.
+  outputFileTracingIncludes: {
+    "/**": ["../content/**/*.mdx"]
   },
   images: {
     remotePatterns: [
@@ -50,4 +54,4 @@ const nextConfig = {
   }
 }
 
-export default withNextIntl(withContentlayer(nextConfig))
+export default withNextIntl(nextConfig)

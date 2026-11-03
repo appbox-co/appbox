@@ -1,0 +1,224 @@
+/**
+ * Loads the MDX files in apps/content (docs, blog and policies) and validates
+ * their frontmatter. Server-only: it reads from disk, so client components
+ * must receive content through props.
+ *
+ * Documents keep the shape Contentlayer generated (`_id`, `_raw`, `body.raw`,
+ * `slug`, `slugAsParams`), apart from `body.code`: pages compile MDX when they
+ * render, through `<Mdx>`.
+ */
+import fs from "node:fs"
+import path from "node:path"
+import { parse as parseYaml } from "yaml"
+import { z } from "zod"
+import { blogConfig } from "@/config/blog"
+import type { PostAuthor } from "@/lib/opendocs/types/blog"
+
+export const contentDir = path.join(process.cwd(), "../content")
+
+const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/
+
+interface BaseDocument {
+  _id: string
+  _raw: {
+    sourceFilePath: string
+    sourceFileName: string
+    sourceFileDir: string
+    contentType: "mdx"
+    flattenedPath: string
+  }
+  body: { raw: string }
+  slug: string
+  slugAsParams: string
+}
+
+const links = z
+  .object({
+    doc: z.string(),
+    blog: z.string(),
+    api: z.string(),
+    source: z.string()
+  })
+  .partial()
+  .optional()
+
+// Matches Contentlayer: a date without a time zone is read as UTC.
+const isoDate = z.union([z.string(), z.date()]).transform((value, ctx) => {
+  let date = value instanceof Date ? value : undefined
+
+  if (typeof value === "string") {
+    const hasZone = /(z|[+-]\d{2}:?\d{2})$/i.test(value)
+    date = new Date(
+      value.includes(":") && !hasZone ? `${value.replace(" ", "T")}Z` : value
+    )
+  }
+
+  if (!date || Number.isNaN(date.getTime())) {
+    ctx.addIssue({ code: "custom", message: `Invalid date "${value}"` })
+    return z.NEVER
+  }
+
+  return date.toISOString()
+})
+
+const docSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  sort: z.number().optional(),
+  links,
+  toc: z.boolean().default(true)
+})
+
+const blogSchema = z.object({
+  title: z.string(),
+  excerpt: z.string(),
+  date: isoDate,
+  author_id: z.string().optional(),
+  og_image: z.string().optional(),
+  links,
+  tags: z.array(z.string())
+})
+
+const policySchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  toc: z.boolean().default(true)
+})
+
+export type Doc = BaseDocument & z.infer<typeof docSchema> & { type: "Doc" }
+
+export type Blog = BaseDocument &
+  z.infer<typeof blogSchema> & {
+    type: "Blog"
+    author: Omit<PostAuthor, "bio"> & { bio?: string }
+    readTimeInMinutes: number
+  }
+
+export type Policy = BaseDocument &
+  z.infer<typeof policySchema> & { type: "Policy" }
+
+function listMdxFiles(dir: string) {
+  return fs
+    .readdirSync(dir, { recursive: true, encoding: "utf8" })
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => file.split(path.sep).join("/"))
+    .sort()
+}
+
+function readDocument<T extends z.ZodObject>(
+  collection: string,
+  file: string,
+  schema: T
+): BaseDocument & z.infer<T> {
+  const sourceFilePath = `${collection}/${file}`
+  const source = fs.readFileSync(path.join(contentDir, sourceFilePath), "utf8")
+  const match = FRONTMATTER.exec(source)
+  const data = schema.safeParse(match ? (parseYaml(match[1]) ?? {}) : {})
+
+  if (!data.success) {
+    const issues = data.error.issues
+      .map((issue) => `  ${issue.path.join(".") || "frontmatter"}: ${issue.message}`)
+      .join("\n")
+
+    throw new Error(`${sourceFilePath}\n${issues}`)
+  }
+
+  const flattenedPath = sourceFilePath
+    .replace(/\.mdx$/, "")
+    .replace(/(^|\/)index$/, "")
+
+  const document: BaseDocument = {
+    _id: sourceFilePath,
+    _raw: {
+      sourceFilePath,
+      sourceFileName: path.posix.basename(sourceFilePath),
+      sourceFileDir: path.posix.dirname(sourceFilePath),
+      contentType: "mdx",
+      flattenedPath
+    },
+    body: { raw: match ? source.slice(match[0].length) : source },
+    slug: `/${flattenedPath}`,
+    slugAsParams: flattenedPath.split("/").slice(1).join("/")
+  }
+
+  return { ...(data.data as z.infer<T>), ...document }
+}
+
+function defineCollection<T extends z.ZodObject, D>(
+  collection: string,
+  schema: T,
+  compute: (document: BaseDocument & z.infer<T>) => D
+) {
+  const dir = path.join(contentDir, collection)
+  let cache: { signature: string; documents: D[] } | undefined
+
+  return function getAll(): D[] {
+    if (cache && process.env.NODE_ENV === "production") {
+      return cache.documents
+    }
+
+    const files = listMdxFiles(dir)
+
+    // Development reloads a collection when any of its files change.
+    const signature = files
+      .map((file) => `${file}:${fs.statSync(path.join(dir, file)).mtimeMs}`)
+      .join("|")
+
+    if (cache?.signature === signature) {
+      return cache.documents
+    }
+
+    const errors: string[] = []
+    const documents: D[] = []
+
+    for (const file of files) {
+      try {
+        documents.push(compute(readDocument(collection, file, schema)))
+      } catch (error) {
+        errors.push(error instanceof Error ? error.message : String(error))
+      }
+    }
+
+    if (errors.length > 0) {
+      throw new Error(
+        `Invalid frontmatter in ${errors.length} ${collection} file(s):\n${errors.join("\n")}`
+      )
+    }
+
+    cache = { signature, documents }
+    return documents
+  }
+}
+
+export const getAllDocs = defineCollection(
+  "docs",
+  docSchema,
+  (doc): Doc => ({ ...doc, type: "Doc" })
+)
+
+export const getAllBlogs = defineCollection("blog", blogSchema, (post): Blog => {
+  const [, locale] = post._raw.sourceFileDir.split("/")
+  const author = blogConfig.authors.find(
+    (author) => author.id === post.author_id
+  )
+  const words = post.body.raw.trim().split(/\s+/).length
+
+  return {
+    ...post,
+    type: "Blog",
+    author: author
+      ? {
+          ...author,
+          bio:
+            author.bio?.[locale as keyof typeof author.bio] || author.bio?.en
+        }
+      : { id: post.author_id },
+    readTimeInMinutes: Math.ceil(words / 200)
+  }
+})
+
+export const getAllPolicies = defineCollection(
+  "policies",
+  policySchema,
+  (policy): Policy => ({ ...policy, type: "Policy" })
+)

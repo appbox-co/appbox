@@ -7,7 +7,7 @@
  * - src/lib/opendocs/components/docs/pager.tsx
  */
 
-import { allDocs } from "contentlayer/generated"
+import { getAllDocs } from "@/lib/content"
 import type { DocsConfig } from "@/lib/opendocs/types/docs"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
@@ -71,7 +71,7 @@ function generateSidebarNav(
   const sectionToDocsMap = new Map<string, DocInfo[]>()
 
   // Filter docs for the current locale
-  const docsInLocale = allDocs.filter((doc) =>
+  const docsInLocale = getAllDocs().filter((doc) =>
     doc.slugAsParams.startsWith(locale)
   )
 

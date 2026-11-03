@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { allBlogs, allDocs } from "contentlayer/generated"
+import { getAllBlogs, getAllDocs } from "@/lib/content"
 import { getAlternativePages } from "@/api/appbox/alternative-pages"
 import { routing } from "@/i18n/routing"
 import { absoluteUrl } from "@/lib/utils"
@@ -51,7 +51,7 @@ export default async function sitemap(): Promise<Sitemap> {
     }))
   )
 
-  const docPaths: Sitemap = allDocs.map((doc) => {
+  const docPaths: Sitemap = getAllDocs().map((doc) => {
     const [, ...docSlugList] = doc.slugAsParams.split("/")
     const docSlug = docSlugList.join("/") || ""
 
@@ -70,7 +70,7 @@ export default async function sitemap(): Promise<Sitemap> {
     }
   })
 
-  const blogPaths: Sitemap = allBlogs.map((post) => {
+  const blogPaths: Sitemap = getAllBlogs().map((post) => {
     const [, ...postSlugList] = post.slugAsParams.split("/")
     const postSlug = postSlugList.join("/") || ""
 

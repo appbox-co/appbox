@@ -31,28 +31,19 @@ By contributing to this project, you agree that your contributions will be licen
 
 4. **Test your changes** locally
 
-5. **If working with documentation or content**, rebuild the contentlayer cache:
-
-   ```bash
-   cd apps/web
-   pnpm contentlayer:build
-   ```
-
-   This is necessary when adding new docs, modifying content structure, or changing the contentlayer configuration.
-
-6. **Commit your changes** using conventional commit format:
+5. **Commit your changes** using conventional commit format:
 
    ```bash
    git commit -m "feat: add new feature"
    ```
 
-7. **Push to your fork**:
+6. **Push to your fork**:
 
    ```bash
    git push origin feature/your-feature-name
    ```
 
-8. **Create a pull request** to the main repository
+7. **Create a pull request** to the main repository
 
 ## Code Style Guidelines
 
@@ -80,15 +71,6 @@ We especially welcome contributions to our documentation:
 - Adding tutorials or how-to guides
 
 Pick a page from the open issues labelled [`documentation`](https://github.com/appbox-co/appbox/issues?q=is%3Aissue%20state%3Aopen%20label%3Adocumentation) and comment to claim it, or suggest one with the documentation request form. [Writing docs](https://www.appbox.co/docs/contributing/writing-docs) covers where pages go, the app page template and the style guide. Write in English only; the Appbox team handles translations.
-
-When working with documentation, remember to rebuild the contentlayer cache after making changes:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-This ensures your content changes are properly processed and visible in the local development environment.
 
 ## Reporting Issues
 

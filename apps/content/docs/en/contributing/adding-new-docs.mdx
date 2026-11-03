@@ -44,25 +44,9 @@ author: Author Name
 ---
 ```
 
-But when adding custom metadata, you also need to update the `apps/web/contentlayer.config.ts` file, inside the `fields` property in the `Doc` or `Blog` constants.
+But when adding custom metadata, you also need to add the field to the matching schema (`docSchema`, `blogSchema` or `policySchema`) in `apps/web/src/lib/content/index.ts`. Frontmatter keys that aren't in the schema are dropped.
 After that, you will need to display the new information in the document template. To do this, you will need to update the `apps/web/src/app/[locale]/(marketing)/docs/[[...slug]]/page.tsx` file, or `apps/web/src/app/[locale]/(marketing)/blog/[[...slug]]/page.tsx` or one of its child components.
 
-## Rebuilding Contentlayer
+## Checking your changes
 
-When you make changes to documentation content, add new docs, or modify the `contentlayer.config.ts` file, you'll need to rebuild the contentlayer cache for your changes to take effect during development. Run:
-
-```bash
-cd apps/web
-pnpm contentlayer:build
-```
-
-This command regenerates the content types and data needed by the application. You'll need to run this command whenever you:
-
-- Add new metadata fields to the `contentlayer.config.ts` file
-- Add or modify MDX content when the dev server isn't running
-- Change the structure of your content organization
-
-The command is automatically run when building the project for production, but you'll need to run it manually during development if you make structural changes to content.
-
-
-
+The site reads the MDX files directly, so `pnpm dev` shows changes when you refresh the page. A file with invalid frontmatter stops the page from loading and names the file and field. `pnpm build` checks every file in every language.

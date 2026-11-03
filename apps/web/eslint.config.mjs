@@ -13,7 +13,6 @@ export default defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    ".contentlayer/**",
     ".turbo/**",
     "public/**"
   ]),

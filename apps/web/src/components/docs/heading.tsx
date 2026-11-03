@@ -1,4 +1,4 @@
-import type { Doc } from "contentlayer/generated"
+import type { Doc } from "@/lib/content"
 import Balancer from "react-wrap-balancer"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import { DocNotAvailableInThisLanguage } from "./not-available"

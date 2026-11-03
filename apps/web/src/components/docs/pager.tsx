@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import type { Doc } from "contentlayer/generated"
+import type { Doc } from "@/lib/content"
 import { Link } from "@/i18n/routing"
 import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { NavItem, NavItemWithChildren } from "@/lib/opendocs/types/nav"

@@ -12,11 +12,12 @@ import {
   MoonIcon,
   SunIcon
 } from "@radix-ui/react-icons"
-import { allBlogs } from "contentlayer/generated"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "@/i18n/routing"
 import { useBlogConfig } from "@/lib/opendocs/hooks/use-blog-config"
-import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
+import type { Blog } from "@/lib/content"
+import type { DocsConfig } from "@/lib/opendocs/types/docs"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import type { NavItemWithChildren } from "@/lib/opendocs/types/nav"
 import { getObjectValueByLocale } from "@/lib/opendocs/utils/locale"
 import { cn } from "@/lib/utils"
@@ -30,17 +31,27 @@ import {
   CommandSeparator
 } from "../ui/command"
 
+export type BlogSearchItem = Pick<
+  Blog,
+  "_id" | "title" | "excerpt" | "tags" | "slugAsParams"
+>
+
 function DocsCommandMenu({
+  docs,
   runCommand,
   messages
 }: {
+  docs: DocsConfig
   runCommand: (command: () => unknown) => void
   messages: {
     docs: string
   }
 }) {
   const router = useRouter()
-  const docsConfig = useDocsConfig()
+  const docsConfig = {
+    currentLocale: useLocale() as LocaleOptions,
+    docs
+  }
 
   function renderItems(items: NavItemWithChildren[]) {
     return items.map((navItem) => {
@@ -108,24 +119,17 @@ function DocsCommandMenu({
 }
 
 function BlogCommandMenu({
+  posts,
   runCommand,
   messages
 }: {
+  posts: BlogSearchItem[]
   runCommand: (command: () => unknown) => void
   messages: {
     blog: string
   }
 }) {
   const router = useRouter()
-  const locale = useLocale()
-
-  const posts = useMemo(() => {
-    return allBlogs.filter((post) => {
-      const [postLocale] = post.slugAsParams.split("/")
-
-      return postLocale === locale
-    })
-  }, [locale])
 
   return (
     <CommandGroup heading={messages.blog}>
@@ -155,6 +159,9 @@ function BlogCommandMenu({
 }
 
 interface CommandMenuProps extends AlertDialogProps {
+  docs: DocsConfig
+  /** Blog posts in the current locale */
+  blogPosts: BlogSearchItem[]
   messages: {
     docs: string
     blog: string
@@ -172,10 +179,19 @@ interface CommandMenuProps extends AlertDialogProps {
   }
 }
 
-export function CommandMenu({ messages, ...props }: CommandMenuProps) {
+export function CommandMenu({
+  docs,
+  blogPosts,
+  messages,
+  ...props
+}: CommandMenuProps) {
   const router = useRouter()
   const { setTheme } = useTheme()
-  const docsConfig = useDocsConfig()
+  const locale = useLocale() as LocaleOptions
+  const docsConfig = useMemo(
+    () => ({ currentLocale: locale, docs }),
+    [locale, docs]
+  )
   const blogConfig = useBlogConfig()
   const [open, setOpen] = useState(false)
 
@@ -263,6 +279,7 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
           </CommandGroup>
 
           <DocsCommandMenu
+            docs={docs}
             runCommand={runCommand}
             messages={{
               docs: messages.docs
@@ -272,6 +289,7 @@ export function CommandMenu({ messages, ...props }: CommandMenuProps) {
           <CommandSeparator className="my-1" />
 
           <BlogCommandMenu
+            posts={blogPosts}
             runCommand={runCommand}
             messages={{
               blog: messages.blog

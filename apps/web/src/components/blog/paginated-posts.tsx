@@ -1,4 +1,4 @@
-import type { Blog } from "contentlayer/generated"
+import type { Blog } from "@/lib/content"
 import { compareDesc } from "date-fns"
 import Balancer from "react-wrap-balancer"
 import { dateLocales, Link } from "@/i18n/routing"

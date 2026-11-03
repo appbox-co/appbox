@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server"
-import type { Doc } from "contentlayer/generated"
+import type { Doc } from "@/lib/content"
 import { ExternalLinkIcon } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"

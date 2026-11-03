@@ -9,7 +9,7 @@
     "dev:admin": "set -a; [ -f .env.local ] && . ./.env.local; set +a; ENABLE_ADMIN_MODULE=true pnpm admin:bridge && next dev --turbopack -H ${DEV_HTTPS_HOST:-localhost} --experimental-https --experimental-https-key \"$DEV_HTTPS_KEY\" --experimental-https-cert \"$DEV_HTTPS_CERT\"",
     "dev:http": "ENABLE_ADMIN_MODULE=false pnpm admin:bridge && next dev --turbopack",
     "dev:http:admin": "ENABLE_ADMIN_MODULE=true pnpm admin:bridge && next dev --turbopack",
-    "build": "pnpm admin:bridge && run-s contentlayer:build next:build",
+    "build": "pnpm admin:bridge && next build",
     "start": "pnpm admin:bridge && node server.mjs",
     "lint": "pnpm admin:bridge && tsc --noEmit && eslint .",
     "lint:fix": "pnpm admin:bridge && tsc --noEmit && eslint --fix .",
@@ -21,12 +21,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "migrate:app-descriptions": "node scripts/migrate-app-descriptions.mjs",
-    "next:build": "next build",
-    "contentlayer:build": "contentlayer2 build"
+    "next:build": "next build"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",
     "@hookform/resolvers": "^5.4.0",
+    "@mdx-js/mdx": "^3.1.1",
     "@novnc/novnc": "1.7.0",
     "@radix-ui/react-accordion": "^1.2.16",
     "@radix-ui/react-alert-dialog": "^1.1.19",
@@ -52,7 +52,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
-    "contentlayer2": "^0.5.8",
     "date-fns": "^4.4.0",
     "deepmerge": "^4.3.1",
     "feed": "^6.0.0",
@@ -64,7 +63,6 @@
     "mdx-bundler": "^10.1.1",
     "motion": "^12.42.2",
     "next": "^16.2.10",
-    "next-contentlayer2": "^0.5.8",
     "next-intl": "4.13.1",
     "next-themes": "^0.4.6",
     "normalize-path": "^3.0.0",
@@ -82,6 +80,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import * as React from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { Server } from "lucide-react"
 import { Icons } from "@/components/shared/icons"
 import {
@@ -14,7 +14,8 @@ import {
 import { launchWeekFlags } from "@/config/launch-week-flags"
 import { siteConfig } from "@/config/site"
 import { Link, usePathname, useRouter } from "@/i18n/routing"
-import { useDocsConfig } from "@/lib/opendocs/hooks/use-docs-config"
+import type { DocsConfig } from "@/lib/opendocs/types/docs"
+import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
 import { cn } from "@/lib/utils"
 import { DocsSidebarNav } from "../docs/sidebar-nav"
 import { Button } from "../ui/button"
@@ -34,16 +35,17 @@ interface MenuItem {
 }
 
 interface MobileNavProps {
+  docs: DocsConfig
   messages: {
     menu: string
     toggleMenu: string
   }
 }
 
-export function MobileNav({ messages }: MobileNavProps) {
+export function MobileNav({ docs, messages }: MobileNavProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const docsConfig = useDocsConfig()
+  const docsConfig = { currentLocale: useLocale() as LocaleOptions, docs }
   const [open, setOpen] = useState(false)
   const t = useTranslations("site.navigation")
   const tExt = useTranslations("site.external_links")

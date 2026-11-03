@@ -24,9 +24,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "contentlayer/generated": [
-        "./.contentlayer/generated"
       ]
     },
     "noEmit": true,
@@ -46,8 +43,6 @@
     "next.config.js",
     "tailwind.config.ts",
     ".next/types/**/*.ts",
-    "contentlayer.config.ts",
-    ".contentlayer/generated",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

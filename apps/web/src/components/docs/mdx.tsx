@@ -1,5 +1,8 @@
+import { createHash } from "node:crypto"
+import path from "node:path"
 import type { ComponentProps } from "react"
-import { useMDXComponent } from "next-contentlayer2/hooks"
+import * as runtime from "react/jsx-runtime"
+import { evaluate } from "@mdx-js/mdx"
 import Image from "next/image"
 import { CodeBlockWrapper } from "@/components/docs/mdx-components/code-block-wrapper"
 import { Callout } from "@/components/marketing/callout"
@@ -13,6 +16,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Link } from "@/i18n/routing"
+import { contentDir } from "@/lib/content"
+import { mdxOptions } from "@/lib/content/mdx-options"
 import { cn } from "@/lib/utils"
 import { a } from "./mdx-components/a"
 import { blockquote } from "./mdx-components/blockquote"
@@ -148,17 +153,40 @@ const components = {
 }
 
 interface MdxProps {
-  code: string
+  /** MDX source, without frontmatter */
+  source: string
+  /** Path relative to apps/content, used to resolve code imports */
+  sourceFilePath: string
 }
 
-export function Mdx({ code }: MdxProps) {
-  /* eslint-disable react-hooks/static-components -- MDX: component is dynamic per code string */
-  const Component = useMDXComponent(code)
+const compiled = new Map<string, ReturnType<typeof evaluate>>()
+
+function compile(source: string, sourceFilePath: string) {
+  const key = createHash("sha1")
+    .update(sourceFilePath)
+    .update("\0")
+    .update(source)
+    .digest("hex")
+
+  let mdxModule = compiled.get(key)
+
+  if (!mdxModule) {
+    mdxModule = evaluate(
+      { value: source, path: path.join(contentDir, sourceFilePath) },
+      { ...runtime, ...mdxOptions }
+    )
+    compiled.set(key, mdxModule)
+  }
+
+  return mdxModule
+}
+
+export async function Mdx({ source, sourceFilePath }: MdxProps) {
+  const { default: Content } = await compile(source, sourceFilePath)
 
   return (
     <div className="mdx">
-      <Component components={components} />
+      <Content components={components} />
     </div>
   )
-  /* eslint-enable react-hooks/static-components */
 }

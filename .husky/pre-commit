@@ -45,17 +45,6 @@ if git diff --cached --name-only | grep -E '^apps/web/src/lib/admin/(bridge|avai
   fi
 fi
 
-# Check if any MDX files or contentlayer config have been modified
-if git diff --cached --name-only | grep -E '\.mdx$|contentlayer\.config\.ts$'; then
-  echo "Content files changed, rebuilding contentlayer..."
-  pnpm --filter appbox-web contentlayer:build
-  if [ $? -ne 0 ]; then
-    echo "Contentlayer build failed! Fix the errors before committing."
-    exit 1
-  fi
-  echo "Contentlayer rebuild successful."
-fi 
-
 # Run build to catch any build-time errors
 echo "Running build check before commit..."
 cd "$(git rev-parse --show-toplevel)" || exit 1
