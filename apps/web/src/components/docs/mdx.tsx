@@ -1,9 +1,8 @@
-import { createHash } from "node:crypto"
 import path from "node:path"
 import type { ComponentProps } from "react"
-import * as runtime from "react/jsx-runtime"
-import { evaluate } from "@mdx-js/mdx"
 import Image from "next/image"
+import { evaluate } from "@mdx-js/mdx"
+import * as runtime from "react/jsx-runtime"
 import { CodeBlockWrapper } from "@/components/docs/mdx-components/code-block-wrapper"
 import { Callout } from "@/components/marketing/callout"
 import {
@@ -159,24 +158,31 @@ interface MdxProps {
   sourceFilePath: string
 }
 
-const compiled = new Map<string, ReturnType<typeof evaluate>>()
+// One compiled module per file. An edited file replaces its old module, and a
+// failed compile isn't kept, so the next render tries again.
+const compiled = new Map<
+  string,
+  { source: string; mdxModule: ReturnType<typeof evaluate> }
+>()
 
 function compile(source: string, sourceFilePath: string) {
-  const key = createHash("sha1")
-    .update(sourceFilePath)
-    .update("\0")
-    .update(source)
-    .digest("hex")
+  const cached = compiled.get(sourceFilePath)
 
-  let mdxModule = compiled.get(key)
-
-  if (!mdxModule) {
-    mdxModule = evaluate(
-      { value: source, path: path.join(contentDir, sourceFilePath) },
-      { ...runtime, ...mdxOptions }
-    )
-    compiled.set(key, mdxModule)
+  if (cached?.source === source) {
+    return cached.mdxModule
   }
+
+  const mdxModule = evaluate(
+    { value: source, path: path.join(contentDir, sourceFilePath) },
+    { ...runtime, ...mdxOptions }
+  )
+
+  compiled.set(sourceFilePath, { source, mdxModule })
+  mdxModule.catch(() => {
+    if (compiled.get(sourceFilePath)?.mdxModule === mdxModule) {
+      compiled.delete(sourceFilePath)
+    }
+  })
 
   return mdxModule
 }

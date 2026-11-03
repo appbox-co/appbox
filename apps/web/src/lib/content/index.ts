@@ -9,6 +9,7 @@
  */
 import fs from "node:fs"
 import path from "node:path"
+import { cache } from "react"
 import { parse as parseYaml } from "yaml"
 import { z } from "zod"
 import { blogConfig } from "@/config/blog"
@@ -44,7 +45,8 @@ const links = z
   .partial()
   .optional()
 
-// Matches Contentlayer: a date without a time zone is read as UTC.
+// A date without a time zone is read as UTC, so dates don't depend on where the
+// site is built. Contentlayer used the build machine's time zone.
 const isoDate = z.union([z.string(), z.date()]).transform((value, ctx) => {
   let date = value instanceof Date ? value : undefined
 
@@ -165,11 +167,13 @@ function defineCollection<T extends z.ZodObject, D>(
   compute: (document: BaseDocument & z.infer<T>) => D
 ) {
   const dir = path.join(contentDir, collection)
-  let cache: { signature: string; documents: D[] } | undefined
+  let loaded: { signature: string; documents: D[] } | undefined
 
-  return function getAll(): D[] {
-    if (cache && process.env.NODE_ENV === "production") {
-      return cache.documents
+  // A page reads each collection several times, so check the files for
+  // changes once per request.
+  return cache(function getAll(): D[] {
+    if (loaded && process.env.NODE_ENV === "production") {
+      return loaded.documents
     }
 
     const files = listMdxFiles(dir)
@@ -179,8 +183,8 @@ function defineCollection<T extends z.ZodObject, D>(
       .map((file) => `${file}:${fs.statSync(path.join(dir, file)).mtimeMs}`)
       .join("|")
 
-    if (cache?.signature === signature) {
-      return cache.documents
+    if (loaded?.signature === signature) {
+      return loaded.documents
     }
 
     const errors: string[] = []
@@ -206,9 +210,9 @@ function defineCollection<T extends z.ZodObject, D>(
       console.error(message)
     }
 
-    cache = { signature, documents }
+    loaded = { signature, documents }
     return documents
-  }
+  })
 }
 
 export const getAllDocs = defineCollection(

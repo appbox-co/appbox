@@ -45,7 +45,7 @@ interface MobileNavProps {
 export function MobileNav({ docs, messages }: MobileNavProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const docsConfig = { currentLocale: useLocale() as LocaleOptions, docs }
+  const locale = useLocale() as LocaleOptions
   const [open, setOpen] = useState(false)
   const t = useTranslations("site.navigation")
   const tExt = useTranslations("site.external_links")
@@ -322,8 +322,8 @@ export function MobileNav({ docs, messages }: MobileNavProps) {
               {shouldDisplayDocsSidebarContent && (
                 <DocsSidebarNav
                   isMobile
-                  locale={docsConfig.currentLocale}
-                  items={docsConfig.docs.sidebarNav}
+                  locale={locale}
+                  items={docs.sidebarNav}
                   handleMobileSidebar={setOpen}
                 />
               )}
