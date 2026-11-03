@@ -79,6 +79,8 @@ We especially welcome contributions to our documentation:
 - Fixing typos or clarifying existing content
 - Adding tutorials or how-to guides
 
+Pick a page from the open issues labelled [`documentation`](https://github.com/appbox-co/appbox/issues?q=is%3Aissue%20state%3Aopen%20label%3Adocumentation) and comment to claim it, or suggest one with the documentation request form. [Writing docs](https://www.appbox.co/docs/contributing/writing-docs) covers where pages go, the app page template and the style guide. Write in English only; the Appbox team handles translations.
+
 When working with documentation, remember to rebuild the contentlayer cache after making changes:
 
 ```bash
