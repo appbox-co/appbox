@@ -79,7 +79,8 @@ export async function getAlternativePage(
 ): Promise<AlternativePageDetails> {
   const response = await fetch(
     `${PUBLIC_ALTERNATIVES_ENDPOINT}/${encodeURIComponent(slug)}`,
-    { next: { revalidate: 3600 } }
+    // Matches the page's ISR interval, so a regeneration fetches fresh data.
+    { next: { revalidate: 300 } }
   )
 
   if (!response.ok) {

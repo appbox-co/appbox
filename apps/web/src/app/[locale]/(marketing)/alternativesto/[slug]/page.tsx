@@ -3,13 +3,11 @@ import { notFound } from "next/navigation"
 import Script from "next/script"
 import {
   getAlternativePage,
-  getAlternativePages,
   type AlternativePageDetails
 } from "@/api/appbox/alternative-pages"
 import { AlternativeList } from "@/components/marketing/alternative-list"
 import { BlockRenderer } from "@/components/marketing/app-blocks/block-renderer"
 import { siteConfig } from "@/config/site"
-import { routing } from "@/i18n/routing"
 import {
   extractMeta,
   markdownToPlainText,
@@ -74,18 +72,13 @@ function getAlternativePageStructuredData(
   }
 }
 
+// Cached like a static page, but rendered on first request instead of at
+// build: prerendering every slug in every locale added about 1.3 GB of build
+// output. The API content is refreshed in the background every 5 minutes.
+export const revalidate = 300
+
 export async function generateStaticParams() {
-  try {
-    const pages = await getAlternativePages()
-    return routing.locales.flatMap((locale) =>
-      pages.map((page) => ({
-        locale,
-        slug: page.slug
-      }))
-    )
-  } catch {
-    return []
-  }
+  return []
 }
 
 export async function generateMetadata({

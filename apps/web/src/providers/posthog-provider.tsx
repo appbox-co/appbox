@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import {
@@ -95,31 +95,92 @@ function syncPostHogSessionRecording() {
   }
 }
 
-export function PostHogProvider({ children }: { children: React.ReactNode }) {
+let postHogInitialized = false
+
+// Runs once per page load. The provider and the pageview tracker both call it:
+// the tracker sits in its own Suspense boundary, so its effects can run before
+// the provider's, and the first pageview must never be captured before init.
+function initPostHog() {
+  if (postHogInitialized) return
+  postHogInitialized = true
+
+  posthog.init("phc_et9aGikely5Rh6zc3qA5tFyCAZNyX2CD4kGSalefCQJ", {
+    api_host: `https://${POSTHOG_PROXY_HOST}`,
+    ui_host: "https://eu.posthog.com", // EU region UI host
+    capture_pageview: false, // We'll capture pageviews manually
+    capture_pageleave: false,
+    autocapture: false,
+    persistence: "memory",
+    save_campaign_params: false,
+    save_referrer: false,
+    disable_session_recording: true,
+    disable_surveys: true,
+    disable_web_experiments: true,
+    advanced_disable_feature_flags: true,
+    person_profiles: "identified_only"
+  })
+  clearLegacyPostHogOptOutIfAllowed()
+  syncPostHogAttribution()
+  syncPostHogSessionRecording()
+
+  if (
+    (window as WindowWithTrackingBridge).__appboxRedditAdvertisingConsentGranted
+  ) {
+    allowRedditTracking()
+  }
+}
+
+// useSearchParams() makes Next.js render the nearest Suspense boundary on the
+// client only, so this lives in its own boundary to keep pages prerenderable.
+function PostHogPageviewTracker() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    // Initialize PostHog
-    if (typeof window !== "undefined") {
-      posthog.init("phc_et9aGikely5Rh6zc3qA5tFyCAZNyX2CD4kGSalefCQJ", {
-        api_host: `https://${POSTHOG_PROXY_HOST}`,
-        ui_host: "https://eu.posthog.com", // EU region UI host
-        capture_pageview: false, // We'll capture pageviews manually
-        capture_pageleave: false,
-        autocapture: false,
-        persistence: "memory",
-        save_campaign_params: false,
-        save_referrer: false,
-        disable_session_recording: true,
-        disable_surveys: true,
-        disable_web_experiments: true,
-        advanced_disable_feature_flags: true,
-        person_profiles: "identified_only"
-      })
-      clearLegacyPostHogOptOutIfAllowed()
-      syncPostHogAttribution()
+    if (pathname) {
+      initPostHog()
+
+      const includeAdvertisingAttribution = hasAdvertisingConsent()
+      const attributionParams = includeAdvertisingAttribution
+        ? persistAttributionParams(searchParams.toString(), {
+            allowStorage: true
+          })
+        : persistAttributionParams(searchParams.toString(), {
+            allowStorage: false
+          })
+
+      syncPostHogAttribution(searchParams.toString())
       syncPostHogSessionRecording()
+      trackRedditPageVisit()
+
+      if (!allowsStatisticalAnalytics()) {
+        return
+      }
+
+      clearLegacyPostHogOptOutIfAllowed()
+
+      // Track pageviews
+      posthog.capture("$pageview", {
+        $current_url: pageviewUrl(includeAdvertisingAttribution),
+        $host: window.location.host,
+        $pathname: pathname,
+        $referrer: document.referrer,
+        $referring_domain: referringDomain(),
+        appbox_analytics_mode: hasMeasurementConsent()
+          ? "consented"
+          : "statistical",
+        ...(includeAdvertisingAttribution ? attributionParams : {})
+      })
+    }
+  }, [pathname, searchParams])
+
+  return null
+}
+
+export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      initPostHog()
 
       const trackingWindow = window as WindowWithTrackingBridge
       trackingWindow.appboxAllowRedditTracking = allowRedditTracking
@@ -209,41 +270,12 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     )
   }, [])
 
-  useEffect(() => {
-    if (pathname) {
-      const includeAdvertisingAttribution = hasAdvertisingConsent()
-      const attributionParams = includeAdvertisingAttribution
-        ? persistAttributionParams(searchParams.toString(), {
-            allowStorage: true
-          })
-        : persistAttributionParams(searchParams.toString(), {
-            allowStorage: false
-          })
-
-      syncPostHogAttribution(searchParams.toString())
-      syncPostHogSessionRecording()
-      trackRedditPageVisit()
-
-      if (!allowsStatisticalAnalytics()) {
-        return
-      }
-
-      clearLegacyPostHogOptOutIfAllowed()
-
-      // Track pageviews
-      posthog.capture("$pageview", {
-        $current_url: pageviewUrl(includeAdvertisingAttribution),
-        $host: window.location.host,
-        $pathname: pathname,
-        $referrer: document.referrer,
-        $referring_domain: referringDomain(),
-        appbox_analytics_mode: hasMeasurementConsent()
-          ? "consented"
-          : "statistical",
-        ...(includeAdvertisingAttribution ? attributionParams : {})
-      })
-    }
-  }, [pathname, searchParams])
-
-  return children
+  return (
+    <>
+      <Suspense fallback={null}>
+        <PostHogPageviewTracker />
+      </Suspense>
+      {children}
+    </>
+  )
 }
