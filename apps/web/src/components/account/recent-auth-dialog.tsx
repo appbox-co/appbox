@@ -22,11 +22,27 @@ interface ReauthResponse {
   two_factor_token?: string
 }
 
+export interface RecentAuthDialogMessages {
+  title: string
+  description: string
+  twoFactorDescription: string
+  password: string
+  twoFactorCode: string
+  recoveryCode: string
+  useRecoveryCode: string
+  useAuthenticator: string
+  cancel: string
+  submit: string
+  verify: string
+  failed: string
+}
+
 interface RecentAuthDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onVerified: () => void | Promise<void>
-  description?: string
+  /** Overrides for the dialog's strings. The rest come from account.apiKeys. */
+  messages?: Partial<RecentAuthDialogMessages>
   idPrefix?: string
 }
 
@@ -47,10 +63,25 @@ export function RecentAuthDialog({
   open,
   onOpenChange,
   onVerified,
-  description,
+  messages,
   idPrefix = "recent-auth"
 }: RecentAuthDialogProps) {
   const t = useTranslations("account.apiKeys")
+  const m: RecentAuthDialogMessages = {
+    title: t("reauthTitle"),
+    description: t("reauthDescription"),
+    twoFactorDescription: t("reauthTwoFactorDescription"),
+    password: t("password"),
+    twoFactorCode: t("twoFactorCode"),
+    recoveryCode: t("recoveryCode"),
+    useRecoveryCode: t("useRecoveryCode"),
+    useAuthenticator: t("useAuthenticator"),
+    cancel: t("cancel"),
+    submit: t("reauthSubmit"),
+    verify: t("verify"),
+    failed: t("reauthFailed"),
+    ...messages
+  }
   const [password, setPassword] = useState("")
   const [code, setCode] = useState("")
   const [useRecovery, setUseRecovery] = useState(false)
@@ -108,9 +139,7 @@ export function RecentAuthDialog({
       if (!isCurrentSubmission(submissionId)) return
 
       if (!response.ok) {
-        setError(
-          typeof data.error === "string" ? data.error : t("reauthFailed")
-        )
+        setError(typeof data.error === "string" ? data.error : m.failed)
         return
       }
 
@@ -127,7 +156,7 @@ export function RecentAuthDialog({
       onOpenChange(false)
     } catch {
       if (!isCurrentSubmission(submissionId)) return
-      setError(t("reauthFailed"))
+      setError(m.failed)
     } finally {
       if (isCurrentSubmission(submissionId)) {
         setIsPending(false)
@@ -146,18 +175,16 @@ export function RecentAuthDialog({
       <DialogContent>
         <form onSubmit={submitReauth} className="space-y-4">
           <DialogHeader>
-            <DialogTitle>{t("reauthTitle")}</DialogTitle>
+            <DialogTitle>{m.title}</DialogTitle>
             <DialogDescription>
-              {twoFactorToken
-                ? t("reauthTwoFactorDescription")
-                : (description ?? t("reauthDescription"))}
+              {twoFactorToken ? m.twoFactorDescription : m.description}
             </DialogDescription>
           </DialogHeader>
 
           {twoFactorToken ? (
             <div className="space-y-2">
               <Label htmlFor={`${idPrefix}-code`}>
-                {useRecovery ? t("recoveryCode") : t("twoFactorCode")}
+                {useRecovery ? m.recoveryCode : m.twoFactorCode}
               </Label>
               <Input
                 id={`${idPrefix}-code`}
@@ -177,12 +204,12 @@ export function RecentAuthDialog({
                   setCode("")
                 }}
               >
-                {useRecovery ? t("useAuthenticator") : t("useRecoveryCode")}
+                {useRecovery ? m.useAuthenticator : m.useRecoveryCode}
               </button>
             </div>
           ) : (
             <div className="space-y-2">
-              <Label htmlFor={`${idPrefix}-password`}>{t("password")}</Label>
+              <Label htmlFor={`${idPrefix}-password`}>{m.password}</Label>
               <Input
                 id={`${idPrefix}-password`}
                 type="password"
@@ -203,11 +230,11 @@ export function RecentAuthDialog({
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={close}>
-              {t("cancel")}
+              {m.cancel}
             </Button>
             <Button type="submit" disabled={isPending}>
               {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
-              {twoFactorToken ? t("verify") : t("reauthSubmit")}
+              {twoFactorToken ? m.verify : m.submit}
             </Button>
           </DialogFooter>
         </form>

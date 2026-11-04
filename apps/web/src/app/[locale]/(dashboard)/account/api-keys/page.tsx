@@ -31,6 +31,19 @@ import {
   useUpdateApiKey
 } from "@/api/account/hooks/use-account"
 import { ApiError } from "@/api/client"
+import {
+  ApiKeyScopePicker,
+  scopePickerHintId
+} from "@/components/account/api-key-scope-picker"
+import { ApiKeyScopeSummary } from "@/components/account/api-key-scope-summary"
+import {
+  getDefaultScopes,
+  hasSameScopes
+} from "@/components/account/api-key-scopes"
+import {
+  isRecentAuthError,
+  RecentAuthDialog
+} from "@/components/account/recent-auth-dialog"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -55,16 +68,6 @@ import { queryKeys } from "@/constants/query-keys"
 import { Link } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
 import { AccountPageHeader } from "../_components/account-page-header"
-import {
-  isRecentAuthError,
-  RecentAuthDialog
-} from "../_components/recent-auth-dialog"
-import {
-  ApiKeyScopePicker,
-  scopePickerHintId
-} from "./_components/api-key-scope-picker"
-import { ApiKeyScopeSummary } from "./_components/api-key-scope-summary"
-import { getDefaultScopes, hasSameScopes } from "./_components/api-key-scopes"
 
 const DEVELOPER_API_URL = "https://api.appbox.co/developer/v1"
 const DEVELOPER_API_KEY_HEADER = "X-API-Key"
