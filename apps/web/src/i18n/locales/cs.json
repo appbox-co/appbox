@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Zrušit a vrátit se na {host}",
       "returningTitle": "Návrat na {host}",
       "returningDescription": "Pokud se nic neděje, vraťte se do aplikace. Tuto kartu můžete zavřít.",
-      "reauthDescription": "Připojení aplikace vyžaduje nedávné přihlášení. Pokračujte zadáním hesla."
+      "reauthDescription": "Připojení aplikace vyžaduje nedávné přihlášení. Pokračujte zadáním hesla.",
+      "redirectApp": "Aplikace <code>{scheme}</code>",
+      "returningApp": "Otevírá se aplikace {scheme}",
+      "cancelAndReturnApp": "Zrušit a otevřít aplikaci {scheme}"
     },
     "error": {
       "metaTitle": "Připojení se nezdařilo",
       "title": "Tato aplikace se nemohla připojit k Appboxu",
-      "description": "Appbox nemohl přijmout žádost aplikace o připojení. Zkuste se z aplikace připojit znovu. Pokud problém přetrvává, kontaktujte vývojáře aplikace.",
+      "description": "Appbox nemohl přijmout žádost aplikace o připojení.",
       "hints": {
         "invalid_request": "Žádost byla neúplná nebo neodpovídala adresám, které aplikace zaregistrovala.",
         "invalid_client": "Appbox aplikaci nedokázal identifikovat.",
-        "invalid_client_metadata": "Registrační údaje aplikace nejsou platné."
+        "invalid_client_metadata": "Registrační údaje aplikace nejsou platné.",
+        "unsupported_response_type": "Aplikace požádala o připojení způsobem, který Appbox nepodporuje.",
+        "invalid_target": "Aplikace požádala o přístup ke službě, kterou Appbox nenabízí.",
+        "invalid_scope": "Aplikace požádala o oprávnění, která neexistují.",
+        "temporarily_unavailable": "Appbox obdržel z vaší sítě příliš mnoho žádostí o připojení."
       },
       "codeLabel": "Chyba",
-      "detailsLabel": "Podrobnosti",
-      "dashboard": "Přejít na dashboard"
+      "dashboard": "Přejít na dashboard",
+      "tryAgain": "Vraťte se do aplikace a zkuste to znovu. Pokud problém přetrvává, kontaktujte vývojáře aplikace.",
+      "rateLimitedTitle": "Příliš mnoho pokusů o připojení",
+      "rateLimitedTryAgain": "Počkejte minutu, pak se vraťte do aplikace a zkuste to znovu."
     }
   },
   "common": {

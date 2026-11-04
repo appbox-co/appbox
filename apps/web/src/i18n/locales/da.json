@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Annuller, og vend tilbage til {host}",
       "returningTitle": "Vender tilbage til {host}",
       "returningDescription": "Hvis der ikke sker noget, så gå tilbage til appen. Du kan lukke dette faneblad.",
-      "reauthDescription": "Forbindelse af en app kræver et nyligt login. Indtast din adgangskode for at fortsætte."
+      "reauthDescription": "Forbindelse af en app kræver et nyligt login. Indtast din adgangskode for at fortsætte.",
+      "redirectApp": "Appen <code>{scheme}</code>",
+      "returningApp": "Åbner appen {scheme}",
+      "cancelAndReturnApp": "Annuller, og åbn appen {scheme}"
     },
     "error": {
       "metaTitle": "Forbindelsen mislykkedes",
       "title": "Denne app kunne ikke forbinde til Appbox",
-      "description": "Appbox kunne ikke acceptere appens forbindelsesanmodning. Prøv at forbinde igen fra appen. Hvis det bliver ved, så kontakt appens udvikler.",
+      "description": "Appbox kunne ikke acceptere appens forbindelsesanmodning.",
       "hints": {
         "invalid_request": "Anmodningen var ufuldstændig eller passede ikke til de adresser, appen har registreret.",
         "invalid_client": "Appbox kunne ikke identificere appen.",
-        "invalid_client_metadata": "Appens registreringsoplysninger er ikke gyldige."
+        "invalid_client_metadata": "Appens registreringsoplysninger er ikke gyldige.",
+        "unsupported_response_type": "Appen bad om at forbinde på en måde, som Appbox ikke understøtter.",
+        "invalid_target": "Appen bad om adgang til en tjeneste, som Appbox ikke tilbyder.",
+        "invalid_scope": "Appen bad om tilladelser, der ikke findes.",
+        "temporarily_unavailable": "Appbox modtog for mange forbindelsesanmodninger fra dit netværk."
       },
       "codeLabel": "Fejl",
-      "detailsLabel": "Detaljer",
-      "dashboard": "Gå til dashboardet"
+      "dashboard": "Gå til dashboardet",
+      "tryAgain": "Gå tilbage til appen, og prøv igen. Hvis det bliver ved, så kontakt appens udvikler.",
+      "rateLimitedTitle": "For mange forbindelsesforsøg",
+      "rateLimitedTryAgain": "Vent et minut. Gå derefter tilbage til appen, og prøv igen."
     }
   },
   "common": {

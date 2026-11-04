@@ -1719,20 +1719,29 @@
       "cancelAndReturn": "Cancel and return to {host}",
       "returningTitle": "Returning to {host}",
       "returningDescription": "If nothing happens, go back to the app. You can close this tab.",
-      "reauthDescription": "Connecting an app needs a recent sign-in. Enter your password to continue."
+      "reauthDescription": "Connecting an app needs a recent sign-in. Enter your password to continue.",
+      "redirectApp": "The <code>{scheme}</code> app",
+      "returningApp": "Opening the {scheme} app",
+      "cancelAndReturnApp": "Cancel and open the {scheme} app"
     },
     "error": {
       "metaTitle": "Connection failed",
       "title": "This app couldn't connect to Appbox",
-      "description": "Appbox couldn't accept the app's connection request. Try connecting again from the app. If it keeps happening, contact the app's developer.",
+      "description": "Appbox couldn't accept the app's connection request.",
       "hints": {
         "invalid_request": "The request was incomplete, or didn't match the addresses the app registered.",
         "invalid_client": "Appbox couldn't identify the app.",
-        "invalid_client_metadata": "The app's registration details aren't valid."
+        "invalid_client_metadata": "The app's registration details aren't valid.",
+        "unsupported_response_type": "The app asked to connect in a way Appbox doesn't support.",
+        "invalid_target": "The app asked for access to a service Appbox doesn't offer.",
+        "invalid_scope": "The app asked for permissions that don't exist.",
+        "temporarily_unavailable": "Appbox received too many connection requests from your network."
       },
       "codeLabel": "Error",
-      "detailsLabel": "Details",
-      "dashboard": "Go to the dashboard"
+      "dashboard": "Go to the dashboard",
+      "tryAgain": "Go back to the app and try again. If it keeps happening, contact the app's developer.",
+      "rateLimitedTitle": "Too many connection attempts",
+      "rateLimitedTryAgain": "Wait a minute, then go back to the app and try again."
     }
   },
   "common": {

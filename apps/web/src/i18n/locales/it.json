@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Annulla e torna a {host}",
       "returningTitle": "Ritorno a {host}",
       "returningDescription": "Se non succede nulla, torna all'app. Puoi chiudere questa scheda.",
-      "reauthDescription": "Il collegamento di un'app richiede un accesso recente. Inserisci la password per continuare."
+      "reauthDescription": "Il collegamento di un'app richiede un accesso recente. Inserisci la password per continuare.",
+      "redirectApp": "App <code>{scheme}</code>",
+      "returningApp": "Apertura dell'app {scheme}",
+      "cancelAndReturnApp": "Annulla e apri l'app {scheme}"
     },
     "error": {
       "metaTitle": "Collegamento non riuscito",
       "title": "Questa app non è riuscita a collegarsi ad Appbox",
-      "description": "Appbox non ha potuto accettare la richiesta di collegamento dell'app. Prova a collegarti di nuovo dall'app. Se il problema persiste, contatta lo sviluppatore dell'app.",
+      "description": "Appbox non ha potuto accettare la richiesta di collegamento dell'app.",
       "hints": {
         "invalid_request": "La richiesta era incompleta oppure non corrispondeva agli indirizzi registrati dall'app.",
         "invalid_client": "Appbox non è riuscito a identificare l'app.",
-        "invalid_client_metadata": "I dati di registrazione dell'app non sono validi."
+        "invalid_client_metadata": "I dati di registrazione dell'app non sono validi.",
+        "unsupported_response_type": "L'app ha chiesto di collegarsi in un modo che Appbox non supporta.",
+        "invalid_target": "L'app ha chiesto l'accesso a un servizio che Appbox non offre.",
+        "invalid_scope": "L'app ha chiesto autorizzazioni che non esistono.",
+        "temporarily_unavailable": "Appbox ha ricevuto troppe richieste di collegamento dalla tua rete."
       },
       "codeLabel": "Errore",
-      "detailsLabel": "Dettagli",
-      "dashboard": "Vai alla dashboard"
+      "dashboard": "Vai alla dashboard",
+      "tryAgain": "Torna all'app e riprova. Se il problema persiste, contatta lo sviluppatore dell'app.",
+      "rateLimitedTitle": "Troppi tentativi di collegamento",
+      "rateLimitedTryAgain": "Aspetta un minuto, poi torna all'app e riprova."
     }
   },
   "common": {

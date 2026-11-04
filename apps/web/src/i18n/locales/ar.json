@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "إلغاء والعودة إلى {host}",
       "returningTitle": "جارٍ العودة إلى {host}",
       "returningDescription": "إذا لم يحدث شيء، ارجع إلى التطبيق. يمكنك إغلاق علامة التبويب هذه.",
-      "reauthDescription": "يتطلب ربط تطبيق تسجيل دخول حديثاً. أدخل كلمة المرور للمتابعة."
+      "reauthDescription": "يتطلب ربط تطبيق تسجيل دخول حديثاً. أدخل كلمة المرور للمتابعة.",
+      "redirectApp": "تطبيق <code>{scheme}</code>",
+      "returningApp": "جارٍ فتح تطبيق {scheme}",
+      "cancelAndReturnApp": "إلغاء وفتح تطبيق {scheme}"
     },
     "error": {
       "metaTitle": "فشل الربط",
       "title": "تعذر ربط هذا التطبيق بـ Appbox",
-      "description": "تعذر على Appbox قبول طلب الربط من التطبيق. حاول الربط مرة أخرى من التطبيق. إذا استمرت المشكلة، تواصل مع مطور التطبيق.",
+      "description": "تعذر على Appbox قبول طلب الربط من التطبيق.",
       "hints": {
         "invalid_request": "كان الطلب ناقصاً، أو لم يطابق العناوين التي سجّلها التطبيق.",
         "invalid_client": "تعذر على Appbox التعرف على التطبيق.",
-        "invalid_client_metadata": "بيانات تسجيل التطبيق غير صالحة."
+        "invalid_client_metadata": "بيانات تسجيل التطبيق غير صالحة.",
+        "unsupported_response_type": "طلب التطبيق الربط بطريقة لا يدعمها Appbox.",
+        "invalid_target": "طلب التطبيق الوصول إلى خدمة لا يوفرها Appbox.",
+        "invalid_scope": "طلب التطبيق صلاحيات غير موجودة.",
+        "temporarily_unavailable": "تلقى Appbox عدداً كبيراً جداً من طلبات الربط من شبكتك."
       },
       "codeLabel": "الخطأ",
-      "detailsLabel": "التفاصيل",
-      "dashboard": "الانتقال إلى لوحة التحكم"
+      "dashboard": "الانتقال إلى لوحة التحكم",
+      "tryAgain": "ارجع إلى التطبيق وحاول مرة أخرى. إذا استمرت المشكلة، تواصل مع مطور التطبيق.",
+      "rateLimitedTitle": "محاولات ربط كثيرة جداً",
+      "rateLimitedTryAgain": "انتظر دقيقة، ثم ارجع إلى التطبيق وحاول مرة أخرى."
     }
   },
   "common": {

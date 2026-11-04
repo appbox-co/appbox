@@ -60,6 +60,14 @@ function safeClientRedirect(value: unknown): string | null {
   }
 }
 
+/**
+ * The API gives a redirect into an installed app (a custom URL scheme) as the
+ * scheme with its colon, such as `cursor:`, instead of a host.
+ */
+function isAppScheme(redirectHost: string) {
+  return redirectHost.endsWith(":")
+}
+
 /** No session, or a signed-out (blacklisted) one. */
 function isSignInRequired(error: unknown) {
   if (!(error instanceof ApiError)) return false
@@ -244,7 +252,11 @@ export function OAuthConsent() {
     return (
       <StatusCard
         icon={<Loader2 className="size-5 motion-safe:animate-spin" />}
-        title={t("returningTitle", { host: returningTo })}
+        title={
+          isAppScheme(returningTo)
+            ? t("returningApp", { scheme: returningTo })
+            : t("returningTitle", { host: returningTo })
+        }
         description={t("returningDescription")}
       />
     )
@@ -315,9 +327,20 @@ export function OAuthConsent() {
       <dl className="grid gap-x-4 gap-y-2 text-sm sm:grid-cols-[auto_1fr]">
         <dt className="text-muted-foreground">{t("redirectLabel")}</dt>
         <dd>
-          <code className="break-all bg-muted px-1 py-0.5 font-mono text-xs">
-            {client.redirect_host}
-          </code>
+          {isAppScheme(client.redirect_host) ? (
+            t.rich("redirectApp", {
+              scheme: client.redirect_host,
+              code: (chunks) => (
+                <code className="break-all bg-muted px-1 py-0.5 font-mono text-xs">
+                  {chunks}
+                </code>
+              )
+            })
+          ) : (
+            <code className="break-all bg-muted px-1 py-0.5 font-mono text-xs">
+              {client.redirect_host}
+            </code>
+          )}
         </dd>
         <dt className="text-muted-foreground">{t("clientIdLabel")}</dt>
         <dd>
@@ -417,7 +440,9 @@ export function OAuthConsent() {
               {pending === "deny" && (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               )}
-              {t("cancelAndReturn", { host: client.redirect_host })}
+              {isAppScheme(client.redirect_host)
+                ? t("cancelAndReturnApp", { scheme: client.redirect_host })
+                : t("cancelAndReturn", { host: client.redirect_host })}
             </Button>
           </div>
         </>

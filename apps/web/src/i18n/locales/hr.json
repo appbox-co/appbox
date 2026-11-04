@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Odustani i vrati se na {host}",
       "returningTitle": "Povratak na {host}",
       "returningDescription": "Ako se ništa ne dogodi, vratite se u aplikaciju. Ovu karticu možete zatvoriti.",
-      "reauthDescription": "Povezivanje aplikacije zahtijeva nedavnu prijavu. Unesite lozinku za nastavak."
+      "reauthDescription": "Povezivanje aplikacije zahtijeva nedavnu prijavu. Unesite lozinku za nastavak.",
+      "redirectApp": "Aplikacija <code>{scheme}</code>",
+      "returningApp": "Otvaranje aplikacije {scheme}",
+      "cancelAndReturnApp": "Odustani i otvori aplikaciju {scheme}"
     },
     "error": {
       "metaTitle": "Povezivanje nije uspjelo",
       "title": "Ova se aplikacija nije mogla povezati s Appboxom",
-      "description": "Appbox nije mogao prihvatiti zahtjev aplikacije za povezivanje. Pokušajte se ponovno povezati iz aplikacije. Ako se problem nastavi, obratite se programeru aplikacije.",
+      "description": "Appbox nije mogao prihvatiti zahtjev aplikacije za povezivanje.",
       "hints": {
         "invalid_request": "Zahtjev je bio nepotpun ili se nije podudarao s adresama koje je aplikacija registrirala.",
         "invalid_client": "Appbox nije mogao identificirati aplikaciju.",
-        "invalid_client_metadata": "Podaci o registraciji aplikacije nisu valjani."
+        "invalid_client_metadata": "Podaci o registraciji aplikacije nisu valjani.",
+        "unsupported_response_type": "Aplikacija je zatražila povezivanje na način koji Appbox ne podržava.",
+        "invalid_target": "Aplikacija je zatražila pristup usluzi koju Appbox ne nudi.",
+        "invalid_scope": "Aplikacija je zatražila ovlasti koje ne postoje.",
+        "temporarily_unavailable": "Appbox je primio previše zahtjeva za povezivanje s vaše mreže."
       },
       "codeLabel": "Pogreška",
-      "detailsLabel": "Pojedinosti",
-      "dashboard": "Idi na nadzornu ploču"
+      "dashboard": "Idi na nadzornu ploču",
+      "tryAgain": "Vratite se u aplikaciju i pokušajte ponovno. Ako se problem nastavi, obratite se programeru aplikacije.",
+      "rateLimitedTitle": "Previše pokušaja povezivanja",
+      "rateLimitedTryAgain": "Pričekajte minutu, zatim se vratite u aplikaciju i pokušajte ponovno."
     }
   },
   "common": {

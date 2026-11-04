@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Abbrechen und zu {host} zurückkehren",
       "returningTitle": "Rückkehr zu {host}",
       "returningDescription": "Falls nichts passiert, gehe zurück zur App. Du kannst diesen Tab schließen.",
-      "reauthDescription": "Zum Verbinden einer App ist eine aktuelle Anmeldung erforderlich. Gib dein Passwort ein, um fortzufahren."
+      "reauthDescription": "Zum Verbinden einer App ist eine aktuelle Anmeldung erforderlich. Gib dein Passwort ein, um fortzufahren.",
+      "redirectApp": "Die App <code>{scheme}</code>",
+      "returningApp": "Die App {scheme} wird geöffnet",
+      "cancelAndReturnApp": "Abbrechen und die App {scheme} öffnen"
     },
     "error": {
       "metaTitle": "Verbindung fehlgeschlagen",
       "title": "Diese App konnte sich nicht mit Appbox verbinden",
-      "description": "Appbox konnte die Verbindungsanfrage der App nicht annehmen. Versuche, die Verbindung erneut von der App aus herzustellen. Wenn das Problem weiter auftritt, wende dich an den Entwickler der App.",
+      "description": "Appbox konnte die Verbindungsanfrage der App nicht annehmen.",
       "hints": {
         "invalid_request": "Die Anfrage war unvollständig oder stimmte nicht mit den Adressen überein, die die App registriert hat.",
         "invalid_client": "Appbox konnte die App nicht identifizieren.",
-        "invalid_client_metadata": "Die Registrierungsdaten der App sind ungültig."
+        "invalid_client_metadata": "Die Registrierungsdaten der App sind ungültig.",
+        "unsupported_response_type": "Die App wollte sich auf eine Weise verbinden, die Appbox nicht unterstützt.",
+        "invalid_target": "Die App hat Zugriff auf einen Dienst angefragt, den Appbox nicht anbietet.",
+        "invalid_scope": "Die App hat Berechtigungen angefragt, die es nicht gibt.",
+        "temporarily_unavailable": "Appbox hat von deinem Netzwerk zu viele Verbindungsanfragen erhalten."
       },
       "codeLabel": "Fehler",
-      "detailsLabel": "Details",
-      "dashboard": "Zum Dashboard"
+      "dashboard": "Zum Dashboard",
+      "tryAgain": "Gehe zurück zur App und versuche es erneut. Wenn das Problem weiter auftritt, wende dich an den Entwickler der App.",
+      "rateLimitedTitle": "Zu viele Verbindungsversuche",
+      "rateLimitedTryAgain": "Warte eine Minute, gehe dann zurück zur App und versuche es erneut."
     }
   },
   "common": {

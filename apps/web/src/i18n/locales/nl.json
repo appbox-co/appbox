@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Annuleren en terug naar {host}",
       "returningTitle": "Terug naar {host}",
       "returningDescription": "Als er niets gebeurt, ga je terug naar de app. Je kunt dit tabblad sluiten.",
-      "reauthDescription": "Voor het koppelen van een app is een recente aanmelding nodig. Voer je wachtwoord in om door te gaan."
+      "reauthDescription": "Voor het koppelen van een app is een recente aanmelding nodig. Voer je wachtwoord in om door te gaan.",
+      "redirectApp": "De app <code>{scheme}</code>",
+      "returningApp": "De app {scheme} openen",
+      "cancelAndReturnApp": "Annuleren en de app {scheme} openen"
     },
     "error": {
       "metaTitle": "Koppeling mislukt",
       "title": "Deze app kon geen verbinding maken met Appbox",
-      "description": "Appbox kon het koppelingsverzoek van de app niet accepteren. Probeer opnieuw te koppelen vanuit de app. Blijft het gebeuren, neem dan contact op met de ontwikkelaar van de app.",
+      "description": "Appbox kon het koppelingsverzoek van de app niet accepteren.",
       "hints": {
         "invalid_request": "Het verzoek was onvolledig of kwam niet overeen met de adressen die de app heeft geregistreerd.",
         "invalid_client": "Appbox kon de app niet identificeren.",
-        "invalid_client_metadata": "De registratiegegevens van de app zijn ongeldig."
+        "invalid_client_metadata": "De registratiegegevens van de app zijn ongeldig.",
+        "unsupported_response_type": "De app vroeg om te koppelen op een manier die Appbox niet ondersteunt.",
+        "invalid_target": "De app vroeg toegang tot een dienst die Appbox niet aanbiedt.",
+        "invalid_scope": "De app vroeg om rechten die niet bestaan.",
+        "temporarily_unavailable": "Appbox heeft te veel koppelingsverzoeken van je netwerk ontvangen."
       },
       "codeLabel": "Fout",
-      "detailsLabel": "Details",
-      "dashboard": "Ga naar het dashboard"
+      "dashboard": "Ga naar het dashboard",
+      "tryAgain": "Ga terug naar de app en probeer het opnieuw. Blijft het gebeuren, neem dan contact op met de ontwikkelaar van de app.",
+      "rateLimitedTitle": "Te veel koppelingspogingen",
+      "rateLimitedTryAgain": "Wacht een minuut en ga dan terug naar de app om het opnieuw te proberen."
     }
   },
   "common": {

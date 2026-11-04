@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Anulează și revino la {host}",
       "returningTitle": "Revenire la {host}",
       "returningDescription": "Dacă nu se întâmplă nimic, revino în aplicație. Poți închide această filă.",
-      "reauthDescription": "Conectarea unei aplicații necesită o autentificare recentă. Introdu parola pentru a continua."
+      "reauthDescription": "Conectarea unei aplicații necesită o autentificare recentă. Introdu parola pentru a continua.",
+      "redirectApp": "Aplicația <code>{scheme}</code>",
+      "returningApp": "Se deschide aplicația {scheme}",
+      "cancelAndReturnApp": "Anulează și deschide aplicația {scheme}"
     },
     "error": {
       "metaTitle": "Conectare eșuată",
       "title": "Această aplicație nu s-a putut conecta la Appbox",
-      "description": "Appbox nu a putut accepta cererea de conectare a aplicației. Încearcă să te conectezi din nou din aplicație. Dacă problema persistă, contactează dezvoltatorul aplicației.",
+      "description": "Appbox nu a putut accepta cererea de conectare a aplicației.",
       "hints": {
         "invalid_request": "Cererea a fost incompletă sau nu corespundea adreselor înregistrate de aplicație.",
         "invalid_client": "Appbox nu a putut identifica aplicația.",
-        "invalid_client_metadata": "Detaliile de înregistrare ale aplicației nu sunt valide."
+        "invalid_client_metadata": "Detaliile de înregistrare ale aplicației nu sunt valide.",
+        "unsupported_response_type": "Aplicația a cerut conectarea într-un mod pe care Appbox nu îl acceptă.",
+        "invalid_target": "Aplicația a cerut acces la un serviciu pe care Appbox nu îl oferă.",
+        "invalid_scope": "Aplicația a cerut permisiuni care nu există.",
+        "temporarily_unavailable": "Appbox a primit prea multe cereri de conectare din rețeaua ta."
       },
       "codeLabel": "Eroare",
-      "detailsLabel": "Detalii",
-      "dashboard": "Mergi la dashboard"
+      "dashboard": "Mergi la dashboard",
+      "tryAgain": "Revino în aplicație și încearcă din nou. Dacă problema persistă, contactează dezvoltatorul aplicației.",
+      "rateLimitedTitle": "Prea multe încercări de conectare",
+      "rateLimitedTryAgain": "Așteaptă un minut, apoi revino în aplicație și încearcă din nou."
     }
   },
   "common": {

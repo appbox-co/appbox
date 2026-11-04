@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Mégse, vissza ide: {host}",
       "returningTitle": "Visszatérés ide: {host}",
       "returningDescription": "Ha semmi sem történik, menj vissza az alkalmazáshoz. Bezárhatod ezt a lapot.",
-      "reauthDescription": "Az alkalmazás csatlakoztatásához friss bejelentkezés szükséges. Add meg a jelszavad a folytatáshoz."
+      "reauthDescription": "Az alkalmazás csatlakoztatásához friss bejelentkezés szükséges. Add meg a jelszavad a folytatáshoz.",
+      "redirectApp": "A(z) <code>{scheme}</code> alkalmazás",
+      "returningApp": "A(z) {scheme} alkalmazás megnyitása",
+      "cancelAndReturnApp": "Mégse, a(z) {scheme} alkalmazás megnyitása"
     },
     "error": {
       "metaTitle": "A csatlakozás sikertelen",
       "title": "Ez az alkalmazás nem tudott csatlakozni az Appboxhoz",
-      "description": "Az Appbox nem tudta elfogadni az alkalmazás csatlakozási kérését. Próbálj újra csatlakozni az alkalmazásból. Ha a probléma továbbra is fennáll, fordulj az alkalmazás fejlesztőjéhez.",
+      "description": "Az Appbox nem tudta elfogadni az alkalmazás csatlakozási kérését.",
       "hints": {
         "invalid_request": "A kérés hiányos volt, vagy nem egyezett az alkalmazás által regisztrált címekkel.",
         "invalid_client": "Az Appbox nem tudta azonosítani az alkalmazást.",
-        "invalid_client_metadata": "Az alkalmazás regisztrációs adatai érvénytelenek."
+        "invalid_client_metadata": "Az alkalmazás regisztrációs adatai érvénytelenek.",
+        "unsupported_response_type": "Az alkalmazás olyan módon kért csatlakozást, amelyet az Appbox nem támogat.",
+        "invalid_target": "Az alkalmazás olyan szolgáltatáshoz kért hozzáférést, amelyet az Appbox nem kínál.",
+        "invalid_scope": "Az alkalmazás olyan jogosultságokat kért, amelyek nem léteznek.",
+        "temporarily_unavailable": "Az Appbox túl sok csatlakozási kérést kapott a hálózatodról."
       },
       "codeLabel": "Hiba",
-      "detailsLabel": "Részletek",
-      "dashboard": "Ugrás az irányítópultra"
+      "dashboard": "Ugrás az irányítópultra",
+      "tryAgain": "Menj vissza az alkalmazáshoz, és próbáld újra. Ha a probléma továbbra is fennáll, fordulj az alkalmazás fejlesztőjéhez.",
+      "rateLimitedTitle": "Túl sok csatlakozási kísérlet",
+      "rateLimitedTryAgain": "Várj egy percet, majd menj vissza az alkalmazáshoz, és próbáld újra."
     }
   },
   "common": {

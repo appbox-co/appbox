@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Cancelar e voltar para {host}",
       "returningTitle": "Voltando para {host}",
       "returningDescription": "Se nada acontecer, volte ao app. Você pode fechar esta aba.",
-      "reauthDescription": "Conectar um app exige um login recente. Digite sua senha para continuar."
+      "reauthDescription": "Conectar um app exige um login recente. Digite sua senha para continuar.",
+      "redirectApp": "O app <code>{scheme}</code>",
+      "returningApp": "Abrindo o app {scheme}",
+      "cancelAndReturnApp": "Cancelar e abrir o app {scheme}"
     },
     "error": {
       "metaTitle": "Falha na conexão",
       "title": "Este app não conseguiu se conectar ao Appbox",
-      "description": "O Appbox não conseguiu aceitar a solicitação de conexão do app. Tente conectar novamente pelo app. Se continuar acontecendo, entre em contato com o desenvolvedor do app.",
+      "description": "O Appbox não conseguiu aceitar a solicitação de conexão do app.",
       "hints": {
         "invalid_request": "A solicitação estava incompleta ou não correspondia aos endereços que o app registrou.",
         "invalid_client": "O Appbox não conseguiu identificar o app.",
-        "invalid_client_metadata": "Os dados de registro do app não são válidos."
+        "invalid_client_metadata": "Os dados de registro do app não são válidos.",
+        "unsupported_response_type": "O app pediu para conectar de uma forma que o Appbox não suporta.",
+        "invalid_target": "O app pediu acesso a um serviço que o Appbox não oferece.",
+        "invalid_scope": "O app pediu permissões que não existem.",
+        "temporarily_unavailable": "O Appbox recebeu muitas solicitações de conexão da sua rede."
       },
       "codeLabel": "Erro",
-      "detailsLabel": "Detalhes",
-      "dashboard": "Ir para o painel"
+      "dashboard": "Ir para o painel",
+      "tryAgain": "Volte ao app e tente de novo. Se continuar acontecendo, entre em contato com o desenvolvedor do app.",
+      "rateLimitedTitle": "Muitas tentativas de conexão",
+      "rateLimitedTryAgain": "Aguarde um minuto, depois volte ao app e tente de novo."
     }
   },
   "common": {

@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Anuluj i wróć do {host}",
       "returningTitle": "Powrót do {host}",
       "returningDescription": "Jeśli nic się nie dzieje, wróć do aplikacji. Możesz zamknąć tę kartę.",
-      "reauthDescription": "Połączenie aplikacji wymaga niedawnego logowania. Wpisz hasło, aby kontynuować."
+      "reauthDescription": "Połączenie aplikacji wymaga niedawnego logowania. Wpisz hasło, aby kontynuować.",
+      "redirectApp": "Aplikacja <code>{scheme}</code>",
+      "returningApp": "Otwieranie aplikacji {scheme}",
+      "cancelAndReturnApp": "Anuluj i otwórz aplikację {scheme}"
     },
     "error": {
       "metaTitle": "Połączenie nie powiodło się",
       "title": "Ta aplikacja nie mogła połączyć się z Appbox",
-      "description": "Appbox nie mógł przyjąć prośby aplikacji o połączenie. Spróbuj połączyć się ponownie z poziomu aplikacji. Jeśli problem się powtarza, skontaktuj się z deweloperem aplikacji.",
+      "description": "Appbox nie mógł przyjąć prośby aplikacji o połączenie.",
       "hints": {
         "invalid_request": "Prośba była niekompletna lub nie pasowała do adresów zarejestrowanych przez aplikację.",
         "invalid_client": "Appbox nie mógł zidentyfikować aplikacji.",
-        "invalid_client_metadata": "Dane rejestracyjne aplikacji są nieprawidłowe."
+        "invalid_client_metadata": "Dane rejestracyjne aplikacji są nieprawidłowe.",
+        "unsupported_response_type": "Aplikacja poprosiła o połączenie w sposób, którego Appbox nie obsługuje.",
+        "invalid_target": "Aplikacja poprosiła o dostęp do usługi, której Appbox nie oferuje.",
+        "invalid_scope": "Aplikacja poprosiła o uprawnienia, które nie istnieją.",
+        "temporarily_unavailable": "Appbox otrzymał zbyt wiele próśb o połączenie z Twojej sieci."
       },
       "codeLabel": "Błąd",
-      "detailsLabel": "Szczegóły",
-      "dashboard": "Przejdź do panelu"
+      "dashboard": "Przejdź do panelu",
+      "tryAgain": "Wróć do aplikacji i spróbuj ponownie. Jeśli problem się powtarza, skontaktuj się z deweloperem aplikacji.",
+      "rateLimitedTitle": "Zbyt wiele prób połączenia",
+      "rateLimitedTryAgain": "Odczekaj minutę, a potem wróć do aplikacji i spróbuj ponownie."
     }
   },
   "common": {

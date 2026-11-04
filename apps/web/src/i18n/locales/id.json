@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Batal dan kembali ke {host}",
       "returningTitle": "Kembali ke {host}",
       "returningDescription": "Jika tidak terjadi apa-apa, kembali ke aplikasi. Anda dapat menutup tab ini.",
-      "reauthDescription": "Menghubungkan aplikasi memerlukan sign-in terbaru. Masukkan password Anda untuk melanjutkan."
+      "reauthDescription": "Menghubungkan aplikasi memerlukan sign-in terbaru. Masukkan password Anda untuk melanjutkan.",
+      "redirectApp": "Aplikasi <code>{scheme}</code>",
+      "returningApp": "Membuka aplikasi {scheme}",
+      "cancelAndReturnApp": "Batal dan buka aplikasi {scheme}"
     },
     "error": {
       "metaTitle": "Koneksi Gagal",
       "title": "Aplikasi ini tidak dapat terhubung ke Appbox",
-      "description": "Appbox tidak dapat menerima permintaan koneksi dari aplikasi. Coba hubungkan lagi dari aplikasi. Jika terus terjadi, hubungi developer aplikasi.",
+      "description": "Appbox tidak dapat menerima permintaan koneksi dari aplikasi.",
       "hints": {
         "invalid_request": "Permintaan tidak lengkap, atau tidak cocok dengan alamat yang didaftarkan aplikasi.",
         "invalid_client": "Appbox tidak dapat mengenali aplikasi.",
-        "invalid_client_metadata": "Detail pendaftaran aplikasi tidak valid."
+        "invalid_client_metadata": "Detail pendaftaran aplikasi tidak valid.",
+        "unsupported_response_type": "Aplikasi meminta koneksi dengan cara yang tidak didukung Appbox.",
+        "invalid_target": "Aplikasi meminta akses ke layanan yang tidak disediakan Appbox.",
+        "invalid_scope": "Aplikasi meminta izin yang tidak ada.",
+        "temporarily_unavailable": "Appbox menerima terlalu banyak permintaan koneksi dari jaringan Anda."
       },
       "codeLabel": "Kesalahan",
-      "detailsLabel": "Detail",
-      "dashboard": "Buka dashboard"
+      "dashboard": "Buka dashboard",
+      "tryAgain": "Kembali ke aplikasi dan coba lagi. Jika terus terjadi, hubungi developer aplikasi.",
+      "rateLimitedTitle": "Terlalu banyak percobaan koneksi",
+      "rateLimitedTryAgain": "Tunggu satu menit, lalu kembali ke aplikasi dan coba lagi."
     }
   },
   "common": {

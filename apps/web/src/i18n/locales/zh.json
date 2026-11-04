@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "取消并返回 {host}",
       "returningTitle": "正在返回 {host}",
       "returningDescription": "如果没有反应，请返回应用。你可以关闭此标签页。",
-      "reauthDescription": "连接应用需要近期登录。请输入密码以继续。"
+      "reauthDescription": "连接应用需要近期登录。请输入密码以继续。",
+      "redirectApp": "<code>{scheme}</code> 应用",
+      "returningApp": "正在打开 {scheme} 应用",
+      "cancelAndReturnApp": "取消并打开 {scheme} 应用"
     },
     "error": {
       "metaTitle": "连接失败",
       "title": "此应用无法连接到 Appbox",
-      "description": "Appbox 无法接受该应用的连接请求。请从应用中重试连接。如果问题持续出现，请联系该应用的开发者。",
+      "description": "Appbox 无法接受该应用的连接请求。",
       "hints": {
         "invalid_request": "请求不完整，或与应用注册的地址不匹配。",
         "invalid_client": "Appbox 无法识别该应用。",
-        "invalid_client_metadata": "该应用的注册信息无效。"
+        "invalid_client_metadata": "该应用的注册信息无效。",
+        "unsupported_response_type": "该应用请求以 Appbox 不支持的方式连接。",
+        "invalid_target": "该应用请求访问 Appbox 未提供的服务。",
+        "invalid_scope": "该应用请求了不存在的权限。",
+        "temporarily_unavailable": "Appbox 收到了来自你所在网络的过多连接请求。"
       },
       "codeLabel": "错误",
-      "detailsLabel": "详情",
-      "dashboard": "前往 Dashboard"
+      "dashboard": "前往 Dashboard",
+      "tryAgain": "请返回应用重试。如果问题持续出现，请联系该应用的开发者。",
+      "rateLimitedTitle": "连接尝试次数过多",
+      "rateLimitedTryAgain": "请等待一分钟，然后返回应用重试。"
     }
   },
   "common": {

@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "रद्द करा आणि {host} वर परत जा",
       "returningTitle": "{host} वर परत जात आहे",
       "returningDescription": "काही झाले नाही तर अॅपवर परत जा. तुम्ही हा tab बंद करू शकता.",
-      "reauthDescription": "अॅप कनेक्ट करण्यासाठी अलीकडील sign-in आवश्यक आहे. पुढे जाण्यासाठी तुमचा password टाका."
+      "reauthDescription": "अॅप कनेक्ट करण्यासाठी अलीकडील sign-in आवश्यक आहे. पुढे जाण्यासाठी तुमचा password टाका.",
+      "redirectApp": "<code>{scheme}</code> अॅप",
+      "returningApp": "{scheme} अॅप उघडत आहे",
+      "cancelAndReturnApp": "रद्द करा आणि {scheme} अॅप उघडा"
     },
     "error": {
       "metaTitle": "कनेक्शन अयशस्वी",
       "title": "हे अॅप Appbox शी कनेक्ट होऊ शकले नाही",
-      "description": "Appbox अॅपची कनेक्शन विनंती स्वीकारू शकले नाही. अॅपमधून पुन्हा कनेक्ट करून पाहा. हे वारंवार होत राहिल्यास, अॅपच्या developer शी संपर्क साधा.",
+      "description": "Appbox अॅपची कनेक्शन विनंती स्वीकारू शकले नाही.",
       "hints": {
         "invalid_request": "विनंती अपूर्ण होती किंवा अॅपने नोंदवलेल्या addresses शी जुळली नाही.",
         "invalid_client": "Appbox अॅपला ओळखू शकले नाही.",
-        "invalid_client_metadata": "अॅपचे registration तपशील वैध नाहीत."
+        "invalid_client_metadata": "अॅपचे registration तपशील वैध नाहीत.",
+        "unsupported_response_type": "Appbox समर्थन देत नाही अशा पद्धतीने अॅपने कनेक्ट करण्याची विनंती केली.",
+        "invalid_target": "Appbox देत नसलेल्या service चा access अॅपने मागितला.",
+        "invalid_scope": "अॅपने अस्तित्वात नसलेले scopes मागितले.",
+        "temporarily_unavailable": "Appbox ला तुमच्या network वरून खूप जास्त कनेक्शन विनंत्या मिळाल्या."
       },
       "codeLabel": "त्रुटी",
-      "detailsLabel": "तपशील",
-      "dashboard": "डॅशबोर्डवर जा"
+      "dashboard": "डॅशबोर्डवर जा",
+      "tryAgain": "अॅपवर परत जा आणि पुन्हा प्रयत्न करा. हे वारंवार होत राहिल्यास, अॅपच्या developer शी संपर्क साधा.",
+      "rateLimitedTitle": "कनेक्शनचे खूप जास्त प्रयत्न",
+      "rateLimitedTryAgain": "एक मिनिट थांबा, मग अॅपवर परत जा आणि पुन्हा प्रयत्न करा."
     }
   },
   "common": {

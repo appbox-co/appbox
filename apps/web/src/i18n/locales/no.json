@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Avbryt og gå tilbake til {host}",
       "returningTitle": "Går tilbake til {host}",
       "returningDescription": "Hvis ingenting skjer, går du tilbake til appen. Du kan lukke denne fanen.",
-      "reauthDescription": "Tilkobling av en app krever en nylig innlogging. Skriv inn passordet ditt for å fortsette."
+      "reauthDescription": "Tilkobling av en app krever en nylig innlogging. Skriv inn passordet ditt for å fortsette.",
+      "redirectApp": "Appen <code>{scheme}</code>",
+      "returningApp": "Åpner appen {scheme}",
+      "cancelAndReturnApp": "Avbryt og åpne appen {scheme}"
     },
     "error": {
       "metaTitle": "Tilkoblingen mislyktes",
       "title": "Denne appen kunne ikke koble til Appbox",
-      "description": "Appbox kunne ikke godta appens tilkoblingsforespørsel. Prøv å koble til på nytt fra appen. Hvis det fortsetter å skje, kontakt utvikleren av appen.",
+      "description": "Appbox kunne ikke godta appens tilkoblingsforespørsel.",
       "hints": {
         "invalid_request": "Forespørselen var ufullstendig, eller samsvarte ikke med adressene appen har registrert.",
         "invalid_client": "Appbox kunne ikke identifisere appen.",
-        "invalid_client_metadata": "Appens registreringsdetaljer er ugyldige."
+        "invalid_client_metadata": "Appens registreringsdetaljer er ugyldige.",
+        "unsupported_response_type": "Appen ba om å koble til på en måte Appbox ikke støtter.",
+        "invalid_target": "Appen ba om tilgang til en tjeneste Appbox ikke tilbyr.",
+        "invalid_scope": "Appen ba om tillatelser som ikke finnes.",
+        "temporarily_unavailable": "Appbox mottok for mange tilkoblingsforespørsler fra nettverket ditt."
       },
       "codeLabel": "Feil",
-      "detailsLabel": "Detaljer",
-      "dashboard": "Gå til dashbordet"
+      "dashboard": "Gå til dashbordet",
+      "tryAgain": "Gå tilbake til appen og prøv igjen. Hvis det fortsetter å skje, kontakt utvikleren av appen.",
+      "rateLimitedTitle": "For mange tilkoblingsforsøk",
+      "rateLimitedTryAgain": "Vent et minutt, og gå deretter tilbake til appen og prøv igjen."
     }
   },
   "common": {

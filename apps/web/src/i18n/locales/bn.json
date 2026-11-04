@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "বাতিল করে {host}-এ ফিরে যান",
       "returningTitle": "{host}-এ ফিরে যাওয়া হচ্ছে",
       "returningDescription": "কিছু না হলে অ্যাপে ফিরে যান। আপনি এই ট্যাব বন্ধ করতে পারেন।",
-      "reauthDescription": "অ্যাপ সংযুক্ত করতে সাম্প্রতিক sign-in দরকার। চালিয়ে যেতে আপনার password লিখুন।"
+      "reauthDescription": "অ্যাপ সংযুক্ত করতে সাম্প্রতিক sign-in দরকার। চালিয়ে যেতে আপনার password লিখুন।",
+      "redirectApp": "<code>{scheme}</code> অ্যাপ",
+      "returningApp": "{scheme} অ্যাপ খোলা হচ্ছে",
+      "cancelAndReturnApp": "বাতিল করে {scheme} অ্যাপ খুলুন"
     },
     "error": {
       "metaTitle": "সংযোগ ব্যর্থ হয়েছে",
       "title": "এই অ্যাপ Appbox-এর সাথে সংযুক্ত হতে পারেনি",
-      "description": "Appbox অ্যাপের সংযোগের request গ্রহণ করতে পারেনি। অ্যাপ থেকে আবার সংযুক্ত করার চেষ্টা করুন। সমস্যা চলতে থাকলে অ্যাপের developer-এর সাথে যোগাযোগ করুন।",
+      "description": "Appbox অ্যাপের সংযোগের request গ্রহণ করতে পারেনি।",
       "hints": {
         "invalid_request": "request-টি অসম্পূর্ণ ছিল, অথবা অ্যাপ যে ঠিকানাগুলো registered করেছে তার সাথে মেলেনি।",
         "invalid_client": "Appbox অ্যাপটিকে শনাক্ত করতে পারেনি।",
-        "invalid_client_metadata": "অ্যাপের registration-এর তথ্য সঠিক নয়।"
+        "invalid_client_metadata": "অ্যাপের registration-এর তথ্য সঠিক নয়।",
+        "unsupported_response_type": "অ্যাপ এমনভাবে সংযুক্ত হতে চেয়েছে যা Appbox সমর্থন করে না।",
+        "invalid_target": "অ্যাপ এমন একটি পরিষেবায় অ্যাক্সেস চেয়েছে যা Appbox দেয় না।",
+        "invalid_scope": "অ্যাপ এমন অনুমতি চেয়েছে যার অস্তিত্ব নেই।",
+        "temporarily_unavailable": "আপনার নেটওয়ার্ক থেকে Appbox অনেক বেশি সংযোগের request পেয়েছে।"
       },
       "codeLabel": "ত্রুটি",
-      "detailsLabel": "বিস্তারিত",
-      "dashboard": "ড্যাশবোর্ডে যান"
+      "dashboard": "ড্যাশবোর্ডে যান",
+      "tryAgain": "অ্যাপে ফিরে গিয়ে আবার চেষ্টা করুন। সমস্যা চলতে থাকলে অ্যাপের developer-এর সাথে যোগাযোগ করুন।",
+      "rateLimitedTitle": "অনেক বেশি সংযোগের চেষ্টা",
+      "rateLimitedTryAgain": "এক মিনিট অপেক্ষা করুন, তারপর অ্যাপে ফিরে গিয়ে আবার চেষ্টা করুন।"
     }
   },
   "common": {

@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Peruuta ja palaa kohteeseen {host}",
       "returningTitle": "Palataan kohteeseen {host}",
       "returningDescription": "Jos mitään ei tapahdu, palaa sovellukseen. Voit sulkea tämän välilehden.",
-      "reauthDescription": "Sovelluksen yhdistäminen vaatii tuoreen kirjautumisen. Jatka antamalla salasanasi."
+      "reauthDescription": "Sovelluksen yhdistäminen vaatii tuoreen kirjautumisen. Jatka antamalla salasanasi.",
+      "redirectApp": "Sovellus <code>{scheme}</code>",
+      "returningApp": "Avataan sovellus {scheme}",
+      "cancelAndReturnApp": "Peruuta ja avaa sovellus {scheme}"
     },
     "error": {
       "metaTitle": "Yhdistäminen epäonnistui",
       "title": "Tämä sovellus ei voinut yhdistyä Appboxiin",
-      "description": "Appbox ei voinut hyväksyä sovelluksen yhteyspyyntöä. Yritä yhdistää uudelleen sovelluksesta. Jos ongelma toistuu, ota yhteyttä sovelluksen kehittäjään.",
+      "description": "Appbox ei voinut hyväksyä sovelluksen yhteyspyyntöä.",
       "hints": {
         "invalid_request": "Pyyntö oli puutteellinen tai ei vastannut osoitteita, jotka sovellus on rekisteröinyt.",
         "invalid_client": "Appbox ei voinut tunnistaa sovellusta.",
-        "invalid_client_metadata": "Sovelluksen rekisteröintitiedot eivät kelpaa."
+        "invalid_client_metadata": "Sovelluksen rekisteröintitiedot eivät kelpaa.",
+        "unsupported_response_type": "Sovellus pyysi yhdistämistä tavalla, jota Appbox ei tue.",
+        "invalid_target": "Sovellus pyysi pääsyä palveluun, jota Appbox ei tarjoa.",
+        "invalid_scope": "Sovellus pyysi käyttöoikeuksia, joita ei ole olemassa.",
+        "temporarily_unavailable": "Appbox sai liian monta yhteyspyyntöä verkostasi."
       },
       "codeLabel": "Virhe",
-      "detailsLabel": "Lisätiedot",
-      "dashboard": "Siirry Dashboardiin"
+      "dashboard": "Siirry Dashboardiin",
+      "tryAgain": "Palaa sovellukseen ja yritä uudelleen. Jos ongelma toistuu, ota yhteyttä sovelluksen kehittäjään.",
+      "rateLimitedTitle": "Liian monta yhteysyritystä",
+      "rateLimitedTryAgain": "Odota minuutti, palaa sitten sovellukseen ja yritä uudelleen."
     }
   },
   "common": {

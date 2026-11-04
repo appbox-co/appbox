@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "Prekliči in se vrni na {host}",
       "returningTitle": "Vrnitev na {host}",
       "returningDescription": "Če se nič ne zgodi, se vrnite v aplikacijo. Ta zavihek lahko zaprete.",
-      "reauthDescription": "Povezovanje aplikacije zahteva nedavno prijavo. Za nadaljevanje vnesite geslo."
+      "reauthDescription": "Povezovanje aplikacije zahteva nedavno prijavo. Za nadaljevanje vnesite geslo.",
+      "redirectApp": "Aplikacija <code>{scheme}</code>",
+      "returningApp": "Odpiranje aplikacije {scheme}",
+      "cancelAndReturnApp": "Prekliči in odpri aplikacijo {scheme}"
     },
     "error": {
       "metaTitle": "Povezava ni uspela",
       "title": "Ta aplikacija se ni mogla povezati z Appboxom",
-      "description": "Appbox ni mogel sprejeti zahteve aplikacije za povezavo. Poskusite se znova povezati iz aplikacije. Če se težava ponavlja, se obrnite na razvijalca aplikacije.",
+      "description": "Appbox ni mogel sprejeti zahteve aplikacije za povezavo.",
       "hints": {
         "invalid_request": "Zahteva je bila nepopolna ali se ni ujemala z naslovi, ki jih je aplikacija registrirala.",
         "invalid_client": "Appbox ni mogel prepoznati aplikacije.",
-        "invalid_client_metadata": "Registracijski podatki aplikacije niso veljavni."
+        "invalid_client_metadata": "Registracijski podatki aplikacije niso veljavni.",
+        "unsupported_response_type": "Aplikacija je zahtevala povezavo na način, ki ga Appbox ne podpira.",
+        "invalid_target": "Aplikacija je zahtevala dostop do storitve, ki je Appbox ne ponuja.",
+        "invalid_scope": "Aplikacija je zahtevala dovoljenja, ki ne obstajajo.",
+        "temporarily_unavailable": "Appbox je prejel preveč zahtev za povezavo iz vašega omrežja."
       },
       "codeLabel": "Napaka",
-      "detailsLabel": "Podrobnosti",
-      "dashboard": "Pojdi na nadzorno ploščo"
+      "dashboard": "Pojdi na nadzorno ploščo",
+      "tryAgain": "Vrnite se v aplikacijo in poskusite znova. Če se težava ponavlja, se obrnite na razvijalca aplikacije.",
+      "rateLimitedTitle": "Preveč poskusov povezave",
+      "rateLimitedTryAgain": "Počakajte minuto, nato se vrnite v aplikacijo in poskusite znova."
     }
   },
   "common": {

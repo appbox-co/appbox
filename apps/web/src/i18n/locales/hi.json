@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "रद्द करें और {host} पर वापस जाएं",
       "returningTitle": "{host} पर वापस जा रहे हैं",
       "returningDescription": "अगर कुछ नहीं होता, तो ऐप में वापस जाएं। आप यह टैब बंद कर सकते हैं।",
-      "reauthDescription": "ऐप कनेक्ट करने के लिए recent sign-in चाहिए। जारी रखने के लिए अपना password डालें।"
+      "reauthDescription": "ऐप कनेक्ट करने के लिए recent sign-in चाहिए। जारी रखने के लिए अपना password डालें।",
+      "redirectApp": "<code>{scheme}</code> ऐप",
+      "returningApp": "{scheme} ऐप खोला जा रहा है",
+      "cancelAndReturnApp": "रद्द करें और {scheme} ऐप खोलें"
     },
     "error": {
       "metaTitle": "कनेक्शन विफल रहा",
       "title": "यह ऐप Appbox से कनेक्ट नहीं हो सका",
-      "description": "Appbox ऐप का कनेक्शन request स्वीकार नहीं कर सका। ऐप से दोबारा कनेक्ट करने की कोशिश करें। अगर यह बार-बार हो रहा है, तो ऐप के developer से संपर्क करें।",
+      "description": "Appbox ऐप का कनेक्शन request स्वीकार नहीं कर सका।",
       "hints": {
         "invalid_request": "request अधूरी थी, या ऐप द्वारा रजिस्टर किए गए पतों से मेल नहीं खाती थी।",
         "invalid_client": "Appbox ऐप की पहचान नहीं कर सका।",
-        "invalid_client_metadata": "ऐप के registration की जानकारी मान्य नहीं है।"
+        "invalid_client_metadata": "ऐप के registration की जानकारी मान्य नहीं है।",
+        "unsupported_response_type": "ऐप ने ऐसे तरीके से कनेक्ट करना चाहा जिसे Appbox समर्थन नहीं करता।",
+        "invalid_target": "ऐप ने ऐसी सेवा तक पहुंच मांगी जो Appbox उपलब्ध नहीं कराता।",
+        "invalid_scope": "ऐप ने ऐसी अनुमतियां मांगीं जो मौजूद ही नहीं हैं।",
+        "temporarily_unavailable": "आपके नेटवर्क से Appbox को कनेक्शन के बहुत ज़्यादा requests मिले।"
       },
       "codeLabel": "त्रुटि",
-      "detailsLabel": "विवरण",
-      "dashboard": "डैशबोर्ड पर जाएं"
+      "dashboard": "डैशबोर्ड पर जाएं",
+      "tryAgain": "ऐप में वापस जाकर दोबारा कोशिश करें। अगर यह बार-बार हो रहा है, तो ऐप के developer से संपर्क करें।",
+      "rateLimitedTitle": "कनेक्शन की बहुत ज़्यादा कोशिशें",
+      "rateLimitedTryAgain": "एक मिनट रुकें, फिर ऐप में वापस जाकर दोबारा कोशिश करें।"
     }
   },
   "common": {

@@ -1715,20 +1715,29 @@
       "cancelAndReturn": "キャンセルして {host} に戻る",
       "returningTitle": "{host} に戻っています",
       "returningDescription": "何も起こらない場合は、アプリに戻ってください。このタブは閉じて構いません。",
-      "reauthDescription": "アプリを接続するには、最近のサインインが必要です。続行するにはパスワードを入力してください。"
+      "reauthDescription": "アプリを接続するには、最近のサインインが必要です。続行するにはパスワードを入力してください。",
+      "redirectApp": "<code>{scheme}</code> アプリ",
+      "returningApp": "{scheme} アプリを開いています",
+      "cancelAndReturnApp": "キャンセルして {scheme} アプリを開く"
     },
     "error": {
       "metaTitle": "接続に失敗しました",
       "title": "このアプリは Appbox に接続できませんでした",
-      "description": "Appbox はアプリの接続リクエストを受け付けられませんでした。アプリからもう一度接続してください。問題が続く場合は、アプリの開発元にお問い合わせください。",
+      "description": "Appbox はアプリの接続リクエストを受け付けられませんでした。",
       "hints": {
         "invalid_request": "リクエストが不完全か、アプリが登録したアドレスと一致しませんでした。",
         "invalid_client": "Appbox はアプリを識別できませんでした。",
-        "invalid_client_metadata": "アプリの登録情報が無効です。"
+        "invalid_client_metadata": "アプリの登録情報が無効です。",
+        "unsupported_response_type": "アプリは、Appbox がサポートしていない方法での接続を要求しました。",
+        "invalid_target": "アプリは、Appbox が提供していないサービスへのアクセスを要求しました。",
+        "invalid_scope": "アプリは、存在しないスコープを要求しました。",
+        "temporarily_unavailable": "お使いのネットワークから Appbox に届いた接続リクエストが多すぎます。"
       },
       "codeLabel": "エラー",
-      "detailsLabel": "詳細",
-      "dashboard": "ダッシュボードへ移動"
+      "dashboard": "ダッシュボードへ移動",
+      "tryAgain": "アプリに戻って、もう一度お試しください。問題が続く場合は、アプリの開発元にお問い合わせください。",
+      "rateLimitedTitle": "接続の試行回数が多すぎます",
+      "rateLimitedTryAgain": "1 分ほど待ってから、アプリに戻ってもう一度お試しください。"
     }
   },
   "common": {
