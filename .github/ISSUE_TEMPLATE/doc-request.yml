@@ -15,14 +15,13 @@ body:
         - New app page
         - New platform page or how-to guide
         - Fix or update an existing page
-        - Move a knowledge base article
     validations:
       required: true
   - type: input
     id: page
     attributes:
       label: App or page
-      description: The app's name in the Appbox App Store, or the address of the existing page or knowledge base article.
+      description: The app's name in the Appbox App Store, or the address of the existing page.
       placeholder: Jellyfin, or https://www.appbox.co/docs/apps/...
     validations:
       required: true
