@@ -13,6 +13,10 @@ import { cache } from "react"
 import { parse as parseYaml } from "yaml"
 import { z } from "zod"
 import { blogConfig } from "@/config/blog"
+import {
+  nextLaunchWeekFlags,
+  type NextLaunchWeekFlag
+} from "@/config/launch-week-flags"
 import type { PostAuthor } from "@/lib/opendocs/types/blog"
 
 // The build traces the file reads below from this path and bundles the MDX
@@ -65,12 +69,19 @@ const isoDate = z.union([z.string(), z.date()]).transform((value, ctx) => {
   return date.toISOString()
 })
 
+const launchDays = Object.keys(nextLaunchWeekFlags) as [
+  NextLaunchWeekFlag,
+  ...NextLaunchWeekFlag[]
+]
+
 const docSchema = z.object({
   title: z.string(),
   description: z.string(),
   sort: z.number().optional(),
   links,
-  toc: z.boolean().default(true)
+  toc: z.boolean().default(true),
+  // The next Launch Week day that publishes this page.
+  launch: z.enum(launchDays).optional()
 })
 
 const blogSchema = z.object({
@@ -161,10 +172,22 @@ function readDocument<T extends z.ZodObject>(
   return { ...(data.data as z.infer<T>), ...document }
 }
 
+/**
+ * A page with `launch: day_N` stays out of every docs list (pages, sidebar,
+ * search, sitemap) until that day's next Launch Week flag is on.
+ * LAUNCH_PREVIEW=1, for Vercel previews, includes it anyway.
+ */
+function isLaunched(launch: NextLaunchWeekFlag | undefined) {
+  return (
+    !launch || nextLaunchWeekFlags[launch] || process.env.LAUNCH_PREVIEW === "1"
+  )
+}
+
+/** `compute` returns null to leave a file out of the collection. */
 function defineCollection<T extends z.ZodObject, D>(
   collection: string,
   schema: T,
-  compute: (document: BaseDocument & z.infer<T>) => D
+  compute: (document: BaseDocument & z.infer<T>) => D | null
 ) {
   const dir = path.join(contentDir, collection)
   let loaded: { signature: string; documents: D[] } | undefined
@@ -192,7 +215,8 @@ function defineCollection<T extends z.ZodObject, D>(
 
     for (const file of files) {
       try {
-        documents.push(compute(readDocument(collection, file, schema)))
+        const document = compute(readDocument(collection, file, schema))
+        if (document !== null) documents.push(document)
       } catch (error) {
         errors.push(error instanceof Error ? error.message : String(error))
       }
@@ -218,7 +242,7 @@ function defineCollection<T extends z.ZodObject, D>(
 export const getAllDocs = defineCollection(
   "docs",
   docSchema,
-  (doc): Doc => ({ ...doc, type: "Doc" })
+  (doc): Doc | null => (isLaunched(doc.launch) ? { ...doc, type: "Doc" } : null)
 )
 
 export const getAllBlogs = defineCollection("blog", blogSchema, (post): Blog => {

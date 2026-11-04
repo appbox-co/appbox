@@ -55,20 +55,35 @@ export function ScopeGroupLabel({
   return group.replace(/_/g, " ")
 }
 
+/** Strings that talk about API keys, for callers that grant scopes to something else. */
+export interface ApiKeyScopePickerMessages {
+  help: string
+  required: string
+  higherRiskNotice: string
+}
+
 interface ApiKeyScopePickerProps {
   idPrefix: string
   value: string[]
   onChange: (scopes: string[]) => void
   disabled?: boolean
+  messages?: Partial<ApiKeyScopePickerMessages>
 }
 
 export function ApiKeyScopePicker({
   idPrefix,
   value,
   onChange,
-  disabled = false
+  disabled = false,
+  messages
 }: ApiKeyScopePickerProps) {
   const t = useTranslations("account.apiKeys")
+  const m: ApiKeyScopePickerMessages = {
+    help: t("scopesHelp"),
+    required: t("scopesRequired"),
+    higherRiskNotice: t("higherRiskNotice"),
+    ...messages
+  }
   const { data: catalog, isLoading, isError, refetch } = useApiKeyScopes()
   const presets = useMemo(() => catalog?.presets ?? [], [catalog])
   const selected = useMemo(() => new Set(value), [value])
@@ -117,7 +132,7 @@ export function ApiKeyScopePicker({
             })}
           </span>
         </div>
-        <p className="text-xs text-muted-foreground">{t("scopesHelp")}</p>
+        <p className="text-xs text-muted-foreground">{m.help}</p>
       </div>
 
       {isLoading && (
@@ -210,7 +225,7 @@ export function ApiKeyScopePicker({
                 className="mt-px size-3.5 shrink-0"
                 aria-hidden="true"
               />
-              {t("higherRiskNotice")}
+              {m.higherRiskNotice}
             </p>
           )}
 
@@ -303,7 +318,7 @@ export function ApiKeyScopePicker({
             className="mt-px size-3.5 shrink-0"
             aria-hidden="true"
           />
-          {t("scopesRequired")}
+          {m.required}
         </p>
       )}
     </div>

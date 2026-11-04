@@ -26,6 +26,7 @@ export const ROUTES = {
   ABUSE_REPORT_DETAIL: (id: number | string) => `/account/abuse/${id}`,
   TWO_FACTOR_SETUP: "/account/2fa-setup",
   API_KEYS: "/account/api-keys",
+  CONNECTED_APPS: "/account/connected-apps",
 
   // Public (complainant) — no auth; access via ?token= from email
   ABUSE_COMPLAINANT: (id: number | string) => `/abusecomplainant/${id}`
