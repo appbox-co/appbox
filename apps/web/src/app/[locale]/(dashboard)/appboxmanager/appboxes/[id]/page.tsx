@@ -3,6 +3,7 @@
 import { use, useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   Activity,
   ArrowDownToLine,
@@ -35,8 +36,10 @@ import {
   DialogTitle
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
 import { formatBytes } from "@/lib/utils"
+import { requestRangeUntilFresh } from "@/lib/websocket/range-request"
 import { useWebSocket } from "@/providers/websocket-provider"
 import { CyloAlerts } from "./_components/cylo-alerts"
 import { CyloDevPanel } from "./_components/cylo-dev-panel"
@@ -199,14 +202,28 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
     unsubscribe
   ])
 
+  // Ask for the selected range. The gateway answers the channel subscribe with
+  // whatever range any viewer asked for last, so this request is what makes
+  // the charts load.
+  const queryClient = useQueryClient()
   useEffect(() => {
-    if (cylo?.server_name) {
-      sendToServer(
-        { action: "stats_range", channel: `cylo:${cyloId}`, range: statsRange },
-        cylo.server_name
-      )
-    }
-  }, [statsRange, cyloId, cylo?.server_name, sendToServer])
+    const serverName = cylo?.server_name
+    if (!serverName) return
+
+    return requestRangeUntilFresh(
+      queryClient,
+      [...queryKeys.cylos.stats(cyloId), statsRange],
+      () =>
+        sendToServer(
+          {
+            action: "stats_range",
+            channel: `cylo:${cyloId}`,
+            range: statsRange
+          },
+          serverName
+        )
+    )
+  }, [statsRange, cyloId, cylo?.server_name, sendToServer, queryClient])
 
   /* ---- Data arrays ---- */
   const diskData = useMemo(

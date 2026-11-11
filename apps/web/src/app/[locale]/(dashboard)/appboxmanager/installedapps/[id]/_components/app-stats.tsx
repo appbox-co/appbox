@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
@@ -13,6 +14,8 @@ import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { ChartWrapper } from "@/components/dashboard/charts/chart-wrapper"
 import { DashboardLineChart } from "@/components/dashboard/charts/line-chart"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { queryKeys } from "@/constants/query-keys"
+import { requestRangeUntilFresh } from "@/lib/websocket/range-request"
 import { useWebSocket } from "@/providers/websocket-provider"
 
 /* -------------------------------------------------------------------------- */
@@ -80,6 +83,7 @@ interface AppStatsProps {
 export function AppStats({ app, transitional = false }: AppStatsProps) {
   const [range, setRange] = useState<ContainerRange>("24h")
   const { sendToServer } = useWebSocket()
+  const queryClient = useQueryClient()
   const { data: stats } = useContainerStats(app.id, range)
 
   // Request fresh data whenever range or app changes, and also when the app
@@ -87,28 +91,23 @@ export function AppStats({ app, transitional = false }: AppStatsProps) {
   // stats immediately rather than waiting for the next ws-gateway ticker.
   // Skip the request while installing since the container doesn't exist yet.
   useEffect(() => {
-    if (!app.server_name || transitional) return
+    const serverName = app.server_name
+    if (!serverName || transitional) return
 
-    const requestStats = () =>
-      sendToServer(
-        {
-          action: "container_stats_range",
-          channel: `instance:${app.id}`,
-          range
-        },
-        app.server_name
-      )
-
-    // Fire immediately for fast paint when ws is already connected.
-    requestStats()
-
-    // If the initial request was sent before the server socket/channel became
-    // ready, retry until this range has cached data.
-    if (stats) return
-    const retryTimer = window.setInterval(requestStats, 2000)
-
-    return () => window.clearInterval(retryTimer)
-  }, [range, app.id, app.server_name, transitional, sendToServer, stats])
+    return requestRangeUntilFresh(
+      queryClient,
+      [...queryKeys.installedApps.containerStats(app.id), range],
+      () =>
+        sendToServer(
+          {
+            action: "container_stats_range",
+            channel: `instance:${app.id}`,
+            range
+          },
+          serverName
+        )
+    )
+  }, [range, app.id, app.server_name, transitional, sendToServer, queryClient])
 
   // Normalise into flat chart-friendly arrays
   const cpuData = (stats?.cpu_history ?? []).map((p) => ({
