@@ -199,14 +199,29 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
     unsubscribe
   ])
 
+  // Request the selected range. The first send usually happens before the
+  // per-server socket is open (WsClient.send drops it), and the gateway answers
+  // the channel subscribe with whatever range was last requested for this
+  // Cylo by any viewer, so keep asking until this range has cached data.
+  // Depends on hasStats rather than stats so live updates don't re-send.
+  const hasStats = stats !== undefined
   useEffect(() => {
-    if (cylo?.server_name) {
+    const serverName = cylo?.server_name
+    if (!serverName) return
+
+    const requestStats = () =>
       sendToServer(
         { action: "stats_range", channel: `cylo:${cyloId}`, range: statsRange },
-        cylo.server_name
+        serverName
       )
-    }
-  }, [statsRange, cyloId, cylo?.server_name, sendToServer])
+
+    requestStats()
+
+    if (hasStats) return
+    const retryTimer = window.setInterval(requestStats, 2000)
+
+    return () => window.clearInterval(retryTimer)
+  }, [statsRange, cyloId, cylo?.server_name, sendToServer, hasStats])
 
   /* ---- Data arrays ---- */
   const diskData = useMemo(
