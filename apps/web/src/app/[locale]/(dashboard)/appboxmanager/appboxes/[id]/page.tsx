@@ -3,6 +3,7 @@
 import { use, useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   Activity,
   ArrowDownToLine,
@@ -35,6 +36,7 @@ import {
   DialogTitle
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
 import { formatBytes } from "@/lib/utils"
 import { useWebSocket } from "@/providers/websocket-provider"
@@ -154,6 +156,10 @@ function formatPercentTooltip(value: unknown): string {
 /*  Page                                                                       */
 /* -------------------------------------------------------------------------- */
 
+// Fallback re-sends of stats_range (each one costs the gateway an immediate
+// stats fetch), starting after its usual ~3 s response time.
+const STATS_RETRY_DELAYS_MS = [4000, 8000, 16000, 30000]
+
 interface CyloDetailPageProps {
   params: Promise<{ id: string; locale: string }>
 }
@@ -199,16 +205,18 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
     unsubscribe
   ])
 
-  // Request the selected range. The first send usually happens before the
-  // per-server socket is open (WsClient.send drops it), and the gateway answers
-  // the channel subscribe with whatever range was last requested for this
-  // Cylo by any viewer, so keep asking until this range has cached data.
-  // Depends on hasStats rather than stats so live updates don't re-send.
-  const hasStats = stats !== undefined
+  // Ask for the selected range. The gateway answers the channel subscribe with
+  // whatever range any viewer asked for last, so this request is what makes
+  // the charts load. The provider replays it once the socket opens; the timer
+  // is a fallback that backs off and stops as soon as this range gets a push
+  // newer than the request (older cached data for the range doesn't count).
+  const queryClient = useQueryClient()
   useEffect(() => {
     const serverName = cylo?.server_name
     if (!serverName) return
 
+    const queryKey = [...queryKeys.cylos.stats(cyloId), statsRange]
+    const requestedAt = Date.now()
     const requestStats = () =>
       sendToServer(
         { action: "stats_range", channel: `cylo:${cyloId}`, range: statsRange },
@@ -217,11 +225,23 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
 
     requestStats()
 
-    if (hasStats) return
-    const retryTimer = window.setInterval(requestStats, 2000)
+    let attempt = 0
+    let retryTimer: number | undefined
+    const scheduleRetry = () => {
+      if (attempt >= STATS_RETRY_DELAYS_MS.length) return
+      retryTimer = window.setTimeout(() => {
+        const updatedAt =
+          queryClient.getQueryState(queryKey)?.dataUpdatedAt ?? 0
+        if (updatedAt > requestedAt) return
+        attempt += 1
+        requestStats()
+        scheduleRetry()
+      }, STATS_RETRY_DELAYS_MS[attempt])
+    }
+    scheduleRetry()
 
-    return () => window.clearInterval(retryTimer)
-  }, [statsRange, cyloId, cylo?.server_name, sendToServer, hasStats])
+    return () => window.clearTimeout(retryTimer)
+  }, [statsRange, cyloId, cylo?.server_name, sendToServer, queryClient])
 
   /* ---- Data arrays ---- */
   const diskData = useMemo(

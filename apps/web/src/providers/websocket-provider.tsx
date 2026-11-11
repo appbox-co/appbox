@@ -67,6 +67,13 @@ export function WebSocketProvider({
   const eventHandlersRef = useRef<Map<string, Set<WsEventHandler>>>(new Map())
   const channelSubsRef = useRef<Set<string>>(new Set())
 
+  // Last stats_range sent per server and channel. WsClient drops messages
+  // sent before the socket is open, and the gateway answers a subscribe with
+  // the range any viewer asked for last, so replay these on every connect.
+  const statsRangesRef = useRef<
+    Map<string, Map<string, Record<string, unknown>>>
+  >(new Map())
+
   // Create central WS connection (cylo-api via /ws-api path on api.{domain})
   useEffect(() => {
     if (!enabled) return
@@ -121,6 +128,9 @@ export function WebSocketProvider({
         onConnect: () => {
           // Re-subscribe to all tracked channels on this client
           channelSubsRef.current.forEach((ch) => client.subscribe(ch))
+          statsRangesRef.current.get(serverName)?.forEach((msg, ch) => {
+            if (channelSubsRef.current.has(ch)) client.send(msg)
+          })
         },
         onDisconnect: () => {},
         onReconnect: () => {
@@ -245,6 +255,7 @@ export function WebSocketProvider({
 
   const unsubscribe = useCallback((channel: string) => {
     channelSubsRef.current.delete(channel)
+    statsRangesRef.current.forEach((byChannel) => byChannel.delete(channel))
     centralRef.current?.unsubscribe(channel)
     serverRefsMap.current.forEach((client) => client.unsubscribe(channel))
   }, [])
@@ -253,6 +264,11 @@ export function WebSocketProvider({
   const sendToServer = useCallback(
     (data: Record<string, unknown>, serverName?: string) => {
       if (serverName) {
+        if (data.action === "stats_range" && typeof data.channel === "string") {
+          const byChannel = statsRangesRef.current.get(serverName) ?? new Map()
+          byChannel.set(data.channel, data)
+          statsRangesRef.current.set(serverName, byChannel)
+        }
         serverRefsMap.current.get(serverName)?.send(data)
       } else {
         const first = serverRefsMap.current.values().next().value
