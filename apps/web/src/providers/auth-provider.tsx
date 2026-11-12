@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useCallback, useContext, type ReactNode } from "react"
+import { toast } from "sonner"
 import { useRouter } from "@/i18n/routing"
 import type { Cylo, User } from "@/lib/auth/session"
 
@@ -50,6 +51,13 @@ export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
       } catch {
         // Network error — retry once.
       }
+    }
+    if (!cleared) {
+      // The session cookie is HttpOnly, so only the server can clear it.
+      // Leaving the page would look like a logout while the session stays
+      // live in this browser.
+      toast.error("Couldn't log you out. Check your connection and try again.")
+      return
     }
     router.replace("/login")
   }, [router])
