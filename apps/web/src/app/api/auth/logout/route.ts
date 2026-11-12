@@ -58,11 +58,24 @@ function serializeExpiredCookie(
   return parts.join("; ")
 }
 
+// Behind Cloudflare and Vercel, request.nextUrl reports the deployment host
+// (appbox-delta.vercel.app), not the one the browser used, so the public site
+// URL (https://www.appbox.co in production) is accepted explicitly.
+function allowedLogoutOrigins(request: NextRequest): Set<string> {
+  const origins = new Set<string>([request.nextUrl.origin])
+  try {
+    origins.add(new URL(process.env.NEXT_PUBLIC_APP_URL ?? "").origin)
+  } catch {
+    // Unset or invalid: only the deployment's own origin is accepted.
+  }
+  return origins
+}
+
 function isSameOriginLogoutRequest(request: NextRequest): boolean {
   const origin = request.headers.get("origin")
   const referer = request.headers.get("referer")
   const secFetchSite = request.headers.get("sec-fetch-site")?.toLowerCase()
-  const expectedOrigin = request.nextUrl.origin
+  const allowedOrigins = allowedLogoutOrigins(request)
 
   if (secFetchSite === "cross-site") {
     return false
@@ -70,7 +83,7 @@ function isSameOriginLogoutRequest(request: NextRequest): boolean {
 
   if (origin) {
     try {
-      return new URL(origin).origin === expectedOrigin
+      return allowedOrigins.has(new URL(origin).origin)
     } catch {
       return false
     }
@@ -78,7 +91,7 @@ function isSameOriginLogoutRequest(request: NextRequest): boolean {
 
   if (referer) {
     try {
-      return new URL(referer).origin === expectedOrigin
+      return allowedOrigins.has(new URL(referer).origin)
     } catch {
       return false
     }
@@ -91,7 +104,7 @@ export async function POST(request: NextRequest) {
   const incomingToken = request.cookies.get("authorization_token")?.value
   const localOnly = request.nextUrl.searchParams.get("local") === "1"
 
-  if (!isSameOriginLogoutRequest(request) || (!incomingToken && !localOnly)) {
+  if (!isSameOriginLogoutRequest(request)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
