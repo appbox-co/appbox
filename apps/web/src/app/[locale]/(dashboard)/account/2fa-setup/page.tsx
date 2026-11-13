@@ -23,6 +23,10 @@ import {
   useVerify2FA
 } from "@/api/account/hooks/use-account"
 import { ApiError } from "@/api/client"
+import {
+  isRecentAuthError,
+  RecentAuthDialog
+} from "@/components/account/recent-auth-dialog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -32,14 +36,10 @@ import {
   InputOTPSlot
 } from "@/components/ui/input-otp"
 import { ROUTES } from "@/constants/routes"
-import { cn } from "@/lib/utils"
 import { useRouter } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 import { useAuth } from "@/providers/auth-provider"
 import { AccountPageHeader } from "../_components/account-page-header"
-import {
-  isRecentAuthError,
-  RecentAuthDialog
-} from "../_components/recent-auth-dialog"
 import { BackupCodes } from "./_components/backup-codes"
 import { QRStep } from "./_components/qr-step"
 import { VerifyStep } from "./_components/verify-step"
@@ -215,7 +215,7 @@ function Disable2FASection() {
           open={reauthOpen}
           onOpenChange={setReauthOpen}
           onVerified={handleReauthVerified}
-          description={t("twoFactor.reauthDescription")}
+          messages={{ description: t("twoFactor.reauthDescription") }}
           idPrefix="disable-2fa-reauth"
         />
       </div>
@@ -327,7 +327,7 @@ function Disable2FASection() {
         open={reauthOpen}
         onOpenChange={setReauthOpen}
         onVerified={handleReauthVerified}
-        description={t("twoFactor.reauthDescription")}
+        messages={{ description: t("twoFactor.reauthDescription") }}
         idPrefix="disable-2fa-reauth"
       />
     </div>
@@ -428,7 +428,9 @@ function RegenerateCodesSection({
           open={reauthOpen}
           onOpenChange={setReauthOpen}
           onVerified={handleReauthVerified}
-          description={t("twoFactor.recoveryCodesReauthDescription")}
+          messages={{
+            description: t("twoFactor.recoveryCodesReauthDescription")
+          }}
           idPrefix="regenerate-recovery-codes-reauth"
         />
       </>
@@ -489,7 +491,9 @@ function RegenerateCodesSection({
         open={reauthOpen}
         onOpenChange={setReauthOpen}
         onVerified={handleReauthVerified}
-        description={t("twoFactor.recoveryCodesReauthDescription")}
+        messages={{
+          description: t("twoFactor.recoveryCodesReauthDescription")
+        }}
         idPrefix="regenerate-recovery-codes-reauth"
       />
     </div>
@@ -776,7 +780,7 @@ export default function TwoFactorSetupPage() {
         open={reauthOpen}
         onOpenChange={setReauthOpen}
         onVerified={handleReauthVerified}
-        description={t("twoFactor.setupReauthDescription")}
+        messages={{ description: t("twoFactor.setupReauthDescription") }}
         idPrefix="setup-2fa-reauth"
       />
     </div>

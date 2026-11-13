@@ -1,0 +1,185 @@
+---
+title: Connect AI assistants (MCP)
+description: Connect Claude, ChatGPT, Claude Code, Cursor or VS Code to Appbox, and manage your apps and domains by asking.
+sort: 5
+launch: day_5
+---
+
+The Appbox MCP server lets AI assistants work with your Appbox for you. Ask Claude to install Jellyfin and wait until it's running, or ask Cursor which of your apps are stopped. The assistant uses the [developer API](/docs/developer-api) on your behalf, with only the scopes you approve. You sign in with your Appbox account, so there's no API key to copy.
+
+| What           | Value                                        |
+| -------------- | -------------------------------------------- |
+| Server URL     | `https://mcp.appbox.co/mcp`                  |
+| Transport      | Streamable HTTP                              |
+| Authentication | OAuth: you sign in and approve in Appbox     |
+| Reaches        | Your own Appboxes, apps and domains, no more |
+
+## How connecting works
+
+Every assistant follows the same steps after you add the server:
+
+1. The assistant opens Appbox in your browser. Sign in if Appbox asks you to.
+2. Check the **Connect** page. It shows the app's name, where your browser goes back to afterwards, and the scopes the app asked for.
+3. Untick any scopes you don't want the app to have, or add ones it will need.
+4. Select **Approve**. If you haven't signed in recently, Appbox asks for your password, and your two-factor code if you use one.
+5. Your browser goes back to the assistant, which can now use Appbox.
+
+The app's name on the **Connect** page comes from the app itself, and Appbox doesn't verify it. Only approve a connection you started yourself, and check that the address it returns to belongs to the assistant you're using.
+
+## Claude
+
+Custom connectors work in Claude on the web and in the desktop app. On Team and Enterprise plans, an owner adds the connector for the organization first.
+
+1. In Claude, open **Customize > Connectors**.
+2. Select **+**, then **Add custom connector**.
+3. Enter `Appbox` as the **Name** and `https://mcp.appbox.co/mcp` as the **Remote MCP server URL**. Leave the OAuth fields empty.
+4. Select **Add**, then **Connect**, and approve the connection in Appbox.
+
+Turn on the Appbox connector in a chat from the tools menu when you want Claude to use it.
+
+## ChatGPT
+
+ChatGPT connects to MCP servers in developer mode, which depends on your plan.
+
+1. Open **Settings > Apps > Advanced settings** and turn on **Developer mode**.
+2. Select **Create app**.
+3. Enter `Appbox` as the name and `https://mcp.appbox.co/mcp` as the **MCP Server URL**, and choose **OAuth** for **Authentication**.
+4. Select **Create**, then approve the connection in Appbox.
+
+In a chat, choose Appbox from the developer mode tools, or mention it by name.
+
+## Claude Code
+
+Add the server from your terminal:
+
+```bash
+claude mcp add --transport http appbox https://mcp.appbox.co/mcp
+```
+
+Then start Claude Code, run `/mcp`, select **appbox** and choose **Authenticate**. Claude Code opens your browser to approve the connection.
+
+## Cursor
+
+Add the server to `~/.cursor/mcp.json`, or to `.cursor/mcp.json` in a project:
+
+```json
+{
+  "mcpServers": {
+    "appbox": {
+      "url": "https://mcp.appbox.co/mcp"
+    }
+  }
+}
+```
+
+Open **Cursor Settings > Tools & MCP** and select **Connect** next to **appbox**. If Cursor's own browser doesn't show the Appbox sign-in page, copy the address into your usual browser.
+
+## VS Code
+
+Run **MCP: Add Server** from the Command Palette, choose **HTTP** and enter `https://mcp.appbox.co/mcp`. Or add it to `.vscode/mcp.json` yourself:
+
+```json
+{
+  "servers": {
+    "appbox": {
+      "type": "http",
+      "url": "https://mcp.appbox.co/mcp"
+    }
+  }
+}
+```
+
+Start the server from the file or from **MCP: List Servers**. VS Code asks whether Appbox may sign in; allow it, then approve the connection in your browser.
+
+## What the assistant can do
+
+The server offers these tools. Each needs the scopes listed, the same ones the matching [endpoint](/docs/developer-api/endpoints) needs. Assistants usually ask you before running a tool that changes or deletes something; the ones marked **Changes** below do.
+
+### Appboxes and the catalog
+
+| Tool                 | What it does                                              | Scopes                                          |
+| -------------------- | --------------------------------------------------------- | ----------------------------------------------- |
+| `list_appboxes`      | Lists your Appboxes and their free app slots.             | `apps:read`                                     |
+| `get_appbox`         | Shows one Appbox.                                         | `apps:read`                                     |
+| `search_catalog`     | Finds apps you can install.                               | `catalog:read`                                  |
+| `get_catalog_app`    | Shows an installable app and its versions.                | `catalog:read`                                  |
+| `get_install_schema` | Lists the fields an install needs.                        | `catalog:read`                                  |
+| `validate_install`   | Checks an install without installing anything.            | The same as `install_app`                       |
+| `check_install_dns`  | Checks that a domain points at the Appbox before install. | `apps:install`, `domains:read`, `domains:write` |
+
+### Apps
+
+| Tool                 | What it does                                                   | Scopes           |
+| -------------------- | -------------------------------------------------------------- | ---------------- |
+| `list_apps`          | Lists your installed apps and their status.                    | `apps:read`      |
+| `get_app`            | Shows one installed app.                                       | `apps:read`      |
+| `wait_for_app`       | Waits up to 3 minutes for an install or change to finish.      | `apps:read`      |
+| `install_app`        | Installs an app. **Changes**                                   | `apps:install`   |
+| `start_app`          | Starts an app. **Changes**                                     | `apps:lifecycle` |
+| `stop_app`           | Stops an app. **Changes**                                      | `apps:lifecycle` |
+| `restart_app`        | Restarts an app. **Changes**                                   | `apps:lifecycle` |
+| `freeze_app`         | Freezes an app. **Changes**                                    | `apps:lifecycle` |
+| `unfreeze_app`       | Unfreezes an app. **Changes**                                  | `apps:lifecycle` |
+| `change_app_version` | Upgrades, downgrades or switches an app's version. **Changes** | `apps:version`   |
+| `set_app_boost`      | Sets an app's boost slots. **Changes**                         | `apps:boost`     |
+| `uninstall_app`      | Uninstalls an app and deletes its data. **Changes**            | `apps:uninstall` |
+
+### Domains
+
+| Tool                           | What it does                                    | Scopes                                         |
+| ------------------------------ | ----------------------------------------------- | ---------------------------------------------- |
+| `list_domains`                 | Lists your domains.                             | `domains:read`                                 |
+| `get_domain`                   | Shows one domain.                               | `domains:read`                                 |
+| `list_app_domains`             | Lists the domains attached to an app.           | `apps:read`, `domains:read`                    |
+| `check_domain_dns`             | Checks a domain's DNS before attaching it.      | `apps:update`, `domains:read`, `domains:write` |
+| `check_subdomain_availability` | Checks whether a subdomain is free.             | `domains:write`                                |
+| `add_domain`                   | Adds a domain to your account. **Changes**      | `domains:write`                                |
+| `attach_domain`                | Attaches a domain to an app. **Changes**        | `apps:update`, `domains:read`, `domains:write` |
+| `detach_domain`                | Detaches a domain from an app. **Changes**      | `apps:update`, `domains:delete`                |
+| `delete_domain`                | Removes a domain from your account. **Changes** | `domains:delete`                               |
+
+### Custom tables and actions
+
+Some apps provide tables, such as mailboxes or users, and actions, such as rescanning a library. All of these tools also need `apps:read`.
+
+| Tool                      | What it does                               | Scopes                   |
+| ------------------------- | ------------------------------------------ | ------------------------ |
+| `list_custom_tables`      | Lists an app's tables.                     | `custom_tables:read`     |
+| `list_custom_table_rows`  | Lists a table's rows. Secrets stay hidden. | `custom_tables:read`     |
+| `add_custom_table_row`    | Adds a row. **Changes**                    | `custom_tables:write`    |
+| `update_custom_table_row` | Changes a row. **Changes**                 | `custom_tables:write`    |
+| `delete_custom_table_row` | Deletes a row. **Changes**                 | `custom_tables:delete`   |
+| `list_custom_actions`     | Lists the actions an app opens to the API. | `custom_actions:read`    |
+| `get_custom_action`       | Shows one action and its inputs.           | `custom_actions:read`    |
+| `run_custom_action`       | Runs an action. **Changes**                | `custom_actions:execute` |
+
+## Scopes and asking for more
+
+When you first connect, most assistants ask for `catalog:read` and `apps:read`, which let them look but not change anything. You can tick more scopes on the **Connect** page if you already know what you want the assistant to do. [Scopes and presets](/docs/developer-api/scopes) explains each one.
+
+When the assistant tries something its scopes don't allow, the server asks it to request the missing scopes. Your browser opens the **Connect** page again with those scopes added to the ones you already approved, and you approve or deny them. Some tools need extra scopes depending on what you ask for:
+
+| Request                                          | Also needs                         |
+| ------------------------------------------------ | ---------------------------------- |
+| `install_app` on one of your own domains         | `domains:read` and `domains:write` |
+| `install_app` with boost slots                   | `apps:boost`                       |
+| `uninstall_app` when domains were attached later | `domains:delete`                   |
+
+No scope lets an assistant manage your API keys, account security, users or billing. Like an API key, a connection always acts as a normal customer account, even when an admin owns it.
+
+## Connected apps
+
+**Account > Connected apps** lists every assistant you've connected, with its scopes, when you connected it and when it last used Appbox.
+
+- To disconnect one, select **Revoke**. It loses access within 15 minutes. To use it again, connect it again from the assistant.
+- Connecting the same assistant again replaces its scopes with the ones you approve.
+- Changing your password or your two-factor settings disconnects every app.
+- Signing out of Appbox doesn't disconnect anything.
+
+## Limits
+
+- **Rate limits:** each connected app has the same limits as one API key, and counts towards your account's total. See [Rate limits](/docs/developer-api#rate-limits).
+- **Long operations:** `wait_for_app` waits up to 3 minutes in one call. If an install takes longer, the assistant can wait again.
+- **Passwords:** if an install or table row needs a password and you don't give one, the server generates it and never shows it to the assistant. Find it on the app's page in Appbox.
+- **Staying connected:** the connection renews itself while you use it. After 30 days without use, connect again.
+- **Custom actions:** `run_custom_action` only runs actions Appbox has reviewed and opened to the API, and few apps have any yet.
