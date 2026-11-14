@@ -130,6 +130,12 @@ function saveFlags(id: number, flags: DevFlags) {
   }
 }
 
+function anyFlagOn(flags: DevFlags) {
+  return Object.entries(flags).some(
+    ([k, v]) => k !== "migrationPercent" && v === true
+  )
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Status flags are mutually exclusive                                        */
 /* -------------------------------------------------------------------------- */
@@ -240,10 +246,7 @@ function CyloDevPanelInner({ cyloId }: CyloDevPanelProps) {
 
   // Re-apply on mount if flags were persisted
   useEffect(() => {
-    const hasAnyFlag = Object.entries(flags).some(
-      ([k, v]) => k !== "migrationPercent" && v === true
-    )
-    if (hasAnyFlag) {
+    if (anyFlagOn(flags)) {
       // Wait for original data to be captured
       const timer = setTimeout(() => applyFlags(flags), 100)
       return () => clearTimeout(timer)
@@ -251,12 +254,12 @@ function CyloDevPanelInner({ cyloId }: CyloDevPanelProps) {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function updateFlags(patch: Partial<DevFlags>) {
-    setFlags((prev) => {
-      const next = { ...prev, ...patch }
-      saveFlags(cyloId, next)
-      applyFlags(next)
-      return next
-    })
+    // Worked out here, not inside a state updater, so saving and applying the
+    // flags happen once per change and never while this panel renders.
+    const next = { ...flags, ...patch }
+    setFlags(next)
+    saveFlags(cyloId, next)
+    applyFlags(next)
   }
 
   function toggleStatus(flag: StatusFlag) {
@@ -276,10 +279,23 @@ function CyloDevPanelInner({ cyloId }: CyloDevPanelProps) {
     setFlags(resetFlags)
     saveFlags(cyloId, resetFlags)
 
-    // Invalidate to re-fetch real data
-    queryClient.invalidateQueries({ queryKey: queryKeys.cylos.detail(cyloId) })
-    queryClient.invalidateQueries({ queryKey: queryKeys.cylos.quota(cyloId) })
-    originalCyloRef.current = null
+    // Invalidate to re-fetch real data, then take what arrives as the copy
+    // the next override starts from. Dropping the copy here without taking
+    // another left the switches doing nothing until the page was reloaded.
+    const detailKey = queryKeys.cylos.detail(cyloId)
+    void Promise.all([
+      queryClient.invalidateQueries({ queryKey: detailKey }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.cylos.quota(cyloId) })
+    ]).then(() => {
+      // A failed reload leaves the overridden cylo in the cache.
+      if (queryClient.getQueryState(detailKey)?.status !== "success") return
+      const fresh = queryClient.getQueryData<CyloDetail>(detailKey)
+      if (!fresh) return
+      originalCyloRef.current = { ...fresh }
+      // Anything switched on while the real data was loading
+      const current = loadFlags(cyloId)
+      if (anyFlagOn(current)) applyFlags(current)
+    })
   }
 
   function toggleCollapsed() {
@@ -290,9 +306,7 @@ function CyloDevPanelInner({ cyloId }: CyloDevPanelProps) {
     })
   }
 
-  const hasAnyFlag = Object.entries(flags).some(
-    ([k, v]) => k !== "migrationPercent" && v === true
-  )
+  const hasAnyFlag = anyFlagOn(flags)
 
   return (
     <div className="fixed bottom-4 right-4 z-9999 w-72 rounded-lg border border-amber-500/40 bg-card shadow-xl">

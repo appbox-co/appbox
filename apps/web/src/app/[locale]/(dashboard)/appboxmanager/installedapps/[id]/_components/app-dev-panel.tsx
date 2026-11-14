@@ -121,6 +121,15 @@ function saveFlags(appId: number, flags: DevFlags) {
   }
 }
 
+function anyOverride(flags: DevFlags) {
+  return (
+    flags.status !== null ||
+    flags.hasUpdate ||
+    flags.job !== null ||
+    flags.cyloSuspended
+  )
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Public export                                                              */
 /* -------------------------------------------------------------------------- */
@@ -248,23 +257,18 @@ function PanelInner({ appId, onJobChange }: AppDevPanelProps) {
 
   /* ── Re-apply persisted flags on mount once original is captured ── */
   useEffect(() => {
-    const hasOverride =
-      flags.status !== null ||
-      flags.hasUpdate ||
-      flags.cyloSuspended ||
-      flags.job !== null
-    if (!hasOverride) return
+    if (!anyOverride(flags)) return
     const timer = setTimeout(() => applyFlags(flags), 100)
     return () => clearTimeout(timer)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function updateFlags(patch: Partial<DevFlags>) {
-    setFlags((prev) => {
-      const next = { ...prev, ...patch }
-      saveFlags(appId, next)
-      applyFlags(next)
-      return next
-    })
+    // Worked out here, not inside a state updater: applying the flags sets the
+    // page's job state, which React does not allow while this panel renders.
+    const next = { ...flags, ...patch }
+    setFlags(next)
+    saveFlags(appId, next)
+    applyFlags(next)
   }
 
   function handleReset() {
@@ -272,19 +276,40 @@ function PanelInner({ appId, onJobChange }: AppDevPanelProps) {
     const next = { ...DEFAULT_FLAGS }
     setFlags(next)
     saveFlags(appId, next)
-    originalRef.current = null
-    originalCyloRef.current = null
-    setOriginalForDisplay(null)
     onJobChange(undefined)
-    queryClient.invalidateQueries({
-      queryKey: queryKeys.installedApps.detail(appId)
-    })
-    queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
+
+    // Re-fetch real data, then take what arrives as the copy the next
+    // override starts from. Dropping the copies here without taking others
+    // left the switches doing nothing until the page was reloaded.
+    const detailKey = queryKeys.installedApps.detail(appId)
+    const reloads = [
+      queryClient.invalidateQueries({ queryKey: detailKey }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
+    ]
     if (cyloId) {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.cylos.detail(cyloId)
-      })
+      reloads.push(
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cylos.detail(cyloId)
+        })
+      )
     }
+    void Promise.all(reloads).then(() => {
+      // A failed reload leaves the overridden app in the cache.
+      if (queryClient.getQueryState(detailKey)?.status !== "success") return
+      const fresh = queryClient.getQueryData<InstalledApp>(detailKey)
+      if (!fresh) return
+      originalRef.current = { ...fresh }
+      setOriginalForDisplay({ ...fresh })
+      const cyloKey = queryKeys.cylos.detail(fresh.cylo_id)
+      const cylo = queryClient.getQueryData<CyloDetail>(cyloKey)
+      originalCyloRef.current =
+        cylo && queryClient.getQueryState(cyloKey)?.status === "success"
+          ? { ...cylo }
+          : null
+      // Anything switched on while the real data was loading
+      const current = loadFlags(appId)
+      if (anyOverride(current)) applyFlags(current)
+    })
   }
 
   function toggleCollapsed() {
@@ -297,11 +322,7 @@ function PanelInner({ appId, onJobChange }: AppDevPanelProps) {
 
   /* ── Derived ── */
   const appName = originalForDisplay?.display_name ?? `App #${appId}`
-  const hasOverride =
-    flags.status !== null ||
-    flags.hasUpdate ||
-    flags.job !== null ||
-    flags.cyloSuspended
+  const hasOverride = anyOverride(flags)
   const isTransitionalStatus = flags.status
     ? ["installing", "updating", "deleting"].includes(flags.status)
     : false

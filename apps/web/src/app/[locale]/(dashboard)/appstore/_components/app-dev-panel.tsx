@@ -265,6 +265,14 @@ function AppDevPanelInner({ appId }: AppDevPanelProps) {
             app_slots: 9999
           }
         }
+        // The install dialog counts the chosen version's own slots ahead of
+        // the app's, so the versions the app carries need the same number.
+        if (patched.versions) {
+          patched.versions = patched.versions.map((version) => ({
+            ...version,
+            app_slots: 9999
+          }))
+        }
       }
       // someNoSlots and mostNoSlots are handled in install-dialog by
       // overriding which cylos appear to have no slots
@@ -291,14 +299,14 @@ function AppDevPanelInner({ appId }: AppDevPanelProps) {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function updateFlags(patch: Partial<DevFlags>) {
-    setFlags((prev) => {
-      const next = { ...prev, ...patch }
-      saveFlags(appId, next)
-      applyFlags(next)
-      // Defer the event so it fires after React finishes rendering this component
-      setTimeout(notifyAppDevFlagsChanged, 0)
-      return next
-    })
+    // Worked out here, not inside a state updater, so saving and applying the
+    // flags happen once per change and never while this panel renders.
+    const next = { ...flags, ...patch }
+    setFlags(next)
+    saveFlags(appId, next)
+    applyFlags(next)
+    // Defer the event so it fires after React finishes rendering this component
+    setTimeout(notifyAppDevFlagsChanged, 0)
   }
 
   function toggleGuard(flag: GuardFlag) {
