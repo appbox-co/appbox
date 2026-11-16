@@ -27,13 +27,21 @@ import { formatDistanceToNow } from "date-fns"
 import { toast } from "sonner"
 import type {
   ApiKey,
+  ApiKeyScopeCatalog,
   CreateApiKeyInput,
-  CreateApiKeyResult
+  CreateApiKeyResult,
+  UpdateApiKeyInput
 } from "@/api/account/account"
+// Pure rules shared with the current design's page.
+import {
+  getDefaultScopes,
+  hasSameScopes
+} from "@/app/[locale]/(dashboard)/account/api-keys/_components/api-key-scopes"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { nextSort, SortHead, type SortState } from "../sort-head"
 import { isRecentAuthError, type Reauth } from "./recent-auth"
 import { RecentAuthDialog } from "./recent-auth-dialog"
+import { ScopePicker, scopesHintId, ScopeSummary } from "./scope-picker"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing
@@ -42,11 +50,11 @@ import { RecentAuthDialog } from "./recent-auth-dialog"
 const COPY = {
   title: "API keys",
   create: "Create API key",
-  renameTitle: "Rename API key",
+  editTitle: "Edit API key",
   revokeTitle: "Revoke API key",
   confirmRevoke: "Revoke key",
   secretTitle: "Save your API key",
-  renameKey: (name: string) => `Rename ${name}`,
+  editKey: (name: string) => `Edit ${name}`,
   revokeKey: (name: string) => `Revoke ${name}`
 } as const
 
@@ -57,12 +65,16 @@ export interface ApiKeysViewProps {
   recentAuthRequired: boolean
   /** Creates a key. Resolves with the secret, which is shown once. */
   onCreate: (input: CreateApiKeyInput) => Promise<CreateApiKeyResult>
-  onRename: (id: number, name: string) => Promise<unknown>
+  /** Changes a key's name, its scopes, or both. */
+  onUpdate: (id: number, input: UpdateApiKeyInput) => Promise<unknown>
   onRevoke: (id: number) => Promise<unknown>
   /** Loads the list again, after signing in again with nothing waiting. */
   onRefresh: () => void
   /** How signing in again is sent. Sample pages pass a stand-in. */
   reauth: Reauth
+  /** The scopes a key can have, and the presets made from them. */
+  scopeCatalog: Loadable<ApiKeyScopeCatalog>
+  onRetryScopes: () => void
 }
 
 /* -------------------------------------------------------------------------- */
@@ -74,7 +86,7 @@ type ApiKeyStatus = "active" | "expired" | "revoked"
 /** A change the API refused for want of a recent sign-in, to run again after one. */
 type PendingApiKeyAction =
   | { type: "create"; input: CreateApiKeyInput }
-  | { type: "rename"; id: number; name: string }
+  | { type: "update"; id: number; input: UpdateApiKeyInput }
   | { type: "revoke"; id: number }
 
 function getStatus(key: ApiKey): ApiKeyStatus {
@@ -181,12 +193,13 @@ function When({ value }: { value: string | null }) {
 
 interface RowActionsProps {
   row: Row
-  onRename: (key: ApiKey) => void
+  catalog: ApiKeyScopeCatalog | undefined
+  onEdit: (key: ApiKey) => void
   onRevoke: (key: ApiKey) => void
 }
 
-/** Rename and revoke, which only a key that still works can have done to it. */
-function RowActions({ row, onRename, onRevoke }: RowActionsProps) {
+/** Edit and revoke, which only a key that still works can have done to it. */
+function RowActions({ row, onEdit, onRevoke }: RowActionsProps) {
   const t = useTranslations("account.apiKeys")
   const disabled = row.status !== "active"
 
@@ -196,11 +209,11 @@ function RowActions({ row, onRename, onRevoke }: RowActionsProps) {
         size="sm"
         icon={PencilSimpleIcon}
         className="whitespace-nowrap"
-        aria-label={COPY.renameKey(row.key.name)}
+        aria-label={COPY.editKey(row.key.name)}
         disabled={disabled}
-        onClick={() => onRename(row.key)}
+        onClick={() => onEdit(row.key)}
       >
-        {t("rename")}
+        {t("edit")}
       </Button>
       <Button
         size="sm"
@@ -241,6 +254,14 @@ function KeyRow(props: RowActionsProps) {
       <Table.Cell>
         <StatusBadge status={status} />
       </Table.Cell>
+      <Table.Cell>
+        <ScopeSummary
+          name={key.name}
+          scopes={key.scopes}
+          catalog={props.catalog}
+          muted={status !== "active"}
+        />
+      </Table.Cell>
       <Table.Cell className="hidden @min-[76rem]:table-cell">
         <When value={key.created_at} />
       </Table.Cell>
@@ -263,6 +284,17 @@ function KeyCard(props: RowActionsProps) {
   const { key, status } = props.row
   const facts = [
     { label: t("prefix"), value: <Prefix value={key.key_prefix} /> },
+    {
+      label: t("scopes"),
+      value: (
+        <ScopeSummary
+          name={key.name}
+          scopes={key.scopes}
+          catalog={props.catalog}
+          muted={status !== "active"}
+        />
+      )
+    },
     { label: t("created"), value: <When value={key.created_at} /> },
     { label: t("lastUsed"), value: <When value={key.last_used_at} /> },
     { label: t("expiresAt"), value: <When value={key.expires_at} /> }
@@ -314,8 +346,8 @@ function ListSkeleton() {
 /* -------------------------------------------------------------------------- */
 
 /**
- * The account's API keys as a table: create one (its secret is shown once),
- * rename or revoke one that still works. A change the API refuses for want of
+ * The account's API keys as a table: create one with the scopes it may use
+ * (its secret is shown once), edit or revoke one that still works. A change the API refuses for want of
  * a recent sign-in is remembered, the password is asked for again, and the
  * change then runs by itself: the current page's flow, unchanged. Where there
  * is no room for a table each key is a card.
@@ -324,10 +356,12 @@ export function ApiKeysView({
   keys,
   recentAuthRequired,
   onCreate,
-  onRename,
+  onUpdate,
   onRevoke,
   onRefresh,
-  reauth
+  reauth,
+  scopeCatalog,
+  onRetryScopes
 }: ApiKeysViewProps) {
   const t = useTranslations("account.apiKeys")
 
@@ -337,6 +371,9 @@ export function ApiKeysView({
   const [createOpen, setCreateOpen] = useState(false)
   const [createName, setCreateName] = useState("")
   const [createExpiresAt, setCreateExpiresAt] = useState("")
+  // Null until a scope is chosen, so the default preset applies as soon as
+  // the scope list arrives.
+  const [createScopes, setCreateScopes] = useState<string[] | null>(null)
   const [creating, setCreating] = useState(false)
 
   // The new key's secret. It is forgotten once its dialog has closed.
@@ -344,12 +381,13 @@ export function ApiKeysView({
   const [createdSecret, setCreatedSecret] = useState("")
   const [copied, setCopied] = useState(false)
 
-  // Rename and revoke. Each target outlives its dialog being open, so that
+  // Edit and revoke. Each target outlives its dialog being open, so that
   // the dialog still shows it while it animates out.
-  const [renameOpen, setRenameOpen] = useState(false)
-  const [renameTarget, setRenameTarget] = useState<ApiKey | null>(null)
-  const [renameName, setRenameName] = useState("")
-  const [renaming, setRenaming] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
+  const [editTarget, setEditTarget] = useState<ApiKey | null>(null)
+  const [editName, setEditName] = useState("")
+  const [editScopes, setEditScopes] = useState<string[]>([])
+  const [editing, setEditing] = useState(false)
   const [revokeOpen, setRevokeOpen] = useState(false)
   const [revokeTarget, setRevokeTarget] = useState<ApiKey | null>(null)
   const [revoking, setRevoking] = useState(false)
@@ -358,6 +396,16 @@ export function ApiKeysView({
   const [reauthOpen, setReauthOpen] = useState(false)
   const [pendingAction, setPendingAction] =
     useState<PendingApiKeyAction | null>(null)
+
+  const catalog =
+    scopeCatalog.status === "ready" ? scopeCatalog.data : undefined
+  const chosenScopes = createScopes ?? getDefaultScopes(catalog?.presets ?? [])
+  // A new key needs a scope; an old key without any may still be renamed,
+  // but a choice cannot be cleared down to nothing.
+  const createBlocked = !catalog || chosenScopes.length === 0
+  const editScopesChanged =
+    editTarget !== null && !hasSameScopes(editScopes, editTarget.scopes)
+  const editBlocked = editScopesChanged && editScopes.length === 0
 
   const all = keys.status === "ready" ? keys.data : []
   const rows: Row[] = all.map((key) => ({ key, status: getStatus(key) }))
@@ -378,7 +426,7 @@ export function ApiKeysView({
   function handleRecentAuthRequired(action: PendingApiKeyAction) {
     setPendingAction(action)
     setCreateOpen(false)
-    setRenameOpen(false)
+    setEditOpen(false)
     setRevokeOpen(false)
     setReauthOpen(true)
   }
@@ -397,9 +445,10 @@ export function ApiKeysView({
         toast.success(t("createSuccess"))
         setCreateName("")
         setCreateExpiresAt("")
+        setCreateScopes(null)
         showSecret(result.key)
-      } else if (action.type === "rename") {
-        await onRename(action.id, action.name)
+      } else if (action.type === "update") {
+        await onUpdate(action.id, action.input)
         toast.success(t("updateSuccess"))
       } else {
         await onRevoke(action.id)
@@ -408,7 +457,7 @@ export function ApiKeysView({
     } catch {
       if (action.type === "create") {
         toast.error(t("createFailed"))
-      } else if (action.type === "rename") {
+      } else if (action.type === "update") {
         toast.error(t("updateFailed"))
       } else {
         toast.error(t("revokeFailed"))
@@ -438,13 +487,13 @@ export function ApiKeysView({
 
   async function submitCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const input = {
+    if (createBlocked) return
+    const input: CreateApiKeyInput = {
       name: createName.trim(),
       expires_at: createExpiresAt
         ? new Date(createExpiresAt).toISOString()
         : null,
-      // No scope chooser here yet: the live page asks for the default set.
-      scopes: []
+      scopes: chosenScopes
     }
 
     setCreating(true)
@@ -453,6 +502,7 @@ export function ApiKeysView({
       toast.success(t("createSuccess"))
       setCreateName("")
       setCreateExpiresAt("")
+      setCreateScopes(null)
       setCreateOpen(false)
       showSecret(result.key)
     } catch (error) {
@@ -466,34 +516,35 @@ export function ApiKeysView({
     }
   }
 
-  function startRename(key: ApiKey) {
-    setRenameTarget(key)
-    setRenameName(key.name)
-    setRenameOpen(true)
+  function startEdit(key: ApiKey) {
+    setEditTarget(key)
+    setEditName(key.name)
+    setEditScopes(key.scopes)
+    setEditOpen(true)
   }
 
-  async function submitRename(event: FormEvent<HTMLFormElement>) {
+  async function submitEdit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!renameTarget) return
-    const nextName = renameName.trim()
+    if (!editTarget || editBlocked) return
+    // Scopes are only sent when they changed, as on the current page.
+    const input: UpdateApiKeyInput = {
+      name: editName.trim(),
+      ...(editScopesChanged ? { scopes: editScopes } : {})
+    }
 
-    setRenaming(true)
+    setEditing(true)
     try {
-      await onRename(renameTarget.id, nextName)
+      await onUpdate(editTarget.id, input)
       toast.success(t("updateSuccess"))
-      setRenameOpen(false)
+      setEditOpen(false)
     } catch (error) {
       if (isRecentAuthError(error)) {
-        handleRecentAuthRequired({
-          type: "rename",
-          id: renameTarget.id,
-          name: nextName
-        })
+        handleRecentAuthRequired({ type: "update", id: editTarget.id, input })
         return
       }
       toast.error(t("updateFailed"))
     } finally {
-      setRenaming(false)
+      setEditing(false)
     }
   }
 
@@ -529,7 +580,8 @@ export function ApiKeysView({
 
   const rowProps = (row: Row): RowActionsProps => ({
     row,
-    onRename: startRename,
+    catalog,
+    onEdit: startEdit,
     onRevoke: startRevoke
   })
 
@@ -610,6 +662,7 @@ export function ApiKeysView({
                       sort={sort}
                       onSort={sortBy}
                     />
+                    <Table.Head>{t("scopes")}</Table.Head>
                     <SortHead
                       label={t("created")}
                       sortKey="created"
@@ -663,7 +716,10 @@ export function ApiKeysView({
           setCreateOpen(open)
         }}
       >
-        <Dialog className="px-6 py-5">
+        <Dialog
+          size="lg"
+          className="max-h-[calc(100dvh-2rem)] overflow-y-auto px-6 py-5"
+        >
           <form onSubmit={submitCreate} className="grid grid-cols-1 gap-5">
             <div className="grid gap-1.5">
               <Dialog.Title className="text-lg font-semibold">
@@ -702,6 +758,15 @@ export function ApiKeysView({
               className="tabular-nums"
             />
 
+            <ScopePicker
+              idPrefix="create-api-key"
+              catalog={scopeCatalog}
+              onRetry={onRetryScopes}
+              value={chosenScopes}
+              onChange={setCreateScopes}
+              disabled={creating}
+            />
+
             <div className="flex justify-end gap-2">
               <Button
                 type="button"
@@ -714,8 +779,13 @@ export function ApiKeysView({
               <Button
                 type="submit"
                 variant="primary"
-                disabled={creating}
+                disabled={creating || createBlocked}
                 loading={creating}
+                aria-describedby={
+                  catalog && chosenScopes.length === 0
+                    ? scopesHintId("create-api-key")
+                    : undefined
+                }
               >
                 {COPY.create}
               </Button>
@@ -776,44 +846,67 @@ export function ApiKeysView({
         </Dialog>
       </Dialog.Root>
 
-      {/* Rename a key */}
+      {/* Edit a key */}
       <Dialog.Root
-        open={renameOpen}
+        open={editOpen}
         onOpenChange={(open) => {
-          if (!open && !renaming) setRenameOpen(false)
+          if (!open && !editing) setEditOpen(false)
         }}
       >
-        <Dialog className="px-6 py-5">
-          <form onSubmit={submitRename} className="grid grid-cols-1 gap-5">
-            <Dialog.Title className="text-lg font-semibold">
-              {COPY.renameTitle}
-            </Dialog.Title>
+        <Dialog
+          size="lg"
+          className="max-h-[calc(100dvh-2rem)] overflow-y-auto px-6 py-5"
+        >
+          <form onSubmit={submitEdit} className="grid grid-cols-1 gap-5">
+            <div className="grid gap-1.5">
+              <Dialog.Title className="text-lg font-semibold">
+                {COPY.editTitle}
+              </Dialog.Title>
+              <Dialog.Description className="text-kumo-subtle">
+                {t("editDescription")}
+              </Dialog.Description>
+            </div>
 
             <Input
-              id="rename-api-key"
+              id="edit-api-key"
               label={t("name")}
-              value={renameName}
-              onChange={(event) => setRenameName(event.target.value)}
+              value={editName}
+              onChange={(event) => setEditName(event.target.value)}
               maxLength={100}
               autoComplete="off"
               passwordManagerIgnore
               required
             />
 
+            <ScopePicker
+              // Remounted per key, so the scope list opens afresh for each.
+              key={editTarget?.id}
+              idPrefix="edit-api-key"
+              catalog={scopeCatalog}
+              onRetry={onRetryScopes}
+              value={editScopes}
+              onChange={setEditScopes}
+              disabled={editing}
+              requireOne={editScopesChanged}
+            />
+
             <div className="flex justify-end gap-2">
               <Button
                 type="button"
                 variant="secondary"
-                onClick={() => setRenameOpen(false)}
-                disabled={renaming}
+                onClick={() => setEditOpen(false)}
+                disabled={editing}
               >
                 {t("cancel")}
               </Button>
               <Button
                 type="submit"
                 variant="primary"
-                disabled={renaming}
-                loading={renaming}
+                disabled={editing || editBlocked}
+                loading={editing}
+                aria-describedby={
+                  editBlocked ? scopesHintId("edit-api-key") : undefined
+                }
               >
                 {t("save")}
               </Button>

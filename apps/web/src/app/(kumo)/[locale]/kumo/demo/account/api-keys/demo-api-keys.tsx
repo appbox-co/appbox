@@ -3,7 +3,7 @@
 import { useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { Select } from "@cloudflare/kumo"
-import type { ApiKey } from "@/api/account/account"
+import type { ApiKey, ApiKeyScopeCatalog } from "@/api/account/account"
 import { ApiError } from "@/api/client"
 import { ROUTES } from "@/constants/routes"
 import { usePathname, useRouter } from "@/i18n/routing"
@@ -14,15 +14,18 @@ import { AppShell } from "../../../_components/app-shell"
 import { buildSearchGroups } from "../../../_components/quick-search"
 import type { Loadable } from "../../../_components/shared"
 import { appsByCylo, cylos, demoUser } from "../../fixtures"
+import { SAMPLE_SCOPE_CATALOG } from "./sample-scopes"
 
 /** States the page has to handle that the sample data does not otherwise reach. */
 const STATES = [
-  { value: "normal", label: "Five keys" },
+  { value: "normal", label: "Six keys" },
   { value: "empty", label: "No keys" },
   { value: "loading", label: "Loading" },
   { value: "error", label: "Failed to load" },
   { value: "reauth-list", label: "Sign-in needed to list" },
-  { value: "reauth-write", label: "Sign-in needed to change" }
+  { value: "reauth-write", label: "Sign-in needed to change" },
+  { value: "scopes-loading", label: "Scope list loading" },
+  { value: "scopes-error", label: "Scope list failed" }
 ] as const
 
 type SampleState = (typeof STATES)[number]["value"]
@@ -51,7 +54,7 @@ function sampleKey(
     last_used_at: null,
     expires_at: null,
     revoked_at: null,
-    scopes: ["apps:read"],
+    scopes: [],
     ...fields
   }
 }
@@ -60,19 +63,28 @@ function sampleKey(
 const SAMPLE: ApiKey[] = [
   // Works, in regular use, never expires.
   sampleKey(1, "Automation script", "abx_s4mp1e", 210, {
-    last_used_at: at(-2 * HOUR)
+    last_used_at: at(-2 * HOUR),
+    scopes: preset("deployment_automation")
   }),
   // Works, but not for much longer.
   sampleKey(2, "Home Assistant", "abx_h0m3as", 87, {
     last_used_at: at(-3 * DAY),
-    expires_at: at(3 * DAY + 9 * HOUR)
+    expires_at: at(3 * DAY + 9 * HOUR),
+    scopes: preset("read_only")
   }),
-  // Works and has never been used.
-  sampleKey(3, "Backup job (new NAS)", "abx_b4ckup", 1, {}),
+  // Works and has never been used; a choice no preset matches.
+  sampleKey(3, "Backup job (new NAS)", "abx_b4ckup", 1, {
+    scopes: ["apps:read", "apps:lifecycle", "custom_tables:read"]
+  }),
+  // Made before keys had scopes, so it cannot call the API until given some.
+  sampleKey(6, "Old cron job", "abx_cr0nj0", 500, {
+    last_used_at: at(-40 * DAY)
+  }),
   // Ran out.
   sampleKey(4, "Grafana dashboard", "abx_gr4f4n", 400, {
     last_used_at: at(-6 * DAY),
-    expires_at: at(-5 * DAY)
+    expires_at: at(-5 * DAY),
+    scopes: preset("read_only")
   }),
   // Switched off by hand.
   sampleKey(5, "Old laptop", "abx_0ldl4p", 720, {
@@ -80,6 +92,13 @@ const SAMPLE: ApiKey[] = [
     revoked_at: at(-300 * DAY)
   })
 ]
+
+function preset(id: string) {
+  return [
+    ...(SAMPLE_SCOPE_CATALOG.presets.find((item) => item.id === id)?.scopes ??
+      [])
+  ]
+}
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -120,6 +139,15 @@ function SampleApiKeys({ state }: { state: SampleState }) {
     if (state === "reauth-write" && !signedInRef.current) throw refused()
   }
 
+  // "Try again" works in the failed state, as a second request might.
+  const [scopesFailed, setScopesFailed] = useState(state === "scopes-error")
+  const scopeCatalog: Loadable<ApiKeyScopeCatalog> =
+    state === "scopes-loading"
+      ? { status: "loading" }
+      : scopesFailed
+        ? { status: "error" }
+        : { status: "ready", data: SAMPLE_SCOPE_CATALOG }
+
   const listRefused = state === "reauth-list" && !signedIn
   const loadable: Loadable<ApiKey[]> =
     state === "loading"
@@ -151,12 +179,17 @@ function SampleApiKeys({ state }: { state: SampleState }) {
         setKeys((current) => [...current, item])
         return { key, item }
       }}
-      onRename={async (id, name) => {
+      onUpdate={async (id, input) => {
         await write()
         setKeys((current) =>
           current.map((key) =>
             key.id === id
-              ? { ...key, name, updated_at: new Date().toISOString() }
+              ? {
+                  ...key,
+                  name: input.name ?? key.name,
+                  scopes: input.scopes ?? key.scopes,
+                  updated_at: new Date().toISOString()
+                }
               : key
           )
         )
@@ -174,6 +207,8 @@ function SampleApiKeys({ state }: { state: SampleState }) {
       // Called once the sign-in went through with nothing waiting on it.
       onRefresh={() => setSignedIn(signedInRef.current)}
       reauth={reauth}
+      scopeCatalog={scopeCatalog}
+      onRetryScopes={() => setScopesFailed(false)}
     />
   )
 }

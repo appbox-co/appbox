@@ -1,14 +1,8 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import {
-  createApiKey,
-  getApiKeyScopes,
-  revokeApiKey,
-  updateApiKey
-} from "@/api/account/account"
-import { useApiKeys } from "@/api/account/hooks/use-account"
-import { getDefaultScopes } from "@/app/[locale]/(dashboard)/account/api-keys/_components/api-key-scopes"
+import { createApiKey, revokeApiKey, updateApiKey } from "@/api/account/account"
+import { useApiKeys, useApiKeyScopes } from "@/api/account/hooks/use-account"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
 import { useAuth } from "@/providers/auth-provider"
@@ -26,6 +20,7 @@ export default function KumoApiKeysPage() {
   const { searchGroups } = useAccountApps()
   const queryClient = useQueryClient()
   const apiKeys = useApiKeys()
+  const scopes = useApiKeyScopes()
 
   // Every write is followed by a fresh list, as on the current page. The view
   // is not kept waiting for it.
@@ -48,16 +43,12 @@ export default function KumoApiKeysPage() {
         keys={toLoadable(apiKeys, (data) => data ?? [])}
         recentAuthRequired={isRecentAuthError(apiKeys.error)}
         onCreate={async (input) => {
-          // The current design's default scope set (its "read only" preset).
-          const scopes = input.scopes.length
-            ? input.scopes
-            : getDefaultScopes((await getApiKeyScopes()).presets)
-          const result = await createApiKey({ ...input, scopes })
+          const result = await createApiKey(input)
           refresh()
           return result
         }}
-        onRename={async (id, name) => {
-          await updateApiKey(id, { name })
+        onUpdate={async (id, input) => {
+          await updateApiKey(id, input)
           refresh()
         }}
         onRevoke={async (id) => {
@@ -66,6 +57,14 @@ export default function KumoApiKeysPage() {
         }}
         onRefresh={refresh}
         reauth={postReauth}
+        scopeCatalog={
+          scopes.data
+            ? { status: "ready", data: scopes.data }
+            : scopes.error
+              ? { status: "error" }
+              : { status: "loading" }
+        }
+        onRetryScopes={() => void scopes.refetch()}
       />
     </AppShell>
   )
