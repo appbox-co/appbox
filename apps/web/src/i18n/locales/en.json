@@ -591,6 +591,13 @@
     "external_links": {
       "billing": "Billing",
       "control_panel": "Control Panel"
+    },
+    "google_ads_landing": {
+      "apps_section": {
+        "headline_1": "More than 70 one-click apps.",
+        "headline_2": "Setup included.",
+        "description": "Install file sync, database, automation, and communication apps. Appbox configures each service."
+      }
     }
   },
   "docs": {
@@ -1470,7 +1477,20 @@
       "show": "Show",
       "hide": "Hide",
       "copy": "Copy",
-      "customTablesRevealFailed": "Failed to reveal value."
+      "customTablesRevealFailed": "Failed to reveal value.",
+      "vmControlPending": "A VM power request is still pending. Wait for it to finish before changing power or resources.",
+      "customTablesDuplicateValue": "A row with that value already exists. Choose a different value.",
+      "customTablesMutationQueued": "The change has been queued.",
+      "customTablesMutationRowFallback": "Row #{id}",
+      "customTablesFailedHistory": "Previous failed changes ({count})",
+      "customTablesFailedHistoryDescription": "These are past attempts, not the current status of the rows.",
+      "customTablesPastMutationFailed": "{action, select, create {Creating this row} update {Updating this row} other {Saving this change}} failed. Attempt #{id}.",
+      "customTablesAdmissionPending": "We couldn't confirm this change was queued. Use Retry to continue the saved change.",
+      "customTablesRetry": "Retry",
+      "customTablesRetryFailed": "Could not retry this change. Please try again or contact support.",
+      "customTablesMutationPending": "{action, select, create {Creating this row. It will appear when the job completes.} update {Updating this row. The new settings will appear when the job completes.} other {Saving this change.}}",
+      "customTablesMutationFailed": "{action, select, create {Creating this row} update {Updating this row} other {Saving this change}} failed. Check the job details and try again.",
+      "customTablesMutationUnknown": "The result of {action, select, create {creating this row} update {updating this row} other {saving this change}} is unknown. Contact support before trying it again."
     },
     "domains": {
       "title": "Custom Domains",
