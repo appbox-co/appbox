@@ -10,8 +10,11 @@ export function createIdempotencyKey(operation: string): string {
   return `appbox-web:${operation}:${randomId()}`
 }
 
-export function idempotencyHeaders(operation: string): HeadersInit {
+export function idempotencyHeaders(
+  operation: string,
+  idempotencyKey?: string
+): HeadersInit {
   return {
-    "Idempotency-Key": createIdempotencyKey(operation)
+    "Idempotency-Key": idempotencyKey ?? createIdempotencyKey(operation)
   }
 }

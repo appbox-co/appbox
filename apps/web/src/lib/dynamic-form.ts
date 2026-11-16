@@ -17,7 +17,13 @@ export interface FieldCondition {
 
 export interface ConditionalFieldMetadata {
   visibleWhen?: FieldCondition | FieldCondition[]
-  condition?: FieldCondition | null
+  condition?:
+    | FieldCondition
+    | {
+        visibleWhen?: FieldCondition | FieldCondition[]
+        clearWhenHidden?: boolean
+      }
+    | null
   conditions?: FieldCondition[]
   clearWhenHidden?: boolean
 }
@@ -38,8 +44,7 @@ function conditionMatches(
   const actual = normalize(values[condition.field])
   const expected = normalize(condition.value)
   const candidates = (
-    condition.values ??
-    (Array.isArray(condition.value) ? condition.value : [])
+    condition.values ?? (Array.isArray(condition.value) ? condition.value : [])
   ).map(normalize)
 
   switch (condition.operator ?? "equals") {
@@ -64,8 +69,13 @@ export function isFieldVisible(
   metadata: ConditionalFieldMetadata | undefined,
   values: DynamicFormValues
 ): boolean {
+  const legacyCondition = metadata?.condition
+  const unwrappedCondition =
+    legacyCondition && "field" in legacyCondition
+      ? legacyCondition
+      : legacyCondition?.visibleWhen
   const conditions =
-    metadata?.conditions ?? metadata?.condition ?? metadata?.visibleWhen
+    metadata?.conditions ?? metadata?.visibleWhen ?? unwrappedCondition
   if (!conditions) return true
   const list = Array.isArray(conditions) ? conditions : [conditions]
   return list.every((condition) => conditionMatches(condition, values))

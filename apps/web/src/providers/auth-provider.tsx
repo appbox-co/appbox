@@ -30,9 +30,16 @@ interface AuthProviderProps {
   children: ReactNode
   user: User
   cylos: Cylo[]
+  /** Where signing out lands. The Kumo prototype passes its own sign-in page. */
+  signInPath?: string
 }
 
-export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
+export function AuthProvider({
+  children,
+  user,
+  cylos,
+  signInPath = "/login"
+}: AuthProviderProps) {
   const router = useRouter()
 
   const logout = useCallback(async () => {
@@ -59,8 +66,8 @@ export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
       toast.error("Couldn't log you out. Check your connection and try again.")
       return
     }
-    router.replace("/login")
-  }, [router])
+    router.replace(signInPath)
+  }, [router, signInPath])
 
   const value: AuthContextValue = {
     user,

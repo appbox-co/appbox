@@ -106,6 +106,15 @@ export const queryKeys = {
         "table",
         tableId,
         "rows"
+      ] as const,
+    mutations: (instanceId: number, tableId: number) =>
+      [
+        "customTables",
+        "instance",
+        instanceId,
+        "table",
+        tableId,
+        "mutations"
       ] as const
   },
   files: {
