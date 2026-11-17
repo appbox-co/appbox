@@ -1730,12 +1730,11 @@
       "description": "Appbox couldn't accept the app's connection request.",
       "hints": {
         "invalid_request": "The request was incomplete, or didn't match the addresses the app registered.",
-        "invalid_client": "Appbox couldn't identify the app.",
         "invalid_client_metadata": "The app's registration details aren't valid.",
         "unsupported_response_type": "The app asked to connect in a way Appbox doesn't support.",
         "invalid_target": "The app asked for access to a service Appbox doesn't offer.",
         "invalid_scope": "The app asked for permissions that don't exist.",
-        "temporarily_unavailable": "Appbox received too many connection requests from your network."
+        "temporarily_unavailable": "Appbox is receiving too many connection requests right now."
       },
       "codeLabel": "Error",
       "dashboard": "Go to the dashboard",

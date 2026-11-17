@@ -7,10 +7,12 @@ import { Link } from "@/i18n/routing"
 
 // Errors /oauth/authorize sends here instead of back to the client: anything
 // found before the client's redirect URI is trusted, every authorization
-// request error for HTTPS redirect URIs, and rate limiting.
+// request error for HTTPS redirect URIs, and rate limiting. invalid_client
+// has no hint of its own: it covers unknown clients, apps Appbox doesn't
+// support yet and metadata it couldn't fetch, so it gets the general
+// description and the server's error_description says which.
 const KNOWN_ERRORS = [
   "invalid_request",
-  "invalid_client",
   "invalid_client_metadata",
   "unsupported_response_type",
   "invalid_target",
