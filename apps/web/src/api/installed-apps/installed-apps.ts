@@ -13,6 +13,8 @@ export interface InstalledApp {
   icon_image: string
   version: string
   status: string
+  /** Why the install failed; set only when status is "failed". */
+  install_failed_reason?: string
   port: number
   cylo_id: number
   cylo_name: string
@@ -84,7 +86,11 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
   const state = Number(raw.state ?? 0)
 
   let status = "offline"
+  // An install the server gave up on: it never ran and can only be removed.
+  const isInstallFailed = flag(raw.install_failed)
+
   if (isDeleting) status = "deleting"
+  else if (isInstallFailed) status = "failed"
   else if (isUpdating) status = "updating"
   else if (isInstalling) status = "installing"
   else if (isFrozen) status = "frozen"
@@ -125,6 +131,10 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
     icon_image: String(raw.icon_image ?? ""),
     version: String(raw.version ?? app?.version ?? raw.latest_ver ?? ""),
     status,
+    install_failed_reason:
+      isInstallFailed && typeof raw.install_failed_reason === "string"
+        ? raw.install_failed_reason
+        : undefined,
     port: Number(raw.port ?? 0),
     cylo_id: Number(raw.cylo_id ?? 0),
     cylo_name: String(raw.cyloname ?? ""),
@@ -162,8 +172,7 @@ function mapInstalledApp(raw: Record<string, unknown>): InstalledApp {
         ? String(app?.documentation_url ?? raw.documentation_url)
         : undefined,
     custom_fields: (app?.customFields ?? raw.customFields) as
-      | Record<string, CustomField>
-      | undefined,
+      Record<string, CustomField> | undefined,
     available_versions: availableVersions
   }
 }

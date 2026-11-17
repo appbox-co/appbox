@@ -36,6 +36,7 @@ import {
 } from "@/api/pinned-apps/hooks/use-pinned-apps"
 import { StatusCell } from "@/components/dashboard/data-table/data-table-cells"
 import { HistoryBackButton } from "@/components/dashboard/navigation/history-back-button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -701,6 +702,16 @@ export default function InstalledAppDetailPage({
 
       {/* State alert banners: suspended appbox or transitional app state */}
       <AppAlerts app={app} cylo={cylo} job={job} showPayloadMessage={false} />
+
+      {app.status === "failed" && (
+        <Alert variant="destructive">
+          <AlertTitle>{t("installFailedTitle")}</AlertTitle>
+          <AlertDescription>
+            {app.install_failed_reason ? `${app.install_failed_reason} ` : null}
+            {t("installFailedDescription")}
+          </AlertDescription>
+        </Alert>
+      )}
 
       {/* Actions — shown only when app and appbox are operational */}
       {actionsAvailable || isStartRecoverable ? (

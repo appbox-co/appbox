@@ -58,6 +58,7 @@ const STATUS_DOT_COLORS: Record<string, string> = {
   online: "bg-emerald-500",
   offline: "bg-red-500",
   inactive: "bg-zinc-500",
+  failed: "bg-red-500",
   restarting: "bg-sky-500",
   frozen: "bg-cyan-500",
   migrating: "bg-amber-500",
@@ -70,6 +71,7 @@ const STATUS_OPTIONS: FacetedFilterOption[] = [
   "online",
   "offline",
   "inactive",
+  "failed",
   "restarting",
   "frozen",
   "migrating",
@@ -115,6 +117,7 @@ function RowActions({
     app.status === "restarting" ||
     app.status === "migrating" ||
     app.status === "installing" ||
+    app.status === "failed" ||
     app.status === "updating" ||
     app.status === "deleting"
 
@@ -510,6 +513,7 @@ export function InstalledAppsQuickList({
           app.status === "restarting" ||
           app.status === "migrating" ||
           app.status === "installing" ||
+          app.status === "failed" ||
           app.status === "updating" ||
           app.status === "deleting"
 
@@ -606,6 +610,7 @@ export function InstalledAppsQuickList({
                           app.status === "restarting" ||
                           app.status === "migrating" ||
                           app.status === "installing" ||
+                          app.status === "failed" ||
                           app.status === "updating" ||
                           app.status === "deleting"
                         return !isTransitioning && !isFrozen && isStopped
@@ -634,6 +639,7 @@ export function InstalledAppsQuickList({
                           app.status === "restarting" ||
                           app.status === "migrating" ||
                           app.status === "installing" ||
+                          app.status === "failed" ||
                           app.status === "updating" ||
                           app.status === "deleting"
                         return (
@@ -668,6 +674,7 @@ export function InstalledAppsQuickList({
                           app.status === "restarting" ||
                           app.status === "migrating" ||
                           app.status === "installing" ||
+                          app.status === "failed" ||
                           app.status === "updating" ||
                           app.status === "deleting"
                         return !isTransitioning && !isFrozen && !isStopped
@@ -696,6 +703,7 @@ export function InstalledAppsQuickList({
                           app.status === "restarting" ||
                           app.status === "migrating" ||
                           app.status === "installing" ||
+                          app.status === "failed" ||
                           app.status === "updating" ||
                           app.status === "deleting"
                         return !isTransitioning && !isFrozen
