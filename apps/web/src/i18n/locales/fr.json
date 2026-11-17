@@ -1726,12 +1726,11 @@
       "description": "Appbox n'a pas pu accepter la demande de connexion de l'app.",
       "hints": {
         "invalid_request": "La demande était incomplète ou ne correspondait pas aux adresses enregistrées par l'app.",
-        "invalid_client": "Appbox n'a pas pu identifier l'app.",
         "invalid_client_metadata": "Les informations d'enregistrement de l'app ne sont pas valides.",
         "unsupported_response_type": "L'app a demandé à se connecter d'une manière qu'Appbox ne prend pas en charge.",
         "invalid_target": "L'app a demandé l'accès à un service qu'Appbox ne propose pas.",
         "invalid_scope": "L'app a demandé des autorisations qui n'existent pas.",
-        "temporarily_unavailable": "Appbox a reçu trop de demandes de connexion depuis votre réseau."
+        "temporarily_unavailable": "Appbox reçoit trop de demandes de connexion en ce moment."
       },
       "codeLabel": "Erreur",
       "dashboard": "Aller au tableau de bord",

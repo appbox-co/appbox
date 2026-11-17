@@ -1726,12 +1726,11 @@
       "description": "Appbox はアプリの接続リクエストを受け付けられませんでした。",
       "hints": {
         "invalid_request": "リクエストが不完全か、アプリが登録したアドレスと一致しませんでした。",
-        "invalid_client": "Appbox はアプリを識別できませんでした。",
         "invalid_client_metadata": "アプリの登録情報が無効です。",
         "unsupported_response_type": "アプリは、Appbox がサポートしていない方法での接続を要求しました。",
         "invalid_target": "アプリは、Appbox が提供していないサービスへのアクセスを要求しました。",
         "invalid_scope": "アプリは、存在しないスコープを要求しました。",
-        "temporarily_unavailable": "お使いのネットワークから Appbox に届いた接続リクエストが多すぎます。"
+        "temporarily_unavailable": "現在、Appbox に届いている接続リクエストが多すぎます。"
       },
       "codeLabel": "エラー",
       "dashboard": "ダッシュボードへ移動",
