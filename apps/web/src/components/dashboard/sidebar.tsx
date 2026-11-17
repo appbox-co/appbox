@@ -22,6 +22,7 @@ import {
   MessageSquare,
   Network,
   Package,
+  PlugZap,
   PlusCircle,
   Rocket,
   Server,
@@ -35,6 +36,7 @@ import {
   Users
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import { isNextLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { ROUTES } from "@/constants/routes"
 import { Link, usePathname } from "@/i18n/routing"
 import { ADMIN_MODULE_AVAILABLE } from "@/lib/admin/availability"
@@ -151,7 +153,7 @@ export function DashboardSidebar({
   onNavigate
 }: DashboardSidebarProps) {
   const t = useTranslations("dashboard.sidebar")
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   const { isAdminMode } = useAdminMode()
@@ -226,7 +228,16 @@ export function DashboardSidebar({
           icon: AlertTriangle
         },
         { title: t("two_factor"), href: ROUTES.TWO_FACTOR_SETUP, icon: Shield },
-        { title: t("api_keys"), href: ROUTES.API_KEYS, icon: KeyRound }
+        { title: t("api_keys"), href: ROUTES.API_KEYS, icon: KeyRound },
+        ...(isNextLaunchWeekEnabled("day_5", isAdmin)
+          ? [
+              {
+                title: t("connected_apps"),
+                href: ROUTES.CONNECTED_APPS,
+                icon: PlugZap
+              }
+            ]
+          : [])
       ]
     },
     {

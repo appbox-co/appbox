@@ -44,6 +44,8 @@ const nextConfig = {
       { source: "/account/:path*", destination: "/en/account/:path*" },
       { source: "/appstore/:path*", destination: "/en/appstore/:path*" },
       { source: "/login", destination: "/en/login" },
+      // OAuth consent and error pages; /oauth/authorize itself is on api.appbox.co.
+      { source: "/oauth/:path*", destination: "/en/oauth/:path*" },
       { source: "/forgot/:path*", destination: "/en/forgot/:path*" }
     ]
   }

@@ -134,6 +134,7 @@ function InstalledInstanceRowActions({ app }: { app: InstalledApp }) {
   const isTransitioning =
     app.status === "restarting" ||
     app.status === "installing" ||
+    app.status === "failed" ||
     app.status === "updating" ||
     app.status === "deleting"
 
@@ -583,6 +584,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
         const isTransitioning =
           installedApp.status === "restarting" ||
           installedApp.status === "installing" ||
+          installedApp.status === "failed" ||
           installedApp.status === "updating" ||
           installedApp.status === "deleting"
 
@@ -875,6 +877,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                             const isTransitioning =
                               installedApp.status === "restarting" ||
                               installedApp.status === "installing" ||
+                              installedApp.status === "failed" ||
                               installedApp.status === "updating" ||
                               installedApp.status === "deleting"
                             return !isTransitioning && !isFrozen && isStopped
@@ -902,6 +905,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                             const isTransitioning =
                               installedApp.status === "restarting" ||
                               installedApp.status === "installing" ||
+                              installedApp.status === "failed" ||
                               installedApp.status === "updating" ||
                               installedApp.status === "deleting"
                             return (
@@ -936,6 +940,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                             const isTransitioning =
                               installedApp.status === "restarting" ||
                               installedApp.status === "installing" ||
+                              installedApp.status === "failed" ||
                               installedApp.status === "updating" ||
                               installedApp.status === "deleting"
                             return !isTransitioning && !isFrozen && !isStopped
@@ -963,6 +968,7 @@ export default function AppDetailPage({ params }: AppDetailPageProps) {
                             const isTransitioning =
                               installedApp.status === "restarting" ||
                               installedApp.status === "installing" ||
+                              installedApp.status === "failed" ||
                               installedApp.status === "updating" ||
                               installedApp.status === "deleting"
                             return !isTransitioning && !isFrozen

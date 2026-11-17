@@ -68,6 +68,9 @@ export const queryKeys = {
     // Kept outside the "apiKeys" prefix so key mutations don't refetch it.
     scopeCatalog: ["apiKeyScopes"] as const
   },
+  oauthGrants: {
+    all: ["oauthGrants"] as const
+  },
   abuseReports: {
     all: ["abuseReports"] as const,
     detail: (id: number) => ["abuseReports", id] as const

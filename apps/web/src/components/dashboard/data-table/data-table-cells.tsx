@@ -66,6 +66,7 @@ type StatusVariant =
   | "restarting"
   | "frozen"
   | "error"
+  | "failed"
   | "pending"
   | "active"
   | "inactive"
@@ -81,6 +82,7 @@ const statusStyles: Record<StatusVariant, string> = {
   offline: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   disabled: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   error: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
+  failed: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   suspended: "bg-red-500/15 text-red-700 border-red-500/25 dark:text-red-400",
   migrating:
     "bg-amber-500/15 text-amber-700 border-amber-500/25 dark:text-amber-400",
@@ -102,6 +104,7 @@ const statusDotStyles: Record<StatusVariant, string> = {
   offline: "bg-red-500",
   disabled: "bg-red-500",
   error: "bg-red-500",
+  failed: "bg-red-500",
   suspended: "bg-red-500",
   migrating: "bg-amber-500 animate-pulse",
   installing: "bg-blue-500 animate-pulse",
