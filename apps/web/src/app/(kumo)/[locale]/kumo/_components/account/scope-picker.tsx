@@ -23,7 +23,7 @@ import {
   findMatchingPreset,
   groupScopes,
   includesHighRiskScope
-} from "@/app/[locale]/(dashboard)/account/api-keys/_components/api-key-scopes"
+} from "@/components/account/api-key-scopes"
 import type { Loadable } from "../shared"
 
 /** Prototype-only copy, in sentence case (a Kumo rule). */
