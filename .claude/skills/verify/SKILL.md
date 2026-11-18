@@ -41,6 +41,24 @@ Say which pages were looked at, signed in as whom, at which commit, and what
 was not checked. A screenshot of the changed page is worth attaching. A
 passing lint and build is not a verification.
 
+## 4. Feedback on the process
+
+When verification got in your way for a reason other than your change, record
+it in the private "Verification feedback" project, so the process gets fixed
+instead of worked around again:
+
+```bash
+gh project item-create 8 --owner appbox-co --title "<one line>" \
+  --body "<what you were verifying, what got in the way, the command and its output, what you did instead>"
+```
+
+File an item when a check failed for a reason other than the change, when
+something could not run, when an instruction here was unclear or wrong, or
+when a step was too slow to use. Nothing to file when it simply worked.
+
+The item is in addition to your report, never instead of it: a verification
+that could not run is still reported as not verified.
+
 ## Rules
 
 - Never test against production. Never sign in with a real customer account.
