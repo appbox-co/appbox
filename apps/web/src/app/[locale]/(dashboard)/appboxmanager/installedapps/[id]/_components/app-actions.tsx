@@ -302,6 +302,7 @@ export function AppActions({
     isFrozen ||
     app.status === "restarting" ||
     app.status === "installing" ||
+    app.status === "failed" ||
     app.status === "updating" ||
     app.status === "deleting"
   const isRecoverableStopped = !app.enabled && app.state === 0
