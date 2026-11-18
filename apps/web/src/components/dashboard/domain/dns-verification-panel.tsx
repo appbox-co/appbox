@@ -107,10 +107,12 @@ const DNS_PROVIDERS: DnsProvider[] = [
 
 function DnsProviderGuide({
   fullDomain,
-  ip
+  ip,
+  rootDomain = false
 }: {
   fullDomain: string
   ip: string
+  rootDomain?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const [selectedProvider, setSelectedProvider] = useState<DnsProvider | null>(
@@ -118,8 +120,9 @@ function DnsProviderGuide({
   )
   const [pickerOpen, setPickerOpen] = useState(false)
 
-  const host =
-    fullDomain.split(".").length > 2
+  const host = rootDomain
+    ? "@"
+    : fullDomain.split(".").length > 2
       ? fullDomain.split(".").slice(0, -2).join(".")
       : "@"
 
@@ -225,6 +228,8 @@ function DnsProviderGuide({
 
 interface DnsVerificationPanelProps {
   subdomain: string
+  /** Check the base domain itself (fullDomain) rather than a subdomain. */
+  rootDomain?: boolean
   domainId: number
   cyloId: number
   fullDomain: string
@@ -235,6 +240,7 @@ interface DnsVerificationPanelProps {
 
 export function DnsVerificationPanel({
   subdomain,
+  rootDomain = false,
   domainId,
   cyloId,
   fullDomain,
@@ -248,14 +254,17 @@ export function DnsVerificationPanel({
     serverIp ? { verified: false, expected_ip: serverIp } : null
   )
   const [copied, setCopied] = useState<"domain" | "ip" | null>(null)
+  const hostReady = rootDomain || Boolean(subdomain.trim())
 
   const runVerification = useCallback(
     async (resetResult = false) => {
-      if (!subdomain.trim() || !domainId || !cyloId) return
+      if (!hostReady || !domainId || !cyloId) return
       setChecking(true)
       if (resetResult) setResult(null)
       try {
-        const res = await checkSubdomainDns(subdomain, domainId, cyloId)
+        const res = await checkSubdomainDns(subdomain, domainId, cyloId, {
+          rootDomain
+        })
         setResult(res)
         onVerified(res.verified)
       } catch {
@@ -265,20 +274,20 @@ export function DnsVerificationPanel({
         setChecking(false)
       }
     },
-    [subdomain, domainId, cyloId, onVerified]
+    [hostReady, subdomain, rootDomain, domainId, cyloId, onVerified]
   )
 
   useEffect(() => {
     setResult(serverIp ? { verified: false, expected_ip: serverIp } : null)
     onVerified(false)
-    if (!subdomain.trim() || !domainId || !cyloId) return
+    if (!hostReady || !domainId || !cyloId) return
 
     const timer = setTimeout(() => {
       void runVerification()
     }, 600)
 
     return () => clearTimeout(timer)
-  }, [subdomain, domainId, cyloId, serverIp, onVerified, runVerification])
+  }, [hostReady, domainId, cyloId, serverIp, onVerified, runVerification])
 
   const handleVerify = async () => {
     await runVerification(true)
@@ -306,7 +315,9 @@ export function DnsVerificationPanel({
       </p>
 
       <p className="text-xs text-muted-foreground">
-        {t("install.domain.dnsInstruction")}
+        {rootDomain
+          ? t("install.domain.dnsInstructionRoot", { domain: fullDomain })
+          : t("install.domain.dnsInstruction")}
       </p>
 
       <div className="space-y-1.5">
@@ -361,15 +372,19 @@ export function DnsVerificationPanel({
       </div>
 
       {result?.expected_ip && (
-        <DnsProviderGuide fullDomain={fullDomain} ip={result.expected_ip} />
+        <DnsProviderGuide
+          fullDomain={fullDomain}
+          ip={result.expected_ip}
+          rootDomain={rootDomain}
+        />
       )}
 
       {result && !result.verified && (
         <div className="flex items-start gap-2 text-sm text-destructive">
           <XCircle className="mt-0.5 size-4 shrink-0" />
           <div>
-            <p>{t("install.domain.dnsNotPointing")}</p>
-            {result.resolved_ip && (
+            <p>{result.problem || t("install.domain.dnsNotPointing")}</p>
+            {result.resolved_ip && !result.problem && (
               <p className="text-xs text-muted-foreground mt-0.5">
                 {t("install.domain.dnsResolvedTo", { ip: result.resolved_ip })}
               </p>
@@ -383,7 +398,7 @@ export function DnsVerificationPanel({
         size="sm"
         variant="outline"
         onClick={handleVerify}
-        disabled={checking || !subdomain}
+        disabled={checking || !hostReady}
         className="w-full"
       >
         {checking ? (

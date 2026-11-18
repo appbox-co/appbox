@@ -24,6 +24,8 @@ export interface DomainSectionState {
   domainType: DomainType
   selectedDomainId: string
   subdomain: string
+  /** Custom domains only: install on the base domain itself (example.com). */
+  rootDomain: boolean
   dnsVerified: boolean
 }
 
@@ -31,6 +33,8 @@ interface DomainSectionProps {
   selectedCyloId: string
   selectedCylo: Cylo | null
   state: DomainSectionState
+  /** Offer the base domain itself as well as a subdomain of it. */
+  allowRootDomain?: boolean
   domainError?: string
   subdomainError?: string
   onChange: (next: Partial<DomainSectionState>) => void
@@ -69,6 +73,43 @@ function DomainTypeToggle({
               ? "install.domain.typeAppbox"
               : "install.domain.typeCustom"
           )}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Host Mode Toggle (custom domains)                                          */
+/* -------------------------------------------------------------------------- */
+
+function HostModeToggle({
+  rootDomain,
+  domain,
+  onChange
+}: {
+  rootDomain: boolean
+  domain: string
+  onChange: (rootDomain: boolean) => void
+}) {
+  const t = useTranslations("appstore")
+  return (
+    <div className="flex max-w-full rounded-md border p-0.5 gap-0.5 bg-muted/50 w-fit">
+      {([false, true] as const).map((root) => (
+        <button
+          key={String(root)}
+          type="button"
+          onClick={() => onChange(root)}
+          className={cn(
+            "truncate rounded px-3 py-1 text-sm font-medium transition-all",
+            rootDomain === root
+              ? "bg-background text-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          {root
+            ? t("install.domain.hostModeRoot", { domain })
+            : t("install.domain.hostModeSubdomain")}
         </button>
       ))}
     </div>
@@ -235,11 +276,14 @@ function CustomDomainSection({
   selectedCylo,
   selectedDomainId,
   subdomain,
+  rootDomain,
+  allowRootDomain,
   dnsVerified,
   domainError,
   subdomainError,
   onDomainChange,
   onSubdomainChange,
+  onRootDomainChange,
   onSubdomainError,
   onDnsVerified
 }: {
@@ -247,11 +291,14 @@ function CustomDomainSection({
   selectedCylo: Cylo | null
   selectedDomainId: string
   subdomain: string
+  rootDomain: boolean
+  allowRootDomain: boolean
   dnsVerified: boolean
   domainError?: string
   subdomainError?: string
   onDomainChange: (id: string, domain: DomainOption | null) => void
   onSubdomainChange: (value: string) => void
+  onRootDomainChange: (rootDomain: boolean) => void
   onSubdomainError: (err: string | undefined) => void
   onDnsVerified: (verified: boolean) => void
 }) {
@@ -274,9 +321,9 @@ function CustomDomainSection({
     })
   }, [selectedCyloId])
 
-  // Subdomain availability check (debounced)
+  // Subdomain (or root domain) availability check (debounced)
   useEffect(() => {
-    if (!subdomain || !selectedDomainId) {
+    if ((!rootDomain && !subdomain) || !selectedDomainId) {
       queueMicrotask(() => setAvailabilityState("idle"))
       return
     }
@@ -289,7 +336,8 @@ function CustomDomainSection({
       try {
         const available = await validateSubdomain(
           subdomain,
-          Number(selectedDomainId)
+          Number(selectedDomainId),
+          { rootDomain }
         )
         setAvailabilityState(available ? "available" : "taken")
         onSubdomainError(undefined)
@@ -305,10 +353,15 @@ function CustomDomainSection({
     return () => {
       if (availabilityTimer.current) clearTimeout(availabilityTimer.current)
     }
-  }, [subdomain, selectedDomainId, onSubdomainError])
+  }, [subdomain, rootDomain, selectedDomainId, onSubdomainError])
 
-  const fullDomain =
-    selectedDomain && subdomain ? `${subdomain}.${selectedDomain.domain}` : ""
+  const fullDomain = !selectedDomain
+    ? ""
+    : rootDomain
+      ? selectedDomain.domain
+      : subdomain
+        ? `${subdomain}.${selectedDomain.domain}`
+        : ""
 
   return (
     <div className="space-y-4">
@@ -329,8 +382,52 @@ function CustomDomainSection({
         />
       </div>
 
+      {/* Subdomain or the base domain itself */}
+      {selectedDomain && allowRootDomain && (
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">
+            {t("install.domain.hostMode")}
+          </Label>
+          <HostModeToggle
+            rootDomain={rootDomain}
+            domain={selectedDomain.domain}
+            onChange={onRootDomainChange}
+          />
+        </div>
+      )}
+
+      {/* Root domain availability */}
+      {selectedDomain && rootDomain && (
+        <div className="space-y-1">
+          <p
+            className={cn(
+              "text-xs",
+              availabilityState === "checking" && "text-muted-foreground",
+              availabilityState === "available" &&
+                "text-emerald-600 dark:text-emerald-400",
+              availabilityState === "taken" && "text-destructive"
+            )}
+          >
+            {availabilityState === "checking" && (
+              <span className="flex items-center gap-1">
+                <Loader2 className="size-3 animate-spin" />
+                {t("install.validation.validating")}
+              </span>
+            )}
+            {availabilityState === "available" && `✓ ${fullDomain}`}
+            {availabilityState === "taken" &&
+              t("install.validation.rootDomainInUse", {
+                domain: selectedDomain.domain
+              })}
+          </p>
+          {subdomainError && (
+            <p className="text-xs text-destructive">{subdomainError}</p>
+          )}
+        </div>
+      )}
+
       {/* Subdomain input */}
-      {selectedDomain && (
+      {selectedDomain && !rootDomain && (
         <div className="space-y-2">
           <Label className="text-sm font-medium">
             {t("install.domain.subdomain")}
@@ -387,11 +484,12 @@ function CustomDomainSection({
 
       {/* DNS verification panel (shown once subdomain + domain are both set and available) */}
       {selectedDomain &&
-        subdomain &&
+        (rootDomain || subdomain) &&
         availabilityState === "available" &&
         selectedCylo && (
           <DnsVerificationPanel
             subdomain={subdomain}
+            rootDomain={rootDomain}
             domainId={Number(selectedDomainId)}
             cyloId={selectedCylo.id}
             fullDomain={fullDomain}
@@ -412,6 +510,7 @@ export function DomainSection({
   selectedCyloId,
   selectedCylo,
   state,
+  allowRootDomain = false,
   domainError,
   subdomainError,
   onChange,
@@ -425,11 +524,21 @@ export function DomainSection({
       domainType: type,
       selectedDomainId: "",
       subdomain: "",
+      rootDomain: false,
       dnsVerified: false
     })
     onDomainError(undefined)
     onSubdomainError(undefined)
   }
+
+  const handleRootDomainChange = useCallback(
+    (rootDomain: boolean) => {
+      if (rootDomain === state.rootDomain) return
+      onChange({ rootDomain, dnsVerified: false })
+      onSubdomainError(undefined)
+    },
+    [state.rootDomain, onChange, onSubdomainError]
+  )
 
   const handleDomainChange = useCallback(
     (_id: string, _domain: DomainOption | null) => {
@@ -483,11 +592,14 @@ export function DomainSection({
           selectedCylo={selectedCylo}
           selectedDomainId={state.selectedDomainId}
           subdomain={state.subdomain}
+          rootDomain={allowRootDomain && state.rootDomain}
+          allowRootDomain={allowRootDomain}
           dnsVerified={state.dnsVerified}
           domainError={domainError}
           subdomainError={subdomainError}
           onDomainChange={handleDomainChange}
           onSubdomainChange={handleSubdomainChange}
+          onRootDomainChange={handleRootDomainChange}
           onSubdomainError={onSubdomainError}
           onDnsVerified={handleDnsVerified}
         />
