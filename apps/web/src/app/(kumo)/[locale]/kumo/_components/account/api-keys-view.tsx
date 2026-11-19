@@ -36,7 +36,7 @@ import type {
 import {
   getDefaultScopes,
   hasSameScopes
-} from "@/app/[locale]/(dashboard)/account/api-keys/_components/api-key-scopes"
+} from "@/components/account/api-key-scopes"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { nextSort, SortHead, type SortState } from "../sort-head"
 import { isRecentAuthError, type Reauth } from "./recent-auth"
