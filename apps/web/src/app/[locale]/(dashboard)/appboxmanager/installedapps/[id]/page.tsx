@@ -30,6 +30,10 @@ import {
   useRevealInstalledAppCustomField
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import {
+  INSTALL_DISPATCH_WINDOW_MS,
+  installRemovableAt
+} from "@/api/installed-apps/installed-apps"
+import {
   usePinApp,
   usePinnedApps,
   useUnpinApp
@@ -566,6 +570,19 @@ export default function InstalledAppDetailPage({
     handleDomainChanged
   ])
 
+  /* An install that outlived its dispatch window may be uninstalled. Re-render
+     when the window closes so Uninstall appears without a reload. */
+  const removableAt = app ? installRemovableAt(app) : null
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => {
+    if (removableAt === null) return
+    const timer = setTimeout(
+      () => setNow(Date.now()),
+      Math.max(0, removableAt - Date.now())
+    )
+    return () => clearTimeout(timer)
+  }, [removableAt])
+
   const togglePin = () => {
     if (!app) return
     if (isPinned) {
@@ -621,6 +638,11 @@ export default function InstalledAppDetailPage({
     !TRANSITIONAL_STATUSES.has(effectiveStatus) &&
     effectiveStatus !== "offline" &&
     isAppOperational
+  const isInstallRemovable =
+    cylo?.status !== "suspended" &&
+    effectiveStatus === "installing" &&
+    removableAt !== null &&
+    now >= removableAt
   const appForActions = {
     ...app,
     status: effectiveStatus,
@@ -713,8 +735,20 @@ export default function InstalledAppDetailPage({
         </Alert>
       )}
 
-      {/* Actions — shown only when app and appbox are operational */}
-      {actionsAvailable || isStartRecoverable ? (
+      {isInstallRemovable && (
+        <Alert>
+          <AlertTitle>{t("installStalledTitle")}</AlertTitle>
+          <AlertDescription>
+            {t("installStalledDescription", {
+              minutes: INSTALL_DISPATCH_WINDOW_MS / 60_000
+            })}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* Actions — shown only when app and appbox are operational, or when
+          the only thing left to do is remove a stalled install */}
+      {actionsAvailable || isStartRecoverable || isInstallRemovable ? (
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base">{t("actions")}</CardTitle>
@@ -724,6 +758,7 @@ export default function InstalledAppDetailPage({
               <AppActions
                 app={appForActions}
                 startOnlyActionable={isStartRecoverable}
+                uninstallOnly={isInstallRemovable}
               />
               {upgradeUrl && (
                 <Button
