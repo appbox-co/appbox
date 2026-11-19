@@ -299,6 +299,7 @@ interface ReverifyResult {
   verified: boolean
   expected_ip?: string
   resolved_ip?: string
+  problem?: string | null
 }
 
 function ReverifyBanner({
@@ -323,6 +324,8 @@ function ReverifyBanner({
         <p className="font-medium">{result.domain.domain}</p>
         {result.verified ? (
           <p className="text-xs mt-0.5">{t("dnsVerified")}</p>
+        ) : result.problem ? (
+          <p className="text-xs mt-0.5">{result.problem}</p>
         ) : (
           <p className="text-xs mt-0.5">
             {t("dnsNotVerified")}
@@ -374,10 +377,13 @@ export default function DomainsPage() {
     setReverifyingId(domain.id)
     setReverifyResult(null)
     try {
+      // An app on the root of its domain has fqdn "@".
+      const rootDomain = domain.fqdn === "@"
       const result = await checkSubdomainDns(
-        domain.fqdn,
+        rootDomain ? "" : domain.fqdn,
         domain.parent,
-        domain.cylo_id
+        domain.cylo_id,
+        { rootDomain }
       )
       setReverifyResult({ domain, ...result })
     } catch {

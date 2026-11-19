@@ -24,7 +24,8 @@ import {
   getAppRestrictions,
   getEffectiveAppSlots,
   getPackages,
-  isAppRestrictedForPackage
+  isAppRestrictedForPackage,
+  supportsRootDomain
 } from "@/api/apps/app-store"
 import {
   useAppBoostInfo,
@@ -67,7 +68,10 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
-import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
+import {
+  isLaunchWeekEnabled,
+  isNextLaunchWeekEnabled
+} from "@/config/launch-week-flags"
 import { ROUTES } from "@/constants/routes"
 import type { Cylo } from "@/lib/auth/session"
 import { clearHiddenFieldValues, isFieldVisible } from "@/lib/dynamic-form"
@@ -1208,7 +1212,7 @@ export function InstallDialog({
 }: InstallDialogProps) {
   const t = useTranslations("appstore")
   const router = useRouter()
-  const { cylos: sessionCylos, user } = useAuth()
+  const { cylos: sessionCylos, user, isAdmin } = useAuth()
   const effectiveUserId = targetUserId ?? user?.id ?? 0
   const effectiveUserRole = targetUserRole ?? user?.roles
   const { data: cylosSummary } = useCylosSummary()
@@ -1358,9 +1362,18 @@ export function InstallDialog({
         : "") ||
       app.display_name.toLowerCase().replace(/[^a-z0-9-]/g, "") ||
       "",
+    rootDomain: false,
     dnsVerified: false
   })
   const [domainError, setDomainError] = useState<string>()
+  // Launch week day 2. cylo-api checks the caller, so this follows the
+  // signed-in user rather than the user an admin installs for.
+  const allowRootDomain =
+    supportsRootDomain(app) && isNextLaunchWeekEnabled("day_2", isAdmin)
+  const installOnRootDomain =
+    allowRootDomain &&
+    domainState.domainType === "custom" &&
+    domainState.rootDomain
   const [subdomainError, setSubdomainError] = useState<string>()
 
   /* ----- Install guard state ----- */
@@ -1840,6 +1853,7 @@ export function InstallDialog({
       domainType: "appbox",
       selectedDomainId: "",
       subdomain: defaultSubdomain,
+      rootDomain: false,
       dnsVerified: false
     })
     setDomainError(undefined)
@@ -1886,7 +1900,10 @@ export function InstallDialog({
         setDomainError(undefined)
       }
       const trimmedSub = domainState.subdomain.trim()
-      if (!trimmedSub) {
+      if (installOnRootDomain) {
+        // No subdomain to check; availability errors still block.
+        if (subdomainError) valid = false
+      } else if (!trimmedSub) {
         setSubdomainError(t("install.validation.required"))
         valid = false
       } else if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(trimmedSub)) {
@@ -1910,6 +1927,7 @@ export function InstallDialog({
     fieldValuesWithDefaults,
     requiresDomain,
     domainState,
+    installOnRootDomain,
     subdomainError,
     selectedCyloData?.domain_id,
     t
@@ -1941,7 +1959,11 @@ export function InstallDialog({
         (domainState.domainType === "appbox"
           ? String(selectedCyloData?.domain_id ?? "")
           : "")
-      payload.subdomain = domainState.subdomain.trim()
+      if (installOnRootDomain) {
+        payload.root_domain = true
+      } else {
+        payload.subdomain = domainState.subdomain.trim()
+      }
       payload.domain_id = Number(effectiveDomainId)
     }
 
@@ -2254,6 +2276,7 @@ export function InstallDialog({
                 cylos.find((c) => String(c.id) === selectedCylo) ?? null
               }
               state={domainState}
+              allowRootDomain={allowRootDomain}
               domainError={domainError}
               subdomainError={subdomainError}
               onChange={handleDomainStateChange}

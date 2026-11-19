@@ -70,6 +70,7 @@ export interface AppStoreItem {
   custom_field_postinstall_description?: string | null
   marketing_content?: unknown
   RequiresDomain: number
+  IsWebApp?: number
 }
 
 export function getEffectiveAppSlots(
@@ -376,16 +377,44 @@ export async function getDomainsForInstall(
 }
 
 /**
- * Validate that a subdomain + domain combination is not already in use.
+ * The hostname an app is installed on: a subdomain of the base domain, or the
+ * base domain itself (rootDomain, launch week day 2).
+ */
+export interface DomainHostOptions {
+  rootDomain?: boolean
+}
+
+function domainHostBody(subdomain: string, options?: DomainHostOptions) {
+  return options?.rootDomain ? { root_domain: true } : { subdomain }
+}
+
+/**
+ * Web apps in a container can be installed on the root of a customer's own
+ * domain (example.com). cylo-api enforces the same rule.
+ */
+export function supportsRootDomain(
+  app: Pick<AppStoreItem, "RequiresDomain" | "IsWebApp" | "type">
+): boolean {
+  return (
+    Number(app.RequiresDomain) === 1 &&
+    Number(app.IsWebApp) === 1 &&
+    (app.type ?? "").toLowerCase() !== "vm"
+  )
+}
+
+/**
+ * Validate that a subdomain + domain combination (or the domain itself, with
+ * rootDomain) is not already in use.
  * Backend: POST /v1/domains/validate
  * Returns true if available, false if taken.
  */
 export async function validateSubdomain(
   subdomain: string,
-  domainId: number
+  domainId: number,
+  options?: DomainHostOptions
 ): Promise<boolean> {
   return apiPost<boolean>("domains/validate", {
-    subdomain,
+    ...domainHostBody(subdomain, options),
     domain_id: domainId
   })
 }
@@ -394,22 +423,26 @@ export interface DnsCheckResult {
   verified: boolean
   expected_ip?: string
   resolved_ip?: string
+  /** Root domains only: what is wrong with the records, when not verified. */
+  problem?: string | null
 }
 
 /**
- * Check that the DNS A record for subdomain.domain points to the server IP.
+ * Check that the DNS A record for subdomain.domain (or the domain itself, with
+ * rootDomain) points to the server IP.
  * Backend: POST /v1/domains/checkdns/v2
- * Returns { verified, expected_ip, resolved_ip }.
+ * Returns { verified, expected_ip, resolved_ip, problem? }.
  * (The legacy /checkdns endpoint returns plain true/false and is preserved for
  * backwards compatibility with other callers.)
  */
 export async function checkSubdomainDns(
   subdomain: string,
   domainId: number,
-  cyloId: number
+  cyloId: number,
+  options?: DomainHostOptions
 ): Promise<DnsCheckResult> {
   return apiPost<DnsCheckResult>("domains/checkdns/v2", {
-    subdomain,
+    ...domainHostBody(subdomain, options),
     domain_id: domainId,
     cylo_id: cyloId
   })
