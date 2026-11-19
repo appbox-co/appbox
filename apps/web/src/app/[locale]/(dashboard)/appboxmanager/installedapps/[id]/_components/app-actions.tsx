@@ -65,6 +65,8 @@ import type { FormFieldConfig } from "@/types/dashboard"
 interface AppActionsProps {
   app: InstalledApp
   startOnlyActionable?: boolean
+  /** A stalled install: Uninstall is the only action that may run. */
+  uninstallOnly?: boolean
 }
 
 type ButtonFieldValidation =
@@ -245,7 +247,8 @@ function validateButtonField(
 
 export function AppActions({
   app,
-  startOnlyActionable = false
+  startOnlyActionable = false,
+  uninstallOnly = false
 }: AppActionsProps) {
   const t = useTranslations("appboxmanager.appDetail")
   const { isAdmin } = useAuth()
@@ -420,7 +423,9 @@ export function AppActions({
             variant="outline"
             size="sm"
             className={ACTION_BUTTON_CLASSNAME}
-            disabled={startOnlyActionable || updateMutation.isPending}
+            disabled={
+              startOnlyActionable || uninstallOnly || updateMutation.isPending
+            }
             onClick={() => setUpdateConfirmOpen(true)}
           >
             {updateMutation.isPending ? (

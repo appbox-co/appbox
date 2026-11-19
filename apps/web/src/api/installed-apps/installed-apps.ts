@@ -55,6 +55,26 @@ export interface InstalledAppVncInfo {
   vm_name: string | null
 }
 
+/**
+ * How long after it was created a first install may still be in the hands of
+ * the API request that started it. Mirrors
+ * AppService::INSTALL_DISPATCH_WINDOW_SECONDS in cylo-api: past this the API
+ * treats the install as abandoned and accepts an uninstall for it.
+ */
+export const INSTALL_DISPATCH_WINDOW_MS = 2700 * 1000
+
+/**
+ * When an installing app may be uninstalled, in epoch milliseconds, or null
+ * when it is not installing or its start time is unknown.
+ */
+export function installRemovableAt(
+  app: Pick<InstalledApp, "status" | "install_date">
+): number | null {
+  if (app.status !== "installing") return null
+  const startedAt = Date.parse(app.install_date)
+  return Number.isNaN(startedAt) ? null : startedAt + INSTALL_DISPATCH_WINDOW_MS
+}
+
 /* -------------------------------------------------------------------------- */
 /*  API functions                                                              */
 /* -------------------------------------------------------------------------- */
