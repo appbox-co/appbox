@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, apiPut } from "@/api/client"
+import { apiDelete, ApiError, apiGet, apiPost, apiPut } from "@/api/client"
 import { idempotencyHeaders } from "@/api/idempotency"
 import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
@@ -55,6 +55,7 @@ export interface CustomTableDefinition {
   rowActions?: CustomTableRowAction[]
   enableAdding: boolean
   enableEditing: boolean
+  supportsRowMutations?: boolean
   enableDeleting: boolean
   editableFields?: string[]
 }
@@ -63,9 +64,45 @@ export type CustomTableRow = Record<string, unknown> & {
   id: number | string
 }
 
+export type CustomTableMutationStatus =
+  "admission_pending" | "queued" | "completed" | "failed" | "unknown"
+
+export interface CustomTableMutation {
+  id: number
+  executionId: string
+  mutationType: "create" | "update"
+  rowId: number
+  status: CustomTableMutationStatus
+  canRetry?: boolean
+  jobId: number | null
+  createdAt?: string | null
+  updatedAt?: string | null
+  completedAt?: string | null
+  failedAt?: string | null
+}
+
+export interface CustomTableMutationAdmission {
+  mutationId: number
+  executionId: string
+  mutationType: "create" | "update"
+  rowId: number
+  status: CustomTableMutationStatus
+  jobId: number | null
+}
+
 export interface CustomTableRef {
   tableId: number
   instanceId: number
+}
+
+// Recognize only the existing duplicate-data response, never display raw errors.
+export function isDuplicateCustomTableValueError(error: unknown): boolean {
+  return (
+    error instanceof ApiError &&
+    error.status === 404 &&
+    (error.message === "Data: Duplicate data" ||
+      error.message === "Custom table value already exists.")
+  )
 }
 
 function parseTableRef(apiRoute: string): CustomTableRef {
@@ -98,21 +135,49 @@ export async function getCustomTableRows(
   return Array.isArray(res) ? res : (res.items ?? [])
 }
 
+export async function getCustomTableMutations(
+  tableId: number,
+  instanceId: number
+): Promise<CustomTableMutation[]> {
+  const res = await apiGet<CustomTableMutation[]>(
+    `tables/${tableId}/data/${instanceId}/mutations`
+  )
+  return Array.isArray(res) ? res : []
+}
+
+export async function retryCustomTableMutation(
+  tableId: number,
+  instanceId: number,
+  mutationId: number
+): Promise<CustomTableMutationAdmission> {
+  return apiPost(
+    `tables/${tableId}/data/${instanceId}/mutations/${mutationId}/retry`
+  )
+}
+
 export async function addCustomTableRow(
   tableId: number,
   instanceId: number,
-  payload: Record<string, unknown>
-): Promise<CustomTableRow> {
-  return apiPut<CustomTableRow>(`tables/${tableId}/data/${instanceId}`, payload)
+  payload: Record<string, unknown>,
+  idempotencyKey?: string
+): Promise<CustomTableRow | CustomTableMutationAdmission> {
+  return apiPut<CustomTableRow | CustomTableMutationAdmission>(
+    `tables/${tableId}/data/${instanceId}`,
+    payload,
+    { headers: idempotencyHeaders("custom_table.create", idempotencyKey) }
+  )
 }
 
 export async function updateCustomTableRow(
   tableId: number,
   instanceId: number,
   rowId: number | string,
-  payload: Record<string, unknown>
-): Promise<void> {
-  return apiPost(`tables/${tableId}/data/${instanceId}/${rowId}`, payload)
+  payload: Record<string, unknown>,
+  idempotencyKey?: string
+): Promise<void | CustomTableMutationAdmission> {
+  return apiPost(`tables/${tableId}/data/${instanceId}/${rowId}`, payload, {
+    headers: idempotencyHeaders("custom_table.update", idempotencyKey)
+  })
 }
 
 export async function deleteCustomTableRow(

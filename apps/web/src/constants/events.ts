@@ -26,6 +26,7 @@ export const WS_EVENTS = {
   UI_UPDATE: "ui.update",
   APP_BOOST_UPDATED: "app.boost.updated",
   CUSTOM_TABLE_CHANGED: "custom_table.changed",
+  CUSTOM_TABLE_MUTATION_CHANGED: "custom_table.mutation.changed",
   DOMAIN_CHANGED: "domain.changed"
 } as const
 

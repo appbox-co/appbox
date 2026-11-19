@@ -5,6 +5,35 @@ import {
   Info,
   Server
 } from "lucide-react"
+import type { Notification } from "@/api/notifications/notifications"
+import { ROUTES } from "@/constants/routes"
+
+export function getNotificationRoute(
+  notification: Notification
+): string | null {
+  const { type, action, relid } = notification
+
+  if (type === "instance") return ROUTES.INSTALLED_APP_DETAIL(relid)
+  if (type === "cylo" || type === "throttled" || type === "throttledcylo") {
+    return ROUTES.APPBOX_DETAIL(relid)
+  }
+  if (
+    type === "abuse" &&
+    [
+      "abuse_unresolvable",
+      "abuse_reply_admin",
+      "abuse_user_new",
+      "abuse_user_closed",
+      "abuse_reply_user"
+    ].includes(action)
+  ) {
+    return ROUTES.ABUSE_REPORT_DETAIL(relid)
+  }
+  if (type === "hwfailure") return ROUTES.APPBOXES
+  if (type === "criticalalert") return ROUTES.DASHBOARD
+
+  return null
+}
 
 export function getNotificationIcon(type: string) {
   switch (type) {

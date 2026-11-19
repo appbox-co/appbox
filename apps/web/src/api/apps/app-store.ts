@@ -8,6 +8,7 @@ import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 /* -------------------------------------------------------------------------- */
 
 export interface CustomFieldValidation {
+  execution?: "server"
   name?: string // "remote" | "matches"
   params?: Record<string, unknown>
   minLength?: number
@@ -30,6 +31,7 @@ export interface CustomField extends ConditionalFieldMetadata {
     errorText?: string
     generatePassword?: boolean
     generatedPasswordLength?: number
+    showOnInstalled?: boolean
     [key: string]: unknown
   }
 }
@@ -322,6 +324,35 @@ export async function getAppVersions(appId: number): Promise<AppVersion[]> {
       created_at: String(item.created_at ?? "")
     } satisfies AppVersion
   })
+}
+
+export interface InstallValidationResult {
+  valid: boolean
+  fieldErrors: Record<string, { code: string; message: string }>
+}
+
+export async function validateInstallApp(
+  data: Record<string, unknown>
+): Promise<InstallValidationResult> {
+  const result = await apiPost<InstallValidationResult>(
+    "apps/install/validate",
+    data
+  )
+  if (
+    typeof result?.valid !== "boolean" ||
+    !result.fieldErrors ||
+    typeof result.fieldErrors !== "object" ||
+    Array.isArray(result.fieldErrors) ||
+    result.valid !== (Object.keys(result.fieldErrors).length === 0) ||
+    Object.values(result.fieldErrors).some(
+      (error) =>
+        !error ||
+        typeof error.code !== "string" ||
+        typeof error.message !== "string"
+    )
+  )
+    throw new Error("Invalid installation validation response.")
+  return result
 }
 
 /**

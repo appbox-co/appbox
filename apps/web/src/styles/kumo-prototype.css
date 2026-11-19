@@ -1,0 +1,325 @@
+/*
+ * Kumo prototype stylesheet.
+ *
+ * Loaded only by the (kumo) root layout, never alongside globals.css: Kumo's
+ * theme redefines Tailwind's text scale (text-base is 14px) and color-scheme,
+ * which would change every existing page if it were imported globally.
+ */
+@source "../../node_modules/@cloudflare/kumo/dist/**/*.{js,jsx,ts,tsx}";
+@import "@cloudflare/kumo/styles/tailwind";
+@import "tailwindcss" source("../app/(kumo)");
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Appbox theme (option B, "softer", chosen 19 Nov 2026), so the prototype
+ * reads as Appbox rather than Cloudflare. The layout sets data-theme="appbox"
+ * on <html>.
+ *
+ * - Colour: the violet-indigo of the logo replaces Cloudflare's blue (and its
+ *   orange brand text); greys lean slightly violet; dark mode is a blue-black.
+ * - Shape: rounder corners (Kumo: 4 / 6 / 8 / 12px).
+ * - Selection: the current sidebar page, ticked checkboxes and switches are
+ *   violet.
+ * - Cards sit on a soft shadow as well as their ring.
+ *
+ * The search bars keep Kumo's own look: see .kumo-search-surface below.
+ */
+@theme {
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+/*
+ * Tokens. Kumo declares its own in Tailwind's theme layer, which this file's
+ * import order puts after the base layer, so these are unlayered to win. The
+ * selectors mirror Kumo's dark-mode ones; light-dark() picks the value.
+ */
+[data-theme="appbox"],
+[data-theme="appbox"][data-mode="dark"],
+[data-mode="dark"] [data-theme="appbox"],
+[data-theme="appbox"] [data-mode="dark"] {
+  --color-kumo-brand: light-dark(oklch(51% 0.24 281), oklch(56% 0.22 282));
+  --color-kumo-brand-hover: light-dark(
+    oklch(46% 0.23 282),
+    oklch(51% 0.22 282)
+  );
+  --text-color-kumo-brand: light-dark(oklch(51% 0.24 281), oklch(78% 0.12 285));
+  --text-color-kumo-link: light-dark(oklch(45% 0.22 281), oklch(78% 0.12 285));
+  --color-kumo-focus: light-dark(oklch(51% 0.24 281), oklch(72% 0.15 284));
+  --color-kumo-badge-blue: light-dark(oklch(51% 0.24 281), oklch(56% 0.22 282));
+
+  --color-kumo-canvas: light-dark(
+    oklch(98.4% 0.005 285),
+    oklch(14.5% 0.02 280)
+  );
+  --color-kumo-base: light-dark(#fff, oklch(19.5% 0.022 280));
+  --color-kumo-elevated: light-dark(
+    oklch(98% 0.005 285),
+    oklch(16.5% 0.02 280)
+  );
+  --color-kumo-recessed: light-dark(
+    oklch(96% 0.008 285),
+    oklch(15.5% 0.014 282)
+  );
+  --color-kumo-control: light-dark(#fff, oklch(21% 0.018 282));
+  --color-kumo-overlay: light-dark(oklch(97.5% 0.006 285), oklch(25% 0.02 282));
+  --color-kumo-line: light-dark(
+    oklch(30% 0.06 285 / 0.13),
+    oklch(32% 0.025 282)
+  );
+  --color-kumo-hairline: light-dark(
+    oklch(93.5% 0.01 285),
+    oklch(26% 0.022 282)
+  );
+  --color-kumo-fill: light-dark(oklch(92.5% 0.012 285), oklch(26% 0.022 282));
+  --color-kumo-fill-hover: light-dark(
+    oklch(96.5% 0.01 285),
+    oklch(34% 0.025 282)
+  );
+  --color-kumo-tint: light-dark(oklch(96.8% 0.01 285), oklch(25% 0.022 282));
+  --color-kumo-interact: light-dark(oklch(87% 0.015 285), oklch(36% 0.025 282));
+
+  --text-color-kumo-default: light-dark(
+    oklch(21% 0.02 285),
+    oklch(96% 0.006 282)
+  );
+  --text-color-kumo-strong: light-dark(
+    oklch(15% 0.02 285),
+    oklch(98.5% 0.004 282)
+  );
+  --text-color-kumo-subtle: light-dark(
+    oklch(54% 0.022 285),
+    oklch(71% 0.022 282)
+  );
+  --text-color-kumo-placeholder: light-dark(
+    oklch(70% 0.016 285),
+    oklch(55% 0.02 282)
+  );
+
+  --appbox-selected: light-dark(
+    oklch(51% 0.24 281 / 0.09),
+    oklch(70% 0.15 284 / 0.14)
+  );
+  --appbox-card-shadow:
+    0 1px 2px light-dark(oklch(30% 0.06 285 / 0.06), oklch(0% 0 0 / 0.3)),
+    0 6px 16px -8px light-dark(oklch(30% 0.1 285 / 0.18), oklch(0% 0 0 / 0.5));
+}
+
+/*
+ * Component touches. Unlayered, so they win over the utility classes inside
+ * Kumo's components. They hook onto Kumo's own data attributes.
+ */
+
+/* The current sidebar page (and hovered items) on a violet tint. */
+[data-theme="appbox"] [data-kumo-component="Sidebar"] {
+  --sidebar-active-bg: var(--appbox-selected);
+}
+
+[data-theme="appbox"] [data-kumo-component="Sidebar"][data-active="true"],
+[data-theme="appbox"] [data-kumo-component="Sidebar"][data-active="true"] svg {
+  color: var(--text-color-kumo-brand);
+}
+
+/* Ticked checkboxes and switches in the brand colour, with a white tick. */
+[data-theme="appbox"]
+  [data-kumo-component="Checkbox"]:is([data-checked], [data-indeterminate]) {
+  --tw-ring-color: var(--color-kumo-brand);
+  --text-color-kumo-inverse: #fff;
+  background-color: var(--color-kumo-brand);
+}
+
+/* The switch's track is a button; Kumo paints it blue-500 rather than a token. */
+[data-theme="appbox"]
+  button[data-kumo-component="Switch"][aria-checked="true"] {
+  --tw-ring-color: var(--color-kumo-brand);
+  background-color: var(--color-kumo-brand);
+}
+
+/*
+ * Cards: a soft shadow under the ring. Kumo has no card hook beyond
+ * LayerCard, so this also matches the card recipe the prototype's own pages
+ * use: a rounded, ringed box on the base colour. Setting --tw-shadow keeps
+ * the ring, which Tailwind draws in the same box-shadow.
+ */
+[data-theme="appbox"] [data-kumo-component="LayerCard"],
+[data-theme="appbox"]
+  :is(.rounded-lg, .rounded-xl).bg-kumo-base.ring:not(
+    button,
+    label,
+    input,
+    .kumo-search-surface
+  ) {
+  --tw-shadow: var(--appbox-card-shadow);
+}
+
+/* A table whose wrapper only becomes a card from @xl up. */
+@container (width >= 36rem) {
+  [data-theme="appbox"] [class~="@xl:ring"] {
+    --tw-shadow: var(--appbox-card-shadow);
+  }
+}
+
+/*
+ * The search bars keep Kumo's own look, by request: the joined search and
+ * filter bar with its tray, the sidebar's quick search and the home page's
+ * search field. Their subtree gets Kumo's default tokens and corners back.
+ */
+.kumo-search-surface {
+  --color-kumo-brand: light-dark(
+    oklch(0.5772 0.2324 260),
+    color-mix(in oklch, oklch(0.5772 0.2324 260), black 10%)
+  );
+  --color-kumo-focus: light-dark(oklch(15% 0 0), oklch(93.5% 0 0));
+  --color-kumo-elevated: light-dark(oklch(98% 0 0), oklch(12% 0 0));
+  --color-kumo-base: light-dark(#fff, oklch(17% 0 0));
+  --color-kumo-control: light-dark(#fff, oklch(21% 0.006 285.885));
+  --color-kumo-line: light-dark(oklch(14.5% 0 0 / 0.1), oklch(32% 0 0));
+  --color-kumo-hairline: light-dark(oklch(93.5% 0 0), oklch(26.9% 0 0));
+  --color-kumo-fill: light-dark(oklch(92.2% 0 0), oklch(26.9% 0 0));
+  --color-kumo-tint: light-dark(oklch(97% 0 0), oklch(26.9% 0 0));
+  --text-color-kumo-default: light-dark(
+    oklch(21% 0.006 285.885),
+    oklch(97% 0 0)
+  );
+  --text-color-kumo-subtle: light-dark(oklch(55.6% 0 0), oklch(70.8% 0 0));
+  --text-color-kumo-placeholder: light-dark(oklch(70.8% 0 0), oklch(55.6% 0 0));
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+}
+
+/*
+ * FilterBar (_components/filter-bar.tsx): search and filters joined in one
+ * bar, as on Cloudflare's list pages.
+ *
+ * Every segment keeps the 1px ring Kumo gives it. Rings are drawn just outside
+ * a box, so two neighbours share the 1px gap between them and the divider
+ * stays one pixel wide. A focused segment is lifted above its neighbours, so
+ * its focus ring replaces its border all the way round instead of being cut
+ * off. Only the bar's outer corners are rounded.
+ *
+ * Unlayered on purpose: these rules have to win over the radius and layout
+ * utilities that Kumo's own components carry, whatever their specificity.
+ */
+.kumo-filter-bar {
+  --bar-radius: 0.375rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border-radius: var(--bar-radius);
+}
+
+.kumo-filter-bar > * {
+  min-width: 0;
+  border-radius: 0;
+}
+
+.kumo-filter-bar > :focus-within {
+  position: relative;
+  z-index: 1;
+}
+
+/* Narrow: search across the top, filters two to a row, an odd one across the bottom. */
+@container (width < 36rem) {
+  .kumo-filter-bar > :first-child {
+    grid-column: 1 / -1;
+    border-start-start-radius: var(--bar-radius);
+    border-start-end-radius: var(--bar-radius);
+  }
+
+  .kumo-filter-bar > :last-child:nth-child(even) {
+    grid-column: 1 / -1;
+    border-end-start-radius: var(--bar-radius);
+    border-end-end-radius: var(--bar-radius);
+  }
+
+  .kumo-filter-bar > :last-child:nth-child(odd) {
+    border-end-end-radius: var(--bar-radius);
+  }
+
+  .kumo-filter-bar > :nth-last-child(2):nth-child(even) {
+    border-end-start-radius: var(--bar-radius);
+  }
+
+  .kumo-filter-bar > :only-child {
+    border-radius: var(--bar-radius);
+  }
+}
+
+/* Wide: one row, the search taking the slack. */
+@container (width >= 36rem) {
+  .kumo-filter-bar {
+    display: flex;
+  }
+
+  .kumo-filter-bar > :first-child {
+    flex: 1 1 0%;
+    border-start-start-radius: var(--bar-radius);
+    border-end-start-radius: var(--bar-radius);
+  }
+
+  .kumo-filter-bar:not([data-drop-last]) > :last-child,
+  .kumo-filter-bar[data-drop-last] > :nth-last-child(2) {
+    border-start-end-radius: var(--bar-radius);
+    border-end-end-radius: var(--bar-radius);
+  }
+
+  /* A last filter that only small screens need, e.g. a sort menu a table replaces. */
+  .kumo-filter-bar[data-drop-last] > :last-child {
+    display: none;
+  }
+}
+
+/*
+ * Sign-in pages: the app wall. Each lane holds its list twice, so moving it
+ * by half its length loops without a seam.
+ */
+@keyframes kumo-wall-up {
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes kumo-wall-left {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Right to left, the row starts at the right edge, so it drifts the other way. */
+@keyframes kumo-wall-right {
+  to {
+    transform: translateX(50%);
+  }
+}
+
+.kumo-wall-lane {
+  animation: kumo-wall-up 240s linear infinite;
+}
+
+.kumo-wall-lane-reverse {
+  animation-direction: reverse;
+}
+
+.kumo-wall-row {
+  animation: kumo-wall-left 70s linear infinite;
+}
+
+[dir="rtl"] .kumo-wall-row {
+  animation-name: kumo-wall-right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kumo-wall-lane,
+  .kumo-wall-row,
+  [dir="rtl"] .kumo-wall-row {
+    animation: none;
+  }
+}
