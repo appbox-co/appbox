@@ -112,7 +112,7 @@ function SearchBox() {
   const openSearch = useQuickSearch()
 
   return (
-    <div className="w-full rounded-2xl bg-kumo-tint p-1 ring ring-kumo-hairline">
+    <div className="kumo-search-surface w-full rounded-2xl bg-kumo-tint p-1 ring ring-kumo-hairline">
       <button
         type="button"
         onClick={openSearch}

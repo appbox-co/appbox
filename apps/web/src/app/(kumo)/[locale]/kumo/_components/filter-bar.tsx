@@ -27,7 +27,7 @@ export function FilterBar({
   dropLastWhenWide?: boolean
 }) {
   return (
-    <div className="@container rounded-xl bg-kumo-elevated p-1.5 ring ring-kumo-hairline">
+    <div className="kumo-search-surface @container rounded-xl bg-kumo-elevated p-1.5 ring ring-kumo-hairline">
       <div
         className="kumo-filter-bar shadow-xs"
         data-drop-last={dropLastWhenWide ? "" : undefined}

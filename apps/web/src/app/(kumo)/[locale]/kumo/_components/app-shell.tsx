@@ -234,7 +234,7 @@ function SidebarSearch() {
     <button
       type="button"
       onClick={openSearch}
-      className="flex h-8.5 w-full cursor-pointer items-center gap-2 rounded-lg bg-kumo-base px-2.5 text-left text-kumo-placeholder ring ring-kumo-line outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand"
+      className="kumo-search-surface flex h-8.5 w-full cursor-pointer items-center gap-2 rounded-lg bg-kumo-base px-2.5 text-left text-kumo-placeholder ring ring-kumo-line outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand"
     >
       <MagnifyingGlassIcon size={16} className="shrink-0 text-kumo-subtle" />
       <span className="min-w-0 flex-1 truncate">{COPY.quickSearch}</span>

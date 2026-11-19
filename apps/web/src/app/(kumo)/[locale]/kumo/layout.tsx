@@ -30,7 +30,8 @@ export default async function KumoRootLayout({
   const dir = locale === "ar" || locale === "ur" ? "rtl" : "ltr"
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
+    // data-theme="appbox": Appbox's colours and shapes over Kumo's defaults (kumo-prototype.css).
+    <html lang={locale} dir={dir} data-theme="appbox" suppressHydrationWarning>
       <body
         className={`${fontSans.variable} min-h-screen bg-kumo-canvas font-sans text-base text-kumo-default antialiased`}
       >
