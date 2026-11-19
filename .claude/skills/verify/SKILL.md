@@ -25,10 +25,15 @@ review.
 
 1. Run the staging journey suite: the API the dashboard depends on still
    behaves.
-2. Open the staging dashboard in a browser, signed in as the test customer.
-   Ask the user to enter the password; never type a password yourself. Walk
-   the changed page and the pages that share its components. Check the
-   console for errors and the network panel for failed requests.
+2. Open the staging dashboard with the Playwright CLI (`playwright-cli`, a
+   headless browser), not the desktop app's built-in browser and not the
+   user's own Chrome. Sign in through the sign-in link the staging skill
+   describes, so no password passes through you; never type a password
+   yourself. Walk the changed page and the pages that share its components,
+   reading the page snapshot for text and structure. Check the console log
+   for errors that are not staging's known baseline, and take a screenshot
+   of the changed page as evidence. Close the browser when you finish, even
+   after a failure.
 3. Check an existing account with data, not only an empty one, and a narrow
    viewport if layout changed.
 
