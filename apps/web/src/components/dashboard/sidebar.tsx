@@ -213,7 +213,16 @@ export function DashboardSidebar({
           href: ROUTES.INSTALLED_APPS,
           icon: Rocket
         },
-        { title: t("domains"), href: ROUTES.DOMAINS, icon: Globe }
+        { title: t("domains"), href: ROUTES.DOMAINS, icon: Globe },
+        ...(isNextLaunchWeekEnabled("day_4", isAdmin)
+          ? [
+              {
+                title: t("dedicated_ipv4"),
+                href: ROUTES.DEDICATED_IPV4,
+                icon: Network
+              }
+            ]
+          : [])
       ]
     },
     {
