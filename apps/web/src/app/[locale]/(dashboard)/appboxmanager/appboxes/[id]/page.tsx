@@ -24,6 +24,10 @@ import { ChartWrapper } from "@/components/dashboard/charts/chart-wrapper"
 import type { SeriesStat } from "@/components/dashboard/charts/chart-wrapper"
 import { DashboardLineChart } from "@/components/dashboard/charts/line-chart"
 import { StatusCell } from "@/components/dashboard/data-table/data-table-cells"
+import {
+  DedicatedIpv4BuyButton,
+  DedicatedIpv4Panel
+} from "@/components/dashboard/dedicated-ipv4/dedicated-ipv4-panel"
 import { HistoryBackButton } from "@/components/dashboard/navigation/history-back-button"
 import { DashboardPageHeader } from "@/components/dashboard/page-header"
 import { Button } from "@/components/ui/button"
@@ -36,10 +40,12 @@ import {
   DialogTitle
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { isNextLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
 import { formatBytes } from "@/lib/utils"
 import { requestRangeUntilFresh } from "@/lib/websocket/range-request"
+import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
 import { CyloAlerts } from "./_components/cylo-alerts"
 import { CyloDevPanel } from "./_components/cylo-dev-panel"
@@ -165,6 +171,8 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
   const { id } = use(params)
   const cyloId = Number(id)
   const t = useTranslations("appboxmanager")
+  const { isAdmin } = useAuth()
+  const dedicatedIpv4Enabled = isNextLaunchWeekEnabled("day_4", isAdmin)
 
   const [statsRange, setStatsRange] = useState("24h")
   const [activeTab, setActiveTab] = useState("summary")
@@ -471,6 +479,11 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
           <TabsTrigger value="file-explorer">
             {t("cyloDetail.fileExplorer")}
           </TabsTrigger>
+          {dedicatedIpv4Enabled && (
+            <TabsTrigger value="dedicated-ipv4">
+              {t("cyloDetail.dedicatedIpv4")}
+            </TabsTrigger>
+          )}
         </TabsList>
 
         {/* ── Summary tab ──────────────────────────────────────────────── */}
@@ -574,6 +587,21 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
         <TabsContent value="file-explorer" className="mt-6 min-w-0">
           <FileExplorer cyloId={cyloId} serverName={cylo?.server_name} />
         </TabsContent>
+
+        {dedicatedIpv4Enabled && (
+          <TabsContent
+            value="dedicated-ipv4"
+            className="mt-6 min-w-0 space-y-4"
+          >
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-2xl text-sm text-muted-foreground">
+                {t("dedicatedIpv4.tabDescription")}
+              </p>
+              <DedicatedIpv4BuyButton />
+            </div>
+            <DedicatedIpv4Panel cyloId={cyloId} />
+          </TabsContent>
+        )}
       </Tabs>
 
       <CyloDevPanel cyloId={cyloId} />
