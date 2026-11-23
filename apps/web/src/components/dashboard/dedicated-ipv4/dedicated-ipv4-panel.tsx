@@ -307,18 +307,20 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
   const countOn = (id: number | null) =>
     id === null ? 0 : all.filter((a) => a.cylo_id === id).length
 
-  // On an Appbox's page: its own addresses first, then the free ones.
+  // Assigned addresses first, grouped by Appbox with the primary on top,
+  // then the free ones. On an Appbox's page, only its own and the free ones.
   const shown = useMemo(() => {
     const list = cyloId
       ? all.filter((a) => a.cylo_id === cyloId || a.cylo_id === null)
       : all
-    return [...list].sort((a, b) => {
-      const rank = (x: DedicatedIpv4Address) =>
-        x.cylo_id === null ? 2 : x.is_primary ? 0 : 1
-      return (
-        (a.cylo_id ?? 0) - (b.cylo_id ?? 0) || rank(a) - rank(b) || a.id - b.id
-      )
-    })
+    const group = (x: DedicatedIpv4Address) =>
+      x.cylo_id === null ? Number.MAX_SAFE_INTEGER : x.cylo_id
+    return [...list].sort(
+      (a, b) =>
+        group(a) - group(b) ||
+        Number(b.is_primary) - Number(a.is_primary) ||
+        a.id - b.id
+    )
   }, [all, cyloId])
 
   const openAction = (action: PendingAction) => {
