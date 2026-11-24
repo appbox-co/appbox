@@ -19,7 +19,7 @@ export default function DedicatedIpv4Page() {
     <div className="space-y-6">
       <DashboardPageHeader
         title={t("title")}
-        description={t("pageDescription")}
+        description={enabled ? t("pageDescription") : undefined}
         icon={<Network className="size-[18px]" />}
         gradient="from-[#0ea5e9] to-[#6366f1]"
         action={enabled ? <DedicatedIpv4BuyButton /> : undefined}

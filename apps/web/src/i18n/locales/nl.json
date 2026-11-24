@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migratie is bezig...",
       "lowQuotaFallbackMessage": "De schijfruimte is kritiek laag.",
       "lowQuotaAppsStoppedMessage": "De schijfruimte is kritiek laag. Alle apps op deze appbox zijn gestopt.",
-      "throttledFallbackMessage": "Schijfdoorvoerbeperking is actief.",
-      "dedicatedIpv4": "Dedicated IPv4"
+      "throttledFallbackMessage": "Schijfdoorvoerbeperking is actief."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Wordt verwijderd",
       "statusUnassigned": "Niet toegewezen",
       "primary": "Primair",
-      "assignedTo": "Op",
+      "assignedTo": "Op <appbox>{name}</appbox>",
       "roleInOut": "Inkomend en uitgaand",
       "roleIn": "Alleen inkomend",
       "unassignedHint": "Het adres is van jou, maar staat op geen enkele Appbox. Wijs het toe om het te gebruiken.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Nieuwe uitgaande verbindingen van de Appbox vertrekken vanaf dit adres in plaats van het huidige primaire adres.",
       "primaryTitle": "Primair adres wijzigen",
       "primaryDescription": "Nieuwe uitgaande verbindingen van {appbox} vertrekken vanaf {address} in plaats van {current}. Verbindingen die al open zijn, houden hun adres.",
-      "primaryDescriptionNoCurrent": "Nieuwe uitgaande verbindingen van {appbox} vertrekken vanaf {address}.",
       "unassignTitle": "{address} ontkoppelen",
       "unassignDescription": "Apps op {appbox} antwoorden niet meer op {address}. Het adres blijft van jou, en je kunt het opnieuw toewijzen zodra de server het heeft verwijderd, meestal binnen een paar minuten.",
       "unassignPrimaryNote": "Dit is het laatste adres van de Appbox, dus de uitgaande verbindingen gebruiken weer het gedeelde adres van de server.",

@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migracija poteka...",
       "lowQuotaFallbackMessage": "Prostor na disku je kritično nizek.",
       "lowQuotaAppsStoppedMessage": "Prostor na disku je kritično nizek. Vse aplikacije na tem appboxu so bile ustavljene.",
-      "throttledFallbackMessage": "Omejevanje prepustnosti diska je aktivno.",
-      "dedicatedIpv4": "Namenski IPv4"
+      "throttledFallbackMessage": "Omejevanje prepustnosti diska je aktivno."
     },
     "fileExplorer": {
       "title": "Raziskovalec datotek",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Se odstranjuje",
       "statusUnassigned": "Ni dodeljen",
       "primary": "Primarni",
-      "assignedTo": "Na",
+      "assignedTo": "Na <appbox>{name}</appbox>",
       "roleInOut": "Dohodni in odhodni",
       "roleIn": "Samo dohodni",
       "unassignedHint": "Vaš je, vendar ni na nobenem Appboxu. Dodelite ga, da ga začnete uporabljati.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Nove odhodne povezave iz Appboxa bodo odhajale s tega naslova namesto z današnjega primarnega.",
       "primaryTitle": "Spremeni primarni naslov",
       "primaryDescription": "Nove odhodne povezave iz {appbox} bodo odhajale z {address} namesto z {current}. Že odprte povezave obdržijo svoj naslov.",
-      "primaryDescriptionNoCurrent": "Nove odhodne povezave iz {appbox} bodo odhajale z {address}.",
       "unassignTitle": "Odstrani dodelitev {address}",
       "unassignDescription": "Aplikacije na {appbox} nehajo odgovarjati na {address}. Naslov ostane vaš, ponovno ga lahko dodelite, ko ga strežnik odstrani, običajno v nekaj minutah.",
       "unassignPrimaryNote": "To je zadnji naslov Appboxa, zato bodo njegove odhodne povezave spet odhajale s skupnega naslova strežnika.",

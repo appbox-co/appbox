@@ -1233,8 +1233,7 @@
       "migrationInProgress": "La migration est en cours...",
       "lowQuotaFallbackMessage": "L’espace disque est extrêmement faible.",
       "lowQuotaAppsStoppedMessage": "L’espace disque est extrêmement faible. Toutes les apps de cet appbox ont été arrêtées.",
-      "throttledFallbackMessage": "La limitation du débit disque est active.",
-      "dedicatedIpv4": "IPv4 dédiée"
+      "throttledFallbackMessage": "La limitation du débit disque est active."
     },
     "fileExplorer": {
       "title": "Explorateur de fichiers",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "En cours de retrait",
       "statusUnassigned": "Non attribuée",
       "primary": "Principale",
-      "assignedTo": "Sur",
+      "assignedTo": "Sur <appbox>{name}</appbox>",
       "roleInOut": "Entrant et sortant",
       "roleIn": "Entrant uniquement",
       "unassignedHint": "Elle est à vous, mais sur aucune Appbox. Attribuez-la pour l'utiliser.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Les nouvelles connexions sortantes de l'Appbox partiront de cette adresse au lieu de l'adresse principale actuelle.",
       "primaryTitle": "Changer l'adresse principale",
       "primaryDescription": "Les nouvelles connexions sortantes de {appbox} partiront de {address} au lieu de {current}. Les connexions déjà ouvertes gardent leur adresse.",
-      "primaryDescriptionNoCurrent": "Les nouvelles connexions sortantes de {appbox} partiront de {address}.",
       "unassignTitle": "Retirer {address}",
       "unassignDescription": "Les apps sur {appbox} cessent de répondre sur {address}. L'adresse reste à vous, et vous pourrez l'attribuer à nouveau une fois que le serveur l'aura retirée, en général en quelques minutes.",
       "unassignPrimaryNote": "C'est la dernière adresse de l'Appbox : ses connexions sortantes repartiront de l'adresse partagée du serveur.",

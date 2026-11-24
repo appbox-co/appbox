@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migrasyon devam ediyor...",
       "lowQuotaFallbackMessage": "Disk alanı kritik derecede düşük.",
       "lowQuotaAppsStoppedMessage": "Disk alanı kritik derecede düşük. Bu appbox’taki tüm uygulamalar durduruldu.",
-      "throttledFallbackMessage": "Disk aktarım hızı kısıtlaması aktif.",
-      "dedicatedIpv4": "Özel IPv4"
+      "throttledFallbackMessage": "Disk aktarım hızı kısıtlaması aktif."
     },
     "fileExplorer": {
       "title": "Dosya Gezgini",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Kaldırılıyor",
       "statusUnassigned": "Atanmadı",
       "primary": "Birincil",
-      "assignedTo": "Appbox:",
+      "assignedTo": "Appbox: <appbox>{name}</appbox>",
       "roleInOut": "Gelen ve giden",
       "roleIn": "Yalnızca gelen",
       "unassignedHint": "Size ait, ama hiçbir Appbox'ta değil. Kullanmak için atayın.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox'ın yeni giden bağlantıları, mevcut birincil adres yerine bu adresten çıkar.",
       "primaryTitle": "Birincil adresi değiştir",
       "primaryDescription": "{appbox} için yeni giden bağlantılar {current} yerine {address} adresinden çıkar. Zaten açık olan bağlantılar adreslerini korur.",
-      "primaryDescriptionNoCurrent": "{appbox} için yeni giden bağlantılar {address} adresinden çıkar.",
       "unassignTitle": "{address} atamasını kaldır",
       "unassignDescription": "{appbox} üzerindeki uygulamalar {address} adresinde yanıt vermeyi bırakır. Adres sizin olmaya devam eder ve sunucu kaldırdıktan sonra yeniden atayabilirsiniz; bu genellikle birkaç dakika sürer.",
       "unassignPrimaryNote": "Bu, Appbox'ın son adresi; bu yüzden giden bağlantıları yeniden sunucunun paylaşılan adresinden çıkar.",

@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migration جاری ہے...",
       "lowQuotaFallbackMessage": "Disk space انتہائی کم ہے۔",
       "lowQuotaAppsStoppedMessage": "Disk space انتہائی کم ہے۔ اس appbox کی تمام apps روک دی گئی ہیں۔",
-      "throttledFallbackMessage": "Disk throughput throttling فعال ہے۔",
-      "dedicatedIpv4": "ڈیڈیکیٹڈ IPv4"
+      "throttledFallbackMessage": "Disk throughput throttling فعال ہے۔"
     },
     "fileExplorer": {
       "title": "فائل ایکسپلورر",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "ہٹایا جا رہا ہے",
       "statusUnassigned": "تفویض نہیں",
       "primary": "بنیادی",
-      "assignedTo": "پر",
+      "assignedTo": "<appbox>{name}</appbox> پر",
       "roleInOut": "اِن باؤنڈ اور آؤٹ باؤنڈ",
       "roleIn": "صرف اِن باؤنڈ",
       "unassignedHint": "یہ آپ کا ہے، لیکن کسی Appbox پر نہیں ہے۔ استعمال کے لیے اسے تفویض کریں۔",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox کے نئے آؤٹ باؤنڈ کنکشن موجودہ بنیادی ایڈریس کے بجائے اس ایڈریس سے نکلیں گے۔",
       "primaryTitle": "بنیادی ایڈریس تبدیل کریں",
       "primaryDescription": "{appbox} کے نئے آؤٹ باؤنڈ کنکشن {current} کے بجائے {address} سے نکلیں گے۔ جو کنکشن پہلے سے کھلے ہیں وہ اپنا ایڈریس برقرار رکھتے ہیں۔",
-      "primaryDescriptionNoCurrent": "{appbox} کے نئے آؤٹ باؤنڈ کنکشن {address} سے نکلیں گے۔",
       "unassignTitle": "{address} کی تفویض ہٹائیں",
       "unassignDescription": "{appbox} پر موجود ایپس {address} پر جواب دینا بند کر دیں گی۔ ایڈریس آپ ہی کا رہے گا، اور سرور کے ہٹانے کے بعد آپ اسے دوبارہ تفویض کر سکتے ہیں، عموماً چند منٹ میں۔",
       "unassignPrimaryNote": "یہ Appbox کا آخری ایڈریس ہے، اس لیے اس کے آؤٹ باؤنڈ کنکشن دوبارہ سرور کے مشترکہ ایڈریس سے نکلیں گے۔",

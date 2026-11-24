@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migrarea este în curs...",
       "lowQuotaFallbackMessage": "Spațiul pe disc este critic de scăzut.",
       "lowQuotaAppsStoppedMessage": "Spațiul pe disc este critic de scăzut. Toate aplicațiile de pe acest appbox au fost oprite.",
-      "throttledFallbackMessage": "Limitarea throughput-ului discului este activă.",
-      "dedicatedIpv4": "IPv4 dedicat"
+      "throttledFallbackMessage": "Limitarea throughput-ului discului este activă."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Se elimină",
       "statusUnassigned": "Neatribuită",
       "primary": "Principală",
-      "assignedTo": "Pe",
+      "assignedTo": "Pe <appbox>{name}</appbox>",
       "roleInOut": "Intrare și ieșire",
       "roleIn": "Doar intrare",
       "unassignedHint": "Este a ta, dar nu e pe niciun Appbox. Atribuie-o ca să o folosești.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Conexiunile noi de ieșire din Appbox vor pleca de pe această adresă în loc de cea principală actuală.",
       "primaryTitle": "Schimbă adresa principală",
       "primaryDescription": "Conexiunile noi de ieșire din {appbox} vor pleca de pe {address} în loc de {current}. Conexiunile deja deschise își păstrează adresa.",
-      "primaryDescriptionNoCurrent": "Conexiunile noi de ieșire din {appbox} vor pleca de pe {address}.",
       "unassignTitle": "Anulează atribuirea {address}",
       "unassignDescription": "Aplicațiile de pe {appbox} nu mai răspund pe {address}. Adresa rămâne a ta și o poți atribui din nou după ce serverul o elimină, de obicei în câteva minute.",
       "unassignPrimaryNote": "Aceasta este ultima adresă a Appbox-ului, așa că conexiunile lui de ieșire vor pleca din nou de pe adresa comună a serverului.",

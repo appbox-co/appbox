@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migracja jest w toku...",
       "lowQuotaFallbackMessage": "Miejsce na dysku jest krytycznie niskie.",
       "lowQuotaAppsStoppedMessage": "Miejsce na dysku jest krytycznie niskie. Wszystkie aplikacje na tym appboxie zostały zatrzymane.",
-      "throttledFallbackMessage": "Ograniczenie przepustowości dysku jest aktywne.",
-      "dedicatedIpv4": "Dedykowany IPv4"
+      "throttledFallbackMessage": "Ograniczenie przepustowości dysku jest aktywne."
     },
     "fileExplorer": {
       "title": "Eksplorator plików",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Usuwanie",
       "statusUnassigned": "Nieprzypisany",
       "primary": "Główny",
-      "assignedTo": "Na",
+      "assignedTo": "Na <appbox>{name}</appbox>",
       "roleInOut": "Przychodzące i wychodzące",
       "roleIn": "Tylko przychodzące",
       "unassignedHint": "Jest Twój, ale nie jest przypisany do żadnego Appboxa. Przypisz go, aby go używać.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Nowe połączenia wychodzące z Appboxa będą wychodzić z tego adresu zamiast z obecnego adresu głównego.",
       "primaryTitle": "Zmień adres główny",
       "primaryDescription": "Nowe połączenia wychodzące z {appbox} będą wychodzić z {address} zamiast z {current}. Połączenia, które są już otwarte, zachowają swój adres.",
-      "primaryDescriptionNoCurrent": "Nowe połączenia wychodzące z {appbox} będą wychodzić z {address}.",
       "unassignTitle": "Cofnij przypisanie {address}",
       "unassignDescription": "Aplikacje na {appbox} przestaną odpowiadać na {address}. Adres nadal należy do Ciebie i możesz przypisać go ponownie, gdy serwer go usunie, zwykle w ciągu kilku minut.",
       "unassignPrimaryNote": "To ostatni adres Appboxa, więc jego połączenia wychodzące wrócą do współdzielonego adresu serwera.",

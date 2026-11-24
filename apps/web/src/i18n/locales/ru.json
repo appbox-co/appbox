@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Миграция выполняется...",
       "lowQuotaFallbackMessage": "Свободного места на диске критически мало.",
       "lowQuotaAppsStoppedMessage": "Свободного места на диске критически мало. Все приложения на этом appbox были остановлены.",
-      "throttledFallbackMessage": "Ограничение пропускной способности диска активно.",
-      "dedicatedIpv4": "Выделенный IPv4"
+      "throttledFallbackMessage": "Ограничение пропускной способности диска активно."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Удаляется",
       "statusUnassigned": "Не назначен",
       "primary": "Основной",
-      "assignedTo": "На",
+      "assignedTo": "На <appbox>{name}</appbox>",
       "roleInOut": "Входящие и исходящие",
       "roleIn": "Только входящие",
       "unassignedHint": "Он ваш, но не назначен ни одному Appbox. Назначьте его, чтобы использовать.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Новые исходящие подключения Appbox будут идти с этого адреса вместо текущего основного.",
       "primaryTitle": "Сменить основной адрес",
       "primaryDescription": "Новые исходящие подключения {appbox} будут идти с {address} вместо {current}. Уже открытые подключения сохранят свой адрес.",
-      "primaryDescriptionNoCurrent": "Новые исходящие подключения {appbox} будут идти с {address}.",
       "unassignTitle": "Отменить назначение {address}",
       "unassignDescription": "Приложения на {appbox} перестанут отвечать на {address}. Адрес остаётся вашим, и вы сможете назначить его снова, когда сервер его удалит, обычно в течение нескольких минут.",
       "unassignPrimaryNote": "Это последний адрес Appbox, поэтому его исходящие подключения снова пойдут с общего адреса сервера.",

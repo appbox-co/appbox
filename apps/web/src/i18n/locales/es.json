@@ -1233,8 +1233,7 @@
       "migrationInProgress": "La migración está en curso...",
       "lowQuotaFallbackMessage": "El espacio en disco es críticamente bajo.",
       "lowQuotaAppsStoppedMessage": "El espacio en disco es críticamente bajo. Todas las apps de este appbox se han detenido.",
-      "throttledFallbackMessage": "La limitación del rendimiento de disco está activa.",
-      "dedicatedIpv4": "IPv4 dedicada"
+      "throttledFallbackMessage": "La limitación del rendimiento de disco está activa."
     },
     "fileExplorer": {
       "title": "Explorador de archivos",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Eliminándose",
       "statusUnassigned": "Sin asignar",
       "primary": "Principal",
-      "assignedTo": "En",
+      "assignedTo": "En <appbox>{name}</appbox>",
       "roleInOut": "Entrante y saliente",
       "roleIn": "Solo entrante",
       "unassignedHint": "Es tuya, pero no está en ningún Appbox. Asígnala para usarla.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Las nuevas conexiones salientes del Appbox saldrán desde esta dirección en lugar de la principal actual.",
       "primaryTitle": "Cambiar la dirección principal",
       "primaryDescription": "Las nuevas conexiones salientes de {appbox} saldrán desde {address} en lugar de {current}. Las conexiones ya abiertas mantienen su dirección.",
-      "primaryDescriptionNoCurrent": "Las nuevas conexiones salientes de {appbox} saldrán desde {address}.",
       "unassignTitle": "Desasignar {address}",
       "unassignDescription": "Las apps de {appbox} dejan de responder en {address}. La dirección sigue siendo tuya y podrás asignarla de nuevo cuando el servidor la haya eliminado, normalmente en unos minutos.",
       "unassignPrimaryNote": "Es la última dirección del Appbox, así que sus conexiones salientes volverán a salir desde la dirección compartida del servidor.",

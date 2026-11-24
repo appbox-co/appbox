@@ -1233,8 +1233,7 @@
       "migrationInProgress": "المهاجرة قيد التقدم...",
       "lowQuotaFallbackMessage": "مساحة القرص منخفضة جدًا.",
       "lowQuotaAppsStoppedMessage": "مساحة القرص منخفضة جدًا. تم إيقاف كل التطبيقات على هذا appbox.",
-      "throttledFallbackMessage": "تقييد معدل نقل القرص نشط.",
-      "dedicatedIpv4": "IPv4 مخصص"
+      "throttledFallbackMessage": "تقييد معدل نقل القرص نشط."
     },
     "fileExplorer": {
       "title": "مستكشف الملفات",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "قيد الإزالة",
       "statusUnassigned": "غير معيّن",
       "primary": "أساسي",
-      "assignedTo": "على",
+      "assignedTo": "على <appbox>{name}</appbox>",
       "roleInOut": "وارد وصادر",
       "roleIn": "وارد فقط",
       "unassignedHint": "العنوان لك، لكنه ليس على أي Appbox. عيّنه لتبدأ باستخدامه.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "ستخرج الاتصالات الصادرة الجديدة من Appbox من هذا العنوان بدلًا من العنوان الأساسي الحالي.",
       "primaryTitle": "تغيير العنوان الأساسي",
       "primaryDescription": "ستخرج الاتصالات الصادرة الجديدة من {appbox} من {address} بدلًا من {current}. تحتفظ الاتصالات المفتوحة بالفعل بعنوانها.",
-      "primaryDescriptionNoCurrent": "ستخرج الاتصالات الصادرة الجديدة من {appbox} من {address}.",
       "unassignTitle": "إلغاء تعيين {address}",
       "unassignDescription": "تتوقف التطبيقات على {appbox} عن الاستجابة على {address}. يبقى العنوان لك، ويمكنك تعيينه مرة أخرى بعد أن يزيله الخادم، وعادةً خلال بضع دقائق.",
       "unassignPrimaryNote": "هذا آخر عنوان لـ Appbox، لذا ستعود اتصالاته الصادرة إلى الخروج من العنوان المشترك للخادم.",

@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migration सुरू आहे...",
       "lowQuotaFallbackMessage": "Disk space अत्यंत कमी आहे.",
       "lowQuotaAppsStoppedMessage": "Disk space अत्यंत कमी आहे. या appbox वरील सर्व apps थांबवले गेले आहेत.",
-      "throttledFallbackMessage": "Disk throughput throttling सक्रिय आहे.",
-      "dedicatedIpv4": "डेडिकेटेड IPv4"
+      "throttledFallbackMessage": "Disk throughput throttling सक्रिय आहे."
     },
     "fileExplorer": {
       "title": "फाइल एक्सप्लोरर",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "काढला जात आहे",
       "statusUnassigned": "असाइन केलेला नाही",
       "primary": "प्राइमरी",
-      "assignedTo": "वर",
+      "assignedTo": "<appbox>{name}</appbox> वर",
       "roleInOut": "इनबाउंड आणि आउटबाउंड",
       "roleIn": "फक्त इनबाउंड",
       "unassignedHint": "हा तुमचा आहे, पण कोणत्याही Appbox वर नाही. वापरण्यासाठी तो असाइन करा.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox चे नवीन आउटबाउंड कनेक्शन सध्याच्या प्राइमरीऐवजी या पत्त्यावरून निघतील.",
       "primaryTitle": "प्राइमरी पत्ता बदला",
       "primaryDescription": "{appbox} चे नवीन आउटबाउंड कनेक्शन {current} ऐवजी {address} वरून निघतील. आधीपासून उघडे असलेले कनेक्शन त्यांचा पत्ता कायम ठेवतात.",
-      "primaryDescriptionNoCurrent": "{appbox} चे नवीन आउटबाउंड कनेक्शन {address} वरून निघतील.",
       "unassignTitle": "{address} असाइनमेंटमधून काढा",
       "unassignDescription": "{appbox} वरील अॅप्स {address} वर प्रतिसाद देणे थांबवतील. पत्ता तुमचाच राहील, आणि सर्व्हरने तो काढल्यावर तुम्ही तो पुन्हा असाइन करू शकता, साधारणपणे काही मिनिटांत.",
       "unassignPrimaryNote": "हा Appbox चा शेवटचा पत्ता आहे, त्यामुळे त्याचे आउटबाउंड कनेक्शन पुन्हा सर्व्हरच्या शेअर्ड पत्त्यावरून निघतील.",

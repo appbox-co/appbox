@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migration চলছে...",
       "lowQuotaFallbackMessage": "Disk space অত্যন্ত কম।",
       "lowQuotaAppsStoppedMessage": "Disk space অত্যন্ত কম। এই appbox-এর সব app বন্ধ করা হয়েছে।",
-      "throttledFallbackMessage": "Disk throughput throttling সক্রিয়।",
-      "dedicatedIpv4": "ডেডিকেটেড IPv4"
+      "throttledFallbackMessage": "Disk throughput throttling সক্রিয়।"
     },
     "fileExplorer": {
       "title": "ফাইল এক্সপ্লোরার",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "সরানো হচ্ছে",
       "statusUnassigned": "Assign করা নেই",
       "primary": "Primary",
-      "assignedTo": "যে Appbox-এ আছে",
+      "assignedTo": "<appbox>{name}</appbox>-এ",
       "roleInOut": "Inbound ও outbound",
       "roleIn": "শুধু inbound",
       "unassignedHint": "এটি আপনার, কিন্তু কোনো Appbox-এ নেই। ব্যবহার করতে assign করুন।",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox-এর নতুন outbound connection বর্তমান primary-র বদলে এই address থেকে বের হবে।",
       "primaryTitle": "Primary address বদলান",
       "primaryDescription": "{appbox}-এর নতুন outbound connection {current}-এর বদলে {address} থেকে বের হবে। যে connection আগে থেকে খোলা আছে সেগুলো নিজের address ধরে রাখে।",
-      "primaryDescriptionNoCurrent": "{appbox}-এর নতুন outbound connection {address} থেকে বের হবে।",
       "unassignTitle": "{address} unassign করুন",
       "unassignDescription": "{appbox}-এর app গুলো {address}-এ সাড়া দেওয়া বন্ধ করবে। Address আপনারই থাকবে, আর server সরিয়ে নিলে আপনি আবার assign করতে পারবেন, সাধারণত কয়েক মিনিটের মধ্যে।",
       "unassignPrimaryNote": "এটি Appbox-এর শেষ address, তাই এর outbound connection আবার server-এর shared address থেকে বের হবে।",

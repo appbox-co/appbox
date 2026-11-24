@@ -1233,8 +1233,7 @@
       "migrationInProgress": "迁移正在进行中...",
       "lowQuotaFallbackMessage": "磁盘空间严重不足。",
       "lowQuotaAppsStoppedMessage": "磁盘空间严重不足。此 appbox 上的所有应用已停止。",
-      "throttledFallbackMessage": "磁盘吞吐量限制已启用。",
-      "dedicatedIpv4": "专用 IPv4"
+      "throttledFallbackMessage": "磁盘吞吐量限制已启用。"
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "正在移除",
       "statusUnassigned": "未分配",
       "primary": "主地址",
-      "assignedTo": "所在",
+      "assignedTo": "所在 Appbox：<appbox>{name}</appbox>",
       "roleInOut": "入站和出站",
       "roleIn": "仅入站",
       "unassignedHint": "这是你的地址，但不在任何 Appbox 上。分配后即可使用。",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox 新的出站连接将从此地址发出，而不是当前的主地址。",
       "primaryTitle": "更改主地址",
       "primaryDescription": "{appbox} 新的出站连接将从 {address} 发出，而不是 {current}。已打开的连接保持原来的地址。",
-      "primaryDescriptionNoCurrent": "{appbox} 新的出站连接将从 {address} 发出。",
       "unassignTitle": "取消分配 {address}",
       "unassignDescription": "{appbox} 上的应用将不再在 {address} 上响应。该地址仍归你所有，服务器移除后你可以再次分配，通常在几分钟内。",
       "unassignPrimaryNote": "这是该 Appbox 的最后一个地址，因此它的出站连接会恢复使用服务器的共享地址。",

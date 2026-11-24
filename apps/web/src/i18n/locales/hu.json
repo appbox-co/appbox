@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migráció folyamatban...",
       "lowQuotaFallbackMessage": "Kritikusan kevés a lemezterület.",
       "lowQuotaAppsStoppedMessage": "Kritikusan kevés a lemezterület. Az appboxon lévő összes alkalmazás le lett állítva.",
-      "throttledFallbackMessage": "A lemezátvitel korlátozása aktív.",
-      "dedicatedIpv4": "Dedikált IPv4"
+      "throttledFallbackMessage": "A lemezátvitel korlátozása aktív."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Eltávolítás alatt",
       "statusUnassigned": "Nincs hozzárendelve",
       "primary": "Elsődleges",
-      "assignedTo": "Appbox:",
+      "assignedTo": "Appbox: <appbox>{name}</appbox>",
       "roleInOut": "Bejövő és kimenő",
       "roleIn": "Csak bejövő",
       "unassignedHint": "A tiéd, de nincs egyetlen Appboxon sem. Rendeld hozzá, hogy használhasd.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Az Appbox új kimenő kapcsolatai ebről a címről indulnak a jelenlegi elsődleges helyett.",
       "primaryTitle": "Elsődleges cím módosítása",
       "primaryDescription": "A(z) {appbox} új kimenő kapcsolatai a(z) {current} helyett a(z) {address} címről indulnak. A már megnyitott kapcsolatok megtartják a címüket.",
-      "primaryDescriptionNoCurrent": "A(z) {appbox} új kimenő kapcsolatai a(z) {address} címről indulnak.",
       "unassignTitle": "{address} hozzárendelésének megszüntetése",
       "unassignDescription": "A(z) {appbox} alkalmazásai nem válaszolnak többé a(z) {address} címen. A cím a tiéd marad, és újra hozzárendelheted, miután a szerver eltávolította, általában néhány percen belül.",
       "unassignPrimaryNote": "Ez az Appbox utolsó címe, ezért a kimenő kapcsolatai újra a szerver megosztott címéről indulnak.",

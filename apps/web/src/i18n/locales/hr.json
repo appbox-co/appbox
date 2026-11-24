@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migracija je u tijeku...",
       "lowQuotaFallbackMessage": "Prostor na disku kritično je nizak.",
       "lowQuotaAppsStoppedMessage": "Prostor na disku kritično je nizak. Sve aplikacije na ovom appboxu su zaustavljene.",
-      "throttledFallbackMessage": "Ograničenje propusnosti diska je aktivno.",
-      "dedicatedIpv4": "Namjenska IPv4"
+      "throttledFallbackMessage": "Ograničenje propusnosti diska je aktivno."
     },
     "fileExplorer": {
       "title": "Preglednik datoteka",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Uklanja se",
       "statusUnassigned": "Nije dodijeljena",
       "primary": "Primarna",
-      "assignedTo": "Na",
+      "assignedTo": "Na <appbox>{name}</appbox>",
       "roleInOut": "Dolazni i odlazni",
       "roleIn": "Samo dolazni",
       "unassignedHint": "Vaša je, ali nije ni na jednom Appboxu. Dodijelite je da je počnete koristiti.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Nove odlazne veze Appboxa izlazit će s ove adrese umjesto s trenutačne primarne.",
       "primaryTitle": "Promijeni primarnu adresu",
       "primaryDescription": "Nove odlazne veze s {appbox} izlazit će s {address} umjesto s {current}. Veze koje su već otvorene zadržavaju svoju adresu.",
-      "primaryDescriptionNoCurrent": "Nove odlazne veze s {appbox} izlazit će s {address}.",
       "unassignTitle": "Ukloni dodjelu {address}",
       "unassignDescription": "Aplikacije na {appbox} prestaju odgovarati na {address}. Adresa i dalje ostaje vaša, a možete je ponovno dodijeliti kad je poslužitelj ukloni, obično u nekoliko minuta.",
       "unassignPrimaryNote": "Ovo je zadnja adresa Appboxa pa će se njegove odlazne veze vratiti na zajedničku adresu poslužitelja.",

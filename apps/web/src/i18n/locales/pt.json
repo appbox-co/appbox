@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migração em andamento...",
       "lowQuotaFallbackMessage": "O espaço em disco está criticamente baixo.",
       "lowQuotaAppsStoppedMessage": "O espaço em disco está criticamente baixo. Todos os apps neste appbox foram interrompidos.",
-      "throttledFallbackMessage": "A limitação de throughput do disco está ativa.",
-      "dedicatedIpv4": "IPv4 dedicado"
+      "throttledFallbackMessage": "A limitação de throughput do disco está ativa."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1524,7 +1523,7 @@
       "statusRemoving": "Sendo removido",
       "statusUnassigned": "Não atribuído",
       "primary": "Principal",
-      "assignedTo": "Em",
+      "assignedTo": "Em <appbox>{name}</appbox>",
       "roleInOut": "Entrada e saída",
       "roleIn": "Somente entrada",
       "unassignedHint": "É seu, mas não está em nenhum Appbox. Atribua para usá-lo.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "As novas conexões de saída do Appbox sairão por este endereço em vez do principal atual.",
       "primaryTitle": "Mudar o endereço principal",
       "primaryDescription": "As novas conexões de saída de {appbox} sairão por {address} em vez de {current}. As conexões já abertas mantêm o endereço.",
-      "primaryDescriptionNoCurrent": "As novas conexões de saída de {appbox} sairão por {address}.",
       "unassignTitle": "Remover atribuição de {address}",
       "unassignDescription": "Os apps em {appbox} deixam de responder em {address}. O endereço continua sendo seu, e você poderá atribuí-lo de novo quando o servidor o remover, geralmente em alguns minutos.",
       "unassignPrimaryNote": "Este é o último endereço do Appbox, então as conexões de saída dele voltam a sair pelo endereço compartilhado do servidor.",
