@@ -102,11 +102,11 @@ export function useSceneScript(
 }
 
 /**
- * The largest a scene is drawn, as a share of the dashboard's real size. At
- * full size its text matched the page's own and read as page content; smaller,
- * it reads as a picture of the product.
+ * The largest a scene is drawn, as a share of the dashboard's real size: just
+ * under it, so the scenes read as pictures of the product beside the page copy
+ * (chosen on 24 Nov 2026, between 0.75 and full size).
  */
-const SCENE_SCALE = 0.75
+const SCENE_SCALE = 0.975
 
 /**
  * A fixed-size illustration, drawn at `width` × `height` and scaled to the
