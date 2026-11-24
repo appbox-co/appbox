@@ -38,13 +38,15 @@
 
 ## A change is reviewed before rollout
 
-- Before a change is merged or rolled out, have a separate agent review the
-  diff: a Claude Fable 5.2 agent at extra-high effort. Start it fresh and
-  give it the diff and what the change is for, not your conclusions.
-- It checks that the code is not overly complex, does not reach beyond what
+- Before a change is merged or rolled out, run the `review-before-rollout`
+  skill. Two separate agents review the diff: Claude Opus 5.5 at extra-high
+  effort and Claude Sonnet 5.5. Start each fresh and give it the diff and
+  what the change is for, not your conclusions.
+- They check that the code is not overly complex, does not reach beyond what
   was asked, and is maintainable.
-- Fix what it finds, or say in the pull request body why a finding was left.
-  The pull request body says that the review ran and what it found.
+- Fix what they find, or say in the pull request body why a finding was left.
+  The pull request body says that the review ran, which models did it, and
+  what they found.
 - The review is in addition to the `verify` skill, not instead of it. If the
   review changes the code, verify again.
 
