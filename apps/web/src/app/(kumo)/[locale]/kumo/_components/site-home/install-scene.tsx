@@ -121,7 +121,7 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
     <Stage width={580} height={520} sceneRef={sceneRef}>
       <div
         className="ks-abs ks-pagecard"
-        style={{ left: 100, top: 96, width: 560 }}
+        style={{ left: 10, top: 96, width: 560 }}
       >
         {view === "store" ? (
           <div className="grid gap-4">
@@ -204,7 +204,7 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
 
       <div
         className={cn("ks-abs ks-dialog-pos", !dialog && "ks-closed")}
-        style={{ left: 24, top: 24, width: 512 }}
+        style={{ left: 34, top: 24, width: 512 }}
       >
         <div className="ks-lift overflow-hidden rounded-xl bg-kumo-base text-kumo-default">
           <header className="relative grid gap-1.5 border-b border-kumo-line py-5 ps-6 pe-16">
