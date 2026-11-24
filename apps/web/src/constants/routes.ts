@@ -19,6 +19,7 @@ export const ROUTES = {
   INSTALLED_APP_DETAIL: (id: number | string) =>
     `/appboxmanager/installedapps/${id}`,
   DOMAINS: "/appboxmanager/domains",
+  DEDICATED_IPV4: "/appboxmanager/dedicated-ipv4",
 
   // Account
   PROFILE: "/account/profile",
