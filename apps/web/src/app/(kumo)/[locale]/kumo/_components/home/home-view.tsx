@@ -196,8 +196,8 @@ export function HomeView({
           />
           <p className="ks-lead text-kumo-subtle">
             {appCount
-              ? `Choose from ${appCount} apps, pick an address, and click install.`
-              : "Choose an app, pick an address, and click install."}{" "}
+              ? `Pick one of ${appCount} apps and an address, then click install.`
+              : "Pick an app and an address, then click install."}{" "}
             Each app gets its own web address and shares your Appbox&apos;s
             storage.
           </p>
@@ -333,7 +333,7 @@ export function HomeView({
             second={
               unmetered
                 ? "Unmetered traffic on all of them."
-                : "Storage, app slots and speed to match."
+                : "Pick the storage and app slots you need."
             }
           />
           <p className="ks-sub text-kumo-subtle">
