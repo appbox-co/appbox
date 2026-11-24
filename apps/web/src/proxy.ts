@@ -75,7 +75,8 @@ export const config = {
     // 1. API routes
     // 2. Next.js internals
     // 3. Static files with extensions
-    "/((?!api/|_next/|_proxy/|_vercel|authors|blog-images|blog-og|docs-images|fonts|_static|[^/]+\\.[^/]+$).*)",
+    // 4. /b5tg, the Google tag loader (rewritten in next.config.mjs)
+    "/((?!api/|_next/|_proxy/|_vercel|authors|blog-images|blog-og|docs-images|fonts|_static|b5tg$|[^/]+\\.[^/]+$).*)",
     // Documentation, blog, and feed routes
     "/([\\w-]+)?/(docs|blog|feed)/(.+)",
     // Locale routes
