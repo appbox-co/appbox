@@ -37,11 +37,11 @@ Only Appboxes in Amsterdam can take an address. A suspended Appbox, or one that'
 
 ## What changes when an address is assigned
 
-**Your apps answer on it, on the same ports.** Each app keeps the host ports it already has. An app that answers at `mybox.appboxes.co:<port>` also answers at `<your address>:<port>`. To find an app's ports, open the app's page and select the **Ports** tab: the **Host Port** column lists them. Ports 80 and 443 aren't forwarded: your web apps' addresses, such as `app.mybox.appboxes.co`, stay on the shared proxy as before.
+Your apps answer on the address, on the host ports they already use. An app that answers at `mybox.appboxes.co:<port>` also answers at `<your address>:<port>`. To find an app's ports, open the app's page and select the **Ports** tab: the **Host Port** column lists them. Ports 80 and 443 aren't forwarded: your web apps' addresses, such as `app.mybox.appboxes.co`, stay on the shared proxy as before.
 
-**Outbound connections leave from it.** New connections that your apps open to the internet, such as a download client reaching its peers or an app calling an outside service, use the Appbox's primary address as their source. Connections that were open before the change keep their old address until they close.
+New outbound connections leave from the Appbox's primary address. A download client reaching its peers, or an app calling an outside service, connects from it. Connections that were open before the change keep their old address until they close.
 
-**Only your apps answer on it.** The server's own services don't listen on your address, and nothing on the address reaches another customer's Appbox.
+Only your apps answer on the address. The server's own services don't listen on it, and nothing on it reaches another customer's Appbox.
 
 ## Use several addresses
 
