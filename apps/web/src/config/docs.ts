@@ -49,7 +49,8 @@ const newLabels: Record<LocaleOptions, string> = {
 
 // Section titles that capitalising the folder name gets wrong
 const sectionTitles: Record<string, string> = {
-  "developer-api": "Developer API"
+  "developer-api": "Developer API",
+  platform: "Using Appbox"
 }
 
 export function docsSectionTitle(section: string): string {
