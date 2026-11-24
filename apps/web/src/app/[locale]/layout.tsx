@@ -189,6 +189,8 @@ export default async function RootLayout(props: AppLayoutProps) {
         )}
       >
         <MarketingScreenshotMode />
+        {/* next.config.mjs rewrites /b5tg to Google's loader for the tag ID
+            configured below; keep the two IDs the same. */}
         <Script src="/b5tg" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

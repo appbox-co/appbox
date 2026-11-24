@@ -49,7 +49,7 @@ const nextConfig = {
       { source: "/forgot/:path*", destination: "/en/forgot/:path*" },
       // First-party path for the Google tag loader, which the [locale] layout
       // loads. A Cloudflare snippet served it until www.appbox.co moved off
-      // Cloudflare's proxy.
+      // Cloudflare's proxy. The tag ID must match the layout's gtag("config").
       {
         source: "/b5tg",
         destination: "https://www.googletagmanager.com/gtag/js?id=GT-T53F3CT6"
