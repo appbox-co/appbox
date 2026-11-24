@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Button, Link as KumoLink } from "@cloudflare/kumo"
 import { BoostSlider } from "../install/boost-slider"
 import { Panel } from "../panel"
-import { Stage, useSceneLoop } from "./scene"
+import { Stage, useSceneScript } from "./scene"
 
 /**
  * The App Boost card from an installed app's page, built from the same slider
@@ -17,18 +17,20 @@ export function BoostScene() {
   const [slots, setSlots] = useState(3)
   const [applying, setApplying] = useState(false)
 
-  useSceneLoop(sceneRef, async (sleep) => {
-    setSlots(0)
-    await sleep(1500)
-    for (const next of [1, 2, 3]) {
-      setSlots(next)
-      await sleep(800)
+  useSceneScript(sceneRef, async (sleep) => {
+    for (;;) {
+      setSlots(0)
+      await sleep(1500)
+      for (const next of [1, 2, 3]) {
+        setSlots(next)
+        await sleep(800)
+      }
+      await sleep(600)
+      setApplying(true)
+      await sleep(1200)
+      setApplying(false)
+      await sleep(2600)
     }
-    await sleep(600)
-    setApplying(true)
-    await sleep(1200)
-    setApplying(false)
-    await sleep(2600)
   })
 
   return (

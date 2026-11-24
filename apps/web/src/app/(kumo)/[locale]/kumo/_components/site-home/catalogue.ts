@@ -8,7 +8,8 @@ import type { PlansData } from "@/components/ui/plans"
 /** Catalogue icon file names by app name, for the illustrations. */
 export type AppIcons = Record<string, string>
 
-export interface WallApp {
+/** An app as the home page's app wall shows it. */
+export interface CatalogueApp {
   name: string
   icon: string
   category: string
@@ -27,18 +28,6 @@ export interface PlanFacts {
   maxSpeed: string
 }
 
-/** The public catalogue sends categories as a list, or as that list's text. */
-function categoriesOf(app: App): string[] {
-  const raw = app.categories as unknown
-  if (Array.isArray(raw)) return raw.map(String)
-  if (typeof raw === "string") {
-    return [...raw.matchAll(/'([^']+)'|"([^"]+)"/g)].map(
-      (match) => match[1] ?? match[2]
-    )
-  }
-  return []
-}
-
 export function appIcons(apps: App[]): AppIcons {
   return Object.fromEntries(
     apps.map((app) => [app.display_name, app.icon_image])
@@ -50,7 +39,10 @@ export function sampleDomain(name: string) {
   return `${name.toLowerCase().replace(/[^a-z0-9]/g, "")}.ada.appboxes.co`
 }
 
-/** Popular apps first, so the wall opens with names people know. */
+/**
+ * Popular apps first, so the wall opens with names people know. The public
+ * feed has no install counts to sort by.
+ */
 const WALL_FIRST = [
   "Plex",
   "Nextcloud",
@@ -96,7 +88,7 @@ const WALL_FIRST = [
   "Arch Linux VPS"
 ]
 
-export function wallApps(apps: App[]): WallApp[] {
+export function catalogueApps(apps: App[]): CatalogueApp[] {
   const rank = (name: string) => {
     const index = WALL_FIRST.indexOf(name)
     return index === -1 ? WALL_FIRST.length : index
@@ -110,14 +102,14 @@ export function wallApps(apps: App[]): WallApp[] {
     .map((app) => ({
       name: app.display_name,
       icon: app.icon_image,
-      category: categoriesOf(app)[0] ?? ""
+      category: app.categories[0] ?? ""
     }))
 }
 
 export function categoryCounts(apps: App[], limit = 9): CategoryCount[] {
   const counts = new Map<string, number>()
   for (const app of apps) {
-    for (const category of categoriesOf(app)) {
+    for (const category of app.categories) {
       counts.set(category, (counts.get(category) ?? 0) + 1)
     }
   }
@@ -127,28 +119,45 @@ export function categoryCounts(apps: App[], limit = 9): CategoryCount[] {
     .slice(0, limit)
 }
 
-/** "648TB" → 648, "10Gbps" → 10. */
-const leadingNumber = (value: string) => Number.parseFloat(value) || 0
-const spaced = (value: string) => value.replace(/(\d)([A-Za-z])/, "$1 $2")
+/** "10Gbps" → "10 Gbps": the feed writes sizes and speeds without a space. */
+export const spaced = (value: string) =>
+  value.replace(/(\d)([A-Za-z])/, "$1 $2")
 
+const SIZE_UNITS: Record<string, number> = { gb: 1, tb: 1000, pb: 1_000_000 }
+const SPEED_UNITS: Record<string, number> = { mbps: 1, gbps: 1000 }
+
+/** "648TB" in GB, "25Gbps" in Mbps; NaN when the unit isn't one of `units`. */
+function amount(value: string, units: Record<string, number>) {
+  const match = value.trim().match(/^([\d.]+)\s*([a-z]+)$/i)
+  const scale = match ? units[match[2].toLowerCase()] : undefined
+  return scale ? Number.parseFloat(match![1]) * scale : Number.NaN
+}
+
+function extremes<T>(items: T[], measure: (item: T) => number) {
+  const known = items
+    .map((item) => ({ item, value: measure(item) }))
+    .filter(({ value }) => Number.isFinite(value))
+    .sort((a, b) => a.value - b.value)
+  return known.length ? [known[0].item, known[known.length - 1].item] : null
+}
+
+/** The ranges the facts strip quotes; null when the feed can't be read. */
 export function planFacts(plans: PlansData): PlanFacts | null {
   const all = plans.data.flatMap((group) => group.plans)
-  if (all.length === 0) return null
-  const byStorage = [...all].sort(
-    (a, b) =>
-      leadingNumber(a.storage_capacity) - leadingNumber(b.storage_capacity)
+  const storage = extremes(all, (plan) =>
+    amount(plan.storage_capacity, SIZE_UNITS)
   )
-  const bySpeed = [...all].sort(
-    (a, b) =>
-      leadingNumber(a.connection_speed) - leadingNumber(b.connection_speed)
+  const speed = extremes(all, (plan) =>
+    amount(plan.connection_speed, SPEED_UNITS)
   )
+  if (!storage || !speed) return null
   const slots = all.map((plan) => plan.app_slots)
   return {
-    minStorage: spaced(byStorage[0].storage_capacity),
-    maxStorage: spaced(byStorage[byStorage.length - 1].storage_capacity),
+    minStorage: spaced(storage[0].storage_capacity),
+    maxStorage: spaced(storage[1].storage_capacity),
     minSlots: Math.min(...slots),
     maxSlots: Math.max(...slots),
-    maxSpeed: spaced(bySpeed[bySpeed.length - 1].connection_speed)
+    maxSpeed: spaced(speed[1].connection_speed)
   }
 }
 

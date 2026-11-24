@@ -5,11 +5,11 @@ import { launchWeekFlags } from "@/config/launch-week-flags"
 import {
   allUnmetered,
   appIcons,
+  catalogueApps,
   categoryCounts,
-  planFacts,
-  wallApps
-} from "../_components/home/catalogue"
-import { HomeView } from "../_components/home/home-view"
+  planFacts
+} from "../_components/site-home/catalogue"
+import { SiteHomeView } from "../_components/site-home/site-home-view"
 
 export const metadata: Metadata = {
   title: "Appbox · Kumo prototype · Home"
@@ -37,10 +37,10 @@ export default async function KumoHomePage({
   ])
 
   return (
-    <HomeView
+    <SiteHomeView
       icons={appIcons(apps)}
       appCount={apps.length}
-      wall={wallApps(apps)}
+      wall={catalogueApps(apps)}
       categories={categoryCounts(apps)}
       facts={planFacts(plans)}
       plans={plans}

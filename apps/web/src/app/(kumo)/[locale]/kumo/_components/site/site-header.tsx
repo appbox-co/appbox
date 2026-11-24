@@ -1,36 +1,31 @@
 "use client"
 
 import {
+  forwardRef,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
+  type ComponentPropsWithoutRef,
   type CSSProperties
 } from "react"
 import { useLocale } from "next-intl"
-import { useTheme } from "next-themes"
 import { Button, cn, DropdownMenu, LinkButton } from "@cloudflare/kumo"
 import {
   CaretDownIcon,
   CaretUpDownIcon,
   ListIcon,
   MagnifyingGlassIcon,
-  MoonIcon,
   ReceiptIcon,
   SquaresFourIcon,
-  SunIcon,
   TranslateIcon
 } from "@phosphor-icons/react"
-import {
-  Link,
-  localeNames,
-  supportedLocales,
-  usePathname,
-  useRouter
-} from "@/i18n/routing"
-import type { LocaleOptions } from "@/lib/opendocs/types/i18n"
+import * as NavigationMenu from "@radix-ui/react-navigation-menu"
+import { Icons } from "@/components/shared/icons"
+import { Link, localeNames, supportedLocales } from "@/i18n/routing"
+import { ThemeToggle } from "../app-shell"
 import { useQuickSearch } from "../quick-search"
+import { useChangeLocale, type Locale } from "../use-change-locale"
 import {
   ACCOUNT_LINKS,
   MORE_LINKS,
@@ -41,7 +36,6 @@ import {
 
 const COPY = {
   home: "Appbox home",
-  main: "Main",
   billing: "Billing",
   controlPanel: "Control panel",
   getAppbox: "Get an Appbox",
@@ -50,14 +44,22 @@ const COPY = {
   menu: "Menu",
   account: "Your account",
   more: "More",
-  language: (name: string) => `Language: ${name}`,
-  theme: "Switch between light and dark"
+  language: (name: string) => `Language: ${name}`
 } as const
 
-function MenuItem({ link }: { link: MenuLink }) {
+/** One menu link. Takes extra props and a ref, so Radix's Link can wrap it. */
+const MenuItem = forwardRef<
+  HTMLAnchorElement,
+  { link: MenuLink } & Omit<ComponentPropsWithoutRef<"a">, "href">
+>(function MenuItem({ link, className, ...rest }, ref) {
   const Icon = link.icon
   return (
-    <Link className="ks-item" href={link.href}>
+    <Link
+      ref={ref}
+      href={link.href}
+      className={cn("ks-item", className)}
+      {...rest}
+    >
       <Icon size={18} className="ks-item-icon" aria-hidden="true" />
       <span className="grid gap-0.5">
         <span className="font-medium text-kumo-default">{link.title}</span>
@@ -65,17 +67,12 @@ function MenuItem({ link }: { link: MenuLink }) {
       </span>
     </Link>
   )
-}
-
-function persistLocale(locale: string) {
-  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; samesite=lax`
-}
+})
 
 /** The language picker: a Kumo dropdown menu of every locale the site has. */
 function LanguageMenu({ variant }: { variant: "code" | "name" }) {
-  const locale = useLocale() as LocaleOptions
-  const router = useRouter()
-  const pathname = usePathname()
+  const locale = useLocale() as Locale
+  const changeLocale = useChangeLocale()
   const name = localeNames[locale] ?? locale
 
   return (
@@ -104,8 +101,7 @@ function LanguageMenu({ variant }: { variant: "code" | "name" }) {
         <DropdownMenu.RadioGroup
           value={locale}
           onValueChange={(next) => {
-            persistLocale(String(next))
-            router.replace(pathname, { locale: next as LocaleOptions })
+            if (next !== locale) changeLocale(next as Locale)
           }}
         >
           {supportedLocales.map((code) => (
@@ -120,116 +116,88 @@ function LanguageMenu({ variant }: { variant: "code" | "name" }) {
   )
 }
 
-/** Both icons render; the stylesheet shows the one for the current mode. */
-function ThemeToggle({ className }: { className?: string }) {
-  const { resolvedTheme, setTheme } = useTheme()
+/**
+ * The Products and Resources menus, after cloudflare.com: Radix's navigation
+ * menu, so one shared panel resizes to each menu, the content slides in from
+ * the side the pointer moved to, and a highlight follows the open trigger.
+ * Only the look lives in kumo-site.css.
+ */
+function MainNav({ appCount }: { appCount: number }) {
   return (
-    <Button
-      variant="ghost"
-      shape="square"
-      aria-label={COPY.theme}
-      className={className}
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-    >
-      <SunIcon size={18} className="ks-sun" aria-hidden="true" />
-      <MoonIcon size={18} className="ks-moon" aria-hidden="true" />
-    </Button>
+    <NavigationMenu.Root delayDuration={80}>
+      <NavigationMenu.List className="ks-nav">
+        {siteMenus(appCount).map((menu) => (
+          <NavigationMenu.Item key={menu.key} value={menu.key}>
+            <NavigationMenu.Trigger className="ks-trigger">
+              {menu.label}
+              <CaretUpDownIcon
+                size={14}
+                className="opacity-70"
+                aria-hidden="true"
+              />
+            </NavigationMenu.Trigger>
+            <NavigationMenu.Content
+              className="ks-content"
+              style={{ "--cols": menu.groups.length } as CSSProperties}
+            >
+              {menu.groups.map((group) => (
+                <div key={group.title} className="ks-col">
+                  <p className="ks-col-head">{group.title}</p>
+                  {group.links.map((link) => (
+                    <NavigationMenu.Link key={link.title} asChild>
+                      <MenuItem link={link} />
+                    </NavigationMenu.Link>
+                  ))}
+                </div>
+              ))}
+            </NavigationMenu.Content>
+          </NavigationMenu.Item>
+        ))}
+        {SITE_LINKS.map((link) => (
+          <NavigationMenu.Item key={link.href}>
+            <NavigationMenu.Link asChild>
+              <Link href={link.href} className="ks-trigger">
+                {link.title}
+              </Link>
+            </NavigationMenu.Link>
+          </NavigationMenu.Item>
+        ))}
+        <NavigationMenu.Indicator className="ks-ind" />
+      </NavigationMenu.List>
+      <div className="ks-viewport-pos">
+        <NavigationMenu.Viewport className="ks-viewport" />
+      </div>
+    </NavigationMenu.Root>
   )
 }
 
-/**
- * The Products and Resources menus, after cloudflare.com: one shared panel
- * under the nav. Moving from one menu to the other keeps the panel open,
- * resizes it to the new content and slides the content in from the side the
- * pointer moved to, while the highlight slides to the new trigger.
- */
-function MainNav({ appCount }: { appCount: number }) {
-  const menus = siteMenus(appCount)
-  const triggers = useRef<(HTMLButtonElement | null)[]>([])
-  const contents = useRef<(HTMLDivElement | null)[]>([])
-  const navRef = useRef<HTMLElement>(null)
-  const viewportRef = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = useState(false)
-  const [active, setActive] = useState(-1)
-  const [from, setFrom] = useState<"left" | "right" | null>(null)
-  const [leaving, setLeaving] = useState<{ index: number; dir: number } | null>(
-    null
-  )
-  const [jump, setJump] = useState(false)
-  const [size, setSize] = useState({ width: 600, height: 200 })
-  const [highlight, setHighlight] = useState({ x: 0, width: 0 })
-  const timers = useRef<{ open?: number; close?: number; clear?: number }>({})
-
-  const show = useCallback(
-    (index: number) => {
-      window.clearTimeout(timers.current.close)
-      window.clearTimeout(timers.current.clear)
-      if (open && index === active) return
-      if (!open || active === -1) {
-        setJump(true)
-        setFrom(null)
-        setLeaving(null)
-      } else {
-        const dir = index > active ? 1 : -1
-        setJump(false)
-        setLeaving({ index: active, dir })
-        setFrom(dir > 0 ? "right" : "left")
-      }
-      setActive(index)
-      setOpen(true)
-    },
-    [open, active]
-  )
-
-  const hide = useCallback(() => {
-    window.clearTimeout(timers.current.open)
-    setOpen(false)
-    window.clearTimeout(timers.current.clear)
-    // Keep the content until the panel has faded out.
-    timers.current.clear = window.setTimeout(() => {
-      setActive(-1)
-      setLeaving(null)
-    }, 160)
-  }, [])
-
-  const hideSoon = useCallback(() => {
-    window.clearTimeout(timers.current.close)
-    timers.current.close = window.setTimeout(hide, 180)
-  }, [hide])
-
-  useLayoutEffect(() => {
-    if (!open || active === -1) return
-    const content = contents.current[active]
-    const trigger = triggers.current[active]
-    if (content) {
-      setSize({
-        width: content.offsetWidth + 10,
-        height: content.offsetHeight + 10
-      })
-    }
-    if (trigger) {
-      setHighlight({ x: trigger.offsetLeft, width: trigger.offsetWidth })
-    }
-  }, [open, active])
+/** The phone menu: every menu's links in one sheet under the header. */
+function MenuSheet({
+  appCount,
+  open,
+  onClose,
+  burgerRef
+}: {
+  appCount: number
+  open: boolean
+  onClose: () => void
+  burgerRef: React.RefObject<HTMLButtonElement | null>
+}) {
+  const sheetRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!jump) return
-    const frame = requestAnimationFrame(() => setJump(false))
-    return () => cancelAnimationFrame(frame)
-  }, [jump])
-
-  useEffect(() => {
+    if (!open) return
     const onClick = (event: MouseEvent) => {
-      const target = event.target as Element
-      const inside =
-        navRef.current?.contains(target) ||
-        viewportRef.current?.contains(target)
-      if (!inside || target.closest(".ks-item")) hide()
+      const target = event.target as Node
+      if (
+        !sheetRef.current?.contains(target) &&
+        !burgerRef.current?.contains(target)
+      ) {
+        onClose()
+      }
     }
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || !open) return
-      triggers.current[active]?.focus()
-      hide()
+      if (event.key === "Escape") onClose()
     }
     document.addEventListener("click", onClick)
     document.addEventListener("keydown", onKey)
@@ -237,143 +205,70 @@ function MainNav({ appCount }: { appCount: number }) {
       document.removeEventListener("click", onClick)
       document.removeEventListener("keydown", onKey)
     }
-  }, [hide, open, active])
-
-  const canHover = () =>
-    matchMedia("(hover: hover) and (pointer: fine)").matches
+  }, [open, onClose, burgerRef])
 
   return (
-    <>
-      <nav
-        ref={navRef}
-        className="ks-nav"
-        aria-label={COPY.main}
-        onMouseLeave={() => canHover() && hideSoon()}
-      >
-        <span
-          aria-hidden="true"
-          className={cn("ks-ind", open && "ks-on", jump && "ks-jump")}
-          style={
-            {
-              "--ix": `${highlight.x}px`,
-              "--iw": `${highlight.width}px`
-            } as CSSProperties
-          }
+    <div
+      ref={sheetRef}
+      id="ks-sheet"
+      className={cn("ks-sheet", open && "ks-open")}
+    >
+      <div className="ks-sheet-account gap-0.5">
+        <p className="ks-sheet-head">{COPY.account}</p>
+        <MenuItem
+          onClick={onClose}
+          link={{
+            icon: ReceiptIcon,
+            title: COPY.billing,
+            text: "Invoices, plans and payment",
+            href: ACCOUNT_LINKS.billing
+          }}
         />
-        {menus.map((menu, index) => (
-          <button
-            key={menu.key}
-            ref={(element) => {
-              triggers.current[index] = element
-            }}
-            type="button"
-            className="ks-trigger"
-            aria-expanded={open && active === index}
-            aria-controls={`ks-menu-${menu.key}`}
-            onClick={() => (open && active === index ? hide() : show(index))}
-            onMouseEnter={() => {
-              if (!canHover()) return
-              window.clearTimeout(timers.current.open)
-              timers.current.open = window.setTimeout(
-                () => show(index),
-                open ? 0 : 80
-              )
-            }}
-          >
-            {menu.label}
-            <CaretUpDownIcon
-              size={14}
-              className="opacity-70"
-              aria-hidden="true"
-            />
-          </button>
-        ))}
-        {SITE_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="ks-trigger"
-            onMouseEnter={() => canHover() && hideSoon()}
-          >
-            {link.title}
-          </Link>
-        ))}
-      </nav>
-      <div
-        ref={viewportRef}
-        className={cn("ks-viewport", open && "ks-open", jump && "ks-jump")}
-        style={
-          {
-            "--vw": `${size.width}px`,
-            "--vh": `${size.height}px`
-          } as CSSProperties
-        }
-        onMouseEnter={() => window.clearTimeout(timers.current.close)}
-        onMouseLeave={() => canHover() && hideSoon()}
-      >
-        <div className="ks-vp-in">
-          {menus.map((menu, index) => {
-            const isActive = index === active
-            const out =
-              leaving?.index === index ? `${-leaving.dir * 48}px` : "0px"
-            return (
-              <div
-                key={menu.key}
-                id={`ks-menu-${menu.key}`}
-                ref={(element) => {
-                  contents.current[index] = element
-                }}
-                className={`ks-content ks-cols-${menu.groups.length}`}
-                data-state={isActive ? "active" : "inactive"}
-                data-from={isActive && from ? from : undefined}
-                style={{ "--out": out } as CSSProperties}
-              >
-                {menu.groups.map((group) => (
-                  <div key={group.title} className="ks-col">
-                    <p className="ks-col-head">{group.title}</p>
-                    {group.links.map((link) => (
-                      <MenuItem key={link.title} link={link} />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            )
-          })}
-        </div>
+        <MenuItem
+          onClick={onClose}
+          link={{
+            icon: SquaresFourIcon,
+            title: COPY.controlPanel,
+            text: "Manage your apps and Appbox",
+            href: ACCOUNT_LINKS.controlPanel
+          }}
+        />
       </div>
-    </>
+      {siteMenus(appCount).flatMap((menu) =>
+        menu.groups.map((group) => (
+          <div key={group.title} className="grid gap-0.5">
+            <p className="ks-sheet-head">{group.title}</p>
+            {group.links.map((link) => (
+              <MenuItem key={link.title} link={link} onClick={onClose} />
+            ))}
+          </div>
+        ))
+      )}
+      <div className="grid gap-0.5">
+        <p className="ks-sheet-head">{COPY.more}</p>
+        {MORE_LINKS.map((link) => (
+          <MenuItem key={link.title} link={link} onClick={onClose} />
+        ))}
+      </div>
+      <div className="ks-sheet-prefs">
+        <LanguageMenu variant="name" />
+        <ThemeToggle />
+      </div>
+    </div>
   )
 }
 
 export function SiteHeader({ appCount }: { appCount: number }) {
   const openSearch = useQuickSearch()
   const [sheet, setSheet] = useState(false)
-  const sheetRef = useRef<HTMLDivElement>(null)
+  const closeSheet = useCallback(() => setSheet(false), [])
   const burgerRef = useRef<HTMLButtonElement>(null)
-
-  useEffect(() => {
-    if (!sheet) return
-    const onClick = (event: MouseEvent) => {
-      const target = event.target as Element
-      if (burgerRef.current?.contains(target)) return
-      if (!sheetRef.current?.contains(target) || target.closest(".ks-item")) {
-        setSheet(false)
-      }
-    }
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSheet(false)
-    }
-    document.addEventListener("click", onClick)
-    document.addEventListener("keydown", onKey)
-    return () => {
-      document.removeEventListener("click", onClick)
-      document.removeEventListener("keydown", onKey)
-    }
-  }, [sheet])
 
   return (
     <header className="ks-head">
-      <Link className="ks-logo" href="/kumo" aria-label={COPY.home} />
+      <Link href="/kumo" aria-label={COPY.home}>
+        <Icons.sitename className="h-6 w-auto text-kumo-default" />
+      </Link>
       <MainNav appCount={appCount} />
       <div className="ks-head-end">
         <span className="ks-head-prefs flex items-center gap-2">
@@ -422,51 +317,12 @@ export function SiteHeader({ appCount }: { appCount: number }) {
           <ListIcon size={20} aria-hidden="true" />
         </Button>
       </div>
-      <div
-        ref={sheetRef}
-        id="ks-sheet"
-        className={cn("ks-sheet", sheet && "ks-open")}
-      >
-        <div className="ks-sheet-account gap-0.5">
-          <p className="ks-sheet-head">{COPY.account}</p>
-          <MenuItem
-            link={{
-              icon: ReceiptIcon,
-              title: COPY.billing,
-              text: "Invoices, plans and payment",
-              href: ACCOUNT_LINKS.billing
-            }}
-          />
-          <MenuItem
-            link={{
-              icon: SquaresFourIcon,
-              title: COPY.controlPanel,
-              text: "Manage your apps and Appbox",
-              href: ACCOUNT_LINKS.controlPanel
-            }}
-          />
-        </div>
-        {siteMenus(appCount).flatMap((menu) =>
-          menu.groups.map((group) => (
-            <div key={group.title} className="grid gap-0.5">
-              <p className="ks-sheet-head">{group.title}</p>
-              {group.links.map((link) => (
-                <MenuItem key={link.title} link={link} />
-              ))}
-            </div>
-          ))
-        )}
-        <div className="grid gap-0.5">
-          <p className="ks-sheet-head">{COPY.more}</p>
-          {MORE_LINKS.map((link) => (
-            <MenuItem key={link.title} link={link} />
-          ))}
-        </div>
-        <div className="ks-sheet-prefs">
-          <LanguageMenu variant="name" />
-          <ThemeToggle />
-        </div>
-      </div>
+      <MenuSheet
+        appCount={appCount}
+        open={sheet}
+        onClose={closeSheet}
+        burgerRef={burgerRef}
+      />
     </header>
   )
 }

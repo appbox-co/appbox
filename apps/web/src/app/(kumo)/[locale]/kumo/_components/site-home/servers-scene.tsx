@@ -4,10 +4,11 @@ import { useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Badge, Button, cn, Tabs } from "@cloudflare/kumo"
 import { ArrowsClockwiseIcon } from "@phosphor-icons/react"
+import { AppIcon } from "../app-icon"
 import { InstanceStatusBadge } from "../instance-controls"
 import { Panel } from "../panel"
 import { sampleDomain, type AppIcons } from "./catalogue"
-import { SceneIcon, Stage, useSceneLoop } from "./scene"
+import { Stage, useSceneScript } from "./scene"
 
 interface LinuxSystem {
   name: string
@@ -115,34 +116,34 @@ export function ServersScene({ icons }: { icons: AppIcons }) {
   })
   const [hidden, setHidden] = useState(false)
 
-  useSceneLoop(sceneRef, async (sleep) => {
-    const system = SYSTEMS[index]
-    if ("windows" in system) {
-      await sleep(3200)
-    } else {
-      let text = system.prompt
-      setTyped(text)
-      for (const command of system.commands) {
-        await sleep(350)
-        for (const char of command) {
-          text += char
-          setTyped(text)
-          await sleep(40)
-        }
-        await sleep(500)
-        text += `\n${system.prompt}`
+  useSceneScript(sceneRef, async (sleep) => {
+    for (let current = 0; ; current = (current + 1) % SYSTEMS.length) {
+      const system = SYSTEMS[current]
+      setIndex(current)
+      setHidden(false)
+      await sleep(400)
+      if ("windows" in system) {
+        await sleep(3200)
+      } else {
+        let text = system.prompt
         setTyped(text)
+        for (const command of system.commands) {
+          await sleep(350)
+          for (const char of command) {
+            text += char
+            setTyped(text)
+            await sleep(40)
+          }
+          await sleep(500)
+          text += `\n${system.prompt}`
+          setTyped(text)
+        }
+        await sleep(1500)
       }
-      await sleep(1500)
+      setHidden(true)
+      await sleep(350)
+      setTyped("")
     }
-    setHidden(true)
-    await sleep(350)
-    const next = (index + 1) % SYSTEMS.length
-    setIndex(next)
-    const upcoming = SYSTEMS[next]
-    setTyped("windows" in upcoming ? "" : upcoming.prompt)
-    setHidden(false)
-    await sleep(400)
   })
 
   const system = SYSTEMS[index]
@@ -156,8 +157,8 @@ export function ServersScene({ icons }: { icons: AppIcons }) {
         <div
           className={cn("ks-swap flex items-center gap-4", hidden && "ks-gone")}
         >
-          <SceneIcon
-            icons={icons}
+          <AppIcon
+            icon={icons[system.name] ?? ""}
             name={system.name}
             size={52}
             className="ks-appicon"

@@ -8,10 +8,12 @@ interface AppIconProps {
   name: string
   /** Sets the size, e.g. `size-5`. */
   className?: string
+  /** Pixels to load the image at; set it when the icon is drawn larger than 32px. */
+  size?: number
 }
 
 /** Small square app icon. Decorative: the app name is always shown beside it. */
-export function AppIcon({ icon, name, className }: AppIconProps) {
+export function AppIcon({ icon, name, className, size = 32 }: AppIconProps) {
   if (!icon) {
     return (
       <span
@@ -30,8 +32,8 @@ export function AppIcon({ icon, name, className }: AppIconProps) {
     <Image
       src={`${APP_ICON_BASE_URL}${icon}`}
       alt=""
-      width={32}
-      height={32}
+      width={size}
+      height={size}
       unoptimized
       className={cn(
         "size-5 shrink-0 rounded-md object-cover ring ring-kumo-hairline",

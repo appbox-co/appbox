@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Badge } from "@cloudflare/kumo"
-import type { AppIcons, WallApp } from "./catalogue"
-import { SceneIcon, useSceneLoop } from "./scene"
+import { AppIcon } from "../app-icon"
+import type { CatalogueApp } from "./catalogue"
+import { usePauseOffscreen } from "./scene"
 
 async function fetchInstallCount(): Promise<number | null> {
   try {
@@ -47,15 +48,9 @@ export function InstallCounter() {
 }
 
 /** Three lanes of catalogue apps drifting sideways, paused while off screen. */
-export function AppsWall({
-  apps,
-  icons
-}: {
-  apps: WallApp[]
-  icons: AppIcons
-}) {
+export function AppsWall({ apps }: { apps: CatalogueApp[] }) {
   const wallRef = useRef<HTMLDivElement>(null)
-  useSceneLoop(wallRef, (sleep) => sleep(60_000))
+  usePauseOffscreen(wallRef)
 
   const shown = apps.slice(0, 42)
   const third = Math.ceil(shown.length / 3)
@@ -71,12 +66,7 @@ export function AppsWall({
         <div key={index} className="ks-lane">
           {[...lane, ...lane].map((app, position) => (
             <div key={`${app.name}-${position}`} className="ks-app">
-              <SceneIcon
-                icons={icons}
-                name={app.name}
-                size={32}
-                className="rounded-md"
-              />
+              <AppIcon icon={app.icon} name={app.name} className="size-8" />
               <span>
                 {app.name}
                 <small>{app.category}</small>

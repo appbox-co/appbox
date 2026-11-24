@@ -5,7 +5,7 @@ import { Badge, cn, LayerCard, LinkButton, Tabs } from "@cloudflare/kumo"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import type { PlansData } from "@/components/ui/plans"
 import { trackBeginCheckout } from "@/lib/posthog"
-import { allUnmetered } from "./catalogue"
+import { spaced } from "./catalogue"
 
 type Group = PlansData["data"][number]
 type Plan = Group["plans"][number]
@@ -20,16 +20,17 @@ const CYCLES: { value: Cycle; label: string; every?: string }[] = [
 
 const BILLING = "https://billing.appbox.co"
 
-/** Windows VPS needs a dedicated plan, or a shared one from NG-18000 up. */
+/** The smallest shared plan that runs Windows VPS; dedicated plans all do. */
+const WINDOWS_TIER = 18000
+
+/** The current page's rule, copied from components/ui/plans.tsx. */
 function supportsWindowsVps(plan: Plan, group: Group) {
   const descriptor =
     `${group.slug} ${group.title} ${group.short_title}`.toLowerCase()
   if (descriptor.includes("dedicated")) return true
   const tier = `${plan.short_title} ${plan.title}`.match(/NG[-\s]?(\d+)/i)
-  return tier !== null && Number.parseInt(tier[1], 10) >= 18000
+  return tier !== null && Number.parseInt(tier[1], 10) >= WINDOWS_TIER
 }
-
-const spaced = (value: string) => value.replace(/(\d)([A-Za-z])/, "$1 $2")
 
 function withAffiliate(url: string, affiliateId?: string) {
   if (!affiliateId) return url
@@ -74,6 +75,7 @@ function PlanCard({
       ? plan.promotion
       : undefined
   const promoPrice = promotion?.promotional_pricing.EUR[cycle]
+  const promoMonths = promotion?.duration_months ?? 1
   const every = CYCLES.find((entry) => entry.value === cycle)?.every
   const available = plan.available !== false
   const orderUrl = withAffiliate(
@@ -107,7 +109,9 @@ function PlanCard({
               <strong className="text-[26px] leading-tight font-semibold tabular-nums">
                 {promoPrice.discounted_per_month}{" "}
                 <small className="text-base font-normal text-kumo-subtle">
-                  first month
+                  {promoMonths === 1
+                    ? "first month"
+                    : `for ${promoMonths} months`}
                 </small>
               </strong>
               <span className="text-sm text-kumo-subtle">
@@ -137,7 +141,9 @@ function PlanCard({
           <Spec label="Connection">{spaced(plan.connection_speed)}</Spec>
           {boostEnabled && <Spec label="App Boost">Included</Spec>}
           <Spec label="Windows VPS">
-            {supportsWindowsVps(plan, group) ? "Supported" : "NG-18000 and up"}
+            {supportsWindowsVps(plan, group)
+              ? "Supported"
+              : `NG-${WINDOWS_TIER} and up`}
           </Spec>
           {plan.raid && <Spec label="RAID">{plan.raid}</Spec>}
           {plan.number_of_disks ? (
@@ -270,14 +276,15 @@ function PlanGroup({
 export function Plans({
   plans,
   affiliateId,
-  boostEnabled
+  boostEnabled,
+  showTraffic
 }: {
   plans: PlansData
   affiliateId?: string
   boostEnabled: boolean
+  /** Off when the section heading already says traffic is unmetered. */
+  showTraffic: boolean
 }) {
-  // The section heading says traffic is unmetered; repeat it per card only when it isn't.
-  const showTraffic = !allUnmetered(plans)
   return (
     <>
       {plans.data.map((group) => (

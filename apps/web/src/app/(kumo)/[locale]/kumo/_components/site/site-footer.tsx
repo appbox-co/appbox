@@ -1,3 +1,4 @@
+import { Icons } from "@/components/shared/icons"
 import { siteConfig } from "@/config/site"
 import { Link } from "@/i18n/routing"
 
@@ -50,7 +51,7 @@ export function SiteFooter() {
   return (
     <footer className="ks-cell ks-foot">
       <div>
-        <span className="ks-logo ks-logo-sm" aria-hidden="true" />
+        <Icons.sitename className="h-5 w-auto text-kumo-default" />
         <p className="mt-2.5 max-w-[26ch] text-kumo-subtle">
           Self-hosted apps on hardware we own.
         </p>
