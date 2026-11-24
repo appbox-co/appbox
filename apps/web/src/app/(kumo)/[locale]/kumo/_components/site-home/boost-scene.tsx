@@ -17,19 +17,21 @@ export function BoostScene() {
   const [slots, setSlots] = useState(3)
   const [applying, setApplying] = useState(false)
 
+  // It starts from the first frame, three slots, so the slider is still as the
+  // scene appears, and goes back to none before stepping up again.
   useSceneScript(sceneRef, async (sleep) => {
     for (;;) {
+      await sleep(600)
+      setApplying(true)
+      await sleep(1200)
+      setApplying(false)
+      await sleep(2600)
       setSlots(0)
       await sleep(1500)
       for (const next of [1, 2, 3]) {
         setSlots(next)
         await sleep(800)
       }
-      await sleep(600)
-      setApplying(true)
-      await sleep(1200)
-      setApplying(false)
-      await sleep(2600)
     }
   })
 
