@@ -2,36 +2,22 @@
 
 import type { ReactNode } from "react"
 import { useLocale, useTranslations } from "next-intl"
-import { useSearchParams } from "next/navigation"
 import { Badge, LinkButton, Select } from "@cloudflare/kumo"
 import { GlobeIcon } from "@phosphor-icons/react"
 import { Icons } from "@/components/shared/icons"
-import {
-  localeNames,
-  supportedLocales,
-  usePathname,
-  useRouter
-} from "@/i18n/routing"
+import { localeNames, supportedLocales } from "@/i18n/routing"
 import { ThemeToggle } from "../app-shell"
 import { KumoRoutesProvider } from "../kumo-routes"
+import { useChangeLocale, type Locale } from "../use-change-locale"
 import { AppStrip, AppWall, useWallApps } from "./app-wall"
-
-type Locale = (typeof supportedLocales)[number]
 
 /** Where Appbox accounts come from: buying a plan on the main site. */
 export const PLANS_HREF = "/#plans-section"
 
-/** The current design's language picker keeps the choice in this cookie. */
-function persistLocaleCookie(locale: Locale) {
-  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; samesite=lax`
-}
-
 function LanguageSelect() {
   const t = useTranslations("site.buttons")
   const locale = useLocale() as Locale
-  const router = useRouter()
-  const pathname = usePathname()
-  const search = useSearchParams().toString()
+  const changeLocale = useChangeLocale()
 
   return (
     <Select
@@ -40,12 +26,7 @@ function LanguageSelect() {
       className="w-auto"
       value={locale}
       onValueChange={(next) => {
-        if (!next || next === locale) return
-        persistLocaleCookie(next as Locale)
-        // Keep ?redirect= and the like, so a sign-in still lands where it was going.
-        router.replace(search ? `${pathname}?${search}` : pathname, {
-          locale: next as Locale
-        })
+        if (next && next !== locale) changeLocale(next as Locale)
       }}
       renderValue={(value) => (
         <span className="flex items-center gap-1.5">

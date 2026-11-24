@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { useTranslations } from "next-intl"
 import { Table } from "@cloudflare/kumo"
 import type { CyloSummary } from "@/api/cylos/cylos"
 import { AppIcon } from "../app-icon"
@@ -9,7 +10,7 @@ import { AppboxCard } from "../home-view"
 import { InstanceStatusBadge } from "../instance-controls"
 import { Panel } from "../panel"
 import { sampleDomain, type AppIcons } from "./catalogue"
-import { Stage, useSceneLoop } from "./scene"
+import { Stage, useSceneScript } from "./scene"
 
 /** Installed on the sample Appbox before the scene starts, newest first. */
 const INSTALLED = ["n8n", "Jellyfin", "qBittorrent", "Nextcloud", "Plex"]
@@ -63,25 +64,27 @@ interface Row {
  * then on the Appbox card's storage, app slots and shortcut strip.
  */
 export function HeroScene({ icons }: { icons: AppIcons }) {
+  const t = useTranslations("appboxmanager.installedApps")
   const sceneRef = useRef<HTMLDivElement>(null)
   const [added, setAdded] = useState<Row[]>([])
-  const next = useRef(0)
 
-  useSceneLoop(sceneRef, async (sleep) => {
-    for (let i = 0; i < 4; i++) {
-      const name = QUEUE[next.current++ % QUEUE.length]
-      setAdded((rows) => [{ name, status: "installing" }, ...rows])
-      await sleep(1700)
-      setAdded((rows) =>
-        rows.map((row) =>
-          row.name === name ? { ...row, status: "online" } : row
+  useSceneScript(sceneRef, async (sleep) => {
+    for (let next = 0; ;) {
+      for (let i = 0; i < 4; i++) {
+        const name = QUEUE[next++ % QUEUE.length]
+        setAdded((rows) => [{ name, status: "installing" }, ...rows])
+        await sleep(1700)
+        setAdded((rows) =>
+          rows.map((row) =>
+            row.name === name ? { ...row, status: "online" } : row
+          )
         )
-      )
-      await sleep(1300)
+        await sleep(1300)
+      }
+      await sleep(2400)
+      setAdded([])
+      await sleep(500)
     }
-    await sleep(2400)
-    setAdded([])
-    await sleep(500)
   })
 
   const online = added.filter((row) => row.status === "online")
@@ -105,7 +108,7 @@ export function HeroScene({ icons }: { icons: AppIcons }) {
     <Stage width={620} height={540} sceneRef={sceneRef}>
       <div className="ks-abs ks-lift" style={{ left: 72, top: 36, width: 600 }}>
         <Panel title="Installed apps" count={appCount} flush>
-          <div className="ks-tablebox overflow-hidden">
+          <div className="max-h-[232px] overflow-hidden">
             <Table layout="fixed">
               <colgroup>
                 <col style={{ width: "38%" }} />
@@ -114,9 +117,9 @@ export function HeroScene({ icons }: { icons: AppIcons }) {
               </colgroup>
               <Table.Header>
                 <Table.Row>
-                  <Table.Head>Name</Table.Head>
-                  <Table.Head>Domain</Table.Head>
-                  <Table.Head>Status</Table.Head>
+                  <Table.Head>{t("name")}</Table.Head>
+                  <Table.Head>{t("domain")}</Table.Head>
+                  <Table.Head>{t("status")}</Table.Head>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -147,7 +150,7 @@ export function HeroScene({ icons }: { icons: AppIcons }) {
         </Panel>
       </div>
       <div
-        className="ks-abs ks-lift ks-four"
+        className="ks-abs ks-lift"
         style={{ left: 20, top: 316, width: 540 }}
       >
         <AppboxCard cylo={sampleAppbox(appCount)} apps={strip} />

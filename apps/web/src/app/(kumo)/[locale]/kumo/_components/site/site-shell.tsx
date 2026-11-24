@@ -5,12 +5,7 @@ import { BookOpenIcon, NewspaperIcon } from "@phosphor-icons/react"
 import { AppIcon } from "../app-icon"
 import { QuickSearchProvider, type SearchGroup } from "../quick-search"
 import { SiteHeader } from "./site-header"
-
-export interface SiteSearchData {
-  apps: { name: string; icon: string; category: string }[]
-  docs: { title: string; section: string; href: string }[]
-  posts: { title: string; date: string; href: string }[]
-}
+import type { SiteSearchData } from "./site-search"
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-GB", {

@@ -2,8 +2,9 @@
 
 import { useRef, useState, type CSSProperties } from "react"
 import { cn } from "@cloudflare/kumo"
+import { AppIcon } from "../app-icon"
 import type { AppIcons } from "./catalogue"
-import { SceneIcon, Stage, useSceneLoop } from "./scene"
+import { Stage, usePauseOffscreen, useSceneScript } from "./scene"
 
 /* -------------------------------------------------------------------------- */
 /*  Connected apps: a diagram of apps sharing storage and a local bridge      */
@@ -39,7 +40,7 @@ const TAGS = [
 
 export function ConnectScene({ icons }: { icons: AppIcons }) {
   const sceneRef = useRef<HTMLDivElement>(null)
-  useSceneLoop(sceneRef, (sleep) => sleep(60_000))
+  usePauseOffscreen(sceneRef)
 
   return (
     <Stage width={460} height={380} sceneRef={sceneRef}>
@@ -78,11 +79,10 @@ export function ConnectScene({ icons }: { icons: AppIcons }) {
           style={{ left: node.x, top: node.y }}
         >
           <span className="ks-ic">
-            <SceneIcon
-              icons={icons}
+            <AppIcon
+              icon={icons[node.name] ?? ""}
               name={node.name}
-              size={32}
-              className="rounded-[7px]"
+              className="size-8 rounded-[7px]"
             />
           </span>
           {node.label ?? node.name}
@@ -156,11 +156,10 @@ export function AssistantScene({ icons }: { icons: AppIcons }) {
   const [messages, setMessages] = useState<Message[]>(() =>
     TALKS[2].map(([kind, text], id) => ({ id, kind, text, done: true }))
   )
-  const counters = useRef({ id: 100, talk: 0 })
-
-  useSceneLoop(sceneRef, async (sleep) => {
+  useSceneScript(sceneRef, async (sleep) => {
+    let nextId = 100
     const add = (message: Omit<Message, "id">) => {
-      const id = counters.current.id++
+      const id = nextId++
       setMessages((list) => [...list, { ...message, id }].slice(-14))
       return id
     }
@@ -171,26 +170,27 @@ export function AssistantScene({ icons }: { icons: AppIcons }) {
         )
       )
 
-    await sleep(2400)
-    setMessages((list) => list.map((message) => ({ ...message, old: true })))
-    setChannel((current) => (current + 1) % CHANNELS.length)
-    const talk = TALKS[counters.current.talk++ % TALKS.length]
-    for (const [kind, text] of talk) {
-      if (kind === "me") {
-        await sleep(500)
-        add({ kind, text })
-        await sleep(700)
-      } else if (kind === "tool") {
-        const id = add({ kind, text })
-        await sleep(1000)
-        update(id, { done: true })
-      } else {
-        const id = add({ kind: "typing", text: "" })
-        await sleep(1100)
-        update(id, { kind: "bot", text })
+    for (let talk = 0; ; talk = (talk + 1) % TALKS.length) {
+      await sleep(2400)
+      setMessages((list) => list.map((message) => ({ ...message, old: true })))
+      setChannel((current) => (current + 1) % CHANNELS.length)
+      for (const [kind, text] of TALKS[talk]) {
+        if (kind === "me") {
+          await sleep(500)
+          add({ kind, text })
+          await sleep(700)
+        } else if (kind === "tool") {
+          const id = add({ kind, text })
+          await sleep(1000)
+          update(id, { done: true })
+        } else {
+          const id = add({ kind: "typing", text: "" })
+          await sleep(1100)
+          update(id, { kind: "bot", text })
+        }
       }
+      await sleep(3000)
     }
-    await sleep(3000)
   })
 
   return (
@@ -200,11 +200,10 @@ export function AssistantScene({ icons }: { icons: AppIcons }) {
         style={{ left: 60, top: 20, width: 340, height: 270 }}
       >
         <div className="ks-chat-head">
-          <SceneIcon
-            icons={icons}
+          <AppIcon
+            icon={icons.OpenClaw ?? ""}
             name="OpenClaw"
-            size={30}
-            className="rounded-full"
+            className="size-[30px] rounded-full"
           />
           <div>
             <b className="block text-[13px] leading-tight font-semibold">
@@ -258,19 +257,31 @@ export function AssistantScene({ icons }: { icons: AppIcons }) {
 /*  Hardware: two racks with blinking lights, uplinked to our routers         */
 /* -------------------------------------------------------------------------- */
 
-/** Fixed blink timings, the same on the server and in the browser. */
-function sledTimings(seed: number) {
-  let state = seed
-  const random = () => {
-    state = (state * 1103515245 + 12345) % 2147483648
-    return state / 2147483648
-  }
-  return Array.from({ length: 9 }, () => {
-    const delay = random() * 2
-    const period = 0.8 + random() * 1.6
-    return { delay, period }
-  })
-}
+/** Blink timings for each rack's nine sleds: [delay, period] in seconds. */
+const SLEDS = [
+  [
+    [0.4, 1.9],
+    [1.7, 1.1],
+    [0.9, 2.2],
+    [1.3, 0.9],
+    [0.2, 1.6],
+    [1.9, 1.3],
+    [0.6, 2.0],
+    [1.1, 1.2],
+    [1.5, 1.8]
+  ],
+  [
+    [1.2, 1.4],
+    [0.3, 2.1],
+    [1.8, 1.0],
+    [0.7, 1.7],
+    [1.4, 2.3],
+    [0.1, 1.2],
+    [1.6, 1.5],
+    [0.8, 0.9],
+    [1.0, 2.0]
+  ]
+]
 
 const light = (delay: number, period: number) =>
   ({
@@ -278,7 +289,15 @@ const light = (delay: number, period: number) =>
     "--t": `${period.toFixed(2)}s`
   }) as CSSProperties
 
-function Rack({ name, x, seed }: { name: string; x: number; seed: number }) {
+function Rack({
+  name,
+  x,
+  sleds
+}: {
+  name: string
+  x: number
+  sleds: number[][]
+}) {
   return (
     <div className="ks-rack" style={{ left: x, top: 128 }}>
       <div className="ks-rack-name">{name}</div>
@@ -288,7 +307,7 @@ function Rack({ name, x, seed }: { name: string; x: number; seed: number }) {
           <i style={light(0.5, 0.9)} />
           <i style={light(0.1, 0.6)} />
         </div>
-        {sledTimings(seed).map(({ delay, period }, index) => (
+        {sleds.map(([delay, period], index) => (
           <div key={index} className="ks-sled">
             <i style={light(delay, period)} />
             <i className="ks-b" style={light(delay / 2, period * 1.7)} />
@@ -301,7 +320,7 @@ function Rack({ name, x, seed }: { name: string; x: number; seed: number }) {
 
 export function HardwareScene({ maxSpeed }: { maxSpeed?: string }) {
   const sceneRef = useRef<HTMLDivElement>(null)
-  useSceneLoop(sceneRef, (sleep) => sleep(60_000))
+  usePauseOffscreen(sceneRef)
 
   return (
     <Stage width={460} height={360} sceneRef={sceneRef}>
@@ -340,8 +359,8 @@ export function HardwareScene({ maxSpeed }: { maxSpeed?: string }) {
         <span className="ks-led" />
         Our routers · peering we choose
       </div>
-      <Rack name="ams-17" x={90} seed={17} />
-      <Rack name="ams-42" x={250} seed={42} />
+      <Rack name="ams-17" x={90} sleds={SLEDS[0]} />
+      <Rack name="ams-42" x={250} sleds={SLEDS[1]} />
       {maxSpeed && (
         <span className="ks-wtag ks-brand" style={{ left: 262, top: 84 }}>
           up to {maxSpeed}

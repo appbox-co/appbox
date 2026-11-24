@@ -14,20 +14,25 @@ import {
 } from "@phosphor-icons/react"
 import type { PlansData } from "@/components/ui/plans"
 import { Link } from "@/i18n/routing"
+import { AppIcon } from "../app-icon"
 import { BoostScene } from "./boost-scene"
-import type { AppIcons, CategoryCount, PlanFacts, WallApp } from "./catalogue"
+import type {
+  AppIcons,
+  CatalogueApp,
+  CategoryCount,
+  PlanFacts
+} from "./catalogue"
 import { HeroScene } from "./hero-scene"
 import { InstallScene } from "./install-scene"
 import { AppsWall, InstallCounter } from "./live-parts"
 import { Plans } from "./plans"
-import { SceneIcon } from "./scene"
 import { ServersScene } from "./servers-scene"
 import { AssistantScene, ConnectScene, HardwareScene } from "./small-scenes"
 
-export interface HomeViewProps {
+export interface SiteHomeViewProps {
   icons: AppIcons
   appCount: number
-  wall: WallApp[]
+  wall: CatalogueApp[]
   categories: CategoryCount[]
   facts: PlanFacts | null
   plans: PlansData
@@ -154,7 +159,7 @@ const FLOATERS = [
   { name: "OpenClaw", x: 84, y: 320, r: 12, d: 2.6 }
 ]
 
-export function HomeView({
+export function SiteHomeView({
   icons,
   appCount,
   wall,
@@ -164,7 +169,7 @@ export function HomeView({
   unmetered,
   boostEnabled,
   affiliateId
-}: HomeViewProps) {
+}: SiteHomeViewProps) {
   const apps = appCount ? `${appCount} apps` : "Apps"
   const ticker = [
     { icon: AppWindowIcon, text: `${appCount || "Dozens of"} one-click apps` },
@@ -306,7 +311,7 @@ export function HomeView({
           Media servers, databases, dev tools, chat and file sync, plus Linux
           and Windows virtual machines.
         </p>
-        <AppsWall apps={wall} icons={icons} />
+        <AppsWall apps={wall} />
         {categories.length > 0 && (
           <div className="ks-cats">
             {categories.map((category) => (
@@ -345,6 +350,7 @@ export function HomeView({
           plans={plans}
           affiliateId={affiliateId}
           boostEnabled={boostEnabled}
+          showTraffic={!unmetered}
         />
       </section>
 
@@ -364,11 +370,10 @@ export function HomeView({
                   } as React.CSSProperties
                 }
               >
-                <SceneIcon
-                  icons={icons}
+                <AppIcon
+                  icon={icons[floater.name] ?? ""}
                   name={floater.name}
-                  size={32}
-                  className="rounded-[7px]"
+                  className="size-8 rounded-[7px] ring-0"
                 />
               </span>
             ))}
