@@ -143,10 +143,12 @@
 /*
  * A slider's fill and thumb glide to a new value instead of jumping to it,
  * whether it was set by a click, a drag, a key or the page. Base UI marks a
- * click on the track as a drag, so the glide can't leave drags out.
+ * click on the track as a drag, so the glide can't leave drags out. The
+ * slider adds the class when its value first changes (BoostSlider), so the
+ * thumb doesn't glide into place as it appears.
  */
 [data-theme="appbox"]
-  [data-base-ui-slider-control]
+  .kumo-slider-glide
   :is([data-base-ui-slider-indicator], [data-index]) {
   transition:
     width 0.6s cubic-bezier(0.3, 0.7, 0.2, 1),
@@ -154,7 +156,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-theme="appbox"] [data-base-ui-slider-control] * {
+  [data-theme="appbox"] .kumo-slider-glide * {
     transition: none;
   }
 }

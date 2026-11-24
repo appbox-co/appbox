@@ -111,6 +111,12 @@ export function BoostSlider({
     setLiveValue(boundedValue)
   }, [boundedValue])
 
+  // The glide (.kumo-slider-glide) starts with the first change of value.
+  // Base UI places the thumb a moment after it appears, and that shouldn't glide.
+  const [firstValue] = useState(boundedValue)
+  const [glide, setGlide] = useState(false)
+  if (!glide && liveValue !== firstValue) setGlide(true)
+
   const title = labels?.title ?? "Boost Slots"
 
   return (
@@ -139,6 +145,7 @@ export function BoostSlider({
         )}
 
         <Slider<number>
+          className={cn(glide && "kumo-slider-glide")}
           value={liveValue}
           min={0}
           // Kumo divides by the range to place the thumb, so an empty range
