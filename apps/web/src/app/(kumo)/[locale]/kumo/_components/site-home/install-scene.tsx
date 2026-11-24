@@ -204,7 +204,7 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
 
       <div
         className={cn("ks-abs ks-dialog-pos", !dialog && "ks-closed")}
-        style={{ left: 24, top: 24, width: 420 }}
+        style={{ left: 24, top: 24, width: 512 }}
       >
         <div className="ks-lift overflow-hidden rounded-xl bg-kumo-base text-kumo-default">
           <header className="relative grid gap-1.5 border-b border-kumo-line py-5 ps-6 pe-16">
@@ -220,24 +220,25 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
             />
           </header>
           <div className="grid gap-5 px-6 py-5">
-            <div className={cn(focus === "appbox" && "ks-focus")}>
-              <Select
-                label={t("app.selectCylo")}
-                className="w-full"
-                placeholder={t("app.selectCylo")}
-                value={appbox ? "ada" : null}
-                renderValue={() => (
-                  <span className="flex items-baseline gap-1.5">
-                    <span>ada</span>
-                    <span className="text-kumo-subtle tabular-nums">
-                      ({t("install.cyloSelector.slotsFree", { count: 5 })})
-                    </span>
+            <Select
+              label={t("app.selectCylo")}
+              className={cn(
+                "w-full",
+                focus === "appbox" && "ring-kumo-focus/50"
+              )}
+              placeholder={t("app.selectCylo")}
+              value={appbox ? "ada" : null}
+              renderValue={() => (
+                <span className="flex items-baseline gap-1.5">
+                  <span>ada</span>
+                  <span className="text-kumo-subtle tabular-nums">
+                    ({t("install.cyloSelector.slotsFree", { count: 5 })})
                   </span>
-                )}
-              >
-                <Select.Option value="ada">ada</Select.Option>
-              </Select>
-            </div>
+                </span>
+              )}
+            >
+              <Select.Option value="ada">ada</Select.Option>
+            </Select>
             <InputGroup
               label={withRequiredMark(t("install.domain.subdomain"), true)}
             >
@@ -249,23 +250,26 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
               />
               <InputGroup.Suffix>.ada.appboxes.co</InputGroup.Suffix>
             </InputGroup>
-            <div className={cn(focus === "password" && "ks-focus")}>
-              <InputGroup label={withRequiredMark(PASSWORD_LABEL, true)}>
-                <InputGroup.Input
-                  aria-label={PASSWORD_LABEL}
-                  value={"•".repeat(password)}
-                  readOnly
-                  autoComplete="off"
+            <InputGroup
+              label={withRequiredMark(PASSWORD_LABEL, true)}
+              className={cn(
+                focus === "password" && "ring-[1.5px] ring-kumo-focus/50"
+              )}
+            >
+              <InputGroup.Input
+                aria-label={PASSWORD_LABEL}
+                value={"•".repeat(password)}
+                readOnly
+                autoComplete="off"
+              />
+              <InputGroup.Addon align="end" className="pr-1">
+                <InputGroup.Button
+                  shape="square"
+                  icon={EyeIcon}
+                  aria-label="Show password"
                 />
-                <InputGroup.Addon align="end" className="pr-1">
-                  <InputGroup.Button
-                    shape="square"
-                    icon={EyeIcon}
-                    aria-label="Show password"
-                  />
-                </InputGroup.Addon>
-              </InputGroup>
-            </div>
+              </InputGroup.Addon>
+            </InputGroup>
           </div>
           <footer className="flex justify-end gap-2 border-t border-kumo-line px-6 py-4">
             <Button variant="secondary">{t("install.dialog.cancel")}</Button>

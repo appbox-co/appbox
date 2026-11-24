@@ -495,7 +495,7 @@
 .ks-stage {
   position: relative;
   width: 100%;
-  max-width: calc(var(--w) * 1.3px);
+  max-width: calc(var(--w) * 1px);
   aspect-ratio: var(--ar);
 }
 .ks-scene {
@@ -575,11 +575,6 @@
 }
 .ks-backdrop.ks-off {
   opacity: 0;
-}
-/* The field the scene is "typing" in: Kumo's select trigger or input group */
-.ks-focus button[data-kumo-component="Select"],
-.ks-focus :has(> input) {
-  box-shadow: 0 0 0 2px var(--color-kumo-brand);
 }
 @keyframes ks-blink {
   50% {

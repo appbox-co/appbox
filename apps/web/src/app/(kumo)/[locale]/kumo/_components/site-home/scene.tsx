@@ -103,8 +103,9 @@ export function useSceneScript(
 
 /**
  * A fixed-size illustration, drawn at `width` × `height` and scaled to the
- * width of its cell (up to 1.3×). It is a picture of the dashboard, so it is
- * hidden from assistive technology and can't be focused or clicked.
+ * width of its cell, never larger than the real thing. It is a picture of the
+ * dashboard, so it is hidden from assistive technology and can't be focused
+ * or clicked.
  */
 export function Stage({
   width,
@@ -125,7 +126,7 @@ export function Stage({
     const fit = () =>
       stage.style.setProperty(
         "--s",
-        Math.min(1.3, stage.clientWidth / width).toFixed(4)
+        Math.min(1, stage.clientWidth / width).toFixed(4)
       )
     fit()
     const observer = new ResizeObserver(fit)
