@@ -35,3 +35,23 @@
 - Do not edit a test or a check in the same change to make it pass. No skips,
   sleeps or retries to quiet a failing check.
 - Never test against production hosts or data.
+
+## A change is reviewed before rollout
+
+- Before a change is merged or rolled out, have a separate agent review the
+  diff: a Claude Fable 5.2 agent at extra-high effort. Start it fresh and
+  give it the diff and what the change is for, not your conclusions.
+- It checks that the code is not overly complex, does not reach beyond what
+  was asked, and is maintainable.
+- Fix what it finds, or say in the pull request body why a finding was left.
+  The pull request body says that the review ran and what it found.
+- The review is in addition to the `verify` skill, not instead of it. If the
+  review changes the code, verify again.
+
+## Copy goes through the avoid-ai-writing skill
+
+- Any copy shown on the frontend or to a user goes through the
+  `avoid-ai-writing` skill before it is committed: page and interface text,
+  error and status messages, notifications, emails, docs and blog posts.
+  A short string is not an exception.
+- The pull request body says that it was run.
