@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migrace probíhá...",
       "lowQuotaFallbackMessage": "Místo na disku je kriticky nízké.",
       "lowQuotaAppsStoppedMessage": "Místo na disku je kriticky nízké. Všechny aplikace na tomto appboxu byly zastaveny.",
-      "throttledFallbackMessage": "Omezování propustnosti disku je aktivní.",
-      "dedicatedIpv4": "Vyhrazená IPv4"
+      "throttledFallbackMessage": "Omezování propustnosti disku je aktivní."
     },
     "fileExplorer": {
       "title": "Průzkumník souborů",
@@ -1518,13 +1517,13 @@
       "loadFailed": "Vaše adresy se nepodařilo načíst. Zkuste to za chvíli znovu.",
       "empty": "Zatím nemáte žádnou vyhrazenou adresu IPv4.",
       "emptyHere": "K tomuto Appboxu není přiřazená žádná adresa a nemáte žádnou volnou.",
-      "emptyDescription": "Kupte si ji ve fakturaci jako addon ke službě vašeho Appboxu. Objeví se zde do minuty po objednávce, připravená k přiřazení.",
+      "emptyDescription": "Kupte si ji ve fakturaci jako addon ke službě vašeho Appboxu. Objeví se zde do minuty po zaplacení, připravená k přiřazení.",
       "copy": "Kopírovat {address}",
       "statusActive": "Aktivní",
       "statusRemoving": "Odebírá se",
       "statusUnassigned": "Nepřiřazená",
       "primary": "Primární",
-      "assignedTo": "Na",
+      "assignedTo": "Na <appbox>{name}</appbox>",
       "roleInOut": "Příchozí i odchozí",
       "roleIn": "Pouze příchozí",
       "unassignedHint": "Je vaše, ale není na žádném Appboxu. Přiřaďte ji, abyste ji mohli používat.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Nová odchozí spojení z Appboxu budou odcházet z této adresy místo z aktuální primární.",
       "primaryTitle": "Změnit primární adresu",
       "primaryDescription": "Nová odchozí spojení z {appbox} budou odcházet z {address} místo z {current}. Už otevřená spojení si adresu ponechají.",
-      "primaryDescriptionNoCurrent": "Nová odchozí spojení z {appbox} budou odcházet z {address}.",
       "unassignTitle": "Zrušit přiřazení {address}",
       "unassignDescription": "Aplikace na {appbox} přestanou na {address} odpovídat. Adresa zůstává vaše a znovu ji můžete přiřadit, až ji server odebere, obvykle do několika minut.",
       "unassignPrimaryNote": "Je to poslední adresa Appboxu, takže jeho odchozí spojení se vrátí ke sdílené adrese serveru.",

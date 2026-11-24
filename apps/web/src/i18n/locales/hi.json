@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migration प्रगति पर है...",
       "lowQuotaFallbackMessage": "Disk space गंभीर रूप से कम है।",
       "lowQuotaAppsStoppedMessage": "Disk space गंभीर रूप से कम है। इस appbox की सभी apps रोक दी गई हैं।",
-      "throttledFallbackMessage": "Disk throughput throttling सक्रिय है।",
-      "dedicatedIpv4": "डेडिकेटेड IPv4"
+      "throttledFallbackMessage": "Disk throughput throttling सक्रिय है।"
     },
     "fileExplorer": {
       "title": "फ़ाइल एक्सप्लोरर",
@@ -1518,13 +1517,13 @@
       "loadFailed": "आपके पते लोड नहीं हो सके। कुछ देर बाद फिर कोशिश करें।",
       "empty": "आपके पास अभी कोई डेडिकेटेड IPv4 पता नहीं है।",
       "emptyHere": "इस Appbox को कोई पता असाइन नहीं है, और आपके पास कोई खाली पता भी नहीं है।",
-      "emptyDescription": "बिलिंग में अपने Appbox की सेवा के ऐडऑन के रूप में एक खरीदें। ऑर्डर के एक मिनट के भीतर वह यहाँ दिखेगा, असाइन करने के लिए तैयार।",
+      "emptyDescription": "बिलिंग में अपने Appbox की सेवा के ऐडऑन के रूप में एक खरीदें। भुगतान के एक मिनट के भीतर वह यहाँ दिखेगा, असाइन करने के लिए तैयार।",
       "copy": "{address} कॉपी करें",
       "statusActive": "सक्रिय",
       "statusRemoving": "हटाया जा रहा है",
       "statusUnassigned": "असाइन नहीं है",
       "primary": "प्राइमरी",
-      "assignedTo": "पर",
+      "assignedTo": "<appbox>{name}</appbox> पर",
       "roleInOut": "इनबाउंड और आउटबाउंड",
       "roleIn": "सिर्फ़ इनबाउंड",
       "unassignedHint": "यह आपका है, लेकिन किसी Appbox पर नहीं है। इस्तेमाल करने के लिए इसे असाइन करें।",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox के नए आउटबाउंड कनेक्शन मौजूदा प्राइमरी के बजाय इस पते से निकलेंगे।",
       "primaryTitle": "प्राइमरी पता बदलें",
       "primaryDescription": "{appbox} के नए आउटबाउंड कनेक्शन {current} के बजाय {address} से निकलेंगे। जो कनेक्शन पहले से खुले हैं, वे अपना पता बनाए रखते हैं।",
-      "primaryDescriptionNoCurrent": "{appbox} के नए आउटबाउंड कनेक्शन {address} से निकलेंगे।",
       "unassignTitle": "{address} का असाइनमेंट हटाएँ",
       "unassignDescription": "{appbox} पर मौजूद ऐप्स {address} पर जवाब देना बंद कर देंगे। पता आपका ही रहेगा, और सर्वर के उसे हटाने के बाद आप इसे फिर असाइन कर सकते हैं, आमतौर पर कुछ मिनटों में।",
       "unassignPrimaryNote": "यह Appbox का आख़िरी पता है, इसलिए उसके आउटबाउंड कनेक्शन फिर से सर्वर के साझा पते से निकलेंगे।",

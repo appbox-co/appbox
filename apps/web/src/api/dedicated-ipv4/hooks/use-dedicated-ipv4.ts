@@ -1,6 +1,7 @@
 "use client"
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { ApiError } from "@/api/client"
 import { queryKeys } from "@/constants/query-keys"
 import {
   assignDedicatedIpv4,
@@ -12,13 +13,15 @@ import {
 } from "../dedicated-ipv4"
 
 /** Every dedicated IPv4 address the signed-in customer owns. */
-export function useMyDedicatedIpv4(enabled = true) {
+export function useMyDedicatedIpv4() {
   return useQuery({
     queryKey: queryKeys.dedicatedIpv4.mine,
-    queryFn: () => getMyDedicatedIpv4(),
-    enabled,
-    // A 403 means the feature is closed for this account; retrying won't help.
-    retry: false,
+    queryFn: getMyDedicatedIpv4,
+    // A 4xx (403: not open for this account yet) won't change on a retry.
+    retry: (failureCount, error) =>
+      !(error instanceof ApiError && error.status < 500) && failureCount < 1,
+    // A bought address shows up after payment in billing, in another tab.
+    refetchOnWindowFocus: true,
     // An unassigned address waits for its old server to confirm the removal;
     // poll while one does, so it becomes assignable without a reload.
     refetchInterval: (query) =>

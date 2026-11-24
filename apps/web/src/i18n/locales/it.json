@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migrazione in corso...",
       "lowQuotaFallbackMessage": "Lo spazio su disco è criticamente basso.",
       "lowQuotaAppsStoppedMessage": "Lo spazio su disco è criticamente basso. Tutte le app su questo appbox sono state arrestate.",
-      "throttledFallbackMessage": "La limitazione del throughput del disco è attiva.",
-      "dedicatedIpv4": "IPv4 dedicato"
+      "throttledFallbackMessage": "La limitazione del throughput del disco è attiva."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1518,13 +1517,13 @@
       "loadFailed": "Non è stato possibile caricare i tuoi indirizzi. Riprova tra un attimo.",
       "empty": "Non hai ancora nessun indirizzo IPv4 dedicato.",
       "emptyHere": "Nessun indirizzo è assegnato a questo Appbox e non ne hai di liberi.",
-      "emptyDescription": "Acquistane uno nella fatturazione come addon del servizio del tuo Appbox. Compare qui entro un minuto dall'ordine, pronto da assegnare.",
+      "emptyDescription": "Acquistane uno nella fatturazione come addon del servizio del tuo Appbox. Compare qui entro un minuto dal pagamento, pronto da assegnare.",
       "copy": "Copia {address}",
       "statusActive": "Attivo",
       "statusRemoving": "In rimozione",
       "statusUnassigned": "Non assegnato",
       "primary": "Principale",
-      "assignedTo": "Su",
+      "assignedTo": "Su <appbox>{name}</appbox>",
       "roleInOut": "In entrata e in uscita",
       "roleIn": "Solo in entrata",
       "unassignedHint": "È tuo, ma non è su nessun Appbox. Assegnalo per usarlo.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Le nuove connessioni in uscita dell'Appbox partiranno da questo indirizzo invece che da quello principale attuale.",
       "primaryTitle": "Cambia l'indirizzo principale",
       "primaryDescription": "Le nuove connessioni in uscita da {appbox} partiranno da {address} invece che da {current}. Le connessioni già aperte mantengono il loro indirizzo.",
-      "primaryDescriptionNoCurrent": "Le nuove connessioni in uscita da {appbox} partiranno da {address}.",
       "unassignTitle": "Rimuovi {address}",
       "unassignDescription": "Le app su {appbox} smettono di rispondere su {address}. L'indirizzo resta tuo e potrai assegnarlo di nuovo quando il server lo avrà rimosso, di solito in pochi minuti.",
       "unassignPrimaryNote": "È l'ultimo indirizzo dell'Appbox, quindi le sue connessioni in uscita torneranno a partire dall'indirizzo condiviso del server.",

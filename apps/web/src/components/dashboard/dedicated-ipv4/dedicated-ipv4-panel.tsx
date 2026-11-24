@@ -1,8 +1,7 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useId, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import {
   AlertTriangle,
   ArrowRightLeft,
@@ -18,7 +17,6 @@ import {
 } from "lucide-react"
 import { toast } from "sonner"
 import { ApiError } from "@/api/client"
-import type { CyloSummary } from "@/api/cylos/cylos"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import {
   useAssignDedicatedIpv4,
@@ -38,6 +36,7 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -45,33 +44,47 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import { isNextLaunchWeekEnabled } from "@/config/launch-week-flags"
 import { ROUTES } from "@/constants/routes"
+import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 /** WHMCS lists the addons a customer can order, per service, here. */
-export const DEDICATED_IPV4_ORDER_URL =
-  "https://billing.appbox.co/cart.php?gid=addons"
+const ORDER_URL = "https://billing.appbox.co/cart.php?gid=addons"
 
-export const DEDICATED_IPV4_DOCS_URL = "/docs/platform/dedicated-ipv4"
+const DOCS_URL = "/docs/platform/dedicated-ipv4"
 
 /** Appboxes the API refuses to assign to. */
 const UNAVAILABLE_STATUSES = new Set(["suspended", "migrating"])
 
-type PendingAction =
-  | { kind: "assign"; address: DedicatedIpv4Address }
-  | { kind: "primary"; address: DedicatedIpv4Address }
-  | { kind: "unassign"; address: DedicatedIpv4Address }
-
-interface DedicatedIpv4PanelProps {
-  /** Show only this Appbox's addresses, plus unassigned ones to add to it. */
-  cyloId?: number
+interface PendingAction {
+  kind: "assign" | "primary" | "unassign"
+  address: DedicatedIpv4Address
+  /** Taken when the dialog opens, so the text holds while it closes. */
+  appbox: string
+  currentPrimary?: string
 }
 
-export function DedicatedIpv4BuyButton({ className }: { className?: string }) {
+/** The API answers 403 while dedicated IPv4 is closed for this account. */
+function isClosed(error: unknown) {
+  return error instanceof ApiError && error.status === 403
+}
+
+/** The API's own message for a refusal (4xx), else undefined. */
+function refusalMessage(error: unknown) {
+  if (!(error instanceof ApiError)) return undefined
+  if (error.status < 400 || error.status >= 500) return undefined
+  return error.message || undefined
+}
+
+export function DedicatedIpv4BuyButton() {
   const t = useTranslations("appboxmanager.dedicatedIpv4")
+  const { error } = useMyDedicatedIpv4()
+  // Billing won't allocate an address while the feature is closed.
+  if (isClosed(error)) return null
   return (
-    <Button size="sm" className={cn("w-full sm:w-auto", className)} asChild>
-      <a href={DEDICATED_IPV4_ORDER_URL} target="_blank" rel="noreferrer">
+    <Button size="sm" className="w-full sm:w-auto" asChild>
+      <a href={ORDER_URL} target="_blank" rel="noreferrer">
         <ShoppingCart className="mr-1.5 size-4" />
         {t("buy")}
         <ExternalLink className="ml-1.5 size-3 opacity-70" />
@@ -86,6 +99,8 @@ export function DedicatedIpv4BuyButton({ className }: { className?: string }) {
 
 function HowItWorks() {
   const t = useTranslations("appboxmanager.dedicatedIpv4")
+  // The guide is only built once day 4 is on, even for admins.
+  const guideLive = isNextLaunchWeekEnabled("day_4")
   const points = [
     t("howInbound"),
     t("howOutbound"),
@@ -96,13 +111,15 @@ function HowItWorks() {
     <div className="rounded-xl border bg-card p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-sm font-semibold">{t("howTitle")}</h2>
-        <Link
-          href={DEDICATED_IPV4_DOCS_URL}
-          className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-        >
-          <BookOpen className="size-3.5" />
-          {t("readGuide")}
-        </Link>
+        {guideLive && (
+          <Link
+            href={DOCS_URL}
+            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+          >
+            <BookOpen className="size-3.5" />
+            {t("readGuide")}
+          </Link>
+        )}
       </div>
       <ul className="mt-3 grid gap-2 text-sm text-muted-foreground md:grid-cols-2">
         {points.map((point) => (
@@ -128,10 +145,13 @@ function CopyAddress({ address }: { address: string }) {
     <button
       type="button"
       onClick={() => {
-        navigator.clipboard.writeText(address).then(() => {
-          setCopied(true)
-          setTimeout(() => setCopied(false), 1500)
-        })
+        navigator.clipboard
+          .writeText(address)
+          .then(() => {
+            setCopied(true)
+            setTimeout(() => setCopied(false), 1500)
+          })
+          .catch(() => toast.error(t("actionFailed")))
       }}
       className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
       aria-label={t("copy", { address })}
@@ -144,42 +164,78 @@ function CopyAddress({ address }: { address: string }) {
 
 function AddressRow({
   address,
-  appbox,
+  appboxName,
   hasSiblings,
   showAppbox,
   busy,
   onAction
 }: {
   address: DedicatedIpv4Address
-  appbox: CyloSummary | undefined
+  appboxName: string
   /** Other addresses are assigned to the same Appbox. */
   hasSiblings: boolean
   showAppbox: boolean
   busy: boolean
-  onAction: (action: PendingAction) => void
+  onAction: (
+    kind: PendingAction["kind"],
+    address: DedicatedIpv4Address
+  ) => void
 }) {
   const t = useTranslations("appboxmanager.dedicatedIpv4")
+  const detailId = useId()
+  const lockedId = useId()
   const assigned = address.cylo_id !== null
+  const role = address.is_primary ? t("roleInOut") : t("roleIn")
+  // The API refuses to unassign a primary while others share its Appbox.
+  const primaryLocked = assigned && address.is_primary && hasSiblings
 
-  let status: { label: string; className: string }
-  if (assigned) {
-    status = {
-      label: t("statusActive"),
-      className:
-        "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
-    }
-  } else if (address.removal_pending) {
-    status = {
-      label: t("statusRemoving"),
-      className:
-        "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400"
-    }
+  const status = assigned
+    ? {
+        label: t("statusActive"),
+        className:
+          "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+      }
+    : address.removal_pending
+      ? {
+          label: t("statusRemoving"),
+          className:
+            "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400"
+        }
+      : { label: t("statusUnassigned"), className: "" }
+
+  let detail: React.ReactNode
+  if (!assigned) {
+    detail = address.removal_pending
+      ? t("removingHint")
+      : t("unassignedHint")
+  } else if (showAppbox) {
+    detail = (
+      <>
+        {t.rich("assignedTo", {
+          name: appboxName,
+          appbox: (chunks) => (
+            <Link
+              href={ROUTES.APPBOX_DETAIL(address.cylo_id!)}
+              className="font-medium text-foreground hover:underline"
+            >
+              <span data-anonymize-single>{chunks}</span>
+            </Link>
+          )
+        })}
+        {" · "}
+        {role}
+      </>
+    )
   } else {
-    status = { label: t("statusUnassigned"), className: "" }
+    detail = role
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-lg border bg-card p-3 sm:flex-row sm:items-center sm:justify-between">
+    <li
+      role="group"
+      aria-label={address.address}
+      className="flex flex-col gap-3 rounded-lg border bg-card p-3 sm:flex-row sm:items-center sm:justify-between"
+    >
       <div className="flex min-w-0 items-start gap-3">
         <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted">
           <Network className="size-4 text-muted-foreground" />
@@ -203,35 +259,11 @@ function AddressRow({
               </Badge>
             )}
           </div>
-          <div className="text-xs text-muted-foreground">
-            {assigned ? (
-              showAppbox ? (
-                <>
-                  {t("assignedTo")}{" "}
-                  <Link
-                    href={ROUTES.APPBOX_DETAIL(address.cylo_id!)}
-                    className="font-medium text-foreground hover:underline"
-                  >
-                    <span data-anonymize-single>
-                      {appbox?.name ?? `#${address.cylo_id}`}
-                    </span>
-                  </Link>
-                  {" · "}
-                  {address.is_primary ? t("roleInOut") : t("roleIn")}
-                </>
-              ) : address.is_primary ? (
-                t("roleInOut")
-              ) : (
-                t("roleIn")
-              )
-            ) : address.removal_pending ? (
-              t("removingHint")
-            ) : (
-              t("unassignedHint")
-            )}
+          <div id={detailId} className="text-xs text-muted-foreground">
+            {detail}
           </div>
-          {assigned && address.is_primary && hasSiblings && (
-            <div className="text-xs text-muted-foreground">
+          {primaryLocked && (
+            <div id={lockedId} className="text-xs text-muted-foreground">
               {t("primaryLastHint")}
             </div>
           )}
@@ -246,7 +278,7 @@ function AddressRow({
                 variant="outline"
                 size="sm"
                 disabled={busy}
-                onClick={() => onAction({ kind: "primary", address })}
+                onClick={() => onAction("primary", address)}
               >
                 <Star className="mr-1.5 size-3.5" />
                 {t("makePrimary")}
@@ -255,8 +287,9 @@ function AddressRow({
             <Button
               variant="outline"
               size="sm"
-              disabled={busy || (address.is_primary && hasSiblings)}
-              onClick={() => onAction({ kind: "unassign", address })}
+              disabled={busy || primaryLocked}
+              aria-describedby={primaryLocked ? lockedId : undefined}
+              onClick={() => onAction("unassign", address)}
             >
               <Unlink className="mr-1.5 size-3.5" />
               {t("unassign")}
@@ -266,14 +299,15 @@ function AddressRow({
           <Button
             size="sm"
             disabled={busy || address.removal_pending}
-            onClick={() => onAction({ kind: "assign", address })}
+            aria-describedby={detailId}
+            onClick={() => onAction("assign", address)}
           >
             <ArrowRightLeft className="mr-1.5 size-3.5" />
             {t("assign")}
           </Button>
         )}
       </div>
-    </div>
+    </li>
   )
 }
 
@@ -281,8 +315,14 @@ function AddressRow({
 /*  Panel                                                                      */
 /* -------------------------------------------------------------------------- */
 
-export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
+export function DedicatedIpv4Panel({
+  cyloId
+}: {
+  /** Show only this Appbox's addresses, plus unassigned ones to add to it. */
+  cyloId?: number
+}) {
   const t = useTranslations("appboxmanager.dedicatedIpv4")
+  const selectId = useId()
   const { data: addresses, isLoading, error } = useMyDedicatedIpv4()
   const { data: cylos } = useCylosSummary()
 
@@ -294,14 +334,17 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
     primaryMutation.isPending ||
     unassignMutation.isPending
 
-  const [pending, setPending] = useState<PendingAction | null>(null)
-  const [targetCyloId, setTargetCyloId] = useState<string>("")
+  // The action outlives `open`, so the dialog keeps its text while it closes.
+  const [action, setAction] = useState<PendingAction | null>(null)
+  const [open, setOpen] = useState(false)
+  const [targetCyloId, setTargetCyloId] = useState("")
   const [makePrimary, setMakePrimary] = useState(false)
 
   const cylosById = useMemo(
     () => new Map((cylos ?? []).map((c) => [c.id, c])),
     [cylos]
   )
+  const appboxName = (id: number) => cylosById.get(id)?.name ?? `#${id}`
 
   const all = useMemo(() => addresses ?? [], [addresses])
   const countOn = (id: number | null) =>
@@ -323,65 +366,74 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
     )
   }, [all, cyloId])
 
-  const openAction = (action: PendingAction) => {
-    setPending(action)
+  const target = targetCyloId ? Number(targetCyloId) : null
+  const targetUnavailable =
+    target !== null &&
+    UNAVAILABLE_STATUSES.has(cylosById.get(target)?.status ?? "")
+
+  const openAction = (
+    kind: PendingAction["kind"],
+    address: DedicatedIpv4Address
+  ) => {
+    setAction({
+      kind,
+      address,
+      appbox: address.cylo_id !== null ? appboxName(address.cylo_id) : "",
+      currentPrimary: all.find(
+        (a) => a.cylo_id === address.cylo_id && a.is_primary
+      )?.address
+    })
     setMakePrimary(false)
     setTargetCyloId(cyloId ? String(cyloId) : "")
+    setOpen(true)
   }
 
   const closeDialog = () => {
-    if (!busy) setPending(null)
+    if (!busy) setOpen(false)
   }
 
-  const announce = (result: DedicatedIpv4Change, message: string) => {
-    if (result?.applied === false) {
-      toast.success(message, { description: t("appliedLater") })
-    } else {
-      toast.success(message)
-    }
-    setPending(null)
+  const onDone = (message: string) => (result: DedicatedIpv4Change) => {
+    toast.success(
+      message,
+      result?.applied === false ? { description: t("appliedLater") } : {}
+    )
+    setOpen(false)
   }
 
-  const fail = (err: unknown) => {
-    toast.error(err instanceof Error ? err.message : t("actionFailed"))
+  const onError = (err: unknown) => {
+    toast.error(refusalMessage(err) ?? t("actionFailed"))
   }
 
   const confirm = () => {
-    if (!pending) return
-    const { address } = pending
-    if (pending.kind === "assign") {
-      const target = Number(targetCyloId)
-      if (!target) return
-      const name = cylosById.get(target)?.name ?? `#${target}`
+    if (!action) return
+    const { id, address } = action.address
+    if (action.kind === "assign") {
+      if (target === null || targetUnavailable) return
       assignMutation.mutate(
-        { id: address.id, cyloId: target, primary: makePrimary },
+        { id, cyloId: target, primary: makePrimary },
         {
-          onSuccess: (r) =>
-            announce(
-              r,
-              t("assigned", { address: address.address, appbox: name })
-            ),
-          onError: fail
+          onSuccess: onDone(
+            t("assigned", { address, appbox: appboxName(target) })
+          ),
+          onError
         }
       )
-    } else if (pending.kind === "primary") {
-      primaryMutation.mutate(address.id, {
-        onSuccess: (r) =>
-          announce(r, t("primaryChanged", { address: address.address })),
-        onError: fail
+    } else if (action.kind === "primary") {
+      primaryMutation.mutate(id, {
+        onSuccess: onDone(t("primaryChanged", { address })),
+        onError
       })
     } else {
-      unassignMutation.mutate(address.id, {
-        onSuccess: (r) =>
-          announce(r, t("unassigned", { address: address.address })),
-        onError: fail
+      unassignMutation.mutate(id, {
+        onSuccess: onDone(t("unassigned", { address })),
+        onError
       })
     }
   }
 
   /* ---- Closed, failed or loading ---- */
 
-  if (error instanceof ApiError && error.status === 403) {
+  if (!addresses && isClosed(error)) {
     return (
       <div className="rounded-xl border border-dashed p-6 text-sm text-muted-foreground">
         {t("notAvailable")}
@@ -389,17 +441,30 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
     )
   }
 
-  const pendingAppbox =
-    pending && pending.address.cylo_id !== null
-      ? (cylosById.get(pending.address.cylo_id)?.name ??
-        `#${pending.address.cylo_id}`)
-      : ""
-  const currentPrimary =
-    pending?.kind === "primary"
-      ? all.find((a) => a.cylo_id === pending.address.cylo_id && a.is_primary)
-      : undefined
-  const target = targetCyloId ? Number(targetCyloId) : null
-  const targetHasAddresses = countOn(target) > 0
+  const dialogText = action && {
+    assign: {
+      title: t("assignTitle", { address: action.address.address }),
+      description: t("assignDescription"),
+      confirm: t("assign")
+    },
+    primary: {
+      title: t("primaryTitle"),
+      description: t("primaryDescription", {
+        appbox: action.appbox,
+        address: action.address.address,
+        current: action.currentPrimary ?? ""
+      }),
+      confirm: t("makePrimary")
+    },
+    unassign: {
+      title: t("unassignTitle", { address: action.address.address }),
+      description: t("unassignDescription", {
+        appbox: action.appbox,
+        address: action.address.address
+      }),
+      confirm: t("unassign")
+    }
+  }[action.kind]
 
   return (
     <div className="space-y-4">
@@ -416,14 +481,17 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
         </div>
       )}
 
-      {error && !isLoading && (
-        <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+      {!addresses && error && (
+        <div
+          role="alert"
+          className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+        >
           <AlertTriangle className="size-4 shrink-0" />
           {t("loadFailed")}
         </div>
       )}
 
-      {!isLoading && !error && shown.length === 0 && (
+      {addresses && shown.length === 0 && (
         <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-4 py-10 text-center">
           <Network className="size-10 text-muted-foreground/40" />
           <div className="space-y-1">
@@ -434,20 +502,17 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
               {t("emptyDescription")}
             </p>
           </div>
-          <DedicatedIpv4BuyButton />
         </div>
       )}
 
-      {!isLoading && !error && shown.length > 0 && (
-        <div className="space-y-2">
+      {shown.length > 0 && (
+        <ul className="space-y-2">
           {shown.map((address) => (
             <AddressRow
               key={address.id}
               address={address}
-              appbox={
-                address.cylo_id !== null
-                  ? cylosById.get(address.cylo_id)
-                  : undefined
+              appboxName={
+                address.cylo_id !== null ? appboxName(address.cylo_id) : ""
               }
               hasSiblings={countOn(address.cylo_id) > 1}
               showAppbox={!cyloId}
@@ -455,159 +520,104 @@ export function DedicatedIpv4Panel({ cyloId }: DedicatedIpv4PanelProps) {
               onAction={openAction}
             />
           ))}
-        </div>
+        </ul>
       )}
 
-      {/* ---- Assign ---- */}
-      <Dialog
-        open={pending?.kind === "assign"}
-        onOpenChange={(open) => !open && closeDialog()}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {t("assignTitle", { address: pending?.address.address ?? "" })}
-            </DialogTitle>
-            <DialogDescription>{t("assignDescription")}</DialogDescription>
-          </DialogHeader>
+      <Dialog open={open} onOpenChange={(next) => !next && closeDialog()}>
+        {action && dialogText && (
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{dialogText.title}</DialogTitle>
+              <DialogDescription>{dialogText.description}</DialogDescription>
+            </DialogHeader>
 
-          {!cyloId && (
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium" htmlFor="dipv4-appbox">
-                {t("appbox")}
-              </label>
-              <Select value={targetCyloId} onValueChange={setTargetCyloId}>
-                <SelectTrigger id="dipv4-appbox">
-                  <SelectValue placeholder={t("chooseAppbox")} />
-                </SelectTrigger>
-                <SelectContent>
-                  {(cylos ?? []).map((c) => (
-                    <SelectItem
-                      key={c.id}
-                      value={String(c.id)}
-                      disabled={UNAVAILABLE_STATUSES.has(c.status)}
-                    >
-                      <span data-anonymize-single>{c.name}</span>
-                      {UNAVAILABLE_STATUSES.has(c.status) && (
-                        <span className="ml-1 text-muted-foreground">
-                          ({t("appboxUnavailable")})
+            {action.kind === "assign" && (
+              <>
+                <div className="space-y-1.5">
+                  {!cyloId && (
+                    <>
+                      <Label htmlFor={selectId}>{t("appbox")}</Label>
+                      <Select
+                        value={targetCyloId}
+                        onValueChange={setTargetCyloId}
+                      >
+                        <SelectTrigger id={selectId}>
+                          <SelectValue placeholder={t("chooseAppbox")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(cylos ?? []).map((c) => (
+                            <SelectItem
+                              key={c.id}
+                              value={String(c.id)}
+                              disabled={UNAVAILABLE_STATUSES.has(c.status)}
+                            >
+                              <span data-anonymize-single>{c.name}</span>
+                              {UNAVAILABLE_STATUSES.has(c.status) && (
+                                <span className="ml-1 text-muted-foreground">
+                                  ({t("appboxUnavailable")})
+                                </span>
+                              )}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </>
+                  )}
+                  <p className="text-xs text-muted-foreground">
+                    {t("amsterdamOnly")}
+                  </p>
+                </div>
+
+                {target !== null &&
+                  !targetUnavailable &&
+                  (countOn(target) > 0 ? (
+                    <label className="flex items-start gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 size-4 accent-primary"
+                        checked={makePrimary}
+                        onChange={(e) => setMakePrimary(e.target.checked)}
+                      />
+                      <span>
+                        {t("assignMakePrimary")}
+                        <span className="block text-xs text-muted-foreground">
+                          {t("assignMakePrimaryHint")}
                         </span>
-                      )}
-                    </SelectItem>
+                      </span>
+                    </label>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      {t("assignFirstIsPrimary")}
+                    </p>
                   ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">
-                {t("amsterdamOnly")}
-              </p>
-            </div>
-          )}
+              </>
+            )}
 
-          {target !== null &&
-            (targetHasAddresses ? (
-              <label className="flex items-start gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  className="mt-0.5 size-4 accent-primary"
-                  checked={makePrimary}
-                  onChange={(e) => setMakePrimary(e.target.checked)}
-                />
-                <span>
-                  {t("assignMakePrimary")}
-                  <span className="block text-xs text-muted-foreground">
-                    {t("assignMakePrimaryHint")}
-                  </span>
-                </span>
-              </label>
-            ) : (
+            {action.kind === "unassign" && action.address.is_primary && (
               <p className="text-sm text-muted-foreground">
-                {t("assignFirstIsPrimary")}
+                {t("unassignPrimaryNote")}
               </p>
-            ))}
+            )}
 
-          {cyloId && (
-            <p className="text-xs text-muted-foreground">
-              {t("amsterdamOnly")}
-            </p>
-          )}
-
-          <DialogFooter>
-            <Button variant="outline" onClick={closeDialog} disabled={busy}>
-              {t("cancel")}
-            </Button>
-            <Button onClick={confirm} disabled={busy || target === null}>
-              {busy && <Loader2 className="mr-1.5 size-4 animate-spin" />}
-              {t("assign")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* ---- Make primary ---- */}
-      <Dialog
-        open={pending?.kind === "primary"}
-        onOpenChange={(open) => !open && closeDialog()}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("primaryTitle")}</DialogTitle>
-            <DialogDescription>
-              {currentPrimary
-                ? t("primaryDescription", {
-                    appbox: pendingAppbox,
-                    address: pending?.address.address ?? "",
-                    current: currentPrimary.address
-                  })
-                : t("primaryDescriptionNoCurrent", {
-                    appbox: pendingAppbox,
-                    address: pending?.address.address ?? ""
-                  })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={closeDialog} disabled={busy}>
-              {t("cancel")}
-            </Button>
-            <Button onClick={confirm} disabled={busy}>
-              {busy && <Loader2 className="mr-1.5 size-4 animate-spin" />}
-              {t("makePrimary")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* ---- Unassign ---- */}
-      <Dialog
-        open={pending?.kind === "unassign"}
-        onOpenChange={(open) => !open && closeDialog()}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {t("unassignTitle", { address: pending?.address.address ?? "" })}
-            </DialogTitle>
-            <DialogDescription>
-              {t("unassignDescription", {
-                appbox: pendingAppbox,
-                address: pending?.address.address ?? ""
-              })}
-            </DialogDescription>
-          </DialogHeader>
-          {pending?.kind === "unassign" && pending.address.is_primary && (
-            <p className="text-sm text-muted-foreground">
-              {t("unassignPrimaryNote")}
-            </p>
-          )}
-          <DialogFooter>
-            <Button variant="outline" onClick={closeDialog} disabled={busy}>
-              {t("cancel")}
-            </Button>
-            <Button variant="destructive" onClick={confirm} disabled={busy}>
-              {busy && <Loader2 className="mr-1.5 size-4 animate-spin" />}
-              {t("unassign")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+            <DialogFooter>
+              <Button variant="outline" onClick={closeDialog} disabled={busy}>
+                {t("cancel")}
+              </Button>
+              <Button
+                variant={action.kind === "unassign" ? "destructive" : "default"}
+                onClick={confirm}
+                disabled={
+                  busy ||
+                  (action.kind === "assign" &&
+                    (target === null || targetUnavailable))
+                }
+              >
+                {busy && <Loader2 className="mr-1.5 size-4 animate-spin" />}
+                {dialogText.confirm}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        )}
       </Dialog>
     </div>
   )

@@ -34,12 +34,9 @@ export interface DedicatedIpv4Change extends DedicatedIpv4Address {
 /*  API functions                                                              */
 /* -------------------------------------------------------------------------- */
 
-export async function getMyDedicatedIpv4(
-  cyloId?: number
-): Promise<DedicatedIpv4Address[]> {
+export async function getMyDedicatedIpv4(): Promise<DedicatedIpv4Address[]> {
   const res = await apiGet<{ addresses?: DedicatedIpv4Address[] }>(
-    "dedicated-ipv4/mine",
-    cyloId ? { params: { cylo_id: String(cyloId) } } : {}
+    "dedicated-ipv4/mine"
   )
   return res?.addresses ?? []
 }

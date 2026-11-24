@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migraatio on käynnissä...",
       "lowQuotaFallbackMessage": "Levytila on kriittisen vähissä.",
       "lowQuotaAppsStoppedMessage": "Levytila on kriittisen vähissä. Kaikki tämän appboxin sovellukset on pysäytetty.",
-      "throttledFallbackMessage": "Levyn läpimenon rajoitus on aktiivinen.",
-      "dedicatedIpv4": "Oma IPv4"
+      "throttledFallbackMessage": "Levyn läpimenon rajoitus on aktiivinen."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1518,13 +1517,13 @@
       "loadFailed": "Osoitteitasi ei voitu ladata. Yritä hetken kuluttua uudelleen.",
       "empty": "Sinulla ei ole vielä omia IPv4-osoitteita.",
       "emptyHere": "Tähän Appboxiin ei ole liitetty osoitteita, eikä sinulla ole vapaita osoitteita.",
-      "emptyDescription": "Osta osoite laskutuksessa lisäosana Appboxisi palveluun. Se näkyy täällä minuutin sisällä tilauksesta, valmiina liitettäväksi.",
+      "emptyDescription": "Osta osoite laskutuksessa lisäosana Appboxisi palveluun. Se näkyy täällä minuutin sisällä maksusta, valmiina liitettäväksi.",
       "copy": "Kopioi {address}",
       "statusActive": "Aktiivinen",
       "statusRemoving": "Poistumassa",
       "statusUnassigned": "Ei liitetty",
       "primary": "Ensisijainen",
-      "assignedTo": "Appbox:",
+      "assignedTo": "Appbox: <appbox>{name}</appbox>",
       "roleInOut": "Saapuva ja lähtevä",
       "roleIn": "Vain saapuva",
       "unassignedHint": "Se on sinun, mutta ei missään Appboxissa. Liitä se käyttääksesi sitä.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appboxin uudet lähtevät yhteydet lähtevät tästä osoitteesta nykyisen ensisijaisen sijaan.",
       "primaryTitle": "Vaihda ensisijainen osoite",
       "primaryDescription": "Appboxin {appbox} uudet lähtevät yhteydet lähtevät osoitteesta {address} osoitteen {current} sijaan. Jo avoimet yhteydet säilyttävät osoitteensa.",
-      "primaryDescriptionNoCurrent": "Appboxin {appbox} uudet lähtevät yhteydet lähtevät osoitteesta {address}.",
       "unassignTitle": "Irrota {address}",
       "unassignDescription": "Appboxin {appbox} sovellukset lakkaavat vastaamasta osoitteessa {address}. Osoite pysyy sinun, ja voit liittää sen uudelleen, kun palvelin on poistanut sen, yleensä muutamassa minuutissa.",
       "unassignPrimaryNote": "Tämä on Appboxin viimeinen osoite, joten sen lähtevät yhteydet lähtevät taas palvelimen jaetusta osoitteesta.",

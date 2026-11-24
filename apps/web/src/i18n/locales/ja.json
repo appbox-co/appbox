@@ -1233,8 +1233,7 @@
       "migrationInProgress": "移行中です...",
       "lowQuotaFallbackMessage": "ディスク容量が非常に少なくなっています。",
       "lowQuotaAppsStoppedMessage": "ディスク容量が非常に少なくなっています。この appbox 上のすべてのアプリは停止されました。",
-      "throttledFallbackMessage": "ディスクスループットの制限が有効です。",
-      "dedicatedIpv4": "専用 IPv4"
+      "throttledFallbackMessage": "ディスクスループットの制限が有効です。"
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1518,13 +1517,13 @@
       "loadFailed": "アドレスを読み込めませんでした。しばらくしてからもう一度お試しください。",
       "empty": "専用 IPv4 アドレスはまだありません。",
       "emptyHere": "この Appbox に割り当てられているアドレスはなく、空いているアドレスもありません。",
-      "emptyDescription": "請求画面で、Appbox のサービスのアドオンとして購入してください。注文から 1 分以内にここに表示され、割り当てできる状態になります。",
+      "emptyDescription": "請求画面で、Appbox のサービスのアドオンとして購入してください。支払いから 1 分以内にここに表示され、割り当てできる状態になります。",
       "copy": "{address} をコピー",
       "statusActive": "有効",
       "statusRemoving": "削除中",
       "statusUnassigned": "未割り当て",
       "primary": "プライマリ",
-      "assignedTo": "割り当て先",
+      "assignedTo": "割り当て先: <appbox>{name}</appbox>",
       "roleInOut": "受信と送信",
       "roleIn": "受信のみ",
       "unassignedHint": "あなたのアドレスですが、どの Appbox にも割り当てられていません。割り当てると使えるようになります。",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Appbox からの新しい送信接続は、現在のプライマリではなくこのアドレスから出ます。",
       "primaryTitle": "プライマリアドレスを変更",
       "primaryDescription": "{appbox} からの新しい送信接続は、{current} ではなく {address} から出ます。すでに開いている接続は、元のアドレスのままです。",
-      "primaryDescriptionNoCurrent": "{appbox} からの新しい送信接続は、{address} から出ます。",
       "unassignTitle": "{address} の割り当てを解除",
       "unassignDescription": "{appbox} のアプリは、{address} で応答しなくなります。アドレスはあなたのものとして残り、サーバーが削除したあとで再び割り当てできます。通常は数分以内です。",
       "unassignPrimaryNote": "この Appbox の最後のアドレスのため、送信接続はサーバーの共有アドレスから出る状態に戻ります。",

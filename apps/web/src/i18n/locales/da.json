@@ -1233,8 +1233,7 @@
       "migrationInProgress": "Migrering er i gang...",
       "lowQuotaFallbackMessage": "Diskpladsen er kritisk lav.",
       "lowQuotaAppsStoppedMessage": "Diskpladsen er kritisk lav. Alle apps på denne appbox er blevet stoppet.",
-      "throttledFallbackMessage": "Begrænsning af diskgennemstrømning er aktiv.",
-      "dedicatedIpv4": "Dedikeret IPv4"
+      "throttledFallbackMessage": "Begrænsning af diskgennemstrømning er aktiv."
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1518,13 +1517,13 @@
       "loadFailed": "Dine adresser kunne ikke indlæses. Prøv igen om lidt.",
       "empty": "Du har ingen dedikerede IPv4-adresser endnu.",
       "emptyHere": "Der er ingen adresser tildelt denne Appbox, og du har ingen ledige.",
-      "emptyDescription": "Køb en i fakturering som addon til din Appboxs tjeneste. Den vises her inden for et minut efter bestillingen, klar til at blive tildelt.",
+      "emptyDescription": "Køb en i fakturering som addon til din Appboxs tjeneste. Den vises her inden for et minut efter betalingen, klar til at blive tildelt.",
       "copy": "Kopiér {address}",
       "statusActive": "Aktiv",
       "statusRemoving": "Fjernes",
       "statusUnassigned": "Ikke tildelt",
       "primary": "Primær",
-      "assignedTo": "På",
+      "assignedTo": "På <appbox>{name}</appbox>",
       "roleInOut": "Indgående og udgående",
       "roleIn": "Kun indgående",
       "unassignedHint": "Den er din, men ikke på nogen Appbox. Tildel den for at bruge den.",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "Nye udgående forbindelser fra Appboxen går ud fra denne adresse i stedet for den nuværende primære.",
       "primaryTitle": "Skift primær adresse",
       "primaryDescription": "Nye udgående forbindelser fra {appbox} går ud fra {address} i stedet for {current}. Forbindelser, der allerede er åbne, beholder deres adresse.",
-      "primaryDescriptionNoCurrent": "Nye udgående forbindelser fra {appbox} går ud fra {address}.",
       "unassignTitle": "Fjern tildeling af {address}",
       "unassignDescription": "Apps på {appbox} holder op med at svare på {address}. Adressen er stadig din, og du kan tildele den igen, når serveren har fjernet den, som regel inden for få minutter.",
       "unassignPrimaryNote": "Det er Appboxens sidste adresse, så dens udgående forbindelser går igen ud fra serverens delte adresse.",

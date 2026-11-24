@@ -481,7 +481,7 @@ export default function CyloDetailPage({ params }: CyloDetailPageProps) {
           </TabsTrigger>
           {dedicatedIpv4Enabled && (
             <TabsTrigger value="dedicated-ipv4">
-              {t("cyloDetail.dedicatedIpv4")}
+              {t("dedicatedIpv4.title")}
             </TabsTrigger>
           )}
         </TabsList>

@@ -1233,8 +1233,7 @@
       "migrationInProgress": "กำลังย้ายข้อมูล...",
       "lowQuotaFallbackMessage": "พื้นที่ดิสก์เหลือน้อยขั้นวิกฤต",
       "lowQuotaAppsStoppedMessage": "พื้นที่ดิสก์เหลือน้อยขั้นวิกฤต แอปทั้งหมดบน appbox นี้ถูกหยุดแล้ว",
-      "throttledFallbackMessage": "การจำกัด throughput ของดิสก์กำลังทำงานอยู่",
-      "dedicatedIpv4": "IPv4 เฉพาะ"
+      "throttledFallbackMessage": "การจำกัด throughput ของดิสก์กำลังทำงานอยู่"
     },
     "fileExplorer": {
       "title": "File Explorer",
@@ -1518,13 +1517,13 @@
       "loadFailed": "โหลดที่อยู่ของคุณไม่ได้ ลองอีกครั้งในอีกสักครู่",
       "empty": "คุณยังไม่มีที่อยู่ IPv4 เฉพาะ",
       "emptyHere": "ไม่มีที่อยู่ที่กำหนดให้ Appbox นี้ และคุณไม่มีที่อยู่ว่าง",
-      "emptyDescription": "ซื้อได้ในส่วนการเรียกเก็บเงินในรูปแบบแอดออนของบริการ Appbox ของคุณ ที่อยู่จะปรากฏที่นี่ภายในหนึ่งนาทีหลังสั่งซื้อ พร้อมให้กำหนด",
+      "emptyDescription": "ซื้อได้ในส่วนการเรียกเก็บเงินในรูปแบบแอดออนของบริการ Appbox ของคุณ ที่อยู่จะปรากฏที่นี่ภายในหนึ่งนาทีหลังชำระเงิน พร้อมให้กำหนด",
       "copy": "คัดลอก {address}",
       "statusActive": "ใช้งานอยู่",
       "statusRemoving": "กำลังถูกนำออก",
       "statusUnassigned": "ยังไม่ได้กำหนด",
       "primary": "หลัก",
-      "assignedTo": "บน",
+      "assignedTo": "บน <appbox>{name}</appbox>",
       "roleInOut": "ขาเข้าและขาออก",
       "roleIn": "ขาเข้าเท่านั้น",
       "unassignedHint": "เป็นของคุณ แต่ไม่ได้อยู่บน Appbox ใดเลย กำหนดให้เพื่อเริ่มใช้งาน",
@@ -1545,7 +1544,6 @@
       "assignMakePrimaryHint": "การเชื่อมต่อขาออกใหม่จาก Appbox จะออกจากที่อยู่นี้แทนที่อยู่หลักปัจจุบัน",
       "primaryTitle": "เปลี่ยนที่อยู่หลัก",
       "primaryDescription": "การเชื่อมต่อขาออกใหม่จาก {appbox} จะออกจาก {address} แทน {current} การเชื่อมต่อที่เปิดอยู่แล้วจะใช้ที่อยู่เดิมต่อไป",
-      "primaryDescriptionNoCurrent": "การเชื่อมต่อขาออกใหม่จาก {appbox} จะออกจาก {address}",
       "unassignTitle": "ยกเลิกการกำหนด {address}",
       "unassignDescription": "แอปบน {appbox} จะหยุดตอบสนองที่ {address} ที่อยู่นี้ยังเป็นของคุณ และคุณจะกำหนดอีกครั้งได้เมื่อเซิร์ฟเวอร์นำออกแล้ว ซึ่งปกติใช้เวลาไม่กี่นาที",
       "unassignPrimaryNote": "นี่เป็นที่อยู่สุดท้ายของ Appbox การเชื่อมต่อขาออกของมันจึงจะกลับไปออกจากที่อยู่ที่ใช้ร่วมกันของเซิร์ฟเวอร์",
