@@ -58,9 +58,9 @@ function serializeExpiredCookie(
   return parts.join("; ")
 }
 
-// Behind Cloudflare and Vercel, request.nextUrl reports the deployment host
-// (appbox-delta.vercel.app), not the one the browser used, so the public site
-// URL (https://www.appbox.co in production) is accepted explicitly.
+// A proxy that fetches this deployment under another host name makes
+// request.nextUrl.origin differ from the browser's, so the origin of
+// NEXT_PUBLIC_APP_URL (https://www.appbox.co in production) is accepted too.
 function allowedLogoutOrigins(request: NextRequest): Set<string> {
   const origins = new Set<string>([request.nextUrl.origin])
   try {
