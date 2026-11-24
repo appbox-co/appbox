@@ -46,7 +46,14 @@ const nextConfig = {
       { source: "/login", destination: "/en/login" },
       // OAuth consent and error pages; /oauth/authorize itself is on api.appbox.co.
       { source: "/oauth/:path*", destination: "/en/oauth/:path*" },
-      { source: "/forgot/:path*", destination: "/en/forgot/:path*" }
+      { source: "/forgot/:path*", destination: "/en/forgot/:path*" },
+      // First-party path for the Google tag loader, which the [locale] layout
+      // loads. A Cloudflare snippet served it until www.appbox.co moved off
+      // Cloudflare's proxy.
+      {
+        source: "/b5tg",
+        destination: "https://www.googletagmanager.com/gtag/js?id=GT-T53F3CT6"
+      }
     ]
   }
 }

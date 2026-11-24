@@ -189,7 +189,7 @@ export default async function RootLayout(props: AppLayoutProps) {
         )}
       >
         <MarketingScreenshotMode />
-        <Script src="/b5tg/" strategy="afterInteractive" />
+        <Script src="/b5tg" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
