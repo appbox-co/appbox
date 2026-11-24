@@ -122,6 +122,8 @@ function Key({ children }: { children: ReactNode }) {
 
 interface QuickSearchProviderProps {
   groups: SearchGroup[]
+  /** The search field's hint; the dashboard's names its Appboxes. */
+  placeholder?: string
   children: ReactNode
 }
 
@@ -131,6 +133,7 @@ interface QuickSearchProviderProps {
  */
 export function QuickSearchProvider({
   groups,
+  placeholder = COPY.placeholder,
   children
 }: QuickSearchProviderProps) {
   const router = useRouter()
@@ -177,7 +180,7 @@ export function QuickSearchProvider({
         onSelect={(item, { newTab }) => go(item, newTab)}
       >
         <CommandPalette.Input
-          placeholder={COPY.placeholder}
+          placeholder={placeholder}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="none"
