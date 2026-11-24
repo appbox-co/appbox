@@ -1,0 +1,51 @@
+---
+title: Launch Week Day 5 - Connect Claude, ChatGPT and your editor to Appbox
+date: 2026-11-24 10:00:00 # set to launch day before merging
+excerpt: Day 5 of Launch Week. The Appbox MCP server lets Claude, ChatGPT, Claude Code, Cursor and VS Code install and manage your apps and domains when you ask, with only the access you approve.
+author_id: rid
+tags: [appbox, launch-week, mcp, ai, claude, chatgpt, developer-api]
+---
+
+# Launch Week Day 5: Connect Claude, ChatGPT and your editor to Appbox
+
+Today you can connect an AI assistant to your Appbox and manage it by asking. Tell Claude to install Jellyfin and let you know when it's running, or ask Cursor which of your apps are stopped and have it start them.
+
+All of this goes through the Appbox MCP server at `https://mcp.appbox.co/mcp`. MCP is the protocol assistants use to call outside tools, and Claude, ChatGPT, Claude Code, Cursor and VS Code all support it.
+
+## How you connect
+
+Add the server URL to your assistant and it opens Appbox in your browser. Sign in, check the **Connect** page and select **Approve**. There's no API key to create or paste into a chat.
+
+The Connect page shows the app's name, where your browser goes back to afterwards, and what the app asked for. Untick anything you don't want it to have. A new connection usually starts with read-only access to your apps and the catalog.
+
+## What an assistant can do
+
+The server has tools for most of what you do in the dashboard:
+
+- Apps: search the catalog, install an app and wait for it to come up, then start, stop, restart, freeze, upgrade or uninstall it.
+- Domains: add a domain, check its DNS and attach it to an app.
+- Custom tables: list, add and change rows in tables apps provide, such as mailboxes.
+- Custom actions: run the actions Appbox has opened to the API. Nextcloud's Rescan Files is the first.
+
+Each tool needs a scope, the same scopes [API keys](/docs/developer-api/scopes) use. When you ask for something the connection can't do yet, such as uninstalling an app, your browser opens the Connect page again with that scope added, and you decide.
+
+Assistants usually ask before running a tool that changes or deletes something.
+
+## Access and revoking
+
+- A connection acts as your own account and reaches only your Appboxes, apps and domains. No scope covers billing, your API keys, users or account security.
+- If an install needs a password and you don't give one, the server generates one and never shows it to the assistant. You'll find it on the app's page in Appbox.
+- **Account > Connected apps** lists every assistant you've connected and when it last used Appbox. Select **Revoke** and it loses access within 15 minutes.
+- Changing your password or your two-factor settings disconnects every app.
+
+## Connect your assistant
+
+[Connect AI assistants (MCP)](/docs/developer-api/mcp) has the steps for Claude, ChatGPT, Claude Code, Cursor and VS Code. In Claude Code it's one command:
+
+```bash
+claude mcp add --transport http appbox https://mcp.appbox.co/mcp
+```
+
+Then run `/mcp` in Claude Code and choose **Authenticate**.
+
+If you'd rather write your own scripts, the [developer API](/docs/developer-api) that the server uses is open to API keys too.

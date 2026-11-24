@@ -18,6 +18,16 @@ info:
     a normal customer account, even when an admin owns it: it only reaches the
     owner's own Appboxes, apps and domains.
 
+    **OAuth.** MCP clients (Claude, ChatGPT, Cursor...) connect through the
+    Appbox MCP server at https://mcp.appbox.co/mcp with OAuth; the user picks
+    the scopes on a consent page. api.appbox.co is the authorization server
+    (metadata at /.well-known/oauth-authorization-server). Its tokens are for
+    the MCP server, which exchanges each one for a short-lived developer API
+    token (`Bearer abxo_at_...`). This API accepts only those exchanged tokens,
+    with the same scopes and rules as API keys. Other apps can't get developer
+    API tokens through OAuth, so there is no oauth2 security scheme here: use
+    an API key.
+
     **Scopes.** Each operation lists the scopes it needs. Some operations need
     extra scopes depending on the request (for example installing an app with
     a domain also needs `domains:read` and `domains:write`). A missing scope
@@ -66,7 +76,7 @@ paths:
       tags: [Key]
       operationId: getKey
       summary: Show the calling API key
-      description: Name, prefix, scopes and expiry of the key making the request. Needs no scope.
+      description: Name, prefix, scopes and expiry of the API key making the request, or the connected app, scopes and expiry of an OAuth token. Needs no scope.
       x-required-scopes: []
       responses:
         '200':
@@ -1085,17 +1095,25 @@ components:
         - domains:delete
     ApiKey:
       type: object
-      required: [id, name, key_prefix, scopes, created_at]
+      description: The calling credential. API keys return `type` api_key with the key's fields; OAuth tokens return `type` oauth with `client`, `scopes` and `expires_at`.
+      required: [type, scopes]
       properties:
-        id: { type: integer }
-        name: { type: string }
-        key_prefix: { type: string, description: 'First characters of the key, for identification.' }
+        type: { type: string, enum: [api_key, oauth] }
+        id: { type: integer, description: 'API keys only.' }
+        name: { type: string, description: 'API keys only.' }
+        key_prefix: { type: string, description: 'API keys only. First characters of the key, for identification.' }
+        client:
+          type: object
+          description: OAuth only. The connected app.
+          properties:
+            client_id: { type: string }
+            name: { type: string }
         scopes:
           type: array
           items: { $ref: '#/components/schemas/Scope' }
-        created_at: { type: string, format: date-time }
+        created_at: { type: string, format: date-time, description: 'API keys only.' }
         expires_at: { type: [string, 'null'], format: date-time }
-        last_used_at: { type: [string, 'null'], format: date-time }
+        last_used_at: { type: [string, 'null'], format: date-time, description: 'API keys only.' }
     Appbox:
       type: object
       required: [id, name, status, enabled, app_slots, used_slots, free_slots, created_at]
