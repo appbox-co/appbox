@@ -102,10 +102,16 @@ export function useSceneScript(
 }
 
 /**
+ * The largest a scene is drawn, as a share of the dashboard's real size. At
+ * full size its text matched the page's own and read as page content; smaller,
+ * it reads as a picture of the product.
+ */
+const SCENE_SCALE = 0.75
+
+/**
  * A fixed-size illustration, drawn at `width` × `height` and scaled to the
- * width of its cell, never larger than the real thing. It is a picture of the
- * dashboard, so it is hidden from assistive technology and can't be focused
- * or clicked.
+ * width of its cell, at most `SCENE_SCALE`. It is a picture of the dashboard,
+ * so it is hidden from assistive technology and can't be focused or clicked.
  */
 export function Stage({
   width,
@@ -126,7 +132,7 @@ export function Stage({
     const fit = () =>
       stage.style.setProperty(
         "--s",
-        Math.min(1, stage.clientWidth / width).toFixed(4)
+        Math.min(SCENE_SCALE, stage.clientWidth / width).toFixed(4)
       )
     fit()
     const observer = new ResizeObserver(fit)
@@ -138,7 +144,12 @@ export function Stage({
     <div
       ref={stageRef}
       className="ks-stage"
-      style={{ "--w": width, "--ar": `${width} / ${height}` } as CSSProperties}
+      style={
+        {
+          "--ar": `${width} / ${height}`,
+          maxWidth: width * SCENE_SCALE
+        } as CSSProperties
+      }
     >
       <div
         ref={sceneRef}
