@@ -11,10 +11,10 @@ import {
 import { toast } from "sonner"
 import { Panel } from "../panel"
 import {
+  livePasskeyActions,
   MAX_PASSKEYS,
   passkeyProvider,
-  type Passkey,
-  type PasskeyActions
+  type Passkey
 } from "./passkeys"
 import { isRecentAuthError, type Reauth } from "./recent-auth"
 import { RecentAuthDialog } from "./recent-auth-dialog"
@@ -121,13 +121,7 @@ function PasskeyRow({
  * Adding and removing need a recent sign-in; when the API asks for one, the
  * password is asked for and the change is tried again.
  */
-export function PasskeysPanel({
-  actions,
-  reauth
-}: {
-  actions: PasskeyActions
-  reauth: Reauth
-}) {
+export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
   const [passkeys, setPasskeys] = useState<Passkey[]>()
   const [loadFailed, setLoadFailed] = useState(false)
   const [loadRun, setLoadRun] = useState(0)
@@ -147,10 +141,10 @@ export function PasskeysPanel({
   const [retry, setRetry] = useState<Pending>()
   const [reauthOpen, setReauthOpen] = useState(false)
 
-  const { list } = actions
   useEffect(() => {
     let current = true
-    list()
+    livePasskeyActions
+      .list()
       .then((result) => {
         if (!current) return
         setPasskeys(result)
@@ -162,7 +156,7 @@ export function PasskeysPanel({
     return () => {
       current = false
     }
-  }, [list, loadRun])
+  }, [loadRun])
 
   const askToName = (passkey: Passkey, fresh: boolean) => {
     setNaming({ passkey, fresh })
@@ -175,7 +169,7 @@ export function PasskeysPanel({
   const add = async ({ afterReauth = false } = {}) => {
     setAdding(true)
     try {
-      const result = await actions.add()
+      const result = await livePasskeyActions.add()
       if (result.kind === "cancelled") return
       if (result.kind === "exists") {
         toast.error(COPY.exists)
@@ -203,7 +197,7 @@ export function PasskeysPanel({
   const remove = async (passkey: Passkey, { afterReauth = false } = {}) => {
     setRemovePending(true)
     try {
-      await actions.remove(passkey.id)
+      await livePasskeyActions.remove(passkey.id)
       setPasskeys((current) =>
         current?.filter((item) => item.id !== passkey.id)
       )
@@ -233,7 +227,10 @@ export function PasskeysPanel({
     }
     setSaving(true)
     try {
-      const updated = await actions.rename(naming.passkey.id, trimmed)
+      const updated = await livePasskeyActions.rename(
+        naming.passkey.id,
+        trimmed
+      )
       setPasskeys((current) =>
         current?.map((item) => (item.id === updated.id ? updated : item))
       )

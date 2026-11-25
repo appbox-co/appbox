@@ -8,10 +8,7 @@ import type { WallApp } from "./wall-apps"
 
 const WallAppsContext = createContext<WallApp[]>([])
 
-/**
- * Hands the catalogue to the signed-out pages. Live pages fill it from the
- * public catalogue, sample pages from their fixtures.
- */
+/** Hands the public catalogue to the signed-out pages. */
 export function WallAppsProvider({
   apps,
   children

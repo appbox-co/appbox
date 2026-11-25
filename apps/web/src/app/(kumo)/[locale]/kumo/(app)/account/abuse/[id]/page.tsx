@@ -34,9 +34,7 @@ export default function KumoAbuseReportPage({
     <AppShell
       width="wide"
       title={report?.subject || FALLBACK_TITLE}
-      parents={[
-        { label: "Abuse reports", href: kumoRoutes(false).abuseReports }
-      ]}
+      parents={[{ label: "Abuse reports", href: kumoRoutes.abuseReports }]}
       currentDesignHref={ROUTES.ABUSE_REPORT_DETAIL(reportId)}
       user={{ name: userName, email: user.email }}
       search={searchGroups}

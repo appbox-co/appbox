@@ -30,7 +30,7 @@ import { AppIcon } from "./app-icon"
 import { AppInstances, type InstanceAction } from "./app-instances"
 import { AppScreenshots, extractScreenshots } from "./app-screenshots"
 import { InstalledBadge } from "./app-store-cards"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { Markdown } from "./markdown"
 import { Panel } from "./panel"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
@@ -89,7 +89,7 @@ export interface AppDetailViewProps {
   onVote: (direction: "up" | "down" | null) => void
   onInstall: () => void
   onInstanceAction: (action: InstanceAction, ids: number[]) => Promise<unknown>
-  /** Comments section, supplied by the page (live hooks or sample data). */
+  /** Comments section, supplied by the page. */
   comments?: ReactNode
 }
 
@@ -270,7 +270,6 @@ export function AppDetailView({
   comments
 }: AppDetailViewProps) {
   const t = useTranslations("appstore")
-  const routes = useKumoRoutes()
   const formatDate = useDate()
 
   if (appState.status === "loading") return <DetailSkeleton />
@@ -284,7 +283,7 @@ export function AppDetailView({
           title={COPY.notFoundTitle}
           description={COPY.notFoundHint}
           contents={
-            <LinkButton href={routes.appStore} variant="secondary">
+            <LinkButton href={kumoRoutes.appStore} variant="secondary">
               {COPY.backToStore}
             </LinkButton>
           }

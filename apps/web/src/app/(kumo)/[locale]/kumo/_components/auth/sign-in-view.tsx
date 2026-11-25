@@ -12,7 +12,7 @@ import {
 } from "@phosphor-icons/react"
 import { z } from "zod"
 import { CODE_LENGTH, CodeInput } from "../account/code-input"
-import { useKumoRoutes } from "../kumo-routes"
+import { kumoRoutes } from "../kumo-routes"
 import { signInDestination, type SignInActions } from "./auth-actions"
 import { AuthHeading, PLANS_HREF } from "./auth-frame"
 import { PasswordInput } from "./password-input"
@@ -26,10 +26,8 @@ const PASSKEY_REFUSED = "That passkey was not accepted."
 export const PASSWORD_RESET_PARAM = "reset"
 
 interface SignInViewProps {
-  /** How the sign-in is sent. Sample pages pass stand-ins. */
+  /** How the sign-in is sent: `liveSignInActions`, for the page's locale. */
   actions: SignInActions
-  /** Shows the note for people sent here by an app's Install button. */
-  fromAppInstall?: boolean
 }
 
 /**
@@ -37,16 +35,15 @@ interface SignInViewProps {
  * steps and what is sent are the current design's login page, unchanged;
  * errors show in the page instead of in toasts.
  */
-export function SignInView({ actions, fromAppInstall }: SignInViewProps) {
+export function SignInView({ actions }: SignInViewProps) {
   const t = useTranslations("auth.login")
   const tCodes = useTranslations("account.apiKeys")
   const tReset = useTranslations("auth.reset")
-  const routes = useKumoRoutes()
   const params = useSearchParams()
 
-  const destination = signInDestination(params.get("redirect"), routes.home)
-  const showInstallNote =
-    fromAppInstall ?? /\/appstore\/app\//.test(destination)
+  const destination = signInDestination(params.get("redirect"), kumoRoutes.home)
+  // The note for people sent here by an app's Install button.
+  const showInstallNote = /\/appstore\/app\//.test(destination)
   const passwordWasReset = params.get(PASSWORD_RESET_PARAM) === "done"
 
   const [email, setEmail] = useState("")
@@ -66,8 +63,8 @@ export function SignInView({ actions, fromAppInstall }: SignInViewProps) {
   const [error, setError] = useState("")
   const busyRef = useRef(false)
 
-  // Passkeys offered in the email field's autofill list (live pages). Each
-  // attempt uses up its challenge, so a failed one starts a fresh wait.
+  // Passkeys offered in the email field's autofill list. Each attempt uses up
+  // its challenge, so a failed one starts a fresh wait.
   const [autofillRun, setAutofillRun] = useState(0)
   const autofillRef = useRef<AbortController | null>(null)
   const { passkeyAutofill, finish } = actions
@@ -176,7 +173,7 @@ export function SignInView({ actions, fromAppInstall }: SignInViewProps) {
       // Out of recovery codes: make new ones before anything else, so the
       // account cannot be locked out. Running low is the dashboard's to raise.
       actions.finish(
-        result.recoveryCodesExhausted ? routes.twoFactor : destination
+        result.recoveryCodesExhausted ? kumoRoutes.twoFactor : destination
       )
     } catch {
       setError(t("error_generic"))
@@ -359,7 +356,7 @@ export function SignInView({ actions, fromAppInstall }: SignInViewProps) {
             error={fieldErrors.password}
             autoComplete="current-password"
           />
-          <Link href={routes.forgotPassword} className="justify-self-end">
+          <Link href={kumoRoutes.forgotPassword} className="justify-self-end">
             {t("forgot_password")}
           </Link>
         </div>

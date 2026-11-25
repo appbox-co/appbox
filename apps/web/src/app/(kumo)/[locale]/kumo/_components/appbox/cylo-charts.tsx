@@ -6,7 +6,7 @@ import { Tabs } from "@cloudflare/kumo"
 import type { CyloDetail } from "@/api/cylos/cylos"
 import { useCyloStats } from "@/api/cylos/hooks/use-cylos"
 import { formatBytes } from "@/lib/utils"
-import { useOptionalWebSocket } from "@/providers/websocket-provider"
+import { useWebSocket } from "@/providers/websocket-provider"
 import { STATS_COLORS, type StatsThreshold } from "../installed/stats-chart"
 import {
   Metric,
@@ -130,11 +130,10 @@ export function CyloCharts({ cylo }: { cylo: CyloDetail }) {
   const [statsRange, setStatsRange] = useState("24h")
   const { data: stats } = useCyloStats(cyloId, statsRange)
 
-  // Optional, so the sample page can render this without a live socket.
-  const sendToServer = useOptionalWebSocket()?.sendToServer
+  const { sendToServer } = useWebSocket()
 
   useEffect(() => {
-    if (sendToServer && cylo.server_name) {
+    if (cylo.server_name) {
       sendToServer(
         { action: "stats_range", channel: `cylo:${cyloId}`, range: statsRange },
         cylo.server_name

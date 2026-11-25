@@ -3,11 +3,8 @@ import { getSafeAuthRedirect } from "@/lib/auth/safe-redirect"
 import { getPasskey, PasskeyCancelled } from "./webauthn"
 
 /*
- * What the sign-in pages send, kept apart from what they render. Live pages
- * pass the functions below, whose requests are the current design's sign-in
- * pages' unchanged. Sample pages pass stand-ins (demo/_lib/sample-auth.ts), so
- * nothing typed into them is sent anywhere: `/api/auth/*` is same-origin, so
- * the sample pages' fetch guard would let it through.
+ * What the sign-in pages send, kept apart from what they render. The requests
+ * are the current design's sign-in pages', unchanged.
  */
 
 export type SignInResult =
@@ -51,14 +48,6 @@ export interface SignInActions {
   finish: (destination: string) => void
 }
 
-export interface ForgotPasswordActions {
-  requestReset: (email: string) => Promise<RequestResult>
-}
-
-export interface ResetPasswordActions {
-  resetPassword: (token: string, password: string) => Promise<RequestResult>
-}
-
 /**
  * Where to go once signed in: the page asked for in `?redirect=` if it is a
  * safe same-site path, otherwise the prototype's home.
@@ -70,7 +59,7 @@ export function signInDestination(redirect: string | null, home: string) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Live requests                                                              */
+/*  Requests                                                                   */
 /* -------------------------------------------------------------------------- */
 
 const API_BASE_URL =
@@ -137,7 +126,8 @@ async function postTwoFactor(
   }
 }
 
-async function putForgot(email: string): Promise<RequestResult> {
+/** Sends the reset link to `email`. */
+export async function putForgot(email: string): Promise<RequestResult> {
   const res = await fetch(`${API_BASE_URL}/users/forgot`, {
     method: "PUT",
     headers: {
@@ -151,7 +141,8 @@ async function putForgot(email: string): Promise<RequestResult> {
   return res.ok ? { ok: true } : { ok: false, message: extractApiError(data) }
 }
 
-async function postReset(
+/** Sets a new password with the token from the reset link. */
+export async function postReset(
   token: string,
   password: string
 ): Promise<RequestResult> {
@@ -169,7 +160,7 @@ async function postReset(
 }
 
 /**
- * Whether live pages offer passkeys. Off until the API from
+ * Whether the pages offer passkeys. Off until the API from
  * appbox-co/cylo-api#221 is deployed with its migration; set
  * `NEXT_PUBLIC_PASSKEYS=on` to try it against an API that has them.
  */
@@ -245,12 +236,4 @@ export function liveSignInActions(
     }),
     finish: (destination) => window.location.replace(localise(destination))
   }
-}
-
-export const liveForgotPasswordActions: ForgotPasswordActions = {
-  requestReset: putForgot
-}
-
-export const liveResetPasswordActions: ResetPasswordActions = {
-  resetPassword: postReset
 }

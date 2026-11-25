@@ -90,7 +90,7 @@ export default function KumoAppboxPage({ params }: KumoAppboxPageProps) {
     <AppShell
       width="wide"
       title={cylo?.name ?? FALLBACK_TITLE}
-      parents={[{ label: "Appboxes", href: kumoRoutes(false).appboxes }]}
+      parents={[{ label: "Appboxes", href: kumoRoutes.appboxes }]}
       currentDesignHref={ROUTES.APPBOX_DETAIL(cyloId)}
       user={{ name: userName, email: user.email }}
       search={searchGroups}

@@ -53,7 +53,6 @@ export default function KumoInstalledAppPage({
   const appId = Number(id)
   const t = useTranslations("appboxmanager.appDetail")
   const router = useRouter()
-  const routes = kumoRoutes(false)
   const { user, logout } = useAuth()
   const { searchGroups } = useAccountApps()
 
@@ -178,7 +177,7 @@ export default function KumoInstalledAppPage({
       if (notif.action === "removed") {
         // The current design returns to the Appbox; that page is not ported
         // yet, so the prototype returns to its installed apps list.
-        router.push(routes.installedApps)
+        router.push(kumoRoutes.installedApps)
         return
       }
 
@@ -195,7 +194,7 @@ export default function KumoInstalledAppPage({
         queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
       }
     },
-    [appId, router, routes.installedApps, queryClient]
+    [appId, router, queryClient]
   )
 
   const handleCustomTableChanged = useCallback(
@@ -272,7 +271,7 @@ export default function KumoInstalledAppPage({
     <AppShell
       width="wide"
       title={app?.display_name ?? COPY.fallbackTitle}
-      parents={[{ label: COPY.installedApps, href: routes.installedApps }]}
+      parents={[{ label: COPY.installedApps, href: kumoRoutes.installedApps }]}
       currentDesignHref={ROUTES.INSTALLED_APP_DETAIL(appId)}
       user={{ name: userName, email: user.email }}
       search={searchGroups}

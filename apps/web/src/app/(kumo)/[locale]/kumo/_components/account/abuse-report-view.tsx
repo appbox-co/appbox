@@ -10,7 +10,7 @@ import {
   type AbuseTimelineEntry
 } from "@/api/account/account"
 import { RAIL_FALLBACK, ShellRail } from "../app-shell"
-import { useKumoRoutes } from "../kumo-routes"
+import { kumoRoutes } from "../kumo-routes"
 import { Panel } from "../panel"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { ShortDate } from "../short-date"
@@ -70,8 +70,8 @@ function formatRelativeTime(dateString: string): string {
 export interface AbuseReportViewProps {
   report: Loadable<AbuseReportDetail>
   /**
-   * The conversation about the report: `LiveComments` on live data, a
-   * `CommentsView` on samples. It brings its own card.
+   * The conversation about the report, supplied by the page (`LiveComments`).
+   * It brings its own card.
    */
   conversation: ReactNode
 }
@@ -235,7 +235,6 @@ export function AbuseReportView({
   conversation
 }: AbuseReportViewProps) {
   const t = useTranslations("account")
-  const routes = useKumoRoutes()
 
   if (reportState.status === "loading") return <ViewSkeleton />
 
@@ -248,7 +247,7 @@ export function AbuseReportView({
           title={COPY.loadFailedTitle}
           description={COPY.loadFailedHint}
           contents={
-            <LinkButton href={routes.abuseReports} variant="secondary">
+            <LinkButton href={kumoRoutes.abuseReports} variant="secondary">
               {COPY.backToList}
             </LinkButton>
           }

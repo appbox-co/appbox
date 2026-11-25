@@ -25,7 +25,7 @@ import {
   useInstanceRunner,
   type InstanceAction
 } from "./instance-controls"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 
 export type { InstanceAction }
@@ -48,7 +48,6 @@ interface AppInstancesProps {
 export function AppInstances({ instances, onAction }: AppInstancesProps) {
   const t = useTranslations("appboxmanager.installedApps")
   const locale = useLocale()
-  const routes = useKumoRoutes()
 
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
@@ -208,7 +207,7 @@ export function AppInstances({ instances, onAction }: AppInstancesProps) {
                         className="size-6"
                       />
                       <Link
-                        href={routes.installedApp(app.id)}
+                        href={kumoRoutes.installedApp(app.id)}
                         className="font-medium text-kumo-default no-underline hover:underline"
                       >
                         {app.display_name}

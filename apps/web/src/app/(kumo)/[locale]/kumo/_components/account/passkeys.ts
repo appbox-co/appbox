@@ -24,10 +24,9 @@ export type AddPasskeyResult =
   | { kind: "exists" }
 
 /**
- * What the passkeys panel asks for. Live pages pass `livePasskeyActions`;
- * sample pages pass stand-ins that never open the browser's passkey prompt.
- * Adding and removing may throw the API's "recent authentication is
- * required" error, which the panel answers by asking for the password.
+ * What the passkeys panel asks for. Adding and removing may throw the API's
+ * "recent authentication is required" error, which the panel answers by
+ * asking for the password.
  */
 export interface PasskeyActions {
   list: () => Promise<Passkey[]>
@@ -69,7 +68,7 @@ export function passkeyProvider(aaguid: string | null) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Live requests                                                              */
+/*  Requests                                                                   */
 /* -------------------------------------------------------------------------- */
 
 interface PasskeyChallenge {

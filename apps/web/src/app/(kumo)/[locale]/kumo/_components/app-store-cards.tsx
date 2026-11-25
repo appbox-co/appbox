@@ -14,7 +14,7 @@ import type { ScreenshotImage } from "@/types/marketing-blocks"
 import { HIDDEN_CATEGORY_ID } from "./app-categories"
 import { AppIcon } from "./app-icon"
 import { screenshotUrl } from "./app-screenshots"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { APP_ICON_BASE_URL } from "./shared"
 
 const COPY = {
@@ -46,10 +46,9 @@ export function visibleCategories(app: AppStoreItem) {
 
 /** Stretched over its positioned card, so the whole card opens the app. */
 export function AppLink({ app }: { app: AppStoreItem }) {
-  const routes = useKumoRoutes()
   return (
     <Link
-      href={routes.appStoreApp(app.id)}
+      href={kumoRoutes.appStoreApp(app.id)}
       className="text-kumo-default no-underline outline-none after:absolute after:inset-0"
     >
       {app.display_name}

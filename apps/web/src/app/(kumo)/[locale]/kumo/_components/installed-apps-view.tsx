@@ -14,7 +14,7 @@ import {
   statusLabel,
   type InstanceAction
 } from "./instance-controls"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { RailStatusCard } from "./rail-status"
 import { percentOf, usageTone, type Loadable } from "./shared"
 import { UsageRing } from "./usage-ring"
@@ -193,7 +193,6 @@ export function InstalledAppsView({
   onTogglePin
 }: InstalledAppsViewProps) {
   const t = useTranslations("appboxmanager.installedApps")
-  const routes = useKumoRoutes()
   const [status, setStatus] = useState<string>(ALL_STATUSES)
 
   const all = apps.status === "ready" ? apps.data : []
@@ -208,7 +207,11 @@ export function InstalledAppsView({
           </h1>
           <p className="text-kumo-subtle">{t("description")}</p>
         </div>
-        <LinkButton href={routes.appStore} variant="primary" icon={PlusIcon}>
+        <LinkButton
+          href={kumoRoutes.appStore}
+          variant="primary"
+          icon={PlusIcon}
+        >
           {COPY.install}
         </LinkButton>
       </header>

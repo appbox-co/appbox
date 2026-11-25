@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl"
 import { Banner, Button } from "@cloudflare/kumo"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { useRouter } from "@/i18n/routing"
-import { useKumoRoutes } from "../kumo-routes"
-import type { ResetPasswordActions } from "./auth-actions"
+import { kumoRoutes } from "../kumo-routes"
+import { postReset } from "./auth-actions"
 import { AuthHeading } from "./auth-frame"
 import { PasswordInput } from "./password-input"
 import { PASSWORD_RESET_PARAM } from "./sign-in-view"
@@ -20,16 +20,12 @@ const MIN_PASSWORD_LENGTH = 8
  * so in place of a toast.
  */
 export function ResetPasswordView({
-  token,
-  actions
+  token
 }: {
   /** From the link in the reset email. */
   token: string
-  /** How the new password is sent. Sample pages pass a stand-in. */
-  actions: ResetPasswordActions
 }) {
   const t = useTranslations("auth.reset")
-  const routes = useKumoRoutes()
   const router = useRouter()
 
   const [password, setPassword] = useState("")
@@ -59,12 +55,12 @@ export function ResetPasswordView({
     setIsPending(true)
     setError("")
     try {
-      const result = await actions.resetPassword(token, password)
+      const result = await postReset(token, password)
       if (!result.ok) {
         setError(result.message || t("error_generic"))
         return
       }
-      router.push(`${routes.signIn}?${PASSWORD_RESET_PARAM}=done`)
+      router.push(`${kumoRoutes.signIn}?${PASSWORD_RESET_PARAM}=done`)
     } catch {
       setError(t("error_generic"))
     } finally {

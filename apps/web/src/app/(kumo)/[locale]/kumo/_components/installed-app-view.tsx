@@ -35,7 +35,7 @@ import { CustomFields } from "./installed/custom-fields"
 import { CustomTables } from "./installed/custom-tables"
 import { PortAssignments } from "./installed/port-assignments"
 import { InstanceStatusBadge } from "./instance-controls"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { Panel } from "./panel"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 
@@ -133,7 +133,6 @@ export function InstalledAppView({
 }: InstalledAppViewProps) {
   const t = useTranslations("appboxmanager.appDetail")
   const locale = useLocale()
-  const routes = useKumoRoutes()
   const { isAdmin } = useAuth()
   const [activeTab, setActiveTab] = useState("overview")
 
@@ -148,7 +147,7 @@ export function InstalledAppView({
           title={t("notFound")}
           description={t("notFoundDescription")}
           contents={
-            <LinkButton href={routes.installedApps} variant="secondary">
+            <LinkButton href={kumoRoutes.installedApps} variant="secondary">
               {t("backToInstalledApps")}
             </LinkButton>
           }
@@ -280,7 +279,7 @@ export function InstalledAppView({
             <span>
               {COPY.onAppbox}{" "}
               <Link
-                href={routes.appbox(app.cylo_id)}
+                href={kumoRoutes.appbox(app.cylo_id)}
                 className="font-medium text-kumo-default no-underline hover:underline"
               >
                 {app.cylo_name}
@@ -374,7 +373,7 @@ export function InstalledAppView({
               <dl className="-my-2 divide-y divide-kumo-hairline">
                 <DetailRow label={t("version")}>
                   <Link
-                    href={routes.appStoreApp(app.app_id)}
+                    href={kumoRoutes.appStoreApp(app.app_id)}
                     className="font-mono text-[0.9em] text-kumo-link"
                   >
                     {app.version || "—"}
@@ -391,7 +390,7 @@ export function InstalledAppView({
                 </DetailRow>
                 <DetailRow label={t("cylo")}>
                   <Link
-                    href={routes.appbox(app.cylo_id)}
+                    href={kumoRoutes.appbox(app.cylo_id)}
                     className="text-kumo-link"
                   >
                     {app.cylo_name}

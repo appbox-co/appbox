@@ -3,13 +3,12 @@
 import { useTranslations } from "next-intl"
 import { LinkButton } from "@cloudflare/kumo"
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react"
-import { useKumoRoutes } from "../kumo-routes"
+import { kumoRoutes } from "../kumo-routes"
 import { AuthHeading } from "./auth-frame"
 
 /** Shown once a reset link has been sent. */
 export function EmailSentView() {
   const t = useTranslations("auth.email_sent")
-  const routes = useKumoRoutes()
 
   return (
     <div className="grid gap-8">
@@ -23,7 +22,7 @@ export function EmailSentView() {
       <p className="text-kumo-subtle text-pretty">{t("check_inbox")}</p>
 
       <LinkButton
-        href={routes.signIn}
+        href={kumoRoutes.signIn}
         variant="secondary"
         className="w-full justify-center"
       >

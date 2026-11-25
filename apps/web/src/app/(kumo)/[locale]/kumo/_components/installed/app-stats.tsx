@@ -5,7 +5,7 @@ import { Tabs } from "@cloudflare/kumo"
 import type { ContainerRange } from "@/api/installed-apps/container-stats"
 import { useContainerStats } from "@/api/installed-apps/hooks/use-container-stats"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
-import { useOptionalWebSocket } from "@/providers/websocket-provider"
+import { useWebSocket } from "@/providers/websocket-provider"
 import { Panel } from "../panel"
 import {
   STATS_COLORS,
@@ -135,8 +135,7 @@ interface AppStatsProps {
  */
 export function AppStats({ app, transitional = false }: AppStatsProps) {
   const [range, setRange] = useState<ContainerRange>("24h")
-  // Optional, so the sample page can render this without a live socket.
-  const sendToServer = useOptionalWebSocket()?.sendToServer
+  const { sendToServer } = useWebSocket()
   const { data: stats } = useContainerStats(app.id, range)
 
   // Request fresh data whenever range or app changes, and also when the app
@@ -144,7 +143,7 @@ export function AppStats({ app, transitional = false }: AppStatsProps) {
   // stats immediately rather than waiting for the next ws-gateway ticker.
   // Skip the request while installing since the container doesn't exist yet.
   useEffect(() => {
-    if (!sendToServer || !app.server_name || transitional) return
+    if (!app.server_name || transitional) return
 
     const requestStats = () =>
       sendToServer(

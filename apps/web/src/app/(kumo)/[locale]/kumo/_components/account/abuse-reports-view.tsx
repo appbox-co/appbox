@@ -23,7 +23,7 @@ import type { AbuseReport } from "@/api/account/account"
 import { Link } from "@/i18n/routing"
 import { ShellRail } from "../app-shell"
 import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "../filter-bar"
-import { useKumoRoutes } from "../kumo-routes"
+import { kumoRoutes } from "../kumo-routes"
 import { RailStatusCard } from "../rail-status"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { ShortDate } from "../short-date"
@@ -128,10 +128,9 @@ const DEFAULT_PAGE_SIZE = PAGE_SIZES[0]
 
 /** The subject, which is the way into the report. */
 function SubjectLink({ row, className }: { row: Row; className?: string }) {
-  const routes = useKumoRoutes()
   return (
     <Link
-      href={routes.abuseReport(row.report.id)}
+      href={kumoRoutes.abuseReport(row.report.id)}
       className={cn(
         "font-medium text-kumo-default no-underline hover:underline",
         className

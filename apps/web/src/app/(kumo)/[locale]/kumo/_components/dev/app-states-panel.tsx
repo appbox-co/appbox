@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 import { Button, Combobox } from "@cloudflare/kumo"
 import { XIcon } from "@phosphor-icons/react"
+import { useQueryClient } from "@tanstack/react-query"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
+import { queryKeys } from "@/constants/query-keys"
 import { InstanceStatusBadge } from "../instance-controls"
 import { APP_STATUS_OPTIONS, AppStateReference } from "./app-states"
 import { DevChoices, DevPanel, DevReset, DevSection, IS_DEV } from "./dev-panel"
@@ -25,19 +27,19 @@ type OverridesMap = Record<number, AppOverride> // appId → override
 const OVERRIDES_KEY = "installed-app-dev-panel-overrides"
 const COLLAPSED_KEY = "installed-app-dev-panel-collapsed"
 
-function loadOverrides(key: string): OverridesMap {
+function loadOverrides(): OverridesMap {
   if (typeof window === "undefined") return {}
   try {
-    const raw = localStorage.getItem(key)
+    const raw = localStorage.getItem(OVERRIDES_KEY)
     return raw ? JSON.parse(raw) : {}
   } catch {
     return {}
   }
 }
 
-function saveOverrides(key: string, o: OverridesMap) {
+function saveOverrides(o: OverridesMap) {
   try {
-    localStorage.setItem(key, JSON.stringify(o))
+    localStorage.setItem(OVERRIDES_KEY, JSON.stringify(o))
   } catch {
     /* noop */
   }
@@ -47,53 +49,70 @@ function saveOverrides(key: string, o: OverridesMap) {
 /*  Component                                                                  */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Where the page keeps the apps this panel overrides: the query cache on a
- * live page, local state on a sample page.
- */
-export interface AppStatesTarget {
-  /** Show this status for one install. */
-  setStatus: (appId: number, cyloId: number, status: string) => void
-  /** Put the real data back for one install, or for all of them. */
-  restore: (only?: { appId: number; cyloId: number }) => void
-}
-
 interface AppStatesPanelProps {
   /** The full loaded app list, so the panel can populate its picker. */
   apps: InstalledApp[]
-  target: AppStatesTarget
-  /** Sample pages keep their overrides apart from the real account's. */
-  storageKey?: string
 }
 
-/** Forces any installed app in the list into any status. */
+/**
+ * Forces any installed app in the list into any status, written to every
+ * cached copy of it.
+ */
 export function AppStatesPanel(props: AppStatesPanelProps) {
   if (!IS_DEV) return null
   return <PanelInner {...props} />
 }
 
-function PanelInner({
-  apps,
-  target,
-  storageKey = OVERRIDES_KEY
-}: AppStatesPanelProps) {
+function PanelInner({ apps }: AppStatesPanelProps) {
+  const queryClient = useQueryClient()
   const [selectedId, setSelectedId] = useState<number | "">("")
-  const [overrides, setOverrides] = useState<OverridesMap>(() =>
-    loadOverrides(storageKey)
-  )
+  const [overrides, setOverrides] = useState<OverridesMap>(loadOverrides)
   const [search, setSearch] = useState("")
+
+  /** Show this status for one install. */
+  function setStatus(appId: number, cyloId: number, status: string) {
+    const patch = (app: InstalledApp) =>
+      app.id === appId ? { ...app, status } : app
+
+    queryClient.setQueryData<InstalledApp[]>(
+      queryKeys.installedApps.all,
+      (prev) => prev?.map(patch)
+    )
+    queryClient.setQueryData<InstalledApp[]>(
+      queryKeys.installedApps.byCylo(cyloId),
+      (prev) => prev?.map(patch)
+    )
+    // Also patch the detail cache if it exists
+    queryClient.setQueryData<InstalledApp>(
+      queryKeys.installedApps.detail(appId),
+      (prev) => (prev ? { ...prev, status } : prev)
+    )
+  }
+
+  /** Put the real data back for one install, or for all of them. */
+  function restore(only?: { appId: number; cyloId: number }) {
+    // Invalidate so real data is re-fetched
+    queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
+    if (!only) return
+    queryClient.invalidateQueries({
+      queryKey: queryKeys.installedApps.byCylo(only.cyloId)
+    })
+    queryClient.invalidateQueries({
+      queryKey: queryKeys.installedApps.detail(only.appId)
+    })
+  }
 
   /* Re-apply persisted overrides once the apps list is available */
   const appliedOnMount = useRef(false)
   useEffect(() => {
     if (appliedOnMount.current || !apps.length) return
-    const saved = loadOverrides(storageKey)
+    const saved = loadOverrides()
     if (!Object.keys(saved).length) return
     appliedOnMount.current = true
     // Patch each saved override back into the page's data
     for (const [idStr, ov] of Object.entries(saved)) {
       const id = Number(idStr)
-      target.setStatus(id, ov.cylo_id, ov.status)
+      setStatus(id, ov.cylo_id, ov.status)
     }
   }, [apps]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -111,27 +130,27 @@ function PanelInner({
 
     const next = { ...overrides, [appId]: ov }
     setOverrides(next)
-    saveOverrides(storageKey, next)
-    target.setStatus(appId, app.cylo_id, status)
+    saveOverrides(next)
+    setStatus(appId, app.cylo_id, status)
   }
 
   /* ---- Clear a single override ---- */
   function clearOverride(appId: number) {
     const { [appId]: removed, ...rest } = overrides
     setOverrides(rest)
-    saveOverrides(storageKey, rest)
+    saveOverrides(rest)
     if (removed) {
       // So the real data is shown again
-      target.restore({ appId, cyloId: removed.cylo_id })
+      restore({ appId, cyloId: removed.cylo_id })
     }
   }
 
   /* ---- Reset all overrides ---- */
   function resetAll() {
     setOverrides({})
-    saveOverrides(storageKey, {})
+    saveOverrides({})
     setSelectedId("")
-    target.restore()
+    restore()
   }
 
   /* ---- Derived state ---- */

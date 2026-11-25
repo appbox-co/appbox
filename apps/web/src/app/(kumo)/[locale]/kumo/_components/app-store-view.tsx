@@ -29,7 +29,7 @@ import {
 } from "./app-store-cards"
 import { AppStoreDiscover } from "./app-store-discover"
 import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 import { DEFAULT_SORT, type AppStoreFilters } from "./use-app-store-filters"
 
@@ -180,7 +180,6 @@ export function AppStoreView({
 }: AppStoreViewProps) {
   const t = useTranslations("appstore")
   const locale = useLocale()
-  const routes = useKumoRoutes()
 
   // The field updates as you type; the filter (and the URL) follow after a pause.
   const [query, setQuery] = useState(filters.q)
@@ -238,7 +237,7 @@ export function AppStoreView({
           </h1>
           <p className="text-kumo-subtle">{t("subtitle")}</p>
         </div>
-        <LinkButton href={routes.installedApps} variant="secondary">
+        <LinkButton href={kumoRoutes.installedApps} variant="secondary">
           {COPY.installedApps}
         </LinkButton>
       </header>

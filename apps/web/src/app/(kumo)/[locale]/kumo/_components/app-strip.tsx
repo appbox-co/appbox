@@ -7,7 +7,7 @@ import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import type { PinnedApp } from "@/api/pinned-apps/pinned-apps"
 import { Link } from "@/i18n/routing"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { APP_ICON_BASE_URL } from "./shared"
 
 export interface StripApp {
@@ -68,7 +68,6 @@ const COPY = {
  * icons do not fit; the edge fade comes from Kumo's `data-overflowing` styles.
  */
 export function AppStrip({ apps, label }: AppStripProps) {
-  const routes = useKumoRoutes()
   const listRef = useRef<HTMLUListElement>(null)
   const [edges, setEdges] = useState({ start: false, end: false })
   const overflowing = edges.start || edges.end
@@ -156,7 +155,7 @@ export function AppStrip({ apps, label }: AppStripProps) {
                 }
                 render={
                   <Link
-                    href={routes.installedApp(app.id)}
+                    href={kumoRoutes.installedApp(app.id)}
                     aria-label={app.name}
                     className="flex size-7 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-kumo-tint text-sm font-medium text-kumo-subtle no-underline ring ring-kumo-hairline outline-none hover:ring-2 hover:ring-kumo-brand focus-visible:ring-2 focus-visible:ring-kumo-brand"
                   />

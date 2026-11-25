@@ -15,7 +15,6 @@ import { useRouter } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
 import { postReauth } from "../../_lib/reauth"
 import { useAccountApps } from "../../_lib/use-account-apps"
-import { livePasskeyActions } from "../../../_components/account/passkeys"
 import { PasskeysPanel } from "../../../_components/account/passkeys-panel"
 import { TwoFactorView } from "../../../_components/account/two-factor-view"
 import { AppShell } from "../../../_components/app-shell"
@@ -81,11 +80,7 @@ export default function KumoTwoFactorPage() {
         onDisable={(code) => disable2FA.mutateAsync({ code })}
         onDisabled={() => logout()}
         reauth={postReauth}
-        passkeys={
-          LIVE_PASSKEYS && (
-            <PasskeysPanel actions={livePasskeyActions} reauth={postReauth} />
-          )
-        }
+        passkeys={LIVE_PASSKEYS && <PasskeysPanel reauth={postReauth} />}
       />
     </AppShell>
   )

@@ -6,8 +6,8 @@ import { Banner, Button, Input, Link } from "@cloudflare/kumo"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { z } from "zod"
 import { useRouter } from "@/i18n/routing"
-import { useKumoRoutes } from "../kumo-routes"
-import type { ForgotPasswordActions } from "./auth-actions"
+import { kumoRoutes } from "../kumo-routes"
+import { putForgot } from "./auth-actions"
 import { AuthHeading } from "./auth-frame"
 
 const emailSchema = z.string().email()
@@ -16,14 +16,8 @@ const emailSchema = z.string().email()
  * Asks for an email address and sends a reset link to it. What is sent is the
  * current design's forgot password page, unchanged.
  */
-export function ForgotPasswordView({
-  actions
-}: {
-  /** How the request is sent. Sample pages pass a stand-in. */
-  actions: ForgotPasswordActions
-}) {
+export function ForgotPasswordView() {
   const t = useTranslations("auth.forgot")
-  const routes = useKumoRoutes()
   const router = useRouter()
 
   const [email, setEmail] = useState("")
@@ -42,12 +36,12 @@ export function ForgotPasswordView({
     setIsPending(true)
     setError("")
     try {
-      const result = await actions.requestReset(email)
+      const result = await putForgot(email)
       if (!result.ok) {
         setError(result.message || t("error_generic"))
         return
       }
-      router.push(routes.resetEmailSent)
+      router.push(kumoRoutes.resetEmailSent)
     } catch {
       setError(t("error_generic"))
     } finally {
@@ -96,7 +90,7 @@ export function ForgotPasswordView({
       </form>
 
       <p className="text-kumo-subtle">
-        <Link href={routes.signIn}>{t("back_to_login")}</Link>
+        <Link href={kumoRoutes.signIn}>{t("back_to_login")}</Link>
       </p>
     </div>
   )

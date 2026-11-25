@@ -32,7 +32,7 @@ import { formatBytes, formatStorageGB } from "@/lib/utils/format"
 import { AppIcon } from "./app-icon"
 import { AppStrip, type StripApp } from "./app-strip"
 import { AppboxStatusBadges } from "./appbox-status"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { useQuickSearch } from "./quick-search"
 import {
   EMPTY_IN_CARD,
@@ -86,8 +86,8 @@ export interface HomeViewProps {
   services: Loadable<CyloSummary[]>
   /** Installed apps keyed by Appbox id, pinned first. */
   apps: Loadable<ReadonlyMap<number, StripApp[]>>
-  /** Card renderer. The live page swaps in one that reads WebSocket usage. */
-  AppboxCard?: ComponentType<{ cylo: CyloSummary; apps: StripApp[] }>
+  /** Card renderer: `AppboxCard` with the usage pushed over the WebSocket. */
+  AppboxCard: ComponentType<{ cylo: CyloSummary; apps: StripApp[] }>
   notifications: Loadable<Notification[]>
   onNotificationOpen?: (notification: Notification) => void
   newestApps: Loadable<AppStoreItem[]>
@@ -284,16 +284,14 @@ interface Recommendation {
 /** Things that need the user's attention, derived from account and Appbox state. */
 function buildRecommendations(
   showTwoFactorPrompt: boolean,
-  cylos: CyloSummary[],
-  appboxHref: (id: number) => string,
-  twoFactorHref: string
+  cylos: CyloSummary[]
 ): Recommendation[] {
   const items: Recommendation[] = []
 
   for (const cylo of cylos) {
     const appbox = {
       action: COPY.viewAppbox,
-      href: appboxHref(cylo.id)
+      href: kumoRoutes.appbox(cylo.id)
     }
     if (cylo.status === "suspended") {
       items.push({
@@ -338,7 +336,7 @@ function buildRecommendations(
       title: COPY.twoFactorTitle,
       meta: COPY.twoFactorMeta,
       action: COPY.twoFactorAction,
-      href: twoFactorHref
+      href: kumoRoutes.twoFactor
     })
   }
 
@@ -436,8 +434,6 @@ export function AppboxCard({
   /** Installed apps, pinned first. Shown as a shortcut strip. */
   apps?: StripApp[]
 }) {
-  const routes = useKumoRoutes()
-
   const storageUsed = usage?.storageUsedGb ?? cylo.storage_used
   const storagePercent = percentOf(storageUsed, cylo.storage_total)
   const upload = usage?.uploadBytes ?? cylo.upload_used
@@ -449,7 +445,7 @@ export function AppboxCard({
       <LayerCard.Secondary className="flex-wrap justify-between gap-x-3 gap-y-1.5">
         <div className="flex min-w-0 items-baseline gap-2">
           <Link
-            href={routes.appbox(cylo.id)}
+            href={kumoRoutes.appbox(cylo.id)}
             className="truncate font-medium text-kumo-default no-underline hover:underline"
           >
             {cylo.name}
@@ -568,7 +564,7 @@ export function HomeView({
   showTwoFactorPrompt,
   services,
   apps,
-  AppboxCard: Card = AppboxCard,
+  AppboxCard: Card,
   notifications,
   onNotificationOpen,
   newestApps,
@@ -577,7 +573,6 @@ export function HomeView({
 }: HomeViewProps) {
   const t = useTranslations("dashboard")
   const tc = useTranslations("common")
-  const routes = useKumoRoutes()
 
   const cylos = services.status === "ready" ? services.data : []
   const appsByCylo = apps.status === "ready" ? apps.data : NO_APPS
@@ -632,7 +627,7 @@ export function HomeView({
         <LinkList
           title={COPY.appboxes}
           count={services.status === "ready" ? cylos.length : undefined}
-          href={routes.appboxes}
+          href={kumoRoutes.appboxes}
           state={services}
           emptyMessage={tc("empty.noAppboxes")}
           errorMessage={tc("errors.loadServicesFailed")}
@@ -640,7 +635,7 @@ export function HomeView({
           {(cylo) => (
             <LinkRow
               key={cylo.id}
-              href={routes.appbox(cylo.id)}
+              href={kumoRoutes.appbox(cylo.id)}
               icon={
                 <span
                   className={cn("size-2 rounded-full", statusDot(cylo.status))}
@@ -655,7 +650,7 @@ export function HomeView({
         <LinkList
           title={COPY.apps}
           count={allApps.status === "ready" ? allApps.data.length : undefined}
-          href={routes.installedApps}
+          href={kumoRoutes.installedApps}
           state={allApps}
           emptyMessage={COPY.noApps}
           errorMessage={tc("errors.loadAppsFailed")}
@@ -663,7 +658,7 @@ export function HomeView({
           {({ app, cylo }) => (
             <LinkRow
               key={app.id}
-              href={routes.installedApp(app.id)}
+              href={kumoRoutes.installedApp(app.id)}
               icon={<AppIcon icon={app.icon} name={app.name} />}
               context={showAppbox ? cylo.name : undefined}
             >
@@ -702,14 +697,7 @@ export function HomeView({
       </div>
 
       {services.status === "ready" && (
-        <Recommended
-          items={buildRecommendations(
-            showTwoFactorPrompt,
-            cylos,
-            routes.appbox,
-            routes.twoFactor
-          )}
-        />
+        <Recommended items={buildRecommendations(showTwoFactorPrompt, cylos)} />
       )}
 
       <Appboxes services={services} apps={appsByCylo} Card={Card} />
@@ -717,7 +705,7 @@ export function HomeView({
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         <LinkList
           title={COPY.newestApps}
-          href={`${routes.appStore}?sort=newest`}
+          href={`${kumoRoutes.appStore}?sort=newest`}
           state={newestApps}
           emptyMessage={tc("empty.noApps")}
           errorMessage={tc("errors.loadAppsFailed")}
@@ -725,7 +713,7 @@ export function HomeView({
           {(app) => (
             <LinkRow
               key={app.id}
-              href={routes.appStoreApp(app.id)}
+              href={kumoRoutes.appStoreApp(app.id)}
               icon={<AppIcon icon={app.icon_image} name={app.display_name} />}
             >
               {app.display_name}
@@ -735,7 +723,7 @@ export function HomeView({
 
         <LinkList
           title={COPY.recentlyUpdated}
-          href={`${routes.appStore}?sort=updated`}
+          href={`${kumoRoutes.appStore}?sort=updated`}
           state={recentlyUpdated}
           emptyMessage={tc("empty.noRecentlyUpdated")}
           errorMessage={tc("errors.loadAppsFailed")}
@@ -743,7 +731,7 @@ export function HomeView({
           {(app) => (
             <LinkRow
               key={app.id}
-              href={routes.appStoreApp(app.id)}
+              href={kumoRoutes.appStoreApp(app.id)}
               icon={<AppIcon icon={app.icon_image} name={app.display_name} />}
             >
               {app.display_name}

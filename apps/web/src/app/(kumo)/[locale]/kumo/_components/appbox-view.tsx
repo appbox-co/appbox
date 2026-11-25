@@ -21,7 +21,7 @@ import { FileExplorer } from "./appbox/file-explorer"
 import { InstalledAppsList } from "./installed-apps-list"
 import { ActionDialog } from "./installed/actions-dialog"
 import { InstanceStatusBadge, type InstanceAction } from "./instance-controls"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 
 /**
@@ -75,7 +75,6 @@ export function AppboxView({
   onRestart
 }: AppboxViewProps) {
   const t = useTranslations("appboxmanager")
-  const routes = useKumoRoutes()
   const [activeTab, setActiveTab] = useState("summary")
   const [restartOpen, setRestartOpen] = useState(false)
 
@@ -90,7 +89,7 @@ export function AppboxView({
           title={t("cyloDetail.notFound")}
           description={t("cyloDetail.notFoundDescription")}
           contents={
-            <LinkButton href={routes.appboxes} variant="secondary">
+            <LinkButton href={kumoRoutes.appboxes} variant="secondary">
               {t("cyloDetail.backToAppboxes")}
             </LinkButton>
           }
@@ -216,7 +215,7 @@ export function AppboxView({
           <section className="grid grid-cols-1 gap-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-lg font-semibold">{COPY.installedApps}</h2>
-              <KumoLink href={routes.appStore}>{COPY.installApp}</KumoLink>
+              <KumoLink href={kumoRoutes.appStore}>{COPY.installApp}</KumoLink>
             </div>
             <InstalledAppsList
               apps={appsWithEffectiveStatus}

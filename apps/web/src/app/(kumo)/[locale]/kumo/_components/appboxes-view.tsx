@@ -36,7 +36,7 @@ import {
 import { useAppboxesUsage } from "./appbox/use-appboxes-usage"
 import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
 import { AppboxCard } from "./home-view"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { RailStatusCard } from "./rail-status"
 import {
   EMPTY_IN_CARD,
@@ -251,7 +251,6 @@ function DiskIo({ row }: { row: Row }) {
  * until the server has its own column it sits under the name.
  */
 function AppboxRow({ row }: { row: Row }) {
-  const routes = useKumoRoutes()
   const { cylo } = row
 
   return (
@@ -264,7 +263,7 @@ function AppboxRow({ row }: { row: Row }) {
           </span>
           <span className="grid min-w-0 gap-0.5">
             <Link
-              href={routes.appbox(cylo.id)}
+              href={kumoRoutes.appbox(cylo.id)}
               className="truncate font-medium text-kumo-default no-underline hover:underline"
             >
               {cylo.name}

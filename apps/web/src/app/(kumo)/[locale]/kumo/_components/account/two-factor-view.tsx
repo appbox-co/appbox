@@ -106,7 +106,7 @@ export interface TwoFactorViewProps {
   onRegenerate: (code: string) => Promise<RegenerateRecoveryCodesResult>
   /** Turns two-factor off. An empty code asks whether one is needed. */
   onDisable: (code: string) => Promise<unknown>
-  /** Runs after it has been turned off (the live page signs out). */
+  /** Runs after it has been turned off (the page signs out). */
   onDisabled: () => Promise<unknown> | void
   /** How a sign-in is repeated when the API asks for a recent one. */
   reauth: Reauth

@@ -32,7 +32,7 @@ import { Link } from "@/i18n/routing"
 import { AppIcon } from "./app-icon"
 import { ShellRail } from "./app-shell"
 import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { RailStatusCard } from "./rail-status"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 import { ShortDate } from "./short-date"
@@ -255,8 +255,6 @@ function DomainName({ row, className }: { row: Row; className?: string }) {
 
 /** What the domain is for: the app it serves, or the subdomains under it. */
 function UsedBy({ row }: { row: Row }) {
-  const routes = useKumoRoutes()
-
   if (row.kind === "base") {
     return (
       <span className="whitespace-nowrap text-kumo-subtle">
@@ -274,7 +272,7 @@ function UsedBy({ row }: { row: Row }) {
   )
   return row.domain.instance_id ? (
     <Link
-      href={routes.installedApp(row.domain.instance_id)}
+      href={kumoRoutes.installedApp(row.domain.instance_id)}
       className="flex max-w-56 min-w-0 items-center gap-2 text-kumo-default no-underline hover:underline"
     >
       {label}
@@ -287,13 +285,12 @@ function UsedBy({ row }: { row: Row }) {
 }
 
 function AppboxLink({ row }: { row: Row }) {
-  const routes = useKumoRoutes()
   if (!row.appbox || !row.domain.cylo_id) {
     return <span className="text-kumo-subtle">—</span>
   }
   return (
     <Link
-      href={routes.appbox(row.domain.cylo_id)}
+      href={kumoRoutes.appbox(row.domain.cylo_id)}
       className="block max-w-40 truncate text-kumo-default no-underline hover:underline"
     >
       {row.appbox}
@@ -517,7 +514,6 @@ export function DomainsView({
 }: DomainsViewProps) {
   const t = useTranslations("appboxmanager.domains")
   const tc = useTranslations("common")
-  const routes = useKumoRoutes()
 
   const [query, setQuery] = useState("")
   const [kind, setKind] = useState<string>(ALL_KINDS)
@@ -685,7 +681,7 @@ export function DomainsView({
             <p className="text-kumo-subtle">{COPY.addBody}</p>
             <div className="mt-1 flex">
               <LinkButton
-                href={routes.installedApps}
+                href={kumoRoutes.installedApps}
                 size="sm"
                 variant="secondary"
               >
@@ -835,7 +831,7 @@ export function DomainsView({
               title={t("emptyTitle")}
               description={t("emptyDescription")}
               contents={
-                <LinkButton href={routes.appStore} variant="primary">
+                <LinkButton href={kumoRoutes.appStore} variant="primary">
                   {t("goToAppStore")}
                 </LinkButton>
               }

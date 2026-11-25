@@ -2,9 +2,6 @@
  * The browser's side of passkeys. The API speaks the standard WebAuthn JSON
  * form (base64url strings); browsers that lack the built-in converters
  * (Safari before 18.4) get the same conversion done here.
- *
- * Only live pages call these: they open the browser's real passkey prompt,
- * which on a sample page would offer the person's real passkeys.
  */
 
 /** Passed through untouched: the API's options, the browser's credential. */

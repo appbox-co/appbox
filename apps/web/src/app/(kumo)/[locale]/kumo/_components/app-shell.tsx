@@ -42,7 +42,7 @@ import { createPortal } from "react-dom"
 import { Icons } from "@/components/shared/icons"
 import { ROUTES } from "@/constants/routes"
 import { usePathname } from "@/i18n/routing"
-import { kumoRoutes, KumoRoutesProvider, useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import {
   QuickSearchProvider,
   useQuickSearch,
@@ -115,8 +115,6 @@ interface AppShellProps {
    * the account home) or `wide` (1400px, as on catalogue and list pages).
    */
   width?: "narrow" | "wide"
-  /** Sample-data mode: ported pages link to their demo twins, which need no session. */
-  demo?: boolean
   /** The same page in the current design, for the comparison link. */
   currentDesignHref?: string
   /** Page-specific quick search entries (apps, Appboxes). Pages are added here. */
@@ -282,7 +280,6 @@ function UserMenu({
   onSignOut?: () => void
 }) {
   const t = useTranslations("dashboard.header")
-  const routes = useKumoRoutes()
   const initial = user.name.charAt(0).toUpperCase() || "?"
 
   return (
@@ -300,10 +297,13 @@ function UserMenu({
           <span className="truncate text-kumo-subtle">{user.email}</span>
         </div>
         <DropdownMenu.Separator />
-        <DropdownMenu.LinkItem href={routes.profile} icon={UserCircleIcon}>
+        <DropdownMenu.LinkItem href={kumoRoutes.profile} icon={UserCircleIcon}>
           {t("profile")}
         </DropdownMenu.LinkItem>
-        <DropdownMenu.LinkItem href={routes.twoFactor} icon={ShieldCheckIcon}>
+        <DropdownMenu.LinkItem
+          href={kumoRoutes.twoFactor}
+          icon={ShieldCheckIcon}
+        >
           {t("security")}
         </DropdownMenu.LinkItem>
         <DropdownMenu.Separator />
@@ -324,7 +324,6 @@ export function AppShell({
   title,
   parents = [],
   width = "wide",
-  demo = false,
   currentDesignHref = ROUTES.DASHBOARD,
   search = [],
   onSignOut,
@@ -332,13 +331,16 @@ export function AppShell({
 }: AppShellProps) {
   const t = useTranslations("dashboard.sidebar")
   const pathname = usePathname()
-  const routes = kumoRoutes(demo)
 
   const groups: NavGroup[] = [
     {
       items: [
-        { label: t("dashboard"), href: routes.home, icon: HouseIcon },
-        { label: t("appstore"), href: routes.appStore, icon: StorefrontIcon }
+        { label: t("dashboard"), href: kumoRoutes.home, icon: HouseIcon },
+        {
+          label: t("appstore"),
+          href: kumoRoutes.appStore,
+          icon: StorefrontIcon
+        }
       ]
     },
     {
@@ -348,19 +350,19 @@ export function AppShell({
           label: t("appboxes"),
           icon: HardDrivesIcon,
           children: [
-            { label: t("appboxes"), href: routes.appboxes },
-            { label: t("installed_apps"), href: routes.installedApps },
-            { label: t("domains"), href: routes.domains }
+            { label: t("appboxes"), href: kumoRoutes.appboxes },
+            { label: t("installed_apps"), href: kumoRoutes.installedApps },
+            { label: t("domains"), href: kumoRoutes.domains }
           ]
         },
         {
           label: t("account"),
           icon: UserCircleIcon,
           children: [
-            { label: t("profile"), href: routes.profile },
-            { label: t("two_factor"), href: routes.twoFactor },
-            { label: t("api_keys"), href: routes.apiKeys },
-            { label: t("abuse_reports"), href: routes.abuseReports }
+            { label: t("profile"), href: kumoRoutes.profile },
+            { label: t("two_factor"), href: kumoRoutes.twoFactor },
+            { label: t("api_keys"), href: kumoRoutes.apiKeys },
+            { label: t("abuse_reports"), href: kumoRoutes.abuseReports }
           ]
         },
         { label: t("add_appbox"), href: "/", icon: PlusCircleIcon }
@@ -391,10 +393,8 @@ export function AppShell({
     }
   ]
 
-  // Exact match only for the demo home, whose path prefixes the other demo pages.
   const isActive = (link: NavLink) =>
-    pathname === link.href ||
-    (link.href !== routes.home && pathname.startsWith(`${link.href}/`))
+    pathname === link.href || pathname.startsWith(`${link.href}/`)
 
   const searchGroups: SearchGroup[] = [
     ...search,
@@ -435,166 +435,164 @@ export function AppShell({
   const [bar, setBar] = useState<HTMLElement | null>(null)
 
   return (
-    <KumoRoutesProvider demo={demo}>
-      <QuickSearchProvider groups={searchGroups}>
-        {/*
+    <QuickSearchProvider groups={searchGroups}>
+      {/*
         As on Cloudflare's dashboard: the sidebar sits on the page canvas, and
         when minimised it expands over the page while hovered or focused
         (`peekable`) instead of opening a flyout per icon.
       */}
-        <Sidebar.Provider
-          open={isMobile ? mobileOpen : desktopOpen}
-          onOpenChange={isMobile ? setMobileOpen : setDesktopOpen}
-          mobileBreakpoint={MOBILE_BREAKPOINT}
-          peekable
-          className="h-svh overflow-clip [--sidebar-bg:var(--color-kumo-canvas)]"
-        >
-          <Sidebar>
-            <Sidebar.Header>
-              <Brand />
-            </Sidebar.Header>
-            <Sidebar.Content>
-              <div className="pb-2">
-                <SidebarSearch />
-              </div>
-              {groups.map((group, index) => (
-                <Sidebar.Group key={group.label ?? index}>
-                  {group.label && (
-                    <Sidebar.GroupLabel>{group.label}</Sidebar.GroupLabel>
-                  )}
-                  <Sidebar.Menu>
-                    {group.items.map((item) =>
-                      isSection(item) ? (
-                        <Sidebar.MenuItem key={item.label}>
-                          <Sidebar.Collapsible
-                            defaultOpen={item.children.some(isActive)}
-                          >
-                            <Sidebar.CollapsibleTrigger
-                              render={
-                                <Sidebar.MenuButton icon={item.icon}>
-                                  {item.label}
-                                  <Sidebar.MenuChevron />
-                                </Sidebar.MenuButton>
-                              }
-                            />
-                            <Sidebar.CollapsibleContent>
-                              <Sidebar.MenuSub>
-                                {item.children.map((child) => (
-                                  <Sidebar.MenuSubButton
-                                    key={child.href}
-                                    href={child.href}
-                                    active={isActive(child)}
-                                  >
-                                    {child.label}
-                                  </Sidebar.MenuSubButton>
-                                ))}
-                              </Sidebar.MenuSub>
-                            </Sidebar.CollapsibleContent>
-                          </Sidebar.Collapsible>
-                        </Sidebar.MenuItem>
-                      ) : (
-                        <Sidebar.MenuButton
-                          key={item.href}
-                          icon={item.icon}
-                          href={item.href}
-                          target={item.external ? "_blank" : undefined}
-                          active={isActive(item)}
-                        >
-                          {item.label}
-                          {item.external && (
-                            <ArrowUpRightIcon
-                              aria-hidden="true"
-                              size={14}
-                              className="ms-auto shrink-0 text-kumo-subtle"
-                            />
-                          )}
-                        </Sidebar.MenuButton>
-                      )
-                    )}
-                  </Sidebar.Menu>
-                </Sidebar.Group>
-              ))}
-            </Sidebar.Content>
-            <Sidebar.Footer>
-              <Sidebar.Trigger />
-            </Sidebar.Footer>
-          </Sidebar>
-
-          <div className="flex h-svh min-w-0 flex-1 flex-col">
-            <header className="flex h-[58px] shrink-0 items-center gap-2 border-b border-kumo-line px-3">
-              <MobileSidebarTrigger />
-              <div className="min-w-0 flex-1">
-                {title && (
-                  <Breadcrumbs size="sm">
-                    <Breadcrumbs.Link href={routes.home}>
-                      Appbox
-                    </Breadcrumbs.Link>
-                    <Breadcrumbs.Separator />
-                    {parents.map((parent) => (
-                      <Fragment key={parent.href}>
-                        <Breadcrumbs.Link href={parent.href}>
-                          {parent.label}
-                        </Breadcrumbs.Link>
-                        <Breadcrumbs.Separator />
-                      </Fragment>
-                    ))}
-                    <Breadcrumbs.Current>{title}</Breadcrumbs.Current>
-                  </Breadcrumbs>
+      <Sidebar.Provider
+        open={isMobile ? mobileOpen : desktopOpen}
+        onOpenChange={isMobile ? setMobileOpen : setDesktopOpen}
+        mobileBreakpoint={MOBILE_BREAKPOINT}
+        peekable
+        className="h-svh overflow-clip [--sidebar-bg:var(--color-kumo-canvas)]"
+      >
+        <Sidebar>
+          <Sidebar.Header>
+            <Brand />
+          </Sidebar.Header>
+          <Sidebar.Content>
+            <div className="pb-2">
+              <SidebarSearch />
+            </div>
+            {groups.map((group, index) => (
+              <Sidebar.Group key={group.label ?? index}>
+                {group.label && (
+                  <Sidebar.GroupLabel>{group.label}</Sidebar.GroupLabel>
                 )}
-              </div>
-              <div className="flex shrink-0 items-center gap-1.5">
-                <Badge variant="beta" className="hidden sm:inline-flex">
-                  Kumo prototype
-                </Badge>
-                <LinkButton
-                  href={currentDesignHref}
-                  variant="ghost"
-                  size="sm"
-                  className="hidden sm:inline-flex"
-                >
-                  Current design
-                </LinkButton>
-                <ThemeToggle />
-                <UserMenu user={user} onSignOut={onSignOut} />
-              </div>
-            </header>
+                <Sidebar.Menu>
+                  {group.items.map((item) =>
+                    isSection(item) ? (
+                      <Sidebar.MenuItem key={item.label}>
+                        <Sidebar.Collapsible
+                          defaultOpen={item.children.some(isActive)}
+                        >
+                          <Sidebar.CollapsibleTrigger
+                            render={
+                              <Sidebar.MenuButton icon={item.icon}>
+                                {item.label}
+                                <Sidebar.MenuChevron />
+                              </Sidebar.MenuButton>
+                            }
+                          />
+                          <Sidebar.CollapsibleContent>
+                            <Sidebar.MenuSub>
+                              {item.children.map((child) => (
+                                <Sidebar.MenuSubButton
+                                  key={child.href}
+                                  href={child.href}
+                                  active={isActive(child)}
+                                >
+                                  {child.label}
+                                </Sidebar.MenuSubButton>
+                              ))}
+                            </Sidebar.MenuSub>
+                          </Sidebar.CollapsibleContent>
+                        </Sidebar.Collapsible>
+                      </Sidebar.MenuItem>
+                    ) : (
+                      <Sidebar.MenuButton
+                        key={item.href}
+                        icon={item.icon}
+                        href={item.href}
+                        target={item.external ? "_blank" : undefined}
+                        active={isActive(item)}
+                      >
+                        {item.label}
+                        {item.external && (
+                          <ArrowUpRightIcon
+                            aria-hidden="true"
+                            size={14}
+                            className="ms-auto shrink-0 text-kumo-subtle"
+                          />
+                        )}
+                      </Sidebar.MenuButton>
+                    )
+                  )}
+                </Sidebar.Menu>
+              </Sidebar.Group>
+            ))}
+          </Sidebar.Content>
+          <Sidebar.Footer>
+            <Sidebar.Trigger />
+          </Sidebar.Footer>
+        </Sidebar>
 
-            {/* A band for a page's tabs and main actions, as on Cloudflare's
+        <div className="flex h-svh min-w-0 flex-1 flex-col">
+          <header className="flex h-[58px] shrink-0 items-center gap-2 border-b border-kumo-line px-3">
+            <MobileSidebarTrigger />
+            <div className="min-w-0 flex-1">
+              {title && (
+                <Breadcrumbs size="sm">
+                  <Breadcrumbs.Link href={kumoRoutes.home}>
+                    Appbox
+                  </Breadcrumbs.Link>
+                  <Breadcrumbs.Separator />
+                  {parents.map((parent) => (
+                    <Fragment key={parent.href}>
+                      <Breadcrumbs.Link href={parent.href}>
+                        {parent.label}
+                      </Breadcrumbs.Link>
+                      <Breadcrumbs.Separator />
+                    </Fragment>
+                  ))}
+                  <Breadcrumbs.Current>{title}</Breadcrumbs.Current>
+                </Breadcrumbs>
+              )}
+            </div>
+            <div className="flex shrink-0 items-center gap-1.5">
+              <Badge variant="beta" className="hidden sm:inline-flex">
+                Kumo prototype
+              </Badge>
+              <LinkButton
+                href={currentDesignHref}
+                variant="ghost"
+                size="sm"
+                className="hidden sm:inline-flex"
+              >
+                Current design
+              </LinkButton>
+              <ThemeToggle />
+              <UserMenu user={user} onSignOut={onSignOut} />
+            </div>
+          </header>
+
+          {/* A band for a page's tabs and main actions, as on Cloudflare's
                 detail pages. Pages fill it through <ShellBar>; it takes no
                 room while empty. */}
-            <div
-              ref={setBar}
-              className="hidden min-h-13 shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-kumo-line px-4 py-2 not-empty:flex sm:px-5"
-            />
+          <div
+            ref={setBar}
+            className="hidden min-h-13 shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-kumo-line px-4 py-2 not-empty:flex sm:px-5"
+          />
 
-            <div className="@container/shell flex min-h-0 flex-1">
-              <main className="min-h-0 min-w-0 flex-1 overflow-y-auto px-4 py-6 sm:px-8 sm:py-8">
-                {/* Padding sits outside the column so its max width is the content width. */}
-                <div
-                  className={cn(
-                    "mx-auto w-full",
-                    width === "narrow" ? "max-w-[1000px]" : "max-w-[1400px]"
-                  )}
-                >
-                  <BarContext.Provider value={bar}>
-                    <RailContext.Provider value={rail}>
-                      {children}
-                    </RailContext.Provider>
-                  </BarContext.Provider>
-                </div>
-              </main>
-              {/* Right-hand column, as on Cloudflare's list pages. Pages fill
+          <div className="@container/shell flex min-h-0 flex-1">
+            <main className="min-h-0 min-w-0 flex-1 overflow-y-auto px-4 py-6 sm:px-8 sm:py-8">
+              {/* Padding sits outside the column so its max width is the content width. */}
+              <div
+                className={cn(
+                  "mx-auto w-full",
+                  width === "narrow" ? "max-w-[1000px]" : "max-w-[1400px]"
+                )}
+              >
+                <BarContext.Provider value={bar}>
+                  <RailContext.Provider value={rail}>
+                    {children}
+                  </RailContext.Provider>
+                </BarContext.Provider>
+              </div>
+            </main>
+            {/* Right-hand column, as on Cloudflare's list pages. Pages fill
                   it through <ShellRail>. It takes no room while empty, or
                   until the area beside the sidebar is wide enough (91rem)
                   that docking it does not squeeze the page. */}
-              <aside
-                ref={setRail}
-                className="hidden w-80 shrink-0 overflow-y-auto border-s border-kumo-line @min-[91rem]/shell:not-empty:block"
-              />
-            </div>
+            <aside
+              ref={setRail}
+              className="hidden w-80 shrink-0 overflow-y-auto border-s border-kumo-line @min-[91rem]/shell:not-empty:block"
+            />
           </div>
-        </Sidebar.Provider>
-      </QuickSearchProvider>
-    </KumoRoutesProvider>
+        </div>
+      </Sidebar.Provider>
+    </QuickSearchProvider>
   )
 }

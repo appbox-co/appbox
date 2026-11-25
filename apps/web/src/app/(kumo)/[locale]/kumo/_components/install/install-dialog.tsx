@@ -35,7 +35,7 @@ import {
   validInstallSubdomain
 } from "@/lib/install-validation"
 import { useAuth } from "@/providers/auth-provider"
-import { useKumoRoutes } from "../kumo-routes"
+import { kumoRoutes } from "../kumo-routes"
 import { BoostSlider } from "./boost-slider"
 import { CustomFieldInput } from "./custom-field-input"
 import { CyloSelector } from "./cylo-selector"
@@ -88,7 +88,6 @@ export function InstallDialog({
 }: InstallDialogProps) {
   const t = useTranslations("appstore")
   const router = useRouter()
-  const routes = useKumoRoutes()
   const { cylos: sessionCylos, user } = useAuth()
   const effectiveUserId = targetUserId ?? user?.id ?? 0
   const effectiveUserRole = targetUserRole ?? user?.roles
@@ -913,7 +912,7 @@ export function InstallDialog({
       if (onInstalled) {
         onInstalled(result.id)
       } else {
-        router.push(routes.installedApp(result.id))
+        router.push(kumoRoutes.installedApp(result.id))
       }
     } catch (error) {
       const parsed = parseInstallError(

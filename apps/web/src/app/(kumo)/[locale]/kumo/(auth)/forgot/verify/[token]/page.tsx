@@ -2,7 +2,6 @@
 
 import { Suspense } from "react"
 import { useParams } from "next/navigation"
-import { liveResetPasswordActions } from "../../../../_components/auth/auth-actions"
 import { AuthFrame } from "../../../../_components/auth/auth-frame"
 import { ResetPasswordView } from "../../../../_components/auth/reset-password-view"
 
@@ -11,10 +10,9 @@ function KumoResetPassword() {
 
   return (
     <AuthFrame
-      demo={false}
       currentDesignHref={`/forgot/verify/${encodeURIComponent(token)}`}
     >
-      <ResetPasswordView token={token} actions={liveResetPasswordActions} />
+      <ResetPasswordView token={token} />
     </AuthFrame>
   )
 }

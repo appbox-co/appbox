@@ -33,8 +33,5 @@ export interface ReauthResult {
   two_factor_token?: string
 }
 
-/**
- * Signs in again. Pages on live data pass `postReauth`; sample pages pass a
- * stand-in, so nothing typed into them is sent anywhere.
- */
+/** Signs in again. Pages pass `postReauth`, from `(app)/_lib/reauth.ts`. */
 export type Reauth = (request: ReauthRequest) => Promise<ReauthResult>

@@ -11,13 +11,13 @@ import {
 import { useInstalledApps } from "@/api/installed-apps/hooks/use-installed-apps"
 import { ROUTES } from "@/constants/routes"
 import { useAuth } from "@/providers/auth-provider"
-import { LiveInstallGuardsPanel } from "../../../_dev/live-panels"
 import { useAccountApps } from "../../../_lib/use-account-apps"
 import { useInstanceActions } from "../../../_lib/use-instance-actions"
 import { useMinimumPlan } from "../../../_lib/use-minimum-plan"
 import { AppDetailView } from "../../../../_components/app-detail-view"
 import { AppShell } from "../../../../_components/app-shell"
 import { LiveComments } from "../../../../_components/comments/live-comments"
+import { InstallGuardsPanel } from "../../../../_components/dev/install-guards-panel"
 import { InstallDialog } from "../../../../_components/install/install-dialog"
 import { kumoRoutes } from "../../../../_components/kumo-routes"
 import type { Loadable } from "../../../../_components/shared"
@@ -27,7 +27,6 @@ function KumoAppDetail({ appId }: { appId: number }) {
   const searchParams = useSearchParams()
   const { user, cylos, logout } = useAuth()
   const { searchGroups } = useAccountApps()
-  const routes = kumoRoutes(false)
 
   const appQuery = useAppDetail(appId)
   const versionsQuery = useAppVersions(appId)
@@ -67,7 +66,7 @@ function KumoAppDetail({ appId }: { appId: number }) {
     <AppShell
       width="wide"
       title={app?.display_name ?? t("title")}
-      parents={[{ label: t("title"), href: routes.appStore }]}
+      parents={[{ label: t("title"), href: kumoRoutes.appStore }]}
       currentDesignHref={ROUTES.APP_STORE_APP(appId)}
       user={{ name: userName, email: user.email }}
       search={searchGroups}
@@ -112,7 +111,7 @@ function KumoAppDetail({ appId }: { appId: number }) {
 
       {/* Development server only. It copies the app when it appears, so it
           waits for the app to load. */}
-      {app && <LiveInstallGuardsPanel appId={appId} />}
+      {app && <InstallGuardsPanel appId={appId} />}
     </AppShell>
   )
 }

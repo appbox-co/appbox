@@ -7,10 +7,10 @@ import { unpinApp } from "@/api/pinned-apps/pinned-apps"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
 import { useAuth } from "@/providers/auth-provider"
-import { LiveAppStatesPanel } from "../_dev/live-panels"
 import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
 import { useInstanceActions } from "../_lib/use-instance-actions"
 import { AppShell } from "../../_components/app-shell"
+import { AppStatesPanel } from "../../_components/dev/app-states-panel"
 import { InstalledAppsView } from "../../_components/installed-apps-view"
 
 const TITLE = "Installed apps"
@@ -70,7 +70,7 @@ export default function KumoInstalledAppsPage() {
       />
 
       {/* Development server only. */}
-      <LiveAppStatesPanel apps={apps} />
+      <AppStatesPanel apps={apps} />
     </AppShell>
   )
 }

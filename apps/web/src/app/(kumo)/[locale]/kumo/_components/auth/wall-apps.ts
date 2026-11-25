@@ -1,6 +1,6 @@
 /*
  * The sign-in pages' app wall, as data. Kept out of the wall's client module
- * so the server layouts that fill it can call it.
+ * so the server layout that fills it can call it.
  */
 
 /** What the wall needs of a catalogue app. */
@@ -13,23 +13,17 @@ export interface WallApp {
 /** Operating systems and servers have distribution logos, not app icons. */
 const NOT_APPS = new Set(["VPS", "OS Containers", "Operating System"])
 
-/**
- * The catalogue's apps, as the wall shows them. The public catalogue names
- * categories; the signed-in one (and the sample fixtures) labels them.
- */
+/** The public catalogue's apps, as the wall shows them. */
 export function toWallApps(
   catalogue: readonly {
     display_name: string
     icon_image: string
-    categories?: readonly (string | { label: string })[]
+    categories?: readonly string[]
   }[]
 ): WallApp[] {
   return catalogue
     .filter(
-      (app) =>
-        !app.categories?.some((category) =>
-          NOT_APPS.has(typeof category === "string" ? category : category.label)
-        )
+      (app) => !app.categories?.some((category) => NOT_APPS.has(category))
     )
     .map((app) => ({ name: app.display_name, icon: app.icon_image }))
 }

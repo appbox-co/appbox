@@ -2,11 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Select } from "@cloudflare/kumo"
+import { useQueryClient } from "@tanstack/react-query"
 import type { AppStoreItem } from "@/api/apps/app-store"
 import {
   notifyAppDevFlagsChanged,
   type AppDevFlags
 } from "@/app/[locale]/(dashboard)/appstore/_components/app-dev-flags"
+import { queryKeys } from "@/constants/query-keys"
+import { useAuth } from "@/providers/auth-provider"
 import {
   DevCheck,
   DevNote,
@@ -198,44 +201,28 @@ function withGuards(original: AppStoreItem, f: DevFlags): AppStoreItem {
 /*  Component                                                                  */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Where the page keeps the app this panel overrides: the query cache on a
- * live page, local state on a sample page. Keep it the same object between
- * renders.
- */
-export interface GuardTarget {
-  /** The app as the page has it now. */
-  read: () => AppStoreItem | undefined
-  /** Show this copy in place of the real app. */
-  write: (app: AppStoreItem) => void
-  /** Load the real app again and hand it back. */
-  reload: () => Promise<AppStoreItem | undefined>
-}
-
 interface InstallGuardsPanelProps {
   appId: number
-  target: GuardTarget
-  /** The signed-in user's role; admins skip the guards unless told not to. */
-  role: string | undefined
-  /** How many Appboxes the user really has. */
-  appboxCount: number
 }
 
 /**
- * Forces each state the install dialog guards against. Render it once the app
- * has loaded: it takes its copy of the real app when it first appears.
+ * Forces each state the install dialog guards against, in the cached app.
+ * Render it once the app has loaded: it takes its copy of the real app when it
+ * first appears.
  */
 export function InstallGuardsPanel(props: InstallGuardsPanelProps) {
   if (!IS_DEV) return null
   return <InstallGuardsPanelInner {...props} />
 }
 
-function InstallGuardsPanelInner({
-  appId,
-  target,
-  role,
-  appboxCount
-}: InstallGuardsPanelProps) {
+function InstallGuardsPanelInner({ appId }: InstallGuardsPanelProps) {
+  const queryClient = useQueryClient()
+  const { cylos, user } = useAuth()
+  // The signed-in user's role; admins skip the guards unless told not to.
+  const role = user?.roles
+  // How many Appboxes the user really has.
+  const appboxCount = (cylos ?? []).length
+
   const originalAppRef = useRef<AppStoreItem | null>(null)
   const [originalAppForDisplay, setOriginalAppForDisplay] =
     useState<AppStoreItem | null>(null)
@@ -244,22 +231,27 @@ function InstallGuardsPanelInner({
 
   // Capture the original app data on first render
   useEffect(() => {
-    const data = target.read()
+    const data = queryClient.getQueryData<AppStoreItem>(
+      queryKeys.apps.detail(appId)
+    )
     if (data && !originalAppRef.current) {
       const snapshot = { ...data }
       originalAppRef.current = snapshot
       queueMicrotask(() => setOriginalAppForDisplay(snapshot))
     }
-  }, [appId, target])
+  }, [appId, queryClient])
 
-  // Apply flags to wherever the page reads the app from
+  // Apply flags to the cached app the page reads
   const applyFlags = useCallback(
     (f: DevFlags) => {
       const original = originalAppRef.current
       if (!original) return
-      target.write(withGuards(original, f))
+      queryClient.setQueryData<AppStoreItem>(
+        queryKeys.apps.detail(appId),
+        withGuards(original, f)
+      )
     },
-    [target]
+    [appId, queryClient]
   )
 
   // Re-apply on mount if flags were persisted
@@ -295,12 +287,16 @@ function InstallGuardsPanelInner({
     setTimeout(notifyAppDevFlagsChanged, 0)
     // Load the real data again and update the original ref so subsequent flag
     // applications have an accurate baseline to patch from.
-    void target.reload().then((fresh) => {
-      if (fresh) {
-        originalAppRef.current = { ...fresh }
-        setOriginalAppForDisplay({ ...fresh })
-      }
-    })
+    const key = queryKeys.apps.detail(appId)
+    void queryClient
+      .refetchQueries({ queryKey: key })
+      .then(() => queryClient.getQueryData<AppStoreItem>(key))
+      .then((fresh) => {
+        if (fresh) {
+          originalAppRef.current = { ...fresh }
+          setOriginalAppForDisplay({ ...fresh })
+        }
+      })
   }
 
   const hasAnyFlag = GUARD_FLAGS.some((k) => flags[k]) || flags.simulateUser

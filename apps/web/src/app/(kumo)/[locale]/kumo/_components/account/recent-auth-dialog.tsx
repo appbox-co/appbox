@@ -14,7 +14,7 @@ interface RecentAuthDialogProps {
   onOpenChange: (open: boolean) => void
   /** Runs once the sign-in is accepted; the dialog closes when it settles. */
   onVerified: () => void | Promise<void>
-  /** How the sign-in is sent. Sample pages pass a stand-in. */
+  /** How the sign-in is sent. */
   reauth: Reauth
   description?: string
   idPrefix?: string

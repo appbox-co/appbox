@@ -20,7 +20,7 @@ import {
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-import { useKumoRoutes } from "../kumo-routes"
+import { kumoRoutes } from "../kumo-routes"
 import { Panel } from "../panel"
 import type { Loadable } from "../shared"
 import { AccountHeader, SettingList, SettingRow } from "./setting-list"
@@ -280,7 +280,6 @@ export function ProfileView({
   const t = useTranslations("account")
   const tc = useTranslations("common")
   const locale = useLocale()
-  const routes = useKumoRoutes()
 
   return (
     <div className="flex flex-col gap-6">
@@ -322,7 +321,7 @@ export function ProfileView({
                     : t("profile.twoFactorDisabled")}
                 </Badge>
                 <LinkButton
-                  href={routes.twoFactor}
+                  href={kumoRoutes.twoFactor}
                   size="sm"
                   variant="secondary"
                 >

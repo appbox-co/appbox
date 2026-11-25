@@ -70,7 +70,7 @@ export interface ApiKeysViewProps {
   onRevoke: (id: number) => Promise<unknown>
   /** Loads the list again, after signing in again with nothing waiting. */
   onRefresh: () => void
-  /** How signing in again is sent. Sample pages pass a stand-in. */
+  /** How signing in again is sent. */
   reauth: Reauth
   /** The scopes a key can have, and the presets made from them. */
   scopeCatalog: Loadable<ApiKeyScopeCatalog>

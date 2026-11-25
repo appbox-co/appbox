@@ -41,7 +41,7 @@ import {
   useInstanceRunner,
   type InstanceAction
 } from "./instance-controls"
-import { useKumoRoutes } from "./kumo-routes"
+import { kumoRoutes } from "./kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 import { nextSort, SortHead, type SortState } from "./sort-head"
 
@@ -177,10 +177,9 @@ interface RowProps {
 }
 
 function NameLink({ app }: { app: InstalledApp }) {
-  const routes = useKumoRoutes()
   return (
     <Link
-      href={routes.installedApp(app.id)}
+      href={kumoRoutes.installedApp(app.id)}
       className="truncate font-medium text-kumo-default no-underline hover:underline"
     >
       {app.display_name}
@@ -452,7 +451,6 @@ export function InstalledAppsList({
   onStatusChange
 }: InstalledAppsListProps) {
   const t = useTranslations("appboxmanager.installedApps")
-  const routes = useKumoRoutes()
 
   const [query, setQuery] = useState("")
   const [ownStatus, setOwnStatus] = useState<string>(ALL_STATUSES)
@@ -688,7 +686,7 @@ export function InstalledAppsList({
             title={COPY.emptyTitle}
             description={COPY.emptyHint}
             contents={
-              <LinkButton href={routes.appStore} variant="primary">
+              <LinkButton href={kumoRoutes.appStore} variant="primary">
                 {COPY.browse}
               </LinkButton>
             }

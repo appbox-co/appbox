@@ -8,7 +8,7 @@ import { EmailSentView } from "../../../_components/auth/email-sent-view"
 export default function KumoEmailSentPage() {
   return (
     <Suspense>
-      <AuthFrame demo={false} currentDesignHref="/forgot/emailsent">
+      <AuthFrame currentDesignHref="/forgot/emailsent">
         <EmailSentView />
       </AuthFrame>
     </Suspense>

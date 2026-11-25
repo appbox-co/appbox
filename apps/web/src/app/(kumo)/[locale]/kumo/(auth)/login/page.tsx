@@ -18,7 +18,7 @@ function KumoSignIn() {
   )
 
   return (
-    <AuthFrame demo={false} currentDesignHref="/login">
+    <AuthFrame currentDesignHref="/login">
       <SignInView actions={actions} />
     </AuthFrame>
   )

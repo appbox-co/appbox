@@ -56,11 +56,8 @@ export function useQuickSearch() {
 /** Search entries for every installed app (pinned first) and every Appbox. */
 export function buildSearchGroups(
   cylos: CyloSummary[],
-  appsByCylo: ReadonlyMap<number, StripApp[]>,
-  /** Sample-data mode: link to the demo twins of the ported pages. */
-  demo = false
+  appsByCylo: ReadonlyMap<number, StripApp[]>
 ): SearchGroup[] {
-  const routes = kumoRoutes(demo)
   const apps = cylos.flatMap((cylo) =>
     (appsByCylo.get(cylo.id) ?? []).map((app) => ({ app, cylo }))
   )
@@ -75,7 +72,7 @@ export function buildSearchGroups(
         id: `app-${app.id}`,
         title: app.name,
         context: cylo.name,
-        href: routes.installedApp(app.id),
+        href: kumoRoutes.installedApp(app.id),
         icon: <AppIcon icon={app.icon} name={app.name} />
       }))
     },
@@ -86,7 +83,7 @@ export function buildSearchGroups(
         id: `cylo-${cylo.id}`,
         title: cylo.name,
         context: cylo.server_name,
-        href: routes.appbox(cylo.id),
+        href: kumoRoutes.appbox(cylo.id),
         icon: <HardDrivesIcon size={16} />
       }))
     }
