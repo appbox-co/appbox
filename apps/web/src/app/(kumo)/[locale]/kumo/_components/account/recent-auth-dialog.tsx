@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Banner, Button, Dialog, Input, Label } from "@cloudflare/kumo"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { postReauth } from "@/api/account/reauth"
-import { CodeInput } from "./code-input"
+import { CodeInput } from "../ui/code-input"
 
 const RECOVERY_CODE_LENGTH = 8
 

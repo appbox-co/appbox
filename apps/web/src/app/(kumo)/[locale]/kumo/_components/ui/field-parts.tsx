@@ -4,9 +4,9 @@ import type { ReactNode } from "react"
 import { Label, Loader } from "@cloudflare/kumo"
 
 /**
- * Small presentational pieces for form fields, in the install dialog and the
- * installed-app forms. They cover the gaps around Kumo's own Field: controls
- * it cannot wrap, and the helper lines shown next to them.
+ * Small presentational pieces for form fields. They cover the gaps around
+ * Kumo's own Field: controls it cannot wrap, and the helper lines shown next
+ * to them.
  */
 
 /**

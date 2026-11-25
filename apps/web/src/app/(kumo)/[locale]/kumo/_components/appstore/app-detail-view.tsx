@@ -25,6 +25,7 @@ import {
   type AppVersion
 } from "@/api/apps/app-store"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
+import { type MinimumPlan } from "../install/use-plan-restrictions"
 import { kumoRoutes } from "../kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { AppIcon } from "../ui/app-icon"
@@ -72,12 +73,6 @@ const COPY = {
 } as const
 
 const VERSIONS_PER_PAGE = 5
-
-export interface MinimumPlan {
-  name: string
-  /** Billing link that upgrades one of the user's restricted Appboxes, if any. */
-  upgradeUrl: string | null
-}
 
 export interface AppDetailViewProps {
   app: Loadable<AppStoreItem>

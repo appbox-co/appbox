@@ -31,8 +31,8 @@ import type {
 } from "@/api/account/account"
 import { isRecentAuthError } from "@/api/account/reauth"
 import { ApiError } from "@/api/client"
+import { CODE_LENGTH, CodeInput } from "../ui/code-input"
 import { Panel } from "../ui/panel"
-import { CODE_LENGTH, CodeInput } from "./code-input"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 import { AccountHeader, SettingList, SettingRow } from "./setting-list"
 

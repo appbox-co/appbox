@@ -7,7 +7,13 @@ import type {
   CyloSummary
 } from "@/api/cylos/cylos"
 import { queryKeys } from "@/constants/query-keys"
-import type { ServiceUsage } from "../shared"
+
+/** Live usage that overrides the figures in an Appbox summary once known. */
+export interface ServiceUsage {
+  storageUsedGb?: number
+  uploadBytes?: number
+  downloadBytes?: number
+}
 
 /** These figures are pushed over the WebSocket into the cache, never fetched. */
 const pushedOnly = <T>(): Promise<T> => Promise.reject(new Error("ws-only"))

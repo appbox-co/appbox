@@ -26,15 +26,14 @@ import { useCyloStats } from "@/api/cylos/hooks/use-cylos"
 import { Link } from "@/i18n/routing"
 import { formatBytes, formatStorageGB } from "@/lib/utils"
 import { RAIL_FALLBACK, ShellRail } from "../app-shell"
-import { AppStrip, type StripApp } from "../installed/app-strip"
 import { kumoRoutes } from "../kumo-routes"
 import {
   BILLING_BASE_URL,
   EMPTY_IN_CARD,
   percentOf,
-  type Loadable,
-  type ServiceUsage
+  type Loadable
 } from "../shared"
+import { AppStrip, type StripApp } from "../ui/app-strip"
 import {
   FILTER_BAR_INPUT,
   FILTER_BAR_SELECT,
@@ -57,7 +56,7 @@ import {
   UsageStrip,
   type UsageFigures
 } from "./usage-summary"
-import { useAppboxesUsage } from "./use-appboxes-usage"
+import { useAppboxesUsage, type ServiceUsage } from "./use-appboxes-usage"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

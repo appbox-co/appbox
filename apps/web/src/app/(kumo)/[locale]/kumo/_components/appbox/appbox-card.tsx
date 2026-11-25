@@ -3,10 +3,11 @@ import { cn, LayerCard } from "@cloudflare/kumo"
 import type { CyloSummary } from "@/api/cylos/cylos"
 import { Link } from "@/i18n/routing"
 import { formatBytes, formatStorageGB } from "@/lib/utils/format"
-import { AppStrip, type StripApp } from "../installed/app-strip"
 import { kumoRoutes } from "../kumo-routes"
-import { percentOf, usageTone, type ServiceUsage } from "../shared"
+import { percentOf, usageTone } from "../shared"
+import { AppStrip, type StripApp } from "../ui/app-strip"
 import { AppboxStatusBadges } from "./appbox-status"
+import { type ServiceUsage } from "./use-appboxes-usage"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

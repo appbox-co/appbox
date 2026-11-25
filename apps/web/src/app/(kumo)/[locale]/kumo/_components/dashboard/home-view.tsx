@@ -30,11 +30,12 @@ import type { Notification } from "@/api/notifications/notifications"
 import { Link } from "@/i18n/routing"
 import { formatStorageGB } from "@/lib/utils/format"
 import { AppboxCard } from "../appbox/appbox-card"
-import { type StripApp } from "../installed/app-strip"
 import { kumoRoutes } from "../kumo-routes"
 import { useQuickSearch } from "../quick-search"
-import { EMPTY_IN_CARD, notificationIcon, type Loadable } from "../shared"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { AppIcon } from "../ui/app-icon"
+import { type StripApp } from "../ui/app-strip"
+import { notificationIcon } from "./notifications"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

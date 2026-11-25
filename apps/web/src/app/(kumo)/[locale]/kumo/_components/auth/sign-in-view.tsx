@@ -11,11 +11,10 @@ import {
   WarningCircleIcon
 } from "@phosphor-icons/react"
 import { z } from "zod"
-import { CODE_LENGTH, CodeInput } from "../account/code-input"
 import { kumoRoutes } from "../kumo-routes"
+import { CODE_LENGTH, CodeInput } from "../ui/code-input"
 import { signInActions, signInDestination } from "./auth-actions"
 import { AuthHeading, PLANS_HREF } from "./auth-frame"
-import { localiseDestination } from "./localise-destination"
 import { PasswordInput } from "./password-input"
 import { passkeyAutofillAvailable } from "./webauthn"
 
@@ -33,11 +32,7 @@ export const PASSWORD_RESET_PARAM = "reset"
  */
 export function SignInView() {
   const locale = useLocale()
-  const actions = useMemo(
-    () =>
-      signInActions((destination) => localiseDestination(destination, locale)),
-    [locale]
-  )
+  const actions = useMemo(() => signInActions(locale), [locale])
   const t = useTranslations("auth.login")
   const tCodes = useTranslations("account.apiKeys")
   const tReset = useTranslations("auth.reset")

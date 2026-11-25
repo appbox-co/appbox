@@ -1,6 +1,7 @@
 import { ApiError, apiPost } from "@/api/client"
 import { passkeysEnabled } from "@/config/passkeys"
 import { getSafeAuthRedirect } from "@/lib/auth/safe-redirect"
+import { localiseDestination } from "./localise-destination"
 import { getPasskey, PasskeyCancelled } from "./webauthn"
 
 /*
@@ -28,7 +29,7 @@ export type PasskeyResult =
 
 export type RequestResult = { ok: true } | { ok: false; message?: string }
 
-export interface SignInActions {
+interface SignInActions {
   signIn: (email: string, password: string) => Promise<SignInResult>
   verifyTwoFactor: (
     token: string,
@@ -215,9 +216,7 @@ async function passkeySignIn(
  * is a full load, as in the current design: the client router would otherwise
  * reuse the signed-out state.
  */
-export function signInActions(
-  localise: (path: string) => string
-): SignInActions {
+export function signInActions(locale: string): SignInActions {
   return {
     signIn: postLogin,
     verifyTwoFactor: postTwoFactor,
@@ -225,6 +224,7 @@ export function signInActions(
       signInWithPasskey: () => passkeySignIn(false),
       passkeyAutofill: (signal: AbortSignal) => passkeySignIn(true, signal)
     }),
-    finish: (destination) => window.location.replace(localise(destination))
+    finish: (destination) =>
+      window.location.replace(localiseDestination(destination, locale))
   }
 }

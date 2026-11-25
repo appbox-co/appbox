@@ -5,12 +5,9 @@ import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import { useInstalledApps } from "@/api/installed-apps/hooks/use-installed-apps"
 import { getPinnedApps } from "@/api/pinned-apps/pinned-apps"
 import { queryKeys } from "@/constants/query-keys"
-import {
-  toStripApps,
-  type StripApp
-} from "../../_components/installed/app-strip"
 import { buildSearchGroups } from "../../_components/quick-search"
 import type { Loadable } from "../../_components/shared"
+import { toStripApps, type StripApp } from "../../_components/ui/app-strip"
 
 export function toLoadable<TData, TItem>(
   query: UseQueryResult<TData>,

@@ -5,8 +5,8 @@ import { Banner, Button, Dialog } from "@cloudflare/kumo"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 
 /**
- * The dialog an action confirms in, on an installed app or an Appbox's files:
- * a title, what will happen, an optional form, and Cancel beside the action.
+ * The dialog an action confirms in: a title, what will happen, an optional
+ * form, and Cancel beside the action itself.
  */
 export function ActionDialog({
   open,

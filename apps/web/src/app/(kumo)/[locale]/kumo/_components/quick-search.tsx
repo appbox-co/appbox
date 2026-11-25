@@ -12,9 +12,9 @@ import { CommandPalette } from "@cloudflare/kumo"
 import { HardDrivesIcon } from "@phosphor-icons/react"
 import type { CyloSummary } from "@/api/cylos/cylos"
 import { useRouter } from "@/i18n/routing"
-import type { StripApp } from "./installed/app-strip"
 import { kumoRoutes } from "./kumo-routes"
 import { AppIcon } from "./ui/app-icon"
+import type { StripApp } from "./ui/app-strip"
 
 export interface SearchItem {
   id: string
