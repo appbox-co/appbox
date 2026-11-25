@@ -21,6 +21,9 @@ try {
   const {
     validateInstallField,
     getInstallFieldActivity,
+    getFieldActivity,
+    fieldConditionsMet,
+    clearInactiveFieldValues,
     validInstallSubdomain,
     createInstallValidationSession
   } = await import(pathToFileURL(outfile))
@@ -155,6 +158,107 @@ try {
     null,
     "Stale failures do not replace current form feedback"
   )
+  // Installed-app screens: a bad condition hides only its own field and the
+  // fields that read it, instead of failing the whole form.
+  assert.deepEqual(
+    getFieldActivity(
+      {
+        mode: {},
+        bad: { condition: { field: "mode", operator: "bogus" } },
+        child: { condition: { field: "bad", operator: "truthy" } },
+        ok: { condition: { field: "mode", value: "a" } }
+      },
+      { mode: "a", bad: "1", child: "x" }
+    ),
+    { mode: true, bad: false, child: false, ok: true },
+    "An invalid condition hides only its field and its dependents"
+  )
+  assert.deepEqual(
+    getFieldActivity(
+      { loop: { condition: { field: "loop", operator: "truthy" } }, other: {} },
+      { loop: "1" }
+    ),
+    { loop: false, other: true },
+    "A self-referencing condition hides only that field"
+  )
+  assert.deepEqual(
+    getFieldActivity(
+      { orphan: { condition: { field: "missing", value: "1" } } },
+      {}
+    ),
+    { orphan: false },
+    "A condition on a field that does not exist hides the field"
+  )
+  assert.deepEqual(
+    getFieldActivity(
+      {
+        a: {},
+        b: { condition: { field: "a", value: "on" } },
+        c: { condition: { field: "b", operator: "truthy" } }
+      },
+      { a: "off", b: "1" }
+    ),
+    { a: true, b: false, c: false },
+    "A field whose source field is hidden is hidden too"
+  )
+  assert.deepEqual(
+    getFieldActivity(
+      {
+        a: { defaultValue: "on" },
+        b: { condition: { field: "a", value: "on" } }
+      },
+      {}
+    ),
+    { a: true, b: true },
+    "A missing value falls back to the field's default"
+  )
+  const buttonFields = { a: {} }
+  assert.equal(
+    fieldConditionsMet(
+      { condition: { field: "a", value: "on" } },
+      buttonFields,
+      { a: "on" }
+    ),
+    true,
+    "A button shows when its condition holds"
+  )
+  assert.equal(
+    fieldConditionsMet(
+      { condition: { field: "a", value: "on" } },
+      buttonFields,
+      { a: "off" }
+    ),
+    false,
+    "A button hides when its condition fails"
+  )
+  assert.equal(
+    fieldConditionsMet(
+      { condition: { field: "a", operator: "bogus" } },
+      buttonFields,
+      { a: "on" }
+    ),
+    false,
+    "A button with an invalid condition hides"
+  )
+  assert.equal(
+    fieldConditionsMet({}, buttonFields, {}),
+    true,
+    "A button without conditions shows"
+  )
+  assert.deepEqual(
+    clearInactiveFieldValues(
+      {
+        a: {},
+        b: { condition: { field: "a", value: "on" }, clearWhenHidden: true },
+        c: { condition: { field: "a", value: "on" } },
+        d: { clearWhenHidden: true }
+      },
+      { a: "off", b: "x", c: "y", d: "z" }
+    ),
+    { a: "off", b: "", c: "y", d: "z" },
+    "Only inactive fields marked clearWhenHidden are emptied"
+  )
+
   console.log(
     "Install validation passed:",
     fixtures.values.length,

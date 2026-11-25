@@ -122,8 +122,8 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
       table.supportsRowMutations === true
     )
   const retryMutation = useRetryCustomTableMutation(tableId, instanceId)
-  const addMutation = useSaveCustomTableRow(tableId, instanceId)
-  const updateMutation = useSaveCustomTableRow(tableId, instanceId)
+  // Adds and edits; the add and edit dialogs are never open together.
+  const saveMutation = useSaveCustomTableRow(tableId, instanceId)
   const deleteMutation = useDeleteCustomTableRow(tableId, instanceId)
   const revealMutation = useRevealCustomTableRowField(tableId, instanceId)
   const rowActionMutation = useCustomTableRowAction(tableId, instanceId)
@@ -366,7 +366,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     if (!validateForm(inputDataColumns)) return
     addIdempotencyKey.current ??= createIdempotencyKey("custom_table.create")
     try {
-      const result = await addMutation.mutateAsync({
+      const result = await saveMutation.mutateAsync({
         payload: formValues,
         idempotencyKey: addIdempotencyKey.current
       })
@@ -405,7 +405,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     if (!validateForm(editableColumnsForEdit, editTarget)) return
     editIdempotencyKey.current ??= createIdempotencyKey("custom_table.update")
     try {
-      const result = await updateMutation.mutateAsync({
+      const result = await saveMutation.mutateAsync({
         rowId: editTarget.id,
         payload: buildEditPayload(),
         idempotencyKey: editIdempotencyKey.current
@@ -885,7 +885,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
           <>
             <Button
               onClick={() => setAddOpen(false)}
-              disabled={addMutation.isPending}
+              disabled={saveMutation.isPending}
             >
               {t("customTablesCancel")}
             </Button>
@@ -893,7 +893,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
               variant="primary"
               data-dialog-submit="true"
               onClick={handleAdd}
-              loading={addMutation.isPending}
+              loading={saveMutation.isPending}
             >
               {t("customTablesSave")}
             </Button>
@@ -971,7 +971,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
           <>
             <Button
               onClick={() => setEditTarget(null)}
-              disabled={updateMutation.isPending}
+              disabled={saveMutation.isPending}
             >
               {t("customTablesCancel")}
             </Button>
@@ -979,7 +979,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
               variant="primary"
               data-dialog-submit="true"
               onClick={handleEdit}
-              loading={updateMutation.isPending}
+              loading={saveMutation.isPending}
             >
               {t("customTablesUpdate")}
             </Button>

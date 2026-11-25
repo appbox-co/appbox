@@ -10,7 +10,7 @@ import {
 } from "./sort-head"
 
 /** The page sizes every list offers. */
-export const PAGE_SIZES = [10, 25, 50, 100]
+const PAGE_SIZES = [10, 25, 50, 100]
 
 interface PagedRowsOptions<Row, Key extends string> {
   sorters: Record<Key, Comparator<Row>>
