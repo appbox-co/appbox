@@ -6,6 +6,8 @@ import {
   WarningIcon,
   type Icon
 } from "@phosphor-icons/react"
+import type { Notification } from "@/api/notifications/notifications"
+import { kumoRoutes } from "./kumo-routes"
 
 export const APP_ICON_BASE_URL =
   "https://api.appbox.co/assets/images/apps/icons/"
@@ -54,4 +56,30 @@ const DEFAULT_NOTIFICATION_ICON = {
 
 export function notificationIcon(type: string) {
   return NOTIFICATION_ICONS[type] ?? DEFAULT_NOTIFICATION_ICON
+}
+
+const ABUSE_REPORT_ACTIONS = new Set([
+  "abuse_unresolvable",
+  "abuse_reply_admin",
+  "abuse_user_new",
+  "abuse_user_closed",
+  "abuse_reply_user"
+])
+
+/** The Kumo page a notification opens, as the current design's notification menu maps them. */
+export function notificationRoute({
+  type,
+  action,
+  relid
+}: Notification): string | null {
+  if (type === "instance") return kumoRoutes.installedApp(relid)
+  if (type === "cylo" || type === "throttled" || type === "throttledcylo") {
+    return kumoRoutes.appbox(relid)
+  }
+  if (type === "abuse" && ABUSE_REPORT_ACTIONS.has(action)) {
+    return kumoRoutes.abuseReport(relid)
+  }
+  if (type === "hwfailure") return kumoRoutes.appboxes
+  if (type === "criticalalert") return kumoRoutes.home
+  return null
 }

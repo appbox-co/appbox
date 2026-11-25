@@ -13,6 +13,7 @@ import {
   revealCustomTableRowField,
   runCustomTableRowAction,
   updateCustomTableRow,
+  type CustomTableMutationAdmission,
   type CustomTableRow,
   type CustomTableRowAction
 } from "../custom-tables"
@@ -98,19 +99,11 @@ export function useRetryCustomTableMutation(
 export function useAddCustomTableRow(tableId: number, instanceId: number) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({
-      payload,
-      idempotencyKey
-    }: {
-      payload: Record<string, unknown>
-      idempotencyKey: string
-    }) => addCustomTableRow(tableId, instanceId, payload, idempotencyKey),
+    mutationFn: (payload: Record<string, unknown>) =>
+      addCustomTableRow(tableId, instanceId, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.customTables.rows(instanceId, tableId)
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.customTables.mutations(instanceId, tableId)
       })
     }
   })
@@ -121,14 +114,45 @@ export function useUpdateCustomTableRow(tableId: number, instanceId: number) {
   return useMutation({
     mutationFn: ({
       rowId,
-      payload,
-      idempotencyKey
+      payload
     }: {
       rowId: number | string
       payload: Record<string, unknown>
+    }) => updateCustomTableRow(tableId, instanceId, rowId, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.customTables.rows(instanceId, tableId)
+      })
+    }
+  })
+}
+
+/**
+ * Adds a row, or updates one when `rowId` is given, under an idempotency key
+ * so that a retried save is applied once. The API may answer with a queued
+ * mutation instead of the row, which the caller has to report.
+ */
+export function useSaveCustomTableRow(tableId: number, instanceId: number) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      rowId,
+      payload,
+      idempotencyKey
+    }: {
+      rowId?: number | string
+      payload: Record<string, unknown>
       idempotencyKey: string
-    }) =>
-      updateCustomTableRow(tableId, instanceId, rowId, payload, idempotencyKey),
+    }): Promise<CustomTableRow | CustomTableMutationAdmission | void> =>
+      rowId === undefined
+        ? addCustomTableRow(tableId, instanceId, payload, idempotencyKey)
+        : updateCustomTableRow(
+            tableId,
+            instanceId,
+            rowId,
+            payload,
+            idempotencyKey
+          ),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.customTables.rows(instanceId, tableId)

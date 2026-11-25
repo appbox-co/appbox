@@ -30,7 +30,9 @@ function KumoAppDetail({ appId }: { appId: number }) {
 
   const appQuery = useAppDetail(appId)
   const versionsQuery = useAppVersions(appId)
-  const installedApps = useInstalledApps()
+  const installedApps = useInstalledApps(undefined, undefined, {
+    watchVmControl: true
+  })
   const voteMutation = useVoteApp(appId)
   const runAction = useInstanceActions()
 

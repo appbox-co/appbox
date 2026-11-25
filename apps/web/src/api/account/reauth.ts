@@ -3,9 +3,7 @@ import { ApiError } from "@/api/client"
 /**
  * Sensitive account changes need a sign-in from the last few minutes. The API
  * refuses them with one of these messages otherwise; the page then asks for
- * the password again (see `RecentAuthDialog`) and retries.
- *
- * Same test as the current design's recent-auth-dialog.tsx.
+ * the password again and retries.
  */
 export function isRecentAuthError(error: unknown) {
   if (!(error instanceof ApiError) || error.status !== 403) {
@@ -33,5 +31,26 @@ export interface ReauthResult {
   two_factor_token?: string
 }
 
-/** Signs in again. Pages pass `postReauth`, from `(app)/_lib/reauth.ts`. */
-export type Reauth = (request: ReauthRequest) => Promise<ReauthResult>
+/** Signs in again through the app's own route, with the browser's cookies. */
+export async function postReauth(
+  request: ReauthRequest
+): Promise<ReauthResult> {
+  const response = await fetch("/api/auth/reauth", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(request)
+  })
+
+  const data = (await response.json().catch(() => ({}))) as Omit<
+    ReauthResult,
+    "ok"
+  >
+  return { ...data, ok: response.ok }
+}
+
+/** How a screen signs in again. Pages pass `postReauth`. */
+export type Reauth = typeof postReauth

@@ -29,10 +29,10 @@ import type {
   TwoFactorStatus,
   TwoFactorVerifyResult
 } from "@/api/account/account"
+import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
 import { ApiError } from "@/api/client"
 import { Panel } from "../panel"
 import { CODE_LENGTH, CodeInput } from "./code-input"
-import { isRecentAuthError, type Reauth } from "./recent-auth"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 import { AccountHeader, SettingList, SettingRow } from "./setting-list"
 

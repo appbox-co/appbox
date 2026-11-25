@@ -5,8 +5,8 @@ import { useQueryClient } from "@tanstack/react-query"
 import { Bug, ChevronDown, ChevronUp, RotateCcw } from "lucide-react"
 import type { AppStoreItem } from "@/api/apps/app-store"
 import { queryKeys } from "@/constants/query-keys"
+import { notifyAppDevFlagsChanged } from "@/lib/app-dev-flags"
 import { useAuth } from "@/providers/auth-provider"
-import { notifyAppDevFlagsChanged } from "./app-dev-flags"
 
 /* -------------------------------------------------------------------------- */
 /*  Only render in development                                                 */

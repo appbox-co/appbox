@@ -4,8 +4,8 @@ import { useRef, useState, type FormEvent } from "react"
 import { useTranslations } from "next-intl"
 import { Banner, Button, Dialog, Input, Label } from "@cloudflare/kumo"
 import { WarningCircleIcon } from "@phosphor-icons/react"
+import type { Reauth } from "@/api/account/reauth"
 import { CodeInput } from "./code-input"
-import type { Reauth } from "./recent-auth"
 
 const RECOVERY_CODE_LENGTH = 8
 

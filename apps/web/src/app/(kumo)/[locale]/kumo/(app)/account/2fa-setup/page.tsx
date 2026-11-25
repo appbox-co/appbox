@@ -10,15 +10,16 @@ import {
   useRegenerateRecoveryCodes,
   useVerify2FA
 } from "@/api/account/hooks/use-account"
+import { postReauth } from "@/api/account/reauth"
 import { ROUTES } from "@/constants/routes"
 import { useRouter } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
-import { postReauth } from "../../_lib/reauth"
 import { useAccountApps } from "../../_lib/use-account-apps"
 import { PasskeysPanel } from "../../../_components/account/passkeys-panel"
 import { TwoFactorView } from "../../../_components/account/two-factor-view"
 import { AppShell } from "../../../_components/app-shell"
 import { LIVE_PASSKEYS } from "../../../_components/auth/auth-actions"
+import { kumoRoutes } from "../../../_components/kumo-routes"
 
 const TITLE = "Two-factor authentication"
 
@@ -75,7 +76,7 @@ export default function KumoTwoFactorPage() {
           }).catch(() => {})
           return result
         }}
-        onSetupDone={() => router.replace(ROUTES.LOGIN)}
+        onSetupDone={() => router.replace(kumoRoutes.signIn)}
         onRegenerate={(code) => regenerate.mutateAsync({ code })}
         onDisable={(code) => disable2FA.mutateAsync({ code })}
         onDisabled={() => logout()}

@@ -22,7 +22,6 @@ import {
   useRevealCustomTableRowField,
   useUpdateCustomTableRow
 } from "@/api/custom-tables/hooks/use-custom-tables"
-import { createIdempotencyKey } from "@/api/idempotency"
 import {
   DataTable,
   DataTableColumnHeader
@@ -311,10 +310,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
   const handleAdd = async () => {
     if (!validateForm(inputDataColumns)) return
     try {
-      await addMutation.mutateAsync({
-        payload: formValues,
-        idempotencyKey: createIdempotencyKey("custom_table.create")
-      })
+      await addMutation.mutateAsync(formValues)
       setAddOpen(false)
       toast.success(t("customTablesAddSuccess"))
     } catch {
@@ -341,8 +337,7 @@ function CustomTableCard({ table }: { table: CustomTableDefinition }) {
     try {
       await updateMutation.mutateAsync({
         rowId: editTarget.id,
-        payload: buildEditPayload(),
-        idempotencyKey: createIdempotencyKey("custom_table.update")
+        payload: buildEditPayload()
       })
       setEditTarget(null)
       toast.success(t("customTablesEditSuccess"))

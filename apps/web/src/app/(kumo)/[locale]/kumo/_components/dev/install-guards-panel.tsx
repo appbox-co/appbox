@@ -4,11 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Select } from "@cloudflare/kumo"
 import { useQueryClient } from "@tanstack/react-query"
 import type { AppStoreItem } from "@/api/apps/app-store"
-import {
-  notifyAppDevFlagsChanged,
-  type AppDevFlags
-} from "@/app/[locale]/(dashboard)/appstore/_components/app-dev-flags"
 import { queryKeys } from "@/constants/query-keys"
+import { notifyAppDevFlagsChanged, type AppDevFlags } from "@/lib/app-dev-flags"
 import { useAuth } from "@/providers/auth-provider"
 import {
   DevCheck,

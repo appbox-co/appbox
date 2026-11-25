@@ -11,7 +11,7 @@ import {
   EyeSlashIcon
 } from "@phosphor-icons/react"
 import type { CustomField } from "@/api/apps/app-store"
-import { isFieldVisible } from "@/lib/dynamic-form"
+import { getFieldActivity } from "@/lib/install-validation"
 import { Panel } from "../panel"
 
 /* -------------------------------------------------------------------------- */
@@ -216,12 +216,13 @@ export function CustomFields({ fields, onReveal }: CustomFieldsProps) {
       field.defaultValue == null ? "" : String(field.defaultValue)
     ])
   )
-  const entries = Object.entries(fields).filter(([, field]) => {
+  const active = getFieldActivity(fields, fieldValues)
+  const entries = Object.entries(fields).filter(([key, field]) => {
     const fieldType = field.type ?? "text"
     const displayValue = String(field.defaultValue ?? "").trim()
     return (
       field.params?.showOnInstalled !== false &&
-      isFieldVisible(field, fieldValues) &&
+      active[key] &&
       !HIDDEN_TYPES.has(fieldType) &&
       displayValue.length > 0
     )

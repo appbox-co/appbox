@@ -14,7 +14,6 @@ import {
   useNotifications
 } from "@/api/notifications/hooks/use-notifications"
 import type { Notification } from "@/api/notifications/notifications"
-import { getNotificationRoute } from "@/components/dashboard/notification-helpers"
 import { useRouter } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
@@ -22,6 +21,7 @@ import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
 import { AppShell } from "../../_components/app-shell"
 import type { StripApp } from "../../_components/app-strip"
 import { AppboxCard, HomeView } from "../../_components/home-view"
+import { notificationRoute } from "../../_components/shared"
 
 /** Appbox card that prefers the live quota and bandwidth pushed over WebSocket. */
 function LiveAppboxCard({
@@ -100,7 +100,7 @@ export default function KumoDashboardPage() {
 
   const openNotification = (notification: Notification) => {
     if (!notification.is_read) markRead.mutate(notification.id)
-    const route = getNotificationRoute(notification)
+    const route = notificationRoute(notification)
     if (route) router.push(route)
   }
 

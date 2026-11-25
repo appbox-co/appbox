@@ -8,7 +8,6 @@ import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 /* -------------------------------------------------------------------------- */
 
 export interface CustomFieldValidation {
-  execution?: "server"
   name?: string // "remote" | "matches"
   params?: Record<string, unknown>
   minLength?: number

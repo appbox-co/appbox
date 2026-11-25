@@ -36,7 +36,11 @@ import {
 } from "@/api/installed-apps/hooks/use-installed-apps"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
-import { clearHiddenFieldValues, isFieldVisible } from "@/lib/dynamic-form"
+import {
+  clearInactiveFieldValues,
+  fieldConditionsMet,
+  getFieldActivity
+} from "@/lib/install-validation"
 import { useAuth } from "@/providers/auth-provider"
 import { toFieldValue } from "../install/logic"
 import { ActionDialog } from "./actions-dialog"
@@ -121,12 +125,13 @@ export function AppActions({
   const visibleCustomButtons = useMemo(
     () =>
       customButtons.filter((button) =>
-        isFieldVisible(
+        fieldConditionsMet(
           { conditions: button.visibilityConditions ?? button.conditions },
+          app.custom_fields ?? {},
           customFieldValues
         )
       ),
-    [customButtons, customFieldValues]
+    [customButtons, app.custom_fields, customFieldValues]
   )
 
   const freezeEnabled = isLaunchWeekEnabled("day_5", isAdmin)
@@ -585,10 +590,10 @@ function CustomButtonItem({
   }, [button.inputForm?.fields])
 
   const hasForm = formFields.length > 0
-  const visibleFormFields = useMemo(
-    () => formFields.filter(([, field]) => isFieldVisible(field, fieldValues)),
-    [formFields, fieldValues]
-  )
+  const visibleFormFields = useMemo(() => {
+    const active = getFieldActivity(Object.fromEntries(formFields), fieldValues)
+    return formFields.filter(([name]) => active[name])
+  }, [formFields, fieldValues])
 
   const openDialog = () => {
     if (hasForm) {
@@ -611,7 +616,10 @@ function CustomButtonItem({
 
   const handleFieldChange = (name: string, value: string) => {
     setFieldValues((prev) =>
-      clearHiddenFieldValues(formFields, { ...prev, [name]: value })
+      clearInactiveFieldValues(Object.fromEntries(formFields), {
+        ...prev,
+        [name]: value
+      })
     )
     setFieldErrors((prev) => {
       if (!prev[name]) return prev

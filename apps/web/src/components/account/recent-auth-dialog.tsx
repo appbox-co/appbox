@@ -3,7 +3,7 @@
 import { FormEvent, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Loader2 } from "lucide-react"
-import { ApiError } from "@/api/client"
+import { postReauth } from "@/api/account/reauth"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,12 +15,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-interface ReauthResponse {
-  error?: string
-  two_factor_required?: boolean
-  two_factor_token?: string
-}
 
 export interface RecentAuthDialogMessages {
   title: string
@@ -46,18 +40,7 @@ interface RecentAuthDialogProps {
   idPrefix?: string
 }
 
-export function isRecentAuthError(error: unknown) {
-  if (!(error instanceof ApiError) || error.status !== 403) {
-    return false
-  }
-
-  const message = error.message.toLowerCase()
-  return (
-    message.includes("recent authentication is required") ||
-    message.includes("recent user authentication is required") ||
-    message.includes("auth: recent authentication required")
-  )
-}
+export { isRecentAuthError } from "@/api/account/reauth"
 
 export function RecentAuthDialog({
   open,
@@ -117,28 +100,18 @@ export function RecentAuthDialog({
     setError("")
 
     try {
-      const response = await fetch("/api/auth/reauth", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(
-          twoFactorToken
-            ? {
-                code: code.trim(),
-                two_factor_token: twoFactorToken,
-                use_recovery: useRecovery
-              }
-            : { password }
-        )
-      })
-
-      const data = (await response.json().catch(() => ({}))) as ReauthResponse
+      const data = await postReauth(
+        twoFactorToken
+          ? {
+              code: code.trim(),
+              two_factor_token: twoFactorToken,
+              use_recovery: useRecovery
+            }
+          : { password }
+      )
       if (!isCurrentSubmission(submissionId)) return
 
-      if (!response.ok) {
+      if (!data.ok) {
         setError(typeof data.error === "string" ? data.error : m.failed)
         return
       }

@@ -9,6 +9,7 @@ import {
   WarningCircleIcon
 } from "@phosphor-icons/react"
 import { toast } from "sonner"
+import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
 import { Panel } from "../panel"
 import {
   livePasskeyActions,
@@ -16,7 +17,6 @@ import {
   passkeyProvider,
   type Passkey
 } from "./passkeys"
-import { isRecentAuthError, type Reauth } from "./recent-auth"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 
 /** Prototype-only copy, in English, as on the rest of the two-factor page. */

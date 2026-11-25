@@ -155,6 +155,13 @@ export async function retryCustomTableMutation(
   )
 }
 
+/** Without a key the request carries none, and the API saves the row at once. */
+function idempotencyKeyOption(idempotencyKey?: string) {
+  return idempotencyKey
+    ? { headers: { "Idempotency-Key": idempotencyKey } }
+    : {}
+}
+
 export async function addCustomTableRow(
   tableId: number,
   instanceId: number,
@@ -164,7 +171,7 @@ export async function addCustomTableRow(
   return apiPut<CustomTableRow | CustomTableMutationAdmission>(
     `tables/${tableId}/data/${instanceId}`,
     payload,
-    { headers: idempotencyHeaders("custom_table.create", idempotencyKey) }
+    idempotencyKeyOption(idempotencyKey)
   )
 }
 
@@ -175,9 +182,11 @@ export async function updateCustomTableRow(
   payload: Record<string, unknown>,
   idempotencyKey?: string
 ): Promise<void | CustomTableMutationAdmission> {
-  return apiPost(`tables/${tableId}/data/${instanceId}/${rowId}`, payload, {
-    headers: idempotencyHeaders("custom_table.update", idempotencyKey)
-  })
+  return apiPost(
+    `tables/${tableId}/data/${instanceId}/${rowId}`,
+    payload,
+    idempotencyKeyOption(idempotencyKey)
+  )
 }
 
 export async function deleteCustomTableRow(

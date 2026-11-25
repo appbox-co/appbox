@@ -21,11 +21,15 @@ export function toLoadable<TData, TItem>(
 /**
  * The signed-in user's Appboxes and installed apps (pinned first), plus the
  * matching quick search entries, so every prototype page offers the same ⌘K
- * results.
+ * results. Pages that show VM power controls pass `watchVmControl`.
  */
-export function useAccountApps() {
+export function useAccountApps({
+  watchVmControl = false
+}: { watchVmControl?: boolean } = {}) {
   const cylosSummary = useCylosSummary()
-  const installedApps = useInstalledApps()
+  const installedApps = useInstalledApps(undefined, undefined, {
+    watchVmControl
+  })
   const cylos = cylosSummary.data ?? []
 
   // Pins are stored per Appbox, so fetch them for each one (same cache keys

@@ -19,7 +19,7 @@ const TITLE = "Installed apps"
 export default function KumoInstalledAppsPage() {
   const { user, logout } = useAuth()
   const { cylosSummary, installedApps, pinnedOrder, searchGroups } =
-    useAccountApps()
+    useAccountApps({ watchVmControl: true })
   const runAction = useInstanceActions()
   const queryClient = useQueryClient()
   const pinMutation = usePinApp()

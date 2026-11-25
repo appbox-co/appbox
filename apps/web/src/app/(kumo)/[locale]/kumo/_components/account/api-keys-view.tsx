@@ -32,6 +32,7 @@ import type {
   CreateApiKeyResult,
   UpdateApiKeyInput
 } from "@/api/account/account"
+import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
 // Pure rules shared with the current design's page.
 import {
   getDefaultScopes,
@@ -39,7 +40,6 @@ import {
 } from "@/components/account/api-key-scopes"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { nextSort, SortHead, type SortState } from "../sort-head"
-import { isRecentAuthError, type Reauth } from "./recent-auth"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 import { ScopePicker, scopesHintId, ScopeSummary } from "./scope-picker"
 

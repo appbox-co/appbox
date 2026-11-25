@@ -43,8 +43,8 @@ interface KumoInstalledAppPageProps {
 
 /**
  * Kumo prototype of one installed app's management page, on live account
- * data. The data and live-update wiring below is the current page's, unchanged
- * apart from where it sends you once the app has been removed.
+ * data. The data and live-update wiring below is the current page's, with
+ * links to Kumo's pages.
  */
 export default function KumoInstalledAppPage({
   params
@@ -58,7 +58,13 @@ export default function KumoInstalledAppPage({
 
   const queryClient = useQueryClient()
 
-  const { data: app, isLoading, error } = useInstalledApp(appId)
+  const {
+    data: app,
+    isLoading,
+    error
+  } = useInstalledApp(appId, {
+    watchVmControl: true
+  })
   const { data: cylo } = useCylo(app?.cylo_id ?? 0)
   const { data: appVersions } = useAppVersions(app?.app_id ?? 0)
   const revealCustomFieldMutation = useRevealInstalledAppCustomField(appId)
@@ -175,9 +181,7 @@ export default function KumoInstalledAppPage({
       if (notif.type !== "instance" || Number(notif.relid) !== appId) return
 
       if (notif.action === "removed") {
-        // The current design returns to the Appbox; that page is not ported
-        // yet, so the prototype returns to its installed apps list.
-        router.push(kumoRoutes.installedApps)
+        router.push(app ? kumoRoutes.appbox(app.cylo_id) : kumoRoutes.appboxes)
         return
       }
 
@@ -194,7 +198,7 @@ export default function KumoInstalledAppPage({
         queryClient.invalidateQueries({ queryKey: queryKeys.installedApps.all })
       }
     },
-    [appId, router, queryClient]
+    [appId, app, router, queryClient]
   )
 
   const handleCustomTableChanged = useCallback(

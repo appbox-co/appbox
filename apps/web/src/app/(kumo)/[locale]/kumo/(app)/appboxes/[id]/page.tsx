@@ -36,7 +36,9 @@ export default function KumoAppboxPage({ params }: KumoAppboxPageProps) {
 
   const cyloQuery = useCylo(cyloId)
   const cylo = cyloQuery.data
-  const installedApps = useInstalledApps(cyloId)
+  const installedApps = useInstalledApps(cyloId, undefined, {
+    watchVmControl: true
+  })
   const { data: pinnedApps } = usePinnedApps(cyloId)
   const restartMutation = useRestartCylo()
   const runAction = useInstanceActions()

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { WsEventBridge } from "@/components/dashboard/ws-event-bridge"
+import { WsEventBridge } from "@/components/shared/ws-event-bridge"
 import { getServerSession } from "@/lib/auth/session"
 import { AuthProvider } from "@/providers/auth-provider"
 import { TanstackQueryProvider } from "@/providers/query-provider"

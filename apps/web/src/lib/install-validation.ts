@@ -1,4 +1,5 @@
 import type { CustomField } from "@/api/apps/app-store"
+import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
 export interface InstallFieldIssue {
   code: string
@@ -105,6 +106,8 @@ type Condition = {
   value?: unknown
   values?: unknown[]
 }
+/** What the conditions read from a field: its own conditions and its default value. */
+type ConditionalField = ConditionalFieldMetadata & { defaultValue?: unknown }
 const configError = () =>
   new Error(
     "This app has an invalid installation field configuration. Please contact support."
@@ -120,7 +123,7 @@ const normalize = (value: unknown): string =>
 const scalar = (value: unknown) =>
   value == null || ["string", "number", "boolean"].includes(typeof value)
 
-function conditions(field: CustomField): Condition[] {
+function conditions(field: ConditionalFieldMetadata): Condition[] {
   const metadata = field as unknown as Record<string, unknown>
   const legacy = metadata.condition
   const raw =
@@ -171,18 +174,20 @@ function conditions(field: CustomField): Condition[] {
   return list
 }
 
-export function getInstallFieldActivity(
-  fields: Record<string, CustomField>,
+/**
+ * Evaluates each field once, when it is first read. A field whose conditions
+ * are malformed, read a field that is not there or read themselves throws the
+ * configuration error, and so does every field that reads it.
+ */
+function createFieldActivity(
+  fields: Record<string, ConditionalField>,
   values: Record<string, unknown>
-): Record<string, boolean> {
+) {
   const active: Record<string, boolean> = {}
   const visiting = new Set<string>()
-  const visit = (name: string): boolean => {
-    if (Object.hasOwn(active, name)) return active[name]
-    if (!Object.hasOwn(fields, name) || visiting.has(name)) throw configError()
-    visiting.add(name)
+  const conditionsMet = (metadata: ConditionalFieldMetadata): boolean => {
     let visible = true
-    for (const condition of conditions(fields[name])) {
+    for (const condition of conditions(metadata)) {
       const sourceActive = visit(condition.field)
       const raw =
         values[condition.field] ?? fields[condition.field].defaultValue ?? ""
@@ -220,23 +225,95 @@ export function getInstallFieldActivity(
       }
       visible = visible && sourceActive && matches
     }
-    visiting.delete(name)
-    return (active[name] = visible)
+    return visible
   }
-  for (const name of Object.keys(fields)) visit(name)
-  return active
+  const visit = (name: string): boolean => {
+    if (Object.hasOwn(active, name)) return active[name]
+    if (!Object.hasOwn(fields, name) || visiting.has(name)) throw configError()
+    visiting.add(name)
+    try {
+      return (active[name] = conditionsMet(fields[name]))
+    } finally {
+      visiting.delete(name)
+    }
+  }
+  return { visit, conditionsMet }
 }
 
-export function clearInactiveInstallValues(
-  fields: Record<string, CustomField>,
-  values: Record<string, string>
+/** Which install fields are active. Throws if any field's conditions are invalid. */
+export function getInstallFieldActivity(
+  fields: Record<string, ConditionalField>,
+  values: Record<string, unknown>
+): Record<string, boolean> {
+  const { visit } = createFieldActivity(fields, values)
+  return Object.fromEntries(
+    Object.keys(fields).map((name) => [name, visit(name)])
+  )
+}
+
+function holds(evaluate: () => boolean) {
+  try {
+    return evaluate()
+  } catch {
+    return false
+  }
+}
+
+/**
+ * The same rules for an installed app's own screens (its values, buttons and
+ * tables), where one invalid condition should not hide everything: a field
+ * the install check would refuse is inactive, with every field that reads it.
+ */
+export function getFieldActivity(
+  fields: Record<string, ConditionalField>,
+  values: Record<string, unknown>
+): Record<string, boolean> {
+  const { visit } = createFieldActivity(fields, values)
+  return Object.fromEntries(
+    Object.keys(fields).map((name) => [name, holds(() => visit(name))])
+  )
+}
+
+/** Whether something other than a field, such as an app's button, shows by its conditions on the fields. */
+export function fieldConditionsMet(
+  metadata: ConditionalFieldMetadata,
+  fields: Record<string, ConditionalField>,
+  values: Record<string, unknown>
+): boolean {
+  return holds(() =>
+    createFieldActivity(fields, values).conditionsMet(metadata)
+  )
+}
+
+function clearInactiveValues(
+  fields: Record<string, ConditionalField>,
+  values: Record<string, string>,
+  active: Record<string, boolean>
 ) {
-  const active = getInstallFieldActivity(fields, values)
   const next = { ...values }
   for (const [name, field] of Object.entries(fields)) {
     if (field.clearWhenHidden && !active[name]) next[name] = ""
   }
   return next
+}
+
+export function clearInactiveInstallValues(
+  fields: Record<string, ConditionalField>,
+  values: Record<string, string>
+) {
+  return clearInactiveValues(
+    fields,
+    values,
+    getInstallFieldActivity(fields, values)
+  )
+}
+
+/** Empties fields marked clearWhenHidden that are inactive, by the rules of `getFieldActivity`. */
+export function clearInactiveFieldValues(
+  fields: Record<string, ConditionalField>,
+  values: Record<string, string>
+) {
+  return clearInactiveValues(fields, values, getFieldActivity(fields, values))
 }
 
 export function validInstallSubdomain(value: string): boolean {

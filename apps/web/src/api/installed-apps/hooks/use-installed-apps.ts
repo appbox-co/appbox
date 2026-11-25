@@ -32,33 +32,56 @@ import {
 /*  Queries                                                                    */
 /* -------------------------------------------------------------------------- */
 
-export function useInstalledApps(cyloId?: number, userIdOverride?: number) {
+interface InstalledAppsQueryOptions {
+  /**
+   * Refetch every 5 seconds while the result holds a Windows VM with
+   * pre-shutdown protection. A power request from inside Windows starts
+   * without a panel action, so screens that show VM power controls pass this
+   * to see the request begin and end.
+   */
+  watchVmControl?: boolean
+}
+
+const VM_CONTROL_REFETCH_MS = 5000
+
+function isPreshutdownVm(app: InstalledApp) {
+  return app.app_type === "vm" && app.windows_preshutdown_enabled === true
+}
+
+export function useInstalledApps(
+  cyloId?: number,
+  userIdOverride?: number,
+  { watchVmControl = false }: InstalledAppsQueryOptions = {}
+) {
   const { user } = useAuth()
   return useQuery({
     queryKey: cyloId
       ? queryKeys.installedApps.byCylo(cyloId)
       : queryKeys.installedApps.all,
     queryFn: () => getInstalledApps(cyloId, userIdOverride ?? user.id),
-    // Native Windows power requests can start without a panel mutation.
-    refetchInterval: (query) =>
-      query.state.data?.some(
-        (app) => app.app_type === "vm" && app.windows_preshutdown_enabled
-      )
-        ? 5000
-        : false
+    refetchInterval: watchVmControl
+      ? (query) =>
+          query.state.data?.some(isPreshutdownVm)
+            ? VM_CONTROL_REFETCH_MS
+            : false
+      : undefined
   })
 }
 
-export function useInstalledApp(id: number) {
+export function useInstalledApp(
+  id: number,
+  { watchVmControl = false }: InstalledAppsQueryOptions = {}
+) {
   return useQuery({
     queryKey: queryKeys.installedApps.detail(id),
     queryFn: () => getInstalledApp(id),
     enabled: id > 0,
-    refetchInterval: (query) =>
-      query.state.data?.app_type === "vm" &&
-      query.state.data.windows_preshutdown_enabled
-        ? 5000
-        : false
+    refetchInterval: watchVmControl
+      ? (query) =>
+          query.state.data && isPreshutdownVm(query.state.data)
+            ? VM_CONTROL_REFETCH_MS
+            : false
+      : undefined
   })
 }
 

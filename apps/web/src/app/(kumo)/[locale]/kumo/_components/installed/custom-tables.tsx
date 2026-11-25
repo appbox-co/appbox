@@ -33,7 +33,6 @@ import {
   parseTableRef
 } from "@/api/custom-tables/custom-tables"
 import {
-  useAddCustomTableRow,
   useCustomTableMutations,
   useCustomTableRowAction,
   useCustomTableRows,
@@ -41,11 +40,14 @@ import {
   useInstanceCustomTables,
   useRetryCustomTableMutation,
   useRevealCustomTableRowField,
-  useUpdateCustomTableRow
+  useSaveCustomTableRow
 } from "@/api/custom-tables/hooks/use-custom-tables"
 import { customTableMutationRowLabel } from "@/api/custom-tables/mutation-notices"
 import { createIdempotencyKey } from "@/api/idempotency"
-import { clearHiddenFieldValues, isFieldVisible } from "@/lib/dynamic-form"
+import {
+  clearInactiveFieldValues,
+  getFieldActivity
+} from "@/lib/install-validation"
 import { LoadingRow } from "../install/field-parts"
 import { Panel } from "../panel"
 import { EMPTY_IN_CARD } from "../shared"
@@ -85,6 +87,11 @@ const COPY = {
 
 const SECRET_MASK = "••••••••"
 
+/** A form's columns as the fields their conditions read. */
+function columnsByName(columns: CustomTableColumn[]) {
+  return Object.fromEntries(columns.map((col) => [col.name, col]))
+}
+
 /**
  * The last value that was not null. A dialog that is closing keeps showing
  * what it was opened for while it animates out, instead of going blank.
@@ -116,8 +123,8 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
       table.supportsRowMutations === true
     )
   const retryMutation = useRetryCustomTableMutation(tableId, instanceId)
-  const addMutation = useAddCustomTableRow(tableId, instanceId)
-  const updateMutation = useUpdateCustomTableRow(tableId, instanceId)
+  const addMutation = useSaveCustomTableRow(tableId, instanceId)
+  const updateMutation = useSaveCustomTableRow(tableId, instanceId)
   const deleteMutation = useDeleteCustomTableRow(tableId, instanceId)
   const revealMutation = useRevealCustomTableRowField(tableId, instanceId)
   const rowActionMutation = useCustomTableRowAction(tableId, instanceId)
@@ -297,8 +304,9 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     row: CustomTableRow | null = null
   ): boolean => {
     const nextErrors: Record<string, string> = {}
+    const active = getFieldActivity(columnsByName(columns), formValues)
     for (const col of columns) {
-      if (!isFieldVisible(col, formValues)) continue
+      if (!active[col.name]) continue
       const value = formValues[col.name] ?? ""
       if (shouldPreserveRedactedSensitiveValue(col, row, value)) continue
 
@@ -366,8 +374,12 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
 
   const buildEditPayload = (): Record<string, string> => {
     const payload: Record<string, string> = {}
+    const active = getFieldActivity(
+      columnsByName(editableColumnsForEdit),
+      formValues
+    )
     for (const col of editableColumnsForEdit) {
-      if (!isFieldVisible(col, formValues)) continue
+      if (!active[col.name]) continue
       const value = formValues[col.name] ?? ""
       if (shouldPreserveRedactedSensitiveValue(col, editTarget, value)) {
         continue
@@ -524,10 +536,10 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     if (editTarget) editIdempotencyKey.current = null
     if (typeof next === "string" || typeof next === "number") {
       setFormValues((prev) =>
-        clearHiddenFieldValues(
-          columns.map((column) => [column.name, column]),
-          { ...prev, [col.name]: String(next) }
-        )
+        clearInactiveFieldValues(columnsByName(columns), {
+          ...prev,
+          [col.name]: String(next)
+        })
       )
       return
     }
@@ -550,8 +562,9 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
   }
 
   const renderFormFields = (columns: CustomTableColumn[]) => {
+    const active = getFieldActivity(columnsByName(columns), formValues)
     return columns
-      .filter((col) => isFieldVisible(col, formValues))
+      .filter((col) => active[col.name])
       .map((col) => (
         <CustomTableField
           key={`${formSession}:${col.name}`}

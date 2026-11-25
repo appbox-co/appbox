@@ -26,8 +26,8 @@ import {
 } from "@/api/apps/hooks/use-app-store"
 import { useInstallValidation } from "@/api/apps/hooks/use-install-validation"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
-import { useAppDevFlags } from "@/app/[locale]/(dashboard)/appstore/_components/app-dev-flags"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
+import { useAppDevFlags } from "@/lib/app-dev-flags"
 import type { Cylo } from "@/lib/auth/session"
 import {
   clearInactiveInstallValues,
@@ -753,6 +753,41 @@ export function InstallDialog({
       (!requiresDomain || validInstallSubdomain(domainState.subdomain.trim()))
   )
 
+  // A server error on a field the dialog shows appears beside it. Any other
+  // (the Appbox, version or boost, or a hidden or generated field) goes on the
+  // general error line, so that a disabled Install always says why.
+  const inlineErrorFields = new Set(
+    isBlocked
+      ? []
+      : [
+          ...visibleFields
+            .filter(([, field]) => field.type !== "staticText")
+            .map(([fname]) => fname),
+          ...(requiresDomain ? ["subdomain"] : []),
+          ...(requiresDomain && domainState.domainType === "custom"
+            ? ["domain_id"]
+            : [])
+        ]
+  )
+  const generalErrors = [
+    ...new Set(
+      [
+        fieldActivity.error || preflight.error,
+        ...Object.entries(preflight.fieldErrors)
+          .filter(([name]) => name !== "_form" && !inlineErrorFields.has(name))
+          .map(([name, error]) => {
+            const label = customFields[name]?.label
+            return label
+              ? t("install.validation.fieldError", {
+                  field: label,
+                  message: error.message
+                })
+              : error.message
+          })
+      ].filter((message): message is string => Boolean(message))
+    )
+  ]
+
   /* ----- Handlers ----- */
   const handleFieldChange = useCallback(
     (fname: string, value: string) => {
@@ -1190,7 +1225,9 @@ export function InstallDialog({
                   cylos.find((c) => String(c.id) === selectedCylo) ?? null
                 }
                 state={domainState}
-                domainError={domainError}
+                domainError={
+                  domainError ?? preflight.fieldErrors.domain_id?.message
+                }
                 subdomainError={
                   subdomainError ?? preflight.fieldErrors.subdomain?.message
                 }
@@ -1232,10 +1269,12 @@ export function InstallDialog({
               </div>
             )}
 
-            {(fieldActivity.error || preflight.error) && (
-              <p role="alert" className="text-kumo-danger">
-                {fieldActivity.error || preflight.error}
-              </p>
+            {generalErrors.length > 0 && (
+              <div role="alert" className="grid gap-1 text-kumo-danger">
+                {generalErrors.map((message) => (
+                  <p key={message}>{message}</p>
+                ))}
+              </div>
             )}
 
             {installMutation.isError && parsedInstallError && (
