@@ -4,8 +4,8 @@ import { Suspense } from "react"
 import { useAppCategories, useSearchApps } from "@/api/apps/hooks/use-app-store"
 import { useInstalledApps } from "@/api/installed-apps/hooks/use-installed-apps"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
-import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
+import { toLoadable } from "../_lib/use-account-apps"
+import { useAccountShell } from "../_lib/use-account-shell"
 import { useFeaturedCovers } from "../_lib/use-featured-covers"
 import { AppShell } from "../../_components/app-shell"
 import { AppStoreView } from "../../_components/app-store-view"
@@ -15,8 +15,7 @@ import {
 } from "../../_components/use-app-store-filters"
 
 function KumoAppStore() {
-  const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
   const { filters, setFilters, resetFilters } = useAppStoreFilters()
 
   // The whole catalogue feeds the store front. With no filters set, the
@@ -37,16 +36,8 @@ function KumoAppStore() {
     installed.set(app.app_id, (installed.get(app.app_id) ?? 0) + 1)
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
-    <AppShell
-      width="wide"
-      currentDesignHref={ROUTES.APP_STORE}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
-    >
+    <AppShell width="wide" currentDesignHref={ROUTES.APP_STORE} {...shell}>
       <AppStoreView
         catalogue={toLoadable(catalogue, (data) => data?.data ?? [])}
         results={toLoadable(search, (data) => data?.data ?? [])}

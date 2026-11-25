@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Badge, cn, LayerCard, LinkButton, Tabs } from "@cloudflare/kumo"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import type { PlansData } from "@/components/ui/plans"
+import { BILLING_BASE_URL } from "../shared"
 import { spaced } from "./catalogue"
 
 type Group = PlansData["data"][number]
@@ -16,8 +17,6 @@ const CYCLES: { value: Cycle; label: string; every?: string }[] = [
   { value: "semiannually", label: "Semiannually", every: "6 months" },
   { value: "annually", label: "Annually", every: "year" }
 ]
-
-const BILLING = "https://billing.appbox.co"
 
 /** The smallest shared plan that runs Windows VPS; dedicated plans all do. */
 const WINDOWS_TIER = 18000
@@ -79,12 +78,12 @@ function PlanCard({
   const available = plan.available !== false
   const orderUrl = withAffiliate(
     available
-      ? `${BILLING}/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${cycle}${
+      ? `${BILLING_BASE_URL}/order.php?spage=product&a=add&pid=${plan.product_id}&billingcycle=${cycle}${
           promotion?.auto_apply && promotion.promo_code
             ? `&promocode=${promotion.promo_code}`
             : ""
         }`
-      : `${BILLING}/contact.php`,
+      : `${BILLING_BASE_URL}/contact.php`,
     affiliateId
   )
   const excluded = Object.values(plan.excluded_app_categories ?? {})

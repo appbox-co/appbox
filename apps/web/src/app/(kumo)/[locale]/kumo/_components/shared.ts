@@ -12,6 +12,14 @@ import { kumoRoutes } from "./kumo-routes"
 export const APP_ICON_BASE_URL =
   "https://api.appbox.co/assets/images/apps/icons/"
 
+/** Billing (WHMCS): where Appboxes are ordered, upgraded and paid for. */
+export const BILLING_BASE_URL = "https://billing.appbox.co"
+
+/** Where an Appbox moves to a bigger plan, by its billing service id. */
+export function upgradeUrl(serviceId: string | number) {
+  return `${BILLING_BASE_URL}/upgrade.php?type=package&id=${serviceId}`
+}
+
 /**
  * Kumo's Empty draws its own bordered surface. Inside a card that already has
  * one, drop it so the two outlines do not stack.

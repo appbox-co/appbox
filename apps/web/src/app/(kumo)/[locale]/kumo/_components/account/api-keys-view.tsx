@@ -9,7 +9,6 @@ import {
   Dialog,
   Empty,
   Input,
-  SkeletonLine,
   Table,
   Tooltip
 } from "@cloudflare/kumo"
@@ -23,7 +22,6 @@ import {
   WarningCircleIcon,
   WarningIcon
 } from "@phosphor-icons/react"
-import { formatDistanceToNow } from "date-fns"
 import { toast } from "sonner"
 import type {
   ApiKey,
@@ -39,7 +37,16 @@ import {
   hasSameScopes
 } from "@/components/account/api-key-scopes"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
-import { nextSort, SortHead, type SortState } from "../sort-head"
+import { useRelativeTime } from "../short-date"
+import { ListSkeleton } from "../skeletons"
+import {
+  compareText,
+  nextSort,
+  SortHead,
+  sortRows,
+  timeOf,
+  type SortState
+} from "../sort-head"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 import { ScopePicker, scopesHintId, ScopeSummary } from "./scope-picker"
 
@@ -115,27 +122,17 @@ interface Row {
 type SortKey = "name" | "status" | "created" | "lastUsed" | "expires"
 type Sort = SortState<SortKey>
 
-const time = (value: string | null) => {
-  if (!value) return 0
-  const parsed = new Date(value).getTime()
-  return Number.isNaN(parsed) ? 0 : parsed
-}
-
 const SORTERS: Record<SortKey, (a: Row, b: Row) => number> = {
-  name: (a, b) =>
-    a.key.name.localeCompare(b.key.name, undefined, {
-      numeric: true,
-      sensitivity: "base"
-    }),
+  name: (a, b) => compareText(a.key.name, b.key.name),
   status: (a, b) =>
     STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status),
-  created: (a, b) => time(a.key.created_at) - time(b.key.created_at),
+  created: (a, b) => timeOf(a.key.created_at) - timeOf(b.key.created_at),
   // "Never" sorts as the earliest time.
-  lastUsed: (a, b) => time(a.key.last_used_at) - time(b.key.last_used_at),
+  lastUsed: (a, b) => timeOf(a.key.last_used_at) - timeOf(b.key.last_used_at),
   // A key with no expiry outlasts every key that has one.
   expires: (a, b) =>
-    (a.key.expires_at ? time(a.key.expires_at) : Infinity) -
-      (b.key.expires_at ? time(b.key.expires_at) : Infinity) || 0
+    (a.key.expires_at ? timeOf(a.key.expires_at) : Infinity) -
+      (b.key.expires_at ? timeOf(b.key.expires_at) : Infinity) || 0
 }
 
 /* -------------------------------------------------------------------------- */
@@ -167,6 +164,7 @@ function Prefix({ value }: { value: string }) {
 function When({ value }: { value: string | null }) {
   const t = useTranslations("account.apiKeys")
   const locale = useLocale()
+  const relativeTime = useRelativeTime()
   const date = value ? new Date(value) : null
   if (!date || Number.isNaN(date.getTime())) {
     return <span className="text-kumo-subtle">{t("never")}</span>
@@ -174,7 +172,7 @@ function When({ value }: { value: string | null }) {
 
   return (
     <Tooltip
-      content={formatDistanceToNow(date, { addSuffix: true })}
+      content={relativeTime(date)}
       render={
         <time
           dateTime={value ?? undefined}
@@ -324,23 +322,6 @@ function KeyCard(props: RowActionsProps) {
   )
 }
 
-function ListSkeleton() {
-  return (
-    <div
-      aria-hidden="true"
-      className="divide-y divide-kumo-hairline rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line"
-    >
-      {Array.from({ length: 4 }, (_, index) => (
-        <div key={index} className="flex items-center gap-3 px-4 py-4">
-          <SkeletonLine className="h-2.5 w-40 rounded-full" />
-          <SkeletonLine className="h-2.5 w-16 rounded-full" />
-          <SkeletonLine className="ms-auto h-2.5 w-28 rounded-full" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 /* -------------------------------------------------------------------------- */
 /*  View                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -409,12 +390,8 @@ export function ApiKeysView({
 
   const all = keys.status === "ready" ? keys.data : []
   const rows: Row[] = all.map((key) => ({ key, status: getStatus(key) }))
-  // Array.sort is stable, so with no sort chosen the server's order stands.
-  const ordered = sort
-    ? [...rows].sort(
-        (a, b) => SORTERS[sort.key](a, b) * (sort.dir === "asc" ? 1 : -1)
-      )
-    : rows
+  // With no sort chosen the server's order stands.
+  const ordered = sortRows(rows, sort, SORTERS)
   const sortBy = (key: SortKey) => setSort((current) => nextSort(current, key))
 
   function showSecret(secret: string) {
@@ -438,38 +415,41 @@ export function ApiKeysView({
     setReauthOpen(open)
   }
 
-  async function replayPendingAction(action: PendingApiKeyAction) {
+  /**
+   * Sends a change and says how it went, closing its dialog once it is done.
+   * One refused for want of a recent sign-in waits for the password and then
+   * runs again by itself (`isReplay`); refused again then, it has failed.
+   */
+  async function perform(action: PendingApiKeyAction, isReplay = false) {
     try {
       if (action.type === "create") {
         const result = await onCreate(action.input)
-        toast.success(t("createSuccess"))
         setCreateName("")
         setCreateExpiresAt("")
         setCreateScopes(null)
+        setCreateOpen(false)
         showSecret(result.key)
       } else if (action.type === "update") {
         await onUpdate(action.id, action.input)
-        toast.success(t("updateSuccess"))
+        setEditOpen(false)
       } else {
         await onRevoke(action.id)
-        toast.success(t("revokeSuccess"))
+        setRevokeOpen(false)
       }
-    } catch {
-      if (action.type === "create") {
-        toast.error(t("createFailed"))
-      } else if (action.type === "update") {
-        toast.error(t("updateFailed"))
-      } else {
-        toast.error(t("revokeFailed"))
+      toast.success(t(`${action.type}Success`))
+    } catch (error) {
+      if (!isReplay && isRecentAuthError(error)) {
+        handleRecentAuthRequired(action)
+        return
       }
-    } finally {
-      setPendingAction(null)
+      toast.error(t(`${action.type}Failed`))
     }
   }
 
   async function handleReauthVerified() {
     if (pendingAction) {
-      await replayPendingAction(pendingAction)
+      await perform(pendingAction, true)
+      setPendingAction(null)
       return
     }
 
@@ -497,23 +477,8 @@ export function ApiKeysView({
     }
 
     setCreating(true)
-    try {
-      const result = await onCreate(input)
-      toast.success(t("createSuccess"))
-      setCreateName("")
-      setCreateExpiresAt("")
-      setCreateScopes(null)
-      setCreateOpen(false)
-      showSecret(result.key)
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        handleRecentAuthRequired({ type: "create", input })
-        return
-      }
-      toast.error(t("createFailed"))
-    } finally {
-      setCreating(false)
-    }
+    await perform({ type: "create", input })
+    setCreating(false)
   }
 
   function startEdit(key: ApiKey) {
@@ -533,19 +498,8 @@ export function ApiKeysView({
     }
 
     setEditing(true)
-    try {
-      await onUpdate(editTarget.id, input)
-      toast.success(t("updateSuccess"))
-      setEditOpen(false)
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        handleRecentAuthRequired({ type: "update", id: editTarget.id, input })
-        return
-      }
-      toast.error(t("updateFailed"))
-    } finally {
-      setEditing(false)
-    }
+    await perform({ type: "update", id: editTarget.id, input })
+    setEditing(false)
   }
 
   function startRevoke(key: ApiKey) {
@@ -557,19 +511,8 @@ export function ApiKeysView({
     if (!revokeTarget) return
 
     setRevoking(true)
-    try {
-      await onRevoke(revokeTarget.id)
-      toast.success(t("revokeSuccess"))
-      setRevokeOpen(false)
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        handleRecentAuthRequired({ type: "revoke", id: revokeTarget.id })
-        return
-      }
-      toast.error(t("revokeFailed"))
-    } finally {
-      setRevoking(false)
-    }
+    await perform({ type: "revoke", id: revokeTarget.id })
+    setRevoking(false)
   }
 
   async function copySecret() {

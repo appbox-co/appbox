@@ -7,14 +7,13 @@ import { useBoostApp } from "@/api/installed-apps/hooks/use-installed-apps"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { BoostSlider } from "../install/boost-slider"
 import { Panel } from "../panel"
+import { upgradeUrl } from "../shared"
 
 interface BoostCardProps {
   app: InstalledApp
   whmcsServiceId?: number | string
   disabled?: boolean
 }
-
-const BILLING_BASE_URL = "https://billing.appbox.co"
 
 /** Trade spare app slots for more memory and CPU on this app. */
 export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
@@ -29,9 +28,7 @@ export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
 
   const hasChanges = boostSlots !== (app.boost_slots ?? 0)
   const isVm = app.app_type === "vm"
-  const upgradeUrl = whmcsServiceId
-    ? `${BILLING_BASE_URL}/upgrade.php?type=package&id=${whmcsServiceId}`
-    : undefined
+  const planUpgradeUrl = whmcsServiceId ? upgradeUrl(whmcsServiceId) : undefined
 
   const helperText = useMemo(() => {
     if (isVm) {
@@ -56,7 +53,7 @@ export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
           cyloFreeSlots={0}
           onChange={setBoostSlots}
           disabled={isDisabled || boostMutation.isPending}
-          upgradeUrl={upgradeUrl}
+          upgradeUrl={planUpgradeUrl}
           showHeader={false}
           showUpgradeCta={false}
           labels={{
@@ -73,9 +70,9 @@ export function BoostCard({ app, whmcsServiceId, disabled }: BoostCardProps) {
         <p className="text-kumo-subtle">{helperText}</p>
 
         <div className="flex flex-wrap items-center justify-between gap-3">
-          {upgradeUrl ? (
+          {planUpgradeUrl ? (
             <KumoLink
-              href={upgradeUrl}
+              href={planUpgradeUrl}
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -1,15 +1,24 @@
 /**
- * Pure helpers for the install dialog, copied verbatim from the current
- * design so both dialogs behave the same:
+ * Pure helpers for the install dialog, taken from the current design so both
+ * dialogs decide the same things:
  *
  * - appstore/_components/install-dialog.tsx
  * - appstore/_components/domain-section.tsx
  * - components/dashboard/boost-slider.tsx
  * - components/dashboard/base-domain-selector.tsx
  * - components/dashboard/domain/dns-verification-panel.tsx
- * - components/ui/switch.tsx (isSwitchChecked only)
  *
- * Nothing in here renders. Change the originals and this file together.
+ * Most are copied unchanged. These differ:
+ *
+ * - `validateField` checks a value with the shared rules in
+ *   lib/install-validation.ts and turns what they find into the dialog's
+ *   translated messages.
+ * - `isFieldRequired` treats rules that are not a list as no rules.
+ * - `mapCustomFieldToFormConfig` gives a date field a YYYY-MM-DD placeholder.
+ * - `isSwitchChecked` came from components/ui/switch.tsx, which is gone.
+ *
+ * Nothing in here renders. Until the current design is removed, change the
+ * originals and this file together.
  */
 
 import type { CustomField } from "@/api/apps/app-store"
@@ -22,7 +31,6 @@ import type { FormFieldConfig } from "@/types/dashboard"
 /*  Constants                                                                  */
 /* -------------------------------------------------------------------------- */
 
-export const BILLING_BASE_URL = "https://billing.appbox.co"
 export const MARKETING_URL = "/"
 
 export const SKIP_INPUT_TYPES = new Set([

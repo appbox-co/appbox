@@ -40,6 +40,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Comment, CommentSortOrder } from "@/api/comments/comments"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import { useRelativeTime } from "../short-date"
 
 /* -------------------------------------------------------------------------- */
 /*  Props                                                                      */
@@ -79,24 +80,21 @@ export interface CommentDraft {
 export type CommentVoteDirection = "up" | "down" | null
 
 /**
- * What an action handler may return. With a promise the view shows progress
- * until it settles, and a rejection counts as failure: the draft, editor or
- * confirmation stays open.
+ * The view shows an action in progress until its promise settles. A rejection
+ * counts as failure: the draft, editor or confirmation stays open.
  */
-export type CommentActionResult = Promise<unknown> | void
-
 export interface CommentsViewProps {
   comments: Loadable<CommentsData>
   /** Null when nobody is signed in. */
   currentUser: CommentsViewer | null
   sortOrder: CommentSortOrder
   onSortChange: (order: CommentSortOrder) => void
-  onPost: (draft: CommentDraft) => CommentActionResult
+  onPost: (draft: CommentDraft) => Promise<unknown>
   /** `comment` is trimmed, within `maxLength` and differs from the original. */
-  onEdit: (id: number, comment: string) => CommentActionResult
-  onDelete: (id: number) => CommentActionResult
+  onEdit: (id: number, comment: string) => Promise<unknown>
+  onDelete: (id: number) => Promise<unknown>
   /** `null` withdraws the current user's vote. */
-  onVote: (id: number, direction: CommentVoteDirection) => CommentActionResult
+  onVote: (id: number, direction: CommentVoteDirection) => Promise<unknown>
   /** A further page is being fetched. */
   loadingMore?: boolean
   /**
@@ -134,23 +132,6 @@ const COPY = {
   deleteTitle: "Delete comment?",
   editLabel: "Edit comment"
 } as const
-
-function timeAgo(dateString: string): string {
-  const now = Date.now()
-  const then = new Date(dateString).getTime()
-  const seconds = Math.floor((now - then) / 1000)
-
-  if (seconds < 60) return "just now"
-  const minutes = Math.floor(seconds / 60)
-  if (minutes < 60) return `${minutes}m ago`
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours}h ago`
-  const days = Math.floor(hours / 24)
-  if (days < 30) return `${days}d ago`
-  const months = Math.floor(days / 30)
-  if (months < 12) return `${months}mo ago`
-  return `${Math.floor(months / 12)}y ago`
-}
 
 function sortComments(comments: Comment[], order: CommentSortOrder): Comment[] {
   const sorted = [...comments].sort((a, b) => {
@@ -221,7 +202,7 @@ function replies(count: number) {
  * did: `pending` follows the latest call, and only that call reports success.
  */
 function useAction<Args extends unknown[]>(
-  action: (...args: Args) => CommentActionResult
+  action: (...args: Args) => Promise<unknown>
 ) {
   const [pending, setPending] = useState(false)
   const latest = useRef(0)
@@ -229,7 +210,7 @@ function useAction<Args extends unknown[]>(
   const run = (args: Args, onSuccess?: () => void) => {
     const call = ++latest.current
     setPending(true)
-    new Promise<unknown>((resolve) => resolve(action(...args))).then(
+    action(...args).then(
       () => {
         if (latest.current !== call) return
         setPending(false)
@@ -474,6 +455,7 @@ function CommentItem({
   const [showDeepReplies, setShowDeepReplies] = useState(false)
   const save = useAction(onEdit)
   const vote = useAction(onVote)
+  const relativeTime = useRelativeTime()
 
   const isOwn = comment.user_id === currentUserId
   const canModify = isOwn || canModerate
@@ -564,7 +546,7 @@ function CommentItem({
               </Badge>
             )}
             <span className="text-sm text-kumo-subtle tabular-nums">
-              {timeAgo(comment.created_at)}
+              {relativeTime(comment.created_at)}
             </span>
             {isCollapsed && hasChildren && (
               <span className="text-sm text-kumo-subtle">
@@ -787,7 +769,7 @@ function LoadError() {
 
 /**
  * Comments on an app: a composer, then the threads. Presentational: the data
- * and every action come in as props (see `LiveComments` for the wired one).
+ * and every action come in as props (see `Comments` for the wired one).
  */
 export function CommentsView({
   comments,

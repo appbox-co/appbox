@@ -2,14 +2,7 @@
 
 import { useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
-import {
-  Banner,
-  Empty,
-  InputGroup,
-  Pagination,
-  SkeletonLine,
-  Table
-} from "@cloudflare/kumo"
+import { Banner, Empty, InputGroup, Pagination, Table } from "@cloudflare/kumo"
 import {
   MagnifyingGlassIcon,
   PackageIcon,
@@ -27,6 +20,7 @@ import {
 } from "./instance-controls"
 import { kumoRoutes } from "./kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
+import { LinesSkeleton } from "./skeletons"
 
 export type { InstanceAction }
 
@@ -55,13 +49,7 @@ export function AppInstances({ instances, onAction }: AppInstancesProps) {
   const { busy, bulk, runRow, runBulk } = useInstanceRunner(onAction)
 
   if (instances.status === "loading") {
-    return (
-      <div className="grid gap-3 p-4">
-        <SkeletonLine className="h-2.5 w-1/3 rounded-full" />
-        <SkeletonLine className="h-2.5 w-2/3 rounded-full" />
-        <SkeletonLine className="h-2.5 w-1/2 rounded-full" />
-      </div>
-    )
+    return <LinesSkeleton />
   }
 
   if (instances.status === "error") {

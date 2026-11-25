@@ -15,7 +15,7 @@ import {
   WarningCircleIcon
 } from "@phosphor-icons/react"
 import type { Cylo } from "@/lib/auth/session"
-import { BILLING_BASE_URL } from "./logic"
+import { upgradeUrl } from "../shared"
 
 /** One line under the selector explaining why some Appboxes are not listed. */
 function Hint({ children }: { children: ReactNode }) {
@@ -122,7 +122,7 @@ export function CyloSelector({
       hasSlots
     )
       return null
-    return `${BILLING_BASE_URL}/upgrade.php?type=package&id=${c.whmcs_serviceid}`
+    return upgradeUrl(c.whmcs_serviceid)
   }
 
   const selectedIneligibleCylo = cylos.find(
@@ -289,7 +289,7 @@ export function CyloSelector({
                   })}{" "}
               {restrictedCylos.map((c, i) => {
                 const url = c.whmcs_serviceid
-                  ? `${BILLING_BASE_URL}/upgrade.php?type=package&id=${c.whmcs_serviceid}`
+                  ? upgradeUrl(c.whmcs_serviceid)
                   : null
                 if (!url) return null
                 return (
@@ -319,7 +319,7 @@ export function CyloSelector({
                   })}{" "}
               {noSlotsCylos.map((c, i) => {
                 const url = c.whmcs_serviceid
-                  ? `${BILLING_BASE_URL}/upgrade.php?type=package&id=${c.whmcs_serviceid}`
+                  ? upgradeUrl(c.whmcs_serviceid)
                   : null
                 if (!url) return null
                 return (

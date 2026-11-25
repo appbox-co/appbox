@@ -8,9 +8,7 @@ import {
   cn,
   Empty,
   InputGroup,
-  Pagination,
   Select,
-  SkeletonLine,
   Table
 } from "@cloudflare/kumo"
 import {
@@ -24,10 +22,12 @@ import { Link } from "@/i18n/routing"
 import { ShellRail } from "../app-shell"
 import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "../filter-bar"
 import { kumoRoutes } from "../kumo-routes"
+import { PageFooter, usePagedRows } from "../paged-rows"
 import { RailStatusCard } from "../rail-status"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
 import { ShortDate } from "../short-date"
-import { nextSort, SortHead, type SortState } from "../sort-head"
+import { ListSkeleton } from "../skeletons"
+import { compareText, SortHead, timeOf, type SortState } from "../sort-head"
 import {
   ABUSE_GROUPS,
   abuseGroup,
@@ -85,26 +85,20 @@ type Sort = SortState<SortKey>
 /** Newest first: the reports that still need something are usually recent. */
 const DEFAULT_SORT: Sort = { key: "date", dir: "desc" }
 
-const text = (a: string, b: string) =>
-  a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
-
-const time = (value: string) => {
-  const parsed = new Date(value).getTime()
-  return Number.isNaN(parsed) ? 0 : parsed
-}
-
 const groupRank = (group: AbuseGroup) =>
   ABUSE_GROUPS.findIndex((entry) => entry.value === group)
 
 const SORTERS: Record<SortKey, (a: Row, b: Row) => number> = {
-  id: (a, b) => text(a.reference, b.reference),
-  appbox: (a, b) => text(a.report.cyloname ?? "", b.report.cyloname ?? ""),
-  subject: (a, b) => text(a.report.subject, b.report.subject),
-  complainant: (a, b) => text(a.report.complainant, b.report.complainant),
+  id: (a, b) => compareText(a.reference, b.reference),
+  appbox: (a, b) =>
+    compareText(a.report.cyloname ?? "", b.report.cyloname ?? ""),
+  subject: (a, b) => compareText(a.report.subject, b.report.subject),
+  complainant: (a, b) =>
+    compareText(a.report.complainant, b.report.complainant),
   status: (a, b) =>
     groupRank(a.group) - groupRank(b.group) ||
-    text(a.report.status, b.report.status),
-  date: (a, b) => time(a.report.created_at) - time(b.report.created_at)
+    compareText(a.report.status, b.report.status),
+  date: (a, b) => timeOf(a.report.created_at) - timeOf(b.report.created_at)
 }
 
 /** The sort menu shown on small screens, where there are no column headers. */
@@ -117,10 +111,6 @@ const SORT_PRESETS: { value: string; label: string; sort: Sort }[] = [
   },
   { value: "status:asc", label: "Status", sort: { key: "status", dir: "asc" } }
 ]
-
-/** The current table's page sizes, and its ten a page to start with. */
-const PAGE_SIZES = [10, 25, 50, 100]
-const DEFAULT_PAGE_SIZE = PAGE_SIZES[0]
 
 /* -------------------------------------------------------------------------- */
 /*  Cells                                                                      */
@@ -264,23 +254,6 @@ function ReportCard({ row }: { row: Row }) {
   )
 }
 
-function ListSkeleton() {
-  return (
-    <div
-      aria-hidden="true"
-      className="divide-y divide-kumo-hairline rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line"
-    >
-      {Array.from({ length: 4 }, (_, index) => (
-        <div key={index} className="flex items-center gap-3 px-4 py-4">
-          <SkeletonLine className="h-2.5 w-16 rounded-full" />
-          <SkeletonLine className="h-2.5 w-64 max-w-full rounded-full" />
-          <SkeletonLine className="ms-auto h-2.5 w-24 rounded-full" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 /* -------------------------------------------------------------------------- */
 /*  View                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -295,9 +268,6 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
 
   const [query, setQuery] = useState("")
   const [group, setGroup] = useState<string>(ALL_GROUPS)
-  const [sort, setSort] = useState<Sort>(DEFAULT_SORT)
-  const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(DEFAULT_PAGE_SIZE)
 
   const all = reports.status === "ready" ? reports.data : []
   const rows: Row[] = all.map((report) => ({
@@ -316,30 +286,25 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
           .toLowerCase()
           .includes(needle))
   )
-  // Array.sort is stable, so with no sort chosen the server's order stands.
-  const ordered = sort
-    ? [...matches].sort(
-        (a, b) =>
-          SORTERS[sort.key](a, b) * (sort.dir === "asc" ? 1 : -1) ||
-          b.report.id - a.report.id
-      )
-    : matches
+  // With no sort chosen the server's order stands.
+  const {
+    rows: shown,
+    total,
+    sort,
+    setSort,
+    sortBy,
+    firstPage,
+    pager
+  } = usePagedRows(matches, {
+    sorters: SORTERS,
+    defaultSort: DEFAULT_SORT,
+    tieBreak: (a, b) => b.report.id - a.report.id
+  })
 
-  const pageCount = Math.max(1, Math.ceil(ordered.length / perPage))
-  const currentPage = Math.min(page, pageCount)
-  const shown = ordered.slice(
-    (currentPage - 1) * perPage,
-    currentPage * perPage
-  )
-
-  const sortBy = (key: SortKey) => {
-    setSort((current) => nextSort(current, key))
-    setPage(1)
-  }
   const sortValue = sort ? `${sort.key}:${sort.dir}` : ""
   const filterTo = (value: string) => {
     setGroup(value)
-    setPage(1)
+    firstPage()
   }
   const clearFilters = () => {
     setQuery("")
@@ -392,7 +357,7 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
                 autoComplete="off"
                 onChange={(event) => {
                   setQuery(event.target.value)
-                  setPage(1)
+                  firstPage()
                 }}
               />
               {query && (
@@ -403,7 +368,7 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
                     aria-label={COPY.clearSearch}
                     onClick={() => {
                       setQuery("")
-                      setPage(1)
+                      firstPage()
                     }}
                   />
                 </InputGroup.Addon>
@@ -441,7 +406,6 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
                   SORT_PRESETS.find((preset) => preset.value === value)?.sort ??
                     null
                 )
-                setPage(1)
               }}
               renderValue={(value) =>
                 SORT_PRESETS.find((preset) => preset.value === value)?.label ??
@@ -478,7 +442,7 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
           </div>
         )}
 
-        {rows.length > 0 && ordered.length === 0 && (
+        {rows.length > 0 && total === 0 && (
           <div className="rounded-lg bg-kumo-base ring ring-kumo-hairline">
             <Empty
               className={EMPTY_IN_CARD}
@@ -494,7 +458,7 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
           </div>
         )}
 
-        {ordered.length > 0 && (
+        {total > 0 && (
           // One card around the table and its pager; plain cards below `@xl`.
           <div className="grid grid-cols-1 gap-3 @xl:gap-0 @xl:overflow-clip @xl:rounded-lg @xl:bg-kumo-base @xl:shadow-xs @xl:ring @xl:ring-kumo-line">
             <div className="hidden overflow-x-auto @xl:block">
@@ -558,28 +522,10 @@ export function AbuseReportsView({ reports }: AbuseReportsViewProps) {
               ))}
             </ul>
 
-            {ordered.length > PAGE_SIZES[0] && (
-              <div className="@xl:border-t @xl:border-kumo-hairline @xl:p-3">
-                <Pagination
-                  page={currentPage}
-                  setPage={setPage}
-                  perPage={perPage}
-                  totalCount={ordered.length}
-                  className="flex-wrap gap-y-3"
-                >
-                  <Pagination.Info className="whitespace-nowrap" />
-                  <Pagination.PageSize
-                    value={perPage}
-                    options={PAGE_SIZES}
-                    onChange={(size) => {
-                      setPerPage(size)
-                      setPage(1)
-                    }}
-                  />
-                  <Pagination.Controls />
-                </Pagination>
-              </div>
-            )}
+            <PageFooter
+              pager={pager}
+              className="@xl:border-t @xl:border-kumo-hairline @xl:p-3"
+            />
           </div>
         )}
       </div>

@@ -13,10 +13,7 @@ import {
 import type { AppStoreItem } from "@/api/apps/app-store"
 import {
   computeInstallGuards,
-  getAppRestrictions,
-  getEffectiveAppSlots,
-  getPackages,
-  isAppRestrictedForPackage
+  getEffectiveAppSlots
 } from "@/api/apps/app-store"
 import {
   useAppBoostInfo,
@@ -27,7 +24,6 @@ import {
 import { useInstallValidation } from "@/api/apps/hooks/use-install-validation"
 import { useCylosSummary } from "@/api/cylos/hooks/use-cylos"
 import { isLaunchWeekEnabled } from "@/config/launch-week-flags"
-import { useAppDevFlags } from "@/lib/app-dev-flags"
 import type { Cylo } from "@/lib/auth/session"
 import {
   clearInactiveInstallValues,
@@ -35,7 +31,9 @@ import {
   validInstallSubdomain
 } from "@/lib/install-validation"
 import { useAuth } from "@/providers/auth-provider"
+import { useInstallDevOverrides } from "../dev/use-install-dev-overrides"
 import { kumoRoutes } from "../kumo-routes"
+import { upgradeUrl } from "../shared"
 import { BoostSlider } from "./boost-slider"
 import { CustomFieldInput } from "./custom-field-input"
 import { CyloSelector } from "./cylo-selector"
@@ -43,7 +41,6 @@ import { DomainSection, type DomainSectionState } from "./domain-section"
 import { LoadingRow } from "./field-parts"
 import { InstallGuardBanner } from "./install-guard-banner"
 import {
-  BILLING_BASE_URL,
   findDnsInstallError,
   MARKETING_URL,
   mergeCyloWithSummary,
@@ -52,6 +49,7 @@ import {
   validateField,
   type InstallGuard
 } from "./logic"
+import { appCategoryIds, usePlanRestrictions } from "./use-plan-restrictions"
 
 /** Not in the translations: the current dialog's close button says this too. */
 const COPY = {
@@ -128,56 +126,31 @@ export function InstallDialog({
     [cylosSummary]
   )
   const installMutation = useInstallApp()
-  const devFlags = useAppDevFlags(app.id)
 
-  // Dev overrides: when any guard flag is active, auto-simulate non-admin
-  // so the guard banners actually render (otherwise admin bypasses them all).
-  const devGuardActive =
-    devFlags?.appDisabled ||
-    devFlags?.noCylos ||
-    devFlags?.singleRestricted ||
-    devFlags?.allRestricted ||
-    devFlags?.mostRestricted ||
-    devFlags?.someRestricted ||
-    devFlags?.singleNoSlots ||
-    devFlags?.noSlots ||
-    devFlags?.mostNoSlots ||
-    devFlags?.someNoSlots ||
-    devFlags?.singleNoMulti ||
-    devFlags?.noMulti ||
-    devFlags?.mostNoMulti ||
-    devFlags?.someNoMulti
-  const effectiveIsAdmin =
-    devGuardActive || devFlags?.simulateUser
-      ? false
-      : effectiveUserRole === "admin"
-
-  // When dev guard flags are active, inject fake whmcs_serviceid into cylos
-  // that are missing one so upgrade buttons render during testing.
-  const devCylos = useMemo(() => {
-    if (!devGuardActive) return realCylos
-    return realCylos.map((c, i) =>
-      c.whmcs_serviceid ? c : { ...c, whmcs_serviceid: String(99990 + i) }
-    )
-  }, [realCylos, devGuardActive])
-
-  const EMPTY_CYLOS: typeof realCylos = useMemo(() => [], [])
-  // For single-appbox flags, limit to just the first appbox
-  const devSingleAppbox =
-    devFlags?.singleRestricted ||
-    devFlags?.singleNoSlots ||
-    devFlags?.singleNoMulti
-  const SINGLE_CYLO: typeof realCylos = useMemo(
-    () => (devCylos.length > 0 ? [devCylos[0]] : []),
-    [devCylos]
+  /* ----- Install guard state ----- */
+  const [restrictedCyloIds, setRestrictedCyloIds] = useState<Set<number>>(
+    new Set()
   )
-  const cylos = devFlags?.noCylos
-    ? EMPTY_CYLOS
-    : devSingleAppbox
-      ? SINGLE_CYLO
-      : devGuardActive
-        ? devCylos
-        : realCylos
+  const [existingAppCyloIds, setExistingAppCyloIds] = useState<Set<number>>(
+    new Set()
+  )
+  const [guardsLoading, setGuardsLoading] = useState(false)
+
+  // As given, except on the development server while the install guards
+  // panel forces a guard.
+  const {
+    cylos,
+    isAdmin: effectiveIsAdmin,
+    restrictedCyloIds: effectiveRestrictedCyloIds,
+    existingAppCyloIds: effectiveExistingAppCyloIds,
+    noSlotsCyloIds: devNoSlotsCyloIds
+  } = useInstallDevOverrides({
+    appId: app.id,
+    cylos: realCylos,
+    isAdmin: effectiveUserRole === "admin",
+    restrictedCyloIds,
+    existingAppCyloIds
+  })
   const installableCylos = useMemo(
     () => cylos.filter((c) => !migratingCyloIds.has(c.id)),
     [cylos, migratingCyloIds]
@@ -241,184 +214,16 @@ export function InstallDialog({
   const [domainError, setDomainError] = useState<string>()
   const [subdomainError, setSubdomainError] = useState<string>()
 
-  /* ----- Install guard state ----- */
-  const [restrictedCyloIds, setRestrictedCyloIds] = useState<Set<number>>(
-    new Set()
-  )
-  const [existingAppCyloIds, setExistingAppCyloIds] = useState<Set<number>>(
-    new Set()
-  )
-  const [guardsLoading, setGuardsLoading] = useState(false)
-
   const requiresDomain = app.RequiresDomain === 1
   const selectedVersionData = versionSource.find(
     (v) => String(v.id) === selectedVersion
   )
   const requiredSlots = getEffectiveAppSlots(app, selectedVersionData)
-  const appCategoryIds = useMemo(
-    () =>
-      (app.categories ?? [])
-        .map((c) =>
-          typeof c.key === "number" ? c.key : parseInt(String(c.key), 10)
-        )
-        .filter((id) => Number.isFinite(id)),
+  const categoryIds = useMemo(
+    () => appCategoryIds(app.categories),
     [app.categories]
   )
-
-  const [minimumPlanLabel, setMinimumPlanLabel] = useState<string | null>(null)
-  const [minimumPlanResolved, setMinimumPlanResolved] = useState(false)
-
-  useEffect(() => {
-    let cancelled = false
-    const run = async () => {
-      try {
-        const packages = await getPackages()
-        const candidatePackages = packages
-          .filter(
-            (pkg) =>
-              pkg.id > 0 &&
-              pkg.display_name &&
-              pkg.hidden !== 1 &&
-              // Exclude legacy numeric package names (e.g. "1000"), keep sellable
-              // tiered package labels like BG-2000 / NG-18000 / NG-Ultima.
-              /^[A-Za-z]+-/.test(pkg.display_name)
-          )
-          .sort((a, b) => {
-            const aOrder =
-              typeof a.sort_order === "number"
-                ? a.sort_order
-                : Number.MAX_SAFE_INTEGER
-            const bOrder =
-              typeof b.sort_order === "number"
-                ? b.sort_order
-                : Number.MAX_SAFE_INTEGER
-            return aOrder - bOrder
-          })
-        if (candidatePackages.length === 0) {
-          if (!cancelled) {
-            setMinimumPlanLabel(null)
-            setMinimumPlanResolved(true)
-          }
-          return
-        }
-
-        const restrictionsPerPackage = await Promise.allSettled(
-          candidatePackages.map(async (pkg) => {
-            const restrictions = await getAppRestrictions(pkg.id)
-            return {
-              packageId: pkg.id,
-              packageName: pkg.display_name,
-              restricted: isAppRestrictedForPackage(
-                app.id,
-                appCategoryIds,
-                restrictions
-              )
-            }
-          })
-        )
-
-        if (cancelled) return
-
-        const successful = restrictionsPerPackage
-          .filter(
-            (
-              result
-            ): result is PromiseFulfilledResult<{
-              packageId: number
-              packageName: string
-              restricted: boolean
-            }> => result.status === "fulfilled"
-          )
-          .map((result) => result.value)
-
-        if (successful.length === 0) {
-          setMinimumPlanLabel(null)
-          setMinimumPlanResolved(false)
-          return
-        }
-
-        const byId = new Map<number, (typeof successful)[number]>(
-          successful.map((entry) => [entry.packageId, entry])
-        )
-        const firstEligible = candidatePackages.find((pkg) => {
-          const row = byId.get(pkg.id)
-          return row != null && !row.restricted
-        })
-
-        setMinimumPlanLabel(firstEligible?.display_name ?? null)
-        setMinimumPlanResolved(true)
-      } catch {
-        if (!cancelled) {
-          setMinimumPlanLabel(null)
-          setMinimumPlanResolved(false)
-        }
-      }
-    }
-
-    void run()
-    return () => {
-      cancelled = true
-    }
-  }, [app.id, appCategoryIds])
-
-  const minimumRequiredPlan = useMemo(() => {
-    if (!minimumPlanResolved) return null
-    return minimumPlanLabel
-  }, [minimumPlanResolved, minimumPlanLabel])
-
-  // Dev override: mark cylos as restricted
-  const effectiveRestrictedCyloIds = useMemo(() => {
-    if (devFlags?.singleRestricted || devFlags?.allRestricted) {
-      return new Set(cylos.map((c) => c.id))
-    }
-    if (devFlags?.mostRestricted && cylos.length > 1) {
-      // All but the last cylo are restricted
-      return new Set(cylos.slice(0, -1).map((c) => c.id))
-    }
-    if (devFlags?.someRestricted && cylos.length > 0) {
-      return new Set([cylos[0].id])
-    }
-    return restrictedCyloIds
-  }, [
-    devFlags?.singleRestricted,
-    devFlags?.allRestricted,
-    devFlags?.mostRestricted,
-    devFlags?.someRestricted,
-    cylos,
-    restrictedCyloIds
-  ])
-
-  // Dev override: mark cylos as having existing instances
-  const effectiveExistingAppCyloIds = useMemo(() => {
-    if (devFlags?.singleNoMulti || devFlags?.noMulti) {
-      return new Set(cylos.map((c) => c.id))
-    }
-    if (devFlags?.mostNoMulti && cylos.length > 1) {
-      return new Set(cylos.slice(0, -1).map((c) => c.id))
-    }
-    if (devFlags?.someNoMulti && cylos.length > 0) {
-      return new Set([cylos[0].id])
-    }
-    return existingAppCyloIds
-  }, [
-    devFlags?.singleNoMulti,
-    devFlags?.noMulti,
-    devFlags?.mostNoMulti,
-    devFlags?.someNoMulti,
-    cylos,
-    existingAppCyloIds
-  ])
-
-  // Dev override: simulate specific cylos having no free slots
-  const devNoSlotsCyloIds = useMemo(() => {
-    if (devFlags?.mostNoSlots && cylos.length > 1) {
-      return new Set(cylos.slice(0, -1).map((c) => c.id))
-    }
-    if (devFlags?.someNoSlots && cylos.length > 0) {
-      return new Set([cylos[0].id])
-    }
-    return new Set<number>()
-  }, [devFlags?.mostNoSlots, devFlags?.someNoSlots, cylos])
+  const minimumRequiredPlan = usePlanRestrictions(app).data?.minimumPlan ?? null
 
   /* ----- Extract custom fields ----- */
   const customFields = useMemo(() => {
@@ -508,7 +313,7 @@ export function InstallDialog({
         const { restrictedCyloIds: restricted, existingAppCyloIds: existing } =
           await computeInstallGuards(
             app.id,
-            appCategoryIds,
+            categoryIds,
             cylos,
             effectiveUserId
           )
@@ -526,7 +331,7 @@ export function InstallDialog({
     return () => {
       cancelled = true
     }
-  }, [open, app.id, appCategoryIds, cylos, effectiveUserId])
+  }, [open, app.id, categoryIds, cylos, effectiveUserId])
 
   /* ----- Available cylos (filtered) ----- */
   const availableCylos = useMemo(() => {
@@ -589,7 +394,7 @@ export function InstallDialog({
       if (installableCylos.length === 1) {
         const restrictedServiceId = installableCylos[0].whmcs_serviceid ?? ""
         const restrictedUpgradeUrl = restrictedServiceId
-          ? `${BILLING_BASE_URL}/upgrade.php?type=package&id=${restrictedServiceId}`
+          ? upgradeUrl(restrictedServiceId)
           : MARKETING_URL
 
         return {
@@ -623,7 +428,7 @@ export function InstallDialog({
       if (unrestricted.length === 1 && effectiveRestrictedCyloIds.size === 0) {
         const slotServiceId = unrestricted[0].whmcs_serviceid ?? ""
         const slotUpgradeUrl = slotServiceId
-          ? `${BILLING_BASE_URL}/upgrade.php?type=package&id=${slotServiceId}`
+          ? upgradeUrl(slotServiceId)
           : MARKETING_URL
 
         return {
@@ -1005,7 +810,7 @@ export function InstallDialog({
       ? "No boost slots are available for this Appbox."
       : "Boost is currently unavailable for this Appbox.")
   const boostUpgradeUrl = selectedCyloData?.whmcs_serviceid
-    ? `${BILLING_BASE_URL}/upgrade.php?type=package&id=${selectedCyloData.whmcs_serviceid}`
+    ? upgradeUrl(selectedCyloData.whmcs_serviceid)
     : undefined
 
   useEffect(() => {

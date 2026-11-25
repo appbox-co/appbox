@@ -11,9 +11,7 @@ import {
   InputGroup,
   LayerCard,
   LinkButton,
-  Pagination,
   Select,
-  SkeletonLine,
   Table,
   Tooltip
 } from "@cloudflare/kumo"
@@ -42,8 +40,10 @@ import {
   type InstanceAction
 } from "./instance-controls"
 import { kumoRoutes } from "./kumo-routes"
+import { PageFooter, usePagedRows } from "./paged-rows"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
-import { nextSort, SortHead, type SortState } from "./sort-head"
+import { ListSkeleton } from "./skeletons"
+import { SortHead, timeOf, type SortState } from "./sort-head"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing
@@ -83,7 +83,6 @@ const COPY = {
 
 /** The status filter's "no filter" value. */
 export const ALL_STATUSES = "all"
-const PAGE_SIZES = [10, 20, 50, 100]
 
 /* -------------------------------------------------------------------------- */
 /*  Sorting                                                                    */
@@ -97,7 +96,6 @@ type Sort = SortState<SortKey>
 
 type Sorter = (a: InstalledApp, b: InstalledApp) => number
 
-const time = (value: string) => new Date(value).getTime()
 const statusRank = (status: string) => {
   const rank = (INSTANCE_STATUSES as readonly string[]).indexOf(status)
   return rank === -1 ? INSTANCE_STATUSES.length : rank
@@ -114,7 +112,7 @@ const SORTERS: Record<SortKey, Sorter> = {
       numeric: true
     }),
   slots: (a, b) => a.app_slots - b.app_slots,
-  installed: (a, b) => time(a.install_date) - time(b.install_date)
+  installed: (a, b) => timeOf(a.install_date) - timeOf(b.install_date)
 }
 
 /** The sort menu shown on small screens, where there are no column headers. */
@@ -414,23 +412,6 @@ function InstalledAppCard({
   )
 }
 
-function ListSkeleton() {
-  return (
-    <div
-      aria-hidden="true"
-      className="divide-y divide-kumo-hairline rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line"
-    >
-      {Array.from({ length: 6 }, (_, index) => (
-        <div key={index} className="flex items-center gap-3 px-4 py-3.5">
-          <SkeletonLine className="size-7 rounded-md" />
-          <SkeletonLine className="h-2.5 w-40 rounded-full" />
-          <SkeletonLine className="ms-auto h-2.5 w-24 rounded-full" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 /* -------------------------------------------------------------------------- */
 /*  List                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -460,9 +441,6 @@ export function InstalledAppsList({
     onStatusChange?.(next)
   }
   const [cylo, setCylo] = useState<string>(ALL_STATUSES)
-  const [sort, setSort] = useState<Sort>(null)
-  const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(PAGE_SIZES[0])
   const [selected, setSelected] = useState<ReadonlySet<number>>(new Set())
   const [pinBusy, setPinBusy] = useState<ReadonlySet<number>>(new Set())
   const { busy, bulk, runRow, runBulk } = useInstanceRunner(onAction)
@@ -486,20 +464,17 @@ export function InstalledAppsList({
           .toLowerCase()
           .includes(needle))
   )
-  // Array.sort is stable, so ties and unpinned apps keep the server's order.
-  const ordered = [...matches].sort(
-    sort
-      ? (a, b) =>
-          SORTERS[sort.key](a, b) * (sort.dir === "asc" ? 1 : -1) ||
-          byName(a, b)
-      : (a, b) =>
-          (pinned.get(a.id) ?? Number.POSITIVE_INFINITY) -
-          (pinned.get(b.id) ?? Number.POSITIVE_INFINITY)
+  // Ties and unpinned apps keep the server's order.
+  const { rows, total, sort, setSort, sortBy, firstPage, pager } = usePagedRows(
+    matches,
+    {
+      sorters: SORTERS,
+      tieBreak: byName,
+      unsorted: (a, b) =>
+        (pinned.get(a.id) ?? Number.POSITIVE_INFINITY) -
+        (pinned.get(b.id) ?? Number.POSITIVE_INFINITY)
+    }
   )
-
-  const pageCount = Math.max(1, Math.ceil(ordered.length / perPage))
-  const currentPage = Math.min(page, pageCount)
-  const rows = ordered.slice((currentPage - 1) * perPage, currentPage * perPage)
 
   // A selection outlives paging and filtering, as in the current design.
   const selectedRows = all.filter((app) => selected.has(app.id))
@@ -539,16 +514,11 @@ export function InstalledAppsList({
     }
   }
 
-  const sortBy = (key: SortKey) => {
-    setSort((current) => nextSort(current, key))
-    setPage(1)
-  }
-
   const clearFilters = () => {
     setQuery("")
     setStatus(ALL_STATUSES)
     setCylo(ALL_STATUSES)
-    setPage(1)
+    firstPage()
   }
 
   const rowProps = (app: InstalledApp): RowProps => ({
@@ -580,7 +550,7 @@ export function InstalledAppsList({
             autoComplete="off"
             onChange={(event) => {
               setQuery(event.target.value)
-              setPage(1)
+              firstPage()
             }}
           />
           {query && (
@@ -591,7 +561,7 @@ export function InstalledAppsList({
                 aria-label={COPY.clearSearch}
                 onClick={() => {
                   setQuery("")
-                  setPage(1)
+                  firstPage()
                 }}
               />
             </InputGroup.Addon>
@@ -604,7 +574,7 @@ export function InstalledAppsList({
           value={status}
           onValueChange={(value) => {
             setStatus(value ? String(value) : ALL_STATUSES)
-            setPage(1)
+            firstPage()
           }}
           renderValue={(value) =>
             value === ALL_STATUSES
@@ -627,7 +597,7 @@ export function InstalledAppsList({
             value={cylo}
             onValueChange={(value) => {
               setCylo(value ? String(value) : ALL_STATUSES)
-              setPage(1)
+              firstPage()
             }}
             renderValue={(value) =>
               appboxes.find((entry) => String(entry.id) === value)?.name ??
@@ -653,7 +623,6 @@ export function InstalledAppsList({
             setSort(
               presets.find((preset) => preset.value === value)?.sort ?? null
             )
-            setPage(1)
           }}
           renderValue={(value) =>
             presets.find((preset) => preset.value === value)?.label ??
@@ -668,7 +637,7 @@ export function InstalledAppsList({
         </Select>
       </FilterBar>
 
-      {apps.status === "loading" && <ListSkeleton />}
+      {apps.status === "loading" && <ListSkeleton rows={6} icons />}
 
       {apps.status === "error" && (
         <Banner
@@ -739,7 +708,7 @@ export function InstalledAppsList({
             ) : (
               <span className="text-kumo-subtle" aria-live="polite">
                 {filtered
-                  ? COPY.countOf(ordered.length, all.length)
+                  ? COPY.countOf(total, all.length)
                   : COPY.count(all.length)}
               </span>
             )}
@@ -848,28 +817,10 @@ export function InstalledAppsList({
             </>
           )}
 
-          {ordered.length > PAGE_SIZES[0] && (
-            <div className="@xl:border-t @xl:border-kumo-hairline @xl:p-3">
-              <Pagination
-                page={currentPage}
-                setPage={setPage}
-                perPage={perPage}
-                totalCount={ordered.length}
-                className="flex-wrap gap-y-3"
-              >
-                <Pagination.Info className="whitespace-nowrap" />
-                <Pagination.PageSize
-                  value={perPage}
-                  options={PAGE_SIZES}
-                  onChange={(size) => {
-                    setPerPage(size)
-                    setPage(1)
-                  }}
-                />
-                <Pagination.Controls />
-              </Pagination>
-            </div>
-          )}
+          <PageFooter
+            pager={pager}
+            className="@xl:border-t @xl:border-kumo-hairline @xl:p-3"
+          />
         </div>
       )}
     </div>

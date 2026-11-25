@@ -12,10 +12,10 @@ import {
 import { unpinApp } from "@/api/pinned-apps/pinned-apps"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
 import { AppboxDevPanel } from "../../_dev/appbox-dev-panel"
-import { toLoadable, useAccountApps } from "../../_lib/use-account-apps"
+import { toLoadable } from "../../_lib/use-account-apps"
+import { useAccountShell } from "../../_lib/use-account-shell"
 import { useInstanceActions } from "../../_lib/use-instance-actions"
 import { AppShell } from "../../../_components/app-shell"
 import { AppboxView } from "../../../_components/appbox-view"
@@ -31,8 +31,7 @@ interface KumoAppboxPageProps {
 export default function KumoAppboxPage({ params }: KumoAppboxPageProps) {
   const { id } = use(params)
   const cyloId = Number(id)
-  const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
 
   const cyloQuery = useCylo(cyloId)
   const cylo = cyloQuery.data
@@ -86,17 +85,13 @@ export default function KumoAppboxPage({ params }: KumoAppboxPageProps) {
     })
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={cylo?.name ?? FALLBACK_TITLE}
       parents={[{ label: "Appboxes", href: kumoRoutes.appboxes }]}
       currentDesignHref={ROUTES.APPBOX_DETAIL(cyloId)}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <AppboxView
         cylo={

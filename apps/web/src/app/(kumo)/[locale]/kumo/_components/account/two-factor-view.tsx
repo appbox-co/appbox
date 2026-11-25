@@ -195,13 +195,94 @@ function RecoveryCodes({
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Regenerate recovery codes                                                  */
+/*  A change that may need a code                                              */
 /* -------------------------------------------------------------------------- */
 
 /**
  * The current page's flow, unchanged: try without a code first; the API then
- * says whether it wants a recent sign-in, a code, or neither.
+ * says whether it wants a recent sign-in, a code, or neither. After signing
+ * in again the code form shows. `submit` sends the change with a code (empty
+ * at first); once it succeeds the form closes and `onDone` runs.
  */
+function useCodeConfirmation<Result>({
+  submit,
+  onDone,
+  failedMessage,
+  onReset
+}: {
+  submit: (code: string) => Promise<Result>
+  onDone: (result: Result) => Promise<unknown> | void
+  failedMessage: string
+  onReset?: () => void
+}) {
+  const [code, setCode] = useState("")
+  const [showForm, setShowForm] = useState(false)
+  const [reauthOpen, setReauthOpen] = useState(false)
+  const [pending, setPending] = useState(false)
+
+  const reset = () => {
+    setShowForm(false)
+    setCode("")
+    onReset?.()
+  }
+
+  const run = async (value: string) => {
+    setPending(true)
+    try {
+      const result = await submit(value)
+      reset()
+      await onDone(result)
+    } catch (error) {
+      if (isRecentAuthError(error)) {
+        setReauthOpen(true)
+        setCode("")
+        return
+      }
+      // Without a code, this is the API asking for one.
+      if (!value && needsCode(error)) {
+        setShowForm(true)
+        return
+      }
+
+      toast.error(failedMessage)
+      setCode("")
+    } finally {
+      setPending(false)
+    }
+  }
+
+  return {
+    code,
+    showForm,
+    pending,
+    reset,
+    /** The button that starts it: tries without a code. */
+    start: () => {
+      if (showForm || pending) return
+      void run("")
+    },
+    /** A code being typed; sent once it is `length` long. */
+    enter: (value: string, length: number) => {
+      setCode(value)
+      if (value.length === length) void run(value)
+    },
+    clearCode: () => setCode(""),
+    /** For the recent sign-in dialog. */
+    reauthDialog: {
+      open: reauthOpen,
+      onOpenChange: setReauthOpen,
+      onVerified: () => {
+        setCode("")
+        setShowForm(true)
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Regenerate recovery codes                                                  */
+/* -------------------------------------------------------------------------- */
+
 function RegenerateCodes({
   onRegenerate,
   onCodes,
@@ -210,67 +291,12 @@ function RegenerateCodes({
   onCodes: (codes: string[]) => void
 }) {
   const t = useTranslations("account")
-  const [code, setCode] = useState("")
-  const [showForm, setShowForm] = useState(false)
-  const [reauthOpen, setReauthOpen] = useState(false)
-  const [pending, setPending] = useState(false)
-
-  const resetForm = () => {
-    setShowForm(false)
-    setCode("")
-  }
-
-  const regenerateWithCode = async (value: string) => {
-    setPending(true)
-    try {
-      const result = await onRegenerate(value)
-      onCodes(result.recovery_codes)
-      resetForm()
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        setReauthOpen(true)
-        setCode("")
-        return
-      }
-
-      toast.error(COPY.regenerateFailed)
-      setCode("")
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handleRegenerateClick = async () => {
-    if (showForm || pending) return
-
-    setPending(true)
-    try {
-      const result = await onRegenerate("")
-      onCodes(result.recovery_codes)
-      resetForm()
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        setReauthOpen(true)
-        return
-      }
-
-      if (needsCode(error)) {
-        setShowForm(true)
-        return
-      }
-
-      toast.error(COPY.regenerateFailed)
-      setCode("")
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handleCode = async (value: string) => {
-    setCode(value)
-    if (value.length !== CODE_LENGTH.totp) return
-    await regenerateWithCode(value)
-  }
+  const { code, showForm, pending, reset, start, enter, reauthDialog } =
+    useCodeConfirmation({
+      submit: onRegenerate,
+      onDone: (result) => onCodes(result.recovery_codes),
+      failedMessage: COPY.regenerateFailed
+    })
 
   return (
     <div className="grid grid-cols-1 justify-items-start gap-4">
@@ -280,12 +306,12 @@ function RegenerateCodes({
           <CodeInput
             label={COPY.authenticatorCode}
             value={code}
-            onChange={(value) => void handleCode(value)}
+            onChange={(value) => enter(value, CODE_LENGTH.totp)}
             disabled={pending}
             autoFocus
           />
           {pending && <PendingLine>{COPY.regenerating}</PendingLine>}
-          <Button onClick={resetForm} disabled={pending}>
+          <Button onClick={reset} disabled={pending}>
             {COPY.cancel}
           </Button>
         </>
@@ -294,7 +320,7 @@ function RegenerateCodes({
           <p className="text-kumo-subtle">{COPY.regenerateBody}</p>
           <Button
             icon={ArrowsClockwiseIcon}
-            onClick={() => void handleRegenerateClick()}
+            onClick={start}
             loading={pending}
             disabled={pending}
           >
@@ -304,12 +330,7 @@ function RegenerateCodes({
       )}
 
       <RecentAuthDialog
-        open={reauthOpen}
-        onOpenChange={setReauthOpen}
-        onVerified={() => {
-          setCode("")
-          setShowForm(true)
-        }}
+        {...reauthDialog}
         reauth={reauth}
         description={t("twoFactor.recoveryCodesReauthDescription")}
         idPrefix="regenerate-recovery-codes-reauth"
@@ -322,80 +343,33 @@ function RegenerateCodes({
 /*  Turn off                                                                   */
 /* -------------------------------------------------------------------------- */
 
-/** The current page's flow, unchanged; see `RegenerateCodes`. */
 function DisableTwoFactor({
   onDisable,
   onDisabled,
   reauth
 }: Pick<TwoFactorViewProps, "onDisable" | "onDisabled" | "reauth">) {
   const t = useTranslations("account")
-  const [code, setCode] = useState("")
-  const [showForm, setShowForm] = useState(false)
   const [useRecovery, setUseRecovery] = useState(false)
-  const [reauthOpen, setReauthOpen] = useState(false)
-  const [pending, setPending] = useState(false)
-
-  const resetForm = () => {
-    setShowForm(false)
-    setCode("")
-    setUseRecovery(false)
-  }
-
-  const disableWithCode = async (value: string) => {
-    setPending(true)
-    try {
-      await onDisable(value)
-      resetForm()
+  const {
+    code,
+    showForm,
+    pending,
+    reset,
+    start,
+    enter,
+    clearCode,
+    reauthDialog
+  } = useCodeConfirmation({
+    submit: onDisable,
+    onDone: async () => {
       toast.success(t("twoFactor.disabled"))
       await onDisabled()
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        setReauthOpen(true)
-        setCode("")
-        return
-      }
-
-      toast.error(COPY.disableFailed)
-      setCode("")
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handleDisableClick = async () => {
-    if (showForm || pending) return
-
-    setPending(true)
-    try {
-      await onDisable("")
-      resetForm()
-      toast.success(t("twoFactor.disabled"))
-      await onDisabled()
-    } catch (error) {
-      if (isRecentAuthError(error)) {
-        setReauthOpen(true)
-        return
-      }
-
-      if (needsCode(error)) {
-        setShowForm(true)
-        return
-      }
-
-      toast.error(COPY.disableFailed)
-      setCode("")
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handleCode = async (value: string) => {
-    setCode(value)
-    const ready =
-      value.length === CODE_LENGTH[useRecovery ? "recovery" : "totp"]
-    if (!ready) return
-    await disableWithCode(value)
-  }
+    },
+    failedMessage: COPY.disableFailed,
+    onReset: () => setUseRecovery(false)
+  })
+  const handleCode = (value: string) =>
+    enter(value, CODE_LENGTH[useRecovery ? "recovery" : "totp"])
 
   return (
     <div className="grid grid-cols-1 justify-items-start gap-4">
@@ -417,7 +391,7 @@ function DisableTwoFactor({
                   .toUpperCase()
                 if (text.length > 0) {
                   event.preventDefault()
-                  void handleCode(text.slice(0, CODE_LENGTH.recovery))
+                  handleCode(text.slice(0, CODE_LENGTH.recovery))
                 }
               }}
             >
@@ -426,7 +400,7 @@ function DisableTwoFactor({
                 kind="recovery"
                 label={COPY.recoveryCode}
                 value={code}
-                onChange={(value) => void handleCode(value)}
+                onChange={handleCode}
                 disabled={pending}
                 autoFocus
               />
@@ -436,21 +410,21 @@ function DisableTwoFactor({
               key="totp"
               label={COPY.authenticatorCode}
               value={code}
-              onChange={(value) => void handleCode(value)}
+              onChange={handleCode}
               disabled={pending}
               autoFocus
             />
           )}
           {pending && <PendingLine>{COPY.disabling}</PendingLine>}
           <div className="flex flex-wrap items-center gap-2">
-            <Button onClick={resetForm} disabled={pending}>
+            <Button onClick={reset} disabled={pending}>
               {COPY.cancel}
             </Button>
             <Button
               variant="ghost"
               onClick={() => {
                 setUseRecovery((current) => !current)
-                setCode("")
+                clearCode()
               }}
             >
               {useRecovery ? COPY.useAuthenticator : COPY.useRecovery}
@@ -463,7 +437,7 @@ function DisableTwoFactor({
           <Button
             variant="destructive"
             icon={ShieldSlashIcon}
-            onClick={() => void handleDisableClick()}
+            onClick={start}
             loading={pending}
             disabled={pending}
           >
@@ -473,12 +447,7 @@ function DisableTwoFactor({
       )}
 
       <RecentAuthDialog
-        open={reauthOpen}
-        onOpenChange={setReauthOpen}
-        onVerified={() => {
-          setCode("")
-          setShowForm(true)
-        }}
+        {...reauthDialog}
         reauth={reauth}
         description={t("twoFactor.reauthDescription")}
         idPrefix="disable-2fa-reauth"

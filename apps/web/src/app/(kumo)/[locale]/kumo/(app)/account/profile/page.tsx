@@ -8,7 +8,7 @@ import {
 } from "@/api/account/hooks/use-account"
 import { ROUTES } from "@/constants/routes"
 import { useAuth } from "@/providers/auth-provider"
-import { useAccountApps } from "../../_lib/use-account-apps"
+import { useAccountShell } from "../../_lib/use-account-shell"
 import {
   ProfileView,
   type ProfileSummary
@@ -21,7 +21,7 @@ const TITLE = "Profile"
 /** Kumo prototype of the profile page, on live account data. */
 export default function KumoProfilePage() {
   const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
   const profile = useProfile(user.id)
   const { data: twoFactorStatus } = use2FAStatus()
   const updateProfile = useUpdateProfile(user.id)
@@ -48,16 +48,12 @@ export default function KumoProfilePage() {
           }
         }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="narrow"
       title={TITLE}
       currentDesignHref={ROUTES.PROFILE}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <ProfileView
         profile={summary}

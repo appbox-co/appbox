@@ -11,22 +11,22 @@ import {
 import { useInstalledApps } from "@/api/installed-apps/hooks/use-installed-apps"
 import { ROUTES } from "@/constants/routes"
 import { useAuth } from "@/providers/auth-provider"
-import { useAccountApps } from "../../../_lib/use-account-apps"
+import { useAccountShell } from "../../../_lib/use-account-shell"
 import { useInstanceActions } from "../../../_lib/use-instance-actions"
-import { useMinimumPlan } from "../../../_lib/use-minimum-plan"
 import { AppDetailView } from "../../../../_components/app-detail-view"
 import { AppShell } from "../../../../_components/app-shell"
-import { LiveComments } from "../../../../_components/comments/live-comments"
+import { Comments } from "../../../../_components/comments/comments"
 import { InstallGuardsPanel } from "../../../../_components/dev/install-guards-panel"
 import { InstallDialog } from "../../../../_components/install/install-dialog"
+import { useMinimumPlan } from "../../../../_components/install/use-plan-restrictions"
 import { kumoRoutes } from "../../../../_components/kumo-routes"
 import type { Loadable } from "../../../../_components/shared"
 
 function KumoAppDetail({ appId }: { appId: number }) {
   const t = useTranslations("appstore")
   const searchParams = useSearchParams()
-  const { user, cylos, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { cylos } = useAuth()
+  const { shell } = useAccountShell()
 
   const appQuery = useAppDetail(appId)
   const versionsQuery = useAppVersions(appId)
@@ -62,17 +62,13 @@ function KumoAppDetail({ appId }: { appId: number }) {
         ? { status: "loading" }
         : { status: "ready", data: versionsQuery.data ?? [] }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={app?.display_name ?? t("title")}
       parents={[{ label: t("title"), href: kumoRoutes.appStore }]}
       currentDesignHref={ROUTES.APP_STORE_APP(appId)}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <AppDetailView
         app={
@@ -100,7 +96,7 @@ function KumoAppDetail({ appId }: { appId: number }) {
         onVote={(direction) => voteMutation.mutate(direction)}
         onInstall={() => setInstallOpen(true)}
         onInstanceAction={runAction}
-        comments={app ? <LiveComments appId={app.id} /> : null}
+        comments={app ? <Comments appId={app.id} /> : null}
       />
 
       {app && (

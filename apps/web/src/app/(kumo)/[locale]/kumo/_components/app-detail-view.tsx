@@ -30,6 +30,7 @@ import { AppIcon } from "./app-icon"
 import { AppInstances, type InstanceAction } from "./app-instances"
 import { AppScreenshots, extractScreenshots } from "./app-screenshots"
 import { InstalledBadge } from "./app-store-cards"
+import { DetailRow } from "./detail-row"
 import { kumoRoutes } from "./kumo-routes"
 import { Markdown } from "./markdown"
 import { Panel } from "./panel"
@@ -210,21 +211,6 @@ function VersionsTable({
           />
         </div>
       )}
-    </div>
-  )
-}
-
-function DetailRow({
-  label,
-  children
-}: {
-  label: string
-  children: ReactNode
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-2">
-      <dt className="shrink-0 text-kumo-subtle">{label}</dt>
-      <dd className="min-w-0 truncate text-right font-medium">{children}</dd>
     </div>
   )
 }

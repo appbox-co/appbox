@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from "react"
 import { useLocale } from "next-intl"
 import { localiseDestination } from "../_lib/localise-destination"
-import { liveSignInActions } from "../../_components/auth/auth-actions"
+import { signInActions } from "../../_components/auth/auth-actions"
 import { AuthFrame } from "../../_components/auth/auth-frame"
 import { SignInView } from "../../_components/auth/sign-in-view"
 
@@ -11,9 +11,7 @@ function KumoSignIn() {
   const locale = useLocale()
   const actions = useMemo(
     () =>
-      liveSignInActions((destination) =>
-        localiseDestination(destination, locale)
-      ),
+      signInActions((destination) => localiseDestination(destination, locale)),
     [locale]
   )
 

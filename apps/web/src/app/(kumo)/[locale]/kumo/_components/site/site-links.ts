@@ -21,6 +21,7 @@ import {
   WindowsLogoIcon,
   type Icon
 } from "@phosphor-icons/react"
+import { BILLING_BASE_URL } from "../shared"
 
 export interface MenuLink {
   icon: Icon
@@ -41,7 +42,7 @@ export interface SiteMenu {
 }
 
 export const ACCOUNT_LINKS = {
-  billing: "https://billing.appbox.co",
+  billing: BILLING_BASE_URL,
   controlPanel: "/kumo/dashboard"
 } as const
 

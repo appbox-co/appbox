@@ -24,10 +24,9 @@ import type {
   JobProgressData,
   NotificationCreatedData
 } from "@/lib/websocket/types"
-import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
 import { InstalledAppDevPanel } from "../../_dev/installed-app-dev-panel"
-import { useAccountApps } from "../../_lib/use-account-apps"
+import { useAccountShell } from "../../_lib/use-account-shell"
 import { AppShell } from "../../../_components/app-shell"
 import { InstalledAppView } from "../../../_components/installed-app-view"
 import { kumoRoutes } from "../../../_components/kumo-routes"
@@ -53,8 +52,7 @@ export default function KumoInstalledAppPage({
   const appId = Number(id)
   const t = useTranslations("appboxmanager.appDetail")
   const router = useRouter()
-  const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
 
   const queryClient = useQueryClient()
 
@@ -137,16 +135,7 @@ export default function KumoInstalledAppPage({
   ])
 
   /* Handle job events directly: no TanStack Query cache in the loop */
-  const handleJobStarted = useCallback(
-    (data: JobProgressData) => {
-      if (Number(data.instance_id) === appId) {
-        setJob(data)
-      }
-    },
-    [appId]
-  )
-
-  const handleJobProgress = useCallback(
+  const handleJob = useCallback(
     (data: JobProgressData) => {
       if (Number(data.instance_id) === appId) {
         setJob(data)
@@ -206,13 +195,10 @@ export default function KumoInstalledAppPage({
       const payload = msg.data as { instance_id?: number | string }
       if (Number(payload?.instance_id) !== appId) return
 
-      // Refresh both table definitions and row datasets when another client
-      // mutates custom-table rows for this instance.
+      // Refresh the table definitions and, under the same key, their rows
+      // and changes, when another client changes this instance's tables.
       queryClient.invalidateQueries({
         queryKey: queryKeys.customTables.byInstance(appId)
-      })
-      queryClient.invalidateQueries({
-        queryKey: ["customTables", "instance", appId]
       })
     },
     [appId, queryClient]
@@ -233,10 +219,10 @@ export default function KumoInstalledAppPage({
   useEffect(() => {
     const unsubs = [
       on(WS_SERVER_EVENTS.JOB_STARTED, (msg) =>
-        handleJobStarted(msg.data as JobProgressData)
+        handleJob(msg.data as JobProgressData)
       ),
       on(WS_SERVER_EVENTS.JOB_PROGRESS, (msg) =>
-        handleJobProgress(msg.data as JobProgressData)
+        handleJob(msg.data as JobProgressData)
       ),
       on(WS_SERVER_EVENTS.JOB_COMPLETED, (msg) =>
         handleJobDone(msg.data as { instance_id: number | string })
@@ -252,8 +238,7 @@ export default function KumoInstalledAppPage({
     return () => unsubs.forEach((u) => u())
   }, [
     on,
-    handleJobStarted,
-    handleJobProgress,
+    handleJob,
     handleJobDone,
     handleNotification,
     handleCustomTableChanged,
@@ -269,17 +254,13 @@ export default function KumoInstalledAppPage({
     }
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={app?.display_name ?? COPY.fallbackTitle}
       parents={[{ label: COPY.installedApps, href: kumoRoutes.installedApps }]}
       currentDesignHref={ROUTES.INSTALLED_APP_DETAIL(appId)}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <InstalledAppView
         app={

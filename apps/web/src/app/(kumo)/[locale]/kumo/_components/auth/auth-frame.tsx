@@ -56,7 +56,6 @@ interface AuthFrameProps {
  */
 export function AuthFrame({ currentDesignHref, children }: AuthFrameProps) {
   const t = useTranslations("auth.login")
-  const tApps = useTranslations("site.google_ads_landing.apps_section")
   const tInstall = useTranslations("site.simple_install_promo")
   const apps = useWallApps()
 
@@ -109,7 +108,10 @@ export function AuthFrame({ currentDesignHref, children }: AuthFrameProps) {
           <AppWall apps={apps} />
           <div className="absolute inset-x-0 bottom-0 grid gap-1.5 bg-linear-to-t from-kumo-tint from-45% to-transparent px-10 pt-40 pb-10">
             <h2 className="text-xl font-semibold text-balance">
-              {tApps("headline_1")}
+              {/* The catalogue's own count, so it never goes stale. */}
+              {apps.length > 0
+                ? t("app_wall_title", { count: apps.length })
+                : t("app_wall_title_no_count")}
             </h2>
             <p className="max-w-md text-kumo-subtle text-pretty">
               {tInstall("description")}

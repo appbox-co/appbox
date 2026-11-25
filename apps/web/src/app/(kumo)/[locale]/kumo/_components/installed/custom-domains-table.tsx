@@ -7,36 +7,29 @@ import {
   Button,
   Empty,
   InputGroup,
-  Pagination,
-  SkeletonLine,
   Table,
   Tooltip
 } from "@cloudflare/kumo"
 import {
-  CaretDownIcon,
-  CaretUpDownIcon,
-  CaretUpIcon,
   GlobeIcon,
   MagnifyingGlassIcon,
   TrashIcon,
   XIcon
 } from "@phosphor-icons/react"
 import type { InstanceDomain } from "@/api/domains/hooks/use-domains"
+import { PageFooter, usePagedRows } from "../paged-rows"
 import { EMPTY_IN_CARD } from "../shared"
 import { ShortDate } from "../short-date"
+import { LinesSkeleton } from "../skeletons"
+import { compareText, SortHead, timeOf, type Comparator } from "../sort-head"
 
 /**
  * Prototype-only copy, in English and sentence case, for controls the current
  * design has no translation string for.
  */
 const COPY = {
-  sortBy: (column: string) => `Sort by ${column.toLowerCase()}`,
   clearSearch: "Clear search"
 } as const
-
-/** The current table's page sizes: 25 a page, plus its usual choices. */
-const PAGE_SIZES = [10, 20, 25, 50, 100]
-const DEFAULT_PAGE_SIZE = 25
 
 /** The primary domain is the one the app was installed with. */
 function isPrimaryDomain(domain: InstanceDomain) {
@@ -49,75 +42,10 @@ function isPrimaryDomain(domain: InstanceDomain) {
 
 type SortKey = "domain" | "primary" | "added"
 
-/** `null` is the default: the order the server returned. */
-type SortState = { key: SortKey; dir: "asc" | "desc" } | null
-
-type Sorter = (a: InstanceDomain, b: InstanceDomain) => number
-
-const time = (value: string) => {
-  const parsed = new Date(value).getTime()
-  return Number.isNaN(parsed) ? 0 : parsed
-}
-
-const SORTERS: Record<SortKey, Sorter> = {
-  domain: (a, b) =>
-    a.domain.localeCompare(b.domain, undefined, {
-      numeric: true,
-      sensitivity: "base"
-    }),
+const SORTERS: Record<SortKey, Comparator<InstanceDomain>> = {
+  domain: (a, b) => compareText(a.domain, b.domain),
   primary: (a, b) => Number(isPrimaryDomain(a)) - Number(isPrimaryDomain(b)),
-  added: (a, b) => time(a.created_at) - time(b.created_at)
-}
-
-/** A column header that sorts: ascending, then descending, then back to the default. */
-function SortHead({
-  label,
-  sortKey,
-  sort,
-  onSort,
-  className
-}: {
-  label: string
-  sortKey: SortKey
-  sort: SortState
-  onSort: (key: SortKey) => void
-  className?: string
-}) {
-  const direction = sort?.key === sortKey ? sort.dir : null
-  const Icon =
-    direction === "asc"
-      ? CaretUpIcon
-      : direction === "desc"
-        ? CaretDownIcon
-        : CaretUpDownIcon
-
-  return (
-    <Table.Head
-      aria-sort={
-        direction === "asc"
-          ? "ascending"
-          : direction === "desc"
-            ? "descending"
-            : "none"
-      }
-      className={className}
-    >
-      <button
-        type="button"
-        title={COPY.sortBy(label)}
-        onClick={() => onSort(sortKey)}
-        className="-mx-1.5 -my-1 flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 font-semibold whitespace-nowrap hover:bg-kumo-tint focus-visible:outline-2 focus-visible:outline-kumo-brand"
-      >
-        {label}
-        <Icon
-          aria-hidden="true"
-          size={12}
-          weight="bold"
-          className={direction ? undefined : "text-kumo-inactive"}
-        />
-      </button>
-    </Table.Head>
-  )
+  added: (a, b) => timeOf(a.created_at) - timeOf(b.created_at)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -154,39 +82,20 @@ export function CustomDomainsTable({
   const t = useTranslations("appboxmanager.appDetail")
 
   const [query, setQuery] = useState("")
-  const [sort, setSort] = useState<SortState>(null)
-  const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(DEFAULT_PAGE_SIZE)
 
   const needle = query.trim().toLowerCase()
   const matches = needle
     ? domains.filter((domain) => domain.domain.toLowerCase().includes(needle))
     : domains
-  // Array.sort is stable, so ties keep the server's order.
-  const ordered = sort
-    ? [...matches].sort(
-        (a, b) => SORTERS[sort.key](a, b) * (sort.dir === "asc" ? 1 : -1)
-      )
-    : matches
-
-  const pageCount = Math.max(1, Math.ceil(ordered.length / perPage))
-  const currentPage = Math.min(page, pageCount)
-  const rows = ordered.slice((currentPage - 1) * perPage, currentPage * perPage)
-
-  const sortBy = (key: SortKey) => {
-    setSort((current) =>
-      current?.key !== key
-        ? { key, dir: "asc" }
-        : current.dir === "asc"
-          ? { key, dir: "desc" }
-          : null
-    )
-    setPage(1)
-  }
+  // Ties keep the server's order.
+  const { rows, sort, sortBy, firstPage, pager } = usePagedRows(matches, {
+    sorters: SORTERS,
+    perPage: 25
+  })
 
   const clearSearch = () => {
     setQuery("")
-    setPage(1)
+    firstPage()
   }
 
   return (
@@ -205,7 +114,7 @@ export function CustomDomainsTable({
             autoComplete="off"
             onChange={(event) => {
               setQuery(event.target.value)
-              setPage(1)
+              firstPage()
             }}
           />
           {query && (
@@ -222,11 +131,7 @@ export function CustomDomainsTable({
       </div>
 
       {isLoading ? (
-        <div aria-hidden="true" className="grid gap-3 p-4">
-          <SkeletonLine className="h-2.5 w-1/3 rounded-full" />
-          <SkeletonLine className="h-2.5 w-2/3 rounded-full" />
-          <SkeletonLine className="h-2.5 w-1/2 rounded-full" />
-        </div>
+        <LinesSkeleton />
       ) : rows.length === 0 ? (
         <Empty
           className={EMPTY_IN_CARD}
@@ -340,28 +245,7 @@ export function CustomDomainsTable({
         </div>
       )}
 
-      {!isLoading && ordered.length > PAGE_SIZES[0] && (
-        <div className="border-t border-kumo-hairline p-3">
-          <Pagination
-            page={currentPage}
-            setPage={setPage}
-            perPage={perPage}
-            totalCount={ordered.length}
-            className="flex-wrap gap-y-3"
-          >
-            <Pagination.Info className="whitespace-nowrap" />
-            <Pagination.PageSize
-              value={perPage}
-              options={PAGE_SIZES}
-              onChange={(size) => {
-                setPerPage(size)
-                setPage(1)
-              }}
-            />
-            <Pagination.Controls />
-          </Pagination>
-        </div>
-      )}
+      {!isLoading && <PageFooter pager={pager} />}
     </div>
   )
 }

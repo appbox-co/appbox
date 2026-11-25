@@ -13,6 +13,32 @@ import {
 export const IS_DEV = process.env.NODE_ENV === "development"
 
 /* -------------------------------------------------------------------------- */
+/*  Overrides, kept in this browser                                            */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * A panel's saved overrides, over its defaults. The defaults alone while the
+ * server renders, before anything is saved, or when storage is blocked.
+ */
+export function loadFlags<T extends object>(key: string, defaults: T): T {
+  if (typeof window === "undefined") return defaults
+  try {
+    const raw = localStorage.getItem(key)
+    return raw ? { ...defaults, ...JSON.parse(raw) } : defaults
+  } catch {
+    return defaults
+  }
+}
+
+export function saveFlags(key: string, flags: object) {
+  try {
+    localStorage.setItem(key, JSON.stringify(flags))
+  } catch {
+    // Blocked storage: the overrides last until the page reloads.
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Open or minimised, remembered per panel                                    */
 /* -------------------------------------------------------------------------- */
 

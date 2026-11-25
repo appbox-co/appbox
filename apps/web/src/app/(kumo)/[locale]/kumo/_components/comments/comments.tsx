@@ -33,7 +33,7 @@ const ABUSE_REPORT_COMMENT_TYPES = new Set([
   "abuseReportComplainant"
 ])
 
-interface LiveCommentsProps {
+interface CommentsProps {
   /** An app's comments: pass its id and leave `commentType` and `relId` out. */
   appId?: number
   /**
@@ -52,14 +52,14 @@ interface LiveCommentsProps {
  * `Comments` in components/dashboard/comments.tsx: an app's by default, or
  * those of a given type and related id.
  */
-export function LiveComments({
+export function Comments({
   appId = 0,
   commentType,
   relId = 0,
   title,
   enableVoting,
   enableReplies
-}: LiveCommentsProps) {
+}: CommentsProps) {
   const auth = useOptionalAuth()
   const ws = useOptionalWebSocket()
   const [sortOrder, setSortOrder] = useState<CommentSortOrder>("rating")

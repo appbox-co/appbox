@@ -20,6 +20,38 @@ export function nextSort<Key extends string>(
   return current.dir === "asc" ? { key, dir: "desc" } : null
 }
 
+export type Comparator<Row> = (a: Row, b: Row) => number
+
+/**
+ * The rows in the chosen order, with `tieBreak` settling equal rows. With no
+ * sort chosen, or a column with no sorter, they stay as given. Array.sort is
+ * stable, so rows that are still equal keep the order they came in.
+ */
+export function sortRows<Row, Key extends string>(
+  rows: readonly Row[],
+  sort: SortState<Key>,
+  sorters: Record<Key, Comparator<Row>>,
+  tieBreak?: Comparator<Row>
+): readonly Row[] {
+  // A column that has since gone (a table's definition changed) sorts nothing.
+  const compare = sort && sorters[sort.key]
+  if (!sort || !compare) return rows
+  const dir = sort.dir === "asc" ? 1 : -1
+  return [...rows].sort(
+    (a, b) => compare(a, b) * dir || (tieBreak?.(a, b) ?? 0)
+  )
+}
+
+/** Text in reading order: case ignored, digits by value ("app2" before "app10"). */
+export const compareText = (a: string, b: string) =>
+  a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
+
+/** A date as milliseconds to sort by; 0 when there is none or it cannot be read. */
+export function timeOf(value: string | null | undefined) {
+  const parsed = value ? new Date(value).getTime() : 0
+  return Number.isNaN(parsed) ? 0 : parsed
+}
+
 /** A table column header that sorts the table when clicked. */
 export function SortHead<Key extends string>({
   label,

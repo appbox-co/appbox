@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 import { useTranslations } from "next-intl"
-import { cn, Empty, LinkButton, SkeletonLine } from "@cloudflare/kumo"
+import { cn, Empty, LinkButton } from "@cloudflare/kumo"
 import { CheckCircleIcon, FlagIcon } from "@phosphor-icons/react"
 import {
   ABUSE_STATUS_LABELS,
@@ -10,10 +10,12 @@ import {
   type AbuseTimelineEntry
 } from "@/api/account/account"
 import { RAIL_FALLBACK, ShellRail } from "../app-shell"
+import { DetailRow } from "../detail-row"
 import { kumoRoutes } from "../kumo-routes"
 import { Panel } from "../panel"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
-import { ShortDate } from "../short-date"
+import { ShortDate, useRelativeTime } from "../short-date"
+import { ViewSkeleton } from "../skeletons"
 import { abuseGroup, AbuseStatusBadge, type AbuseGroup } from "./abuse-status"
 
 /**
@@ -52,25 +54,10 @@ const TIMELINE_MESSAGES: Record<number, string> = {
   12: "Closed by complainant."
 }
 
-/** The current page's rule: relative for a month, then the date. */
-function formatRelativeTime(dateString: string): string {
-  const date = new Date(dateString)
-  const now = Date.now()
-  const diffMs = now - date.getTime()
-  const diffMins = Math.floor(diffMs / 60_000)
-  const diffHours = Math.floor(diffMs / 3_600_000)
-  const diffDays = Math.floor(diffMs / 86_400_000)
-  if (diffMins < 1) return "Just now"
-  if (diffMins < 60) return `${diffMins} min ago`
-  if (diffHours < 24) return `${diffHours} hour(s) ago`
-  if (diffDays < 30) return `${diffDays} day(s) ago`
-  return date.toLocaleDateString()
-}
-
 export interface AbuseReportViewProps {
   report: Loadable<AbuseReportDetail>
   /**
-   * The conversation about the report, supplied by the page (`LiveComments`).
+   * The conversation about the report, supplied by the page (`Comments`).
    * It brings its own card.
    */
   conversation: ReactNode
@@ -89,6 +76,7 @@ const CURRENT_STEP_TONE: Record<AbuseGroup, string> = {
 }
 
 function Timeline({ entries }: { entries: AbuseTimelineEntry[] }) {
+  const relativeTime = useRelativeTime()
   if (entries.length === 0) {
     return <p className="text-kumo-subtle">{COPY.noTimeline}</p>
   }
@@ -134,7 +122,7 @@ function Timeline({ entries }: { entries: AbuseTimelineEntry[] }) {
                 className="text-kumo-subtle tabular-nums"
                 suppressHydrationWarning
               >
-                {formatRelativeTime(entry.created_at)}
+                {relativeTime(entry.created_at)}
               </time>
               {message && <p className="mt-1 text-kumo-subtle">{message}</p>}
             </div>
@@ -149,74 +137,41 @@ function Timeline({ entries }: { entries: AbuseTimelineEntry[] }) {
 /*  Details                                                                    */
 /* -------------------------------------------------------------------------- */
 
-function DetailRow({
-  label,
-  children
-}: {
-  label: string
-  children: ReactNode
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-2">
-      <dt className="shrink-0 text-kumo-subtle">{label}</dt>
-      <dd className="flex min-w-0 justify-end text-end font-medium">
-        {children}
-      </dd>
-    </div>
-  )
-}
-
 /** The report's facts: shown beside the page, wherever there is room for them. */
 function Details({ report }: { report: AbuseReportDetail }) {
   const t = useTranslations("account")
 
   return (
     <dl className="grid grid-cols-1 divide-y divide-kumo-hairline">
-      <DetailRow label={t("abuse.id")}>
+      <DetailRow label={t("abuse.id")} fit>
         <span className="font-mono text-[0.9em]">#{report.id}</span>
       </DetailRow>
-      <DetailRow label={t("abuse.status")}>
+      <DetailRow label={t("abuse.status")} fit>
         <AbuseStatusBadge
           status={report.status}
           statusCode={report.statusCode}
         />
       </DetailRow>
       {report.complainant && (
-        <DetailRow label={t("abuse.complainant")}>
+        <DetailRow label={t("abuse.complainant")} fit>
           <span title={report.complainant} className="truncate">
             {report.complainant}
           </span>
         </DetailRow>
       )}
       {report.cyloname && (
-        <DetailRow label={COPY.appbox}>
+        <DetailRow label={COPY.appbox} fit>
           <span className="truncate font-mono text-[0.9em]">
             {report.cyloname}
           </span>
         </DetailRow>
       )}
-      <DetailRow label={t("abuse.date")}>
+      <DetailRow label={t("abuse.date")} fit>
         <span className="font-normal">
           <ShortDate value={report.created_at} />
         </span>
       </DetailRow>
     </dl>
-  )
-}
-
-function ViewSkeleton() {
-  return (
-    <div aria-hidden="true" className="grid grid-cols-1 gap-8">
-      <div className="flex items-start gap-4">
-        <SkeletonLine className="size-14 rounded-xl" />
-        <div className="grid flex-1 gap-3 pt-1">
-          <SkeletonLine className="h-4 w-72 max-w-full rounded-full" />
-          <SkeletonLine className="h-2.5 w-96 max-w-full rounded-full" />
-        </div>
-      </div>
-      <SkeletonLine className="h-48 rounded-lg" />
-      <SkeletonLine className="h-64 rounded-lg" />
-    </div>
   )
 }
 
@@ -236,7 +191,7 @@ export function AbuseReportView({
 }: AbuseReportViewProps) {
   const t = useTranslations("account")
 
-  if (reportState.status === "loading") return <ViewSkeleton />
+  if (reportState.status === "loading") return <ViewSkeleton icon />
 
   if (reportState.status === "error") {
     return (

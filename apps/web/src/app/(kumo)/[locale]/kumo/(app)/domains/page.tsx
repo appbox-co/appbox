@@ -7,9 +7,9 @@ import { useDeleteDomain, useDomains } from "@/api/domains/hooks/use-domains"
 import { WS_EVENTS } from "@/constants/events"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
-import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
+import { toLoadable } from "../_lib/use-account-apps"
+import { useAccountShell } from "../_lib/use-account-shell"
 import { AppShell } from "../../_components/app-shell"
 import { DomainsView, type DomainInstall } from "../../_components/domains-view"
 
@@ -17,8 +17,7 @@ const TITLE = "Custom domains"
 
 /** Kumo prototype of the custom domains page, on live account data. */
 export default function KumoDomainsPage() {
-  const { user, logout } = useAuth()
-  const { cylosSummary, installedApps, searchGroups } = useAccountApps()
+  const { shell, cylosSummary, installedApps } = useAccountShell()
   const domains = useDomains()
   const deleteDomain = useDeleteDomain()
   const queryClient = useQueryClient()
@@ -42,16 +41,12 @@ export default function KumoDomainsPage() {
     (cylosSummary.data ?? []).map((cylo) => [cylo.id, cylo.name])
   )
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={TITLE}
       currentDesignHref={ROUTES.DOMAINS}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <DomainsView
         domains={toLoadable(domains, (data) => data ?? [])}

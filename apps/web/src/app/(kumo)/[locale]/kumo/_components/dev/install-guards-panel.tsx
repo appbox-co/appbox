@@ -5,7 +5,12 @@ import { Select } from "@cloudflare/kumo"
 import { useQueryClient } from "@tanstack/react-query"
 import type { AppStoreItem } from "@/api/apps/app-store"
 import { queryKeys } from "@/constants/query-keys"
-import { notifyAppDevFlagsChanged, type AppDevFlags } from "@/lib/app-dev-flags"
+import {
+  notifyAppDevFlagsChanged,
+  readAppDevFlags,
+  saveAppDevFlags,
+  type AppDevFlags
+} from "@/lib/app-dev-flags"
 import { useAuth } from "@/providers/auth-provider"
 import {
   DevCheck,
@@ -133,27 +138,6 @@ const GUARD_FLAGS: GuardFlag[] = GUARDS.map((guard) => guard.flag)
 const NO_GUARD = "none"
 const COPY_NONE = "None (real data)"
 
-const STORAGE_KEY = (id: number) => `app-dev-panel-${id}`
-
-function loadFlags(id: number): DevFlags {
-  if (typeof window === "undefined") return DEFAULT_FLAGS
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY(id))
-    if (!raw) return DEFAULT_FLAGS
-    return { ...DEFAULT_FLAGS, ...JSON.parse(raw) }
-  } catch {
-    return DEFAULT_FLAGS
-  }
-}
-
-function saveFlags(id: number, flags: DevFlags) {
-  try {
-    localStorage.setItem(STORAGE_KEY(id), JSON.stringify(flags))
-  } catch {
-    // ignore
-  }
-}
-
 /**
  * The app as the page should see it with these flags on. The flags not
  * handled here change which Appboxes look eligible, which the install dialog
@@ -224,7 +208,10 @@ function InstallGuardsPanelInner({ appId }: InstallGuardsPanelProps) {
   const [originalAppForDisplay, setOriginalAppForDisplay] =
     useState<AppStoreItem | null>(null)
 
-  const [flags, setFlags] = useState<DevFlags>(() => loadFlags(appId))
+  const [flags, setFlags] = useState<DevFlags>(() => ({
+    ...DEFAULT_FLAGS,
+    ...readAppDevFlags(appId)
+  }))
 
   // Capture the original app data on first render
   useEffect(() => {
@@ -263,7 +250,7 @@ function InstallGuardsPanelInner({ appId }: InstallGuardsPanelProps) {
   function updateFlags(patch: Partial<DevFlags>) {
     const next = { ...flags, ...patch }
     setFlags(next)
-    saveFlags(appId, next)
+    saveAppDevFlags(appId, next)
     applyFlags(next)
     // Defer the event so it fires after React finishes rendering this component
     setTimeout(notifyAppDevFlagsChanged, 0)
@@ -280,7 +267,7 @@ function InstallGuardsPanelInner({ appId }: InstallGuardsPanelProps) {
   function handleReset() {
     const resetFlags = { ...DEFAULT_FLAGS }
     setFlags(resetFlags)
-    saveFlags(appId, resetFlags)
+    saveAppDevFlags(appId, resetFlags)
     setTimeout(notifyAppDevFlagsChanged, 0)
     // Load the real data again and update the original ref so subsequent flag
     // applications have an accurate baseline to patch from.

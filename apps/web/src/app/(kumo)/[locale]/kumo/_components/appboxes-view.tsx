@@ -10,7 +10,6 @@ import {
   InputGroup,
   LinkButton,
   Select,
-  SkeletonLine,
   Table
 } from "@cloudflare/kumo"
 import {
@@ -39,12 +38,14 @@ import { AppboxCard } from "./home-view"
 import { kumoRoutes } from "./kumo-routes"
 import { RailStatusCard } from "./rail-status"
 import {
+  BILLING_BASE_URL,
   EMPTY_IN_CARD,
   percentOf,
   type Loadable,
   type ServiceUsage
 } from "./shared"
-import { nextSort, SortHead, type SortState } from "./sort-head"
+import { ListSkeleton } from "./skeletons"
+import { nextSort, SortHead, sortRows, type SortState } from "./sort-head"
 import { Sparkline } from "./sparkline"
 import { UsageRing } from "./usage-ring"
 import {
@@ -86,9 +87,6 @@ const COPY = {
   noMatchHint: "Try a different search or status.",
   clearFilters: "Clear filters"
 } as const
-
-/** Where a new Appbox is ordered, as on the current page. */
-const ADD_HREF = "https://billing.appbox.co"
 
 export interface AppboxesViewProps {
   /** Every Appbox on the account. */
@@ -331,23 +329,6 @@ function AppboxRow({ row }: { row: Row }) {
   )
 }
 
-function ListSkeleton() {
-  return (
-    <div
-      aria-hidden="true"
-      className="divide-y divide-kumo-hairline rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line"
-    >
-      {Array.from({ length: 3 }, (_, index) => (
-        <div key={index} className="flex items-center gap-3 px-4 py-4">
-          <SkeletonLine className="size-7 rounded-md" />
-          <SkeletonLine className="h-2.5 w-40 rounded-full" />
-          <SkeletonLine className="ms-auto h-2.5 w-32 rounded-full" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 /* -------------------------------------------------------------------------- */
 /*  View                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -423,14 +404,8 @@ export function AppboxesView({ cylos, apps, boost }: AppboxesViewProps) {
           .toLowerCase()
           .includes(needle))
   )
-  // Array.sort is stable, so with no sort chosen the server's order stands.
-  const ordered = sort
-    ? [...matches].sort(
-        (a, b) =>
-          SORTERS[sort.key](a, b) * (sort.dir === "asc" ? 1 : -1) ||
-          SORTERS.name(a, b)
-      )
-    : matches
+  // With no sort chosen the server's order stands.
+  const ordered = sortRows(matches, sort, SORTERS, SORTERS.name)
 
   const sortBy = (key: SortKey) => setSort((current) => nextSort(current, key))
   const sortValue = sort ? `${sort.key}:${sort.dir}` : ""
@@ -448,7 +423,7 @@ export function AppboxesView({ cylos, apps, boost }: AppboxesViewProps) {
 
   const addButton = (size?: "sm") => (
     <LinkButton
-      href={ADD_HREF}
+      href={BILLING_BASE_URL}
       target="_blank"
       rel="noopener noreferrer"
       variant={size ? "secondary" : "primary"}
@@ -576,7 +551,7 @@ export function AppboxesView({ cylos, apps, boost }: AppboxesViewProps) {
           </FilterBar>
         )}
 
-        {cylos.status === "loading" && <ListSkeleton />}
+        {cylos.status === "loading" && <ListSkeleton rows={3} icons />}
 
         {cylos.status === "error" && (
           <Banner

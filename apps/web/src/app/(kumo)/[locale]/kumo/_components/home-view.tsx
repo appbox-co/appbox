@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentType, ReactNode } from "react"
+import type { ReactNode } from "react"
 import { useTranslations } from "next-intl"
 import {
   Badge,
@@ -26,6 +26,7 @@ import {
 import type { AppStoreItem } from "@/api/apps/app-store"
 import type { BlogPost } from "@/api/blog/blog"
 import type { CyloSummary } from "@/api/cylos/cylos"
+import { useCyloBandwidth, useCyloDiskQuota } from "@/api/cylos/hooks/use-cylos"
 import type { Notification } from "@/api/notifications/notifications"
 import { Link } from "@/i18n/routing"
 import { formatBytes, formatStorageGB } from "@/lib/utils/format"
@@ -86,8 +87,6 @@ export interface HomeViewProps {
   services: Loadable<CyloSummary[]>
   /** Installed apps keyed by Appbox id, pinned first. */
   apps: Loadable<ReadonlyMap<number, StripApp[]>>
-  /** Card renderer: `AppboxCard` with the usage pushed over the WebSocket. */
-  AppboxCard: ComponentType<{ cylo: CyloSummary; apps: StripApp[] }>
   notifications: Loadable<Notification[]>
   onNotificationOpen?: (notification: Notification) => void
   newestApps: Loadable<AppStoreItem[]>
@@ -502,14 +501,39 @@ export function AppboxCard({
   )
 }
 
+/**
+ * `AppboxCard` with the live quota and bandwidth the servers push over the
+ * WebSocket, in place of the summary's figures once they arrive.
+ */
+function LiveAppboxCard({
+  cylo,
+  apps
+}: {
+  cylo: CyloSummary
+  apps: StripApp[]
+}) {
+  const { data: quota } = useCyloDiskQuota(cylo.id)
+  const { data: bandwidth } = useCyloBandwidth(cylo.id)
+
+  return (
+    <AppboxCard
+      cylo={cylo}
+      apps={apps}
+      usage={{
+        storageUsedGb: quota?.used_gb,
+        uploadBytes: bandwidth?.upload_bytes,
+        downloadBytes: bandwidth?.download_bytes
+      }}
+    />
+  )
+}
+
 function Appboxes({
   services,
-  apps,
-  Card
+  apps
 }: {
   services: Loadable<CyloSummary[]>
   apps: ReadonlyMap<number, StripApp[]>
-  Card: ComponentType<{ cylo: CyloSummary; apps: StripApp[] }>
 }) {
   const tc = useTranslations("common")
 
@@ -545,7 +569,11 @@ function Appboxes({
       ) : (
         <div className="grid grid-cols-1 gap-3">
           {services.data.map((cylo) => (
-            <Card key={cylo.id} cylo={cylo} apps={apps.get(cylo.id) ?? []} />
+            <LiveAppboxCard
+              key={cylo.id}
+              cylo={cylo}
+              apps={apps.get(cylo.id) ?? []}
+            />
           ))}
         </div>
       )}
@@ -564,7 +592,6 @@ export function HomeView({
   showTwoFactorPrompt,
   services,
   apps,
-  AppboxCard: Card,
   notifications,
   onNotificationOpen,
   newestApps,
@@ -700,7 +727,7 @@ export function HomeView({
         <Recommended items={buildRecommendations(showTwoFactorPrompt, cylos)} />
       )}
 
-      <Appboxes services={services} apps={appsByCylo} Card={Card} />
+      <Appboxes services={services} apps={appsByCylo} />
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         <LinkList

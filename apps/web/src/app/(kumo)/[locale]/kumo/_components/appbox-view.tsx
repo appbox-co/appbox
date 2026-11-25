@@ -7,7 +7,6 @@ import {
   Empty,
   Link as KumoLink,
   LinkButton,
-  SkeletonLine,
   Tabs
 } from "@cloudflare/kumo"
 import { ArrowClockwiseIcon, HardDrivesIcon } from "@phosphor-icons/react"
@@ -23,6 +22,7 @@ import { ActionDialog } from "./installed/actions-dialog"
 import { InstanceStatusBadge, type InstanceAction } from "./instance-controls"
 import { kumoRoutes } from "./kumo-routes"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
+import { ViewSkeleton } from "./skeletons"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing
@@ -44,19 +44,6 @@ export interface AppboxViewProps {
   restartPending: boolean
   /** Restarts the Appbox. Resolves once the request has been accepted. */
   onRestart: () => Promise<unknown>
-}
-
-function ViewSkeleton() {
-  return (
-    <div aria-hidden="true" className="grid grid-cols-1 gap-8">
-      <div className="grid gap-3">
-        <SkeletonLine className="h-4 w-48 rounded-full" />
-        <SkeletonLine className="h-2.5 w-72 max-w-full rounded-full" />
-      </div>
-      <SkeletonLine className="h-24 rounded-lg" />
-      <SkeletonLine className="h-80 rounded-lg" />
-    </div>
-  )
 }
 
 /**

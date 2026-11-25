@@ -7,8 +7,6 @@ import {
   useRecentlyUpdatedApps
 } from "@/api/apps/hooks/use-app-store"
 import { useRecentBlogPosts } from "@/api/blog/hooks/use-blog"
-import type { CyloSummary } from "@/api/cylos/cylos"
-import { useCyloBandwidth, useCyloDiskQuota } from "@/api/cylos/hooks/use-cylos"
 import {
   useMarkRead,
   useNotifications
@@ -17,42 +15,18 @@ import type { Notification } from "@/api/notifications/notifications"
 import { useRouter } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
-import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
+import { toLoadable } from "../_lib/use-account-apps"
+import { useAccountShell } from "../_lib/use-account-shell"
 import { AppShell } from "../../_components/app-shell"
-import type { StripApp } from "../../_components/app-strip"
-import { AppboxCard, HomeView } from "../../_components/home-view"
+import { HomeView } from "../../_components/home-view"
 import { notificationRoute } from "../../_components/shared"
-
-/** Appbox card that prefers the live quota and bandwidth pushed over WebSocket. */
-function LiveAppboxCard({
-  cylo,
-  apps
-}: {
-  cylo: CyloSummary
-  apps: StripApp[]
-}) {
-  const { data: quota } = useCyloDiskQuota(cylo.id)
-  const { data: bandwidth } = useCyloBandwidth(cylo.id)
-
-  return (
-    <AppboxCard
-      cylo={cylo}
-      apps={apps}
-      usage={{
-        storageUsedGb: quota?.used_gb,
-        uploadBytes: bandwidth?.upload_bytes,
-        downloadBytes: bandwidth?.download_bytes
-      }}
-    />
-  )
-}
 
 export default function KumoDashboardPage() {
   const locale = useLocale()
   const router = useRouter()
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
 
-  const { cylosSummary, apps, searchGroups } = useAccountApps()
+  const { shell, userName, cylosSummary, apps } = useAccountShell()
   const notifications = useNotifications(5)
   const markRead = useMarkRead()
   const newestApps = useNewestApps(6)
@@ -104,21 +78,13 @@ export default function KumoDashboardPage() {
     if (route) router.push(route)
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
-    <AppShell
-      width="narrow"
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
-    >
+    <AppShell width="narrow" {...shell}>
       <HomeView
         userName={userName}
         showTwoFactorPrompt={!user.two_factor_enabled}
         services={toLoadable(cylosSummary, (data) => data ?? [])}
         apps={apps}
-        AppboxCard={LiveAppboxCard}
         notifications={toLoadable(notifications, (data) => data?.items ?? [])}
         onNotificationOpen={openNotification}
         newestApps={toLoadable(newestApps, (data) => data ?? [])}

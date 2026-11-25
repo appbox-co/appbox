@@ -11,9 +11,7 @@ import {
   Empty,
   InputGroup,
   LinkButton,
-  Pagination,
   Select,
-  SkeletonLine,
   Table,
   Tooltip
 } from "@cloudflare/kumo"
@@ -33,10 +31,12 @@ import { AppIcon } from "./app-icon"
 import { ShellRail } from "./app-shell"
 import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
 import { kumoRoutes } from "./kumo-routes"
+import { PageFooter, usePagedRows } from "./paged-rows"
 import { RailStatusCard } from "./rail-status"
 import { EMPTY_IN_CARD, type Loadable } from "./shared"
 import { ShortDate } from "./short-date"
-import { nextSort, SortHead, type SortState } from "./sort-head"
+import { ListSkeleton } from "./skeletons"
+import { compareText, SortHead, timeOf, type SortState } from "./sort-head"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing
@@ -173,27 +173,20 @@ type Sort = SortState<SortKey>
 
 const DEFAULT_SORT: Sort = { key: "domain", dir: "asc" }
 
-const text = (a: string, b: string) =>
-  a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
-
-const time = (value: string) => {
-  const parsed = new Date(value).getTime()
-  return Number.isNaN(parsed) ? 0 : parsed
-}
-
 const SORTERS: Record<SortKey, (a: Row, b: Row) => number> = {
   // Each base domain, then the subdomains under it.
   domain: (a, b) =>
-    text(a.root, b.root) ||
+    compareText(a.root, b.root) ||
     Number(a.root !== a.domain.domain) - Number(b.root !== b.domain.domain) ||
-    text(a.domain.domain, b.domain.domain),
+    compareText(a.domain.domain, b.domain.domain),
   type: (a, b) =>
     KINDS.findIndex((kind) => kind.value === a.kind) -
     KINDS.findIndex((kind) => kind.value === b.kind),
-  app: (a, b) => text(a.appName ?? "", b.appName ?? ""),
-  appbox: (a, b) => text(a.appbox ?? "", b.appbox ?? ""),
-  ip: (a, b) => text(a.domain.ip_address ?? "", b.domain.ip_address ?? ""),
-  created: (a, b) => time(a.domain.created_at) - time(b.domain.created_at)
+  app: (a, b) => compareText(a.appName ?? "", b.appName ?? ""),
+  appbox: (a, b) => compareText(a.appbox ?? "", b.appbox ?? ""),
+  ip: (a, b) =>
+    compareText(a.domain.ip_address ?? "", b.domain.ip_address ?? ""),
+  created: (a, b) => timeOf(a.domain.created_at) - timeOf(b.domain.created_at)
 }
 
 /** The sort menu shown on small screens, where there are no column headers. */
@@ -206,9 +199,6 @@ const SORT_PRESETS: { value: string; label: string; sort: Sort }[] = [
   },
   { value: "type:asc", label: "Type", sort: { key: "type", dir: "asc" } }
 ]
-
-const PAGE_SIZES = [10, 25, 50, 100]
-const DEFAULT_PAGE_SIZE = 25
 
 /* -------------------------------------------------------------------------- */
 /*  Cells                                                                      */
@@ -477,23 +467,6 @@ function DomainCard(props: RowActionsProps) {
   )
 }
 
-function ListSkeleton() {
-  return (
-    <div
-      aria-hidden="true"
-      className="divide-y divide-kumo-hairline rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line"
-    >
-      {Array.from({ length: 4 }, (_, index) => (
-        <div key={index} className="flex items-center gap-3 px-4 py-4">
-          <SkeletonLine className="h-2.5 w-48 rounded-full" />
-          <SkeletonLine className="h-2.5 w-16 rounded-full" />
-          <SkeletonLine className="ms-auto h-2.5 w-24 rounded-full" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 /* -------------------------------------------------------------------------- */
 /*  View                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -517,9 +490,6 @@ export function DomainsView({
 
   const [query, setQuery] = useState("")
   const [kind, setKind] = useState<string>(ALL_KINDS)
-  const [sort, setSort] = useState<Sort>(DEFAULT_SORT)
-  const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(DEFAULT_PAGE_SIZE)
 
   // The target outlives the dialog being open, so that the dialog still shows
   // it while it animates out.
@@ -581,30 +551,26 @@ export function DomainsView({
           .toLowerCase()
           .includes(needle))
   )
-  // Array.sort is stable, so with no sort chosen the server's order stands.
-  const ordered = sort
-    ? [...matches].sort(
-        (a, b) =>
-          SORTERS[sort.key](a, b) * (sort.dir === "asc" ? 1 : -1) ||
-          SORTERS.domain(a, b)
-      )
-    : matches
+  // With no sort chosen the server's order stands.
+  const {
+    rows: shown,
+    total,
+    sort,
+    setSort,
+    sortBy,
+    firstPage,
+    pager
+  } = usePagedRows(matches, {
+    sorters: SORTERS,
+    defaultSort: DEFAULT_SORT,
+    tieBreak: SORTERS.domain,
+    perPage: 25
+  })
 
-  const pageCount = Math.max(1, Math.ceil(ordered.length / perPage))
-  const currentPage = Math.min(page, pageCount)
-  const shown = ordered.slice(
-    (currentPage - 1) * perPage,
-    currentPage * perPage
-  )
-
-  const sortBy = (key: SortKey) => {
-    setSort((current) => nextSort(current, key))
-    setPage(1)
-  }
   const sortValue = sort ? `${sort.key}:${sort.dir}` : ""
   const filterTo = (value: string) => {
     setKind(value)
-    setPage(1)
+    firstPage()
   }
   const clearFilters = () => {
     setQuery("")
@@ -651,7 +617,7 @@ export function DomainsView({
 
   // With each base domain leading its subdomains, show them as nested.
   const grouped = sort?.key === "domain" && sort.dir === "asc"
-  const listed = new Set(ordered.map((row) => row.domain.domain))
+  const listed = new Set(matches.map((row) => row.domain.domain))
 
   const rowProps = (row: Row): RowActionsProps => ({
     row,
@@ -750,7 +716,7 @@ export function DomainsView({
                 autoComplete="off"
                 onChange={(event) => {
                   setQuery(event.target.value)
-                  setPage(1)
+                  firstPage()
                 }}
               />
               {query && (
@@ -761,7 +727,7 @@ export function DomainsView({
                     aria-label={COPY.clearSearch}
                     onClick={() => {
                       setQuery("")
-                      setPage(1)
+                      firstPage()
                     }}
                   />
                 </InputGroup.Addon>
@@ -797,7 +763,6 @@ export function DomainsView({
                   SORT_PRESETS.find((preset) => preset.value === value)?.sort ??
                     null
                 )
-                setPage(1)
               }}
               renderValue={(value) =>
                 SORT_PRESETS.find((preset) => preset.value === value)?.label ??
@@ -839,7 +804,7 @@ export function DomainsView({
           </div>
         )}
 
-        {rows.length > 0 && ordered.length === 0 && (
+        {rows.length > 0 && total === 0 && (
           <div className="rounded-lg bg-kumo-base ring ring-kumo-hairline">
             <Empty
               className={EMPTY_IN_CARD}
@@ -855,7 +820,7 @@ export function DomainsView({
           </div>
         )}
 
-        {ordered.length > 0 && (
+        {total > 0 && (
           // One card around the table and its pager; plain cards below `@xl`.
           <div className="grid grid-cols-1 gap-3 @xl:gap-0 @xl:overflow-clip @xl:rounded-lg @xl:bg-kumo-base @xl:shadow-xs @xl:ring @xl:ring-kumo-line">
             <div className="hidden overflow-x-auto @xl:block">
@@ -923,28 +888,10 @@ export function DomainsView({
               ))}
             </ul>
 
-            {ordered.length > PAGE_SIZES[0] && (
-              <div className="@xl:border-t @xl:border-kumo-hairline @xl:p-3">
-                <Pagination
-                  page={currentPage}
-                  setPage={setPage}
-                  perPage={perPage}
-                  totalCount={ordered.length}
-                  className="flex-wrap gap-y-3"
-                >
-                  <Pagination.Info className="whitespace-nowrap" />
-                  <Pagination.PageSize
-                    value={perPage}
-                    options={PAGE_SIZES}
-                    onChange={(size) => {
-                      setPerPage(size)
-                      setPage(1)
-                    }}
-                  />
-                  <Pagination.Controls />
-                </Pagination>
-              </div>
-            )}
+            <PageFooter
+              pager={pager}
+              className="@xl:border-t @xl:border-kumo-hairline @xl:p-3"
+            />
           </div>
         )}
       </div>

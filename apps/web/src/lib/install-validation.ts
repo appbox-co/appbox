@@ -1,11 +1,28 @@
 import type { CustomField } from "@/api/apps/app-store"
 import type { ConditionalFieldMetadata } from "@/lib/dynamic-form"
 
-export interface InstallFieldIssue {
-  code: string
-  message: string
-  count?: number
-}
+type InstallFieldCode =
+  | "required"
+  | "minLength"
+  | "maxLength"
+  | "alphanumeric"
+  | "notOnlyAlpha"
+  | "lowercase"
+  | "uppercase"
+  | "number"
+  | "specialChar"
+  | "email"
+  | "date"
+
+/**
+ * What is wrong with a value, as a code the form turns into its own
+ * translated message (with `count`, the length limit, for minLength and
+ * maxLength). A field definition that cannot be read has no translation, so
+ * it comes with its text.
+ */
+export type InstallFieldIssue =
+  | { code: "configuration"; message: string }
+  | { code: InstallFieldCode; count?: number }
 
 export function validateInstallField(
   value: string,
@@ -18,54 +35,46 @@ export function validateInstallField(
       message: "Invalid installation field configuration."
     }
   const required = rules.includes("required")
-  if (value.trim() === "")
-    return required
-      ? { code: "required", message: "This field is required." }
-      : null
+  if (value.trim() === "") return required ? { code: "required" } : null
   const issue = (
-    code: string,
-    message: string,
+    code: InstallFieldCode,
     count?: number
-  ): InstallFieldIssue => ({ code, message, count })
+  ): InstallFieldIssue => ({
+    code,
+    count
+  })
   // Keep ordering aligned with API validation: length, type, then server regex.
   for (const rule of rules) {
     if (typeof rule !== "object") continue
     if (rule.minLength != null && value.length < rule.minLength)
-      return issue("minLength", "This value is too short.", rule.minLength)
+      return issue("minLength", rule.minLength)
     if (
       rule.maxLength != null &&
       rule.maxLength > 0 &&
       value.length > rule.maxLength
     )
-      return issue("maxLength", "This value is too long.", rule.maxLength)
+      return issue("maxLength", rule.maxLength)
   }
   for (const rule of rules) {
     switch (rule) {
       case "alphanumeric":
-        if (!/^[a-zA-Z0-9]+$/.test(value))
-          return issue("alphanumeric", "Only letters and numbers are allowed.")
+        if (!/^[a-zA-Z0-9]+$/.test(value)) return issue("alphanumeric")
         break
       case "notOnlyAlpha":
-        if (/^[a-zA-Z]+$/.test(value))
-          return issue("notOnlyAlpha", "Include a number or special character.")
+        if (/^[a-zA-Z]+$/.test(value)) return issue("notOnlyAlpha")
         break
       case "complexPassword":
-        if (!/[a-z]/.test(value))
-          return issue("lowercase", "Include a lowercase letter.")
-        if (!/[A-Z]/.test(value))
-          return issue("uppercase", "Include an uppercase letter.")
-        if (!/[0-9]/.test(value)) return issue("number", "Include a number.")
-        if (!/[^a-zA-Z0-9]/.test(value))
-          return issue("specialChar", "Include a special character.")
+        if (!/[a-z]/.test(value)) return issue("lowercase")
+        if (!/[A-Z]/.test(value)) return issue("uppercase")
+        if (!/[0-9]/.test(value)) return issue("number")
+        if (!/[^a-zA-Z0-9]/.test(value)) return issue("specialChar")
         break
       case "email":
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
-          return issue("email", "Enter a valid email address.")
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return issue("email")
         break
       case "date": {
         const parts = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.exec(value)
-        if (!parts)
-          return issue("date", "Enter a valid date in YYYY-MM-DD format.")
+        if (!parts) return issue("date")
         const year = Number(parts[1]),
           month = Number(parts[2]),
           day = Number(parts[3])
@@ -91,7 +100,7 @@ export function validateInstallField(
           day < 1 ||
           day > days[month - 1]
         )
-          return issue("date", "Enter a valid date in YYYY-MM-DD format.")
+          return issue("date")
         break
       }
     }

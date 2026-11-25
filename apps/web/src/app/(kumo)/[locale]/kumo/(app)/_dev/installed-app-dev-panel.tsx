@@ -18,7 +18,9 @@ import {
   DevPanel,
   DevReset,
   DevSection,
-  IS_DEV
+  IS_DEV,
+  loadFlags,
+  saveFlags
 } from "../../_components/dev/dev-panel"
 import { InstanceStatusBadge } from "../../_components/instance-controls"
 
@@ -73,24 +75,6 @@ function storageKey(appId: number) {
 }
 const COLLAPSED_KEY = "app-dev-panel-collapsed"
 
-function loadFlags(appId: number): DevFlags {
-  if (typeof window === "undefined") return DEFAULT_FLAGS
-  try {
-    const raw = localStorage.getItem(storageKey(appId))
-    return raw ? { ...DEFAULT_FLAGS, ...JSON.parse(raw) } : DEFAULT_FLAGS
-  } catch {
-    return DEFAULT_FLAGS
-  }
-}
-
-function saveFlags(appId: number, flags: DevFlags) {
-  try {
-    localStorage.setItem(storageKey(appId), JSON.stringify(flags))
-  } catch {
-    /* noop */
-  }
-}
-
 function anyOverride(flags: DevFlags) {
   return (
     flags.status !== null ||
@@ -133,7 +117,9 @@ function PanelInner({ appId, onJobChange }: InstalledAppDevPanelProps) {
   const [originalForDisplay, setOriginalForDisplay] =
     useState<InstalledApp | null>(null)
 
-  const [flags, setFlags] = useState<DevFlags>(() => loadFlags(appId))
+  const [flags, setFlags] = useState<DevFlags>(() =>
+    loadFlags(storageKey(appId), DEFAULT_FLAGS)
+  )
 
   /* ── Capture originals on first render ── */
   useEffect(() => {
@@ -239,7 +225,7 @@ function PanelInner({ appId, onJobChange }: InstalledAppDevPanelProps) {
   function updateFlags(patch: Partial<DevFlags>) {
     const next = { ...flags, ...patch }
     setFlags(next)
-    saveFlags(appId, next)
+    saveFlags(storageKey(appId), next)
     applyFlags(next)
   }
 
@@ -247,7 +233,7 @@ function PanelInner({ appId, onJobChange }: InstalledAppDevPanelProps) {
     const cyloId = originalRef.current?.cylo_id
     const next = { ...DEFAULT_FLAGS }
     setFlags(next)
-    saveFlags(appId, next)
+    saveFlags(storageKey(appId), next)
     onJobChange(undefined)
 
     // Re-fetch real data, then take what arrives as the copy the next
@@ -280,7 +266,7 @@ function PanelInner({ appId, onJobChange }: InstalledAppDevPanelProps) {
           ? { ...cylo }
           : null
       // Anything switched on while the real data was loading
-      const current = loadFlags(appId)
+      const current = loadFlags(storageKey(appId), DEFAULT_FLAGS)
       if (anyOverride(current)) applyFlags(current)
     })
   }

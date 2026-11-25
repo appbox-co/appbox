@@ -15,6 +15,7 @@ import type {
   CustomTableRow
 } from "@/api/custom-tables/custom-tables"
 import type { FormFieldConfig } from "@/types/dashboard"
+import { compareText } from "../sort-head"
 
 export const REDACTED_SECRET_VALUE = "[REDACTED]"
 
@@ -180,11 +181,6 @@ export function initialPageSize(maxRows: number | undefined): number {
   return Math.max(10, Math.min(maxRows ?? 25, 50))
 }
 
-/** The page sizes on offer, always including the one in use. */
-export function pageSizeOptions(pageSize: number): number[] {
-  return Array.from(new Set([pageSize, 10, 20, 50, 100])).sort((a, b) => a - b)
-}
-
 /** Whether a cell's text contains the search text, ignoring case. */
 export function matchesSearch(
   row: CustomTableRow,
@@ -200,9 +196,5 @@ export function compareRows(
   b: CustomTableRow,
   column: string
 ): number {
-  return toTextValue(a[column]).localeCompare(
-    toTextValue(b[column]),
-    undefined,
-    { numeric: true, sensitivity: "base" }
-  )
+  return compareText(toTextValue(a[column]), toTextValue(b[column]))
 }

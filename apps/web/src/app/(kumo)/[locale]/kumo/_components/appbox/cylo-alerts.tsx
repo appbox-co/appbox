@@ -12,41 +12,13 @@ import {
   WarningIcon
 } from "@phosphor-icons/react"
 import type { CyloDetail } from "@/api/cylos/cylos"
-import { MigrationNotice } from "../installed/app-alerts"
-
-/* -------------------------------------------------------------------------- */
-/*  Helpers, unchanged from the current design                                 */
-/* -------------------------------------------------------------------------- */
-
-const PHASE_KEYS: Record<number, string> = {
-  1: "migrationPhase1",
-  2: "migrationPhase2",
-  3: "migrationPhase3",
-  4: "migrationPhase4",
-  5: "migrationPhase5",
-  6: "migrationPhase6",
-  7: "migrationPhase7",
-  8: "migrationPhase8"
-}
-
-function formatMigrationReason(reason?: string): string | null {
-  const trimmed = reason?.trim()
-  if (!trimmed) return null
-  return trimmed
-}
-
-function formatRelativeTime(iso: string): string {
-  if (!iso) return ""
-  const diff = new Date(iso).getTime() - Date.now()
-  const abs = Math.abs(diff)
-  const mins = Math.round(abs / 60_000)
-  const hrs = Math.round(abs / 3_600_000)
-  const days = Math.round(abs / 86_400_000)
-  if (mins < 1) return "just now"
-  if (mins < 60) return diff > 0 ? `in ${mins}m` : `${mins}m ago`
-  if (hrs < 24) return diff > 0 ? `in ${hrs}h` : `${hrs}h ago`
-  return diff > 0 ? `in ${days}d` : `${days}d ago`
-}
+import {
+  formatMigrationReason,
+  MIGRATION_PHASE_KEYS,
+  MigrationNotice
+} from "../installed/app-alerts"
+import { BILLING_BASE_URL, upgradeUrl } from "../shared"
+import { useRelativeTime } from "../short-date"
 
 /* -------------------------------------------------------------------------- */
 /*  Pieces                                                                     */
@@ -131,6 +103,7 @@ interface CyloAlertsProps {
  */
 export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
   const t = useTranslations("appboxmanager.cyloDetail")
+  const relativeTime = useRelativeTime()
 
   const hasAlerts =
     cylo.is_migrating ||
@@ -142,8 +115,8 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
   if (!hasAlerts) return null
 
   const billingUrl = cylo.whmcs_serviceid
-    ? `https://billing.appbox.co/upgrade.php?type=package&id=${cylo.whmcs_serviceid}`
-    : "https://billing.appbox.co"
+    ? upgradeUrl(cylo.whmcs_serviceid)
+    : BILLING_BASE_URL
 
   const upgradeButton = (
     <LinkButton
@@ -208,7 +181,7 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
                   },
                   {
                     label: t("throttleExpires"),
-                    value: formatRelativeTime(cylo.throttle_details.expires_at)
+                    value: relativeTime(cylo.throttle_details.expires_at)
                   },
                   ...(cylo.throttle_details.app_instance_domain
                     ? [
@@ -292,7 +265,7 @@ export function CyloAlerts({ cylo, onSwitchToFileExplorer }: CyloAlertsProps) {
           const totalBytes = Number(progress?.pre_migration_space_used ?? 0)
           const transferredBytes = Number(progress?.total_sent ?? 0)
           const migrationStatusText = progress
-            ? t(PHASE_KEYS[progress.phase] ?? "migrationPhase5")
+            ? t(MIGRATION_PHASE_KEYS[progress.phase] ?? "migrationPhase5")
             : t("migrationInProgress")
 
           return (

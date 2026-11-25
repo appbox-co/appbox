@@ -8,9 +8,9 @@ import {
   CaretUpDownIcon,
   CaretUpIcon
 } from "@phosphor-icons/react"
-import { formatDistanceToNow } from "date-fns"
 import type { FileItem } from "@/api/files/files"
 import { formatBytes } from "@/lib/utils/format"
+import { useRelativeTime } from "../short-date"
 import { nextSort, SortHead, type SortState } from "../sort-head"
 import { FileActionsMenu, hasFileActions } from "./file-actions-menu"
 import { FileTypeIcon } from "./file-icon"
@@ -89,12 +89,9 @@ function fileSize(item: FileItem) {
 }
 
 function ModifiedTime({ value }: { value: string }) {
+  const relativeTime = useRelativeTime()
   if (!value) return "—"
-  return (
-    <time dateTime={value}>
-      {formatDistanceToNow(new Date(value), { addSuffix: true })}
-    </time>
-  )
+  return <time dateTime={value}>{relativeTime(value)}</time>
 }
 
 /**

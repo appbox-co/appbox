@@ -2,19 +2,15 @@
 
 import { useState } from "react"
 import { useTranslations } from "next-intl"
-import {
-  Empty,
-  InputGroup,
-  Pagination,
-  SkeletonLine,
-  Table
-} from "@cloudflare/kumo"
+import { Empty, InputGroup, Table } from "@cloudflare/kumo"
 import { MagnifyingGlassIcon, PlugsIcon } from "@phosphor-icons/react"
 import { usePortAssignments } from "@/api/installed-apps/hooks/use-port-assignments"
 import type { PortAssignment } from "@/api/installed-apps/port-assignments"
+import { PageFooter, usePagedRows } from "../paged-rows"
 import { Panel } from "../panel"
 import { EMPTY_IN_CARD } from "../shared"
-import { nextSort, SortHead, type SortState } from "../sort-head"
+import { LinesSkeleton } from "../skeletons"
+import { SortHead, type Comparator } from "../sort-head"
 
 interface PortAssignmentsProps {
   serverName: string
@@ -23,8 +19,6 @@ interface PortAssignmentsProps {
 
 type Column =
   "internal_ip" | "host_ip" | "internal_port" | "host_port" | "protocol"
-
-const PAGE_SIZE = 25
 
 const COLUMNS: { key: Column; labelKey: string; upper?: boolean }[] = [
   { key: "internal_ip", labelKey: "internalIp" },
@@ -43,6 +37,13 @@ function compare(a: PortAssignment, b: PortAssignment, key: Column) {
   })
 }
 
+const SORTERS = Object.fromEntries(
+  COLUMNS.map(({ key }) => [
+    key,
+    (a: PortAssignment, b: PortAssignment) => compare(a, b, key)
+  ])
+) as Record<Column, Comparator<PortAssignment>>
+
 /** The ports this app has been given on its server: searchable, sortable, 25 to a page. */
 export function PortAssignments({
   serverName,
@@ -54,8 +55,6 @@ export function PortAssignments({
     instanceId
   )
   const [query, setQuery] = useState("")
-  const [sort, setSort] = useState<SortState<Column>>(null)
-  const [page, setPage] = useState(1)
 
   const needle = query.trim().toLowerCase()
   const matches = needle
@@ -67,17 +66,10 @@ export function PortAssignments({
         )
       )
     : ports
-  const ordered = sort
-    ? [...matches].sort(
-        (a, b) => compare(a, b, sort.key) * (sort.dir === "asc" ? 1 : -1)
-      )
-    : matches
-  const pageCount = Math.max(1, Math.ceil(ordered.length / PAGE_SIZE))
-  const currentPage = Math.min(page, pageCount)
-  const rows = ordered.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
-  )
+  const { rows, sort, sortBy, firstPage, pager } = usePagedRows(matches, {
+    sorters: SORTERS,
+    perPage: 25
+  })
 
   return (
     <Panel
@@ -97,18 +89,14 @@ export function PortAssignments({
             autoComplete="off"
             onChange={(event) => {
               setQuery(event.target.value)
-              setPage(1)
+              firstPage()
             }}
           />
         </InputGroup>
       </div>
 
       {isLoading ? (
-        <div className="grid gap-3 p-4">
-          <SkeletonLine className="h-2.5 w-1/3 rounded-full" />
-          <SkeletonLine className="h-2.5 w-2/3 rounded-full" />
-          <SkeletonLine className="h-2.5 w-1/2 rounded-full" />
-        </div>
+        <LinesSkeleton />
       ) : rows.length === 0 ? (
         <Empty
           className={EMPTY_IN_CARD}
@@ -127,10 +115,7 @@ export function PortAssignments({
                     label={t(column.labelKey)}
                     sortKey={column.key}
                     sort={sort}
-                    onSort={(key) => {
-                      setSort((current) => nextSort(current, key))
-                      setPage(1)
-                    }}
+                    onSort={sortBy}
                   />
                 ))}
               </Table.Row>
@@ -157,19 +142,7 @@ export function PortAssignments({
         </div>
       )}
 
-      {ordered.length > PAGE_SIZE && (
-        <div className="border-t border-kumo-hairline p-3">
-          <Pagination
-            page={currentPage}
-            setPage={setPage}
-            perPage={PAGE_SIZE}
-            totalCount={ordered.length}
-          >
-            <Pagination.Info />
-            <Pagination.Controls />
-          </Pagination>
-        </div>
-      )}
+      <PageFooter pager={pager} fixedSize />
     </Panel>
   )
 }

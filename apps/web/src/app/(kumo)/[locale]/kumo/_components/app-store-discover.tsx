@@ -15,6 +15,7 @@ import {
   type AppCovers,
   type InstalledCounts
 } from "./app-store-cards"
+import { timeOf } from "./sort-head"
 import type { AppStoreFilters } from "./use-app-store-filters"
 
 const COPY = {
@@ -38,8 +39,6 @@ const FEATURED_LIMIT = 3
 const CHART_LIMIT = 5
 const SHELF_LIMIT = 4
 const CATEGORY_SHELVES = 2
-
-const time = (value: string) => new Date(value).getTime() || 0
 
 interface DiscoverProps {
   /** Whole catalogue, most popular first. */
@@ -198,10 +197,10 @@ export function AppStoreDiscover({
   const featured = featuredApps(apps)
   const topRated = [...apps].sort((a, b) => b.rating - a.rating)
   const newest = [...apps].sort(
-    (a, b) => time(b.created_at) - time(a.created_at)
+    (a, b) => timeOf(b.created_at) - timeOf(a.created_at)
   )
   const updated = [...apps].sort(
-    (a, b) => time(b.updated_at) - time(a.updated_at)
+    (a, b) => timeOf(b.updated_at) - timeOf(a.updated_at)
   )
 
   // Count from the catalogue itself, so tiles never promise apps that are hidden.
@@ -311,7 +310,7 @@ export function AppStoreDiscover({
         >
           <Shelf
             apps={[...inCategory]
-              .sort((a, b) => time(b.created_at) - time(a.created_at))
+              .sort((a, b) => timeOf(b.created_at) - timeOf(a.created_at))
               .slice(0, SHELF_LIMIT)}
             installed={installed}
           />

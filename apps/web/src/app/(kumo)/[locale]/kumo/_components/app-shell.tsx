@@ -48,6 +48,7 @@ import {
   useQuickSearch,
   type SearchGroup
 } from "./quick-search"
+import { BILLING_BASE_URL } from "./shared"
 
 interface NavLink {
   label: string
@@ -379,13 +380,13 @@ export function AppShell({
         },
         {
           label: t("support_billing"),
-          href: "https://billing.appbox.co/",
+          href: `${BILLING_BASE_URL}/`,
           icon: LifebuoyIcon,
           external: true
         },
         {
           label: t("knowledgebase"),
-          href: "https://billing.appbox.co/index.php?rp=/knowledgebase",
+          href: `${BILLING_BASE_URL}/index.php?rp=/knowledgebase`,
           icon: BookOpenIcon,
           external: true
         }

@@ -26,7 +26,7 @@ const PASSKEY_REFUSED = "That passkey was not accepted."
 export const PASSWORD_RESET_PARAM = "reset"
 
 interface SignInViewProps {
-  /** How the sign-in is sent: `liveSignInActions`, for the page's locale. */
+  /** How the sign-in is sent: `signInActions`, for the page's locale. */
   actions: SignInActions
 }
 

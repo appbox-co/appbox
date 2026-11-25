@@ -7,6 +7,8 @@ export const queryKeys = {
       ["apps", id, "boost-info", cyloId, versionId ?? "default"] as const,
     detailByName: (name: string) => ["apps", "name", name] as const,
     versions: (appId: number) => ["apps", appId, "versions"] as const,
+    planRestrictions: (appId: number, categoryIds: readonly number[]) =>
+      ["apps", appId, "plan-restrictions", categoryIds] as const,
     featured: ["apps", "featured"] as const,
     top: ["apps", "top"] as const,
     new: ["apps", "new"] as const,
@@ -66,6 +68,9 @@ export const queryKeys = {
   },
   profile: {
     me: ["profile", "me"] as const
+  },
+  passkeys: {
+    all: ["passkeys"] as const
   },
   apiKeys: {
     all: ["apiKeys"] as const,

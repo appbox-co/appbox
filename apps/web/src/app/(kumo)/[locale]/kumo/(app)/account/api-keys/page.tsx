@@ -6,8 +6,8 @@ import { useApiKeys, useApiKeyScopes } from "@/api/account/hooks/use-account"
 import { isRecentAuthError, postReauth } from "@/api/account/reauth"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
-import { toLoadable, useAccountApps } from "../../_lib/use-account-apps"
+import { toLoadable } from "../../_lib/use-account-apps"
+import { useAccountShell } from "../../_lib/use-account-shell"
 import { ApiKeysView } from "../../../_components/account/api-keys-view"
 import { AppShell } from "../../../_components/app-shell"
 
@@ -15,8 +15,7 @@ const TITLE = "API keys"
 
 /** Kumo prototype of the API keys page, on live account data. */
 export default function KumoApiKeysPage() {
-  const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
   const queryClient = useQueryClient()
   const apiKeys = useApiKeys()
   const scopes = useApiKeyScopes()
@@ -27,16 +26,12 @@ export default function KumoApiKeysPage() {
     void queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.all })
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={TITLE}
       currentDesignHref={ROUTES.API_KEYS}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <ApiKeysView
         keys={toLoadable(apiKeys, (data) => data ?? [])}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type FormEvent } from "react"
+import { useState, type FormEvent } from "react"
 import { useLocale } from "next-intl"
 import { Badge, Banner, Button, Dialog, Input, Loader } from "@cloudflare/kumo"
 import {
@@ -9,14 +9,21 @@ import {
   WarningCircleIcon
 } from "@phosphor-icons/react"
 import { toast } from "sonner"
-import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
-import { Panel } from "../panel"
 import {
-  livePasskeyActions,
-  MAX_PASSKEYS,
-  passkeyProvider,
-  type Passkey
-} from "./passkeys"
+  useAddPasskey,
+  useDeletePasskey,
+  usePasskeys,
+  useRenamePasskey
+} from "@/api/account/hooks/use-passkeys"
+import { MAX_PASSKEYS, type Passkey } from "@/api/account/passkeys"
+import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
+import {
+  createPasskey,
+  PasskeyAlreadyRegistered,
+  PasskeyCancelled,
+  passkeysSupported
+} from "../auth/webauthn"
+import { Panel } from "../panel"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 
 /** Prototype-only copy, in English, as on the rest of the two-factor page. */
@@ -31,6 +38,7 @@ const COPY = {
   limit: `You have the most passkeys an account can hold (${MAX_PASSKEYS}). Remove one to add another.`,
   added: "Passkey added",
   exists: "This device already has a passkey for your account.",
+  unsupported: "This browser cannot create passkeys.",
   addFailed: "The passkey could not be added.",
   synced: "Synced",
   added_on: (date: string) => `Added ${date}`,
@@ -56,6 +64,35 @@ const COPY = {
 } as const
 
 type Pending = { kind: "add" } | { kind: "remove"; passkey: Passkey }
+
+/**
+ * Names for the password managers and devices most passkeys come from, from
+ * the community list at github.com/passkeydeveloper/passkey-authenticator-aaguids.
+ */
+const PROVIDERS: Record<string, string> = {
+  "fbfc3007-154e-4ecc-8c0b-6e020557d7bd": "Apple Passwords",
+  "dd4ec289-e01d-41c9-bb89-70fa845d4bf2": "iCloud Keychain (Managed)",
+  "ea9b8d66-4d01-1d21-3ce4-b6b48cb575d4": "Google Password Manager",
+  "adce0002-35bc-c60a-648b-0b25f1f05503": "Chrome on Mac",
+  "771b48fd-d3d4-4f74-9232-fc157ab0507a": "Edge on Mac",
+  "08987058-cadc-4b81-b6e1-30de50dcbe96": "Windows Hello",
+  "9ddd1817-af5a-4672-a2b9-3e3dd95000a9": "Windows Hello",
+  "6028b017-b1d4-4c02-b4b3-afcdafc96bb2": "Windows Hello",
+  "bada5566-a7aa-401f-bd96-45619a55120d": "1Password",
+  "d548826e-79b4-db40-a3d8-11116f7e8349": "Bitwarden",
+  "531126d6-e717-415c-9320-3d9aa6981239": "Dashlane",
+  "b84e4048-15dc-4dd0-8640-f4f60813c8af": "NordPass",
+  "0ea242b4-43c4-4a1b-8b17-dd6d0b6baec6": "Keeper",
+  "f3809540-7f14-49c1-a8b3-8f813b225541": "Enpass",
+  "b78a0a55-6ef8-d246-a042-ba0f6d55050c": "LastPass",
+  "53414d53-554e-4700-0000-000000000000": "Samsung Pass",
+  "50726f74-6f6e-5061-7373-50726f746f6e": "Proton Pass",
+  "fdb141b2-5d84-443e-8a35-4698c205a502": "KeePassXC"
+}
+
+function passkeyProvider(aaguid: string | null) {
+  return aaguid ? PROVIDERS[aaguid.toLowerCase()] : undefined
+}
 
 function useShortDate() {
   const locale = useLocale()
@@ -122,41 +159,29 @@ function PasskeyRow({
  * password is asked for and the change is tried again.
  */
 export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
-  const [passkeys, setPasskeys] = useState<Passkey[]>()
-  const [loadFailed, setLoadFailed] = useState(false)
-  const [loadRun, setLoadRun] = useState(0)
-  const [adding, setAdding] = useState(false)
+  const passkeysQuery = usePasskeys()
+  const addPasskey = useAddPasskey()
+  const renamePasskey = useRenamePasskey()
+  const deletePasskey = useDeletePasskey()
+
+  const passkeys = passkeysQuery.data
+  // A failed refresh keeps a list already on screen.
+  const loadFailed = passkeysQuery.isError && !passkeys
+  const adding = addPasskey.isPending
 
   // Naming: straight after adding one, or from its Rename button.
   const [naming, setNaming] = useState<{ passkey: Passkey; fresh: boolean }>()
   const [nameOpen, setNameOpen] = useState(false)
   const [name, setName] = useState("")
-  const [saving, setSaving] = useState(false)
+  const saving = renamePasskey.isPending
 
   const [removing, setRemoving] = useState<Passkey>()
   const [removeOpen, setRemoveOpen] = useState(false)
-  const [removePending, setRemovePending] = useState(false)
+  const removePending = deletePasskey.isPending
 
   // What to try again once the password has been entered.
   const [retry, setRetry] = useState<Pending>()
   const [reauthOpen, setReauthOpen] = useState(false)
-
-  useEffect(() => {
-    let current = true
-    livePasskeyActions
-      .list()
-      .then((result) => {
-        if (!current) return
-        setPasskeys(result)
-        setLoadFailed(false)
-      })
-      .catch(() => {
-        if (current) setLoadFailed(true)
-      })
-    return () => {
-      current = false
-    }
-  }, [loadRun])
 
   const askToName = (passkey: Passkey, fresh: boolean) => {
     setNaming({ passkey, fresh })
@@ -167,18 +192,21 @@ export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
   }
 
   const add = async ({ afterReauth = false } = {}) => {
-    setAdding(true)
+    if (!passkeysSupported()) {
+      toast.error(COPY.unsupported)
+      return
+    }
     try {
-      const result = await livePasskeyActions.add()
-      if (result.kind === "cancelled") return
-      if (result.kind === "exists") {
+      const passkey = await addPasskey.mutateAsync(createPasskey)
+      toast.success(COPY.added)
+      askToName(passkey, true)
+    } catch (error) {
+      // Closing the browser's prompt is not an error.
+      if (error instanceof PasskeyCancelled) return
+      if (error instanceof PasskeyAlreadyRegistered) {
         toast.error(COPY.exists)
         return
       }
-      setPasskeys((current) => [result.passkey, ...(current ?? [])])
-      toast.success(COPY.added)
-      askToName(result.passkey, true)
-    } catch (error) {
       if (isRecentAuthError(error)) {
         // Refused again straight after signing in: let the dialog say so.
         if (afterReauth) throw error
@@ -189,18 +217,12 @@ export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
       toast.error(
         error instanceof Error && error.message ? error.message : COPY.addFailed
       )
-    } finally {
-      setAdding(false)
     }
   }
 
   const remove = async (passkey: Passkey, { afterReauth = false } = {}) => {
-    setRemovePending(true)
     try {
-      await livePasskeyActions.remove(passkey.id)
-      setPasskeys((current) =>
-        current?.filter((item) => item.id !== passkey.id)
-      )
+      await deletePasskey.mutateAsync(passkey.id)
       setRemoveOpen(false)
       toast.success(COPY.removed)
     } catch (error) {
@@ -212,8 +234,6 @@ export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
         return
       }
       toast.error(COPY.removeFailed)
-    } finally {
-      setRemovePending(false)
     }
   }
 
@@ -225,20 +245,11 @@ export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
       setNameOpen(false)
       return
     }
-    setSaving(true)
     try {
-      const updated = await livePasskeyActions.rename(
-        naming.passkey.id,
-        trimmed
-      )
-      setPasskeys((current) =>
-        current?.map((item) => (item.id === updated.id ? updated : item))
-      )
+      await renamePasskey.mutateAsync({ id: naming.passkey.id, name: trimmed })
       setNameOpen(false)
     } catch {
       toast.error(COPY.renameFailed)
-    } finally {
-      setSaving(false)
     }
   }
 
@@ -273,7 +284,7 @@ export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
               icon={<WarningCircleIcon weight="fill" />}
               description={COPY.loadFailed}
             />
-            <Button size="sm" onClick={() => setLoadRun((run) => run + 1)}>
+            <Button size="sm" onClick={() => void passkeysQuery.refetch()}>
               {COPY.retry}
             </Button>
           </div>

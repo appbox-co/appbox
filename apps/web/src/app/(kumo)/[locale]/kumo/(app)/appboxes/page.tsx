@@ -2,9 +2,9 @@
 
 import { useEffect } from "react"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
 import { useWebSocket } from "@/providers/websocket-provider"
-import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
+import { toLoadable } from "../_lib/use-account-apps"
+import { useAccountShell } from "../_lib/use-account-shell"
 import { AppShell } from "../../_components/app-shell"
 import { AppboxesView } from "../../_components/appboxes-view"
 
@@ -13,8 +13,7 @@ const NO_APPS = new Map<number, never[]>()
 
 /** Kumo prototype of the Appboxes list, on live account data. */
 export default function KumoAppboxesPage() {
-  const { user, logout } = useAuth()
-  const { cylosSummary, installedApps, apps, searchGroups } = useAccountApps()
+  const { shell, cylosSummary, installedApps, apps } = useAccountShell()
   const cylos = cylosSummary.data
 
   const {
@@ -64,16 +63,12 @@ export default function KumoAppboxesPage() {
     )
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={TITLE}
       currentDesignHref={ROUTES.APPBOXES}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <AppboxesView
         cylos={toLoadable(cylosSummary, (data) => data ?? [])}

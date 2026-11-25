@@ -11,14 +11,14 @@ import {
   useVerify2FA
 } from "@/api/account/hooks/use-account"
 import { postReauth } from "@/api/account/reauth"
+import { passkeysEnabled } from "@/config/passkeys"
 import { ROUTES } from "@/constants/routes"
 import { useRouter } from "@/i18n/routing"
 import { useAuth } from "@/providers/auth-provider"
-import { useAccountApps } from "../../_lib/use-account-apps"
+import { useAccountShell } from "../../_lib/use-account-shell"
 import { PasskeysPanel } from "../../../_components/account/passkeys-panel"
 import { TwoFactorView } from "../../../_components/account/two-factor-view"
 import { AppShell } from "../../../_components/app-shell"
-import { LIVE_PASSKEYS } from "../../../_components/auth/auth-actions"
 import { kumoRoutes } from "../../../_components/kumo-routes"
 
 const TITLE = "Two-factor authentication"
@@ -28,7 +28,7 @@ export default function KumoTwoFactorPage() {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
   const [sessionCleared, setSessionCleared] = useState(false)
   const { data: profile } = useProfile(sessionCleared ? 0 : user.id)
   const { data: twoFactorStatus } = use2FAStatus(!sessionCleared)
@@ -46,16 +46,12 @@ export default function KumoTwoFactorPage() {
     profile?.two_factor_enabled ??
     user.two_factor_enabled
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="narrow"
       title={TITLE}
       currentDesignHref={ROUTES.TWO_FACTOR_SETUP}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <TwoFactorView
         enabled={enabled}
@@ -81,7 +77,7 @@ export default function KumoTwoFactorPage() {
         onDisable={(code) => disable2FA.mutateAsync({ code })}
         onDisabled={() => logout()}
         reauth={postReauth}
-        passkeys={LIVE_PASSKEYS && <PasskeysPanel reauth={postReauth} />}
+        passkeys={passkeysEnabled && <PasskeysPanel reauth={postReauth} />}
       />
     </AppShell>
   )

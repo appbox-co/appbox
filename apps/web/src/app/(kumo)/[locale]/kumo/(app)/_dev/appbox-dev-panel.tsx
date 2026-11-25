@@ -16,7 +16,9 @@ import {
   DevPanel,
   DevReset,
   DevSection,
-  IS_DEV
+  IS_DEV,
+  loadFlags,
+  saveFlags
 } from "../../_components/dev/dev-panel"
 
 /*
@@ -119,25 +121,6 @@ const DEFAULT_FLAGS: DevFlags = {
 
 const STORAGE_KEY = (id: number) => `cylo-dev-panel-${id}`
 
-function loadFlags(id: number): DevFlags {
-  if (typeof window === "undefined") return DEFAULT_FLAGS
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY(id))
-    if (!raw) return DEFAULT_FLAGS
-    return { ...DEFAULT_FLAGS, ...JSON.parse(raw) }
-  } catch {
-    return DEFAULT_FLAGS
-  }
-}
-
-function saveFlags(id: number, flags: DevFlags) {
-  try {
-    localStorage.setItem(STORAGE_KEY(id), JSON.stringify(flags))
-  } catch {
-    // ignore
-  }
-}
-
 function anyFlagOn(flags: DevFlags) {
   return Object.entries(flags).some(
     ([k, v]) => k !== "migrationPercent" && v === true
@@ -178,7 +161,9 @@ function AppboxDevPanelInner({ cyloId }: AppboxDevPanelProps) {
   const queryClient = useQueryClient()
   const originalCyloRef = useRef<CyloDetail | null>(null)
 
-  const [flags, setFlags] = useState<DevFlags>(() => loadFlags(cyloId))
+  const [flags, setFlags] = useState<DevFlags>(() =>
+    loadFlags(STORAGE_KEY(cyloId), DEFAULT_FLAGS)
+  )
 
   // Capture the original cylo data on first render
   useEffect(() => {
@@ -264,7 +249,7 @@ function AppboxDevPanelInner({ cyloId }: AppboxDevPanelProps) {
   function updateFlags(patch: Partial<DevFlags>) {
     const next = { ...flags, ...patch }
     setFlags(next)
-    saveFlags(cyloId, next)
+    saveFlags(STORAGE_KEY(cyloId), next)
     applyFlags(next)
   }
 
@@ -283,7 +268,7 @@ function AppboxDevPanelInner({ cyloId }: AppboxDevPanelProps) {
   function handleReset() {
     const resetFlags = { ...DEFAULT_FLAGS }
     setFlags(resetFlags)
-    saveFlags(cyloId, resetFlags)
+    saveFlags(STORAGE_KEY(cyloId), resetFlags)
 
     // Invalidate to re-fetch real data, then take what arrives as the copy
     // the next override starts from. (The current design's panel drops its
@@ -300,7 +285,7 @@ function AppboxDevPanelInner({ cyloId }: AppboxDevPanelProps) {
       if (!fresh) return
       originalCyloRef.current = { ...fresh }
       // Anything switched on while the real data was loading
-      const current = loadFlags(cyloId)
+      const current = loadFlags(STORAGE_KEY(cyloId), DEFAULT_FLAGS)
       if (anyFlagOn(current)) applyFlags(current)
     })
   }

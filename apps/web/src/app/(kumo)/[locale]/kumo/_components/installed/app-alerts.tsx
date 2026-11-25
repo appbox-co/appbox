@@ -12,6 +12,7 @@ import {
 import type { CyloDetail } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import type { JobProgressData } from "@/lib/websocket/types"
+import { useRelativeTime } from "../short-date"
 
 /* -------------------------------------------------------------------------- */
 /*  State logic, unchanged from the current design                             */
@@ -22,7 +23,8 @@ interface StateConfig {
   descriptionKey: string
 }
 
-const MIGRATION_PHASE_KEYS: Record<number, string> = {
+/** The Appbox detail strings for each migration phase. Shared with `CyloAlerts`. */
+export const MIGRATION_PHASE_KEYS: Record<number, string> = {
   1: "migrationPhase1",
   2: "migrationPhase2",
   3: "migrationPhase3",
@@ -33,7 +35,7 @@ const MIGRATION_PHASE_KEYS: Record<number, string> = {
   8: "migrationPhase8"
 }
 
-function formatMigrationReason(reason?: string): string | null {
+export function formatMigrationReason(reason?: string): string | null {
   const trimmed = reason?.trim()
   if (!trimmed) return null
   return trimmed
@@ -82,19 +84,6 @@ const STATE_CONFIG: Record<string, StateConfig> = {
 function formatGiB(bytes: number): string {
   if (!Number.isFinite(bytes) || bytes <= 0) return "0.00"
   return (bytes / 1024 / 1024 / 1024).toFixed(2)
-}
-
-function formatRelativeTime(iso: string): string {
-  if (!iso) return ""
-  const diff = new Date(iso).getTime() - Date.now()
-  const abs = Math.abs(diff)
-  const mins = Math.round(abs / 60_000)
-  const hrs = Math.round(abs / 3_600_000)
-  const days = Math.round(abs / 86_400_000)
-  if (mins < 1) return "just now"
-  if (mins < 60) return diff > 0 ? `in ${mins}m` : `${mins}m ago`
-  if (hrs < 24) return diff > 0 ? `in ${hrs}h` : `${hrs}h ago`
-  return diff > 0 ? `in ${days}d` : `${days}d ago`
 }
 
 function shouldShowEta(iso?: string): boolean {
@@ -161,6 +150,7 @@ export function MigrationNotice({
   offlineMessage,
   fallbackMessage
 }: MigrationNoticeProps) {
+  const relativeTime = useRelativeTime()
   const hasProgress =
     typeof progress === "number" && typeof live === "boolean" && !!phase
   const pct = Math.max(0, Math.min(100, Math.round(progress ?? 0)))
@@ -218,7 +208,7 @@ export function MigrationNotice({
                   {shouldShowEta(eta) && (
                     <>
                       <ClockIcon aria-hidden="true" size={14} />
-                      ETA {formatRelativeTime(eta!)}
+                      ETA {relativeTime(eta!)}
                     </>
                   )}
                 </span>

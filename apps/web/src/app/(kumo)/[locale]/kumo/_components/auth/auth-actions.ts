@@ -1,4 +1,5 @@
 import { ApiError, apiPost } from "@/api/client"
+import { passkeysEnabled } from "@/config/passkeys"
 import { getSafeAuthRedirect } from "@/lib/auth/safe-redirect"
 import { getPasskey, PasskeyCancelled } from "./webauthn"
 
@@ -159,16 +160,6 @@ export async function postReset(
   return res.ok ? { ok: true } : { ok: false, message: extractApiError(data) }
 }
 
-/**
- * Whether the pages offer passkeys. Off until the API from
- * appbox-co/cylo-api#221 is deployed with its migration; set
- * `NEXT_PUBLIC_PASSKEYS=on` to try it against an API that has them.
- */
-export const LIVE_PASSKEYS =
-  process.env.NEXT_PUBLIC_PASSKEYS === "on" ||
-  // Staging (appbox.foo) runs the passkey API, so it is on there.
-  process.env.NEXT_PUBLIC_DOMAIN === "appbox.foo"
-
 interface PasskeyChallenge {
   options: Record<string, unknown>
   challenge_token: string
@@ -224,13 +215,13 @@ async function passkeySignIn(
  * is a full load, as in the current design: the client router would otherwise
  * reuse the signed-out state.
  */
-export function liveSignInActions(
+export function signInActions(
   localise: (path: string) => string
 ): SignInActions {
   return {
     signIn: postLogin,
     verifyTwoFactor: postTwoFactor,
-    ...(LIVE_PASSKEYS && {
+    ...(passkeysEnabled && {
       signInWithPasskey: () => passkeySignIn(false),
       passkeyAutofill: (signal: AbortSignal) => passkeySignIn(true, signal)
     }),

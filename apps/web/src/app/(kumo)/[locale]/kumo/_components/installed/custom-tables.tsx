@@ -7,8 +7,6 @@ import {
   Empty,
   Input,
   InputGroup,
-  Pagination,
-  SkeletonLine,
   Table,
   Tooltip
 } from "@cloudflare/kumo"
@@ -49,9 +47,11 @@ import {
   getFieldActivity
 } from "@/lib/install-validation"
 import { LoadingRow } from "../install/field-parts"
+import { PageFooter, usePagedRows } from "../paged-rows"
 import { Panel } from "../panel"
 import { EMPTY_IN_CARD } from "../shared"
-import { nextSort, SortHead, type SortState } from "../sort-head"
+import { LinesSkeleton } from "../skeletons"
+import { SortHead } from "../sort-head"
 import { CustomTableField, type FieldChange } from "./custom-tables-field"
 import {
   compareRows,
@@ -63,7 +63,6 @@ import {
   isSensitiveColumn,
   mapColumnToFormConfig,
   matchesSearch,
-  pageSizeOptions,
   REDACTED_SECRET_VALUE,
   shouldPreserveRedactedSensitiveValue,
   toTextValue,
@@ -158,11 +157,6 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
 
   // What the current design keeps in its shared DataTable.
   const [query, setQuery] = useState("")
-  const [sort, setSort] = useState<SortState<string>>(null)
-  const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(() =>
-    initialPageSize(table.maxRowShowAddButton)
-  )
   const [hiddenColumns, setHiddenColumns] = useState<ReadonlySet<string>>(
     new Set()
   )
@@ -227,9 +221,12 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     () => tableMutations.filter((mutation) => mutation.status === "failed"),
     [tableMutations]
   )
-  const mutationRowLabel = (rowId: number) =>
-    customTableMutationRowLabel(rowId, rows, table.columns) ??
-    t("customTablesMutationRowFallback", { id: rowId })
+  const mutationRowLabel = useCallback(
+    (rowId: number) =>
+      customTableMutationRowLabel(rowId, rows, table.columns) ??
+      t("customTablesMutationRowFallback", { id: rowId }),
+    [rows, table.columns, t]
+  )
 
   useEffect(() => {
     if (!mutationsLoaded) return
@@ -237,18 +234,15 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     if (seenFailureIds.current !== null) {
       for (const mutation of failedMutations) {
         if (seenFailureIds.current.has(mutation.id)) continue
-        const label =
-          customTableMutationRowLabel(mutation.rowId, rows, table.columns) ??
-          t("customTablesMutationRowFallback", { id: mutation.rowId })
         toast.error(
-          `${label}: ${t("customTablesMutationFailed", { action: mutation.mutationType })}`
+          `${mutationRowLabel(mutation.rowId)}: ${t("customTablesMutationFailed", { action: mutation.mutationType })}`
         )
       }
     }
     seenFailureIds.current ??= new Set()
     for (const mutation of failedMutations)
       seenFailureIds.current.add(mutation.id)
-  }, [failedMutations, mutationsLoaded, rows, table.columns, t])
+  }, [failedMutations, mutationsLoaded, mutationRowLabel, t])
   const activeRowIds = useMemo(
     () => new Set(activeMutations.map((mutation) => String(mutation.rowId))),
     [activeMutations]
@@ -325,6 +319,49 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     return Object.keys(nextErrors).length === 0
   }
 
+  /**
+   * Reports what became of a saved change and returns whether its form may
+   * close: not after a failure or an unknown outcome, so it can be tried
+   * again. `successKey` is the message for a change made at once. A retry
+   * passes none: its notice already shows where the change stands, so it
+   * hears only about problems and a queue that could not be confirmed.
+   */
+  const reportAdmission = (result: unknown, successKey?: string) => {
+    if (!isMutationAdmission(result)) {
+      if (successKey) toast.success(t(successKey))
+      return true
+    }
+    const values = { action: result.mutationType }
+    switch (result.status) {
+      case "failed":
+        toast.error(t("customTablesMutationFailed", values))
+        return false
+      case "unknown":
+        toast.error(t("customTablesMutationUnknown", values))
+        return false
+      case "admission_pending":
+        // As in the current design: a success after a save, a note after a retry.
+        if (successKey) toast.success(t("customTablesAdmissionPending"))
+        else toast.info(t("customTablesAdmissionPending"))
+        return true
+      default:
+        if (successKey) {
+          toast.success(
+            t(
+              result.status === "completed"
+                ? successKey
+                : "customTablesMutationQueued"
+            )
+          )
+        }
+        return true
+    }
+  }
+
+  /** An unknown outcome keeps its idempotency key, so trying again cannot save twice. */
+  const isUnknown = (result: unknown) =>
+    isMutationAdmission(result) && result.status === "unknown"
+
   const handleAdd = async () => {
     if (!validateForm(inputDataColumns)) return
     addIdempotencyKey.current ??= createIdempotencyKey("custom_table.create")
@@ -333,34 +370,8 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
         payload: formValues,
         idempotencyKey: addIdempotencyKey.current
       })
-      if (isMutationAdmission(result) && result.status === "failed") {
-        addIdempotencyKey.current = null
-        toast.error(
-          t("customTablesMutationFailed", {
-            action: result.mutationType
-          })
-        )
-        return
-      }
-      if (isMutationAdmission(result) && result.status === "unknown") {
-        toast.error(
-          t("customTablesMutationUnknown", {
-            action: result.mutationType
-          })
-        )
-        return
-      }
-      addIdempotencyKey.current = null
-      setAddOpen(false)
-      toast.success(
-        isMutationAdmission(result)
-          ? result.status === "completed"
-            ? t("customTablesAddSuccess")
-            : result.status === "admission_pending"
-              ? t("customTablesAdmissionPending")
-              : t("customTablesMutationQueued")
-          : t("customTablesAddSuccess")
-      )
+      if (!isUnknown(result)) addIdempotencyKey.current = null
+      if (reportAdmission(result, "customTablesAddSuccess")) setAddOpen(false)
     } catch (error) {
       toast.error(
         t(
@@ -399,34 +410,10 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
         payload: buildEditPayload(),
         idempotencyKey: editIdempotencyKey.current
       })
-      if (isMutationAdmission(result) && result.status === "failed") {
-        editIdempotencyKey.current = null
-        toast.error(
-          t("customTablesMutationFailed", {
-            action: result.mutationType
-          })
-        )
-        return
+      if (!isUnknown(result)) editIdempotencyKey.current = null
+      if (reportAdmission(result, "customTablesEditSuccess")) {
+        setEditTarget(null)
       }
-      if (isMutationAdmission(result) && result.status === "unknown") {
-        toast.error(
-          t("customTablesMutationUnknown", {
-            action: result.mutationType
-          })
-        )
-        return
-      }
-      editIdempotencyKey.current = null
-      setEditTarget(null)
-      toast.success(
-        isMutationAdmission(result)
-          ? result.status === "completed"
-            ? t("customTablesEditSuccess")
-            : result.status === "admission_pending"
-              ? t("customTablesAdmissionPending")
-              : t("customTablesMutationQueued")
-          : t("customTablesEditSuccess")
-      )
     } catch (error) {
       toast.error(
         t(
@@ -470,19 +457,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
 
   const handleRetry = async (mutationId: number) => {
     try {
-      const result = await retryMutation.mutateAsync(mutationId)
-      if (result.status === "failed" || result.status === "unknown") {
-        toast.error(
-          t(
-            result.status === "failed"
-              ? "customTablesMutationFailed"
-              : "customTablesMutationUnknown",
-            { action: result.mutationType }
-          )
-        )
-      } else if (result.status === "admission_pending") {
-        toast.info(t("customTablesAdmissionPending"))
-      }
+      reportAdmission(await retryMutation.mutateAsync(mutationId))
     } catch {
       toast.error(t("customTablesRetryFailed"))
     }
@@ -595,19 +570,23 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
     searchName !== null && needle !== ""
       ? rows.filter((row) => matchesSearch(row, searchName, needle))
       : rows
-  // Array.sort is stable, so ties keep the server's order.
-  const ordered = sort
-    ? [...matches].sort(
-        (a, b) => compareRows(a, b, sort.key) * (sort.dir === "asc" ? 1 : -1)
-      )
-    : matches
-  const pageCount = Math.max(1, Math.ceil(ordered.length / perPage))
-  const currentPage = Math.min(page, pageCount)
-  const pageRows = ordered.slice(
-    (currentPage - 1) * perPage,
-    currentPage * perPage
+  // Any column sorts, by its text. Ties keep the server's order.
+  const sorters = Object.fromEntries(
+    table.columns.map((col) => [
+      col.name,
+      (a: CustomTableRow, b: CustomTableRow) => compareRows(a, b, col.name)
+    ])
   )
-  const sizeOptions = pageSizeOptions(perPage)
+  const {
+    rows: pageRows,
+    sort,
+    sortBy,
+    firstPage,
+    pager
+  } = usePagedRows(matches, {
+    sorters,
+    perPage: initialPageSize(table.maxRowShowAddButton)
+  })
 
   const renderValue = (row: CustomTableRow, column: CustomTableColumn) => {
     const rawValue = row[column.name]
@@ -758,7 +737,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
                 autoComplete="off"
                 onChange={(event) => {
                   setQuery(event.target.value)
-                  setPage(1)
+                  firstPage()
                 }}
               />
               {query && (
@@ -769,7 +748,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
                     aria-label={COPY.clearSearch}
                     onClick={() => {
                       setQuery("")
-                      setPage(1)
+                      firstPage()
                     }}
                   />
                 </InputGroup.Addon>
@@ -779,11 +758,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
         )}
 
         {isLoading ? (
-          <div className="grid gap-3 p-4">
-            <SkeletonLine className="h-2.5 w-1/3 rounded-full" />
-            <SkeletonLine className="h-2.5 w-2/3 rounded-full" />
-            <SkeletonLine className="h-2.5 w-1/2 rounded-full" />
-          </div>
+          <LinesSkeleton />
         ) : pageRows.length === 0 ? (
           <Empty
             className={EMPTY_IN_CARD}
@@ -802,10 +777,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
                       label={column.title || column.name}
                       sortKey={column.name}
                       sort={sort}
-                      onSort={(key) => {
-                        setSort((current) => nextSort(current, key))
-                        setPage(1)
-                      }}
+                      onSort={sortBy}
                     />
                   ))}
                   {hasActions && (
@@ -898,28 +870,7 @@ function CustomTablePanel({ table }: { table: CustomTableDefinition }) {
           </div>
         )}
 
-        {ordered.length > Math.min(...sizeOptions) && (
-          <div className="border-t border-kumo-hairline p-3">
-            <Pagination
-              page={currentPage}
-              setPage={setPage}
-              perPage={perPage}
-              totalCount={ordered.length}
-              className="flex-wrap gap-y-3"
-            >
-              <Pagination.Info className="whitespace-nowrap" />
-              <Pagination.PageSize
-                value={perPage}
-                options={sizeOptions}
-                onChange={(size) => {
-                  setPerPage(size)
-                  setPage(1)
-                }}
-              />
-              <Pagination.Controls />
-            </Pagination>
-          </div>
-        )}
+        <PageFooter pager={pager} />
       </Panel>
 
       <FormDialog

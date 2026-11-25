@@ -1,13 +1,12 @@
 "use client"
 
-import { useState, type ReactNode } from "react"
+import { useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import {
   Button,
   Empty,
   Link as KumoLink,
   LinkButton,
-  SkeletonLine,
   Tabs,
   Tooltip
 } from "@cloudflare/kumo"
@@ -25,6 +24,7 @@ import type { JobProgressData } from "@/lib/websocket/types"
 import { useAuth } from "@/providers/auth-provider"
 import { AppIcon } from "./app-icon"
 import { ShellBar } from "./app-shell"
+import { DetailRow } from "./detail-row"
 import { AppActions } from "./installed/app-actions"
 import { AppAlerts } from "./installed/app-alerts"
 import { AppConsole } from "./installed/app-console"
@@ -37,7 +37,8 @@ import { PortAssignments } from "./installed/port-assignments"
 import { InstanceStatusBadge } from "./instance-controls"
 import { kumoRoutes } from "./kumo-routes"
 import { Panel } from "./panel"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
+import { EMPTY_IN_CARD, upgradeUrl, type Loadable } from "./shared"
+import { ViewSkeleton } from "./skeletons"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing
@@ -79,42 +80,6 @@ export interface InstalledAppViewProps {
   onRevealField: (fieldId: number) => Promise<string | undefined>
 }
 
-function DetailRow({
-  label,
-  children
-}: {
-  label: string
-  children: ReactNode
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-2">
-      <dt className="shrink-0 text-kumo-subtle">{label}</dt>
-      <dd className="min-w-0 truncate text-end font-medium">{children}</dd>
-    </div>
-  )
-}
-
-function ViewSkeleton() {
-  return (
-    <div aria-hidden="true" className="grid grid-cols-1 gap-8">
-      <div className="flex items-start gap-4">
-        <SkeletonLine className="size-14 rounded-xl" />
-        <div className="grid flex-1 gap-3 pt-1">
-          <SkeletonLine className="h-4 w-48 rounded-full" />
-          <SkeletonLine className="h-2.5 w-72 max-w-full rounded-full" />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-        <div className="grid gap-6">
-          <SkeletonLine className="h-28 rounded-lg" />
-          <SkeletonLine className="h-64 rounded-lg" />
-        </div>
-        <SkeletonLine className="h-56 rounded-lg" />
-      </div>
-    </div>
-  )
-}
-
 /**
  * One installed app: what state it is in, what can be done to it, and the
  * details needed to use it. Laid out like Cloudflare's Worker page: tabs and
@@ -136,7 +101,7 @@ export function InstalledAppView({
   const { isAdmin } = useAuth()
   const [activeTab, setActiveTab] = useState("overview")
 
-  if (appState.status === "loading") return <ViewSkeleton />
+  if (appState.status === "loading") return <ViewSkeleton icon aside />
 
   if (appState.status === "error") {
     return (
@@ -186,8 +151,8 @@ export function InstalledAppView({
     status: effectiveStatus,
     available_versions: availableVersions
   }
-  const upgradeUrl = cylo?.whmcs_serviceid
-    ? `https://billing.appbox.co/upgrade.php?type=package&id=${cylo.whmcs_serviceid}`
+  const planUpgradeUrl = cylo?.whmcs_serviceid
+    ? upgradeUrl(cylo.whmcs_serviceid)
     : null
   const isVmApp = app.app_type === "vm"
   const isVmFeatureEnabled = isLaunchWeekEnabled("day_3", isAdmin)
@@ -298,10 +263,10 @@ export function InstalledAppView({
             <Panel
               title={t("actions")}
               action={
-                upgradeUrl &&
+                planUpgradeUrl &&
                 (actionsAvailable || isStartRecoverable) && (
                   <KumoLink
-                    href={upgradeUrl}
+                    href={planUpgradeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

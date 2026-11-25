@@ -4,11 +4,10 @@ import { use } from "react"
 import { useTranslations } from "next-intl"
 import { useAbuseReport } from "@/api/account/hooks/use-account"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
-import { useAccountApps } from "../../../_lib/use-account-apps"
+import { useAccountShell } from "../../../_lib/use-account-shell"
 import { AbuseReportView } from "../../../../_components/account/abuse-report-view"
 import { AppShell } from "../../../../_components/app-shell"
-import { LiveComments } from "../../../../_components/comments/live-comments"
+import { Comments } from "../../../../_components/comments/comments"
 import { kumoRoutes } from "../../../../_components/kumo-routes"
 
 const FALLBACK_TITLE = "Abuse report"
@@ -24,11 +23,8 @@ export default function KumoAbuseReportPage({
   const { id } = use(params)
   const reportId = Number(id)
   const t = useTranslations("account")
-  const { user, logout } = useAuth()
-  const { searchGroups } = useAccountApps()
+  const { shell } = useAccountShell()
   const { data: report, isLoading, error } = useAbuseReport(reportId)
-
-  const userName = user.alias || user.firstname || user.email
 
   return (
     <AppShell
@@ -36,9 +32,7 @@ export default function KumoAbuseReportPage({
       title={report?.subject || FALLBACK_TITLE}
       parents={[{ label: "Abuse reports", href: kumoRoutes.abuseReports }]}
       currentDesignHref={ROUTES.ABUSE_REPORT_DETAIL(reportId)}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <AbuseReportView
         report={
@@ -51,7 +45,7 @@ export default function KumoAbuseReportPage({
         // The current page's conversation, unchanged: comments of this type
         // on the report, with no voting and no replies.
         conversation={
-          <LiveComments
+          <Comments
             commentType="abuseReportUser"
             relId={reportId}
             enableVoting={false}

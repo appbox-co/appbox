@@ -6,8 +6,8 @@ import { usePinApp } from "@/api/pinned-apps/hooks/use-pinned-apps"
 import { unpinApp } from "@/api/pinned-apps/pinned-apps"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
-import { useAuth } from "@/providers/auth-provider"
-import { toLoadable, useAccountApps } from "../_lib/use-account-apps"
+import { toLoadable } from "../_lib/use-account-apps"
+import { useAccountShell } from "../_lib/use-account-shell"
 import { useInstanceActions } from "../_lib/use-instance-actions"
 import { AppShell } from "../../_components/app-shell"
 import { AppStatesPanel } from "../../_components/dev/app-states-panel"
@@ -17,9 +17,9 @@ const TITLE = "Installed apps"
 
 /** Kumo prototype of the installed apps list, on live account data. */
 export default function KumoInstalledAppsPage() {
-  const { user, logout } = useAuth()
-  const { cylosSummary, installedApps, pinnedOrder, searchGroups } =
-    useAccountApps({ watchVmControl: true })
+  const { shell, cylosSummary, installedApps, pinnedOrder } = useAccountShell({
+    watchVmControl: true
+  })
   const runAction = useInstanceActions()
   const queryClient = useQueryClient()
   const pinMutation = usePinApp()
@@ -50,16 +50,12 @@ export default function KumoInstalledAppsPage() {
     })
   }
 
-  const userName = user.alias || user.firstname || user.email
-
   return (
     <AppShell
       width="wide"
       title={TITLE}
       currentDesignHref={ROUTES.INSTALLED_APPS}
-      user={{ name: userName, email: user.email }}
-      search={searchGroups}
-      onSignOut={() => void logout()}
+      {...shell}
     >
       <InstalledAppsView
         apps={toLoadable(installedApps, () => apps)}
