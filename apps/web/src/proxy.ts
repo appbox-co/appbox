@@ -76,6 +76,36 @@ function isKumoRoute(pathname: string): boolean {
 const KUMO_CHECK_TIMEOUT_MS = 5000
 
 /**
+ * The API allows `validate_token` 120 times per token and 60 per caller in 5
+ * minutes, and one Kumo page view brings a dozen link prefetches. So the
+ * proxy keeps each session's answer for a minute, keyed by a hash of its
+ * token, and asks again after that. Failures are not kept.
+ */
+const KUMO_ANSWER_TTL_MS = 60_000
+const KUMO_ANSWERS_MAX = 1000
+const kumoAnswers = new Map<string, { allowed: boolean; expires: number }>()
+
+async function tokenKey(token: string) {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(token)
+  )
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, "0")
+  ).join("")
+}
+
+function rememberKumoAnswer(key: string, allowed: boolean, now: number) {
+  if (kumoAnswers.size >= KUMO_ANSWERS_MAX) {
+    for (const [stored, answer] of kumoAnswers) {
+      if (answer.expires <= now) kumoAnswers.delete(stored)
+    }
+    if (kumoAnswers.size >= KUMO_ANSWERS_MAX) kumoAnswers.clear()
+  }
+  kumoAnswers.set(key, { allowed, expires: now + KUMO_ANSWER_TTL_MS })
+}
+
+/**
  * Whether this request may open the Kumo pages (config/kumo-access.ts). While
  * they are for admins only, the check runs here, before any Kumo code does.
  * If the API can't be asked in time, the answer is no.
@@ -83,12 +113,20 @@ const KUMO_CHECK_TIMEOUT_MS = 5000
 async function mayOpenKumo(token: string | undefined): Promise<boolean> {
   if (kumoAccess === "everyone") return true
   if (!token) return false
+
+  const key = await tokenKey(token)
+  const now = Date.now()
+  const known = kumoAnswers.get(key)
+  if (known && known.expires > now) return known.allowed
+
   try {
     const user = await fetchTokenUser(
       token,
       AbortSignal.timeout(KUMO_CHECK_TIMEOUT_MS)
     )
-    return canOpenKumo(user?.roles)
+    const allowed = canOpenKumo(user?.roles)
+    rememberKumoAnswer(key, allowed, now)
+    return allowed
   } catch {
     return false
   }
