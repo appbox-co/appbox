@@ -10,12 +10,12 @@ import {
   type AbuseTimelineEntry
 } from "@/api/account/account"
 import { RAIL_FALLBACK, ShellRail } from "../app-shell"
-import { DetailRow } from "../detail-row"
 import { kumoRoutes } from "../kumo-routes"
-import { Panel } from "../panel"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
-import { ShortDate, useRelativeTime } from "../short-date"
-import { ViewSkeleton } from "../skeletons"
+import { DetailRow } from "../ui/detail-row"
+import { Panel } from "../ui/panel"
+import { ShortDate, useRelativeTime } from "../ui/short-date"
+import { ViewSkeleton } from "../ui/skeletons"
 import { abuseGroup, AbuseStatusBadge, type AbuseGroup } from "./abuse-status"
 
 /**

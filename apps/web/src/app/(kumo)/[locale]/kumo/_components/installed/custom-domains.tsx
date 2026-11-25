@@ -21,8 +21,8 @@ import {
 import { useAuth } from "@/providers/auth-provider"
 import { BaseDomainSelector } from "../install/base-domain-selector"
 import { DnsVerificationPanel } from "../install/dns-verification-panel"
-import { FieldBlock, FieldError } from "../install/field-parts"
-import { Panel } from "../panel"
+import { FieldBlock, FieldError } from "../ui/field-parts"
+import { Panel } from "../ui/panel"
 import { CustomDomainConfigDialog } from "./custom-domains-config"
 import { CustomDomainsTable } from "./custom-domains-table"
 

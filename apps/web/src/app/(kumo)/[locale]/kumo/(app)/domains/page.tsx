@@ -11,7 +11,10 @@ import { useWebSocket } from "@/providers/websocket-provider"
 import { toLoadable } from "../_lib/use-account-apps"
 import { useAccountShell } from "../_lib/use-account-shell"
 import { AppShell } from "../../_components/app-shell"
-import { DomainsView, type DomainInstall } from "../../_components/domains-view"
+import {
+  DomainsView,
+  type DomainInstall
+} from "../../_components/domains/domains-view"
 
 const TITLE = "Custom domains"
 

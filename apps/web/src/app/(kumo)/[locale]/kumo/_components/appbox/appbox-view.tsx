@@ -12,17 +12,20 @@ import {
 import { ArrowClockwiseIcon, HardDrivesIcon } from "@phosphor-icons/react"
 import type { CyloDetail } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
-import { RAIL_FALLBACK, ShellBar, ShellRail } from "./app-shell"
-import { CyloAlerts } from "./appbox/cylo-alerts"
-import { CyloCharts } from "./appbox/cylo-charts"
-import { CyloUsageRail, CyloUsageStrip } from "./appbox/cylo-usage"
-import { FileExplorer } from "./appbox/file-explorer"
-import { InstalledAppsList } from "./installed-apps-list"
-import { ActionDialog } from "./installed/actions-dialog"
-import { InstanceStatusBadge, type InstanceAction } from "./instance-controls"
-import { kumoRoutes } from "./kumo-routes"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
-import { ViewSkeleton } from "./skeletons"
+import { RAIL_FALLBACK, ShellBar, ShellRail } from "../app-shell"
+import { InstalledAppsList } from "../installed/installed-apps-list"
+import {
+  InstanceStatusBadge,
+  type InstanceAction
+} from "../installed/instance-controls"
+import { kumoRoutes } from "../kumo-routes"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import { ActionDialog } from "../ui/actions-dialog"
+import { ViewSkeleton } from "../ui/skeletons"
+import { CyloAlerts } from "./cylo-alerts"
+import { CyloCharts } from "./cylo-charts"
+import { CyloUsageRail, CyloUsageStrip } from "./cylo-usage"
+import { FileExplorer } from "./file-explorer"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

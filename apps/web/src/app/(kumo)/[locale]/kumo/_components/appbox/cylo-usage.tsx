@@ -9,7 +9,7 @@ import {
   UsageRailSection,
   UsageStrip,
   type UsageFigures
-} from "../usage-summary"
+} from "./usage-summary"
 
 const COPY = {
   usage: "Usage",

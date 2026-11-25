@@ -7,7 +7,7 @@ import {
   useStopApp,
   useUnfreezeApp
 } from "@/api/installed-apps/hooks/use-installed-apps"
-import type { InstanceAction } from "../../_components/instance-controls"
+import type { InstanceAction } from "../../_components/installed/instance-controls"
 
 /** Runs a power action on one or more installs with the dashboard's own requests. */
 export function useInstanceActions() {

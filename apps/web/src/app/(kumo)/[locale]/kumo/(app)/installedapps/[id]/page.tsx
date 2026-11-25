@@ -28,7 +28,7 @@ import { useWebSocket } from "@/providers/websocket-provider"
 import { InstalledAppDevPanel } from "../../_dev/installed-app-dev-panel"
 import { useAccountShell } from "../../_lib/use-account-shell"
 import { AppShell } from "../../../_components/app-shell"
-import { InstalledAppView } from "../../../_components/installed-app-view"
+import { InstalledAppView } from "../../../_components/installed/installed-app-view"
 import { kumoRoutes } from "../../../_components/kumo-routes"
 
 const COPY = {

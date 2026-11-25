@@ -6,15 +6,15 @@ import { Button, cn, InputGroup, Label } from "@cloudflare/kumo"
 import { validateSubdomain, type DomainOption } from "@/api/apps/app-store"
 import type { Cylo } from "@/lib/auth/session"
 import { validInstallSubdomain } from "@/lib/install-validation"
-import { BaseDomainSelector } from "./base-domain-selector"
-import { DnsVerificationPanel } from "./dns-verification-panel"
 import {
   FieldBlock,
   FieldError,
   LoadingRow,
   Notice,
   withRequiredMark
-} from "./field-parts"
+} from "../ui/field-parts"
+import { BaseDomainSelector } from "./base-domain-selector"
+import { DnsVerificationPanel } from "./dns-verification-panel"
 import { SUBDOMAIN_VALIDATION_FAILED } from "./logic"
 
 /* -------------------------------------------------------------------------- */

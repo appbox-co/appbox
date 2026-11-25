@@ -328,7 +328,10 @@ stateOverride = (value) => value
 // Every Kumo list with power controls (installed apps, an Appbox's apps, an
 // app's instances) renders the shared row and bulk controls, so execute those,
 // including the bulk runner on mixed pending/non-pending selections.
-for (const relative of ["installed-apps-list.tsx", "app-instances.tsx"]) {
+for (const relative of [
+  "installed/installed-apps-list.tsx",
+  "appstore/app-instances.tsx"
+]) {
   const text = readFileSync(new URL(kumo + relative, root), "utf8")
   for (const usage of [
     "<InstanceRowActions",
@@ -344,7 +347,7 @@ const {
   canRunInBulk,
   // Called outside React here; its useState is the stub above.
   useInstanceRunner: createInstanceRunner
-} = load(kumo + "instance-controls.tsx")
+} = load(kumo + "installed/instance-controls.tsx")
 for (const status of ["online", "offline", "inactive", "frozen"]) {
   const held = { ...app, status, vm_control_pending: true }
   const rowButtons = buttons(InstanceRowActions({ app: held, onRun: () => {} }))
@@ -406,7 +409,7 @@ assert.deepEqual(calls, [["stop", [2]]])
 
 // The page hides AppActions for inactive-but-not-yet-off VMs. Render its real
 // fallback paragraph so a protected Stop keeps the specific pending message.
-const detailPage = kumo + "installed-app-view.tsx"
+const detailPage = kumo + "installed/installed-app-view.tsx"
 const detailSource = readFileSync(new URL(detailPage, root), "utf8")
 const detailAst = ts.createSourceFile(
   detailPage,

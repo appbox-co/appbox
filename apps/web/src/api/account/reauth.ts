@@ -51,6 +51,3 @@ export async function postReauth(
   >
   return { ...data, ok: response.ok }
 }
-
-/** How a screen signs in again. Pages pass `postReauth`. */
-export type Reauth = typeof postReauth

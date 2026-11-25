@@ -20,14 +20,18 @@ import {
 import type { AbuseReport } from "@/api/account/account"
 import { Link } from "@/i18n/routing"
 import { ShellRail } from "../app-shell"
-import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "../filter-bar"
 import { kumoRoutes } from "../kumo-routes"
-import { PageFooter, usePagedRows } from "../paged-rows"
-import { RailStatusCard } from "../rail-status"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
-import { ShortDate } from "../short-date"
-import { ListSkeleton } from "../skeletons"
-import { compareText, SortHead, timeOf, type SortState } from "../sort-head"
+import {
+  FILTER_BAR_INPUT,
+  FILTER_BAR_SELECT,
+  FilterBar
+} from "../ui/filter-bar"
+import { PageFooter, usePagedRows } from "../ui/paged-rows"
+import { RailStatusCard } from "../ui/rail-status"
+import { ShortDate } from "../ui/short-date"
+import { ListSkeleton } from "../ui/skeletons"
+import { compareText, SortHead, timeOf, type SortState } from "../ui/sort-head"
 import {
   ABUSE_GROUPS,
   abuseGroup,

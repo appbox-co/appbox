@@ -25,35 +25,39 @@ import type { CyloSummary } from "@/api/cylos/cylos"
 import { useCyloStats } from "@/api/cylos/hooks/use-cylos"
 import { Link } from "@/i18n/routing"
 import { formatBytes, formatStorageGB } from "@/lib/utils"
-import { RAIL_FALLBACK, ShellRail } from "./app-shell"
-import { AppStrip, type StripApp } from "./app-strip"
-import {
-  APPBOX_STATUS_FILTERS,
-  AppboxStatusBadge,
-  AppboxStatusBadges
-} from "./appbox-status"
-import { useAppboxesUsage } from "./appbox/use-appboxes-usage"
-import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
-import { AppboxCard } from "./home-view"
-import { kumoRoutes } from "./kumo-routes"
-import { RailStatusCard } from "./rail-status"
+import { RAIL_FALLBACK, ShellRail } from "../app-shell"
+import { AppStrip, type StripApp } from "../installed/app-strip"
+import { kumoRoutes } from "../kumo-routes"
 import {
   BILLING_BASE_URL,
   EMPTY_IN_CARD,
   percentOf,
   type Loadable,
   type ServiceUsage
-} from "./shared"
-import { ListSkeleton } from "./skeletons"
-import { nextSort, SortHead, sortRows, type SortState } from "./sort-head"
+} from "../shared"
+import {
+  FILTER_BAR_INPUT,
+  FILTER_BAR_SELECT,
+  FilterBar
+} from "../ui/filter-bar"
+import { RailStatusCard } from "../ui/rail-status"
+import { ListSkeleton } from "../ui/skeletons"
+import { nextSort, SortHead, sortRows, type SortState } from "../ui/sort-head"
+import { UsageRing } from "../ui/usage-ring"
+import { AppboxCard } from "./appbox-card"
+import {
+  APPBOX_STATUS_FILTERS,
+  AppboxStatusBadge,
+  AppboxStatusBadges
+} from "./appbox-status"
 import { Sparkline } from "./sparkline"
-import { UsageRing } from "./usage-ring"
 import {
   Meter,
   UsageRailSection,
   UsageStrip,
   type UsageFigures
 } from "./usage-summary"
+import { useAppboxesUsage } from "./use-appboxes-usage"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

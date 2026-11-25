@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { cn } from "@cloudflare/kumo"
-import { APP_ICON_BASE_URL } from "./shared"
+import { APP_ICON_BASE_URL } from "../shared"
 
 interface AppIconProps {
   /** Icon file name from the catalogue; falls back to the app's initial. */

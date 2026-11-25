@@ -4,8 +4,8 @@ import type { ReactNode } from "react"
 import { cn } from "@cloudflare/kumo"
 import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react"
 import { formatBytes, formatStorageGB } from "@/lib/utils"
-import { percentOf, usageTone } from "./shared"
-import { UsageRing } from "./usage-ring"
+import { percentOf, usageTone } from "../shared"
+import { UsageRing } from "../ui/usage-ring"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

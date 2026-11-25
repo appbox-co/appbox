@@ -7,13 +7,9 @@ import type { CyloDetail } from "@/api/cylos/cylos"
 import { useCyloStats } from "@/api/cylos/hooks/use-cylos"
 import { formatBytes } from "@/lib/utils"
 import { useWebSocket } from "@/providers/websocket-provider"
-import { STATS_COLORS, type StatsThreshold } from "../installed/stats-chart"
-import {
-  Metric,
-  MetricGroup,
-  type MetricState
-} from "../installed/stats-metric"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
+import { STATS_COLORS, type StatsThreshold } from "../ui/stats-chart"
+import { Metric, MetricGroup, type MetricState } from "../ui/stats-metric"
 
 /**
  * Prototype-only copy, in English and sentence case. The series names are

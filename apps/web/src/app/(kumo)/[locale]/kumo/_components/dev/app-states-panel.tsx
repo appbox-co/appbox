@@ -6,7 +6,7 @@ import { XIcon } from "@phosphor-icons/react"
 import { useQueryClient } from "@tanstack/react-query"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { queryKeys } from "@/constants/query-keys"
-import { InstanceStatusBadge } from "../instance-controls"
+import { InstanceStatusBadge } from "../installed/instance-controls"
 import { APP_STATUS_OPTIONS, AppStateReference } from "./app-states"
 import { DevChoices, DevPanel, DevReset, DevSection, IS_DEV } from "./dev-panel"
 

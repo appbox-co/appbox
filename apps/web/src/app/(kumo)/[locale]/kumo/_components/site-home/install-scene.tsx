@@ -10,9 +10,9 @@ import {
   XIcon
 } from "@phosphor-icons/react"
 import type { CustomField } from "@/api/apps/app-store"
-import { AppIcon } from "../app-icon"
-import { withRequiredMark } from "../install/field-parts"
 import { CustomFields } from "../installed/custom-fields"
+import { AppIcon } from "../ui/app-icon"
+import { withRequiredMark } from "../ui/field-parts"
 import { AppPageHeader } from "./app-page-header"
 import { sampleDomain, type AppIcons } from "./catalogue"
 import { Stage, useSceneScript } from "./scene"

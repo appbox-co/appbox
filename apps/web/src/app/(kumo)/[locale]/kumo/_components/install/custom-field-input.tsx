@@ -21,7 +21,7 @@ import {
 import { fetchSearchFieldOptions, type CustomField } from "@/api/apps/app-store"
 import { generateSecurePassword } from "@/lib/dynamic-form"
 import type { FormFieldConfig } from "@/types/dashboard"
-import { FieldBlock, Notice, withRequiredMark } from "./field-parts"
+import { FieldBlock, Notice, withRequiredMark } from "../ui/field-parts"
 import {
   isFieldRequired,
   isSwitchChecked,

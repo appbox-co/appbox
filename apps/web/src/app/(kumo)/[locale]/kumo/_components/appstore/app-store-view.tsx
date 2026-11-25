@@ -19,6 +19,13 @@ import {
   XIcon
 } from "@phosphor-icons/react"
 import type { AppCategory, AppStoreItem } from "@/api/apps/app-store"
+import { kumoRoutes } from "../kumo-routes"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import {
+  FILTER_BAR_INPUT,
+  FILTER_BAR_SELECT,
+  FilterBar
+} from "../ui/filter-bar"
 import { HIDDEN_CATEGORY_ID } from "./app-categories"
 import {
   AppCard,
@@ -28,9 +35,6 @@ import {
   type InstalledCounts
 } from "./app-store-cards"
 import { AppStoreDiscover } from "./app-store-discover"
-import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
-import { kumoRoutes } from "./kumo-routes"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
 import { DEFAULT_SORT, type AppStoreFilters } from "./use-app-store-filters"
 
 /**

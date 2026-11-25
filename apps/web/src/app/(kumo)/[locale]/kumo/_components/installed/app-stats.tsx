@@ -6,13 +6,13 @@ import type { ContainerRange } from "@/api/installed-apps/container-stats"
 import { useContainerStats } from "@/api/installed-apps/hooks/use-container-stats"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { useWebSocket } from "@/providers/websocket-provider"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
 import {
   STATS_COLORS,
   type StatsPoint,
   type StatsThreshold
-} from "./stats-chart"
-import { Metric, MetricGroup, type MetricState } from "./stats-metric"
+} from "../ui/stats-chart"
+import { Metric, MetricGroup, type MetricState } from "../ui/stats-metric"
 
 /**
  * Prototype-only copy, in English and sentence case. The current page has

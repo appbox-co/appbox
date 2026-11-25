@@ -30,15 +30,15 @@ import type {
   CreateApiKeyResult,
   UpdateApiKeyInput
 } from "@/api/account/account"
-import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
+import { isRecentAuthError } from "@/api/account/reauth"
 // Pure rules shared with the current design's page.
 import {
   getDefaultScopes,
   hasSameScopes
 } from "@/components/account/api-key-scopes"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
-import { useRelativeTime } from "../short-date"
-import { ListSkeleton } from "../skeletons"
+import { useRelativeTime } from "../ui/short-date"
+import { ListSkeleton } from "../ui/skeletons"
 import {
   compareText,
   nextSort,
@@ -46,7 +46,7 @@ import {
   sortRows,
   timeOf,
   type SortState
-} from "../sort-head"
+} from "../ui/sort-head"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 import { ScopePicker, scopesHintId, ScopeSummary } from "./scope-picker"
 
@@ -77,8 +77,6 @@ export interface ApiKeysViewProps {
   onRevoke: (id: number) => Promise<unknown>
   /** Loads the list again, after signing in again with nothing waiting. */
   onRefresh: () => void
-  /** How signing in again is sent. */
-  reauth: Reauth
   /** The scopes a key can have, and the presets made from them. */
   scopeCatalog: Loadable<ApiKeyScopeCatalog>
   onRetryScopes: () => void
@@ -340,7 +338,6 @@ export function ApiKeysView({
   onUpdate,
   onRevoke,
   onRefresh,
-  reauth,
   scopeCatalog,
   onRetryScopes
 }: ApiKeysViewProps) {
@@ -742,7 +739,6 @@ export function ApiKeysView({
         open={reauthOpen}
         onOpenChange={handleReauthOpenChange}
         onVerified={handleReauthVerified}
-        reauth={reauth}
       />
 
       {/* The new key's secret, shown this once. It takes a deliberate close:

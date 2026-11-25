@@ -4,8 +4,9 @@ import type { ReactNode } from "react"
 import { Button, LayerCard } from "@cloudflare/kumo"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import type { AppCategory, AppStoreItem } from "@/api/apps/app-store"
+import { AppIcon } from "../ui/app-icon"
+import { timeOf } from "../ui/sort-head"
 import { categoryIcon, HIDDEN_CATEGORY_ID } from "./app-categories"
-import { AppIcon } from "./app-icon"
 import {
   AppLink,
   FeaturedCard,
@@ -15,7 +16,6 @@ import {
   type AppCovers,
   type InstalledCounts
 } from "./app-store-cards"
-import { timeOf } from "./sort-head"
 import type { AppStoreFilters } from "./use-app-store-filters"
 
 const COPY = {

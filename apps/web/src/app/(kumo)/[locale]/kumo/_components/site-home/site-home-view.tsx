@@ -14,7 +14,7 @@ import {
 } from "@phosphor-icons/react"
 import type { PlansData } from "@/components/ui/plans"
 import { Link } from "@/i18n/routing"
-import { AppIcon } from "../app-icon"
+import { AppIcon } from "../ui/app-icon"
 import { BoostScene } from "./boost-scene"
 import type {
   AppIcons,

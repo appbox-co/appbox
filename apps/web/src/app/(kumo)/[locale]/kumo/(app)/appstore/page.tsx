@@ -8,11 +8,11 @@ import { toLoadable } from "../_lib/use-account-apps"
 import { useAccountShell } from "../_lib/use-account-shell"
 import { useFeaturedCovers } from "../_lib/use-featured-covers"
 import { AppShell } from "../../_components/app-shell"
-import { AppStoreView } from "../../_components/app-store-view"
+import { AppStoreView } from "../../_components/appstore/app-store-view"
 import {
   DEFAULT_SORT,
   useAppStoreFilters
-} from "../../_components/use-app-store-filters"
+} from "../../_components/appstore/use-app-store-filters"
 
 function KumoAppStore() {
   const { shell } = useAccountShell()

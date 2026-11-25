@@ -26,8 +26,17 @@ import {
 import type { CyloSummary } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { Link } from "@/i18n/routing"
-import { AppIcon } from "./app-icon"
-import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
+import { kumoRoutes } from "../kumo-routes"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import { AppIcon } from "../ui/app-icon"
+import {
+  FILTER_BAR_INPUT,
+  FILTER_BAR_SELECT,
+  FilterBar
+} from "../ui/filter-bar"
+import { PageFooter, usePagedRows } from "../ui/paged-rows"
+import { ListSkeleton } from "../ui/skeletons"
+import { SortHead, timeOf, type SortState } from "../ui/sort-head"
 import {
   canRunInBulk,
   INSTANCE_ACTIONS,
@@ -39,11 +48,6 @@ import {
   useInstanceRunner,
   type InstanceAction
 } from "./instance-controls"
-import { kumoRoutes } from "./kumo-routes"
-import { PageFooter, usePagedRows } from "./paged-rows"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
-import { ListSkeleton } from "./skeletons"
-import { SortHead, timeOf, type SortState } from "./sort-head"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

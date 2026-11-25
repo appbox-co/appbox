@@ -5,9 +5,9 @@ import { getAppDetail, type AppStoreItem } from "@/api/apps/app-store"
 import { queryKeys } from "@/constants/query-keys"
 import { useAuth } from "@/providers/auth-provider"
 import type { ScreenshotImage } from "@/types/marketing-blocks"
-import { extractScreenshots } from "../../_components/app-screenshots"
-import type { AppCovers } from "../../_components/app-store-cards"
-import { featuredApps } from "../../_components/app-store-discover"
+import { extractScreenshots } from "../../_components/appstore/app-screenshots"
+import type { AppCovers } from "../../_components/appstore/app-store-cards"
+import { featuredApps } from "../../_components/appstore/app-store-discover"
 
 /**
  * Cover screenshots for the store front's featured apps. Screenshots live in

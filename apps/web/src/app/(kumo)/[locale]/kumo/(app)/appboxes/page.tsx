@@ -6,7 +6,7 @@ import { useWebSocket } from "@/providers/websocket-provider"
 import { toLoadable } from "../_lib/use-account-apps"
 import { useAccountShell } from "../_lib/use-account-shell"
 import { AppShell } from "../../_components/app-shell"
-import { AppboxesView } from "../../_components/appboxes-view"
+import { AppboxesView } from "../../_components/appbox/appboxes-view"
 
 const TITLE = "Appboxes"
 const NO_APPS = new Map<number, never[]>()

@@ -11,11 +11,11 @@ import { ThumbsUpIcon } from "@phosphor-icons/react"
 import { getEffectiveAppSlots, type AppStoreItem } from "@/api/apps/app-store"
 import { Link } from "@/i18n/routing"
 import type { ScreenshotImage } from "@/types/marketing-blocks"
+import { kumoRoutes } from "../kumo-routes"
+import { APP_ICON_BASE_URL } from "../shared"
+import { AppIcon } from "../ui/app-icon"
 import { HIDDEN_CATEGORY_ID } from "./app-categories"
-import { AppIcon } from "./app-icon"
 import { screenshotUrl } from "./app-screenshots"
-import { kumoRoutes } from "./kumo-routes"
-import { APP_ICON_BASE_URL } from "./shared"
 
 const COPY = {
   slotCount: (count: number) => `${count} app slot${count === 1 ? "" : "s"}`,

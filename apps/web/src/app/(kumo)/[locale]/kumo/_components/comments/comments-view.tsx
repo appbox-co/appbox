@@ -40,7 +40,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Comment, CommentSortOrder } from "@/api/comments/comments"
 import { EMPTY_IN_CARD, type Loadable } from "../shared"
-import { useRelativeTime } from "../short-date"
+import { useRelativeTime } from "../ui/short-date"
 
 /* -------------------------------------------------------------------------- */
 /*  Props                                                                      */

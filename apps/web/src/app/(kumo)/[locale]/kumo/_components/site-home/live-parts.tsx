@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Badge } from "@cloudflare/kumo"
-import { AppIcon } from "../app-icon"
+import { AppIcon } from "../ui/app-icon"
 import type { CatalogueApp } from "./catalogue"
 import { usePauseOffscreen } from "./scene"
 

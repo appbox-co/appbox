@@ -2,7 +2,7 @@
 
 import { useRef, useState, type CSSProperties } from "react"
 import { cn } from "@cloudflare/kumo"
-import { AppIcon } from "../app-icon"
+import { AppIcon } from "../ui/app-icon"
 import type { AppIcons } from "./catalogue"
 import { Stage, usePauseOffscreen, useSceneScript } from "./scene"
 

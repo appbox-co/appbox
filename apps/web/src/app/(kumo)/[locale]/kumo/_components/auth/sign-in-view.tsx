@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState, type FormEvent } from "react"
-import { useTranslations } from "next-intl"
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react"
+import { useLocale, useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { Banner, Button, Input, Label, Link } from "@cloudflare/kumo"
 import {
@@ -13,8 +13,9 @@ import {
 import { z } from "zod"
 import { CODE_LENGTH, CodeInput } from "../account/code-input"
 import { kumoRoutes } from "../kumo-routes"
-import { signInDestination, type SignInActions } from "./auth-actions"
+import { signInActions, signInDestination } from "./auth-actions"
 import { AuthHeading, PLANS_HREF } from "./auth-frame"
+import { localiseDestination } from "./localise-destination"
 import { PasswordInput } from "./password-input"
 import { passkeyAutofillAvailable } from "./webauthn"
 
@@ -25,17 +26,18 @@ const PASSKEY_REFUSED = "That passkey was not accepted."
 /** The reset password page sends people here with this, once it has worked. */
 export const PASSWORD_RESET_PARAM = "reset"
 
-interface SignInViewProps {
-  /** How the sign-in is sent: `signInActions`, for the page's locale. */
-  actions: SignInActions
-}
-
 /**
  * Email and password, then a two-factor code if the account has one. The
  * steps and what is sent are the current design's login page, unchanged;
  * errors show in the page instead of in toasts.
  */
-export function SignInView({ actions }: SignInViewProps) {
+export function SignInView() {
+  const locale = useLocale()
+  const actions = useMemo(
+    () =>
+      signInActions((destination) => localiseDestination(destination, locale)),
+    [locale]
+  )
   const t = useTranslations("auth.login")
   const tCodes = useTranslations("account.apiKeys")
   const tReset = useTranslations("auth.reset")

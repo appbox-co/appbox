@@ -16,14 +16,14 @@ import {
   useRenamePasskey
 } from "@/api/account/hooks/use-passkeys"
 import { MAX_PASSKEYS, type Passkey } from "@/api/account/passkeys"
-import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
+import { isRecentAuthError } from "@/api/account/reauth"
 import {
   createPasskey,
   PasskeyAlreadyRegistered,
   PasskeyCancelled,
   passkeysSupported
 } from "../auth/webauthn"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 
 /** Prototype-only copy, in English, as on the rest of the two-factor page. */
@@ -158,7 +158,7 @@ function PasskeyRow({
  * Adding and removing need a recent sign-in; when the API asks for one, the
  * password is asked for and the change is tried again.
  */
-export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
+export function PasskeysPanel() {
   const passkeysQuery = usePasskeys()
   const addPasskey = useAddPasskey()
   const renamePasskey = useRenamePasskey()
@@ -412,7 +412,6 @@ export function PasskeysPanel({ reauth }: { reauth: Reauth }) {
             await remove(action.passkey, { afterReauth: true })
           }
         }}
-        reauth={reauth}
         description={COPY.reauth}
         idPrefix="passkeys-reauth"
       />

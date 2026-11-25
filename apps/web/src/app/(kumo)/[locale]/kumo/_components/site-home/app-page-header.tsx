@@ -1,6 +1,6 @@
 import { cn } from "@cloudflare/kumo"
-import { AppIcon } from "../app-icon"
-import { InstanceStatusBadge } from "../instance-controls"
+import { InstanceStatusBadge } from "../installed/instance-controls"
+import { AppIcon } from "../ui/app-icon"
 import { sampleDomain } from "./catalogue"
 
 /** The top of an installed app's page on the sample Appbox "ada", as the scenes draw it. */

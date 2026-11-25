@@ -46,12 +46,12 @@ import {
   clearInactiveFieldValues,
   getFieldActivity
 } from "@/lib/install-validation"
-import { LoadingRow } from "../install/field-parts"
-import { PageFooter, usePagedRows } from "../paged-rows"
-import { Panel } from "../panel"
 import { EMPTY_IN_CARD } from "../shared"
-import { LinesSkeleton } from "../skeletons"
-import { SortHead } from "../sort-head"
+import { LoadingRow } from "../ui/field-parts"
+import { PageFooter, usePagedRows } from "../ui/paged-rows"
+import { Panel } from "../ui/panel"
+import { LinesSkeleton } from "../ui/skeletons"
+import { SortHead } from "../ui/sort-head"
 import { CustomTableField, type FieldChange } from "./custom-tables-field"
 import {
   compareRows,

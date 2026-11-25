@@ -3,7 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { createApiKey, revokeApiKey, updateApiKey } from "@/api/account/account"
 import { useApiKeys, useApiKeyScopes } from "@/api/account/hooks/use-account"
-import { isRecentAuthError, postReauth } from "@/api/account/reauth"
+import { isRecentAuthError } from "@/api/account/reauth"
 import { queryKeys } from "@/constants/query-keys"
 import { ROUTES } from "@/constants/routes"
 import { toLoadable } from "../../_lib/use-account-apps"
@@ -50,7 +50,6 @@ export default function KumoApiKeysPage() {
           refresh()
         }}
         onRefresh={refresh}
-        reauth={postReauth}
         scopeCatalog={
           scopes.data
             ? { status: "ready", data: scopes.data }

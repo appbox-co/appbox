@@ -18,7 +18,7 @@ import { toLoadable } from "../../_lib/use-account-apps"
 import { useAccountShell } from "../../_lib/use-account-shell"
 import { useInstanceActions } from "../../_lib/use-instance-actions"
 import { AppShell } from "../../../_components/app-shell"
-import { AppboxView } from "../../../_components/appbox-view"
+import { AppboxView } from "../../../_components/appbox/appbox-view"
 import { kumoRoutes } from "../../../_components/kumo-routes"
 
 const FALLBACK_TITLE = "Appbox"

@@ -29,9 +29,9 @@ import type {
   TwoFactorStatus,
   TwoFactorVerifyResult
 } from "@/api/account/account"
-import { isRecentAuthError, type Reauth } from "@/api/account/reauth"
+import { isRecentAuthError } from "@/api/account/reauth"
 import { ApiError } from "@/api/client"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
 import { CODE_LENGTH, CodeInput } from "./code-input"
 import { RecentAuthDialog } from "./recent-auth-dialog"
 import { AccountHeader, SettingList, SettingRow } from "./setting-list"
@@ -108,8 +108,6 @@ export interface TwoFactorViewProps {
   onDisable: (code: string) => Promise<unknown>
   /** Runs after it has been turned off (the page signs out). */
   onDisabled: () => Promise<unknown> | void
-  /** How a sign-in is repeated when the API asks for a recent one. */
-  reauth: Reauth
   /** The passkeys panel: above the danger zone, and hidden while setting up. */
   passkeys?: ReactNode
 }
@@ -285,9 +283,8 @@ function useCodeConfirmation<Result>({
 
 function RegenerateCodes({
   onRegenerate,
-  onCodes,
-  reauth
-}: Pick<TwoFactorViewProps, "onRegenerate" | "reauth"> & {
+  onCodes
+}: Pick<TwoFactorViewProps, "onRegenerate"> & {
   onCodes: (codes: string[]) => void
 }) {
   const t = useTranslations("account")
@@ -331,7 +328,6 @@ function RegenerateCodes({
 
       <RecentAuthDialog
         {...reauthDialog}
-        reauth={reauth}
         description={t("twoFactor.recoveryCodesReauthDescription")}
         idPrefix="regenerate-recovery-codes-reauth"
       />
@@ -345,9 +341,8 @@ function RegenerateCodes({
 
 function DisableTwoFactor({
   onDisable,
-  onDisabled,
-  reauth
-}: Pick<TwoFactorViewProps, "onDisable" | "onDisabled" | "reauth">) {
+  onDisabled
+}: Pick<TwoFactorViewProps, "onDisable" | "onDisabled">) {
   const t = useTranslations("account")
   const [useRecovery, setUseRecovery] = useState(false)
   const {
@@ -448,7 +443,6 @@ function DisableTwoFactor({
 
       <RecentAuthDialog
         {...reauthDialog}
-        reauth={reauth}
         description={t("twoFactor.reauthDescription")}
         idPrefix="disable-2fa-reauth"
       />
@@ -601,7 +595,6 @@ export function TwoFactorView({
   onRegenerate,
   onDisable,
   onDisabled,
-  reauth,
   passkeys
 }: TwoFactorViewProps) {
   const t = useTranslations("account")
@@ -767,7 +760,6 @@ export function TwoFactorView({
             <RegenerateCodes
               onRegenerate={onRegenerate}
               onCodes={setNewCodes}
-              reauth={reauth}
             />
           </Panel>
 
@@ -780,11 +772,7 @@ export function TwoFactorView({
             />
           ) : (
             <Panel title={COPY.disableTitle}>
-              <DisableTwoFactor
-                onDisable={onDisable}
-                onDisabled={onDisabled}
-                reauth={reauth}
-              />
+              <DisableTwoFactor onDisable={onDisable} onDisabled={onDisabled} />
             </Panel>
           )}
         </>
@@ -846,7 +834,6 @@ export function TwoFactorView({
         open={reauthOpen}
         onOpenChange={setReauthOpen}
         onVerified={handleReauthVerified}
-        reauth={reauth}
         description={t("twoFactor.setupReauthDescription")}
         idPrefix="setup-2fa-reauth"
       />

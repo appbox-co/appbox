@@ -9,8 +9,8 @@ import {
 } from "@phosphor-icons/react"
 import { generateSecurePassword } from "@/lib/dynamic-form"
 import type { FormFieldConfig } from "@/types/dashboard"
-import { FieldError, withRequiredMark } from "../install/field-parts"
 import { isSwitchChecked } from "../install/logic"
+import { FieldError, withRequiredMark } from "../ui/field-parts"
 
 /** Text that stays in English, as it does in the current design's form fields. */
 const COPY = {

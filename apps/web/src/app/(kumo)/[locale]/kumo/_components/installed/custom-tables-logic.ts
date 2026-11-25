@@ -15,7 +15,7 @@ import type {
   CustomTableRow
 } from "@/api/custom-tables/custom-tables"
 import type { FormFieldConfig } from "@/types/dashboard"
-import { compareText } from "../sort-head"
+import { compareText } from "../ui/sort-head"
 
 export const REDACTED_SECRET_VALUE = "[REDACTED]"
 

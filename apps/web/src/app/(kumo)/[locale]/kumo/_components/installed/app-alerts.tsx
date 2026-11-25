@@ -12,7 +12,7 @@ import {
 import type { CyloDetail } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import type { JobProgressData } from "@/lib/websocket/types"
-import { useRelativeTime } from "../short-date"
+import { useRelativeTime } from "../ui/short-date"
 
 /* -------------------------------------------------------------------------- */
 /*  State logic, unchanged from the current design                             */

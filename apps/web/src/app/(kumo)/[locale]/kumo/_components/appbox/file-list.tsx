@@ -10,8 +10,8 @@ import {
 } from "@phosphor-icons/react"
 import type { FileItem } from "@/api/files/files"
 import { formatBytes } from "@/lib/utils/format"
-import { useRelativeTime } from "../short-date"
-import { nextSort, SortHead, type SortState } from "../sort-head"
+import { useRelativeTime } from "../ui/short-date"
+import { nextSort, SortHead, type SortState } from "../ui/sort-head"
 import { FileActionsMenu, hasFileActions } from "./file-actions-menu"
 import { FileTypeIcon } from "./file-icon"
 

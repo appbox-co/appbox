@@ -22,7 +22,7 @@ import {
   loadFlags,
   saveFlags
 } from "../../_components/dev/dev-panel"
-import { InstanceStatusBadge } from "../../_components/instance-controls"
+import { InstanceStatusBadge } from "../../_components/installed/instance-controls"
 
 /*
  * State, storage and cache patching are the current design's installed app

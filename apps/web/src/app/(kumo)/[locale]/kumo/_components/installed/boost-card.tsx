@@ -6,8 +6,8 @@ import { Button, Link as KumoLink } from "@cloudflare/kumo"
 import { useBoostApp } from "@/api/installed-apps/hooks/use-installed-apps"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { BoostSlider } from "../install/boost-slider"
-import { Panel } from "../panel"
 import { upgradeUrl } from "../shared"
+import { Panel } from "../ui/panel"
 
 interface BoostCardProps {
   app: InstalledApp

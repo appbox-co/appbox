@@ -4,7 +4,7 @@ import { useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Button, Link as KumoLink } from "@cloudflare/kumo"
 import { BoostSlider } from "../install/boost-slider"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
 import { Stage, useSceneScript } from "./scene"
 
 /**

@@ -6,7 +6,11 @@ import { cn, LinkButton, SkeletonLine } from "@cloudflare/kumo"
 import { PackageIcon, PlusIcon } from "@phosphor-icons/react"
 import type { CyloSummary } from "@/api/cylos/cylos"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
-import { RAIL_FALLBACK, ShellRail } from "./app-shell"
+import { RAIL_FALLBACK, ShellRail } from "../app-shell"
+import { kumoRoutes } from "../kumo-routes"
+import { percentOf, usageTone, type Loadable } from "../shared"
+import { RailStatusCard } from "../ui/rail-status"
+import { UsageRing } from "../ui/usage-ring"
 import { ALL_STATUSES, InstalledAppsList } from "./installed-apps-list"
 import {
   INSTANCE_STATUSES,
@@ -14,10 +18,6 @@ import {
   statusLabel,
   type InstanceAction
 } from "./instance-controls"
-import { kumoRoutes } from "./kumo-routes"
-import { RailStatusCard } from "./rail-status"
-import { percentOf, usageTone, type Loadable } from "./shared"
-import { UsageRing } from "./usage-ring"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

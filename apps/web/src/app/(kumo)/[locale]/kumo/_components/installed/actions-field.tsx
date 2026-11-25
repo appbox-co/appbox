@@ -16,8 +16,8 @@ import {
 } from "@phosphor-icons/react"
 import { generateSecurePassword } from "@/lib/dynamic-form"
 import type { FormFieldConfig } from "@/types/dashboard"
-import { FieldError, withRequiredMark } from "../install/field-parts"
 import { isSwitchChecked, toFieldValue } from "../install/logic"
+import { FieldError, withRequiredMark } from "../ui/field-parts"
 
 /**
  * One field of a custom button's form: the custom buttons' share of the

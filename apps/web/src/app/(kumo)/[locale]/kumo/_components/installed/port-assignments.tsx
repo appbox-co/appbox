@@ -6,11 +6,11 @@ import { Empty, InputGroup, Table } from "@cloudflare/kumo"
 import { MagnifyingGlassIcon, PlugsIcon } from "@phosphor-icons/react"
 import { usePortAssignments } from "@/api/installed-apps/hooks/use-port-assignments"
 import type { PortAssignment } from "@/api/installed-apps/port-assignments"
-import { PageFooter, usePagedRows } from "../paged-rows"
-import { Panel } from "../panel"
 import { EMPTY_IN_CARD } from "../shared"
-import { LinesSkeleton } from "../skeletons"
-import { SortHead, type Comparator } from "../sort-head"
+import { PageFooter, usePagedRows } from "../ui/paged-rows"
+import { Panel } from "../ui/panel"
+import { LinesSkeleton } from "../ui/skeletons"
+import { SortHead, type Comparator } from "../ui/sort-head"
 
 interface PortAssignmentsProps {
   serverName: string

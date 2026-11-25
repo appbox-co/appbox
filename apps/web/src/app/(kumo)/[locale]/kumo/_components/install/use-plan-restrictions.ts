@@ -10,7 +10,7 @@ import {
 } from "@/api/apps/app-store"
 import { queryKeys } from "@/constants/query-keys"
 import type { Cylo } from "@/lib/auth/session"
-import type { MinimumPlan } from "../app-detail-view"
+import type { MinimumPlan } from "../appstore/app-detail-view"
 import { upgradeUrl } from "../shared"
 
 export interface PlanRestrictions {

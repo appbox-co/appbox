@@ -18,7 +18,7 @@ import { useWebSocket } from "@/providers/websocket-provider"
 import { toLoadable } from "../_lib/use-account-apps"
 import { useAccountShell } from "../_lib/use-account-shell"
 import { AppShell } from "../../_components/app-shell"
-import { HomeView } from "../../_components/home-view"
+import { HomeView } from "../../_components/dashboard/home-view"
 import { notificationRoute } from "../../_components/shared"
 
 export default function KumoDashboardPage() {

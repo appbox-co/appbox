@@ -21,8 +21,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 import { kumoRoutes } from "../kumo-routes"
-import { Panel } from "../panel"
 import type { Loadable } from "../shared"
+import { Panel } from "../ui/panel"
 import { AccountHeader, SettingList, SettingRow } from "./setting-list"
 
 /**

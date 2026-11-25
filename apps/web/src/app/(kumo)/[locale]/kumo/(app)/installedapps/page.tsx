@@ -11,7 +11,7 @@ import { useAccountShell } from "../_lib/use-account-shell"
 import { useInstanceActions } from "../_lib/use-instance-actions"
 import { AppShell } from "../../_components/app-shell"
 import { AppStatesPanel } from "../../_components/dev/app-states-panel"
-import { InstalledAppsView } from "../../_components/installed-apps-view"
+import { InstalledAppsView } from "../../_components/installed/installed-apps-view"
 
 const TITLE = "Installed apps"
 

@@ -17,11 +17,11 @@ import {
   XIcon
 } from "@phosphor-icons/react"
 import type { InstanceDomain } from "@/api/domains/hooks/use-domains"
-import { PageFooter, usePagedRows } from "../paged-rows"
 import { EMPTY_IN_CARD } from "../shared"
-import { ShortDate } from "../short-date"
-import { LinesSkeleton } from "../skeletons"
-import { compareText, SortHead, timeOf, type Comparator } from "../sort-head"
+import { PageFooter, usePagedRows } from "../ui/paged-rows"
+import { ShortDate } from "../ui/short-date"
+import { LinesSkeleton } from "../ui/skeletons"
+import { compareText, SortHead, timeOf, type Comparator } from "../ui/sort-head"
 
 /**
  * Prototype-only copy, in English and sentence case, for controls the current

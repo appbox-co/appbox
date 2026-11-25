@@ -27,16 +27,20 @@ import {
 } from "@phosphor-icons/react"
 import type { Domain } from "@/api/domains/domains"
 import { Link } from "@/i18n/routing"
-import { AppIcon } from "./app-icon"
-import { ShellRail } from "./app-shell"
-import { FILTER_BAR_INPUT, FILTER_BAR_SELECT, FilterBar } from "./filter-bar"
-import { kumoRoutes } from "./kumo-routes"
-import { PageFooter, usePagedRows } from "./paged-rows"
-import { RailStatusCard } from "./rail-status"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
-import { ShortDate } from "./short-date"
-import { ListSkeleton } from "./skeletons"
-import { compareText, SortHead, timeOf, type SortState } from "./sort-head"
+import { ShellRail } from "../app-shell"
+import { kumoRoutes } from "../kumo-routes"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import { AppIcon } from "../ui/app-icon"
+import {
+  FILTER_BAR_INPUT,
+  FILTER_BAR_SELECT,
+  FilterBar
+} from "../ui/filter-bar"
+import { PageFooter, usePagedRows } from "../ui/paged-rows"
+import { RailStatusCard } from "../ui/rail-status"
+import { ShortDate } from "../ui/short-date"
+import { ListSkeleton } from "../ui/skeletons"
+import { compareText, SortHead, timeOf, type SortState } from "../ui/sort-head"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

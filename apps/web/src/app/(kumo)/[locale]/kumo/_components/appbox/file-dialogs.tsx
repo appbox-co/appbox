@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { Input } from "@cloudflare/kumo"
-import { ActionDialog } from "../installed/actions-dialog"
+import { ActionDialog } from "../ui/actions-dialog"
 
 /*
  * The file explorer's three dialogs. `ActionDialog` supplies what the current

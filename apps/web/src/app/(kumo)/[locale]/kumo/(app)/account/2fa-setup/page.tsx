@@ -10,7 +10,6 @@ import {
   useRegenerateRecoveryCodes,
   useVerify2FA
 } from "@/api/account/hooks/use-account"
-import { postReauth } from "@/api/account/reauth"
 import { passkeysEnabled } from "@/config/passkeys"
 import { ROUTES } from "@/constants/routes"
 import { useRouter } from "@/i18n/routing"
@@ -76,8 +75,7 @@ export default function KumoTwoFactorPage() {
         onRegenerate={(code) => regenerate.mutateAsync({ code })}
         onDisable={(code) => disable2FA.mutateAsync({ code })}
         onDisabled={() => logout()}
-        reauth={postReauth}
-        passkeys={passkeysEnabled && <PasskeysPanel reauth={postReauth} />}
+        passkeys={passkeysEnabled && <PasskeysPanel />}
       />
     </AppShell>
   )

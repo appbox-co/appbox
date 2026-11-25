@@ -16,7 +16,7 @@ import {
   WarningIcon
 } from "@phosphor-icons/react"
 import { useInstalledAppVncInfo } from "@/api/installed-apps/hooks/use-installed-apps"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
 import { CHAR_TO_KEY, MODIFIER_RELEASES, SHIFT_KEYSYM } from "./console-keys"
 
 interface AppConsoleProps {

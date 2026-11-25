@@ -10,17 +10,17 @@ import {
 } from "@phosphor-icons/react"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import { Link } from "@/i18n/routing"
-import { AppIcon } from "./app-icon"
 import {
   InstanceBulkActions,
   InstanceRowActions,
   InstanceStatusBadge,
   useInstanceRunner,
   type InstanceAction
-} from "./instance-controls"
-import { kumoRoutes } from "./kumo-routes"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
-import { LinesSkeleton } from "./skeletons"
+} from "../installed/instance-controls"
+import { kumoRoutes } from "../kumo-routes"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import { AppIcon } from "../ui/app-icon"
+import { LinesSkeleton } from "../ui/skeletons"
 
 export type { InstanceAction }
 

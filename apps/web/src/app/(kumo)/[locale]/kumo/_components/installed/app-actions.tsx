@@ -43,7 +43,7 @@ import {
 } from "@/lib/install-validation"
 import { useAuth } from "@/providers/auth-provider"
 import { toFieldValue } from "../install/logic"
-import { ActionDialog } from "./actions-dialog"
+import { ActionDialog } from "../ui/actions-dialog"
 import { ActionFormField } from "./actions-field"
 import {
   getVersionTimestamp,

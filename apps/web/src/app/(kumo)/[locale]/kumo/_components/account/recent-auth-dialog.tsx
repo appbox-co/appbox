@@ -4,7 +4,7 @@ import { useRef, useState, type FormEvent } from "react"
 import { useTranslations } from "next-intl"
 import { Banner, Button, Dialog, Input, Label } from "@cloudflare/kumo"
 import { WarningCircleIcon } from "@phosphor-icons/react"
-import type { Reauth } from "@/api/account/reauth"
+import { postReauth } from "@/api/account/reauth"
 import { CodeInput } from "./code-input"
 
 const RECOVERY_CODE_LENGTH = 8
@@ -14,8 +14,6 @@ interface RecentAuthDialogProps {
   onOpenChange: (open: boolean) => void
   /** Runs once the sign-in is accepted; the dialog closes when it settles. */
   onVerified: () => void | Promise<void>
-  /** How the sign-in is sent. */
-  reauth: Reauth
   description?: string
   idPrefix?: string
 }
@@ -29,7 +27,6 @@ export function RecentAuthDialog({
   open,
   onOpenChange,
   onVerified,
-  reauth,
   description,
   idPrefix = "recent-auth"
 }: RecentAuthDialogProps) {
@@ -69,7 +66,7 @@ export function RecentAuthDialog({
     setError("")
 
     try {
-      const result = await reauth(
+      const result = await postReauth(
         twoFactorToken
           ? {
               code: code.trim(),

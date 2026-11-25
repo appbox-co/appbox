@@ -2,8 +2,8 @@
 
 import { useMemo, type ReactNode } from "react"
 import { BookOpenIcon, NewspaperIcon } from "@phosphor-icons/react"
-import { AppIcon } from "../app-icon"
 import { QuickSearchProvider, type SearchGroup } from "../quick-search"
+import { AppIcon } from "../ui/app-icon"
 import { SiteHeader } from "./site-header"
 import type { SiteSearchData } from "./site-search"
 

@@ -14,8 +14,8 @@ import {
   useRenameItem,
   useUploadFiles
 } from "@/api/files/hooks/use-files"
-import { Panel } from "../panel"
 import { EMPTY_IN_CARD } from "../shared"
+import { Panel } from "../ui/panel"
 import { FileBreadcrumb } from "./file-breadcrumb"
 import {
   DeleteConfirmDialog,

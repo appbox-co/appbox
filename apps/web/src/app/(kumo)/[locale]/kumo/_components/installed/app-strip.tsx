@@ -7,8 +7,8 @@ import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
 import type { PinnedApp } from "@/api/pinned-apps/pinned-apps"
 import { Link } from "@/i18n/routing"
-import { kumoRoutes } from "./kumo-routes"
-import { APP_ICON_BASE_URL } from "./shared"
+import { kumoRoutes } from "../kumo-routes"
+import { APP_ICON_BASE_URL } from "../shared"
 
 export interface StripApp {
   id: number

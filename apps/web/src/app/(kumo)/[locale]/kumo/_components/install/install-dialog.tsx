@@ -34,11 +34,11 @@ import { useAuth } from "@/providers/auth-provider"
 import { useInstallDevOverrides } from "../dev/use-install-dev-overrides"
 import { kumoRoutes } from "../kumo-routes"
 import { upgradeUrl } from "../shared"
+import { LoadingRow } from "../ui/field-parts"
 import { BoostSlider } from "./boost-slider"
 import { CustomFieldInput } from "./custom-field-input"
 import { CyloSelector } from "./cylo-selector"
 import { DomainSection, type DomainSectionState } from "./domain-section"
-import { LoadingRow } from "./field-parts"
 import { InstallGuardBanner } from "./install-guard-banner"
 import {
   findDnsInstallError,

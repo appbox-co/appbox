@@ -25,16 +25,16 @@ import {
   type AppVersion
 } from "@/api/apps/app-store"
 import type { InstalledApp } from "@/api/installed-apps/installed-apps"
+import { kumoRoutes } from "../kumo-routes"
+import { EMPTY_IN_CARD, type Loadable } from "../shared"
+import { AppIcon } from "../ui/app-icon"
+import { DetailRow } from "../ui/detail-row"
+import { Panel } from "../ui/panel"
 import { HIDDEN_CATEGORY_ID } from "./app-categories"
-import { AppIcon } from "./app-icon"
 import { AppInstances, type InstanceAction } from "./app-instances"
 import { AppScreenshots, extractScreenshots } from "./app-screenshots"
 import { InstalledBadge } from "./app-store-cards"
-import { DetailRow } from "./detail-row"
-import { kumoRoutes } from "./kumo-routes"
 import { Markdown } from "./markdown"
-import { Panel } from "./panel"
-import { EMPTY_IN_CARD, type Loadable } from "./shared"
 
 /**
  * Prototype-only copy, in English and sentence case (a Kumo rule the existing

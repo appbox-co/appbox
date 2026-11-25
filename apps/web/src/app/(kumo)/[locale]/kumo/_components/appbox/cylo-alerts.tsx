@@ -18,7 +18,7 @@ import {
   MigrationNotice
 } from "../installed/app-alerts"
 import { BILLING_BASE_URL, upgradeUrl } from "../shared"
-import { useRelativeTime } from "../short-date"
+import { useRelativeTime } from "../ui/short-date"
 
 /* -------------------------------------------------------------------------- */
 /*  Pieces                                                                     */

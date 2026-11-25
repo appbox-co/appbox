@@ -12,7 +12,7 @@ import {
 } from "@phosphor-icons/react"
 import type { CustomField } from "@/api/apps/app-store"
 import { getFieldActivity } from "@/lib/install-validation"
-import { Panel } from "../panel"
+import { Panel } from "../ui/panel"
 
 /* -------------------------------------------------------------------------- */
 /*  Field rules, unchanged from the current design                             */

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Collapsible } from "@cloudflare/kumo"
-import { InstanceStatusBadge } from "../instance-controls"
+import { InstanceStatusBadge } from "../installed/instance-controls"
 
 /** The statuses an installed app can be forced into, and what each stands for. */
 export const APP_STATUS_OPTIONS = [

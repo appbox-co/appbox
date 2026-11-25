@@ -9,7 +9,7 @@ import {
   getDomainsForInstall,
   type DomainOption
 } from "@/api/apps/app-store"
-import { FieldError, Notice } from "./field-parts"
+import { FieldError, Notice } from "../ui/field-parts"
 import { getSafeAddDomainError, isBlockedDomain } from "./logic"
 
 interface BaseDomainSelectorProps {
