@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, type ReactNode } from "react"
 import { toast } from "sonner"
 import { useRouter } from "@/i18n/routing"
+import { isAdminRole } from "@/lib/auth/roles"
 import type { Cylo, User } from "@/lib/auth/session"
 
 interface AuthContextValue {
@@ -72,7 +73,7 @@ export function AuthProvider({
   const value: AuthContextValue = {
     user,
     cylos,
-    isAdmin: user.roles === "admin" || user.roles === "superadmin",
+    isAdmin: isAdminRole(user.roles),
     logout
   }
 

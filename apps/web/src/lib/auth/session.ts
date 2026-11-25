@@ -1,7 +1,5 @@
 import { cookies } from "next/headers"
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://api.appbox.co/v1"
+import { API_BASE_URL, fetchTokenUser } from "./validate-token"
 
 export interface User {
   id: number
@@ -48,25 +46,8 @@ export async function validateSession(
   token: string
 ): Promise<SessionData | null> {
   try {
-    // Validate token and get user info
-    const userResponse = await fetch(`${API_BASE_URL}/users/validate_token`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "Appbox-Web/2.0",
-        Cookie: `authorization_token=${token}`
-      },
-      cache: "no-store"
-    })
-
-    if (!userResponse.ok) {
-      return null
-    }
-
-    const userData = await userResponse.json()
-
-    // Backend returns `false` if the token is invalid
-    if (!userData || userData === false || !userData.id) {
+    const userData = await fetchTokenUser(token)
+    if (!userData) {
       return null
     }
 

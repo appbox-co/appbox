@@ -1,6 +1,9 @@
 import createMiddleware from "next-intl/middleware"
 import { NextRequest, NextResponse } from "next/server"
+import { kumoAccess } from "@/config/kumo-access"
 import { routing } from "@/i18n/routing-config"
+import { isAdminRole } from "@/lib/auth/roles"
+import { fetchTokenUser } from "@/lib/auth/validate-token"
 
 const intlMiddleware = createMiddleware(routing)
 
@@ -46,9 +49,37 @@ function getLocaleFromPath(pathname: string): string | null {
   return null
 }
 
-export function proxy(request: NextRequest) {
+function isKumoRoute(pathname: string): boolean {
+  const path = normalizeAuthPath(pathname)
+  return path === "/kumo" || path.startsWith("/kumo/")
+}
+
+/**
+ * Whether this request may open the Kumo pages (config/kumo-access.ts). While
+ * they are for admins only, the check runs here, before any Kumo code does.
+ * If the API can't be asked, the answer is no.
+ */
+async function mayOpenKumo(token: string | undefined): Promise<boolean> {
+  if (kumoAccess === "everyone") return true
+  if (!token) return false
+  try {
+    const user = await fetchTokenUser(token)
+    return isAdminRole(user?.roles)
+  } catch {
+    return false
+  }
+}
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get("authorization_token")?.value
+
+  // To anyone who may not open Kumo, its pages don't exist.
+  if (isKumoRoute(pathname) && !(await mayOpenKumo(token))) {
+    return NextResponse.rewrite(new URL("/_not-found", request.url), {
+      status: 404
+    })
+  }
 
   // Check if this is a protected route
   if (isProtectedRoute(pathname)) {
