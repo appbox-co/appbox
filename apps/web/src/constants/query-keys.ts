@@ -36,6 +36,10 @@ export const queryKeys = {
     infinite: (limit: number) => ["notifications", "infinite", limit] as const,
     unread: ["notifications", "unread"] as const
   },
+  dedicatedIpv4: {
+    all: ["dedicatedIpv4"] as const,
+    mine: ["dedicatedIpv4", "mine"] as const
+  },
   domains: {
     all: ["domains"] as const,
     byCylo: (cyloId: number) => ["domains", "cylo", cyloId] as const,

@@ -1,0 +1,86 @@
+---
+title: Dedicated IPv4
+description: Give an Appbox its own public IPv4 address, so your apps answer on it and its outbound connections leave from it.
+launch: day_4
+---
+
+An Appbox normally shares its server's public IPv4 address with the other Appboxes on that server. A dedicated IPv4 address is yours alone. Once you assign it to an Appbox, your apps answer on it, and the Appbox's new outbound connections leave from it.
+
+| What          | Detail                                               |
+| ------------- | ---------------------------------------------------- |
+| Price         | €5 per address per month                             |
+| Billed as     | An addon on your Appbox's service in billing         |
+| How many      | As many as you like, on one Appbox or several        |
+| Where         | Appboxes in Amsterdam only, for now                  |
+| What it opens | Your apps' existing ports, not a whole-address route |
+
+## Buy an address
+
+1. Open the [addons page](https://billing.appbox.co/cart.php?gid=addons) in billing.
+2. Under **Dedicated IPv4**, choose the Appbox service the address is for.
+3. Select **Order Now**, then check out and pay.
+
+Each address is its own addon. Order the addon again for each extra address.
+
+The address appears in the dashboard within a minute of payment, under **Appboxes > Dedicated IPv4**. It's yours but not in use until you assign it.
+
+## Assign it to an Appbox
+
+1. In the dashboard, open **Appboxes > Dedicated IPv4**.
+2. Next to the address, select **Assign**.
+3. Choose the Appbox.
+4. Select **Assign**.
+
+The address comes up within seconds. You can also do this from the Appbox's own page, on its **Dedicated IPv4** tab.
+
+Only Appboxes in Amsterdam can take an address. A suspended Appbox, or one that's moving to another server, can't take one until it's back to normal.
+
+## What changes when an address is assigned
+
+Your apps answer on the address, on the host ports they already use. An app that answers at `mybox.appboxes.co:<port>` also answers at `<your address>:<port>`. To find an app's ports, open the app's page and select the **Ports** tab: the **Host Port** column lists them. Ports 80 and 443 aren't forwarded: your web apps' addresses, such as `app.mybox.appboxes.co`, stay on the shared proxy as before.
+
+New outbound connections leave from the Appbox's primary address. A download client reaching its peers, or an app calling an outside service, connects from it. Connections that were open before the change keep their old address until they close.
+
+Only your apps answer on the address. The server's own services don't listen on it, and nothing on it reaches another customer's Appbox.
+
+## Use several addresses
+
+An Appbox can hold more than one address. Your apps answer on all of them. One of them is the **primary**: new outbound connections leave from the primary only.
+
+- The first address you assign to an Appbox becomes its primary.
+- To change it, select **Make primary** next to another address on the same Appbox. New outbound connections switch to that address.
+- When you assign another address, tick **Make it the primary address** to switch the source at the same time.
+
+## Unassign or move an address
+
+1. Next to the address, select **Unassign**.
+2. Select **Unassign** again to confirm.
+
+Your apps stop answering on the address straight away. The address stays yours, and is shown as **Being removed** until the old server confirms that it has let go of it, usually within a few minutes. After that it shows as **Not assigned**, and you can assign it to any of your Appboxes in Amsterdam.
+
+The primary address can only be unassigned when it's the last address on its Appbox. If the Appbox has others, make one of them primary first. When the last address is unassigned, the Appbox's outbound connections go back to the server's shared address.
+
+## When the Appbox moves or is suspended
+
+When an Appbox moves to another server in Amsterdam, its addresses move with it. They stop answering during the hand-over, usually for a few seconds.
+
+An Appbox that holds an address can't move out of Amsterdam, and that includes a package change that would move it. Unassign its addresses first.
+
+While an Appbox is suspended, its addresses stay assigned to it but don't forward traffic.
+
+## Billing
+
+- If the addon is suspended, for example for an unpaid invoice, the address is unassigned but stays reserved for you. Once the addon is active again, assign the address again. If the address was the Appbox's primary and the Appbox has other addresses, the one with the lowest number becomes the primary.
+- If you cancel the addon, the address is unassigned and goes back to the pool. It may later be given to someone else, so update anything that relies on it first.
+
+## Troubleshooting
+
+| What you see                                                                   | What to check                                                                                                                         |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| A bought address doesn't show in the dashboard                                 | Check that the invoice is paid and the addon is active in billing, then reload the page after a minute.                               |
+| "Dedicated IPv4 addresses are only available for Appboxes in Amsterdam (AMS3)" | The Appbox is in another location. Assign the address to an Appbox in Amsterdam.                                                      |
+| **Assign** is greyed out and the address shows **Being removed**               | The old server hasn't confirmed the removal yet. Wait a few minutes; the page updates on its own.                                     |
+| "The address is still being released from its previous server"                 | Same as above: the old server hasn't confirmed the removal yet. Try again in a few minutes.                                           |
+| **Unassign** is greyed out on the primary address                              | The Appbox has other addresses. Make one of them primary first.                                                                       |
+| "The server will apply the change within five minutes"                         | The change is saved, but the server couldn't be reached at that moment. It picks the change up within five minutes.                   |
+| An app doesn't answer on the address                                           | Use the app's host port from its **Ports** tab, not 80 or 443. Web addresses on 80 and 443 stay on the Appbox's `appboxes.co` domain. |
