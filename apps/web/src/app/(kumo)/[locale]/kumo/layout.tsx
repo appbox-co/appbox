@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { ThemeProvider } from "next-themes"
+import { notFound } from "next/navigation"
+import { canOpenKumo } from "@/config/kumo-access"
+import { getServerSession } from "@/lib/auth/session"
 import { fontSans } from "@/lib/fonts"
 import "@/styles/kumo-prototype.css"
 import { KumoProviders } from "./_components/kumo-providers"
@@ -25,6 +28,11 @@ export default async function KumoRootLayout({
   children,
   params
 }: KumoRootLayoutProps) {
+  // The request proxy already turns away whoever may not open Kumo
+  // (config/kumo-access.ts). This is the backstop, should a request get past it.
+  const session = await getServerSession()
+  if (!canOpenKumo(session?.user.roles)) notFound()
+
   const { locale } = await params
   const messages = await getMessages()
   const dir = locale === "ar" || locale === "ur" ? "rtl" : "ltr"

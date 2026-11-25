@@ -4,6 +4,7 @@ import { getServerSession } from "@/lib/auth/session"
 import { AuthProvider } from "@/providers/auth-provider"
 import { TanstackQueryProvider } from "@/providers/query-provider"
 import { WebSocketProvider } from "@/providers/websocket-provider"
+import { kumoRoutes } from "../_components/kumo-routes"
 
 interface KumoAppLayoutProps {
   children: React.ReactNode
@@ -19,7 +20,7 @@ export default async function KumoAppLayout({
   const session = await getServerSession()
 
   if (!session) {
-    redirect(`/${locale}/kumo/login`)
+    redirect(`/${locale}${kumoRoutes.signIn}`)
   }
 
   return (
@@ -27,7 +28,7 @@ export default async function KumoAppLayout({
       <AuthProvider
         user={session.user}
         cylos={session.cylos}
-        signInPath="/kumo/login"
+        signInPath={kumoRoutes.signIn}
       >
         <WebSocketProvider>
           <WsEventBridge />

@@ -18,9 +18,13 @@ export interface TokenUser {
 
 /**
  * The account a session token belongs to, or null when the API doesn't accept
- * the token. Usable anywhere on the server, the request proxy included.
+ * the token. Usable anywhere on the server, the request proxy included. A
+ * caller that must not wait on a slow API passes a `signal` with a timeout.
  */
-export async function fetchTokenUser(token: string): Promise<TokenUser | null> {
+export async function fetchTokenUser(
+  token: string,
+  signal?: AbortSignal
+): Promise<TokenUser | null> {
   const response = await fetch(`${API_BASE_URL}/users/validate_token`, {
     method: "GET",
     headers: {
@@ -28,7 +32,8 @@ export async function fetchTokenUser(token: string): Promise<TokenUser | null> {
       "User-Agent": "Appbox-Web/2.0",
       Cookie: `authorization_token=${token}`
     },
-    cache: "no-store"
+    cache: "no-store",
+    signal
   })
   if (!response.ok) return null
 

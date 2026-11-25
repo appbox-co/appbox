@@ -1,8 +1,7 @@
 import createMiddleware from "next-intl/middleware"
 import { NextRequest, NextResponse } from "next/server"
-import { kumoAccess } from "@/config/kumo-access"
+import { canOpenKumo, kumoAccess } from "@/config/kumo-access"
 import { routing } from "@/i18n/routing-config"
-import { isAdminRole } from "@/lib/auth/roles"
 import { fetchTokenUser } from "@/lib/auth/validate-token"
 
 const intlMiddleware = createMiddleware(routing)
@@ -49,22 +48,44 @@ function getLocaleFromPath(pathname: string): string | null {
   return null
 }
 
+/**
+ * Whether a request is for a Kumo page. It reads the path as next-intl will
+ * route it, decoded and cleaned the same way, so an encoded or padded path
+ * (`/%6bumo`, `/ku%09mo`, `//kumo`) can't slip past. A path that can't be
+ * decoded counts as Kumo, so it is refused rather than let through.
+ */
 function isKumoRoute(pathname: string): boolean {
-  const path = normalizeAuthPath(pathname)
+  let routed: string
+  try {
+    routed = decodeURI(pathname)
+  } catch {
+    return true
+  }
+  routed = routed
+    .replace(/\\/g, "%5C")
+    .replace(/[\t\n\r]/g, "")
+    .replace(/\/+/g, "/")
+  const path = normalizeAuthPath(routed)
   return path === "/kumo" || path.startsWith("/kumo/")
 }
+
+/** How long the Kumo check waits for the API before refusing. */
+const KUMO_CHECK_TIMEOUT_MS = 5000
 
 /**
  * Whether this request may open the Kumo pages (config/kumo-access.ts). While
  * they are for admins only, the check runs here, before any Kumo code does.
- * If the API can't be asked, the answer is no.
+ * If the API can't be asked in time, the answer is no.
  */
 async function mayOpenKumo(token: string | undefined): Promise<boolean> {
   if (kumoAccess === "everyone") return true
   if (!token) return false
   try {
-    const user = await fetchTokenUser(token)
-    return isAdminRole(user?.roles)
+    const user = await fetchTokenUser(
+      token,
+      AbortSignal.timeout(KUMO_CHECK_TIMEOUT_MS)
+    )
+    return canOpenKumo(user?.roles)
   } catch {
     return false
   }
@@ -112,6 +133,9 @@ export const config = {
     "/([\\w-]+)?/(docs|blog|feed)/(.+)",
     // Locale routes
     "/(en|de)/:path*",
+    // Every Kumo page, whatever its last segment, so the Kumo check always runs
+    "/kumo/:path*",
+    "/:locale/kumo/:path*",
     // Root path
     "/"
   ]

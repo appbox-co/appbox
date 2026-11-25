@@ -1,3 +1,4 @@
+import { cache } from "react"
 import { cookies } from "next/headers"
 import { API_BASE_URL, fetchTokenUser } from "./validate-token"
 
@@ -119,7 +120,8 @@ export async function validateSession(
   }
 }
 
-export async function getServerSession(): Promise<SessionData | null> {
+/** The signed-in session, asked of the API once per request however many layouts read it. */
+export const getServerSession = cache(async (): Promise<SessionData | null> => {
   const cookieStore = await cookies()
   const token = cookieStore.get("authorization_token")?.value
 
@@ -128,4 +130,4 @@ export async function getServerSession(): Promise<SessionData | null> {
   }
 
   return validateSession(token)
-}
+})
