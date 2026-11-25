@@ -18,8 +18,10 @@ export interface TokenUser {
 
 /**
  * The account a session token belongs to, or null when the API doesn't accept
- * the token. Usable anywhere on the server, the request proxy included. A
- * caller that must not wait on a slow API passes a `signal` with a timeout.
+ * the token. Any other failure, such as a rate limit (429) or a server error,
+ * throws, so a caller can tell "not signed in" from "couldn't ask". Usable
+ * anywhere on the server, the request proxy included. A caller that must not
+ * wait on a slow API passes a `signal` with a timeout.
  */
 export async function fetchTokenUser(
   token: string,
@@ -35,7 +37,10 @@ export async function fetchTokenUser(
     cache: "no-store",
     signal
   })
-  if (!response.ok) return null
+  if (response.status === 401 || response.status === 403) return null
+  if (!response.ok) {
+    throw new Error(`validate_token answered ${response.status}`)
+  }
 
   const user = await response.json()
   // The API answers `false` for a token it doesn't accept.

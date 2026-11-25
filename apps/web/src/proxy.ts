@@ -54,9 +54,10 @@ function getLocaleFromPath(pathname: string): string | null {
  * (`/%6bumo`, `/ku%09mo`, `//kumo`) can't slip past. `kumo` counts as either
  * the first segment or the second, whatever comes before it: Next takes any
  * first segment as the `[locale]` of app/(kumo)/[locale]/kumo, so
- * `/fonts/kumo` is a Kumo page too until the layout refuses the locale. A
- * path that can't be decoded counts as Kumo, so it is refused rather than let
- * through.
+ * `/fonts/kumo` is a Kumo page too until the layout refuses the locale. Any
+ * live page with `kumo` as its second segment (none exists) would be gated the
+ * same way. A path that can't be decoded counts as Kumo, so it is refused with
+ * a 404 rather than let through.
  */
 function isKumoRoute(pathname: string): boolean {
   let routed: string
@@ -79,11 +80,16 @@ const KUMO_CHECK_TIMEOUT_MS = 5000
  * The API allows `validate_token` 120 times per token and 60 per caller in 5
  * minutes, and one Kumo page view brings a dozen link prefetches. So the
  * proxy keeps each session's answer for a minute, keyed by a hash of its
- * token, and asks again after that. Failures are not kept.
+ * token, and asks again after that. Requests that arrive while the answer is
+ * on its way share it. A failed request (rate limit, server error, timeout) is
+ * not kept, so the next request asks again.
  */
 const KUMO_ANSWER_TTL_MS = 60_000
 const KUMO_ANSWERS_MAX = 1000
-const kumoAnswers = new Map<string, { allowed: boolean; expires: number }>()
+const kumoAnswers = new Map<
+  string,
+  { answer: Promise<boolean>; expires: number }
+>()
 
 async function tokenKey(token: string) {
   const digest = await crypto.subtle.digest(
@@ -95,14 +101,22 @@ async function tokenKey(token: string) {
   ).join("")
 }
 
-function rememberKumoAnswer(key: string, allowed: boolean, now: number) {
+function rememberKumoAnswer(
+  key: string,
+  answer: Promise<boolean>,
+  now: number
+) {
   if (kumoAnswers.size >= KUMO_ANSWERS_MAX) {
-    for (const [stored, answer] of kumoAnswers) {
-      if (answer.expires <= now) kumoAnswers.delete(stored)
+    for (const [stored, entry] of kumoAnswers) {
+      if (entry.expires <= now) kumoAnswers.delete(stored)
     }
     if (kumoAnswers.size >= KUMO_ANSWERS_MAX) kumoAnswers.clear()
   }
-  kumoAnswers.set(key, { allowed, expires: now + KUMO_ANSWER_TTL_MS })
+  kumoAnswers.set(key, { answer, expires: now + KUMO_ANSWER_TTL_MS })
+  // A failure is not an answer: forget it, unless a newer request replaced it.
+  answer.catch(() => {
+    if (kumoAnswers.get(key)?.answer === answer) kumoAnswers.delete(key)
+  })
 }
 
 /**
@@ -116,17 +130,18 @@ async function mayOpenKumo(token: string | undefined): Promise<boolean> {
 
   const key = await tokenKey(token)
   const now = Date.now()
-  const known = kumoAnswers.get(key)
-  if (known && known.expires > now) return known.allowed
-
-  try {
-    const user = await fetchTokenUser(
+  let entry = kumoAnswers.get(key)
+  if (!entry || entry.expires <= now) {
+    const answer = fetchTokenUser(
       token,
       AbortSignal.timeout(KUMO_CHECK_TIMEOUT_MS)
-    )
-    const allowed = canOpenKumo(user?.roles)
-    rememberKumoAnswer(key, allowed, now)
-    return allowed
+    ).then((user) => canOpenKumo(user?.roles))
+    rememberKumoAnswer(key, answer, now)
+    entry = kumoAnswers.get(key)!
+  }
+
+  try {
+    return await entry.answer
   } catch {
     return false
   }
