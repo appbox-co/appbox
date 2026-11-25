@@ -88,7 +88,17 @@ const WALL_FIRST = [
   "Arch Linux VPS"
 ]
 
-export function catalogueApps(apps: App[]): CatalogueApp[] {
+/** An app as the wall and the site search list it. */
+export function catalogueApp(app: App): CatalogueApp {
+  return {
+    name: app.display_name,
+    icon: app.icon_image,
+    category: app.categories[0] ?? ""
+  }
+}
+
+/** The apps on the wall: as many as WALL_FIRST names, those first. */
+export function wallApps(apps: App[]): CatalogueApp[] {
   const rank = (name: string) => {
     const index = WALL_FIRST.indexOf(name)
     return index === -1 ? WALL_FIRST.length : index
@@ -99,11 +109,8 @@ export function catalogueApps(apps: App[]): CatalogueApp[] {
         rank(a.display_name) - rank(b.display_name) ||
         a.display_name.localeCompare(b.display_name)
     )
-    .map((app) => ({
-      name: app.display_name,
-      icon: app.icon_image,
-      category: app.categories[0] ?? ""
-    }))
+    .slice(0, WALL_FIRST.length)
+    .map(catalogueApp)
 }
 
 export function categoryCounts(apps: App[], limit = 9): CategoryCount[] {

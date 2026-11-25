@@ -6,9 +6,10 @@
 import type { App } from "@/api/appbox/hooks/use-apps"
 import { docsSectionTitle } from "@/config/docs"
 import { getAllBlogs, getAllDocs } from "@/lib/content"
+import { catalogueApp, type CatalogueApp } from "../site-home/catalogue"
 
 export interface SiteSearchData {
-  apps: { name: string; icon: string; category: string }[]
+  apps: CatalogueApp[]
   docs: { title: string; section: string; href: string }[]
   posts: { title: string; date: string; href: string }[]
 }
@@ -21,11 +22,7 @@ export function siteSearchData(locale: string, apps: App[]): SiteSearchData {
   return {
     apps: [...apps]
       .sort((a, b) => a.display_name.localeCompare(b.display_name))
-      .map((app) => ({
-        name: app.display_name,
-        icon: app.icon_image,
-        category: app.categories[0] ?? ""
-      })),
+      .map(catalogueApp),
     docs: getAllDocs()
       .filter((doc) => inLocale(doc.slugAsParams))
       .map((doc) => {

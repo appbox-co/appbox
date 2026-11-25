@@ -215,9 +215,9 @@
   overflow: hidden;
   mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
+/* Margins, not gaps, in the drifting rows: the doubled list must be exactly two periods wide. */
 .ks-lane {
   display: flex;
-  gap: 12px;
   width: max-content;
   animation: kumo-wall-left 60s linear infinite;
 }
@@ -237,6 +237,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-inline-end: 12px;
   padding: 6px 14px 6px 6px;
   border-radius: 10px;
   background: var(--color-kumo-base);
@@ -289,6 +290,13 @@
     transparent 100%
   );
 }
+[dir="rtl"] .ks-scroll.ks-fade-end {
+  mask-image: linear-gradient(
+    to left,
+    black calc(100% - 64px),
+    transparent 100%
+  );
+}
 .ks-cards {
   display: inline-flex;
   gap: 14px;
@@ -297,12 +305,16 @@
 .ks-arrow {
   position: absolute;
   top: 50%;
-  right: 14px;
+  inset-inline-end: 14px;
   translate: 0 -50%;
   opacity: 0;
   pointer-events: none;
   color: var(--text-color-kumo-default);
   transition: opacity 0.3s;
+}
+/* Points, and nudges, towards the end of the row. */
+[dir="rtl"] .ks-arrow {
+  scale: -1 1;
 }
 .ks-arrow.ks-on {
   opacity: 1;
@@ -422,7 +434,6 @@
 }
 .ks-ticker-in {
   display: flex;
-  gap: 36px;
   width: max-content;
   animation: kumo-wall-left 40s linear infinite;
 }
@@ -430,6 +441,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-inline-end: 36px;
   white-space: nowrap;
   color: oklch(97% 0.01 290);
 }

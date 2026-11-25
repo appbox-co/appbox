@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Badge, cn, LayerCard, LinkButton, Tabs } from "@cloudflare/kumo"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import type { PlansData } from "@/components/ui/plans"
-import { trackBeginCheckout } from "@/lib/posthog"
 import { spaced } from "./catalogue"
 
 type Group = PlansData["data"][number]
@@ -166,19 +165,6 @@ function PlanCard({
             variant="primary"
             className="mt-auto w-full justify-center"
             external
-            onClick={(event) => {
-              event.currentTarget.href = trackBeginCheckout(
-                orderUrl,
-                "plan_card_click",
-                {
-                  billing_product_id: plan.product_id,
-                  billing_cycle: cycle,
-                  plan_title: plan.title,
-                  plan_short_title: plan.short_title,
-                  plan_group: group.title
-                }
-              )
-            }}
           >
             Order now
           </LinkButton>
@@ -217,7 +203,8 @@ function PlanGroup({
     const scroll = scrollRef.current
     if (!scroll) return
     const max = scroll.scrollWidth - scroll.clientWidth
-    setMore(max > 1 && scroll.scrollLeft < max - 1)
+    // Right to left, scrollLeft runs from 0 down to -max.
+    setMore(max > 1 && Math.abs(scroll.scrollLeft) < max - 1)
   }, [])
 
   useEffect(() => {

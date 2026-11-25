@@ -52,12 +52,11 @@ export function AppsWall({ apps }: { apps: CatalogueApp[] }) {
   const wallRef = useRef<HTMLDivElement>(null)
   usePauseOffscreen(wallRef)
 
-  const shown = apps.slice(0, 42)
-  const third = Math.ceil(shown.length / 3)
+  const third = Math.ceil(apps.length / 3)
   const lanes = [
-    shown.slice(0, third),
-    shown.slice(third, third * 2),
-    shown.slice(third * 2)
+    apps.slice(0, third),
+    apps.slice(third, third * 2),
+    apps.slice(third * 2)
   ]
 
   return (

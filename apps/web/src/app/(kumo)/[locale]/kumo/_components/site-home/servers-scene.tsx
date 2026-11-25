@@ -4,10 +4,9 @@ import { useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Badge, Button, cn, Tabs } from "@cloudflare/kumo"
 import { ArrowsClockwiseIcon } from "@phosphor-icons/react"
-import { AppIcon } from "../app-icon"
-import { InstanceStatusBadge } from "../instance-controls"
 import { Panel } from "../panel"
-import { sampleDomain, type AppIcons } from "./catalogue"
+import { AppPageHeader } from "./app-page-header"
+import { type AppIcons } from "./catalogue"
 import { Stage, useSceneScript } from "./scene"
 
 interface LinuxSystem {
@@ -154,31 +153,12 @@ export function ServersScene({ icons }: { icons: AppIcons }) {
         className="ks-abs ks-pagecard"
         style={{ left: 40, top: 36, width: 600 }}
       >
-        <div
-          className={cn("ks-swap flex items-center gap-4", hidden && "ks-gone")}
-        >
-          <AppIcon
-            icon={icons[system.name] ?? ""}
-            name={system.name}
-            size={52}
-            className="ks-appicon"
-          />
-          <div className="grid min-w-0 gap-1.5">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-              <h1 className="min-w-0 text-2xl font-semibold">{system.name}</h1>
-              <InstanceStatusBadge status="online" />
-            </div>
-            <p className="flex flex-wrap items-center gap-x-2 text-kumo-subtle">
-              <span className="font-mono text-[0.9em]">
-                {sampleDomain(system.name)}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>
-                on <span className="font-medium text-kumo-default">ada</span>
-              </span>
-            </p>
-          </div>
-        </div>
+        <AppPageHeader
+          name={system.name}
+          icon={icons[system.name] ?? ""}
+          status="online"
+          className={cn("ks-swap", hidden && "ks-gone")}
+        />
         <div className="flex">
           <Tabs
             variant="segmented"

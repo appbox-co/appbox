@@ -13,7 +13,7 @@ import type { CustomField } from "@/api/apps/app-store"
 import { AppIcon } from "../app-icon"
 import { withRequiredMark } from "../install/field-parts"
 import { CustomFields } from "../installed/custom-fields"
-import { InstanceStatusBadge } from "../instance-controls"
+import { AppPageHeader } from "./app-page-header"
 import { sampleDomain, type AppIcons } from "./catalogue"
 import { Stage, useSceneScript } from "./scene"
 
@@ -129,7 +129,6 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
               <AppIcon
                 icon={icons[APP] ?? ""}
                 name={APP}
-                size={52}
                 className="ks-appicon"
               />
               <div className="grid gap-1">
@@ -159,30 +158,11 @@ export function InstallScene({ icons }: { icons: AppIcons }) {
           </div>
         ) : (
           <div className="ks-in grid gap-4">
-            <div className="flex items-center gap-4">
-              <AppIcon
-                icon={icons[APP] ?? ""}
-                name={APP}
-                size={52}
-                className="ks-appicon"
-              />
-              <div className="grid min-w-0 gap-1.5">
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                  <h1 className="min-w-0 text-2xl font-semibold">{APP}</h1>
-                  <InstanceStatusBadge
-                    status={online ? "online" : "installing"}
-                  />
-                </div>
-                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-kumo-subtle">
-                  <span className="font-mono text-[0.9em]">{DOMAIN}</span>
-                  <span aria-hidden="true">·</span>
-                  <span>
-                    on{" "}
-                    <span className="font-medium text-kumo-default">ada</span>
-                  </span>
-                </p>
-              </div>
-            </div>
+            <AppPageHeader
+              name={APP}
+              icon={icons[APP] ?? ""}
+              status={online ? "online" : "installing"}
+            />
             {online ? (
               <div className="ks-in">
                 <CustomFields

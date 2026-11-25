@@ -5,9 +5,9 @@ import { launchWeekFlags } from "@/config/launch-week-flags"
 import {
   allUnmetered,
   appIcons,
-  catalogueApps,
   categoryCounts,
-  planFacts
+  planFacts,
+  wallApps
 } from "../_components/site-home/catalogue"
 import { SiteHomeView } from "../_components/site-home/site-home-view"
 
@@ -40,7 +40,7 @@ export default async function KumoHomePage({
     <SiteHomeView
       icons={appIcons(apps)}
       appCount={apps.length}
-      wall={catalogueApps(apps)}
+      wall={wallApps(apps)}
       categories={categoryCounts(apps)}
       facts={planFacts(plans)}
       plans={plans}
