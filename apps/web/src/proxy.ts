@@ -51,8 +51,12 @@ function getLocaleFromPath(pathname: string): string | null {
 /**
  * Whether a request is for a Kumo page. It reads the path as next-intl will
  * route it, decoded and cleaned the same way, so an encoded or padded path
- * (`/%6bumo`, `/ku%09mo`, `//kumo`) can't slip past. A path that can't be
- * decoded counts as Kumo, so it is refused rather than let through.
+ * (`/%6bumo`, `/ku%09mo`, `//kumo`) can't slip past. `kumo` counts as either
+ * the first segment or the second, whatever comes before it: Next takes any
+ * first segment as the `[locale]` of app/(kumo)/[locale]/kumo, so
+ * `/fonts/kumo` is a Kumo page too until the layout refuses the locale. A
+ * path that can't be decoded counts as Kumo, so it is refused rather than let
+ * through.
  */
 function isKumoRoute(pathname: string): boolean {
   let routed: string
@@ -65,8 +69,7 @@ function isKumoRoute(pathname: string): boolean {
     .replace(/\\/g, "%5C")
     .replace(/[\t\n\r]/g, "")
     .replace(/\/+/g, "/")
-  const path = normalizeAuthPath(routed)
-  return path === "/kumo" || path.startsWith("/kumo/")
+  return /^\/(?:[^/]+\/)?kumo(?:\/|$)/.test(routed)
 }
 
 /** How long the Kumo check waits for the API before refusing. */
@@ -133,9 +136,10 @@ export const config = {
     "/([\\w-]+)?/(docs|blog|feed)/(.+)",
     // Locale routes
     "/(en|de)/:path*",
-    // Every Kumo page, whatever its last segment, so the Kumo check always runs
+    // Every Kumo page, so the Kumo check always runs: whatever the last
+    // segment, and whatever the first, which the first entry may exclude
     "/kumo/:path*",
-    "/:locale/kumo/:path*",
+    "/:first/kumo/:path*",
     // Root path
     "/"
   ]

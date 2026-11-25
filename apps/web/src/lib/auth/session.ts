@@ -1,6 +1,9 @@
 import { cache } from "react"
 import { cookies } from "next/headers"
-import { API_BASE_URL, fetchTokenUser } from "./validate-token"
+import { fetchTokenUser } from "./validate-token"
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://api.appbox.co/v1"
 
 export interface User {
   id: number

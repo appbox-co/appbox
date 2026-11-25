@@ -1,4 +1,4 @@
-export const API_BASE_URL =
+const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://api.appbox.co/v1"
 
 /** The account fields the web app reads from `users/validate_token`. */

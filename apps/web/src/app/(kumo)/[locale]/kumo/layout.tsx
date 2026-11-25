@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
-import { NextIntlClientProvider } from "next-intl"
+import { hasLocale, NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { ThemeProvider } from "next-themes"
 import { notFound } from "next/navigation"
 import { canOpenKumo } from "@/config/kumo-access"
+import { routing } from "@/i18n/routing-config"
 import { getServerSession } from "@/lib/auth/session"
 import { fontSans } from "@/lib/fonts"
 import "@/styles/kumo-prototype.css"
@@ -28,12 +29,16 @@ export default async function KumoRootLayout({
   children,
   params
 }: KumoRootLayoutProps) {
+  // Any first segment reaches this tree as [locale] (`/fonts/kumo`), so only
+  // real locales get a page.
+  const { locale } = await params
+  if (!hasLocale(routing.locales, locale)) notFound()
+
   // The request proxy already turns away whoever may not open Kumo
   // (config/kumo-access.ts). This is the backstop, should a request get past it.
   const session = await getServerSession()
   if (!canOpenKumo(session?.user.roles)) notFound()
 
-  const { locale } = await params
   const messages = await getMessages()
   const dir = locale === "ar" || locale === "ur" ? "rtl" : "ltr"
 
