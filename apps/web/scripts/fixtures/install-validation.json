@@ -1,0 +1,1098 @@
+{
+  "values": [
+    {
+      "name": "required empty",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1
+        }
+      ],
+      "values": {
+        "VALUE": ""
+      },
+      "errors": {
+        "VALUE": "required"
+      }
+    },
+    {
+      "name": "required unicode whitespace",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1
+        }
+      ],
+      "values": {
+        "VALUE": "  ﻿"
+      },
+      "errors": {
+        "VALUE": "required"
+      }
+    },
+    {
+      "name": "optional whitespace",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "minLength": 8
+        }
+      ],
+      "values": {
+        "VALUE": " \t"
+      },
+      "errors": {}
+    },
+    {
+      "name": "optional zero",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1
+        }
+      ],
+      "values": {
+        "VALUE": "0"
+      },
+      "errors": {}
+    },
+    {
+      "name": "length below",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "minLength": 2
+        }
+      ],
+      "values": {
+        "VALUE": "a"
+      },
+      "errors": {
+        "VALUE": "minLength"
+      }
+    },
+    {
+      "name": "length boundary",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "minLength": 2,
+          "maxLength": 2
+        }
+      ],
+      "values": {
+        "VALUE": "ab"
+      },
+      "errors": {}
+    },
+    {
+      "name": "length above",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "maxLength": 2
+        }
+      ],
+      "values": {
+        "VALUE": "abc"
+      },
+      "errors": {
+        "VALUE": "maxLength"
+      }
+    },
+    {
+      "name": "accent counts once",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "maxLength": 1
+        }
+      ],
+      "values": {
+        "VALUE": "é"
+      },
+      "errors": {}
+    },
+    {
+      "name": "emoji counts twice",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "maxLength": 2
+        }
+      ],
+      "values": {
+        "VALUE": "😀"
+      },
+      "errors": {}
+    },
+    {
+      "name": "emoji above one",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "maxLength": 1
+        }
+      ],
+      "values": {
+        "VALUE": "😀"
+      },
+      "errors": {
+        "VALUE": "maxLength"
+      }
+    },
+    {
+      "name": "alphaNumeric",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "alphaNumeric"
+        }
+      ],
+      "values": {
+        "VALUE": "Abc123"
+      },
+      "errors": {}
+    },
+    {
+      "name": "alphaNumeric punctuation",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "alphaNumeric"
+        }
+      ],
+      "values": {
+        "VALUE": "Abc-123"
+      },
+      "errors": {
+        "VALUE": "alphanumeric"
+      }
+    },
+    {
+      "name": "passwordAlphaNumeric",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "passwordAlphaNumeric"
+        }
+      ],
+      "values": {
+        "VALUE": "Abc123"
+      },
+      "errors": {}
+    },
+    {
+      "name": "passwordAlphaNumeric punctuation",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "passwordAlphaNumeric"
+        }
+      ],
+      "values": {
+        "VALUE": "Abc$123"
+      },
+      "errors": {
+        "VALUE": "alphanumeric"
+      }
+    },
+    {
+      "name": "letters only password",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "password"
+        }
+      ],
+      "values": {
+        "VALUE": "Abcdef"
+      },
+      "errors": {
+        "VALUE": "notOnlyAlpha"
+      }
+    },
+    {
+      "name": "ordinary password",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "password"
+        }
+      ],
+      "values": {
+        "VALUE": "Abc1"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special $",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1$"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special !",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1!"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special :",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1:"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special |",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1|"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special \\",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1\\"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special  ",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1 "
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special é",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1é"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex special 😀",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1😀"
+      },
+      "errors": {}
+    },
+    {
+      "name": "complex missing lowercase",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "EXAMPLE1$"
+      },
+      "errors": {
+        "VALUE": "lowercase"
+      }
+    },
+    {
+      "name": "complex missing uppercase",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "example1$"
+      },
+      "errors": {
+        "VALUE": "uppercase"
+      }
+    },
+    {
+      "name": "complex missing number",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example$"
+      },
+      "errors": {
+        "VALUE": "number"
+      }
+    },
+    {
+      "name": "complex missing special",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "complexPassword"
+        }
+      ],
+      "values": {
+        "VALUE": "Example1"
+      },
+      "errors": {
+        "VALUE": "specialChar"
+      }
+    },
+    {
+      "name": "email",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "email"
+        }
+      ],
+      "values": {
+        "VALUE": "name@example.test"
+      },
+      "errors": {}
+    },
+    {
+      "name": "bad email",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "email"
+        }
+      ],
+      "values": {
+        "VALUE": "name@example"
+      },
+      "errors": {
+        "VALUE": "email"
+      }
+    },
+    {
+      "name": "unicode whitespace email",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "email"
+        }
+      ],
+      "values": {
+        "VALUE": "a b@example.test"
+      },
+      "errors": {
+        "VALUE": "email"
+      }
+    },
+    {
+      "name": "date valid",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "2026-09-18"
+      },
+      "errors": {}
+    },
+    {
+      "name": "date leap",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "2024-02-29"
+      },
+      "errors": {}
+    },
+    {
+      "name": "date nonleap",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "2026-02-29"
+      },
+      "errors": {
+        "VALUE": "date"
+      }
+    },
+    {
+      "name": "date century",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "1900-02-29"
+      },
+      "errors": {
+        "VALUE": "date"
+      }
+    },
+    {
+      "name": "date fourcentury",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "2000-02-29"
+      },
+      "errors": {}
+    },
+    {
+      "name": "date format",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "09/18/2026"
+      },
+      "errors": {
+        "VALUE": "date"
+      }
+    },
+    {
+      "name": "date rollover",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "2026-04-31"
+      },
+      "errors": {
+        "VALUE": "date"
+      }
+    },
+    {
+      "name": "date yearzero",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "date"
+        }
+      ],
+      "values": {
+        "VALUE": "0000-01-01"
+      },
+      "errors": {
+        "VALUE": "date"
+      }
+    },
+    {
+      "name": "regex raw",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "regex": "^[A-Z]+$"
+        }
+      ],
+      "values": {
+        "VALUE": "ABC"
+      },
+      "errors": {},
+      "serverOnly": true
+    },
+    {
+      "name": "regex delimited",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "regex": "/^[a-z]+$/i"
+        }
+      ],
+      "values": {
+        "VALUE": "ABC"
+      },
+      "errors": {},
+      "serverOnly": true
+    },
+    {
+      "name": "regex slash",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "regex": "^a/b$"
+        }
+      ],
+      "values": {
+        "VALUE": "a/b"
+      },
+      "errors": {},
+      "serverOnly": true
+    },
+    {
+      "name": "regex escaped slash",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "regex": "^a\\/b$"
+        }
+      ],
+      "values": {
+        "VALUE": "a/b"
+      },
+      "errors": {},
+      "serverOnly": true
+    },
+    {
+      "name": "regex lookahead",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "regex": "^(?!reserved$)[a-z]+$"
+        }
+      ],
+      "values": {
+        "VALUE": "ordinary"
+      },
+      "errors": {},
+      "serverOnly": true
+    },
+    {
+      "name": "regex reject",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "regex": "^[A-Z]+$"
+        }
+      ],
+      "values": {
+        "VALUE": "abc"
+      },
+      "errors": {
+        "VALUE": "matches"
+      },
+      "serverOnly": true
+    },
+    {
+      "name": "Literal zero regex is enforced",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "regex": "0"
+        }
+      ],
+      "values": {
+        "VALUE": "other"
+      },
+      "errors": {
+        "VALUE": "matches"
+      },
+      "serverOnly": true
+    }
+  ],
+  "conditions": [
+    {
+      "name": "condition equals",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "equals",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "yes",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition notEquals",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "notEquals",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "no",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition not_equals",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "not_equals",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "yes",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": false
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition truthy",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "truthy"
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "0",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": false
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition falsy",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "falsy"
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "false",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition in",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "in",
+              "values": ["one", "two"]
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "two",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition notIn",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "notIn",
+              "values": ["one", "two"]
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "three",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {}
+    },
+    {
+      "name": "condition not_in",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "operator": "not_in",
+              "values": ["one", "two"]
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": "one",
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": false
+      },
+      "errors": {}
+    },
+    {
+      "name": "default controller",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText",
+          "default_value": "yes"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {},
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {
+        "VALUE": "required"
+      }
+    },
+    {
+      "name": "boolean normalisation",
+      "fields": [
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "value": true
+            }
+          }
+        }
+      ],
+      "values": {
+        "MODE": true,
+        "VALUE": "ok"
+      },
+      "active": {
+        "MODE": true,
+        "VALUE": true
+      },
+      "errors": {}
+    },
+    {
+      "name": "inactive chain",
+      "fields": [
+        {
+          "fname": "ROOT",
+          "fieldtype": "dynamicText"
+        },
+        {
+          "fname": "MODE",
+          "fieldtype": "dynamicText",
+          "condition_json": {
+            "visibleWhen": {
+              "field": "ROOT",
+              "value": "yes"
+            }
+          }
+        },
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "required": 1,
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MODE",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {
+        "ROOT": "no",
+        "MODE": "yes"
+      },
+      "active": {
+        "ROOT": true,
+        "MODE": false,
+        "VALUE": false
+      },
+      "errors": {}
+    },
+    {
+      "name": "unknown dependency",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "fieldtype": "dynamicText",
+          "condition_json": {
+            "visibleWhen": {
+              "field": "MISSING",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {},
+      "active": {},
+      "errors": {
+        "_form": "configuration"
+      }
+    },
+    {
+      "name": "dependency cycle",
+      "fields": [
+        {
+          "fname": "ONE",
+          "fieldtype": "dynamicText",
+          "condition_json": {
+            "visibleWhen": {
+              "field": "TWO",
+              "value": "yes"
+            }
+          }
+        },
+        {
+          "fname": "TWO",
+          "fieldtype": "dynamicText",
+          "condition_json": {
+            "visibleWhen": {
+              "field": "ONE",
+              "value": "yes"
+            }
+          }
+        }
+      ],
+      "values": {},
+      "active": {},
+      "errors": {
+        "_form": "configuration"
+      }
+    },
+    {
+      "name": "Malformed empty condition object is rejected",
+      "fields": [
+        {
+          "fname": "VALUE",
+          "condition_json": {}
+        }
+      ],
+      "values": {},
+      "errors": {
+        "_form": "configuration"
+      }
+    }
+  ],
+  "subdomains": [
+    {
+      "value": " My-App ",
+      "result": "my-app"
+    },
+    {
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "result": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "result": null
+    },
+    {
+      "value": "app-name!",
+      "result": null
+    },
+    {
+      "value": "-app",
+      "result": null
+    },
+    {
+      "value": "app-",
+      "result": null
+    },
+    {
+      "value": "",
+      "result": null
+    }
+  ]
+}

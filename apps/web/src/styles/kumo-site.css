@@ -1,0 +1,1281 @@
+/*
+ * Kumo public site: the home page and the header and footer that later public
+ * pages will share. Loaded by the (site) layout inside the Kumo root layout,
+ * so Kumo's tokens and the Appbox theme (kumo-prototype.css) are in scope.
+ *
+ * Layout after cloudflare.com: a framed column with dashed side rails, cells
+ * divided by hairlines with corner marks, and flat pieces of the real Kumo
+ * dashboard lying on dotted cells, running off the edges and fading out. The
+ * soft violet glow behind the top of the page was chosen on 23 Nov 2026.
+ */
+[data-theme="appbox"] {
+  --ks-glow: light-dark(oklch(51% 0.24 281 / 0.11), oklch(56% 0.22 282 / 0.2));
+  --ks-drop: light-dark(oklch(30% 0.1 285 / 0.2), oklch(0% 0 0 / 0.6));
+  --ks-drop-soft: light-dark(oklch(30% 0.06 285 / 0.06), oklch(0% 0 0 / 0.3));
+  --ks-dot: light-dark(oklch(30% 0.06 285 / 0.13), oklch(100% 0 0 / 0.07));
+  --ks-backdrop: light-dark(oklch(20% 0.03 285 / 0.18), oklch(0% 0 0 / 0.45));
+  --ks-band: light-dark(oklch(51% 0.24 281), oklch(46% 0.22 282));
+  --ks-band-light: light-dark(
+    oklch(88% 0.09 292 / 0.75),
+    oklch(80% 0.12 292 / 0.55)
+  );
+  --ks-band-dots: oklch(100% 0 0 / 0.14);
+  --ks-screen: oklch(0% 0 0);
+  --ks-screen-fg: oklch(86% 0 0);
+  --ks-screen-dim: oklch(64% 0 0);
+  --ks-ease: cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+/* Its own stacking context, so dialogs and menus portalled to <body> sit above the header and the fades */
+.ks-page {
+  isolation: isolate;
+  min-height: 100vh;
+  padding-inline: max(16px, env(safe-area-inset-left, 0px))
+    max(16px, env(safe-area-inset-right, 0px));
+  background-image: radial-gradient(
+    64rem 34rem at 50% -6rem,
+    var(--ks-glow),
+    transparent 70%
+  );
+  background-repeat: no-repeat;
+  overflow-x: clip;
+}
+
+/* The frame */
+.ks-frame {
+  position: relative;
+  max-width: 1200px;
+  margin-inline: auto;
+  border-inline: 1px dashed var(--color-kumo-line);
+}
+.ks-cell {
+  position: relative;
+  border-top: 1px solid var(--color-kumo-hairline);
+}
+.ks-cell::before,
+.ks-cell::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  z-index: 2;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--color-kumo-line);
+  background: var(--color-kumo-canvas);
+}
+.ks-cell::before {
+  left: -4px;
+}
+.ks-cell::after {
+  right: -4px;
+}
+
+/* The AB cube in the connected apps diagram, drawn in the text colour */
+.ks-logo-box {
+  width: 40px;
+  height: 42px;
+  background: var(--text-color-kumo-default);
+  mask: url(/appbox-box-white.svg) no-repeat center / contain;
+}
+
+/* Headings, written to the kumo-design rules: sentence case, semibold, no tracking */
+.ks-h1,
+.ks-h2 {
+  margin: 0;
+  font-weight: 600;
+  text-wrap: balance;
+  color: var(--text-color-kumo-default);
+}
+.ks-h1 {
+  font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.25rem);
+  line-height: 1.05;
+}
+.ks-h2 {
+  font-size: clamp(1.625rem, 1.25rem + 1.4vw, 2.25rem);
+  line-height: 1.1;
+}
+.ks-h1 span,
+.ks-h2 span {
+  display: block;
+  color: var(--text-color-kumo-subtle);
+}
+.ks-lead {
+  max-width: 46ch;
+}
+.ks-sub {
+  max-width: 52ch;
+  margin: 14px auto 0;
+}
+
+/* Hero */
+.ks-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+}
+.ks-hero-copy {
+  display: grid;
+  justify-items: start;
+  gap: 22px;
+  padding: 64px 40px 64px 48px;
+}
+.ks-hero-art {
+  align-self: stretch;
+  border-inline-start: 1px solid var(--color-kumo-hairline);
+}
+
+/* Facts strip */
+.ks-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ks-fact {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 28px 32px 32px;
+}
+.ks-fact + .ks-fact {
+  border-inline-start: 1px solid var(--color-kumo-hairline);
+}
+.ks-fact h3,
+.ks-tile h3 {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.ks-intro {
+  padding: 72px 24px 64px;
+  text-align: center;
+}
+
+/* Feature rows */
+.ks-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+.ks-copy {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 16px;
+  padding: 56px 48px;
+}
+.ks-copy .ks-p {
+  max-width: 44ch;
+}
+.ks-row .ks-art {
+  border-inline-start: 1px solid var(--color-kumo-hairline);
+}
+.ks-row.ks-flip .ks-art {
+  order: -1;
+  border-inline-start: 0;
+  border-inline-end: 1px solid var(--color-kumo-hairline);
+}
+.ks-points {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* Bento */
+/* Subgrid rows, so the three captions start on one line */
+.ks-bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto 1fr;
+}
+.ks-tile {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+}
+.ks-tile + .ks-tile {
+  border-inline-start: 1px solid var(--color-kumo-hairline);
+}
+.ks-tile .ks-art {
+  border-bottom: 1px solid var(--color-kumo-hairline);
+}
+.ks-tile-text {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 20px 28px 28px;
+}
+
+/* Apps */
+.ks-apps {
+  padding: 72px 0 64px;
+  text-align: center;
+}
+.ks-wall {
+  display: grid;
+  gap: 12px;
+  margin-top: 36px;
+  overflow: hidden;
+  mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+/* Margins, not gaps, in the drifting rows: the doubled list must be exactly two periods wide. */
+.ks-lane {
+  display: flex;
+  width: max-content;
+  animation: kumo-wall-left 60s linear infinite;
+}
+.ks-lane:nth-child(2) {
+  animation-direction: reverse;
+  animation-duration: 75s;
+}
+.ks-lane:nth-child(3) {
+  animation-duration: 90s;
+}
+/* Right to left, the rows start at the right edge, so they drift the other way */
+[dir="rtl"] .ks-lane,
+[dir="rtl"] .ks-ticker-in {
+  animation-name: kumo-wall-right;
+}
+.ks-app {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-inline-end: 12px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 10px;
+  background: var(--color-kumo-base);
+  box-shadow: 0 0 0 1px var(--color-kumo-hairline);
+  white-space: nowrap;
+  text-align: start;
+}
+.ks-app small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--text-color-kumo-subtle);
+}
+.ks-cats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding-inline: 24px;
+}
+
+/* Plans: one row per group that scrolls sideways, as on the current page */
+.ks-plans {
+  padding: 72px 0 56px;
+}
+.ks-group {
+  margin-top: 44px;
+}
+.ks-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-inline: 48px;
+}
+.ks-scrollwrap {
+  position: relative;
+  margin-top: 16px;
+}
+.ks-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.ks-scroll.ks-fade-end {
+  mask-image: linear-gradient(
+    to right,
+    black calc(100% - 64px),
+    transparent 100%
+  );
+}
+[dir="rtl"] .ks-scroll.ks-fade-end {
+  mask-image: linear-gradient(
+    to left,
+    black calc(100% - 64px),
+    transparent 100%
+  );
+}
+.ks-cards {
+  display: inline-flex;
+  gap: 14px;
+  padding: 6px 48px 18px;
+}
+.ks-arrow {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 14px;
+  translate: 0 -50%;
+  opacity: 0;
+  pointer-events: none;
+  color: var(--text-color-kumo-default);
+  transition: opacity 0.3s;
+}
+/* Points, and nudges, towards the end of the row. */
+[dir="rtl"] .ks-arrow {
+  scale: -1 1;
+}
+.ks-arrow.ks-on {
+  opacity: 1;
+  animation: ks-nudge 2s ease-in-out infinite;
+}
+@keyframes ks-nudge {
+  50% {
+    transform: translateX(4px) scale(1.06);
+  }
+}
+.ks-plan {
+  flex: none;
+  width: 236px;
+}
+.ks-plan.ks-popular {
+  box-shadow: 0 0 0 1.5px var(--color-kumo-brand);
+}
+
+/* Closing band */
+.ks-closing {
+  padding: 24px;
+}
+.ks-band {
+  position: relative;
+  overflow: hidden;
+  padding: 96px 24px 0;
+  border-radius: 16px;
+  text-align: center;
+  color: oklch(99% 0 0);
+  background-color: var(--ks-band);
+  background-image:
+    radial-gradient(
+      36rem 11rem at 50% 100%,
+      var(--ks-band-light),
+      transparent 75%
+    ),
+    radial-gradient(var(--ks-band-dots) 1px, transparent 1.3px);
+  background-size:
+    auto,
+    10px 10px;
+}
+.ks-band-h {
+  position: relative;
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  font-weight: 600;
+}
+.ks-band-p {
+  position: relative;
+  max-width: 48ch;
+  margin: 14px auto 0;
+  color: oklch(96% 0.02 290);
+}
+.ks-band-ctas {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+.ks-btn-white,
+.ks-btn-clear {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding-inline: 14px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.ks-btn-white {
+  background: oklch(99% 0 0);
+  color: oklch(30% 0.12 282);
+}
+.ks-btn-white:hover {
+  background: oklch(95% 0.02 285);
+}
+.ks-btn-clear {
+  box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.45);
+}
+.ks-btn-clear:hover {
+  background: oklch(100% 0 0 / 0.1);
+}
+.ks-btn-white:focus-visible,
+.ks-btn-clear:focus-visible {
+  outline: 2px solid oklch(99% 0 0);
+  outline-offset: 2px;
+}
+.ks-floaters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ks-float {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: oklch(100% 0 0 / 0.14);
+  box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.3);
+  rotate: var(--r);
+  animation: ks-float 6s ease-in-out var(--d) infinite;
+}
+@keyframes ks-float {
+  50% {
+    translate: 0 -10px;
+  }
+}
+.ks-ticker {
+  margin-top: 84px;
+  padding-block: 12px;
+  overflow: hidden;
+  border-top: 1px solid oklch(100% 0 0 / 0.2);
+}
+.ks-ticker-in {
+  display: flex;
+  width: max-content;
+  animation: kumo-wall-left 40s linear infinite;
+}
+.ks-ticker span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-end: 36px;
+  white-space: nowrap;
+  color: oklch(97% 0.01 290);
+}
+
+/* Footer */
+.ks-foot {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  padding: 48px;
+}
+.ks-foot ul {
+  display: grid;
+  gap: 8px;
+}
+.ks-foot a:hover {
+  color: var(--text-color-kumo-brand);
+}
+.ks-foot-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--color-kumo-hairline);
+  color: var(--text-color-kumo-subtle);
+}
+
+/* Scenes: fixed-size pieces of the dashboard, scaled to their cell */
+.ks-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background-color: var(--color-kumo-elevated);
+  background-image: radial-gradient(var(--ks-dot) 1px, transparent 1.3px);
+  background-size: 14px 14px;
+}
+/* The illustration fades into its cell at the cell's own edges */
+.ks-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to right,
+      var(--color-kumo-elevated),
+      transparent 28px,
+      transparent calc(100% - 72px),
+      var(--color-kumo-elevated)
+    ),
+    linear-gradient(
+      to bottom,
+      var(--color-kumo-elevated),
+      transparent 20px,
+      transparent calc(100% - 72px),
+      var(--color-kumo-elevated)
+    );
+}
+.ks-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ar);
+}
+.ks-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  transform: scale(var(--s, 1));
+}
+.ks-paused,
+.ks-paused * {
+  animation-play-state: paused !important;
+}
+.ks-abs {
+  position: absolute;
+}
+.ks-lift {
+  box-shadow:
+    0 0 0 1px var(--color-kumo-line),
+    0 1px 2px var(--ks-drop-soft),
+    0 24px 40px -24px var(--ks-drop);
+  border-radius: var(--radius-lg);
+}
+.ks-pagecard {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 14px;
+  background: var(--color-kumo-canvas);
+  box-shadow:
+    0 0 0 1px var(--color-kumo-line),
+    0 24px 40px -24px var(--ks-drop);
+}
+.ks-appicon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px var(--color-kumo-hairline);
+}
+.ks-in {
+  animation: ks-in 0.4s ease-out both;
+}
+@keyframes ks-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.ks-rowin {
+  animation: ks-rowin 0.45s ease-out both;
+}
+@keyframes ks-rowin {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Install: the App Store page, Kumo's dialog over it, then the app's own page */
+.ks-dialog-pos {
+  transform-origin: 50% 40%;
+  transition:
+    scale 0.15s,
+    opacity 0.15s;
+}
+.ks-dialog-pos.ks-closed {
+  scale: 0.9;
+  opacity: 0;
+}
+.ks-backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ks-backdrop);
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.ks-backdrop.ks-off {
+  opacity: 0;
+}
+@keyframes ks-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.ks-press {
+  scale: 0.96;
+}
+
+/* VPS: the Console tab, switching between systems */
+.ks-swap {
+  transition: opacity 0.35s;
+}
+.ks-swap.ks-gone {
+  opacity: 0;
+}
+.ks-screen {
+  height: 168px;
+  padding: 10px 12px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--ks-screen);
+  color: var(--ks-screen-fg);
+  font:
+    12px/1.5 ui-monospace,
+    "SFMono-Regular",
+    Menlo,
+    monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.ks-screen .ks-dim {
+  color: var(--ks-screen-dim);
+}
+.ks-desk {
+  position: relative;
+  height: 168px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: radial-gradient(
+    70% 90% at 30% 100%,
+    oklch(45% 0.17 255),
+    oklch(22% 0.1 262) 70%
+  );
+}
+.ks-desk-task {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  background: oklch(20% 0.02 260 / 0.85);
+}
+.ks-desk-task i {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  background: oklch(85% 0.02 260 / 0.8);
+}
+.ks-desk-win {
+  position: absolute;
+  top: 12%;
+  left: 16%;
+  width: 56%;
+  height: 62%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: oklch(97% 0 0);
+  color: oklch(25% 0 0);
+  font-size: 11px;
+  box-shadow: 0 10px 20px oklch(0% 0 0 / 0.35);
+}
+.ks-desk-drive {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: oklch(93% 0.01 255);
+}
+
+/* Connected apps and hardware: plain diagrams with dashed lines */
+.ks-graph {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+.ks-wire {
+  fill: none;
+  stroke: var(--text-color-kumo-subtle);
+  stroke-width: 1.25;
+  stroke-dasharray: 4 4;
+  opacity: 0.55;
+}
+.ks-wire.ks-bridge {
+  stroke: var(--color-kumo-brand);
+  opacity: 0.9;
+}
+.ks-pkt {
+  fill: var(--color-kumo-brand);
+}
+.ks-node,
+.ks-hub {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  translate: -50% -50%;
+  font-size: 12px;
+  text-align: center;
+}
+.ks-node {
+  width: 74px;
+  color: var(--text-color-kumo-subtle);
+}
+.ks-hub {
+  font-weight: 500;
+}
+.ks-ic {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--color-kumo-base);
+  box-shadow:
+    0 0 0 1px var(--color-kumo-line),
+    0 10px 20px -14px var(--ks-drop);
+}
+.ks-hub .ks-ic {
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 1.5px var(--color-kumo-brand),
+    0 0 36px var(--ks-glow);
+}
+.ks-wtag {
+  position: absolute;
+  translate: -50% -50%;
+  padding: 0 7px;
+  border-radius: 99px;
+  background: var(--color-kumo-base);
+  box-shadow: 0 0 0 1px var(--color-kumo-hairline);
+  color: var(--text-color-kumo-subtle);
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.ks-wtag.ks-brand {
+  box-shadow: 0 0 0 1px var(--color-kumo-brand);
+  color: var(--text-color-kumo-brand);
+}
+.ks-router {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  translate: -50% -50%;
+  border-radius: 99px;
+  background: var(--color-kumo-base);
+  box-shadow:
+    0 0 0 1px var(--color-kumo-line),
+    0 10px 20px -14px var(--ks-drop);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.ks-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-kumo-success);
+}
+.ks-rack {
+  position: absolute;
+  display: grid;
+  gap: 6px;
+  width: 120px;
+}
+.ks-rack-name {
+  color: var(--text-color-kumo-subtle);
+  font:
+    11px ui-monospace,
+    Menlo,
+    monospace;
+  text-align: center;
+}
+.ks-rack-front {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--color-kumo-base);
+  box-shadow:
+    0 0 0 1px var(--color-kumo-line),
+    0 18px 30px -20px var(--ks-drop);
+}
+.ks-sled {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 17px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--color-kumo-elevated);
+  box-shadow: inset 0 0 0 1px var(--color-kumo-hairline);
+}
+.ks-sled i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-kumo-success);
+  animation: ks-blink var(--t, 1.3s) steps(2) var(--d, 0s) infinite;
+}
+.ks-sled i.ks-b,
+.ks-sled.ks-net i {
+  background: var(--color-kumo-brand);
+}
+.ks-sled::after {
+  content: "";
+  width: 46%;
+  height: 5px;
+  margin-inline-start: auto;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-kumo-hairline) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+/* Assistant: a chat transcript */
+.ks-chat {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 360px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-kumo-base);
+  box-shadow:
+    0 0 0 1px var(--color-kumo-line),
+    0 24px 40px -24px var(--ks-drop);
+}
+.ks-chat-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-kumo-hairline);
+}
+.ks-msgs {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 12px 14px;
+  overflow: hidden;
+}
+.ks-msg {
+  max-width: 84%;
+  padding: 7px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  animation: ks-in 0.3s ease-out both;
+}
+.ks-msg.ks-me {
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  background: var(--color-kumo-brand);
+  color: oklch(99% 0 0);
+}
+.ks-msg.ks-bot {
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  background: var(--color-kumo-elevated);
+  box-shadow: inset 0 0 0 1px var(--color-kumo-hairline);
+}
+.ks-tool {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-color-kumo-subtle);
+  font:
+    11px ui-monospace,
+    Menlo,
+    monospace;
+  animation: ks-in 0.3s ease-out both;
+}
+.ks-tool i {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--color-kumo-hairline);
+  border-top-color: var(--color-kumo-brand);
+  border-radius: 50%;
+  animation: ks-spin 0.8s linear infinite;
+}
+.ks-tool.ks-done i {
+  border: 0;
+  background: var(--color-kumo-success);
+  animation: none;
+}
+.ks-typing {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: var(--color-kumo-elevated);
+}
+.ks-typing i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-color-kumo-subtle);
+  animation: ks-dot 1s infinite;
+}
+.ks-typing i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.ks-typing i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes ks-dot {
+  30% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes ks-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.ks-old {
+  opacity: 0.35;
+  transition: opacity 0.5s;
+}
+
+/*
+ * Header menus, after cloudflare.com: one shared panel under the nav. Moving
+ * from one menu to the next keeps it open, resizes it to the new content and
+ * slides the content across, while the highlight slides to the new trigger.
+ */
+.ks-head {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 14px 24px;
+}
+.ks-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.ks-head-end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+.ks-trigger {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 8px;
+  color: var(--text-color-kumo-subtle);
+  cursor: pointer;
+}
+.ks-trigger:hover,
+.ks-trigger[aria-expanded="true"] {
+  color: var(--text-color-kumo-default);
+}
+.ks-trigger:focus-visible,
+.ks-item:focus-visible,
+.ks-lang:focus-visible {
+  outline: 2px solid var(--color-kumo-focus);
+  outline-offset: 1px;
+}
+/* The highlight behind the open trigger; Radix sets its width and offset */
+.ks-ind {
+  top: 50%;
+  z-index: 0;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 8px;
+  background: var(--color-kumo-base);
+  box-shadow: 0 0 0 1px var(--color-kumo-line);
+  transition:
+    transform 0.25s var(--ks-ease),
+    width 0.25s var(--ks-ease);
+}
+.ks-ind[data-state="visible"] {
+  animation: ks-fade-in 0.15s;
+}
+.ks-ind[data-state="hidden"] {
+  animation: ks-fade-out 0.15s forwards;
+}
+/* The shared panel, which Radix sizes to the open menu's content */
+.ks-viewport-pos {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 50%;
+  translate: -50% 0;
+}
+.ks-viewport {
+  position: relative;
+  box-sizing: content-box;
+  width: var(--radix-navigation-menu-viewport-width);
+  height: var(--radix-navigation-menu-viewport-height);
+  padding: 5px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-kumo-elevated);
+  box-shadow:
+    0 0 0 1px var(--color-kumo-hairline),
+    0 28px 56px -24px var(--ks-drop);
+  transition:
+    width 0.25s var(--ks-ease),
+    height 0.25s var(--ks-ease);
+}
+/* The inner card, drawn by the panel so it resizes with it */
+.ks-viewport::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 10px;
+  background: var(--color-kumo-base);
+  box-shadow: 0 0 0 1px var(--color-kumo-line);
+}
+.ks-viewport[data-state="open"] {
+  animation: ks-panel-in 0.15s;
+}
+.ks-viewport[data-state="closed"] {
+  animation: ks-panel-out 0.15s forwards;
+}
+.ks-content {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  width: calc(var(--cols) * 300px);
+}
+/* Moving between menus, the content slides in from the side the pointer went */
+.ks-content[data-motion="from-end"] {
+  animation: ks-from-end 0.25s var(--ks-ease);
+}
+.ks-content[data-motion="from-start"] {
+  animation: ks-from-start 0.25s var(--ks-ease);
+}
+.ks-content[data-motion="to-end"] {
+  animation: ks-to-end 0.25s var(--ks-ease) forwards;
+}
+.ks-content[data-motion="to-start"] {
+  animation: ks-to-start 0.25s var(--ks-ease) forwards;
+}
+@keyframes ks-from-end {
+  from {
+    translate: 48px 0;
+    opacity: 0;
+  }
+}
+@keyframes ks-from-start {
+  from {
+    translate: -48px 0;
+    opacity: 0;
+  }
+}
+@keyframes ks-to-end {
+  to {
+    translate: 48px 0;
+    opacity: 0;
+  }
+}
+@keyframes ks-to-start {
+  to {
+    translate: -48px 0;
+    opacity: 0;
+  }
+}
+@keyframes ks-panel-in {
+  from {
+    translate: 0 -4px;
+    opacity: 0;
+  }
+}
+@keyframes ks-panel-out {
+  to {
+    translate: 0 -4px;
+    opacity: 0;
+  }
+}
+@keyframes ks-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ks-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+.ks-col {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  padding: 14px 12px 12px;
+}
+.ks-col + .ks-col {
+  border-inline-start: 1px solid var(--color-kumo-hairline);
+}
+.ks-col-head,
+.ks-sheet-head {
+  margin: 0 12px 6px;
+  font-size: 12px;
+  color: var(--text-color-kumo-subtle);
+}
+.ks-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+.ks-item:hover {
+  background: var(--color-kumo-tint);
+}
+.ks-item-icon {
+  margin-top: 1px;
+  color: var(--text-color-kumo-subtle);
+}
+.ks-item:hover .ks-item-icon {
+  color: var(--text-color-kumo-brand);
+}
+.ks-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ks-lang:hover,
+.ks-lang[aria-expanded="true"],
+.ks-lang[data-popup-open] {
+  background: var(--color-kumo-tint);
+}
+.ks-burger,
+.ks-sheet,
+.ks-sheet-account,
+.ks-sheet-prefs {
+  display: none;
+}
+@media (max-width: 1079px) {
+  .ks-nav,
+  .ks-viewport-pos {
+    display: none;
+  }
+  .ks-burger {
+    display: inline-flex;
+  }
+  .ks-sheet {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: grid;
+    gap: 2px;
+    max-height: calc(100dvh - 120px);
+    padding: 8px 12px 16px;
+    overflow-y: auto;
+    translate: 0 -4px;
+    border-radius: 0 0 14px 14px;
+    background: var(--color-kumo-base);
+    box-shadow:
+      0 0 0 1px var(--color-kumo-line),
+      0 28px 56px -24px var(--ks-drop);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.15s,
+      translate 0.15s,
+      visibility 0s linear 0.15s;
+  }
+  .ks-sheet.ks-open {
+    translate: 0 0;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.15s,
+      translate 0.15s;
+  }
+  .ks-sheet-head {
+    margin-top: 12px;
+    margin-bottom: 2px;
+  }
+}
+/* Billing and Control panel move into the menu sheet when the header gets narrow */
+@media (max-width: 720px) {
+  .ks-account {
+    display: none;
+  }
+  .ks-sheet-account {
+    display: grid;
+  }
+}
+@media (max-width: 560px) {
+  .ks-head-prefs {
+    display: none;
+  }
+  .ks-sheet-prefs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 12px 4px 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-kumo-hairline);
+  }
+}
+
+/* Narrow screens */
+@media (max-width: 960px) {
+  .ks-hero,
+  .ks-row,
+  .ks-bento,
+  .ks-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ks-hero-art,
+  .ks-row .ks-art,
+  .ks-row.ks-flip .ks-art {
+    order: 2;
+    border-inline: 0;
+    border-top: 1px solid var(--color-kumo-hairline);
+  }
+  .ks-tile + .ks-tile,
+  .ks-fact + .ks-fact {
+    border-inline-start: 0;
+    border-top: 1px solid var(--color-kumo-hairline);
+  }
+  .ks-hero-copy,
+  .ks-copy {
+    padding: 40px 24px;
+  }
+  .ks-group-head,
+  .ks-cards {
+    padding-inline: 24px;
+  }
+  .ks-foot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 32px 24px;
+  }
+  .ks-foot > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 520px) {
+  .ks-head {
+    gap: 12px;
+    padding-inline: 16px;
+  }
+  .ks-float:nth-child(n + 4) {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ks-page *,
+  .ks-page *::before,
+  .ks-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

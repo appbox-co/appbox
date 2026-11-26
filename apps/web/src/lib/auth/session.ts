@@ -1,4 +1,6 @@
+import { cache } from "react"
 import { cookies } from "next/headers"
+import { fetchTokenUser } from "./validate-token"
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://api.appbox.co/v1"
@@ -48,25 +50,8 @@ export async function validateSession(
   token: string
 ): Promise<SessionData | null> {
   try {
-    // Validate token and get user info
-    const userResponse = await fetch(`${API_BASE_URL}/users/validate_token`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "Appbox-Web/2.0",
-        Cookie: `authorization_token=${token}`
-      },
-      cache: "no-store"
-    })
-
-    if (!userResponse.ok) {
-      return null
-    }
-
-    const userData = await userResponse.json()
-
-    // Backend returns `false` if the token is invalid
-    if (!userData || userData === false || !userData.id) {
+    const userData = await fetchTokenUser(token)
+    if (!userData) {
       return null
     }
 
@@ -138,7 +123,8 @@ export async function validateSession(
   }
 }
 
-export async function getServerSession(): Promise<SessionData | null> {
+/** The signed-in session, asked of the API once per request however many layouts read it. */
+export const getServerSession = cache(async (): Promise<SessionData | null> => {
   const cookieStore = await cookies()
   const token = cookieStore.get("authorization_token")?.value
 
@@ -147,4 +133,4 @@ export async function getServerSession(): Promise<SessionData | null> {
   }
 
   return validateSession(token)
-}
+})

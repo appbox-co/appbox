@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, type ReactNode } from "react"
 import { toast } from "sonner"
 import { useRouter } from "@/i18n/routing"
+import { isAdminRole } from "@/lib/auth/roles"
 import type { Cylo, User } from "@/lib/auth/session"
 
 interface AuthContextValue {
@@ -30,9 +31,16 @@ interface AuthProviderProps {
   children: ReactNode
   user: User
   cylos: Cylo[]
+  /** Where signing out lands. The Kumo prototype passes its own sign-in page. */
+  signInPath?: string
 }
 
-export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
+export function AuthProvider({
+  children,
+  user,
+  cylos,
+  signInPath = "/login"
+}: AuthProviderProps) {
   const router = useRouter()
 
   const logout = useCallback(async () => {
@@ -59,13 +67,13 @@ export function AuthProvider({ children, user, cylos }: AuthProviderProps) {
       toast.error("Couldn't log you out. Check your connection and try again.")
       return
     }
-    router.replace("/login")
-  }, [router])
+    router.replace(signInPath)
+  }, [router, signInPath])
 
   const value: AuthContextValue = {
     user,
     cylos,
-    isAdmin: user.roles === "admin" || user.roles === "superadmin",
+    isAdmin: isAdminRole(user.roles),
     logout
   }
 

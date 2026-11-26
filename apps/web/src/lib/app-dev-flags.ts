@@ -42,6 +42,16 @@ export function readAppDevFlags(appId: number): AppDevFlags | null {
   }
 }
 
+/** Saves the flags the dev panel set, for the install dialog to read. */
+export function saveAppDevFlags(appId: number, flags: AppDevFlags) {
+  if (!IS_DEV || typeof window === "undefined") return
+  try {
+    localStorage.setItem(storageKey(appId), JSON.stringify(flags))
+  } catch {
+    // Blocked storage: the flags last until the page reloads.
+  }
+}
+
 /** Called by the dev panel after saving flags */
 export function notifyAppDevFlagsChanged() {
   if (typeof window !== "undefined") {
