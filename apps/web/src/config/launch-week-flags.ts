@@ -21,7 +21,7 @@ export const nextLaunchWeekFlags = {
   day_2: false,
   day_3: false,
   day_4: false,
-  day_5: false
+  day_5: true
 } as const
 
 export type NextLaunchWeekFlag = keyof typeof nextLaunchWeekFlags
